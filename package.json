@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@rgrove/parse-xml": "^3.0.0",
     "jest": "^26.6.3"
   },
   "devDependencies": {
