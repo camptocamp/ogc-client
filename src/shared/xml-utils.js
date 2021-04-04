@@ -9,9 +9,12 @@ export class XmlParseError extends Error {
 /**
  * @typedef {import('@rgrove/parse-xml').XmlDocument} XmlDocument
  */
+/**
+ * @typedef {import('@rgrove/parse-xml').XmlElement} XmlElement
+ */
 
 /**
- *
+ * Parses a XML document as string, return a document object
  * @param {string} xmlString
  * @return {XmlDocument}
  */
@@ -22,6 +25,62 @@ export function parseXmlString(xmlString) {
     } catch (e) {
         throw new XmlParseError(e.message);
     }
-
     return doc;
+}
+
+
+/**
+ * Return the root element
+ * @param {XmlDocument} xmlDoc
+ * @return {XmlElement}
+ */
+export function getRootElement(xmlDoc) {
+    return xmlDoc.children[0];
+}
+
+/**
+ * Will return all matching elements
+ * @param {XmlElement} element Element to look into
+ * @param {string} name element name
+ * @param {boolean} [nested=false] if true, will lookup children of children too
+ * @return {XmlElement[]} Returns an empty array if no match found
+ */
+export function findChildrenElement(element, name, nested) {
+    function reducer(prev, curr) {
+        if(curr.name === name) {
+            prev.push(curr);
+        }
+
+        if (nested) {
+            return [...prev, ...curr.children.reduce(reducer, [])];
+        } else {
+            return prev;
+        }
+    }
+
+    return element.children.reduce(reducer, [])
+}
+
+/**
+ * Will return the first matching element
+ * @param {XmlElement} element Element to look into
+ * @param {string} name element name
+ * @param {boolean} [nested=false] if true, will lookup children of children too
+ * @return {XmlElement} Returns null if no matching element found
+ */
+export function findChildElement(element, name, nested) {
+    return findChildrenElement(element, name, nested)[0] || null;
+}
+
+/**
+ * Returns the text node in the element. Note that giving an null element
+ * will simply return an empty string.
+ * @param {XmlElement} element
+ * @return {string} found text or empty string if no text node found
+ */
+export function getElementText(element) {
+    const textNode = element && Array.isArray(element.children) ?
+        element.children.find(node => node.type === 'text') :
+        null;
+    return textNode ? textNode.text : '';
 }

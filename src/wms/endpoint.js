@@ -2,7 +2,9 @@
  * @typedef {Object} WmsLayer
  * @property {string} name
  * @property {string} title
- * @property {string[]} path
+ * @property {string} abstract
+ * @property {string[]} availableCrs
+ * @property {?WmsLayer[]} childLayers
  */
 
 /**
