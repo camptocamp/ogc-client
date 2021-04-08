@@ -21,31 +21,61 @@ describe('WMS capabilities', () => {
         name: 'GEOSERVICES_GEOLOGIE',
         title: 'GéoServices : géologie, hydrogéologie et gravimétrie',
         abstract: 'Ensemble des services d\'accès aux données sur la géologie, l\'hydrogéologie et la gravimétrie, diffusées par le BRGM',
-        availableCrs: expect.any(Array),
+        availableCrs: [
+          "EPSG:4326",
+          "CRS:84",
+          "EPSG:3857",
+          "EPSG:4171",
+          "EPSG:2154",
+        ],
         childLayers: [
           {
             name: 'GEOLOGIE',
             title: 'Cartes géologiques',
             abstract: 'Cartes géologiques',
-            availableCrs: expect.any(Array),
+            availableCrs: [
+              "EPSG:4326",
+              "CRS:84",
+              "EPSG:3857",
+              "EPSG:4171",
+              "EPSG:2154",
+            ],
             childLayers: [
               {
                 abstract: "BD Scan-Million-Géol est la base de données géoréférencées de la carte géologique image à 1/1 000 000",
-                availableCrs: expect.any(Array),
+                availableCrs: [
+                  "EPSG:4326",
+                  "EPSG:3857",
+                  "CRS:84",
+                  "EPSG:32620",
+                  "EPSG:32621"
+                ],
                 childLayers: [],
                 name: "SCAN_F_GEOL1M",
                 title: "Carte géologique image de la France au million"
               },
               {
                 abstract: "BD Scan-Géol-250 est la base de données géoréférencées des cartes géologiques image à 1/250 000. Utilisation scientifique, technique, pédagogique",
-                availableCrs: expect.any(Array),
+                availableCrs: [
+                  "EPSG:4326",
+                  "EPSG:3857",
+                  "CRS:84",
+                  "EPSG:32620",
+                  "EPSG:32621"
+                ],
                 childLayers: [],
                 name: "SCAN_F_GEOL250",
                 title: "Carte géologique image de la France au 1/250000"
               },
               {
                 abstract: "BD Scan-Géol-50 est la base de données géoréférencées des cartes géologiques 'papier' à 1/50 000",
-                availableCrs: expect.any(Array),
+                availableCrs: [
+                  "EPSG:4326",
+                  "EPSG:3857",
+                  "CRS:84",
+                  "EPSG:32620",
+                  "EPSG:32621"
+                ],
                 childLayers: [],
                 name: "SCAN_D_GEOL50",
                 title: "Carte géologique image de la France au 1/50 000e"

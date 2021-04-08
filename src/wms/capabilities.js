@@ -24,14 +24,18 @@ export function readLayersFromCapabilities(capabilitiesDoc) {
  * Parse a layer in a capabilities doc
  * @param {XmlElement} layerObj
  * @param {WmsVersion} version
+ * @param {string[]} [inheritedSrs]
  * @return {WmsLayer}
  */
-function parseLayer(layerObj, version) {
+function parseLayer(layerObj, version, inheritedSrs = []) {
+  const srsTag = version === '1.3.0' ? 'CRS' : 'SRS'
+  const srsList = findChildrenElement(layerObj, srsTag).map(getElementText)
+  const availableCrs = srsList.length > 0 ? srsList : inheritedSrs
   return {
     name: getElementText(findChildElement(layerObj, 'Name')),
     title: getElementText(findChildElement(layerObj, 'Title')),
     abstract: getElementText(findChildElement(layerObj, 'Abstract')),
-    availableCrs: [],
-    childLayers: findChildrenElement(layerObj, 'Layer').map(layer => parseLayer(layer, version)),
+    availableCrs,
+    childLayers: findChildrenElement(layerObj, 'Layer').map(layer => parseLayer(layer, version, availableCrs)),
   }
 }
