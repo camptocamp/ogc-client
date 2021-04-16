@@ -1,4 +1,11 @@
-import {findChildElement, findChildrenElement, getElementText, getRootElement} from "../shared/xml-utils";
+import {
+  findChildElement,
+  findChildrenElement,
+  getElementAttribute,
+  getElementText,
+  getRootElement
+} from "../shared/xml-utils";
+import {hasInvertedCoordinates} from "../shared/crs-utils";
 
 /**
  * Will read a WMS version from the capabilities doc
@@ -24,18 +31,30 @@ export function readLayersFromCapabilities(capabilitiesDoc) {
  * Parse a layer in a capabilities doc
  * @param {XmlElement} layerObj
  * @param {WmsVersion} version
- * @param {string[]} [inheritedSrs]
+ * @param {CrsCode[]} [inheritedSrs]
  * @return {WmsLayer}
  */
 function parseLayer(layerObj, version, inheritedSrs = []) {
   const srsTag = version === '1.3.0' ? 'CRS' : 'SRS'
   const srsList = findChildrenElement(layerObj, srsTag).map(getElementText)
   const availableCrs = srsList.length > 0 ? srsList : inheritedSrs
+  function parseBBox(bboxEl) {
+    const srs = getElementAttribute(bboxEl, srsTag)
+    const attrs = hasInvertedCoordinates(srs) && version === '1.3.0' ?
+      ['miny', 'minx', 'maxy', 'maxx'] :
+      ['minx', 'miny', 'maxx', 'maxy'];
+    return attrs.map(name => getElementAttribute(bboxEl, name))
+  }
   return {
     name: getElementText(findChildElement(layerObj, 'Name')),
     title: getElementText(findChildElement(layerObj, 'Title')),
     abstract: getElementText(findChildElement(layerObj, 'Abstract')),
     availableCrs,
+    boundingBoxes: findChildrenElement(layerObj, 'BoundingBox').reduce((prev, bboxEl) =>
+      ({
+        ...prev,
+        [getElementAttribute(bboxEl, srsTag)]: parseBBox(bboxEl)
+      }), {}),
     childLayers: findChildrenElement(layerObj, 'Layer').map(layer => parseLayer(layer, version, availableCrs)),
   }
 }

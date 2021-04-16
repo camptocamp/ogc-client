@@ -1,9 +1,19 @@
 /**
+ * @typedef {[number, number, number, number]} BoundingBox
+ *  Expressed as minx, miny, maxx, maxy
+ */
+
+/**
+ * @typedef {string} CrsCode
+ */
+
+/**
  * @typedef {Object} WmsLayer
  * @property {string} name
  * @property {string} title
  * @property {string} abstract
- * @property {string[]} availableCrs
+ * @property {CrsCode[]} availableCrs
+ * @property {Object.<CrsCode, BoundingBox>} boundingBoxes Dict of bounding boxes where keys are CRS codes
  * @property {?WmsLayer[]} childLayers
  */
 

@@ -84,3 +84,14 @@ export function getElementText(element) {
         null;
     return textNode ? textNode.text : '';
 }
+
+/**
+ * Returns the element's attribute value. Note that giving an null element
+ * will simply return an empty string.
+ * @param {XmlElement} element
+ * @param {string} attrName
+ * @return {string} found attribute value or empty if non existent
+ */
+export function getElementAttribute(element, attrName) {
+    return element && element.attributes[attrName] || ''
+}
