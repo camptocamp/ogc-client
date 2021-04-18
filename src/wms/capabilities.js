@@ -24,21 +24,45 @@ export function readVersionFromCapabilities(capabilitiesDoc) {
 export function readLayersFromCapabilities(capabilitiesDoc) {
   const version = readVersionFromCapabilities(capabilitiesDoc)
   const capability = findChildElement(getRootElement(capabilitiesDoc), 'Capability');
-  return findChildrenElement(capability, 'Layer').map(layer => parseLayer(layer, version))
+
+  /**
+   * @param {string[]} path
+   * @param {CrsCode[]} [inheritedCrs]
+   * @param {LayerStyle[]} [inheritedStyles]
+   * @return {function(WmsLayer[], XmlElement): WmsLayer[]} A reducer which parses all layers recursively
+   */
+  const recursiveParseLayer = (path, inheritedCrs, inheritedStyles) => (prev, layerEl) => {
+    const parsedLayer = parseLayer(path, layerEl, version, inheritedCrs, inheritedStyles);
+    const children = findChildrenElement(layerEl, 'Layer');
+    const childrenPath = [...path, parsedLayer.name];
+    return [
+      ...prev,
+      parsedLayer,
+      ...children.reduce(recursiveParseLayer(childrenPath, parsedLayer.availableCrs, parsedLayer.styles), [])
+    ];
+  }
+
+  return findChildrenElement(capability, 'Layer')
+    .reduce(recursiveParseLayer([]), [])
 }
 
 /**
  * Parse a layer in a capabilities doc
+ * @param {string[]} path Path of the layer to be parsed (empty array of root layer)
  * @param {XmlElement} layerEl
  * @param {WmsVersion} version
  * @param {CrsCode[]} [inheritedSrs]
- * @param {Style[]} [inheritedStyles]
+ * @param {LayerStyle[]} [inheritedStyles]
  * @return {WmsLayer}
  */
-function parseLayer(layerEl, version, inheritedSrs = [], inheritedStyles = []) {
+function parseLayer(path, layerEl, version, inheritedSrs = [], inheritedStyles = []) {
   const srsTag = version === '1.3.0' ? 'CRS' : 'SRS'
   const srsList = findChildrenElement(layerEl, srsTag).map(getElementText)
   const availableCrs = srsList.length > 0 ? srsList : inheritedSrs
+  const layerStyles = findChildrenElement(layerEl, 'Style')
+    .map(styleEl => findChildElement(styleEl, 'Name'))
+    .map(getElementText);
+  const styles = layerStyles.length > 0 ? layerStyles : inheritedStyles;
   function parseBBox(bboxEl) {
     const srs = getElementAttribute(bboxEl, srsTag)
     const attrs = hasInvertedCoordinates(srs) && version === '1.3.0' ?
@@ -46,10 +70,6 @@ function parseLayer(layerEl, version, inheritedSrs = [], inheritedStyles = []) {
       ['minx', 'miny', 'maxx', 'maxy'];
     return attrs.map(name => getElementAttribute(bboxEl, name))
   }
-  const layerStyles = findChildrenElement(layerEl, 'Style')
-    .map(styleEl => findChildElement(styleEl, 'Name'))
-    .map(getElementText);
-  const styles = layerStyles.length > 0 ? layerStyles : inheritedStyles;
   return {
     name: getElementText(findChildElement(layerEl, 'Name')),
     title: getElementText(findChildElement(layerEl, 'Title')),
@@ -61,6 +81,6 @@ function parseLayer(layerEl, version, inheritedSrs = [], inheritedStyles = []) {
         ...prev,
         [getElementAttribute(bboxEl, srsTag)]: parseBBox(bboxEl)
       }), {}),
-    childLayers: findChildrenElement(layerEl, 'Layer').map(layer => parseLayer(layer, version, availableCrs, styles)),
+    path
   }
 }

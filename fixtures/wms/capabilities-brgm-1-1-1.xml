@@ -225,6 +225,14 @@
                             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://mapsref.brgm.fr/legendes/geoservices/Geologie1000_legende.jpg"/>
                         </LegendURL>
                     </Style>
+                    <Style>
+                        <Name>inspire_common:OTHER</Name>
+                        <Title>inspire_common:OTHER</Title>
+                        <LegendURL width="600" height="732">
+                            <Format>image/png</Format>
+                            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://mapsref.brgm.fr/legendes/geoservices/Geologie1000_legende_other.jpg"/>
+                        </LegendURL>
+                    </Style>
                     <ScaleHint min="74.8354272644456" max="3741.77136322228" />
                 </Layer>
                 <Layer queryable="0" opaque="0" cascaded="0">

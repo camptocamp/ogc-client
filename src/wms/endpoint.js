@@ -8,7 +8,7 @@
  */
 
 /**
- * @typedef {string} Style
+ * @typedef {string} LayerStyle
  */
 
 /**
@@ -17,9 +17,10 @@
  * @property {string} title
  * @property {string} abstract
  * @property {CrsCode[]} availableCrs
- * @property {Style[]} styles
+ * @property {LayerStyle[]} styles
  * @property {Object.<CrsCode, BoundingBox>} boundingBoxes Dict of bounding boxes where keys are CRS codes
- * @property {?WmsLayer[]} childLayers
+ * @property {string[]} path If the layer is nested in other layers, the path will contain the name of previous layers
+ *   in order from the topmost parent (root layer) to the closest one.
  */
 
 /**

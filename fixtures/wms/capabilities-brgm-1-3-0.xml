@@ -239,6 +239,14 @@
                             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://mapsref.brgm.fr/legendes/geoservices/Geologie1000_legende.jpg"/>
                         </LegendURL>
                     </Style>
+                    <Style>
+                        <Name>inspire_common:OTHER</Name>
+                        <Title>inspire_common:OTHER</Title>
+                        <LegendURL width="600" height="732">
+                            <Format>image/png</Format>
+                            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://mapsref.brgm.fr/legendes/geoservices/Geologie1000_legende_other.jpg"/>
+                        </LegendURL>
+                    </Style>
                     <MinScaleDenominator>200000</MinScaleDenominator>
                     <MaxScaleDenominator>1e+07</MaxScaleDenominator>
                 </Layer>
