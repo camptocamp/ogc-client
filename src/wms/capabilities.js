@@ -29,14 +29,15 @@ export function readLayersFromCapabilities(capabilitiesDoc) {
 
 /**
  * Parse a layer in a capabilities doc
- * @param {XmlElement} layerObj
+ * @param {XmlElement} layerEl
  * @param {WmsVersion} version
  * @param {CrsCode[]} [inheritedSrs]
+ * @param {Style[]} [inheritedStyles]
  * @return {WmsLayer}
  */
-function parseLayer(layerObj, version, inheritedSrs = []) {
+function parseLayer(layerEl, version, inheritedSrs = [], inheritedStyles = []) {
   const srsTag = version === '1.3.0' ? 'CRS' : 'SRS'
-  const srsList = findChildrenElement(layerObj, srsTag).map(getElementText)
+  const srsList = findChildrenElement(layerEl, srsTag).map(getElementText)
   const availableCrs = srsList.length > 0 ? srsList : inheritedSrs
   function parseBBox(bboxEl) {
     const srs = getElementAttribute(bboxEl, srsTag)
@@ -45,16 +46,21 @@ function parseLayer(layerObj, version, inheritedSrs = []) {
       ['minx', 'miny', 'maxx', 'maxy'];
     return attrs.map(name => getElementAttribute(bboxEl, name))
   }
+  const layerStyles = findChildrenElement(layerEl, 'Style')
+    .map(styleEl => findChildElement(styleEl, 'Name'))
+    .map(getElementText);
+  const styles = layerStyles.length > 0 ? layerStyles : inheritedStyles;
   return {
-    name: getElementText(findChildElement(layerObj, 'Name')),
-    title: getElementText(findChildElement(layerObj, 'Title')),
-    abstract: getElementText(findChildElement(layerObj, 'Abstract')),
+    name: getElementText(findChildElement(layerEl, 'Name')),
+    title: getElementText(findChildElement(layerEl, 'Title')),
+    abstract: getElementText(findChildElement(layerEl, 'Abstract')),
     availableCrs,
-    boundingBoxes: findChildrenElement(layerObj, 'BoundingBox').reduce((prev, bboxEl) =>
+    styles,
+    boundingBoxes: findChildrenElement(layerEl, 'BoundingBox').reduce((prev, bboxEl) =>
       ({
         ...prev,
         [getElementAttribute(bboxEl, srsTag)]: parseBBox(bboxEl)
       }), {}),
-    childLayers: findChildrenElement(layerObj, 'Layer').map(layer => parseLayer(layer, version, availableCrs)),
+    childLayers: findChildrenElement(layerEl, 'Layer').map(layer => parseLayer(layer, version, availableCrs, styles)),
   }
 }

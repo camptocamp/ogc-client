@@ -8,11 +8,16 @@
  */
 
 /**
+ * @typedef {string} Style
+ */
+
+/**
  * @typedef {Object} WmsLayer
  * @property {string} name
  * @property {string} title
  * @property {string} abstract
  * @property {CrsCode[]} availableCrs
+ * @property {Style[]} styles
  * @property {Object.<CrsCode, BoundingBox>} boundingBoxes Dict of bounding boxes where keys are CRS codes
  * @property {?WmsLayer[]} childLayers
  */

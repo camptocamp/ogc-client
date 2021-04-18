@@ -28,6 +28,7 @@ describe('WMS capabilities', () => {
           "EPSG:4171",
           "EPSG:2154",
         ],
+        styles: ["default"],
         boundingBoxes: {
           "CRS:84": [
             "-180",
@@ -72,6 +73,7 @@ describe('WMS capabilities', () => {
               "EPSG:4171",
               "EPSG:2154",
             ],
+            styles: ["default"],
             boundingBoxes: {},
             childLayers: [
               {
@@ -83,6 +85,7 @@ describe('WMS capabilities', () => {
                   "EPSG:32620",
                   "EPSG:32621"
                 ],
+                styles: ["inspire_common:DEFAULT"],
                 boundingBoxes: {
                   "CRS:84": [
                     "-5.86764",
@@ -128,6 +131,7 @@ describe('WMS capabilities', () => {
                   "EPSG:32620",
                   "EPSG:32621"
                 ],
+                styles: ["default"],
                 boundingBoxes: {
                   "CRS:84": [
                     "-6.20495",
@@ -173,6 +177,7 @@ describe('WMS capabilities', () => {
                   "EPSG:32620",
                   "EPSG:32621"
                 ],
+                styles: ["default"],
                 boundingBoxes: {
                   "CRS:84": [
                     "-12.2064",
