@@ -28,7 +28,13 @@ describe('WMS capabilities', () => {
           "EPSG:4171",
           "EPSG:2154",
         ],
-        styles: ["default"],
+        styles: [
+          {
+            legendUrl: expect.stringContaining("http://geoservices.brgm.fr/geologie?"),
+            name: "default",
+            title: "default"
+          }
+        ],
         boundingBoxes: {
           "CRS:84": [
             "-180",
@@ -74,7 +80,12 @@ describe('WMS capabilities', () => {
           "EPSG:4171",
           "EPSG:2154",
         ],
-        styles: ["default"],
+        styles: [
+          {
+            name: "default",
+            title: "default"
+          }
+        ],
         boundingBoxes: {},
         path: ['GEOSERVICES_GEOLOGIE']
       },
@@ -87,7 +98,18 @@ describe('WMS capabilities', () => {
           "EPSG:32620",
           "EPSG:32621"
         ],
-        styles: ["inspire_common:DEFAULT", "inspire_common:OTHER"],
+        styles: [
+          {
+            legendUrl: "http://mapsref.brgm.fr/legendes/geoservices/Geologie1000_legende.jpg",
+            name: "inspire_common:DEFAULT",
+            title: "inspire_common:DEFAULT"
+          },
+          {
+            legendUrl: "http://mapsref.brgm.fr/legendes/geoservices/Geologie1000_legende_other.jpg",
+            name: "inspire_common:OTHER",
+            title: "inspire_common:OTHER"
+          }
+        ],
         boundingBoxes: {
           "CRS:84": [
             "-5.86764",
@@ -133,7 +155,12 @@ describe('WMS capabilities', () => {
           "EPSG:32620",
           "EPSG:32621"
         ],
-        styles: ["default"],
+        styles: [
+          {
+            name: "default",
+            title: "default"
+          }
+        ],
         boundingBoxes: {
           "CRS:84": [
             "-6.20495",
@@ -179,7 +206,12 @@ describe('WMS capabilities', () => {
           "EPSG:32620",
           "EPSG:32621"
         ],
-        styles: ["default"],
+        styles: [
+          {
+            name: "default",
+            title: "default"
+          }
+        ],
         boundingBoxes: {
           "CRS:84": [
             "-12.2064",

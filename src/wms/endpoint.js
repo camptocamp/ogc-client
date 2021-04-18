@@ -8,7 +8,10 @@
  */
 
 /**
- * @typedef {string} LayerStyle
+ * @typedef {Object} LayerStyle
+ * @property {string} name
+ * @property {string} title
+ * @property {string} [legendUrl] May not be defined; a GetLegendGraphic operation should work in any case
  */
 
 /**

@@ -58,7 +58,7 @@ export function findChildrenElement(element, name, nested) {
         }
     }
 
-    return element.children.reduce(reducer, [])
+    return element && Array.isArray(element.children) ? element.children.reduce(reducer, []) : []
 }
 
 /**

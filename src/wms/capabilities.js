@@ -60,8 +60,7 @@ function parseLayer(path, layerEl, version, inheritedSrs = [], inheritedStyles =
   const srsList = findChildrenElement(layerEl, srsTag).map(getElementText)
   const availableCrs = srsList.length > 0 ? srsList : inheritedSrs
   const layerStyles = findChildrenElement(layerEl, 'Style')
-    .map(styleEl => findChildElement(styleEl, 'Name'))
-    .map(getElementText);
+    .map(parseLayerStyle);
   const styles = layerStyles.length > 0 ? layerStyles : inheritedStyles;
   function parseBBox(bboxEl) {
     const srs = getElementAttribute(bboxEl, srsTag)
@@ -83,4 +82,23 @@ function parseLayer(path, layerEl, version, inheritedSrs = [], inheritedStyles =
       }), {}),
     path
   }
+}
+
+/**
+ * @param {XmlElement} styleEl
+ * @return {LayerStyle}
+ */
+function parseLayerStyle(styleEl) {
+  const legendUrl = getElementAttribute(
+    findChildElement(
+      findChildElement(styleEl, 'LegendURL'),
+      'OnlineResource'
+    ),
+  'xlink:href'
+  );
+  return {
+    name: getElementText(findChildElement(styleEl, 'Name')),
+    title: getElementText(findChildElement(styleEl, 'Title')),
+    ...legendUrl && { legendUrl }
+  };
 }
