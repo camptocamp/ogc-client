@@ -47,6 +47,23 @@ export function readLayersFromCapabilities(capabilitiesDoc) {
 }
 
 /**
+ * Will read service-related info from the capabilities doc
+ * @param {XmlDocument} capabilitiesDoc Capabilities document
+ * @return {WmsInfo} Parsed service info
+ */
+export function readInfoFromCapabilities(capabilitiesDoc) {
+  const service = findChildElement(getRootElement(capabilitiesDoc), 'Service');
+
+  return {
+    title: getElementText(findChildElement(service, 'Title')),
+    name: getElementText(findChildElement(service, 'Name')),
+    abstract: getElementText(findChildElement(service, 'Abstract')),
+    fees: getElementText(findChildElement(service, 'Fees')),
+    constraints: getElementText(findChildElement(service, 'AccessConstraints')),
+  }
+}
+
+/**
  * Parse a layer in a capabilities doc
  * @param {string[]} path Path of the layer to be parsed (empty array of root layer)
  * @param {XmlElement} layerEl

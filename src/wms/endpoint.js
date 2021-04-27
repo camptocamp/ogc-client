@@ -31,6 +31,15 @@
  */
 
 /**
+ * @typedef {Object} WmsInfo
+ * @property {string} name
+ * @property {string} title
+ * @property {string} abstract
+ * @property {string} fees
+ * @property {string} constraints
+ */
+
+/**
  *
  */
 export default class WmsEndpoint {

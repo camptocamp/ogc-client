@@ -9,7 +9,7 @@
     <!-- MapServer version 6.5-dev OUTPUT=PNG OUTPUT=JPEG SUPPORTS=PROJ SUPPORTS=AGG SUPPORTS=FREETYPE SUPPORTS=CAIRO SUPPORTS=SVG_SYMBOLS SUPPORTS=SVGCAIRO SUPPORTS=ICONV SUPPORTS=FRIBIDI SUPPORTS=WMS_SERVER SUPPORTS=WMS_CLIENT SUPPORTS=WFS_SERVER SUPPORTS=WFS_CLIENT SUPPORTS=WCS_SERVER SUPPORTS=SOS_SERVER SUPPORTS=FASTCGI SUPPORTS=GEOS INPUT=JPEG INPUT=POSTGIS INPUT=ORACLESPATIAL INPUT=OGR INPUT=GDAL INPUT=SHAPEFILE -->
 
     <Service>
-        <Name>OGC:WMS</Name>
+        <Name>WMS</Name>
         <Title>GéoServices : géologie, hydrogéologie et gravimétrie</Title>
         <Abstract>Ensemble des services d&#39;accès aux données sur la géologie, l&#39;hydrogéologie et la gravimétrie, diffusées par le BRGM</Abstract>
         <KeywordList>

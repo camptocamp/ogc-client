@@ -1,4 +1,4 @@
-import {readLayersFromCapabilities, readVersionFromCapabilities} from './capabilities'
+import {readInfoFromCapabilities, readLayersFromCapabilities, readVersionFromCapabilities} from './capabilities'
 import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml'
 import capabilities111 from '../../fixtures/wms/capabilities-brgm-1-1-1.xml'
 import {parseXmlString} from "../shared/xml-utils";
@@ -257,5 +257,25 @@ describe('WMS capabilities', () => {
       const doc = parseXmlString(capabilities111)
       expect(readLayersFromCapabilities(doc)).toEqual(expectedLayers)
     })
+  })
+
+  describe('readInfoFromCapabilities', () => {
+    const expectedInfo = {
+      abstract: "Ensemble des services d'accès aux données sur la géologie, l'hydrogéologie et la gravimétrie, diffusées par le BRGM",
+      constraints: "None",
+      fees: "no conditions apply",
+      name: "WMS",
+      title: "GéoServices : géologie, hydrogéologie et gravimétrie"
+    };
+
+    it('reads the service info (1.3.0)', () => {
+      const doc = parseXmlString(capabilities130)
+      expect(readInfoFromCapabilities(doc)).toEqual(expectedInfo)
+    });
+
+    it('reads the service info (1.1.1)', () => {
+      const doc = parseXmlString(capabilities111)
+      expect(readInfoFromCapabilities(doc)).toEqual(expectedInfo)
+    });
   })
 })
