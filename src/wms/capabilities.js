@@ -126,7 +126,7 @@ function parseLayer(
       }),
       {}
     ),
-    path,
+    path: [...path],
   };
 }
 
