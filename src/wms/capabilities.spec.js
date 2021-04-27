@@ -16,6 +16,11 @@ describe('WMS capabilities', () => {
   })
 
   describe('readLayersFromCapabilities', () => {
+    const attribution = {
+      title: 'Brgm',
+      url: 'http://www.brgm.fr/',
+      logoUrl: 'http://mapsref.brgm.fr/legendes/brgm_logo.png'
+    }
     const expectedLayers = [
       {
         name: 'GEOSERVICES_GEOLOGIE',
@@ -67,6 +72,7 @@ describe('WMS capabilities', () => {
             "90"
           ]
         },
+        attribution,
         path: []
       },
       {
@@ -87,6 +93,7 @@ describe('WMS capabilities', () => {
           }
         ],
         boundingBoxes: {},
+        attribution,
         path: ['GEOSERVICES_GEOLOGIE']
       },
       {
@@ -144,6 +151,10 @@ describe('WMS capabilities', () => {
         },
         name: "SCAN_F_GEOL1M",
         title: "Carte géologique image de la France au million",
+        attribution: {
+          ...attribution,
+          title: 'BRGM (modified attribution)'
+        },
         path: ["GEOSERVICES_GEOLOGIE", "GEOLOGIE"]
       },
       {
@@ -195,6 +206,7 @@ describe('WMS capabilities', () => {
         },
         name: "SCAN_F_GEOL250",
         title: "Carte géologique image de la France au 1/250000",
+        attribution,
         path: ["GEOSERVICES_GEOLOGIE", "GEOLOGIE"]
       },
       {
@@ -246,6 +258,7 @@ describe('WMS capabilities', () => {
         },
         name: "SCAN_D_GEOL50",
         title: "Carte géologique image de la France au 1/50 000e",
+        attribution,
         path: ["GEOSERVICES_GEOLOGIE", "GEOLOGIE"]
       }
     ]

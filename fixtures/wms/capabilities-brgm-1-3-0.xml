@@ -216,8 +216,8 @@
                     <BoundingBox CRS="EPSG:32621"
                                  minx="3.93464e+06" miny="6.12146e+06" maxx="5.93425e+06" maxy="8.11543e+06" />
                     <Attribution>
-                        <Title>BRGM</Title>
-                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.brgm.fr"/>
+                        <Title>BRGM (modified attribution)</Title>
+                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.brgm.fr/"/>
                         <LogoURL width="158" height="82">
                             <Format>image/png</Format>
                             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://mapsref.brgm.fr/legendes/brgm_logo.png"/>
@@ -280,14 +280,6 @@
                                  minx="4.23619e+06" miny="6.6238e+06" maxx="6.21236e+06" maxy="8.70077e+06" />
                     <BoundingBox CRS="EPSG:32621"
                                  minx="3.9038e+06" miny="6.1856e+06" maxx="5.89555e+06" maxy="8.21306e+06" />
-                    <Attribution>
-                        <Title>BRGM</Title>
-                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.brgm.fr"/>
-                        <LogoURL width="158" height="82">
-                            <Format>image/png</Format>
-                            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://mapsref.brgm.fr/legendes/brgm_logo.png"/>
-                        </LogoURL>
-                    </Attribution>
                     <AuthorityURL name="BRGM">
                         <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="www.brgm.fr"/>
                     </AuthorityURL>
@@ -329,14 +321,6 @@
                                  minx="3.88148e+06" miny="6.13796e+06" maxx="6.31307e+06" maxy="8.70752e+06" />
                     <BoundingBox CRS="EPSG:32621"
                                  minx="3.52434e+06" miny="5.74736e+06" maxx="5.97375e+06" maxy="8.23867e+06" />
-                    <Attribution>
-                        <Title>BRGM</Title>
-                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.brgm.fr"/>
-                        <LogoURL width="158" height="82">
-                            <Format>image/png</Format>
-                            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://mapsref.brgm.fr/legendes/brgm_logo.png"/>
-                        </LogoURL>
-                    </Attribution>
                     <AuthorityURL name="BRGM">
                         <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="www.brgm.fr"/>
                     </AuthorityURL>

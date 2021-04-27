@@ -27,18 +27,20 @@ export function readLayersFromCapabilities(capabilitiesDoc) {
 
   /**
    * @param {string[]} path
-   * @param {CrsCode[]} [inheritedCrs]
-   * @param {LayerStyle[]} [inheritedStyles]
+   * @param {WmsLayer} [parentLayer]
    * @return {function(WmsLayer[], XmlElement): WmsLayer[]} A reducer which parses all layers recursively
    */
-  const recursiveParseLayer = (path, inheritedCrs, inheritedStyles) => (prev, layerEl) => {
-    const parsedLayer = parseLayer(path, layerEl, version, inheritedCrs, inheritedStyles);
+  const recursiveParseLayer = (path, parentLayer) => (prev, layerEl) => {
+    const parsedLayer = parseLayer(path, layerEl, version,
+      parentLayer && parentLayer.availableCrs,
+      parentLayer && parentLayer.styles,
+      parentLayer && parentLayer.attribution);
     const children = findChildrenElement(layerEl, 'Layer');
     const childrenPath = [...path, parsedLayer.name];
     return [
       ...prev,
       parsedLayer,
-      ...children.reduce(recursiveParseLayer(childrenPath, parsedLayer.availableCrs, parsedLayer.styles), [])
+      ...children.reduce(recursiveParseLayer(childrenPath, parsedLayer), [])
     ];
   }
 
@@ -70,9 +72,10 @@ export function readInfoFromCapabilities(capabilitiesDoc) {
  * @param {WmsVersion} version
  * @param {CrsCode[]} [inheritedSrs]
  * @param {LayerStyle[]} [inheritedStyles]
+ * @param {LayerAttribution} [inheritedAttribution]
  * @return {WmsLayer}
  */
-function parseLayer(path, layerEl, version, inheritedSrs = [], inheritedStyles = []) {
+function parseLayer(path, layerEl, version, inheritedSrs = [], inheritedStyles = [], inheritedAttribution = null) {
   const srsTag = version === '1.3.0' ? 'CRS' : 'SRS'
   const srsList = findChildrenElement(layerEl, srsTag).map(getElementText)
   const availableCrs = srsList.length > 0 ? srsList : inheritedSrs
@@ -86,12 +89,15 @@ function parseLayer(path, layerEl, version, inheritedSrs = [], inheritedStyles =
       ['minx', 'miny', 'maxx', 'maxy'];
     return attrs.map(name => getElementAttribute(bboxEl, name))
   }
+  const attributionEl = findChildElement(layerEl, 'Attribution')
+  const attribution = attributionEl !== null ? parseLayerAttribution(attributionEl) : inheritedAttribution
   return {
     name: getElementText(findChildElement(layerEl, 'Name')),
     title: getElementText(findChildElement(layerEl, 'Title')),
     abstract: getElementText(findChildElement(layerEl, 'Abstract')),
     availableCrs,
     styles,
+    attribution,
     boundingBoxes: findChildrenElement(layerEl, 'BoundingBox').reduce((prev, bboxEl) =>
       ({
         ...prev,
@@ -117,5 +123,26 @@ function parseLayerStyle(styleEl) {
     name: getElementText(findChildElement(styleEl, 'Name')),
     title: getElementText(findChildElement(styleEl, 'Title')),
     ...legendUrl && { legendUrl }
+  };
+}
+
+/**
+ * @param {XmlElement} attributionEl
+ * @return {LayerAttribution}
+ */
+function parseLayerAttribution(attributionEl) {
+  const logoUrl = getElementAttribute(
+    findChildElement(
+      findChildElement(attributionEl, 'LogoURL'),
+      'OnlineResource'
+    ),
+  'xlink:href'
+  );
+  const url = getElementAttribute(findChildElement(attributionEl, 'OnlineResource'), 'xlink:href')
+  const title = getElementText(findChildElement(attributionEl, 'Title'))
+  return {
+    ...title && { title },
+    ...url && { url },
+    ...logoUrl && { logoUrl }
   };
 }

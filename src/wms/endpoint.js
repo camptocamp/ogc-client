@@ -15,6 +15,13 @@
  */
 
 /**
+ * @typedef {Object} LayerAttribution
+ * @property {string} [title]
+ * @property {string} [url]
+ * @property {string} [logoUrl]
+ */
+
+/**
  * @typedef {Object} WmsLayer
  * @property {string} name
  * @property {string} title
@@ -22,6 +29,7 @@
  * @property {CrsCode[]} availableCrs
  * @property {LayerStyle[]} styles
  * @property {Object.<CrsCode, BoundingBox>} boundingBoxes Dict of bounding boxes where keys are CRS codes
+ * @property {LayerAttribution} [attribution]
  * @property {string[]} path If the layer is nested in other layers, the path will contain the name of previous layers
  *   in order from the topmost parent (root layer) to the closest one.
  */
