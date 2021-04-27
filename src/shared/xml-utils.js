@@ -1,9 +1,9 @@
-import parser from '@rgrove/parse-xml'
+import parser from '@rgrove/parse-xml';
 
 export class XmlParseError extends Error {
-    constructor(message) {
-        super(message);
-    }
+  constructor(message) {
+    super(message);
+  }
 }
 
 /**
@@ -19,15 +19,14 @@ export class XmlParseError extends Error {
  * @return {XmlDocument}
  */
 export function parseXmlString(xmlString) {
-    let doc = null
-    try {
-        doc = parser(xmlString);
-    } catch (e) {
-        throw new XmlParseError(e.message);
-    }
-    return doc;
+  let doc = null;
+  try {
+    doc = parser(xmlString);
+  } catch (e) {
+    throw new XmlParseError(e.message);
+  }
+  return doc;
 }
-
 
 /**
  * Return the root element
@@ -35,7 +34,7 @@ export function parseXmlString(xmlString) {
  * @return {XmlElement}
  */
 export function getRootElement(xmlDoc) {
-    return xmlDoc.children[0];
+  return xmlDoc.children[0];
 }
 
 /**
@@ -46,19 +45,21 @@ export function getRootElement(xmlDoc) {
  * @return {XmlElement[]} Returns an empty array if no match found
  */
 export function findChildrenElement(element, name, nested) {
-    function reducer(prev, curr) {
-        if(curr.name === name) {
-            prev.push(curr);
-        }
-
-        if (nested) {
-            return [...prev, ...curr.children.reduce(reducer, [])];
-        } else {
-            return prev;
-        }
+  function reducer(prev, curr) {
+    if (curr.name === name) {
+      prev.push(curr);
     }
 
-    return element && Array.isArray(element.children) ? element.children.reduce(reducer, []) : []
+    if (nested) {
+      return [...prev, ...curr.children.reduce(reducer, [])];
+    } else {
+      return prev;
+    }
+  }
+
+  return element && Array.isArray(element.children)
+    ? element.children.reduce(reducer, [])
+    : [];
 }
 
 /**
@@ -69,7 +70,7 @@ export function findChildrenElement(element, name, nested) {
  * @return {XmlElement} Returns null if no matching element found
  */
 export function findChildElement(element, name, nested) {
-    return findChildrenElement(element, name, nested)[0] || null;
+  return findChildrenElement(element, name, nested)[0] || null;
 }
 
 /**
@@ -79,10 +80,11 @@ export function findChildElement(element, name, nested) {
  * @return {string} found text or empty string if no text node found
  */
 export function getElementText(element) {
-    const textNode = element && Array.isArray(element.children) ?
-        element.children.find(node => node.type === 'text') :
-        null;
-    return textNode ? textNode.text : '';
+  const textNode =
+    element && Array.isArray(element.children)
+      ? element.children.find((node) => node.type === 'text')
+      : null;
+  return textNode ? textNode.text : '';
 }
 
 /**
@@ -93,5 +95,5 @@ export function getElementText(element) {
  * @return {string} found attribute value or empty if non existent
  */
 export function getElementAttribute(element, attrName) {
-    return element && element.attributes[attrName] || ''
+  return (element && element.attributes[attrName]) || '';
 }

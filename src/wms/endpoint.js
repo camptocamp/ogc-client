@@ -74,6 +74,4 @@ export default class WmsEndpoint {
      */
     this._selectedLayer = null;
   }
-
-
 }

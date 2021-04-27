@@ -3,9 +3,9 @@ import {
   findChildrenElement,
   getElementAttribute,
   getElementText,
-  getRootElement
-} from "../shared/xml-utils";
-import {hasInvertedCoordinates} from "../shared/crs-utils";
+  getRootElement,
+} from '../shared/xml-utils';
+import { hasInvertedCoordinates } from '../shared/crs-utils';
 
 /**
  * Will read a WMS version from the capabilities doc
@@ -22,8 +22,11 @@ export function readVersionFromCapabilities(capabilitiesDoc) {
  * @return {WmsLayer[]} Parsed layers
  */
 export function readLayersFromCapabilities(capabilitiesDoc) {
-  const version = readVersionFromCapabilities(capabilitiesDoc)
-  const capability = findChildElement(getRootElement(capabilitiesDoc), 'Capability');
+  const version = readVersionFromCapabilities(capabilitiesDoc);
+  const capability = findChildElement(
+    getRootElement(capabilitiesDoc),
+    'Capability'
+  );
 
   /**
    * @param {string[]} path
@@ -31,21 +34,27 @@ export function readLayersFromCapabilities(capabilitiesDoc) {
    * @return {function(WmsLayer[], XmlElement): WmsLayer[]} A reducer which parses all layers recursively
    */
   const recursiveParseLayer = (path, parentLayer) => (prev, layerEl) => {
-    const parsedLayer = parseLayer(path, layerEl, version,
+    const parsedLayer = parseLayer(
+      path,
+      layerEl,
+      version,
       parentLayer && parentLayer.availableCrs,
       parentLayer && parentLayer.styles,
-      parentLayer && parentLayer.attribution);
+      parentLayer && parentLayer.attribution
+    );
     const children = findChildrenElement(layerEl, 'Layer');
     const childrenPath = [...path, parsedLayer.name];
     return [
       ...prev,
       parsedLayer,
-      ...children.reduce(recursiveParseLayer(childrenPath, parsedLayer), [])
+      ...children.reduce(recursiveParseLayer(childrenPath, parsedLayer), []),
     ];
-  }
+  };
 
-  return findChildrenElement(capability, 'Layer')
-    .reduce(recursiveParseLayer([]), [])
+  return findChildrenElement(capability, 'Layer').reduce(
+    recursiveParseLayer([]),
+    []
+  );
 }
 
 /**
@@ -62,7 +71,7 @@ export function readInfoFromCapabilities(capabilitiesDoc) {
     abstract: getElementText(findChildElement(service, 'Abstract')),
     fees: getElementText(findChildElement(service, 'Fees')),
     constraints: getElementText(findChildElement(service, 'AccessConstraints')),
-  }
+  };
 }
 
 /**
@@ -75,22 +84,34 @@ export function readInfoFromCapabilities(capabilitiesDoc) {
  * @param {LayerAttribution} [inheritedAttribution]
  * @return {WmsLayer}
  */
-function parseLayer(path, layerEl, version, inheritedSrs = [], inheritedStyles = [], inheritedAttribution = null) {
-  const srsTag = version === '1.3.0' ? 'CRS' : 'SRS'
-  const srsList = findChildrenElement(layerEl, srsTag).map(getElementText)
-  const availableCrs = srsList.length > 0 ? srsList : inheritedSrs
-  const layerStyles = findChildrenElement(layerEl, 'Style')
-    .map(parseLayerStyle);
+function parseLayer(
+  path,
+  layerEl,
+  version,
+  inheritedSrs = [],
+  inheritedStyles = [],
+  inheritedAttribution = null
+) {
+  const srsTag = version === '1.3.0' ? 'CRS' : 'SRS';
+  const srsList = findChildrenElement(layerEl, srsTag).map(getElementText);
+  const availableCrs = srsList.length > 0 ? srsList : inheritedSrs;
+  const layerStyles = findChildrenElement(layerEl, 'Style').map(
+    parseLayerStyle
+  );
   const styles = layerStyles.length > 0 ? layerStyles : inheritedStyles;
   function parseBBox(bboxEl) {
-    const srs = getElementAttribute(bboxEl, srsTag)
-    const attrs = hasInvertedCoordinates(srs) && version === '1.3.0' ?
-      ['miny', 'minx', 'maxy', 'maxx'] :
-      ['minx', 'miny', 'maxx', 'maxy'];
-    return attrs.map(name => getElementAttribute(bboxEl, name))
+    const srs = getElementAttribute(bboxEl, srsTag);
+    const attrs =
+      hasInvertedCoordinates(srs) && version === '1.3.0'
+        ? ['miny', 'minx', 'maxy', 'maxx']
+        : ['minx', 'miny', 'maxx', 'maxy'];
+    return attrs.map((name) => getElementAttribute(bboxEl, name));
   }
-  const attributionEl = findChildElement(layerEl, 'Attribution')
-  const attribution = attributionEl !== null ? parseLayerAttribution(attributionEl) : inheritedAttribution
+  const attributionEl = findChildElement(layerEl, 'Attribution');
+  const attribution =
+    attributionEl !== null
+      ? parseLayerAttribution(attributionEl)
+      : inheritedAttribution;
   return {
     name: getElementText(findChildElement(layerEl, 'Name')),
     title: getElementText(findChildElement(layerEl, 'Title')),
@@ -98,13 +119,15 @@ function parseLayer(path, layerEl, version, inheritedSrs = [], inheritedStyles =
     availableCrs,
     styles,
     attribution,
-    boundingBoxes: findChildrenElement(layerEl, 'BoundingBox').reduce((prev, bboxEl) =>
-      ({
+    boundingBoxes: findChildrenElement(layerEl, 'BoundingBox').reduce(
+      (prev, bboxEl) => ({
         ...prev,
-        [getElementAttribute(bboxEl, srsTag)]: parseBBox(bboxEl)
-      }), {}),
-    path
-  }
+        [getElementAttribute(bboxEl, srsTag)]: parseBBox(bboxEl),
+      }),
+      {}
+    ),
+    path,
+  };
 }
 
 /**
@@ -113,16 +136,13 @@ function parseLayer(path, layerEl, version, inheritedSrs = [], inheritedStyles =
  */
 function parseLayerStyle(styleEl) {
   const legendUrl = getElementAttribute(
-    findChildElement(
-      findChildElement(styleEl, 'LegendURL'),
-      'OnlineResource'
-    ),
-  'xlink:href'
+    findChildElement(findChildElement(styleEl, 'LegendURL'), 'OnlineResource'),
+    'xlink:href'
   );
   return {
     name: getElementText(findChildElement(styleEl, 'Name')),
     title: getElementText(findChildElement(styleEl, 'Title')),
-    ...legendUrl && { legendUrl }
+    ...(legendUrl && { legendUrl }),
   };
 }
 
@@ -136,13 +156,16 @@ function parseLayerAttribution(attributionEl) {
       findChildElement(attributionEl, 'LogoURL'),
       'OnlineResource'
     ),
-  'xlink:href'
+    'xlink:href'
   );
-  const url = getElementAttribute(findChildElement(attributionEl, 'OnlineResource'), 'xlink:href')
-  const title = getElementText(findChildElement(attributionEl, 'Title'))
+  const url = getElementAttribute(
+    findChildElement(attributionEl, 'OnlineResource'),
+    'xlink:href'
+  );
+  const title = getElementText(findChildElement(attributionEl, 'Title'));
   return {
-    ...title && { title },
-    ...url && { url },
-    ...logoUrl && { logoUrl }
+    ...(title && { title }),
+    ...(url && { url }),
+    ...(logoUrl && { logoUrl }),
   };
 }

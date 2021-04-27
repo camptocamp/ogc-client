@@ -67,7 +67,7 @@ const LatLonCrsList = [
   'EPSG:4302', // Trinidad 1903
   'EPSG:4324', // WGS 72BE
   'EPSG:4326', // WGS 84
-]
+];
 
 /**
  * Inverted coordinates is meant from the POV of a programmer, i.e. Y before X
@@ -75,5 +75,5 @@ const LatLonCrsList = [
  * @return {boolean}
  */
 export function hasInvertedCoordinates(crsName) {
-  return LatLonCrsList.indexOf(crsName) > -1
+  return LatLonCrsList.indexOf(crsName) > -1;
 }
