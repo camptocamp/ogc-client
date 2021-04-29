@@ -19,3 +19,7 @@ body {
 strong {
   font-weight: bold;
 }
+
+input {
+  min-width: 20rem;
+}

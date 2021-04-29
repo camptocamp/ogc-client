@@ -11,7 +11,14 @@
     </section>
 
     <h1 class="text-l text-bold padding-m align-right">WMS</h1>
-    <section class="padding-m">WMS stuff goes here</section>
+    <section class="padding-m">
+      <p>
+        Enter a WMS service URL below to get some information and a list of
+        layers from it.
+      </p>
+      <div class="spacer-m"></div>
+      <WmsEndpoint></WmsEndpoint>
+    </section>
   </div>
 </template>
 
@@ -37,9 +44,10 @@ section {
 import './style/reset.css';
 import './style/generics.css';
 import './style/helpers.css';
+import WmsEndpoint from './components/WmsEndpoint';
 
 export default {
   name: 'App',
-  components: {},
+  components: { WmsEndpoint },
 };
 </script>
