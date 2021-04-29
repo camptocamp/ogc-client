@@ -1,0 +1,41 @@
+.margin-s {
+  margin: 0.5rem;
+}
+.margin-m {
+  margin: 1rem;
+}
+.margin-l {
+  margin: 2rem;
+}
+.padding-s {
+  padding: 0.5rem;
+}
+.padding-m {
+  padding: 1rem;
+}
+.padding-l {
+  padding: 2rem;
+}
+
+.text-s {
+  font-size: 0.8rem;
+}
+.text-m {
+  font-size: 1rem;
+}
+.text-l {
+  font-size: 1.3rem;
+}
+.text-bold {
+  font-weight: bold;
+}
+
+.align-left {
+  text-align: left;
+}
+.align-right {
+  text-align: right;
+}
+.align-center {
+  text-align: center;
+}
