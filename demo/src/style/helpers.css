@@ -18,7 +18,7 @@
 }
 
 .text-s {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 .text-m {
   font-size: 1rem;
@@ -28,6 +28,9 @@
 }
 .text-bold {
   font-weight: bold;
+}
+.text-light {
+  color: #6b7280;
 }
 
 .text-wrap {

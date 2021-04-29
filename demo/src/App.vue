@@ -25,7 +25,7 @@
 <style>
 #app {
   display: grid;
-  grid-template-columns: 30% auto;
+  grid-template-columns: 15rem auto;
   height: 100%;
 }
 
