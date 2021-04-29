@@ -10,7 +10,7 @@
 <style scoped>
 dl {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 0fr auto;
   grid-gap: 0.5rem 1rem;
 }
 dt {

@@ -34,6 +34,9 @@ h1 {
   background-color: #4b5563;
   color: #f9fafb;
 }
+h1:nth-last-of-type(1) {
+  height: 1fr;
+}
 
 section {
   grid-column: 2;
