@@ -8,10 +8,11 @@
     <div class="spacer-s"></div>
     <div v-if="loading">Loading...</div>
     <div v-if="loaded">
-      <ServiceInfo :info="serviceInfo"></ServiceInfo>
+      <ServiceInfo :info="endpoint.getServiceInfo()"></ServiceInfo>
       <div class="spacer-s"></div>
-      <ItemsTree :items="layers"></ItemsTree>
+      <ItemsTree :items="endpoint.getLayers()"></ItemsTree>
     </div>
+    <div v-if="error">Error: {{ error }}</div>
   </div>
 </template>
 
@@ -24,27 +25,27 @@ export default {
   name: 'WmsEndpoint',
   components: { ItemsTree, ServiceInfo },
   data: () => ({
-    loading: null,
+    loading: false,
     error: null,
-    serviceInfo: null,
-    layers: null,
+    endpoint: null,
     url: 'https://ahocevar.com/geoserver/wms',
   }),
   computed: {
     loaded() {
-      return this.loading === false && this.error === null;
+      return this.endpoint && this.loading === false && this.error === null;
     },
   },
   methods: {
     async createEndpoint() {
+      this.error = null;
       this.loading = true;
-      const endpoint = new WmsEndpoint(this.url);
-      endpoint
-        .getServiceInfo()
-        .catch((error) => (this.error = error.message))
-        .finally(() => (this.loading = false));
-      this.serviceInfo = await endpoint.getServiceInfo();
-      this.layers = await endpoint.getLayers();
+      this.endpoint = new WmsEndpoint(this.url);
+      try {
+        await this.endpoint.isReady();
+      } catch (e) {
+        this.error = e.message;
+      }
+      this.loading = false;
     },
   },
 };

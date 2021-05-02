@@ -55,6 +55,13 @@
  * @property {string} constraints
  */
 
+/**
+ * @typedef {Object} EndpointError
+ * @property {string} message
+ * @property {boolean} isCrossOriginRelated
+ * @property {number} [httpStatus]
+ */
+
 import { parseXmlString } from '../shared/xml-utils';
 import {
   readInfoFromCapabilities,
@@ -78,40 +85,56 @@ export default class WmsEndpoint {
     capabilitiesUrl.searchParams.set('REQUEST', 'GetCapabilities');
 
     /**
+     * This fetches the capabilities doc and parses its contents
      * @type {Promise<XmlDocument>}
      * @private
      */
     this._capabilitiesPromise = fetch(capabilitiesUrl.toString())
-      .then((resp) => resp.text())
-      .then((xml) => parseXmlString(xml));
+      .then(async (resp) => {
+        const text = await resp.text();
+        if (!resp.ok) {
+          throw new Error(
+            `Received an error with code ${resp.status}: ${text}`
+          );
+        }
+        return text;
+      })
+      .then((xml) => parseXmlString(xml))
+      .then((xmlDoc) => {
+        this._info = readInfoFromCapabilities(xmlDoc);
+        this._layers = readLayersFromCapabilities(xmlDoc);
+        this._version = readVersionFromCapabilities(xmlDoc);
+      });
 
     /**
-     * @type {Promise<WmsInfo>}
+     * @type {WmsInfo|null}
      * @private
      */
-    this._info = this._capabilitiesPromise.then((xmlDoc) =>
-      readInfoFromCapabilities(xmlDoc)
-    );
+    this._info = null;
 
     /**
-     * @type {Promise<WmsLayer[]>}
+     * @type {WmsLayer[]|null}
      * @private
      */
-    this._layers = this._capabilitiesPromise.then((xmlDoc) =>
-      readLayersFromCapabilities(xmlDoc)
-    );
+    this._layers = null;
 
     /**
-     * @type {Promise<WmsVersion>}
+     * @type {WmsVersion|null}
      * @private
      */
-    this._version = this._capabilitiesPromise.then((xmlDoc) =>
-      readVersionFromCapabilities(xmlDoc)
-    );
+    this._version = null;
   }
 
   /**
-   * @return {Promise<WmsInfo>}
+   * @throws {EndpointError}
+   * @return {Promise<WmsEndpoint>}
+   */
+  isReady() {
+    return this._capabilitiesPromise.then(() => this);
+  }
+
+  /**
+   * @return {WmsInfo|null}
    */
   getServiceInfo() {
     return this._info;
@@ -120,32 +143,28 @@ export default class WmsEndpoint {
   /**
    * Returns an array of layers in summary format; use the `path` property
    * to rebuild the tree structure if needed
-   * @return {Promise<WmsLayerSummary[]>}
+   * @return {WmsLayerSummary[]|null}
    */
   getLayers() {
-    return this._layers.then((layers) =>
-      layers.map((layer) => ({
-        title: layer.title,
-        name: layer.name,
-        abstract: layer.abstract,
-        path: layer.path,
-      }))
-    );
+    return this._layers.map((layer) => ({
+      title: layer.title,
+      name: layer.name,
+      abstract: layer.abstract,
+      path: layer.path,
+    }));
   }
 
   /**
    * Returns a complete layer based on its name
    * @param {string} name Layer name property (unique in the WMS service)
-   * @return {Promise<WmsLayer|null>} return null if layer was not found
+   * @return {WmsLayer|null} return null if layer was not found
    */
   getLayerByName(name) {
-    return this._layers.then(
-      (layers) => layers.find((layer) => layer.name === name) || null
-    );
+    return this._layers.find((layer) => layer.name === name) || null;
   }
 
   /**
-   * @return {Promise<WmsVersion>}
+   * @return {WmsVersion|null}
    */
   getVersion() {
     return this._version;
