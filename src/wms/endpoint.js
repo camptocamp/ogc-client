@@ -1,3 +1,11 @@
+import { parseXmlString } from '../shared/xml-utils';
+import {
+  readInfoFromCapabilities,
+  readLayersFromCapabilities,
+  readVersionFromCapabilities,
+} from './capabilities';
+import { EndpointError } from '../shared/errors';
+
 /**
  * @typedef {[number, number, number, number]} BoundingBox
  *  Expressed as minx, miny, maxx, maxy
@@ -56,20 +64,6 @@
  */
 
 /**
- * @typedef {Object} EndpointError
- * @property {string} message
- * @property {boolean} isCrossOriginRelated
- * @property {number} [httpStatus]
- */
-
-import { parseXmlString } from '../shared/xml-utils';
-import {
-  readInfoFromCapabilities,
-  readLayersFromCapabilities,
-  readVersionFromCapabilities,
-} from './capabilities';
-
-/**
  * Represents a WMS endpoint advertising several layers arranged in a tree structure.
  */
 export default class WmsEndpoint {
@@ -93,8 +87,9 @@ export default class WmsEndpoint {
       .then(async (resp) => {
         const text = await resp.text();
         if (!resp.ok) {
-          throw new Error(
-            `Received an error with code ${resp.status}: ${text}`
+          throw new EndpointError(
+            `Received an error with code ${resp.status}: ${text}`,
+            resp.status
           );
         }
         return text;
@@ -104,6 +99,9 @@ export default class WmsEndpoint {
         this._info = readInfoFromCapabilities(xmlDoc);
         this._layers = readLayersFromCapabilities(xmlDoc);
         this._version = readVersionFromCapabilities(xmlDoc);
+      })
+      .catch((error) => {
+        throw new EndpointError(error.message, 0, true);
       });
 
     /**

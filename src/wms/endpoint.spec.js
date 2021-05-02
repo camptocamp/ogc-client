@@ -1,5 +1,6 @@
 import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
 import WmsEndpoint from './endpoint';
+import { EndpointError } from '../shared/errors';
 
 describe('WmsEndpoint', () => {
   /** @type {WmsEndpoint} */
@@ -43,34 +44,38 @@ describe('WmsEndpoint', () => {
   });
 
   describe('#isReady', () => {
-    let enpoint2;
+    let endpoint2;
     describe('HTTP request returns success', () => {
       beforeEach(() => {
-        enpoint2 = new WmsEndpoint('http://aa.bb');
+        endpoint2 = new WmsEndpoint('http://aa.bb');
       });
       it('resolves with the endpoint object', async () => {
-        await expect(enpoint2.isReady()).resolves.toEqual(enpoint2);
+        await expect(endpoint2.isReady()).resolves.toEqual(endpoint2);
       });
     });
     describe('HTTP request returns error', () => {
       beforeEach(() => {
         fetchBehaviour = 'httpError';
-        enpoint2 = new WmsEndpoint('http://aa.bb');
+        endpoint2 = new WmsEndpoint('http://aa.bb');
       });
       it('rejects with an error', async () => {
-        await expect(enpoint2.isReady()).rejects.toThrowError(
-          'Received an error with code 401: <error>Random error</error>'
+        await expect(endpoint2.isReady()).rejects.toThrow(
+          new EndpointError(
+            'Received an error with code 401: <error>Random error</error>',
+            401,
+            false
+          )
         );
       });
     });
     describe('HTTP fails for CORS reasons', () => {
       beforeEach(() => {
         fetchBehaviour = 'corsError';
-        enpoint2 = new WmsEndpoint('http://aa.bb');
+        endpoint2 = new WmsEndpoint('http://aa.bb');
       });
       it('rejects with an error', async () => {
-        await expect(enpoint2.isReady()).rejects.toThrowError(
-          'Cross origin headers missing'
+        await expect(endpoint2.isReady()).rejects.toThrow(
+          new EndpointError('Cross origin headers missing', 0, true)
         );
       });
     });
