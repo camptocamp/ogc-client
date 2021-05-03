@@ -23,7 +23,7 @@ dd {
 
 <script>
 export default {
-  name: 'ServiceInfo',
+  name: 'InfoList',
   props: {
     info: Object,
   },

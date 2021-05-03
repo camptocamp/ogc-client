@@ -49,7 +49,7 @@ section {
 import './style/reset.css';
 import './style/generics.css';
 import './style/helpers.css';
-import WmsEndpoint from './components/WmsEndpoint';
+import WmsEndpoint from './components/wms/WmsEndpoint';
 
 export default {
   name: 'App',
