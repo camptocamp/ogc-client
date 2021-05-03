@@ -31,17 +31,17 @@ import { EndpointError } from '../shared/errors';
 
 /**
  * @typedef {Object} WmsLayerSummary
- * @property {string} name
+ * @property {string} [name] The layer is renderable if defined
  * @property {string} title
- * @property {string} abstract
+ * @property {string} [abstract]
  * @property {WmsLayerSummary[]} [children] Not defined if the layer is a leaf in the tree
  */
 
 /**
  * @typedef {Object} WmsLayerFull
- * @property {string} name
+ * @property {string} [name] The layer is renderable if defined
  * @property {string} title
- * @property {string} abstract
+ * @property {string} [abstract]
  * @property {CrsCode[]} availableCrs
  * @property {LayerStyle[]} styles
  * @property {Object.<CrsCode, BoundingBox>} boundingBoxes Dict of bounding boxes where keys are CRS codes
