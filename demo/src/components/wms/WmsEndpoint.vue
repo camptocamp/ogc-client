@@ -10,12 +10,8 @@
     <div v-if="loaded">
       <InfoList :info="endpoint.getServiceInfo()"></InfoList>
       <div class="spacer-s"></div>
-      <div class="flex-row flex-align-stretch" style="height: 25rem">
-        <ItemsTree
-          :items="endpoint.getLayers()"
-          class="scroll-y flex-grow"
-          style="height: 25rem"
-        >
+      <div class="flex-row flex-align-stretch" style="min-height: 25rem">
+        <ItemsTree :items="endpoint.getLayers()" class="scroll-y flex-grow">
           <template v-slot="{ item }">
             <div :title="item.abstract">
               <template v-if="item.name">
@@ -34,6 +30,7 @@
           <WmsLayerInfo
             v-if="selectedLayer"
             :layer="selectedLayer"
+            :endpoint-url="url"
           ></WmsLayerInfo>
         </div>
       </div>
