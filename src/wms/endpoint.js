@@ -34,20 +34,19 @@ import { EndpointError } from '../shared/errors';
  * @property {string} name
  * @property {string} title
  * @property {string} abstract
- * @property {string[]} path If the layer is nested in other layers, the path will contain the name of previous layers
- *   in order from the topmost parent (root layer) to the closest one.
+ * @property {WmsLayerSummary[]} [children] Not defined if the layer is a leaf in the tree
  */
 
 /**
- * @typedef {Object} WmsLayer
+ * @typedef {Object} WmsLayerFull
  * @property {string} name
  * @property {string} title
  * @property {string} abstract
- * @property {string[]} path
  * @property {CrsCode[]} availableCrs
  * @property {LayerStyle[]} styles
  * @property {Object.<CrsCode, BoundingBox>} boundingBoxes Dict of bounding boxes where keys are CRS codes
  * @property {LayerAttribution} [attribution]
+ * @property {WmsLayerFull[]} [children] Not defined if the layer is a leaf in the tree
  */
 
 /**
@@ -111,7 +110,7 @@ export default class WmsEndpoint {
     this._info = null;
 
     /**
-     * @type {WmsLayer[]|null}
+     * @type {WmsLayerFull[]|null}
      * @private
      */
     this._layers = null;
@@ -144,21 +143,39 @@ export default class WmsEndpoint {
    * @return {WmsLayerSummary[]|null}
    */
   getLayers() {
-    return this._layers.map((layer) => ({
-      title: layer.title,
-      name: layer.name,
-      abstract: layer.abstract,
-      path: layer.path,
-    }));
+    function layerSummaryMapper(layerFull) {
+      return {
+        title: layerFull.title,
+        name: layerFull.name,
+        abstract: layerFull.abstract,
+        ...('children' in layerFull && {
+          children: layerFull.children.map(layerSummaryMapper),
+        }),
+      };
+    }
+    return this._layers.map(layerSummaryMapper);
   }
 
   /**
    * Returns a complete layer based on its name
+   * Note: the first matching layer will be returned
    * @param {string} name Layer name property (unique in the WMS service)
-   * @return {WmsLayer|null} return null if layer was not found
+   * @return {WmsLayerFull|null} return null if layer was not found
    */
   getLayerByName(name) {
-    return this._layers.find((layer) => layer.name === name) || null;
+    let result = null;
+    function layerLookup(layer) {
+      if (result !== null) return;
+      if (layer.name === name) {
+        result = layer;
+        return;
+      }
+      if ('children' in layer) {
+        layer.children.map(layerLookup);
+      }
+    }
+    this._layers.map(layerLookup);
+    return result;
   }
 
   /**

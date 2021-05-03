@@ -19,7 +19,7 @@ export function readVersionFromCapabilities(capabilitiesDoc) {
 /**
  * Will read all layers present in the capabilities doc and return them in a tree structure
  * @param {XmlDocument} capabilitiesDoc Capabilities document
- * @return {WmsLayer[]} Parsed layers
+ * @return {WmsLayerFull[]} Parsed layers
  */
 export function readLayersFromCapabilities(capabilitiesDoc) {
   const version = readVersionFromCapabilities(capabilitiesDoc);
@@ -27,33 +27,8 @@ export function readLayersFromCapabilities(capabilitiesDoc) {
     getRootElement(capabilitiesDoc),
     'Capability'
   );
-
-  /**
-   * @param {string[]} path
-   * @param {WmsLayer} [parentLayer]
-   * @return {function(WmsLayer[], XmlElement): WmsLayer[]} A reducer which parses all layers recursively
-   */
-  const recursiveParseLayer = (path, parentLayer) => (prev, layerEl) => {
-    const parsedLayer = parseLayer(
-      path,
-      layerEl,
-      version,
-      parentLayer && parentLayer.availableCrs,
-      parentLayer && parentLayer.styles,
-      parentLayer && parentLayer.attribution
-    );
-    const children = findChildrenElement(layerEl, 'Layer');
-    const childrenPath = [...path, parsedLayer.name];
-    return [
-      ...prev,
-      parsedLayer,
-      ...children.reduce(recursiveParseLayer(childrenPath, parsedLayer), []),
-    ];
-  };
-
-  return findChildrenElement(capability, 'Layer').reduce(
-    recursiveParseLayer([]),
-    []
+  return findChildrenElement(capability, 'Layer').map((layerEl) =>
+    parseLayer(layerEl, version)
   );
 }
 
@@ -76,16 +51,14 @@ export function readInfoFromCapabilities(capabilitiesDoc) {
 
 /**
  * Parse a layer in a capabilities doc
- * @param {string[]} path Path of the layer to be parsed (empty array of root layer)
  * @param {XmlElement} layerEl
  * @param {WmsVersion} version
  * @param {CrsCode[]} [inheritedSrs]
  * @param {LayerStyle[]} [inheritedStyles]
  * @param {LayerAttribution} [inheritedAttribution]
- * @return {WmsLayer}
+ * @return {WmsLayerFull}
  */
 function parseLayer(
-  path,
   layerEl,
   version,
   inheritedSrs = [],
@@ -112,6 +85,9 @@ function parseLayer(
     attributionEl !== null
       ? parseLayerAttribution(attributionEl)
       : inheritedAttribution;
+  const children = findChildrenElement(layerEl, 'Layer').map((layer) =>
+    parseLayer(layer, version, availableCrs, styles, attribution)
+  );
   return {
     name: getElementText(findChildElement(layerEl, 'Name')),
     title: getElementText(findChildElement(layerEl, 'Title')),
@@ -126,7 +102,7 @@ function parseLayer(
       }),
       {}
     ),
-    path: [...path],
+    ...(children.length && { children }),
   };
 }
 

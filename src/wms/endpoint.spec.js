@@ -95,36 +95,35 @@ describe('WmsEndpoint', () => {
         {
           abstract:
             "Ensemble des services d'accès aux données sur la géologie, l'hydrogéologie et la gravimétrie, diffusées par le BRGM",
+          children: [
+            {
+              abstract: 'Cartes géologiques',
+              children: [
+                {
+                  abstract:
+                    'BD Scan-Million-Géol est la base de données géoréférencées de la carte géologique image à 1/1 000 000',
+                  name: 'SCAN_F_GEOL1M',
+                  title: 'Carte géologique image de la France au million',
+                },
+                {
+                  abstract:
+                    'BD Scan-Géol-250 est la base de données géoréférencées des cartes géologiques image à 1/250 000. Utilisation scientifique, technique, pédagogique',
+                  name: 'SCAN_F_GEOL250',
+                  title: 'Carte géologique image de la France au 1/250000',
+                },
+                {
+                  abstract:
+                    "BD Scan-Géol-50 est la base de données géoréférencées des cartes géologiques 'papier' à 1/50 000",
+                  name: 'SCAN_D_GEOL50',
+                  title: 'Carte géologique image de la France au 1/50 000e',
+                },
+              ],
+              name: 'GEOLOGIE',
+              title: 'Cartes géologiques',
+            },
+          ],
           name: 'GEOSERVICES_GEOLOGIE',
-          path: [],
           title: 'GéoServices : géologie, hydrogéologie et gravimétrie',
-        },
-        {
-          abstract: 'Cartes géologiques',
-          name: 'GEOLOGIE',
-          path: ['GEOSERVICES_GEOLOGIE'],
-          title: 'Cartes géologiques',
-        },
-        {
-          abstract:
-            'BD Scan-Million-Géol est la base de données géoréférencées de la carte géologique image à 1/1 000 000',
-          name: 'SCAN_F_GEOL1M',
-          path: ['GEOSERVICES_GEOLOGIE', 'GEOLOGIE'],
-          title: 'Carte géologique image de la France au million',
-        },
-        {
-          abstract:
-            'BD Scan-Géol-250 est la base de données géoréférencées des cartes géologiques image à 1/250 000. Utilisation scientifique, technique, pédagogique',
-          name: 'SCAN_F_GEOL250',
-          path: ['GEOSERVICES_GEOLOGIE', 'GEOLOGIE'],
-          title: 'Carte géologique image de la France au 1/250000',
-        },
-        {
-          abstract:
-            "BD Scan-Géol-50 est la base de données géoréférencées des cartes géologiques 'papier' à 1/50 000",
-          name: 'SCAN_D_GEOL50',
-          path: ['GEOSERVICES_GEOLOGIE', 'GEOLOGIE'],
-          title: 'Carte géologique image de la France au 1/50 000e',
         },
       ]);
     });
@@ -149,7 +148,6 @@ describe('WmsEndpoint', () => {
         ],
         boundingBoxes: {},
         name: 'GEOLOGIE',
-        path: ['GEOSERVICES_GEOLOGIE'],
         styles: [
           {
             name: 'default',
@@ -157,6 +155,7 @@ describe('WmsEndpoint', () => {
           },
         ],
         title: 'Cartes géologiques',
+        children: expect.any(Array),
       });
     });
   });
