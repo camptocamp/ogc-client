@@ -1,16 +1,20 @@
 <template>
   <div id="app">
-    <h1></h1>
+    <h1 class="text-l text-bold padding-m align-right bg-dark text-white"></h1>
     <section class="padding-m text-l">
       <strong>ogc-client</strong>
     </section>
 
-    <h1 class="text-l text-bold padding-m align-right">Introduction</h1>
+    <h1 class="text-l text-bold padding-m align-right bg-dark text-white">
+      Introduction
+    </h1>
     <section class="padding-m">
       This is the demo app for the <strong>ogc-client</strong> library.
     </section>
 
-    <h1 class="text-l text-bold padding-m align-right">WMS</h1>
+    <h1 class="text-l text-bold padding-m align-right bg-dark text-white">
+      WMS
+    </h1>
     <section class="padding-m">
       <p>
         Enter a WMS service URL below to get some information and a list of
@@ -31,8 +35,6 @@
 
 h1 {
   grid-column: 1;
-  background-color: #4b5563;
-  color: #f9fafb;
 }
 h1:nth-last-of-type(1) {
   height: 1fr;

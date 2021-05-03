@@ -10,7 +10,22 @@
     <div v-if="loaded">
       <ServiceInfo :info="endpoint.getServiceInfo()"></ServiceInfo>
       <div class="spacer-s"></div>
-      <ItemsTree :items="endpoint.getLayers()"></ItemsTree>
+      <ItemsTree
+        :items="endpoint.getLayers()"
+        class="scroll-y"
+        style="height: 25rem"
+      >
+        <template v-slot="{ item }">
+          <div :title="item.abstract">
+            <template v-if="item.name">
+              <a href>{{ item.title }}</a>
+            </template>
+            <template v-else>
+              <span>{{ item.title }}</span>
+            </template>
+          </div>
+        </template>
+      </ItemsTree>
     </div>
     <div v-if="error">Error: {{ error }}</div>
   </div>

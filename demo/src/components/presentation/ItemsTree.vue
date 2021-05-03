@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <div v-for="item in items">
-      <span>{{ item.title }}</span
-      >&nbsp;
-      <span class="text-light">({{ item.name }})</span>
-      <br />
-      <span class="text-s text-light">{{ item.abstract }}</span>
-      <br />
+  <div class="bg-dark text-white text-s padding-s">
+    <div v-for="treeItem in items">
+      <TreeItem :item="treeItem">
+        <template v-slot="{ item }">
+          <!-- use the slot content for items -->
+          <slot v-bind:item="item"></slot>
+        </template>
+      </TreeItem>
       <div class="spacer-s"></div>
     </div>
   </div>
@@ -15,13 +15,15 @@
 <style scoped></style>
 
 <script>
+import TreeItem from './TreeItem';
 /**
  * @typedef {Object} TreeItem
- * @property {string[]} path
+ * @property {TreeItem[]} [children]
  */
 
 export default {
   name: 'ItemsTree',
+  components: { TreeItem },
   props: {
     /** @type {{new (): TreeItem[]}} */
     items: Array,

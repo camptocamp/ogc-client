@@ -29,8 +29,23 @@
 .text-bold {
   font-weight: bold;
 }
-.text-light {
+
+.bg-dark {
+  background-color: #4b5563;
+}
+.bg-light {
+  background-color: #6b7280;
+}
+.bg-white {
+  background-color: #f9fafb;
+}
+.text-light,
+.text-light * {
   color: #6b7280;
+}
+.text-white,
+.text-white * {
+  color: #f9fafb;
 }
 
 .text-wrap {
@@ -162,4 +177,11 @@
 }
 .width-66 {
   width: 66%;
+}
+
+.scroll-x {
+  overflow-x: auto;
+}
+.scroll-y {
+  overflow-y: auto;
 }
