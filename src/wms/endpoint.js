@@ -7,15 +7,6 @@ import {
 import { EndpointError } from '../shared/errors';
 
 /**
- * @typedef {[number, number, number, number]} BoundingBox
- *  Expressed as minx, miny, maxx, maxy
- */
-
-/**
- * @typedef {string} CrsCode
- */
-
-/**
  * @typedef {Object} LayerStyle
  * @property {string} name
  * @property {string} title

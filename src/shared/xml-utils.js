@@ -38,6 +38,16 @@ export function getRootElement(xmlDoc) {
 }
 
 /**
+ * Return the element name without namespace
+ * @param {XmlElement} element
+ * @return {string}
+ */
+function getElementName(element) {
+  const colon = element.name && element.name.indexOf(':');
+  return colon > -1 ? element.name.substr(colon + 1) : element.name;
+}
+
+/**
  * Will return all matching elements
  * @param {XmlElement} element Element to look into
  * @param {string} name element name
@@ -46,7 +56,7 @@ export function getRootElement(xmlDoc) {
  */
 export function findChildrenElement(element, name, nested) {
   function reducer(prev, curr) {
-    if (curr.name === name) {
+    if (getElementName(curr) === name) {
       prev.push(curr);
     }
 

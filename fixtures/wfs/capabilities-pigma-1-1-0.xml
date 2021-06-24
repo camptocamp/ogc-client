@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wfs:WFS_Capabilities version="1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xmlns="http://www.opengis.net/wfs" xmlns:wfs="http://www.opengis.net/wfs"
+                      xmlns:ows="http://www.opengis.net/ows" xmlns:gml="http://www.opengis.net/gml"
+                      xmlns:ogc="http://www.opengis.net/ogc" xmlns:xlink="http://www.w3.org/1999/xlink"
+                      xsi:schemaLocation="http://www.opengis.net/wfs https://www.pigma.org/geoserver/schemas/wfs/1.1.0/wfs.xsd http://inspire.ec.europa.eu/schemas/inspire_dls/1.0 http://inspire.ec.europa.eu/schemas/inspire_dls/1.0/inspire_dls.xsd"
+                      xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0"
+                      xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"
+                      xmlns:geoportail="http://pigma.org/geoportail" xmlns:ausonius="http://pigma.org/ausonius"
+                      xmlns:dila="http://pigma.org/dila" xmlns:ca_gd_villeneuvois="http://pigma.org/ca_gd_villeneuvois"
+                      xmlns:siba="http://pigma.org/siba" xmlns:terega="http://pigma.org/terega"
+                      xmlns:smbgp="http://pigma.org/smbgp" xmlns:cadastre_dgfip="http://pigma.org/cadastre_dgfip"
+                      xmlns:dupinsurlaplanche="http://pigma.org/dupinsurlaplanche"
+                      xmlns:drjscs="http://pigma.org/drjscs" xmlns:audap="ma.org/audap"
+                      xmlns:enedis="http://pigma.org/enedis" xmlns:tri="http://pigma.org/tri"
+                      xmlns:cr_nouvelle_aquitaine="http://pigma.or/cr_nouvelle_aquitaine"
+                      xmlns:adresse="http://pigma.org/adresse" xmlns:pnrlg="http://pigma.org/pnrlg"
+                      xmlns:sdee47="http://pigma.org/sdee47" xmlns:chag40="http://pigma.org/chag40"
+                      xmlns:ddtm33="http://pigma.org/ddtm33" xmlns:onf="http://pigma.org/onf"
+                      xmlns:pegase="http://pigma.org/pegase" xmlns:geotransfert="http://pigma.org/geotransfert"
+                      xmlns:cg40="http://pigma.org/cg40" xmlns:cdc_val_albret="http://pigma.org/cdc_val_albret"
+                      xmlns:c_mezin="http://pigma.org/c_mezin" xmlns:crpf="http://pigma.org/crpf"
+                      xmlns:ca_brive="https://www.pigma.org/ca_brive"
+                      xmlns:mapcache_cartogip="http://pigma.org/mapcache_cartogip" xmlns:smeag="http://pigma.org/smeag"
+                      xmlns:rff="http://pigma.org/rff" xmlns:cdcmtq="http://pigma.org/cdcmtq"
+                      xmlns:sdis="http://pigma.org/sdis" xmlns:smeap="http://pigma.org/smeap"
+                      xmlns:insee="http://pigma.org/insee" xmlns:epidor="http://pigma.org/epidor"
+                      xmlns:rect="http://pigma.org/rect" xmlns:fdp33="http://pigma.org/fdp33"
+                      xmlns:sysdau="http://pigma.org/sysdau" xmlns:ca24="http://pigma.org/ca24"
+                      xmlns:euratl="http://pigma.org/euratl" xmlns:girnum="http://pigma.org/girnum"
+                      xmlns:fdc33="http://pigma.org/fdc33" xmlns:cg33="http://pigma.org/cg33"
+                      xmlns:ign="http://pigma.org/ign" xmlns:chag64="http://pigma.org/chag64"
+                      xmlns:craquitaine="http://pigma.org/craquitaine" xmlns:ce24="http://pigma.org/ce24"
+                      xmlns:ddtm40="http://pigma.org/ddtm40" xmlns:draaf="http://pigma.org/draaf"
+                      xmlns:agrn="http://pigma.org/agrn" xmlns:giplit="http://pigma.org/giplit"
+                      xmlns:epidropt="http://pigma.org/epidropt" xmlns:gpmb="http://pigma.org/gpmb"
+                      xmlns:adacl="http://pigma.org/adacl" xmlns:aprn="http://pigma.org/aprn"
+                      xmlns:renass="http://pigma.org/renass" xmlns:demo_socio_eco="http://pigma.org/demo_socio_eco"
+                      xmlns:gt_adresse="https://www.pigma.org/geoserver/gt_adresse"
+                      xmlns:pigma_pub="http://www.pigma.org/pigma_pub"
+                      xmlns:ca_limoges="https://www.pigma.org/ca_limoges" xmlns:smbvlb="http://pigma.org/smbvlb"
+                      xmlns:geob_openstreetmap="http://pigma.org/geob_openstreetmap"
+                      xmlns:ddsp_47="http://pigma.org/ddsp_47" xmlns:ign_r="http://pigma.org/ign_r"
+                      xmlns:pci_express="http://pigma.org/pci_express" xmlns:pnrm="http://pigma.org/pnrm"
+                      xmlns:oca="http://pigma.org/oca" xmlns:dira="http://pigma.org/dira"
+                      xmlns:alpi="http://pigma.org/alpi" xmlns:grdf="http://pigma.org/grdf"
+                      xmlns:cdc_estuaire="http://pigma.org/cdc_estuaire" xmlns:rte="http://pigma.org/rte"
+                      xmlns:cdc_bourg_en_gironde="http://pigma.org/cdc_bourg_en_gironde"
+                      xmlns:asp="http://pigma.org/asp" xmlns:vnf="http://pigma.org/vnf" xmlns:pcrs_craig="pcrs_craig"
+                      xmlns:ca_grand_dax="http://pigma.org/ca_grand_dax" xmlns:univ_lr="http://pigma.org/univ_lr"
+                      xmlns:pigma_loc="http://pigma.org/pigma_loc"
+                      xmlns:gcis_nom_voies="http://pigma.org/gcis_nom_voies" xmlns:sdci_47="http://pigma.org/sdci_47"
+                      xmlns:spl="http://pigma.org/spl"
+                      xmlns:pigmamobile="https://www.pigma.org/geoserver/pigmamobile/wms"
+                      xmlns:etf_aquitaine="http://pigma.org/etf_aquitaine"
+                      xmlns:cdcpiemontoloronais="http://pigma.org/cdc_piemont_oloronais"
+                      xmlns:ccmacs="http://pigma.org/ccmacs" xmlns:pcrs="http://pigma.org/pcrs"
+                      xmlns:gip_pqa="http://pigma.org/gip_pqa" xmlns:contact_gip="https://www.pigma.org/contact_gip"
+                      xmlns:etalab_pci="http://pigma.org/etalab_pci"
+                      xmlns:man_biosphere="http://pigma.org/man_biosphere" xmlns:ars="http://pigma.org/ars"
+                      xmlns:brgm="http://pigma.org/brgm" xmlns:cd16="http://pigma.org/cd16"
+                      xmlns:bdx_sc_agro="http://pigma.org/bdx_sc_agro" xmlns:pigma_3857="http://pigma.org/pigma_3857"
+                      xmlns:smavlot="http://pigma.org/smavlot"
+                      xmlns:pigma_layergroup="http://pigma.org/pigma_layergroup"
+                      xmlns:gipatgeri="http://pigma.org/gipatgeri" xmlns:ddcspp47="http://pigma.org/ddcspp47"
+                      xmlns:ddt47="http://pigma.org/ddt47" xmlns:mnt="http://pigma.org/mnt"
+                      xmlns:pigma="https://www.pigma.org/pigma/" xmlns:aurba="http://pigma.org/aurba"
+                      xmlns:dreal_directive_inondation="http://pigma.org/dreal_directive_inondation"
+                      xmlns:smgeolandes="http://pigma.org/smgeolandes" xmlns:cobas="http://pigma.org/cobas"
+                      xmlns:cdc_sarlat_perigord_noir="http://pigma.org/cdc_sarlat_perigord_noir"
+                      xmlns:ehlg="http://pigma.org/ehlg" xmlns:ca_cote_basque_adour="http://pigma.org/cote_basque_adour"
+                      xmlns:cdc_prayssas="http://pigma.org/cdc_prayssas"
+                      xmlns:cdc_mezinais="http://pigma.org/cdc_mezinais"
+                      xmlns:cdc_penne_agenais="http://pigma.org/cdc_penne_agenais" xmlns:cenaq="http://pigma.org/cenaq"
+                      xmlns:caue24="http://pigma.org/caue24" xmlns:pigma_edit="http://pigma.org/pigma_edit"
+                      xmlns:cdc_grands_lacs="http://pigma.org/cdc_grands_lacs"
+                      xmlns:aquimap_raster="http://pigma.org/aquimap_raster"
+                      xmlns:geor="http://www.georchestra.org/geor" xmlns:urbanisme="http://pigma.org/urbanisme"
+                      xmlns:caue33="http://pigma.org/caue33" xmlns:cg47="http://pigma.org/cg47"
+                      xmlns:drac="http://pigma.org/drac" xmlns:banatic="https://www.pigma.org/geoserver/batic/wms"
+                      xmlns:bordeauxmetropole="http://pigma.org/bordeauxmetropole" xmlns:inoc="http://pigma.org/inoc"
+                      xmlns:pnrml="http://pigma.org/pnrml" xmlns:cg24="http://pigma.org/cg24"
+                      xmlns:osm="http://pigma.org/osm" xmlns:coban="http://pigma.org/coban"
+                      xmlns:admin_habillage="http://pigma.org/admin_habillage"
+                      xmlns:cadastre="http://pigma.org/cadastre"
+                      xmlns:limites_administratives_archives="http://pigma.org/limites_administratives_archives"
+                      xmlns:crt="http://pigma.org/crt" xmlns:medde="http://pigma.org/medde"
+                      xmlns:couches_extracteur="http://pigma.org/couches_extracteur"
+                      xmlns:univ_bdx="http://pigma.org/univ_bdx" xmlns:airaq="http://pigma.org/airaq"
+                      xmlns:on3v="http://pigma.org/on3v"
+                      xmlns:at_pistes_cyclables="http://pigma.org/referentiel_unique_pistes_cyclables"
+                      xmlns:cg64="http://pigma.org/cg64" xmlns:smegreg="http://pigma.org/smegreg"
+                      xmlns:ifn="http://pigma.org/ifn" xmlns:dgcl="http://pigma.org/dgcl"
+                      xmlns:demo_afigeo="http://pigma.org/demo_afigeo" xmlns:chag33="http://pigma.org/chag33"
+                      xmlns:raudin="http://pigma.org/raudin" xmlns:dreal="http://pigma.org/dreal"
+                      xmlns:gipatgeri-gcis-public="http://pigma.org/gipatgeri-gcis-public"
+                      xmlns:ardfci="http://pigma.org/ardfci" xmlns:siaep_lalinde="http://pigma.org/siaep_lalinde"
+                      xmlns:sraddet="http://pigma.org/sraddet"
+                      xmlns:cdcsudpaysbasque="http://pigma.org/cdcsudpaysbasque"
+                      xmlns:test_ep_a_supprimer="http://pigma.org/test_ep_a_supprimer"
+                      xmlns:vitidata="http://pigma.org/vitidata" xmlns:ddfip64="http://pigma.org/ddfip64"
+                      xmlns:dreal_tri="http://pigma.org/dreal_tri"
+                      xmlns:pays_grand_bergeracois="http://pigma.org/pays_grand_bergeracois"
+                      xmlns:srce="http://pigma.org/srce" xmlns:gcis="http://pigma.org/gcis"
+                      xmlns:ddt24="http://pigma.org/ddt24" xmlns:apem="http://pigma.org/apem" updateSequence="52890">
+    <ows:ServiceIdentification>
+        <ows:Title>Service WFS de l'IDS régionale PIGMA</ows:Title>
+        <ows:Abstract>Service WFS de l'IDS régionale PIGMA</ows:Abstract>
+        <ows:Keywords>
+            <ows:Keyword>WFS</ows:Keyword>
+            <ows:Keyword>WMS</ows:Keyword>
+            <ows:Keyword>GEOSERVER</ows:Keyword>
+        </ows:Keywords>
+        <ows:ServiceType>WFS</ows:ServiceType>
+        <ows:ServiceTypeVersion>1.1.0</ows:ServiceTypeVersion>
+        <ows:Fees>aucun</ows:Fees>
+        <ows:AccessConstraints>aucun</ows:AccessConstraints>
+    </ows:ServiceIdentification>
+    <ows:ServiceProvider>
+        <ows:ProviderName>GIP ATGeRi</ows:ProviderName>
+        <ows:ServiceContact>
+            <ows:IndividualName>PIGMA</ows:IndividualName>
+            <ows:PositionName/>
+            <ows:ContactInfo>
+                <ows:Phone>
+                    <ows:Voice>05.57.85.40.42</ows:Voice>
+                    <ows:Facsimile/>
+                </ows:Phone>
+                <ows:Address>
+                    <ows:DeliveryPoint/>
+                    <ows:City>Bordeaux</ows:City>
+                    <ows:AdministrativeArea/>
+                    <ows:PostalCode>33075</ows:PostalCode>
+                    <ows:Country/>
+                    <ows:ElectronicMailAddress>admin.pigma@gipatgeri.fr</ows:ElectronicMailAddress>
+                </ows:Address>
+            </ows:ContactInfo>
+        </ows:ServiceContact>
+    </ows:ServiceProvider>
+    <ows:OperationsMetadata>
+        <ows:Operation name="GetCapabilities">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                    <ows:Post xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                </ows:HTTP>
+            </ows:DCP>
+            <ows:Parameter name="AcceptVersions">
+                <ows:Value>1.0.0</ows:Value>
+                <ows:Value>1.1.0</ows:Value>
+            </ows:Parameter>
+            <ows:Parameter name="AcceptFormats">
+                <ows:Value>text/xml</ows:Value>
+            </ows:Parameter>
+            <ows:Parameter name="Sections">
+                <ows:Value>ServiceIdentification</ows:Value>
+                <ows:Value>ServiceProvider</ows:Value>
+                <ows:Value>OperationsMetadata</ows:Value>
+                <ows:Value>FeatureTypeList</ows:Value>
+                <ows:Value>Filter_Capabilities</ows:Value>
+            </ows:Parameter>
+        </ows:Operation>
+        <ows:Operation name="DescribeFeatureType">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                    <ows:Post xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                </ows:HTTP>
+            </ows:DCP>
+            <ows:Parameter name="outputFormat">
+                <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+            </ows:Parameter>
+        </ows:Operation>
+        <ows:Operation name="GetFeature">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                    <ows:Post xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                </ows:HTTP>
+            </ows:DCP>
+            <ows:Parameter name="resultType">
+                <ows:Value>results</ows:Value>
+                <ows:Value>hits</ows:Value>
+            </ows:Parameter>
+            <ows:Parameter name="outputFormat">
+                <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+                <ows:Value>DXF</ows:Value>
+                <ows:Value>DXF-ZIP</ows:Value>
+                <ows:Value>GML2</ows:Value>
+                <ows:Value>KML</ows:Value>
+                <ows:Value>SHAPE-ZIP</ows:Value>
+                <ows:Value>application/gml+xml; version=3.2</ows:Value>
+                <ows:Value>application/json</ows:Value>
+                <ows:Value>application/vnd.google-earth.kml xml</ows:Value>
+                <ows:Value>application/vnd.google-earth.kml+xml</ows:Value>
+                <ows:Value>csv</ows:Value>
+                <ows:Value>excel</ows:Value>
+                <ows:Value>excel2007</ows:Value>
+                <ows:Value>gml3</ows:Value>
+                <ows:Value>gml32</ows:Value>
+                <ows:Value>json</ows:Value>
+                <ows:Value>text/javascript</ows:Value>
+                <ows:Value>text/xml; subtype=gml/2.1.2</ows:Value>
+                <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
+            </ows:Parameter>
+            <ows:Constraint name="LocalTraverseXLinkScope">
+                <ows:Value>2</ows:Value>
+            </ows:Constraint>
+        </ows:Operation>
+        <ows:Operation name="GetGmlObject">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                    <ows:Post xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                </ows:HTTP>
+            </ows:DCP>
+        </ows:Operation>
+        <ows:Operation name="LockFeature">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                    <ows:Post xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                </ows:HTTP>
+            </ows:DCP>
+            <ows:Parameter name="releaseAction">
+                <ows:Value>ALL</ows:Value>
+                <ows:Value>SOME</ows:Value>
+            </ows:Parameter>
+        </ows:Operation>
+        <ows:Operation name="GetFeatureWithLock">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                    <ows:Post xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                </ows:HTTP>
+            </ows:DCP>
+            <ows:Parameter name="resultType">
+                <ows:Value>results</ows:Value>
+                <ows:Value>hits</ows:Value>
+            </ows:Parameter>
+            <ows:Parameter name="outputFormat">
+                <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+                <ows:Value>DXF</ows:Value>
+                <ows:Value>DXF-ZIP</ows:Value>
+                <ows:Value>GML2</ows:Value>
+                <ows:Value>KML</ows:Value>
+                <ows:Value>SHAPE-ZIP</ows:Value>
+                <ows:Value>application/gml+xml; version=3.2</ows:Value>
+                <ows:Value>application/json</ows:Value>
+                <ows:Value>application/vnd.google-earth.kml xml</ows:Value>
+                <ows:Value>application/vnd.google-earth.kml+xml</ows:Value>
+                <ows:Value>csv</ows:Value>
+                <ows:Value>excel</ows:Value>
+                <ows:Value>excel2007</ows:Value>
+                <ows:Value>gml3</ows:Value>
+                <ows:Value>gml32</ows:Value>
+                <ows:Value>json</ows:Value>
+                <ows:Value>text/javascript</ows:Value>
+                <ows:Value>text/xml; subtype=gml/2.1.2</ows:Value>
+                <ows:Value>text/xml; subtype=gml/3.2</ows:Value>
+            </ows:Parameter>
+        </ows:Operation>
+        <ows:Operation name="Transaction">
+            <ows:DCP>
+                <ows:HTTP>
+                    <ows:Get xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                    <ows:Post xlink:href="https://www.pigma.org/geoserver/wfs"/>
+                </ows:HTTP>
+            </ows:DCP>
+            <ows:Parameter name="inputFormat">
+                <ows:Value>text/xml; subtype=gml/3.1.1</ows:Value>
+            </ows:Parameter>
+            <ows:Parameter name="idgen">
+                <ows:Value>GenerateNew</ows:Value>
+                <ows:Value>UseExisting</ows:Value>
+                <ows:Value>ReplaceDuplicate</ows:Value>
+            </ows:Parameter>
+            <ows:Parameter name="releaseAction">
+                <ows:Value>ALL</ows:Value>
+                <ows:Value>SOME</ows:Value>
+            </ows:Parameter>
+        </ows:Operation>
+    </ows:OperationsMetadata>
+    <FeatureTypeList>
+        <Operations>
+            <Operation>Query</Operation>
+            <Operation>Insert</Operation>
+            <Operation>Update</Operation>
+            <Operation>Delete</Operation>
+            <Operation>Lock</Operation>
+        </Operations>
+        <FeatureType xmlns:asp="http://pigma.org/asp">
+            <Name>asp:asp_rpg2010</Name>
+            <Title>ASP - RPG 2010</Title>
+            <Abstract>Registre Parcellaire Graphique 2010 en Aquitaine - Agence de Service et de Paiement</Abstract>
+            <ows:Keywords>
+                <ows:Keyword>features</ows:Keyword>
+                <ows:Keyword>rpg2010</ows:Keyword>
+            </ows:Keywords>
+            <DefaultSRS>urn:x-ogc:def:crs:EPSG:2154</DefaultSRS>
+            <OtherSRS>EPSG:32615</OtherSRS>
+            <OtherSRS>EPSG:32616</OtherSRS>
+            <OtherSRS>EPSG:32617</OtherSRS>
+            <OtherSRS>EPSG:32618</OtherSRS>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-1.9540704007796161 42.73286181824404</ows:LowerCorner>
+                <ows:UpperCorner>1.496463327812538 45.717071228823876</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+            <MetadataURL type="TC211" format="text/plain">
+                https://www.pigma.org/geonetwork/?uuid=cbcae9a4-7fc0-4fc8-bd78-089af3af4e8a
+            </MetadataURL>
+            <OutputFormats>
+                <Format>text/xml; subtype=gml/3.1.1</Format>
+            </OutputFormats>
+        </FeatureType>
+        <FeatureType xmlns:cd16="http://pigma.org/cd16">
+            <Name>cd16:comptages_routiers_l</Name>
+            <Title>CD 16 - Comptages routiers</Title>
+            <Abstract>Représentation des moyennes journalières des trafics routiers sur les routes départementales de la
+                Charente (16) au 1er Janvier 2021.&#13;
+                &#13;
+                Mise à jour : Mars 2021
+            </Abstract>
+            <ows:Keywords>
+                <ows:Keyword>features</ows:Keyword>
+                <ows:Keyword>comptages_routiers_l</ows:Keyword>
+            </ows:Keywords>
+            <DefaultSRS>urn:x-ogc:def:crs:EPSG:2154</DefaultSRS>
+            <OtherSRS>EPSG:32615</OtherSRS>
+            <OtherSRS>EPSG:32616</OtherSRS>
+            <OtherSRS>EPSG:32617</OtherSRS>
+            <OtherSRS>EPSG:32618</OtherSRS>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-0.4906009184568518 45.175543885638376</ows:LowerCorner>
+                <ows:UpperCorner>0.9778719979726385 46.14349349624617</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+            <MetadataURL type="TC211" format="text/html">
+                https://www.pigma.org/geonetwork?uuid=4d840710-3f09-4f48-aa31-d2c4c0ee6fda
+            </MetadataURL>
+            <MetadataURL type="19115" format="text/html">
+                https://www.pigma.org/geonetwork?uuid=4d840710-3f09-4f48-aa31-d2c4c0ee6fda
+            </MetadataURL>
+            <MetadataURL type="19115" format="text/xml">
+                https://www.pigma.org/geonetwork/srv/fre/xml_iso19139?uuid=4d840710-3f09-4f48-aa31-d2c4c0ee6fda
+            </MetadataURL>
+            <OutputFormats>
+                <Format>text/xml; subtype=gml/3.1.1</Format>
+            </OutputFormats>
+        </FeatureType>
+        <FeatureType xmlns:cd16="http://pigma.org/cd16">
+            <Name>cd16:hierarchisation_l</Name>
+            <Title>CD 16 - Hiérarchisation du réseau</Title>
+            <Abstract>Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section
+                de route et de son usage au 1er Janvier 2021.&#13;
+                &#13;
+                Mise à jour : Mars 2021
+            </Abstract>
+            <ows:Keywords>
+                <ows:Keyword>features</ows:Keyword>
+                <ows:Keyword>hierarchisation_l</ows:Keyword>
+            </ows:Keywords>
+            <DefaultSRS>urn:x-ogc:def:crs:EPSG:2154</DefaultSRS>
+            <OtherSRS>EPSG:32615</OtherSRS>
+            <OtherSRS>EPSG:32616</OtherSRS>
+            <OtherSRS>EPSG:32617</OtherSRS>
+            <OtherSRS>EPSG:32618</OtherSRS>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-0.4832134559131876 45.18037755571674</ows:LowerCorner>
+                <ows:UpperCorner>0.9725372441782966 46.13877580094452</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+            <MetadataURL type="TC211" format="text/html">
+                https://www.pigma.org/geonetwork?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6
+            </MetadataURL>
+            <MetadataURL type="19115" format="text/html">
+                https://www.pigma.org/geonetwork?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6
+            </MetadataURL>
+            <MetadataURL type="19115" format="text/xml">
+                https://www.pigma.org/geonetwork/srv/fre/xml_iso19139?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6
+            </MetadataURL>
+            <OutputFormats>
+                <Format>text/xml; subtype=gml/3.1.1</Format>
+            </OutputFormats>
+        </FeatureType>
+    </FeatureTypeList>
+    <ogc:Filter_Capabilities>
+        <ogc:Spatial_Capabilities>
+            <ogc:GeometryOperands>
+                <ogc:GeometryOperand>gml:Envelope</ogc:GeometryOperand>
+                <ogc:GeometryOperand>gml:Point</ogc:GeometryOperand>
+                <ogc:GeometryOperand>gml:LineString</ogc:GeometryOperand>
+                <ogc:GeometryOperand>gml:Polygon</ogc:GeometryOperand>
+            </ogc:GeometryOperands>
+            <ogc:SpatialOperators>
+                <ogc:SpatialOperator name="Disjoint"/>
+                <ogc:SpatialOperator name="Equals"/>
+                <ogc:SpatialOperator name="DWithin"/>
+                <ogc:SpatialOperator name="Beyond"/>
+                <ogc:SpatialOperator name="Intersects"/>
+                <ogc:SpatialOperator name="Touches"/>
+                <ogc:SpatialOperator name="Crosses"/>
+                <ogc:SpatialOperator name="Within"/>
+                <ogc:SpatialOperator name="Contains"/>
+                <ogc:SpatialOperator name="Overlaps"/>
+                <ogc:SpatialOperator name="BBOX"/>
+            </ogc:SpatialOperators>
+        </ogc:Spatial_Capabilities>
+        <ogc:Scalar_Capabilities>
+            <ogc:LogicalOperators/>
+            <ogc:ComparisonOperators>
+                <ogc:ComparisonOperator>LessThan</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>GreaterThan</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>LessThanEqualTo</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>GreaterThanEqualTo</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>EqualTo</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>NotEqualTo</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>Like</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>Between</ogc:ComparisonOperator>
+                <ogc:ComparisonOperator>NullCheck</ogc:ComparisonOperator>
+            </ogc:ComparisonOperators>
+            <ogc:ArithmeticOperators>
+                <ogc:SimpleArithmetic/>
+                <ogc:Functions>
+                    <ogc:FunctionNames>
+                        <ogc:FunctionName nArgs="1">abs</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">abs_2</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">abs_3</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">abs_4</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">acos</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">AddCoverages</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">Affine</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">Aggregate</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">Area</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">area2</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">AreaGrid</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">asin</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">asMultiGeometry</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">atan</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">atan2</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">attributeCount</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">BandMerge</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">BandSelect</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">bandStats</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-6">BarnesSurface</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">between</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">boundary</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">boundaryDimension</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="0">boundedBy</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">Bounds</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">buffer</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">BufferFeatureCollection</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">bufferWithSegments</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="7">Categorize</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">ceil</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">centroid</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">classify</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">ClassifyByRange</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">Clip</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">collectGeometries</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">Collection_Average</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">Collection_Bounds</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">Collection_Count</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">Collection_Max</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">Collection_Median</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">Collection_Min</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">Collection_Nearest</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">Collection_Sum</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">Collection_Unique</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-3">colormap</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">Concatenate</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">contains</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">Contour</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">contrast</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">convert</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">convexHull</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">ConvolveCoverage</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">cos</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">Count</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">CoverageClassStats</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">CropCoverage</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">crosses</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">darken</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">dateDifference</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">dateFormat</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">dateParse</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">densify</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">desaturate</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">difference</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">dimension</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">disjoint</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">disjoint3D</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">distance</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">distance3D</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">double2bool</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">Download</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-6">DownloadAnimation</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">DownloadEstimator</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-4">DownloadMap</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">DynamicColorMap</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">endAngle</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">endPoint</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">env</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">envelope</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">EqualArea</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">EqualInterval</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">equalsExact</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">equalsExactTolerance</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">equalTo</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">exp</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">exteriorRing</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">Feature</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">FeatureClassStats</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">floor</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">FormatDateTimezone</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="0">geometry</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">geometryType</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">geomFromWKT</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">geomLength</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-3">GeorectifyCoverage</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">GetFullCoverage</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">getGeometryN</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="0">getID</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">getX</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">getY</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">getz</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">grayscale</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">greaterEqualThan</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">greaterThan</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-3">Grid</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">gridCoverageProperty</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">gridCoverageStats</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-5">Heatmap</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">hsl</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="0">id</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">IEEEremainder</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">if_then_else</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="0">Import</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">in</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="11">in10</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">in2</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="4">in3</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="5">in4</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="6">in5</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="7">in6</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="8">in7</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="9">in8</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="10">in9</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">inArray</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">InclusionFeatureCollection</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">int2bbool</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">int2ddouble</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">interiorPoint</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">interiorRingN</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-5">Interpolate</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">intersection</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">IntersectionFeatureCollection</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">intersects</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">intersects3D</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">isClosed</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="0">isCoverage</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">isEmpty</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">isInstanceOf</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">isLike</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">isNull</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">isometric</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">isRing</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">isSimple</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">isValid</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">isWithinDistance</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">isWithinDistance3D</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">Jenks</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">Jiffle</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">jsonPointer</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">labelPoint</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">lapply</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">length</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">lessEqualThan</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">lessThan</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">lighten</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">list</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">listMultiply</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">litem</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">literate</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">log</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="4">LRSGeocode</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-4">LRSMeasure</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="5">LRSSegment</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">mapGet</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">max</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">max_2</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">max_3</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">max_4</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">MBTiles</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">min</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">min_2</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">min_3</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">min_4</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">mincircle</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">minimumdiameter</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">minrectangle</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">mix</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">modulo</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">MultiplyCoverages</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">Nearest</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">NormalizeCoverage</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">not</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">notEqualTo</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">numberFormat</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="5">numberFormat2</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">numGeometries</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">numInteriorRing</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">numPoints</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">octagonalenvelope</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">offset</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">overlaps</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">PagedUnique</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">parameter</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">parseBoolean</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">parseDouble</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">parseInt</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">parseLong</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">pgNearest</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="0">pi</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">PointBuffers</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">pointN</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-7">PointStacker</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">PolygonExtraction</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">polygonize</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">PolyLabeller</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">pow</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">property</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">PropertyExists</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">Quantile</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">Query</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">queryCollection</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">querySingle</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="0">random</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">RangeLookup</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">RasterAsPointCollection</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">RasterZonalStatistics</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-6">RasterZonalStatistics2</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="5">Recode</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">RectangularClip</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">relate</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">relatePattern</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">reproject</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">ReprojectGeometry</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-3">rescaleToPixels</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">rint</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">round</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">round_2</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">roundDouble</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">saturate</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-5">ScaleCoverage</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">sdo_nn</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">setCRS</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">shade</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">simplify</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">sin</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">size</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">Snap</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">spin</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">splitPolygon</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">sqrt</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">StandardDeviation</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">startAngle</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">startPoint</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">StoreCoverage</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="4">strAbbreviate</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">strCapitalize</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">strConcat</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">strDefaultIfBlank</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">strEndsWith</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">strEqualsIgnoreCase</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">strIndexOf</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="4">stringTemplate</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">strLastIndexOf</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">strLength</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">strMatches</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">strPosition</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="4">strReplace</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">strStartsWith</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">strStripAccents</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">strSubstring</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">strSubstringStart</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">strToLowerCase</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">strToUpperCase</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">strTrim</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">strTrim2</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">strURLEncode</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">StyleCoverage</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">symDifference</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">tan</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">tint</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">toDegrees</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">toDirectPosition</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">ToEnvelope</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-3">toLineString</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">toPoint</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">toRadians</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">touches</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">toWKT</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">toXlinkHref</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">Transform</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-1">TransparencyFill</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">union</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">UnionFeatureCollection</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">Unique</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-2">UniqueInterval</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="-4">VectorToRaster</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="3">VectorZonalStatistics</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="1">vertices</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">Vocab</ogc:FunctionName>
+                        <ogc:FunctionName nArgs="2">within</ogc:FunctionName>
+                    </ogc:FunctionNames>
+                </ogc:Functions>
+            </ogc:ArithmeticOperators>
+        </ogc:Scalar_Capabilities>
+        <ogc:Id_Capabilities>
+            <ogc:FID/>
+            <ogc:EID/>
+        </ogc:Id_Capabilities>
+    </ogc:Filter_Capabilities>
+</wfs:WFS_Capabilities>
