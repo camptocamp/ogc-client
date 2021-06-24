@@ -1,35 +1,17 @@
 import capabilities200 from '../../fixtures/wfs/capabilities-pigma-2-0-0.xml';
 import WfsEndpoint from './endpoint';
-import { EndpointError } from '../shared/errors';
 
 describe('WfsEndpoint', () => {
   /** @type {WfsEndpoint} */
   let endpoint;
 
-  /** @type {'ok'|'httpError'|'corsError'} */
-  let fetchBehaviour;
-
   beforeEach(() => {
-    fetchBehaviour = 'ok';
     window.fetch = jest.fn(() => {
-      switch (fetchBehaviour) {
-        case 'ok':
-          return Promise.resolve({
-            text: () => Promise.resolve(capabilities200),
-            status: 200,
-            ok: true,
-          });
-        case 'httpError':
-          return Promise.resolve({
-            text: () => Promise.resolve('<error>Random error</error>'),
-            status: 401,
-            ok: false,
-          });
-        case 'corsError':
-          return Promise.reject(new Error('Cross origin headers missing'));
-        default:
-          return Promise.reject();
-      }
+      return Promise.resolve({
+        text: () => Promise.resolve(capabilities200),
+        status: 200,
+        ok: true,
+      });
     });
 
     endpoint = new WfsEndpoint(
@@ -44,40 +26,8 @@ describe('WfsEndpoint', () => {
   });
 
   describe('#isReady', () => {
-    let endpoint2;
-    describe('HTTP request returns success', () => {
-      beforeEach(() => {
-        endpoint2 = new WfsEndpoint('http://aa.bb');
-      });
-      it('resolves with the endpoint object', async () => {
-        await expect(endpoint2.isReady()).resolves.toEqual(endpoint2);
-      });
-    });
-    describe('HTTP request returns error', () => {
-      beforeEach(() => {
-        fetchBehaviour = 'httpError';
-        endpoint2 = new WfsEndpoint('http://aa.bb');
-      });
-      it('rejects with an error', async () => {
-        await expect(endpoint2.isReady()).rejects.toThrow(
-          new EndpointError(
-            'Received an error with code 401: <error>Random error</error>',
-            401,
-            false
-          )
-        );
-      });
-    });
-    describe('HTTP fails for CORS reasons', () => {
-      beforeEach(() => {
-        fetchBehaviour = 'corsError';
-        endpoint2 = new WfsEndpoint('http://aa.bb');
-      });
-      it('rejects with an error', async () => {
-        await expect(endpoint2.isReady()).rejects.toThrow(
-          new EndpointError('Cross origin headers missing', 0, true)
-        );
-      });
+    it('resolves with the endpoint object', async () => {
+      await expect(endpoint.isReady()).resolves.toEqual(endpoint);
     });
   });
 

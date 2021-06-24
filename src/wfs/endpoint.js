@@ -1,10 +1,10 @@
 import { EndpointError } from '../shared/errors';
-import { parseXmlString } from '../shared/xml-utils';
 import {
   readFeatureTypesFromCapabilities,
   readInfoFromCapabilities,
   readVersionFromCapabilities,
 } from './capabilities';
+import { queryXmlDocument } from '../shared/http-utils';
 
 /**
  * @typedef {Object} WfsFeatureType
@@ -55,26 +55,13 @@ export default class WfsEndpoint {
      * @type {Promise<XmlDocument>}
      * @private
      */
-    this._capabilitiesPromise = fetch(capabilitiesUrl.toString())
-      .then(async (resp) => {
-        const text = await resp.text();
-        if (!resp.ok) {
-          throw new EndpointError(
-            `Received an error with code ${resp.status}: ${text}`,
-            resp.status
-          );
-        }
-        return text;
-      })
-      .then((xml) => parseXmlString(xml))
-      .then((xmlDoc) => {
-        this._info = readInfoFromCapabilities(xmlDoc);
-        this._featureTypes = readFeatureTypesFromCapabilities(xmlDoc);
-        this._version = readVersionFromCapabilities(xmlDoc);
-      })
-      .catch((error) => {
-        throw new EndpointError(error.message, 0, true);
-      });
+    this._capabilitiesPromise = queryXmlDocument(
+      capabilitiesUrl.toString()
+    ).then((xmlDoc) => {
+      this._info = readInfoFromCapabilities(xmlDoc);
+      this._featureTypes = readFeatureTypesFromCapabilities(xmlDoc);
+      this._version = readVersionFromCapabilities(xmlDoc);
+    });
 
     /**
      * @type {WfsInfo|null}

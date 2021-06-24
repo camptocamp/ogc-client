@@ -1,11 +1,11 @@
-export class EndpointError extends Error {
+export class EndpointError {
   /**
    * @param {string} message
    * @param {number} httpStatus
    * @param {boolean} isCrossOriginRelated
    */
   constructor(message, httpStatus = 0, isCrossOriginRelated = false) {
-    super(message);
+    this.message = message;
     this.httpStatus = httpStatus;
     this.isCrossOriginRelated = isCrossOriginRelated;
   }

@@ -1,10 +1,10 @@
-import { parseXmlString } from '../shared/xml-utils';
 import {
   readInfoFromCapabilities,
   readLayersFromCapabilities,
   readVersionFromCapabilities,
 } from './capabilities';
 import { EndpointError } from '../shared/errors';
+import { queryXmlDocument } from '../shared/http-utils';
 
 /**
  * @typedef {Object} LayerStyle
@@ -73,26 +73,13 @@ export default class WmsEndpoint {
      * @type {Promise<XmlDocument>}
      * @private
      */
-    this._capabilitiesPromise = fetch(capabilitiesUrl.toString())
-      .then(async (resp) => {
-        const text = await resp.text();
-        if (!resp.ok) {
-          throw new EndpointError(
-            `Received an error with code ${resp.status}: ${text}`,
-            resp.status
-          );
-        }
-        return text;
-      })
-      .then((xml) => parseXmlString(xml))
-      .then((xmlDoc) => {
-        this._info = readInfoFromCapabilities(xmlDoc);
-        this._layers = readLayersFromCapabilities(xmlDoc);
-        this._version = readVersionFromCapabilities(xmlDoc);
-      })
-      .catch((error) => {
-        throw new EndpointError(error.message, 0, true);
-      });
+    this._capabilitiesPromise = queryXmlDocument(
+      capabilitiesUrl.toString()
+    ).then((xmlDoc) => {
+      this._info = readInfoFromCapabilities(xmlDoc);
+      this._layers = readLayersFromCapabilities(xmlDoc);
+      this._version = readVersionFromCapabilities(xmlDoc);
+    });
 
     /**
      * @type {WmsInfo|null}
