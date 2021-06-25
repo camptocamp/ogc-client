@@ -67,16 +67,17 @@ function parseFeatureType(featureTypeEl, serviceVersion) {
     : `Default${srsTag}`;
   function parseBBox100() {
     const bboxEl = findChildElement(featureTypeEl, 'LatLongBoundingBox');
-    return ['minx', 'miny', 'maxx', 'maxy'].map((name) =>
-      getElementAttribute(bboxEl, name)
-    );
+    return ['minx', 'miny', 'maxx', 'maxy']
+      .map((name) => getElementAttribute(bboxEl, name))
+      .map(parseFloat);
   }
   function parseBBox() {
     const bboxEl = findChildElement(featureTypeEl, 'WGS84BoundingBox');
     return ['LowerCorner', 'UpperCorner']
       .map((elName) => findChildElement(bboxEl, elName))
       .map((cornerEl) => getElementText(cornerEl).split(' '))
-      .reduce((prev, curr) => [...prev, ...curr]);
+      .reduce((prev, curr) => [...prev, ...curr])
+      .map(parseFloat);
   }
   const otherCrs = serviceVersion.startsWith('1.0')
     ? []
