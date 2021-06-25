@@ -36,6 +36,26 @@ import { queryXmlDocument } from '../shared/http-utils';
  */
 
 /**
+ * @typedef {'string'|'float'|'integer'|'boolean'} FeaturePropertyType
+ */
+
+/**
+ * @typedef {'linestring'|'polygon'|'point'|'multilinestring'|'multipolygon'|'multipoint'|'unknown'} FeatureGeometryType
+ */
+
+/**
+ * @typedef {Object} FeatureTypeInfo
+ * @property {string} name
+ * @property {string} [title]
+ * @property {string} [abstract]
+ * @property {BoundingBox} [boundingBox] Expressed in latitudes and longitudes
+ * @property {Object.<string,FeaturePropertyType>} properties These properties will *not* include the feature geometry
+ * @property {string} [geometryName] Not defined if no geometry present
+ * @property {FeatureGeometryType} [geometryType] Not defined if no geometry present
+ * @property {number} [objectCount] Not defined if object count could not be determined
+ */
+
+/**
  * Represents a WFS endpoint advertising several feature types
  */
 export default class WfsEndpoint {

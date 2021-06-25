@@ -1,0 +1,4 @@
+<wfs:FeatureCollection
+        next="https://www.pigma.org/geoserver/wfs?TYPENAME=cd16%3Ahierarchisation_l%2Casp%3Aasp_rpg2010&amp;REQUEST=GetFeature&amp;RESULTTYPE=results&amp;VERSION=2.0.0&amp;SERVICE=WFS&amp;STARTINDEX=0"
+        numberMatched="364237" numberReturned="0" timeStamp="2021-06-25T12:55:21.659Z"
+        xsi:schemaLocation="http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd"/>

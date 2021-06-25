@@ -1,0 +1,21 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cd16="http://pigma.org/cd16" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:wfs="http://www.opengis.net/wfs/2.0" elementFormDefault="qualified" targetNamespace="http://pigma.org/cd16">
+    <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="https://www.pigma.org/geoserver/schemas/gml/3.2.1/gml.xsd"/>
+    <xsd:complexType name="hierarchisation_lType">
+        <xsd:complexContent>
+            <xsd:extension base="gml:AbstractFeatureType">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="axe" nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="cumuld" nillable="true" type="xsd:long"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="cumulf" nillable="true" type="xsd:long"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="plod" nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="absd" nillable="true" type="xsd:long"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="plof" nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="absf" nillable="true" type="xsd:long"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="categorie" nillable="true" type="xsd:short"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="geom" nillable="true" type="gml:CurvePropertyType"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="hierarchisation_l" substitutionGroup="gml:AbstractFeature" type="cd16:hierarchisation_lType"/>
+</xsd:schema>

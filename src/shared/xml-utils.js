@@ -60,7 +60,7 @@ export function findChildrenElement(element, name, nested) {
       prev.push(curr);
     }
 
-    if (nested) {
+    if (nested && Array.isArray(curr.children)) {
       return [...prev, ...curr.children.reduce(reducer, [])];
     } else {
       return prev;
