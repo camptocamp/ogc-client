@@ -10,8 +10,14 @@
     <div v-if="loaded">
       <InfoList :info="endpoint.getServiceInfo()"></InfoList>
       <div class="spacer-s"></div>
-      <div class="flex-row flex-align-stretch" style="min-height: 25rem">
-        <ItemsTree :items="endpoint.getLayers()" class="scroll-y flex-grow">
+      <div
+        class="flex-row flex-align-stretch"
+        style="min-height: 200px; max-height: 650px"
+      >
+        <ItemsTree
+          :items="endpoint.getLayers()"
+          class="scroll-y flex-grow flex-shrink"
+        >
           <template v-slot="{ item }">
             <div :title="item.abstract">
               <template v-if="item.name">
