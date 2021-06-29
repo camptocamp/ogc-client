@@ -7,11 +7,6 @@ import {
 import { queryXmlDocument } from '../shared/http-utils';
 
 /**
- * @typedef {Object} WfsFeatureType
- * @property {string} [name] The layer is renderable if defined
- */
-
-/**
  * @typedef {'1.0.0'|'1.1.0'|'2.0.0'} WfsVersion
  */
 

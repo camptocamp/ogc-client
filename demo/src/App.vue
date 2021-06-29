@@ -23,6 +23,18 @@
       <div class="spacer-m"></div>
       <WmsEndpoint></WmsEndpoint>
     </section>
+
+    <h1 class="text-l text-bold padding-m align-right bg-dark text-white">
+      WFS
+    </h1>
+    <section class="padding-m">
+      <p>
+        Enter a WFS service URL below to get some information and a list of
+        feature types from it.
+      </p>
+      <div class="spacer-m"></div>
+      <WfsEndpoint></WfsEndpoint>
+    </section>
   </div>
 </template>
 
@@ -50,9 +62,10 @@ import './style/reset.css';
 import './style/generics.css';
 import './style/helpers.css';
 import WmsEndpoint from './components/wms/WmsEndpoint';
+import WfsEndpoint from './components/wfs/WfsEndpoint';
 
 export default {
   name: 'App',
-  components: { WmsEndpoint },
+  components: { WfsEndpoint, WmsEndpoint },
 };
 </script>
