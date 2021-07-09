@@ -5,6 +5,7 @@ import {
 } from './capabilities';
 import { EndpointError } from '../shared/errors';
 import { queryXmlDocument } from '../shared/http-utils';
+import { parseWmsCapabilities } from '../worker';
 
 /**
  * @typedef {Object} LayerStyle
@@ -73,12 +74,12 @@ export default class WmsEndpoint {
      * @type {Promise<XmlDocument>}
      * @private
      */
-    this._capabilitiesPromise = queryXmlDocument(
+    this._capabilitiesPromise = parseWmsCapabilities(
       capabilitiesUrl.toString()
-    ).then((xmlDoc) => {
-      this._info = readInfoFromCapabilities(xmlDoc);
-      this._layers = readLayersFromCapabilities(xmlDoc);
-      this._version = readVersionFromCapabilities(xmlDoc);
+    ).then(({ info, layers, version }) => {
+      this._info = info;
+      this._layers = layers;
+      this._version = version;
     });
 
     /**
