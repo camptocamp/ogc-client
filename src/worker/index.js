@@ -15,3 +15,14 @@ export function parseWmsCapabilities(capabilitiesUrl) {
     url: capabilitiesUrl,
   });
 }
+
+/**
+ * Parses the capabilities document and return all relevant information
+ * @param {string} capabilitiesUrl This url should point to the capabilities document
+ * @return {Promise<{version: WfsVersion, info: WfsInfo, featureTypes: WfsFeatureType[]}>}
+ */
+export function parseWfsCapabilities(capabilitiesUrl) {
+  return sendTaskRequest('parseWfsCapabilities', workerInstance, {
+    url: capabilitiesUrl,
+  });
+}

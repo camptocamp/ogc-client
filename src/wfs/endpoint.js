@@ -1,10 +1,5 @@
 import { EndpointError } from '../shared/errors';
-import {
-  readFeatureTypesFromCapabilities,
-  readInfoFromCapabilities,
-  readVersionFromCapabilities,
-} from './capabilities';
-import { queryXmlDocument } from '../shared/http-utils';
+import { parseWfsCapabilities } from '../worker';
 
 /**
  * @typedef {'1.0.0'|'1.1.0'|'2.0.0'} WfsVersion
@@ -70,12 +65,12 @@ export default class WfsEndpoint {
      * @type {Promise<XmlDocument>}
      * @private
      */
-    this._capabilitiesPromise = queryXmlDocument(
+    this._capabilitiesPromise = parseWfsCapabilities(
       capabilitiesUrl.toString()
-    ).then((xmlDoc) => {
-      this._info = readInfoFromCapabilities(xmlDoc);
-      this._featureTypes = readFeatureTypesFromCapabilities(xmlDoc);
-      this._version = readVersionFromCapabilities(xmlDoc);
+    ).then(({ info, featureTypes, version }) => {
+      this._info = info;
+      this._featureTypes = featureTypes;
+      this._version = version;
     });
 
     /**

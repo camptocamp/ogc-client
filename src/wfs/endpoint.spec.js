@@ -6,20 +6,14 @@ describe('WfsEndpoint', () => {
   let endpoint;
 
   beforeEach(() => {
-    window.fetch = jest.fn(() => {
-      return Promise.resolve({
-        text: () => Promise.resolve(capabilities200),
-        status: 200,
-        ok: true,
-      });
-    });
-
+    window.fetchResponseFactory = () => capabilities200;
     endpoint = new WfsEndpoint(
       'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType&featureType=myfeatures'
     );
   });
 
-  it('makes a getcapabilities request', () => {
+  it('makes a getcapabilities request', async () => {
+    await endpoint.isReady();
     expect(window.fetch).toHaveBeenCalledWith(
       'https://my.test.service/ogc/wfs?featureType=myfeatures&SERVICE=WFS&REQUEST=GetCapabilities'
     );
