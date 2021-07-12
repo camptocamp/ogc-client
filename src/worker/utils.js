@@ -32,7 +32,6 @@ export function sendTaskRequest(taskName, workerInstance, params) {
     );
     /** @param {WorkerResponse} data */
     const handler = ({ data }) => {
-      console.log('message received in main', data);
       if (data.requestId === requestId) {
         workerInstance.removeEventListener('message', handler);
         if ('error' in data) {

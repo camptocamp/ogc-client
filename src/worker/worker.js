@@ -16,7 +16,3 @@ addTaskHandler(
       version: readVersionFromCapabilities(xmlDoc),
     }))
 );
-
-self.addEventListener('message', ({ data }) => {
-  console.log('message received in worker: ', data);
-});

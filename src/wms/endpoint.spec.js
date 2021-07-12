@@ -6,20 +6,14 @@ describe('WmsEndpoint', () => {
   let endpoint;
 
   beforeEach(() => {
-    window.fetch = jest.fn(() => {
-      return Promise.resolve({
-        text: () => Promise.resolve(capabilities130),
-        status: 200,
-        ok: true,
-      });
-    });
-
+    window.fetchResponseFactory = () => capabilities130;
     endpoint = new WmsEndpoint(
       'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb'
     );
   });
 
-  it('makes a getcapabilities request', () => {
+  it('makes a getcapabilities request', async () => {
+    await endpoint.isReady();
     expect(window.fetch).toHaveBeenCalledWith(
       'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetCapabilities'
     );
