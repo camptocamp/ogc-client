@@ -7,11 +7,11 @@ import {
 /**
  * Parses a DescribeFeatureType and GetFeature (with hits) document
  * This requires providing the base feature type object from the GetCapabilities document
- * @param {WfsFeatureType} featureType
+ * @param {WfsFeatureTypeInternal} featureType
  * @param {XmlDocument} describeFeatureTypeDoc
  * @param {XmlDocument} getFeatureHitsDoc
  * @param {WfsVersion} serviceVersion
- * @return {FeatureTypeInfo}
+ * @return {WfsFeatureTypeFull}
  */
 export function parseFeatureTypeInfo(
   featureType,
@@ -19,7 +19,15 @@ export function parseFeatureTypeInfo(
   getFeatureHitsDoc,
   serviceVersion
 ) {
-  const { name, title, abstract, latLonBoundingBox: boundingBox } = featureType;
+  const {
+    name,
+    title,
+    abstract,
+    defaultCrs,
+    otherCrs,
+    outputFormats,
+    latLonBoundingBox: boundingBox,
+  } = featureType;
 
   const hitsAttr = serviceVersion.startsWith('2.0')
     ? 'numberMatched'
@@ -59,6 +67,9 @@ export function parseFeatureTypeInfo(
     ...(title && { title }),
     ...(abstract && { abstract }),
     ...(boundingBox && { boundingBox }),
+    ...(defaultCrs && { defaultCrs }),
+    ...(otherCrs && { otherCrs }),
+    ...(outputFormats && { outputFormats }),
     properties,
     ...(geometryName && { geometryName }),
     ...(geometryType && { geometryType }),

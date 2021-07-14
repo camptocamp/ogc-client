@@ -41,7 +41,7 @@ export function readInfoFromCapabilities(capabilitiesDoc) {
 /**
  * Will read all feature types present in the capabilities doc
  * @param {XmlDocument} capabilitiesDoc
- * @return {WfsFeatureType[]}
+ * @return {WfsFeatureTypeInternal[]}
  */
 export function readFeatureTypesFromCapabilities(capabilitiesDoc) {
   const version = readVersionFromCapabilities(capabilitiesDoc);
@@ -58,7 +58,7 @@ export function readFeatureTypesFromCapabilities(capabilitiesDoc) {
  * Parse a feature type in a capabilities doc
  * @param {XmlElement} featureTypeEl
  * @param {WfsVersion} serviceVersion
- * @return {WfsFeatureType}
+ * @return {WfsFeatureTypeInternal}
  */
 function parseFeatureType(featureTypeEl, serviceVersion) {
   const srsTag = serviceVersion.startsWith('2.') ? 'CRS' : 'SRS';

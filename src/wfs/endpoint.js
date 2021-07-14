@@ -1,5 +1,7 @@
 import { EndpointError } from '../shared/errors';
 import { parseWfsCapabilities } from '../worker';
+import { queryXmlDocument } from '../shared/http-utils';
+import { parseFeatureTypeInfo } from './featuretypeinfo';
 
 /**
  * @typedef {'1.0.0'|'1.1.0'|'2.0.0'} WfsVersion
@@ -15,7 +17,7 @@ import { parseWfsCapabilities } from '../worker';
  */
 
 /**
- * @typedef {Object} WfsFeatureType
+ * @typedef {Object} WfsFeatureTypeInternal
  * @property {string} name
  * @property {string} [title]
  * @property {string} [abstract]
@@ -34,11 +36,22 @@ import { parseWfsCapabilities } from '../worker';
  */
 
 /**
- * @typedef {Object} FeatureTypeInfo
+ * @typedef {Object} WfsFeatureTypeSummary
  * @property {string} name
  * @property {string} [title]
  * @property {string} [abstract]
  * @property {BoundingBox} [boundingBox] Expressed in latitudes and longitudes
+ */
+
+/**
+ * @typedef {Object} WfsFeatureTypeFull
+ * @property {string} name
+ * @property {string} [title]
+ * @property {string} [abstract]
+ * @property {BoundingBox} [boundingBox] Expressed in latitudes and longitudes
+ * @property {CrsCode} defaultCrs
+ * @property {CrsCode[]} otherCrs
+ * @property {MimeType[]} outputFormats
  * @property {Object.<string,FeaturePropertyType>} properties These properties will *not* include the feature geometry
  * @property {string} [geometryName] Not defined if no geometry present
  * @property {FeatureGeometryType} [geometryType] Not defined if no geometry present
@@ -61,12 +74,18 @@ export default class WfsEndpoint {
     capabilitiesUrl.searchParams.set('REQUEST', 'GetCapabilities');
 
     /**
+     * @type {string}
+     * @private
+     */
+    this._capabilitiesUrl = capabilitiesUrl.toString();
+
+    /**
      * This fetches the capabilities doc and parses its contents
      * @type {Promise<XmlDocument>}
      * @private
      */
     this._capabilitiesPromise = parseWfsCapabilities(
-      capabilitiesUrl.toString()
+      this._capabilitiesUrl
     ).then(({ info, featureTypes, version }) => {
       this._info = info;
       this._featureTypes = featureTypes;
@@ -80,7 +99,7 @@ export default class WfsEndpoint {
     this._info = null;
 
     /**
-     * @type {WfsFeatureType[]|null}
+     * @type {WfsFeatureTypeInternal[]|null}
      * @private
      */
     this._featureTypes = null;
@@ -109,21 +128,54 @@ export default class WfsEndpoint {
 
   /**
    * Returns an array of feature types
-   * @return {WfsFeatureType[]|null}
+   * @return {WfsFeatureTypeSummary[]|null}
    */
   getFeatureTypes() {
-    return this._featureTypes;
+    return this._featureTypes.map((featureType) => ({
+      name: featureType.name,
+      ...('title' in featureType && { title: featureType.title }),
+      ...('abstract' in featureType && { abstract: featureType.abstract }),
+      ...('latLonBoundingBox' in featureType && {
+        boundingBox: featureType.latLonBoundingBox,
+      }),
+    }));
   }
 
   /**
    * Returns a complete feature type by its name
    * @param {string} name Feature type name property (unique in the WFS service)
-   * @return {WfsFeatureType|null} return null if layer was not found
+   * @return {Promise<WfsFeatureTypeFull>|null} return null if layer was not found or endpoint is not ready
    */
   getFeatureTypeByName(name) {
-    return (
-      this._featureTypes &&
-      this._featureTypes.find((featureType) => featureType.name === name)
+    if (!this._featureTypes) return null;
+    const featureType = this._featureTypes.find(
+      (featureType) => featureType.name === name
+    );
+    if (!featureType) return null;
+
+    const typeParam = this._version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
+    const countParam = this._version === '2.0.0' ? 'COUNT' : 'maxFeatures';
+
+    const describeUrl = new URL(this._capabilitiesUrl);
+    describeUrl.searchParams.set('REQUEST', 'DescribeFeatureType');
+    describeUrl.searchParams.set('VERSION', this._version);
+    describeUrl.searchParams.set(typeParam, name);
+    const getFeatureUrl = new URL(this._capabilitiesUrl);
+    getFeatureUrl.searchParams.set('REQUEST', 'GetFeature');
+    getFeatureUrl.searchParams.set('VERSION', this._version);
+    getFeatureUrl.searchParams.set(typeParam, name);
+    getFeatureUrl.searchParams.set(countParam, '1');
+
+    return Promise.all([
+      queryXmlDocument(describeUrl.toString()),
+      queryXmlDocument(getFeatureUrl.toString()),
+    ]).then(([describeResponse, getFeatureResponse]) =>
+      parseFeatureTypeInfo(
+        featureType,
+        describeResponse,
+        getFeatureResponse,
+        this._version
+      )
     );
   }
 

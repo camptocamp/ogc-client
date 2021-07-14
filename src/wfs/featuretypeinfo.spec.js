@@ -7,7 +7,7 @@ import { parseXmlString } from '../shared/xml-utils';
 
 describe('feature type info', () => {
   describe('parseFeatureTypeInfo', () => {
-    /** @type {WfsFeatureType} */
+    /** @type {WfsFeatureTypeInternal} */
     const featureType = {
       abstract:
         'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',
@@ -29,7 +29,7 @@ describe('feature type info', () => {
       title: 'CD 16 - Hiérarchisation du réseau',
     };
 
-    /** @type {FeatureTypeInfo} */
+    /** @type {WfsFeatureTypeFull} */
     const expectedFeatureTypeInfo = {
       name: 'cd16:hierarchisation_l',
       title: 'CD 16 - Hiérarchisation du réseau',
@@ -54,6 +54,14 @@ describe('feature type info', () => {
       geometryName: 'geom',
       geometryType: 'linestring',
       objectCount: 364237,
+      defaultCrs: 'EPSG:2154',
+      otherCrs: ['EPSG:32615', 'EPSG:32616', 'EPSG:32617', 'EPSG:32618'],
+      outputFormats: [
+        'application/gml+xml; version=3.2',
+        'text/xml; subtype=gml/3.2.1',
+        'text/xml; subtype=gml/3.1.1',
+        'text/xml; subtype=gml/2.1.2',
+      ],
     };
 
     it('parses the feature type info (1.1.0)', () => {

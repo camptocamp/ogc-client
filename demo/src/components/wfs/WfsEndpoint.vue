@@ -78,9 +78,11 @@ export default {
       }
       this.loading = false;
     },
-    handleItemClick(layer, event) {
-      this.selectedFeatureType = this.endpoint.getFeatureTypeByName(layer.name);
+    async handleItemClick(layer, event) {
       event.preventDefault();
+      this.selectedFeatureType = await this.endpoint.getFeatureTypeByName(
+        layer.name
+      );
     },
   },
 };
