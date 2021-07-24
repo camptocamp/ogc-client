@@ -2,6 +2,7 @@ import { EndpointError } from '../shared/errors';
 import { parseWfsCapabilities } from '../worker';
 import { queryXmlDocument } from '../shared/http-utils';
 import { parseFeatureTypeInfo } from './featuretypeinfo';
+import { useCache } from '../shared/cache';
 
 /**
  * @typedef {'1.0.0'|'1.1.0'|'2.0.0'} WfsVersion
@@ -84,7 +85,10 @@ export default class WfsEndpoint {
      * @type {Promise<XmlDocument>}
      * @private
      */
-    this._capabilitiesPromise = parseWfsCapabilities(
+    this._capabilitiesPromise = useCache(
+      () => parseWfsCapabilities(this._capabilitiesUrl),
+      'WFS',
+      'CAPABILITIES',
       this._capabilitiesUrl
     ).then(({ info, featureTypes, version }) => {
       this._info = info;
@@ -153,29 +157,37 @@ export default class WfsEndpoint {
     );
     if (!featureType) return null;
 
-    const typeParam = this._version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
-    const countParam = this._version === '2.0.0' ? 'COUNT' : 'maxFeatures';
+    return useCache(
+      () => {
+        const typeParam = this._version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
+        const countParam = this._version === '2.0.0' ? 'COUNT' : 'maxFeatures';
 
-    const describeUrl = new URL(this._capabilitiesUrl);
-    describeUrl.searchParams.set('REQUEST', 'DescribeFeatureType');
-    describeUrl.searchParams.set('VERSION', this._version);
-    describeUrl.searchParams.set(typeParam, name);
-    const getFeatureUrl = new URL(this._capabilitiesUrl);
-    getFeatureUrl.searchParams.set('REQUEST', 'GetFeature');
-    getFeatureUrl.searchParams.set('VERSION', this._version);
-    getFeatureUrl.searchParams.set(typeParam, name);
-    getFeatureUrl.searchParams.set(countParam, '1');
+        const describeUrl = new URL(this._capabilitiesUrl);
+        describeUrl.searchParams.set('REQUEST', 'DescribeFeatureType');
+        describeUrl.searchParams.set('VERSION', this._version);
+        describeUrl.searchParams.set(typeParam, name);
+        const getFeatureUrl = new URL(this._capabilitiesUrl);
+        getFeatureUrl.searchParams.set('REQUEST', 'GetFeature');
+        getFeatureUrl.searchParams.set('VERSION', this._version);
+        getFeatureUrl.searchParams.set(typeParam, name);
+        getFeatureUrl.searchParams.set(countParam, '1');
 
-    return Promise.all([
-      queryXmlDocument(describeUrl.toString()),
-      queryXmlDocument(getFeatureUrl.toString()),
-    ]).then(([describeResponse, getFeatureResponse]) =>
-      parseFeatureTypeInfo(
-        featureType,
-        describeResponse,
-        getFeatureResponse,
-        this._version
-      )
+        return Promise.all([
+          queryXmlDocument(describeUrl.toString()),
+          queryXmlDocument(getFeatureUrl.toString()),
+        ]).then(([describeResponse, getFeatureResponse]) =>
+          parseFeatureTypeInfo(
+            featureType,
+            describeResponse,
+            getFeatureResponse,
+            this._version
+          )
+        );
+      },
+      'WFS',
+      'FEATURETYPEINFO',
+      this._capabilitiesUrl,
+      name
     );
   }
 

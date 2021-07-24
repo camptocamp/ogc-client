@@ -1,11 +1,17 @@
 import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
 import WmsEndpoint from './endpoint';
+import { useCache } from '../shared/cache';
+
+jest.mock('../shared/cache', () => ({
+  useCache: jest.fn((factory) => factory()),
+}));
 
 describe('WmsEndpoint', () => {
   /** @type {WmsEndpoint} */
   let endpoint;
 
   beforeEach(() => {
+    jest.clearAllMocks();
     window.fetchResponseFactory = () => capabilities130;
     endpoint = new WmsEndpoint(
       'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb'
@@ -17,6 +23,10 @@ describe('WmsEndpoint', () => {
     expect(window.fetch).toHaveBeenCalledWith(
       'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetCapabilities'
     );
+  });
+
+  it('uses cache', () => {
+    expect(useCache).toHaveBeenCalledTimes(1);
   });
 
   describe('#isReady', () => {

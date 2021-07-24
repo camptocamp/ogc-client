@@ -6,6 +6,7 @@ import {
 import { EndpointError } from '../shared/errors';
 import { queryXmlDocument } from '../shared/http-utils';
 import { parseWmsCapabilities } from '../worker';
+import { useCache } from '../shared/cache';
 
 /**
  * @typedef {Object} LayerStyle
@@ -74,13 +75,19 @@ export default class WmsEndpoint {
      * @type {Promise<XmlDocument>}
      * @private
      */
-    this._capabilitiesPromise = parseWmsCapabilities(
+    this._capabilitiesPromise = useCache(
+      () =>
+        parseWmsCapabilities(capabilitiesUrl.toString()).then(
+          ({ info, layers, version }) => {
+            this._info = info;
+            this._layers = layers;
+            this._version = version;
+          }
+        ),
+      'WMS',
+      'CAPABILITIES',
       capabilitiesUrl.toString()
-    ).then(({ info, layers, version }) => {
-      this._info = info;
-      this._layers = layers;
-      this._version = version;
-    });
+    );
 
     /**
      * @type {WmsInfo|null}

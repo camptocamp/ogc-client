@@ -2,12 +2,18 @@ import capabilities200 from '../../fixtures/wfs/capabilities-pigma-2-0-0.xml';
 import getfeature200 from '../../fixtures/wfs/getfeature-hits-pigma-2-0-0.xml';
 import describefeaturetype200 from '../../fixtures/wfs/describefeaturetype-pigma-2-0-0-xsd.xml';
 import WfsEndpoint from './endpoint';
+import { useCache } from '../shared/cache';
+
+jest.mock('../shared/cache', () => ({
+  useCache: jest.fn((factory) => factory()),
+}));
 
 describe('WfsEndpoint', () => {
   /** @type {WfsEndpoint} */
   let endpoint;
 
   beforeEach(() => {
+    jest.clearAllMocks();
     window.fetchResponseFactory = (url) => {
       if (url.indexOf('GetCapabilities') > -1) return capabilities200;
       if (url.indexOf('GetFeature') > -1) return getfeature200;
@@ -25,6 +31,10 @@ describe('WfsEndpoint', () => {
     expect(window.fetch).toHaveBeenCalledWith(
       'https://my.test.service/ogc/wfs?featureType=myfeatures&SERVICE=WFS&REQUEST=GetCapabilities'
     );
+  });
+
+  it('uses cache', () => {
+    expect(useCache).toHaveBeenCalledTimes(1);
   });
 
   describe('#isReady', () => {
@@ -85,6 +95,11 @@ describe('WfsEndpoint', () => {
   });
 
   describe('#getFeatureTypeByName', () => {
+    it('uses cache', async () => {
+      await endpoint.isReady();
+      endpoint.getFeatureTypeByName('cd16:hierarchisation_l');
+      expect(useCache).toHaveBeenCalledTimes(2);
+    });
     it('returns detailed info on a feature type', async () => {
       await endpoint.isReady();
       await expect(
