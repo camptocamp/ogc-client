@@ -80,7 +80,7 @@ export function parseFeatureProps(
  */
 export function parseFeaturePropsGeojson(getFeaturesGeojson) {
   if (
-    !'features' in getFeaturesGeojson ||
+    !('features' in getFeaturesGeojson) ||
     !Array.isArray(getFeaturesGeojson.features)
   ) {
     throw new Error('Geojson object is apparently not a FeatureCollection');
@@ -89,4 +89,26 @@ export function parseFeaturePropsGeojson(getFeaturesGeojson) {
     id: feature.id,
     properties: { ...feature.properties },
   }));
+}
+
+/**
+ * Returns details regarding the features prop values
+ * @param {WfsFeatureWithProps[]} featuresWithProps
+ * @return {Object.<string, WfsFeatureTypePropDetails>}
+ */
+export function computeFeaturePropsDetails(featuresWithProps) {
+  return featuresWithProps.reduce((prev, curr) => {
+    for (const propName in curr.properties) {
+      const propValue = curr.properties[propName];
+      if (!(propName in prev)) {
+        prev[propName] = { uniqueValues: [] };
+      }
+      const uniqueValue = prev[propName].uniqueValues.find(
+        (v) => v.value === propValue
+      );
+      if (uniqueValue) uniqueValue.count++;
+      else prev[propName].uniqueValues.push({ value: propValue, count: 1 });
+    }
+    return prev;
+  }, {});
 }

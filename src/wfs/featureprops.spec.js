@@ -5,7 +5,11 @@ import getFeatureStates100 from '../../fixtures/wfs/getfeature-props-states-1-0-
 import getFeatureStates110 from '../../fixtures/wfs/getfeature-props-states-1-1-0.xml';
 import getFeatureStates200 from '../../fixtures/wfs/getfeature-props-states-2-0-0.xml';
 import getFeatureStates200Geojson from '../../fixtures/wfs/getfeature-props-states-2-0-0.json';
-import { parseFeatureProps, parseFeaturePropsGeojson } from './featureprops';
+import {
+  computeFeaturePropsDetails,
+  parseFeatureProps,
+  parseFeaturePropsGeojson,
+} from './featureprops';
 import { parseXmlString } from '../shared/xml-utils';
 
 describe('feature props utils', () => {
@@ -339,6 +343,114 @@ describe('feature props utils', () => {
         expect(
           parseFeatureProps(parseXmlString(xml), featureTypeFull, '2.0.0')
         ).toEqual(expected);
+      });
+    });
+  });
+
+  describe('computeFeaturePropsDetails', () => {
+    const featuresWithProps = [
+      {
+        id: 'cities.8338',
+        properties: {
+          NAME: 'Buenos Aires',
+          POPULATION: 10000,
+        },
+      },
+      {
+        id: 'cities.1225',
+        properties: {
+          NAME: 'Karachi',
+          POPULATION: 20000,
+        },
+      },
+      {
+        id: 'cities.2616',
+        properties: {
+          NAME: 'Manila',
+          POPULATION: 30000,
+        },
+      },
+      {
+        id: 'cities.9339',
+        properties: {
+          NAME: 'Sao Paulo',
+          POPULATION: 30000,
+        },
+      },
+      {
+        id: 'cities.9181',
+        properties: {
+          NAME: 'Seoul',
+          POPULATION: 30000,
+        },
+      },
+      {
+        id: 'cities.9055',
+        properties: {
+          NAME: 'Istanbul',
+          POPULATION: 30000,
+        },
+      },
+      {
+        id: 'cities.5102',
+        properties: {
+          NAME: 'Shanghai',
+          POPULATION: 10000,
+        },
+      },
+      {
+        id: 'cities.1350',
+        properties: {
+          NAME: 'Dhaka',
+          POPULATION: 30000,
+        },
+      },
+    ];
+    it('computes unique values', () => {
+      expect(computeFeaturePropsDetails(featuresWithProps)).toEqual({
+        NAME: {
+          uniqueValues: [
+            {
+              count: 1,
+              value: 'Buenos Aires',
+            },
+            {
+              count: 1,
+              value: 'Karachi',
+            },
+            {
+              count: 1,
+              value: 'Manila',
+            },
+            {
+              count: 1,
+              value: 'Sao Paulo',
+            },
+            {
+              count: 1,
+              value: 'Seoul',
+            },
+            {
+              count: 1,
+              value: 'Istanbul',
+            },
+            {
+              count: 1,
+              value: 'Shanghai',
+            },
+            {
+              count: 1,
+              value: 'Dhaka',
+            },
+          ],
+        },
+        POPULATION: {
+          uniqueValues: [
+            { value: 10000, count: 2 },
+            { value: 20000, count: 1 },
+            { value: 30000, count: 5 },
+          ],
+        },
       });
     });
   });

@@ -66,6 +66,17 @@ import { useCache } from '../shared/cache';
  */
 
 /**
+ * @typedef {Object} WfsFeatureTypeUniqueValue
+ * @property {number|boolean|string} value
+ * @property {number} count
+ */
+
+/**
+ * @typedef {Object} WfsFeatureTypePropDetails
+ * @property {WfsFeatureTypeUniqueValue[]} uniqueValues
+ */
+
+/**
  * Represents a WFS endpoint advertising several feature types
  */
 export default class WfsEndpoint {
