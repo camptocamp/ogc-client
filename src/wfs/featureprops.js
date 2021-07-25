@@ -37,6 +37,10 @@ export function parseFeatureProps(
   }
   const idAttr = serviceVersion === '1.0.0' ? 'fid' : 'gml:id';
 
+  function isElementProperty(propName) {
+    return propName in featureTypeFull.properties;
+  }
+
   function parseElementPropertyValue(propName, valueAsString) {
     const type = featureTypeFull.properties[propName];
     switch (type) {
@@ -52,13 +56,15 @@ export function parseFeatureProps(
   }
 
   function getProperties(memberEl) {
-    return getChildrenElement(memberEl).reduce((prev, curr) => {
-      const propName = stripNamespace(getElementName(curr));
-      return {
-        ...prev,
-        [propName]: parseElementPropertyValue(propName, getElementText(curr)),
-      };
-    }, {});
+    return getChildrenElement(memberEl)
+      .filter((el) => isElementProperty(stripNamespace(getElementName(el))))
+      .reduce((prev, curr) => {
+        const propName = stripNamespace(getElementName(curr));
+        return {
+          ...prev,
+          [propName]: parseElementPropertyValue(propName, getElementText(curr)),
+        };
+      }, {});
   }
 
   return members.map((el) => ({

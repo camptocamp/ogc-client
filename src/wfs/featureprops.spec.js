@@ -306,5 +306,40 @@ describe('feature props utils', () => {
         );
       });
     });
+    describe('additional props not present in the feature info', () => {
+      /** @type {WfsFeatureTypeFull} */
+      const featureTypeFull = {
+        name: 'usa:states',
+        properties: {
+          AREA_LAND: 'float',
+          PERSONS: 'integer',
+        },
+      };
+      const expected = [
+        {
+          id: 'states.1',
+          properties: {
+            AREA_LAND: 2.51470069067e11,
+            PERSONS: 563626,
+          },
+        },
+      ];
+      const xml = `
+<wfs:FeatureCollection>
+    <wfs:member>
+        <usa:states gml:id="states.1">
+            <usa:AREA_LAND>2.51470069067E11</usa:AREA_LAND>
+            <usa:PERSONS>563626</usa:PERSONS>
+            <usa:the_geom><gml:MultiSurface srsName="urn:ogc:def:crs:EPSG::4326" srsDimension="2" gml:id="states.1.the_geom"><gml:surfaceMember><gml:Polygon gml:id="states.1.the_geom.1"><gml:exterior><gml:LinearRing><gml:posList>45.000277 -108.621313 44.99738 -104.057697 41.001406 -104.053249 40.997959 -111.046723 45.001321 -111.055199 45.000277 -108.621313</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></gml:surfaceMember></gml:MultiSurface></usa:the_geom>
+        </usa:states>
+    </wfs:member>
+</wfs:FeatureCollection>`;
+
+      it('ignores props not listed in the feature type info', () => {
+        expect(
+          parseFeatureProps(parseXmlString(xml), featureTypeFull, '2.0.0')
+        ).toEqual(expected);
+      });
+    });
   });
 });
