@@ -60,6 +60,12 @@ import { useCache } from '../shared/cache';
  */
 
 /**
+ * @typedef {Object} WfsFeatureWithProps
+ * @property {string} id Feature id
+ * @property {Object.<string, FeaturePropertyType>} properties Feature properties
+ */
+
+/**
  * Represents a WFS endpoint advertising several feature types
  */
 export default class WfsEndpoint {

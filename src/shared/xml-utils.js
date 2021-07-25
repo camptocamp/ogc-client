@@ -38,25 +38,35 @@ export function getRootElement(xmlDoc) {
 }
 
 /**
- * Return the element name without namespace
- * @param {XmlElement} element
+ * Will do nothing if no namespace present
+ * @param {string} name
  * @return {string}
  */
-function getElementName(element) {
-  const colon = element.name && element.name.indexOf(':');
-  return colon > -1 ? element.name.substr(colon + 1) : element.name;
+export function stripNamespace(name) {
+  const colon = name.indexOf(':');
+  return colon > -1 ? name.substr(colon + 1) : name;
 }
 
 /**
- * Will return all matching elements
+ * Return the element name
+ * @param {XmlElement} element
+ * @return {string}
+ */
+export function getElementName(element) {
+  return element.name || '';
+}
+
+/**
+ * Will return all matching elements (namespace will be ignored)
  * @param {XmlElement} element Element to look into
  * @param {string} name element name
  * @param {boolean} [nested=false] if true, will lookup children of children too
  * @return {XmlElement[]} Returns an empty array if no match found
  */
 export function findChildrenElement(element, name, nested) {
+  const strippedName = stripNamespace(name);
   function reducer(prev, curr) {
-    if (getElementName(curr) === name) {
+    if (stripNamespace(getElementName(curr)) === strippedName) {
       prev.push(curr);
     }
 
@@ -81,6 +91,17 @@ export function findChildrenElement(element, name, nested) {
  */
 export function findChildElement(element, name, nested) {
   return findChildrenElement(element, name, nested)[0] || null;
+}
+
+/**
+ * Will return all children elements
+ * @param {XmlElement} element Element to look into
+ * @return {XmlElement[]} Returns empty array if no element found
+ */
+export function getChildrenElement(element) {
+  return element && Array.isArray(element.children)
+    ? [...element.children.filter((el) => el.constructor.name === 'XmlElement')]
+    : [];
 }
 
 /**

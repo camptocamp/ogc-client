@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<wfs:FeatureCollection
+        xmlns:ms="http://mapserver.gis.umn.edu/mapserver"
+        xmlns:gml="http://www.opengis.net/gml/3.2"
+        xmlns:wfs="http://www.opengis.net/wfs/2.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://mapserver.gis.umn.edu/mapserver https://demo.mapserver.org/cgi-bin/wfs?SERVICE=WFS&amp;VERSION=2.0.0&amp;REQUEST=DescribeFeatureType&amp;TYPENAME=cities&amp;OUTPUTFORMAT=application%2Fgml%2Bxml%3B%20version%3D3.2 http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"
+        timeStamp="2021-07-25T03:00:17" numberMatched="unknown" numberReturned="10"
+        next="https://demo.mapserver.org/cgi-bin/wfs?SERVICE=WFS&amp;VERSION=2.0.0&amp;REQUEST=GetFeature&amp;typename=cities&amp;count=10&amp;propertyname=POPULATION%2CNAME&amp;STARTINDEX=10">
+    <wfs:boundedBy>
+        <gml:Envelope srsName="urn:ogc:def:crs:EPSG::4326">
+            <gml:lowerCorner>-34.587500 -99.138611</gml:lowerCorner>
+            <gml:upperCorner>41.018611 126.999722</gml:upperCorner>
+        </gml:Envelope>
+    </wfs:boundedBy>
+    <wfs:member>
+        <ms:cities gml:id="cities.8338">
+            <ms:POPULATION>12116379</ms:POPULATION>
+            <ms:NAME>Buenos Aires</ms:NAME>
+        </ms:cities>
+    </wfs:member>
+    <wfs:member>
+        <ms:cities gml:id="cities.1225">
+            <ms:POPULATION>10537226</ms:POPULATION>
+            <ms:NAME>Karachi</ms:NAME>
+        </ms:cities>
+    </wfs:member>
+    <wfs:member>
+        <ms:cities gml:id="cities.2616">
+            <ms:POPULATION>10232924</ms:POPULATION>
+            <ms:NAME>Manila</ms:NAME>
+        </ms:cities>
+    </wfs:member>
+    <wfs:member>
+        <ms:cities gml:id="cities.9339">
+            <ms:POPULATION>10194978</ms:POPULATION>
+            <ms:NAME>Sao Paulo</ms:NAME>
+        </ms:cities>
+    </wfs:member>
+    <wfs:member>
+        <ms:cities gml:id="cities.9181">
+            <ms:POPULATION>9630586</ms:POPULATION>
+            <ms:NAME>Seoul</ms:NAME>
+        </ms:cities>
+    </wfs:member>
+    <wfs:member>
+        <ms:cities gml:id="cities.9055">
+            <ms:POPULATION>9418987</ms:POPULATION>
+            <ms:NAME>Istanbul</ms:NAME>
+        </ms:cities>
+    </wfs:member>
+    <wfs:member>
+        <ms:cities gml:id="cities.5102">
+            <ms:POPULATION>9005576</ms:POPULATION>
+            <ms:NAME>Shanghai</ms:NAME>
+        </ms:cities>
+    </wfs:member>
+    <wfs:member>
+        <ms:cities gml:id="cities.1350">
+            <ms:POPULATION>8942250</ms:POPULATION>
+            <ms:NAME>Dhaka</ms:NAME>
+        </ms:cities>
+    </wfs:member>
+    <wfs:member>
+        <ms:cities gml:id="cities.1663">
+            <ms:POPULATION>8827879</ms:POPULATION>
+            <ms:NAME>Jakarta</ms:NAME>
+        </ms:cities>
+    </wfs:member>
+    <wfs:member>
+        <ms:cities gml:id="cities.6382">
+            <ms:POPULATION>8681360</ms:POPULATION>
+            <ms:NAME>Mexico</ms:NAME>
+        </ms:cities>
+    </wfs:member>
+</wfs:FeatureCollection>

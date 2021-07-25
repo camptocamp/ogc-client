@@ -1,0 +1,178 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "states.1",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "WY",
+        "STATE_NAME": "Wyoming",
+        "AREA_LAND": 2.51470069067E11,
+        "AREA_WATER": 1.864445306E9,
+        "PERSONS": 563626
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.2",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "PA",
+        "STATE_NAME": "Pennsylvania",
+        "AREA_LAND": 1.15883064314E11,
+        "AREA_WATER": 3.397122731E9,
+        "PERSONS": 12702379
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.3",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "OH",
+        "STATE_NAME": "Ohio",
+        "AREA_LAND": 1.05828706692E11,
+        "AREA_WATER": 1.0269012119E10,
+        "PERSONS": 11536504
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.4",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "NM",
+        "STATE_NAME": "New Mexico",
+        "AREA_LAND": 3.1416074824E11,
+        "AREA_WATER": 7.56659673E8,
+        "PERSONS": 2059179
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.5",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "MD",
+        "STATE_NAME": "Maryland",
+        "AREA_LAND": 2.5141638381E10,
+        "AREA_WATER": 6.989579585E9,
+        "PERSONS": 5773552
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.6",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "RI",
+        "STATE_NAME": "Rhode Island",
+        "AREA_LAND": 2.677566454E9,
+        "AREA_WATER": 1.323668539E9,
+        "PERSONS": 1052567
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.7",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "OR",
+        "STATE_NAME": "Oregon",
+        "AREA_LAND": 2.48607802255E11,
+        "AREA_WATER": 6.191433228E9,
+        "PERSONS": 3831074
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.8",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "PR",
+        "STATE_NAME": "Puerto Rico",
+        "AREA_LAND": 8.867536532E9,
+        "AREA_WATER": 4.923745357E9,
+        "PERSONS": 3725789
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.9",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "WI",
+        "STATE_NAME": "Wisconsin",
+        "AREA_LAND": 1.40268064888E11,
+        "AREA_WATER": 2.9366760483E10,
+        "PERSONS": 5686986
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.10",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "ND",
+        "STATE_NAME": "North Dakota",
+        "AREA_LAND": 1.78711239147E11,
+        "AREA_WATER": 4.396568298E9,
+        "PERSONS": 672591
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.11",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "NV",
+        "STATE_NAME": "Nevada",
+        "AREA_LAND": 2.84331937541E11,
+        "AREA_WATER": 2.047761678E9,
+        "PERSONS": 2700551
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.12",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "GA",
+        "STATE_NAME": "Georgia",
+        "AREA_LAND": 1.48959236603E11,
+        "AREA_WATER": 4.951196915E9,
+        "PERSONS": 9687653
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.13",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "NY",
+        "STATE_NAME": "New York",
+        "AREA_LAND": 1.22056806947E11,
+        "AREA_WATER": 1.92399241E10,
+        "PERSONS": 19378102
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "states.14",
+      "geometry": null,
+      "properties": {
+        "STATE_ABBR": "AR",
+        "STATE_NAME": "Arkansas",
+        "AREA_LAND": 1.34771261408E11,
+        "AREA_WATER": 2.960539257E9,
+        "PERSONS": 2915918
+      }
+    }
+  ],
+  "totalFeatures": 52,
+  "numberMatched": 52,
+  "numberReturned": 14,
+  "timeStamp": "2021-07-25T09:43:53.718Z",
+  "crs": null
+}
