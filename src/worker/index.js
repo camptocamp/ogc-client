@@ -26,3 +26,22 @@ export function parseWfsCapabilities(capabilitiesUrl) {
     url: capabilitiesUrl,
   });
 }
+
+/**
+ * Queries a feature type details
+ * @param {string} capabilitiesUrl This url should point to the capabilities document
+ * @param {WfsVersion} serviceVersion
+ * @param {WfsFeatureTypeFull} featureTypeFull
+ * @return {Promise<{props:Object.<string, WfsFeatureTypePropDetails>}>}
+ */
+export function queryWfsFeatureTypeDetails(
+  capabilitiesUrl,
+  serviceVersion,
+  featureTypeFull
+) {
+  return sendTaskRequest('queryWfsFeatureTypeDetails', workerInstance, {
+    url: capabilitiesUrl,
+    serviceVersion,
+    featureTypeFull,
+  });
+}
