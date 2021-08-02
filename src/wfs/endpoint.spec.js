@@ -1,5 +1,6 @@
 import capabilities200 from '../../fixtures/wfs/capabilities-pigma-2-0-0.xml';
-import getfeature200 from '../../fixtures/wfs/getfeature-hits-pigma-2-0-0.xml';
+import getfeature200hits from '../../fixtures/wfs/getfeature-hits-pigma-2-0-0.xml';
+import getfeature200full from '../../fixtures/wfs/getfeature-props-pigma-2-0-0.xml';
 import describefeaturetype200 from '../../fixtures/wfs/describefeaturetype-pigma-2-0-0-xsd.xml';
 import WfsEndpoint from './endpoint';
 import { useCache } from '../shared/cache';
@@ -16,7 +17,10 @@ describe('WfsEndpoint', () => {
     jest.clearAllMocks();
     window.fetchResponseFactory = (url) => {
       if (url.indexOf('GetCapabilities') > -1) return capabilities200;
-      if (url.indexOf('GetFeature') > -1) return getfeature200;
+      if (url.indexOf('GetFeature') > -1) {
+        if (url.indexOf('RESULTTYPE=hits') > -1) return getfeature200hits;
+        else return getfeature200full;
+      }
       if (url.indexOf('DescribeFeatureType') > -1)
         return describefeaturetype200;
       return 'error';
@@ -94,16 +98,16 @@ describe('WfsEndpoint', () => {
     });
   });
 
-  describe('#getFeatureTypeByName', () => {
+  describe('#getFeatureTypeInformation', () => {
     it('uses cache', async () => {
       await endpoint.isReady();
-      endpoint.getFeatureTypeByName('cd16:hierarchisation_l');
+      endpoint.getFeatureTypeInformation('cd16:hierarchisation_l');
       expect(useCache).toHaveBeenCalledTimes(2);
     });
     it('returns detailed info on a feature type', async () => {
       await endpoint.isReady();
       await expect(
-        endpoint.getFeatureTypeByName('cd16:hierarchisation_l')
+        endpoint.getFeatureTypeInformation('cd16:hierarchisation_l')
       ).resolves.toEqual({
         abstract:
           'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',
@@ -149,6 +153,191 @@ describe('WfsEndpoint', () => {
         fees: 'aucun',
         name: 'WFS',
         title: "Service WFS de l'IDS régionale PIGMA",
+      });
+    });
+  });
+
+  describe('#getFeatureTypePropDetails', () => {
+    it('uses cache', async () => {
+      await endpoint.isReady();
+      await endpoint.getFeatureTypePropDetails('cd16:hierarchisation_l');
+      expect(useCache).toHaveBeenCalledTimes(3);
+    });
+    it('returns detailed info on a feature type', async () => {
+      await endpoint.isReady();
+      await expect(
+        endpoint.getFeatureTypePropDetails('cd16:hierarchisation_l')
+      ).resolves.toEqual({
+        props: {
+          absd: {
+            uniqueValues: [
+              {
+                count: 2,
+                value: 904,
+              },
+              {
+                count: 1,
+                value: 99,
+              },
+              {
+                count: 1,
+                value: 470,
+              },
+              {
+                count: 5,
+                value: 812,
+              },
+              {
+                count: 1,
+                value: 0,
+              },
+            ],
+          },
+          absf: {
+            uniqueValues: [
+              {
+                count: 2,
+                value: 99,
+              },
+              {
+                count: 1,
+                value: 470,
+              },
+              {
+                count: 1,
+                value: 620,
+              },
+              {
+                count: 5,
+                value: 646,
+              },
+              {
+                count: 1,
+                value: 121,
+              },
+            ],
+          },
+          axe: {
+            uniqueValues: [
+              {
+                count: 9,
+                value: 'D941',
+              },
+              {
+                count: 1,
+                value: 'D910_GIR_3',
+              },
+            ],
+          },
+          categorie: {
+            uniqueValues: [
+              {
+                count: 9,
+                value: 2,
+              },
+              {
+                count: 1,
+                value: 3,
+              },
+            ],
+          },
+          cumuld: {
+            uniqueValues: [
+              {
+                count: 2,
+                value: 19363,
+              },
+              {
+                count: 1,
+                value: 23565,
+              },
+              {
+                count: 1,
+                value: 24897,
+              },
+              {
+                count: 5,
+                value: 31232,
+              },
+              {
+                count: 1,
+                value: 0,
+              },
+            ],
+          },
+          cumulf: {
+            uniqueValues: [
+              {
+                count: 2,
+                value: 23565,
+              },
+              {
+                count: 1,
+                value: 24897,
+              },
+              {
+                count: 1,
+                value: 28060,
+              },
+              {
+                count: 5,
+                value: 37029,
+              },
+              {
+                count: 1,
+                value: 121,
+              },
+            ],
+          },
+          plod: {
+            uniqueValues: [
+              {
+                count: 2,
+                value: '38',
+              },
+              {
+                count: 1,
+                value: '43',
+              },
+              {
+                count: 1,
+                value: '44',
+              },
+              {
+                count: 5,
+                value: '50',
+              },
+              {
+                count: 1,
+                value: '0',
+              },
+            ],
+          },
+          plof: {
+            uniqueValues: [
+              {
+                count: 2,
+                value: '43',
+              },
+              {
+                count: 1,
+                value: '44',
+              },
+              {
+                count: 1,
+                value: '47',
+              },
+              {
+                count: 5,
+                value: '56',
+              },
+              {
+                count: 1,
+                value: '0',
+              },
+            ],
+          },
+        },
       });
     });
   });

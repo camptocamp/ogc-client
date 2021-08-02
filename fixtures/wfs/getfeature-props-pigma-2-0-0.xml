@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wfs:FeatureCollection xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wfs="http://www.opengis.net/wfs/2.0"
+                       xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:cd16="http://pigma.org/cd16"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" numberMatched="1693" numberReturned="10"
+                       timeStamp="2021-08-04T14:35:39.860Z"
+                       xsi:schemaLocation="http://www.opengis.net/wfs/2.0 https://www.pigma.org/geoserver/schemas/wfs/2.0/wfs.xsd http://pigma.org/cd16 https://www.pigma.org/geoserver/wfs?service=WFS&amp;version=2.0.0&amp;request=DescribeFeatureType&amp;typeName=cd16%3Ahierarchisation_l http://www.opengis.net/gml/3.2 https://www.pigma.org/geoserver/schemas/gml/3.2.1/gml.xsd">
+    <wfs:boundedBy>
+        <gml:Envelope>
+            <gml:lowerCorner>482291.0684 6511886.4992</gml:lowerCorner>
+            <gml:upperCorner>498773.2563 6536379.2844</gml:upperCorner>
+        </gml:Envelope>
+    </wfs:boundedBy>
+    <wfs:member>
+        <cd16:hierarchisation_l gml:id="hierarchisation_l.fid--24c9db69_17b1184059d_491d">
+            <gml:boundedBy>
+                <gml:Envelope srsName="urn:ogc:def:crs:EPSG::2154" srsDimension="2">
+                    <gml:lowerCorner>496756.5945 6519784.8832</gml:lowerCorner>
+                    <gml:upperCorner>496963.9995 6520124.5934</gml:upperCorner>
+                </gml:Envelope>
+            </gml:boundedBy>
+            <cd16:axe>D941</cd16:axe>
+            <cd16:cumuld>19363</cd16:cumuld>
+            <cd16:cumulf>23565</cd16:cumulf>
+            <cd16:plod>38</cd16:plod>
+            <cd16:absd>904</cd16:absd>
+            <cd16:plof>43</cd16:plof>
+            <cd16:absf>99</cd16:absf>
+            <cd16:categorie>2</cd16:categorie>
+        </cd16:hierarchisation_l>
+    </wfs:member>
+    <wfs:member>
+        <cd16:hierarchisation_l gml:id="hierarchisation_l.fid--24c9db69_17b1184059d_491e">
+            <gml:boundedBy>
+                <gml:Envelope srsName="urn:ogc:def:crs:EPSG::2154" srsDimension="2">
+                    <gml:lowerCorner>496973.3341 6520142.1162</gml:lowerCorner>
+                    <gml:upperCorner>498773.2563 6523434.2536</gml:upperCorner>
+                </gml:Envelope>
+            </gml:boundedBy>
+            <cd16:axe>D941</cd16:axe>
+            <cd16:cumuld>19363</cd16:cumuld>
+            <cd16:cumulf>23565</cd16:cumulf>
+            <cd16:plod>38</cd16:plod>
+            <cd16:absd>904</cd16:absd>
+            <cd16:plof>43</cd16:plof>
+            <cd16:absf>99</cd16:absf>
+            <cd16:categorie>2</cd16:categorie>
+        </cd16:hierarchisation_l>
+    </wfs:member>
+    <wfs:member>
+        <cd16:hierarchisation_l gml:id="hierarchisation_l.fid--24c9db69_17b1184059d_491f">
+            <gml:boundedBy>
+                <gml:Envelope srsName="urn:ogc:def:crs:EPSG::2154" srsDimension="2">
+                    <gml:lowerCorner>496696.687 6518512.9816</gml:lowerCorner>
+                    <gml:upperCorner>496895.6981 6519741.3141</gml:upperCorner>
+                </gml:Envelope>
+            </gml:boundedBy>
+            <cd16:axe>D941</cd16:axe>
+            <cd16:cumuld>23565</cd16:cumuld>
+            <cd16:cumulf>24897</cd16:cumulf>
+            <cd16:plod>43</cd16:plod>
+            <cd16:absd>99</cd16:absd>
+            <cd16:plof>44</cd16:plof>
+            <cd16:absf>470</cd16:absf>
+            <cd16:categorie>2</cd16:categorie>
+        </cd16:hierarchisation_l>
+    </wfs:member>
+    <wfs:member>
+        <cd16:hierarchisation_l gml:id="hierarchisation_l.fid--24c9db69_17b1184059d_4920">
+            <gml:boundedBy>
+                <gml:Envelope srsName="urn:ogc:def:crs:EPSG::2154" srsDimension="2">
+                    <gml:lowerCorner>493578.5425 6518510.372</gml:lowerCorner>
+                    <gml:upperCorner>496696.687 6518698.9448</gml:upperCorner>
+                </gml:Envelope>
+            </gml:boundedBy>
+            <cd16:axe>D941</cd16:axe>
+            <cd16:cumuld>24897</cd16:cumuld>
+            <cd16:cumulf>28060</cd16:cumulf>
+            <cd16:plod>44</cd16:plod>
+            <cd16:absd>470</cd16:absd>
+            <cd16:plof>47</cd16:plof>
+            <cd16:absf>620</cd16:absf>
+            <cd16:categorie>2</cd16:categorie>
+        </cd16:hierarchisation_l>
+    </wfs:member>
+    <wfs:member>
+        <cd16:hierarchisation_l gml:id="hierarchisation_l.fid--24c9db69_17b1184059d_4921">
+            <gml:boundedBy>
+                <gml:Envelope srsName="urn:ogc:def:crs:EPSG::2154" srsDimension="2">
+                    <gml:lowerCorner>482741.8503 6511886.4992</gml:lowerCorner>
+                    <gml:upperCorner>482852.4989 6512023.6059</gml:upperCorner>
+                </gml:Envelope>
+            </gml:boundedBy>
+            <cd16:axe>D941</cd16:axe>
+            <cd16:cumuld>31232</cd16:cumuld>
+            <cd16:cumulf>37029</cd16:cumulf>
+            <cd16:plod>50</cd16:plod>
+            <cd16:absd>812</cd16:absd>
+            <cd16:plof>56</cd16:plof>
+            <cd16:absf>646</cd16:absf>
+            <cd16:categorie>2</cd16:categorie>
+        </cd16:hierarchisation_l>
+    </wfs:member>
+    <wfs:member>
+        <cd16:hierarchisation_l gml:id="hierarchisation_l.fid--24c9db69_17b1184059d_4922">
+            <gml:boundedBy>
+                <gml:Envelope srsName="urn:ogc:def:crs:EPSG::2154" srsDimension="2">
+                    <gml:lowerCorner>482859.8813 6512034.384</gml:lowerCorner>
+                    <gml:upperCorner>483893.1424 6512509.8558</gml:upperCorner>
+                </gml:Envelope>
+            </gml:boundedBy>
+            <cd16:axe>D941</cd16:axe>
+            <cd16:cumuld>31232</cd16:cumuld>
+            <cd16:cumulf>37029</cd16:cumulf>
+            <cd16:plod>50</cd16:plod>
+            <cd16:absd>812</cd16:absd>
+            <cd16:plof>56</cd16:plof>
+            <cd16:absf>646</cd16:absf>
+            <cd16:categorie>2</cd16:categorie>
+        </cd16:hierarchisation_l>
+    </wfs:member>
+    <wfs:member>
+        <cd16:hierarchisation_l gml:id="hierarchisation_l.fid--24c9db69_17b1184059d_4923">
+            <gml:boundedBy>
+                <gml:Envelope srsName="urn:ogc:def:crs:EPSG::2154" srsDimension="2">
+                    <gml:lowerCorner>483905.3963 6512515.1885</gml:lowerCorner>
+                    <gml:upperCorner>484039.3941 6512561.8211</gml:upperCorner>
+                </gml:Envelope>
+            </gml:boundedBy>
+            <cd16:axe>D941</cd16:axe>
+            <cd16:cumuld>31232</cd16:cumuld>
+            <cd16:cumulf>37029</cd16:cumulf>
+            <cd16:plod>50</cd16:plod>
+            <cd16:absd>812</cd16:absd>
+            <cd16:plof>56</cd16:plof>
+            <cd16:absf>646</cd16:absf>
+            <cd16:categorie>2</cd16:categorie>
+        </cd16:hierarchisation_l>
+    </wfs:member>
+    <wfs:member>
+        <cd16:hierarchisation_l gml:id="hierarchisation_l.fid--24c9db69_17b1184059d_4924">
+            <gml:boundedBy>
+                <gml:Envelope srsName="urn:ogc:def:crs:EPSG::2154" srsDimension="2">
+                    <gml:lowerCorner>484054.4845 6512567.948</gml:lowerCorner>
+                    <gml:upperCorner>485206.5709 6513243.9506</gml:upperCorner>
+                </gml:Envelope>
+            </gml:boundedBy>
+            <cd16:axe>D941</cd16:axe>
+            <cd16:cumuld>31232</cd16:cumuld>
+            <cd16:cumulf>37029</cd16:cumulf>
+            <cd16:plod>50</cd16:plod>
+            <cd16:absd>812</cd16:absd>
+            <cd16:plof>56</cd16:plof>
+            <cd16:absf>646</cd16:absf>
+            <cd16:categorie>2</cd16:categorie>
+        </cd16:hierarchisation_l>
+    </wfs:member>
+    <wfs:member>
+        <cd16:hierarchisation_l gml:id="hierarchisation_l.fid--24c9db69_17b1184059d_4925">
+            <gml:boundedBy>
+                <gml:Envelope srsName="urn:ogc:def:crs:EPSG::2154" srsDimension="2">
+                    <gml:lowerCorner>485217.917 6513252.4602</gml:lowerCorner>
+                    <gml:upperCorner>487304.0171 6514948.2534</gml:upperCorner>
+                </gml:Envelope>
+            </gml:boundedBy>
+            <cd16:axe>D941</cd16:axe>
+            <cd16:cumuld>31232</cd16:cumuld>
+            <cd16:cumulf>37029</cd16:cumulf>
+            <cd16:plod>50</cd16:plod>
+            <cd16:absd>812</cd16:absd>
+            <cd16:plof>56</cd16:plof>
+            <cd16:absf>646</cd16:absf>
+            <cd16:categorie>2</cd16:categorie>
+        </cd16:hierarchisation_l>
+    </wfs:member>
+    <wfs:member>
+        <cd16:hierarchisation_l gml:id="hierarchisation_l.fid--24c9db69_17b1184059d_4926">
+            <gml:boundedBy>
+                <gml:Envelope srsName="urn:ogc:def:crs:EPSG::2154" srsDimension="2">
+                    <gml:lowerCorner>482291.0684 6536340.7076</gml:lowerCorner>
+                    <gml:upperCorner>482328.3972 6536379.2844</gml:upperCorner>
+                </gml:Envelope>
+            </gml:boundedBy>
+            <cd16:axe>D910_GIR_3</cd16:axe>
+            <cd16:cumuld>0</cd16:cumuld>
+            <cd16:cumulf>121</cd16:cumulf>
+            <cd16:plod>0</cd16:plod>
+            <cd16:absd>0</cd16:absd>
+            <cd16:plof>0</cd16:plof>
+            <cd16:absf>121</cd16:absf>
+            <cd16:categorie>3</cd16:categorie>
+        </cd16:hierarchisation_l>
+    </wfs:member>
+</wfs:FeatureCollection>

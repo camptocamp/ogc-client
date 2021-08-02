@@ -1,5 +1,5 @@
 import { EndpointError } from '../shared/errors';
-import { parseWfsCapabilities } from '../worker';
+import { parseWfsCapabilities, queryWfsFeatureTypeDetails } from '../worker';
 import { queryXmlDocument } from '../shared/http-utils';
 import { parseFeatureTypeInfo } from './featuretypeinfo';
 import { useCache } from '../shared/cache';
@@ -168,7 +168,7 @@ export default class WfsEndpoint {
    * @param {string} name Feature type name property (unique in the WFS service)
    * @return {Promise<WfsFeatureTypeFull>|null} return null if layer was not found or endpoint is not ready
    */
-  getFeatureTypeByName(name) {
+  getFeatureTypeInformation(name) {
     if (!this._featureTypes) return null;
     const featureType = this._featureTypes.find(
       (featureType) => featureType.name === name
@@ -205,6 +205,29 @@ export default class WfsEndpoint {
       },
       'WFS',
       'FEATURETYPEINFO',
+      this._capabilitiesUrl,
+      name
+    );
+  }
+
+  /**
+   * Returns details regarding properties of a given feature type
+   * @param {string} name Feature type name property (unique in the WFS service)
+   * @return {Promise<Object.<string, WfsFeatureTypePropDetails>>|null} return null if layer was not found or endpoint is not ready
+   */
+  async getFeatureTypePropDetails(name) {
+    const featureTypeFull = await this.getFeatureTypeInformation(name);
+    if (featureTypeFull === null) return null;
+
+    return useCache(
+      () =>
+        queryWfsFeatureTypeDetails(
+          this._capabilitiesUrl,
+          this._version,
+          featureTypeFull
+        ),
+      'WFS',
+      'FEATURETYPEPROPDETAILS',
       this._capabilitiesUrl,
       name
     );
