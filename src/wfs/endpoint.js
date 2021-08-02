@@ -3,6 +3,7 @@ import { parseWfsCapabilities } from '../worker';
 import { queryXmlDocument } from '../shared/http-utils';
 import { parseFeatureTypeInfo } from './featuretypeinfo';
 import { useCache } from '../shared/cache';
+import { generateDescribeFeatureTypeUrl, generateGetFeatureUrl } from './url';
 
 /**
  * @typedef {'1.0.0'|'1.1.0'|'2.0.0'} WfsVersion
@@ -176,22 +177,23 @@ export default class WfsEndpoint {
 
     return useCache(
       () => {
-        const typeParam = this._version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
-        const countParam = this._version === '2.0.0' ? 'COUNT' : 'maxFeatures';
-
-        const describeUrl = new URL(this._capabilitiesUrl);
-        describeUrl.searchParams.set('REQUEST', 'DescribeFeatureType');
-        describeUrl.searchParams.set('VERSION', this._version);
-        describeUrl.searchParams.set(typeParam, name);
-        const getFeatureUrl = new URL(this._capabilitiesUrl);
-        getFeatureUrl.searchParams.set('REQUEST', 'GetFeature');
-        getFeatureUrl.searchParams.set('VERSION', this._version);
-        getFeatureUrl.searchParams.set(typeParam, name);
-        getFeatureUrl.searchParams.set(countParam, '1');
+        const describeUrl = generateDescribeFeatureTypeUrl(
+          this._capabilitiesUrl,
+          this._version,
+          name
+        );
+        const getFeatureUrl = generateGetFeatureUrl(
+          this._capabilitiesUrl,
+          this._version,
+          name,
+          undefined,
+          undefined,
+          true
+        );
 
         return Promise.all([
-          queryXmlDocument(describeUrl.toString()),
-          queryXmlDocument(getFeatureUrl.toString()),
+          queryXmlDocument(describeUrl),
+          queryXmlDocument(getFeatureUrl),
         ]).then(([describeResponse, getFeatureResponse]) =>
           parseFeatureTypeInfo(
             featureType,
