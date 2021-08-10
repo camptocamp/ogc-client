@@ -36,7 +36,7 @@
           <WfsFeatureTypeInfo
             v-if="selectedFeatureType"
             :feature-type="selectedFeatureType"
-            :endpoint-url="url"
+            :endpoint="endpoint"
           ></WfsFeatureTypeInfo>
         </div>
       </div>

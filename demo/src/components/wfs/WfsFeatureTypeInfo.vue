@@ -7,6 +7,16 @@
     <p>Properties</p>
     <div class="spacer-s"></div>
     <InfoList :info="featureProperties"></InfoList>
+    <div class="spacer-m"></div>
+    <div v-if="featurePropsDetails === null && !loadingValues">
+      <button type="button" @click="loadValues()">Load unique values</button>
+    </div>
+    <div v-if="loadingValues">Loading unique values...</div>
+    <div v-if="featurePropsDetails !== null">
+      <p>Unique values</p>
+      <div class="spacer-s"></div>
+      <InfoList :info="uniqueValues"></InfoList>
+    </div>
   </div>
 </template>
 
@@ -20,8 +30,14 @@ export default {
   props: {
     /** @type {{ new(): WfsFeatureTypeFull}} */
     featureType: Object,
-    endpointUrl: String,
+    /** @type {{ new(): WfsEndpoint}} */
+    endpoint: Object,
   },
+  data: () => ({
+    loadingValues: false,
+    /** @type {?{ new(): WfsFeatureTypePropsDetails}} */
+    featurePropsDetails: null,
+  }),
   computed: {
     featureTypeInfo() {
       return {
@@ -47,6 +63,35 @@ export default {
       return {
         ...this.featureType.properties,
       };
+    },
+    uniqueValues() {
+      if (this.featurePropsDetails === null) return {};
+      return Object.keys(this.featurePropsDetails).reduce(
+        (prev, curr) => ({
+          ...prev,
+          [curr]: this.featurePropsDetails[curr].uniqueValues
+            .sort((valueA, valueB) => valueB.count - valueA.count)
+            .filter((v, i) => i <= 8)
+            .map((v, i) => (i < 8 ? `${v.value} (${v.count})` : '...'))
+            .join(', '),
+        }),
+        {}
+      );
+    },
+  },
+  methods: {
+    async loadValues() {
+      this.loadingValues = true;
+      this.featurePropsDetails = await this.endpoint.getFeatureTypePropDetails(
+        this.featureType.name
+      );
+      this.loadingValues = false;
+    },
+  },
+  watch: {
+    featureType() {
+      this.loadingValues = false;
+      this.featurePropsDetails = null;
     },
   },
 };
