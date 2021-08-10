@@ -345,6 +345,63 @@ describe('feature props utils', () => {
         ).toEqual(expected);
       });
     });
+    describe('missing props in some features', () => {
+      /** @type {WfsFeatureTypeFull} */
+      const featureTypeFull = {
+        name: 'usa:states',
+        properties: {
+          AREA_LAND: 'float',
+          PERSONS: 'integer',
+          STATE_ABBR: 'string',
+        },
+      };
+      const expected = [
+        {
+          id: 'states.1',
+          properties: {
+            AREA_LAND: 2.51470069067e11,
+            PERSONS: 563626,
+          },
+        },
+        {
+          id: 'states.2',
+          properties: {
+            PERSONS: 12702379,
+          },
+        },
+        {
+          id: 'states.3',
+          properties: {
+            STATE_ABBR: 'OH',
+          },
+        },
+      ];
+      const xml = `
+<wfs:FeatureCollection>
+    <wfs:member>
+        <usa:states gml:id="states.1">
+            <usa:AREA_LAND>2.51470069067E11</usa:AREA_LAND>
+            <usa:PERSONS>563626</usa:PERSONS>
+        </usa:states>
+    </wfs:member>
+    <wfs:member>
+        <usa:states gml:id="states.2">
+            <usa:PERSONS>12702379</usa:PERSONS>
+        </usa:states>
+    </wfs:member>
+    <wfs:member>
+        <usa:states gml:id="states.3">
+            <usa:STATE_ABBR>OH</usa:STATE_ABBR>
+        </usa:states>
+    </wfs:member>
+</wfs:FeatureCollection>`;
+
+      it('only saves defined props on objects', () => {
+        expect(
+          parseFeatureProps(parseXmlString(xml), featureTypeFull, '2.0.0')
+        ).toStrictEqual(expected);
+      });
+    });
   });
 
   describe('computeFeaturePropsDetails', () => {
