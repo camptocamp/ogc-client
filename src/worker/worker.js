@@ -45,7 +45,7 @@ addTaskHandler(
    * @param {string} url
    * @param {WfsVersion} serviceVersion
    * @param {WfsFeatureTypeFull} featureTypeFull
-   * @return {Promise<{props:Object.<string, WfsFeatureTypePropDetails>}>}
+   * @return {Promise<{props:WfsFeatureTypePropsDetails}>}
    */
   ({ url, serviceVersion, featureTypeFull }) => {
     const getFeatureUrl = generateGetFeatureUrl(

@@ -78,6 +78,10 @@ import { generateDescribeFeatureTypeUrl, generateGetFeatureUrl } from './url';
  */
 
 /**
+ * @typedef {Object.<string, WfsFeatureTypePropDetails>} WfsFeatureTypePropsDetails
+ */
+
+/**
  * Represents a WFS endpoint advertising several feature types
  */
 export default class WfsEndpoint {
@@ -213,7 +217,7 @@ export default class WfsEndpoint {
   /**
    * Returns details regarding properties of a given feature type
    * @param {string} name Feature type name property (unique in the WFS service)
-   * @return {Promise<Object.<string, WfsFeatureTypePropDetails>>|null} return null if layer was not found or endpoint is not ready
+   * @return {Promise<WfsFeatureTypePropsDetails>|null} return null if layer was not found or endpoint is not ready
    */
   async getFeatureTypePropDetails(name) {
     const featureTypeFull = await this.getFeatureTypeInformation(name);

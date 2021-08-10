@@ -94,7 +94,7 @@ export function parseFeaturePropsGeojson(getFeaturesGeojson) {
 /**
  * Returns details regarding the features prop values
  * @param {WfsFeatureWithProps[]} featuresWithProps
- * @return {Object.<string, WfsFeatureTypePropDetails>}
+ * @return {WfsFeatureTypePropsDetails}
  */
 export function computeFeaturePropsDetails(featuresWithProps) {
   return featuresWithProps.reduce((prev, curr) => {

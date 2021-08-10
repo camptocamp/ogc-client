@@ -32,7 +32,7 @@ export function parseWfsCapabilities(capabilitiesUrl) {
  * @param {string} capabilitiesUrl This url should point to the capabilities document
  * @param {WfsVersion} serviceVersion
  * @param {WfsFeatureTypeFull} featureTypeFull
- * @return {Promise<{props:Object.<string, WfsFeatureTypePropDetails>}>}
+ * @return {Promise<{props:WfsFeatureTypePropsDetails}>}
  */
 export function queryWfsFeatureTypeDetails(
   capabilitiesUrl,
