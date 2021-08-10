@@ -229,7 +229,7 @@ export default class WfsEndpoint {
           this._capabilitiesUrl,
           this._version,
           featureTypeFull
-        ),
+        ).then((result) => result.props),
       'WFS',
       'FEATURETYPEPROPDETAILS',
       this._capabilitiesUrl,
