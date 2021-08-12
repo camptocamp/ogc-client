@@ -1,20 +1,19 @@
 <template>
-  <div id="app">
-    <h1 class="text-l text-bold padding-m align-right bg-dark text-white"></h1>
+  <div id="app" class="pos-relative">
+    <div class="app-bg bg-dark"></div>
+
     <section class="padding-m text-l">
       <strong>ogc-client</strong>
     </section>
 
-    <h1 class="text-l text-bold padding-m align-right bg-dark text-white">
+    <h1 class="text-l text-bold padding-m align-right text-white">
       Introduction
     </h1>
     <section class="padding-m">
       This is the demo app for the <strong>ogc-client</strong> library.
     </section>
 
-    <h1 class="text-l text-bold padding-m align-right bg-dark text-white">
-      WMS
-    </h1>
+    <h1 class="text-l text-bold padding-m align-right text-white">WMS</h1>
     <section class="padding-m">
       <p>
         Enter a WMS service URL below to get some information and a list of
@@ -24,9 +23,7 @@
       <WmsEndpoint></WmsEndpoint>
     </section>
 
-    <h1 class="text-l text-bold padding-m align-right bg-dark text-white">
-      WFS
-    </h1>
+    <h1 class="text-l text-bold padding-m align-right text-white">WFS</h1>
     <section class="padding-m">
       <p>
         Enter a WFS service URL below to get some information and a list of
@@ -42,14 +39,21 @@
 #app {
   display: grid;
   grid-template-columns: 15rem auto;
-  height: 100%;
+  min-height: 100%;
+  grid-auto-rows: max-content;
+}
+
+.app-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 15rem;
+  z-index: -1;
 }
 
 h1 {
   grid-column: 1;
-}
-h1:nth-last-of-type(1) {
-  height: 1fr;
 }
 
 section {

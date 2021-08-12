@@ -10,10 +10,7 @@
     <div v-if="loaded">
       <InfoList :info="endpoint.getServiceInfo()"></InfoList>
       <div class="spacer-s"></div>
-      <div
-        class="flex-row flex-align-stretch"
-        style="min-height: 200px; max-height: 650px"
-      >
+      <div class="flex-row flex-align-stretch" style="min-height: 200px">
         <ItemsTree
           :items="endpoint.getLayers()"
           class="scroll-y flex-grow flex-shrink"
