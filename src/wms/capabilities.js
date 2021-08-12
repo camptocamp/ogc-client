@@ -39,6 +39,12 @@ export function readLayersFromCapabilities(capabilitiesDoc) {
  */
 export function readInfoFromCapabilities(capabilitiesDoc) {
   const service = findChildElement(getRootElement(capabilitiesDoc), 'Service');
+  const keywords = findChildrenElement(
+    findChildElement(service, 'KeywordList'),
+    'Keyword'
+  )
+    .map(getElementText)
+    .filter((v, i, arr) => arr.indexOf(v) === i);
 
   return {
     title: getElementText(findChildElement(service, 'Title')),
@@ -46,6 +52,7 @@ export function readInfoFromCapabilities(capabilitiesDoc) {
     abstract: getElementText(findChildElement(service, 'Abstract')),
     fees: getElementText(findChildElement(service, 'Fees')),
     constraints: getElementText(findChildElement(service, 'AccessConstraints')),
+    keywords,
   };
 }
 

@@ -28,6 +28,17 @@ export function readInfoFromCapabilities(capabilitiesDoc) {
     : 'ServiceIdentification';
   const nameTag = version.startsWith('1.0') ? 'Name' : 'ServiceType';
   const service = findChildElement(getRootElement(capabilitiesDoc), serviceTag);
+  let keywords;
+  if (version.startsWith('1.0')) {
+    keywords = getElementText(findChildElement(service, 'Keywords'))
+      .split(',')
+      .map((keyword) => keyword.trim());
+  } else {
+    keywords = findChildrenElement(
+      findChildElement(service, 'Keywords'),
+      'Keyword'
+    ).map(getElementText);
+  }
 
   return {
     title: getElementText(findChildElement(service, 'Title')),
@@ -35,6 +46,7 @@ export function readInfoFromCapabilities(capabilitiesDoc) {
     abstract: getElementText(findChildElement(service, 'Abstract')),
     fees: getElementText(findChildElement(service, 'Fees')),
     constraints: getElementText(findChildElement(service, 'AccessConstraints')),
+    keywords,
   };
 }
 

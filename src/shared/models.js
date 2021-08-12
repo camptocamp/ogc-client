@@ -18,4 +18,5 @@
  * @property {string} abstract
  * @property {string} fees
  * @property {string} constraints
+ * @property {string[]} keywords
  */

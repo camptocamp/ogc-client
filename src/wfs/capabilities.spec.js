@@ -119,6 +119,7 @@ describe('WFS capabilities', () => {
       fees: 'aucun',
       name: 'WFS',
       title: "Service WFS de l'IDS régionale PIGMA",
+      keywords: ['WFS', 'WMS', 'GEOSERVER'],
     };
     it('reads the service info (2.0.0)', () => {
       const doc = parseXmlString(capabilities200);

@@ -153,6 +153,7 @@ describe('WfsEndpoint', () => {
         fees: 'aucun',
         name: 'WFS',
         title: "Service WFS de l'IDS régionale PIGMA",
+        keywords: ['WFS', 'WMS', 'GEOSERVER'],
       });
     });
   });

@@ -124,6 +124,15 @@ describe('WmsEndpoint', () => {
         fees: 'no conditions apply',
         name: 'WMS',
         title: 'GéoServices : géologie, hydrogéologie et gravimétrie',
+        keywords: [
+          'Géologie',
+          'BRGM',
+          'INSPIRE:ViewService',
+          'infoMapAccessService',
+          'WMS 1.1.1',
+          'WMS 1.3.0',
+          'SLD 1.1.0',
+        ],
       });
     });
   });
