@@ -8,7 +8,7 @@ const workerInstance = new Worker('./worker.js', {
 /**
  * Parses the capabilities document and return all relevant information
  * @param {string} capabilitiesUrl This url should point to the capabilities document
- * @return {Promise<{version: WmsVersion, info: WmsInfo, layers: WmsLayerFull[]}>}
+ * @return {Promise<{version: WmsVersion, info: GenericEndpointInfo, layers: WmsLayerFull[]}>}
  */
 export function parseWmsCapabilities(capabilitiesUrl) {
   return sendTaskRequest('parseWmsCapabilities', workerInstance, {
@@ -19,7 +19,7 @@ export function parseWmsCapabilities(capabilitiesUrl) {
 /**
  * Parses the capabilities document and return all relevant information
  * @param {string} capabilitiesUrl This url should point to the capabilities document
- * @return {Promise<{version: WfsVersion, info: WfsInfo, featureTypes: WfsFeatureTypeInternal[]}>}
+ * @return {Promise<{version: WfsVersion, info: GenericEndpointInfo, featureTypes: WfsFeatureTypeInternal[]}>}
  */
 export function parseWfsCapabilities(capabilitiesUrl) {
   return sendTaskRequest('parseWfsCapabilities', workerInstance, {

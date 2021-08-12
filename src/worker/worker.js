@@ -13,7 +13,7 @@ addTaskHandler(
   /** @type {DedicatedWorkerGlobalScope} */ self,
   /**
    * @param {string} url
-   * @return {Promise<{info:WmsInfo,layers:WmsLayerFull[],version:WmsVersion}>}
+   * @return {Promise<{info:GenericEndpointInfo,layers:WmsLayerFull[],version:WmsVersion}>}
    */
   ({ url }) =>
     queryXmlDocument(url).then((xmlDoc) => ({
@@ -28,7 +28,7 @@ addTaskHandler(
   /** @type {DedicatedWorkerGlobalScope} */ self,
   /**
    * @param {string} url
-   * @return {Promise<{info:WfsInfo,featureTypes:WfsFeatureTypeInternal[],version:WfsVersion}>}
+   * @return {Promise<{info:GenericEndpointInfo,featureTypes:WfsFeatureTypeInternal[],version:WfsVersion}>}
    */
   ({ url }) =>
     queryXmlDocument(url).then((xmlDoc) => ({

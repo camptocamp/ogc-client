@@ -19,7 +19,7 @@ export function readVersionFromCapabilities(capabilitiesDoc) {
 /**
  * Will read service-related info from the capabilities doc
  * @param {XmlDocument} capabilitiesDoc Capabilities document
- * @return {WfsInfo} Parsed service info
+ * @return {GenericEndpointInfo} Parsed service info
  */
 export function readInfoFromCapabilities(capabilitiesDoc) {
   const version = readVersionFromCapabilities(capabilitiesDoc);

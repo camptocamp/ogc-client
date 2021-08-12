@@ -10,3 +10,12 @@
 /**
  * @typedef {string} MimeType
  */
+
+/**
+ * @typedef {Object} GenericEndpointInfo
+ * @property {string} name
+ * @property {string} title
+ * @property {string} abstract
+ * @property {string} fees
+ * @property {string} constraints
+ */

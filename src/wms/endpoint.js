@@ -47,15 +47,6 @@ import { useCache } from '../shared/cache';
  */
 
 /**
- * @typedef {Object} WmsInfo
- * @property {string} name
- * @property {string} title
- * @property {string} abstract
- * @property {string} fees
- * @property {string} constraints
- */
-
-/**
  * Represents a WMS endpoint advertising several layers arranged in a tree structure.
  */
 export default class WmsEndpoint {
@@ -90,7 +81,7 @@ export default class WmsEndpoint {
     );
 
     /**
-     * @type {WmsInfo|null}
+     * @type {GenericEndpointInfo|null}
      * @private
      */
     this._info = null;
@@ -117,7 +108,7 @@ export default class WmsEndpoint {
   }
 
   /**
-   * @return {WmsInfo|null}
+   * @return {GenericEndpointInfo|null}
    */
   getServiceInfo() {
     return this._info;

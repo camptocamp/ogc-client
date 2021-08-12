@@ -10,15 +10,6 @@ import { generateDescribeFeatureTypeUrl, generateGetFeatureUrl } from './url';
  */
 
 /**
- * @typedef {Object} WfsInfo
- * @property {string} name
- * @property {string} title
- * @property {string} abstract
- * @property {string} fees
- * @property {string} constraints
- */
-
-/**
  * @typedef {Object} WfsFeatureTypeInternal
  * @property {string} name
  * @property {string} [title]
@@ -119,7 +110,7 @@ export default class WfsEndpoint {
     });
 
     /**
-     * @type {WfsInfo|null}
+     * @type {GenericEndpointInfo|null}
      * @private
      */
     this._info = null;
@@ -146,7 +137,7 @@ export default class WfsEndpoint {
   }
 
   /**
-   * @return {WfsInfo|null}
+   * @return {GenericEndpointInfo|null}
    */
   getServiceInfo() {
     return this._info;
