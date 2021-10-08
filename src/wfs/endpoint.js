@@ -159,6 +159,53 @@ export default class WfsEndpoint {
   }
 
   /**
+   * Returns a summary of a feature type, i.e. only information available in the capabilities document
+   * @param {string} name Feature type name property (unique in the WFS service)
+   * @return {Promise<WfsFeatureTypeFull>|null} return null if layer was not found or endpoint is not ready
+   */
+  getFeatureTypeSummary(name) {
+    if (!this._featureTypes) return null;
+    const featureType = this._featureTypes.find(
+      (featureType) => featureType.name === name
+    );
+    if (!featureType) return null;
+
+    return useCache(
+      () => {
+        const describeUrl = generateDescribeFeatureTypeUrl(
+          this._capabilitiesUrl,
+          this._version,
+          name
+        );
+        const getFeatureUrl = generateGetFeatureUrl(
+          this._capabilitiesUrl,
+          this._version,
+          name,
+          undefined,
+          undefined,
+          true
+        );
+
+        return Promise.all([
+          queryXmlDocument(describeUrl),
+          queryXmlDocument(getFeatureUrl),
+        ]).then(([describeResponse, getFeatureResponse]) =>
+          parseFeatureTypeInfo(
+            featureType,
+            describeResponse,
+            getFeatureResponse,
+            this._version
+          )
+        );
+      },
+      'WFS',
+      'FEATURETYPEINFO',
+      this._capabilitiesUrl,
+      name
+    );
+  }
+
+  /**
    * Returns a complete feature type by its name
    * @param {string} name Feature type name property (unique in the WFS service)
    * @return {Promise<WfsFeatureTypeFull>|null} return null if layer was not found or endpoint is not ready
