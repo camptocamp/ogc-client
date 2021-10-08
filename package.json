@@ -1,11 +1,10 @@
 {
-  "name": "ogc-client",
-  "version": "0.0.1",
-  "description": "",
+  "name": "@camptocamp/ogc-client",
+  "version": "0.1.0",
+  "description": "A pure JS library for interacting with geospatial services.",
   "main": "index.js",
   "dependencies": {
-    "@rgrove/parse-xml": "^3.0.0",
-    "jest": "^26.6.3"
+    "@rgrove/parse-xml": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.13.14",
@@ -15,13 +14,14 @@
     "esbuild": "^0.12.15",
     "mitt": "^3.0.0",
     "prettier": "2.2.1",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "jest": "^26.6.3"
   },
   "scripts": {
     "test": "jest",
     "format:write": "prettier --write src demo",
     "format:check": "prettier --check src demo"
   },
-  "author": "",
-  "license": "MIT"
+  "author": "olivier.guyot@camptocamp.com",
+  "license": "GPL-3.0-or-later"
 }
