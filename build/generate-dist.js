@@ -1,10 +1,10 @@
-import path from 'path';
-import { babel } from '@rollup/plugin-babel';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import common from '@rollup/plugin-commonjs';
-import { rollup } from 'rollup';
-import { terser } from 'rollup-plugin-terser';
-import fse from 'fs-extra';
+const path = require('path');
+const { babel } = require('@rollup/plugin-babel');
+const { nodeResolve } = require('@rollup/plugin-node-resolve');
+const common = require('@rollup/plugin-commonjs');
+const { rollup } = require('rollup');
+const { terser } = require('rollup-plugin-terser');
+const fse = require('fs-extra');
 
 async function serializeWorker(entryPath) {
   const plugins = [
@@ -84,7 +84,7 @@ async function main() {
     }
   }
 
-  fse.remove(distRoot);
+  fse.rmdirSync(distRoot, { recursive: true });
 
   await copyFiles('.');
 }

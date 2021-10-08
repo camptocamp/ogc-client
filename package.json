@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "A pure JS library for interacting with geospatial services.",
   "main": "dist/index.js",
-  "type": "module",
   "dependencies": {
     "@rgrove/parse-xml": "^3.0.0"
   },
