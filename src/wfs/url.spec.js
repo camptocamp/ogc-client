@@ -11,11 +11,14 @@ describe('WFS url helpers', () => {
     });
     it('generates a correct URL (v1.0.0, max features 5, attributes set)', () => {
       expect(
-        generateGetFeatureUrl('http://example.com/wfs', '1.0.0', 'my:type', 5, [
-          'attr1',
-          'attr2',
-          'geom',
-        ])
+        generateGetFeatureUrl(
+          'http://example.com/wfs',
+          '1.0.0',
+          'my:type',
+          undefined,
+          5,
+          ['attr1', 'attr2', 'geom']
+        )
       ).toBe(
         'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.0.0&TYPENAME=my%3Atype&PROPERTYNAME=attr1%2Cattr2%2Cgeom&MAXFEATURES=5'
       );
@@ -42,6 +45,7 @@ describe('WFS url helpers', () => {
           'my:type',
           undefined,
           undefined,
+          undefined,
           true
         )
       ).toBe(
@@ -50,13 +54,28 @@ describe('WFS url helpers', () => {
     });
     it('generates a correct URL (v2.0.0, max features 5, attributes set)', () => {
       expect(
-        generateGetFeatureUrl('http://example.com/wfs', '2.0.0', 'my:type', 5, [
-          'attr1',
-          'attr2',
-          'geom',
-        ])
+        generateGetFeatureUrl(
+          'http://example.com/wfs',
+          '2.0.0',
+          'my:type',
+          undefined,
+          5,
+          ['attr1', 'attr2', 'geom']
+        )
       ).toBe(
         'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&PROPERTYNAME=attr1%2Cattr2%2Cgeom&COUNT=5'
+      );
+    });
+    it('generates a correct URL (v2.0.0, output format set)', () => {
+      expect(
+        generateGetFeatureUrl(
+          'http://example.com/wfs',
+          '2.0.0',
+          'my:type',
+          'application/json'
+        )
+      ).toBe(
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&OUTPUTFORMAT=application%2Fjson'
       );
     });
   });

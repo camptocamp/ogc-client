@@ -374,4 +374,35 @@ describe('WfsEndpoint', () => {
       });
     });
   });
+
+  describe('#getFeatureUrl', () => {
+    beforeEach(async () => {
+      await endpoint.isReady();
+    });
+    it('returns a GetFeature url for a given feature type', () => {
+      expect(
+        endpoint.getFeatureUrl(
+          'hierarchisation_l',
+          200,
+          'application/gml+xml; version=3.2'
+        )
+      ).toEqual(
+        'https://my.test.service/ogc/wfs?featureType=myfeatures&SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&OUTPUTFORMAT=application%2Fgml%2Bxml%3B+version%3D3.2&COUNT=200'
+      );
+    });
+    it('returns an error if the feature type was not found', () => {
+      expect(() => endpoint.getFeatureUrl('does_not_exist')).toThrow(
+        'feature type'
+      );
+    });
+    it('returns an error if the required output format is not supported by the feature type', () => {
+      expect(() =>
+        endpoint.getFeatureUrl(
+          'hierarchisation_l',
+          200,
+          'application/invalid+mime+type'
+        )
+      ).toThrow('output format');
+    });
+  });
 });

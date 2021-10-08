@@ -231,6 +231,7 @@ export default class WfsEndpoint {
           name,
           undefined,
           undefined,
+          undefined,
           true
         );
 
@@ -281,5 +282,36 @@ export default class WfsEndpoint {
    */
   getVersion() {
     return this._version;
+  }
+
+  /**
+   * Will build a GetFeature url based on the given parameters
+   * @param featureType
+   * @param {number} [maxFeatures] no limit if undefined
+   * @param {MimeType} [outputFormat] default format if undefined
+   * @returns {string|null} Returns null if endpoint is not ready
+   */
+  getFeatureUrl(featureType, maxFeatures, outputFormat) {
+    if (!this._featureTypes) {
+      return null;
+    }
+    const internalFeatureType = this._getFeatureTypeByName(featureType);
+    if (!internalFeatureType) {
+      throw new Error(
+        `The following feature type was not found in the service: ${featureType}`
+      );
+    }
+    if (internalFeatureType.outputFormats.indexOf(outputFormat) === -1) {
+      throw new Error(
+        `The following output format type was not found in the feature type ${internalFeatureType.name}: ${outputFormat}`
+      );
+    }
+    return generateGetFeatureUrl(
+      this._capabilitiesUrl,
+      this._version,
+      internalFeatureType.name,
+      outputFormat,
+      maxFeatures
+    );
   }
 }

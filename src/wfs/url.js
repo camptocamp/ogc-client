@@ -3,6 +3,7 @@
  * @param {string} serviceUrl
  * @param {WfsVersion} version
  * @param {string} featureType
+ * @param {MimeType} [outputFormat]
  * @param {number} [maxFeatures] if not defined, all features will be returned
  * @param {string[]} [attributes] if not defined, all attributes will be included
  * @param {boolean} [hitsOnly] if true, will not return feature data, only hit count
@@ -13,6 +14,7 @@ export function generateGetFeatureUrl(
   serviceUrl,
   version,
   featureType,
+  outputFormat,
   maxFeatures,
   attributes,
   hitsOnly
@@ -24,6 +26,8 @@ export function generateGetFeatureUrl(
   url.searchParams.set('REQUEST', 'GetFeature');
   url.searchParams.set('VERSION', version);
   url.searchParams.set(typeParam, featureType);
+  if (outputFormat !== undefined)
+    url.searchParams.set('OUTPUTFORMAT', outputFormat);
   if (attributes !== undefined)
     url.searchParams.set('PROPERTYNAME', attributes.join(','));
   if (hitsOnly) {
