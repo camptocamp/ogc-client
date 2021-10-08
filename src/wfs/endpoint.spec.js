@@ -98,16 +98,42 @@ describe('WfsEndpoint', () => {
     });
   });
 
-  describe('#getFeatureTypeInformation', () => {
+  describe('#getFeatureTypeSummary', () => {
+    it('returns general info on a feature type', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getFeatureTypeSummary('cd16:hierarchisation_l')).toEqual({
+        abstract:
+          'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',
+        name: 'cd16:hierarchisation_l',
+        title: 'CD 16 - Hiérarchisation du réseau',
+        boundingBox: [
+          -0.4832134559131876,
+          45.18037755571674,
+          0.9725372441782966,
+          46.13877580094452,
+        ],
+        defaultCrs: 'EPSG:2154',
+        otherCrs: ['EPSG:32615', 'EPSG:32616', 'EPSG:32617', 'EPSG:32618'],
+        outputFormats: [
+          'application/gml+xml; version=3.2',
+          'text/xml; subtype=gml/3.2.1',
+          'text/xml; subtype=gml/3.1.1',
+          'text/xml; subtype=gml/2.1.2',
+        ],
+      });
+    });
+  });
+
+  describe('#getFeatureTypeFull', () => {
     it('uses cache', async () => {
       await endpoint.isReady();
-      endpoint.getFeatureTypeInformation('cd16:hierarchisation_l');
+      endpoint.getFeatureTypeFull('cd16:hierarchisation_l');
       expect(useCache).toHaveBeenCalledTimes(2);
     });
     it('returns detailed info on a feature type', async () => {
       await endpoint.isReady();
       await expect(
-        endpoint.getFeatureTypeInformation('cd16:hierarchisation_l')
+        endpoint.getFeatureTypeFull('cd16:hierarchisation_l')
       ).resolves.toEqual({
         abstract:
           'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',

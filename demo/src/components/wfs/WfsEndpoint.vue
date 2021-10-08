@@ -77,7 +77,7 @@ export default {
     },
     async handleItemClick(layer, event) {
       event.preventDefault();
-      this.selectedFeatureType = await this.endpoint.getFeatureTypeInformation(
+      this.selectedFeatureType = await this.endpoint.getFeatureTypeFull(
         layer.name
       );
     },

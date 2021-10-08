@@ -29,11 +29,22 @@ import { generateDescribeFeatureTypeUrl, generateGetFeatureUrl } from './url';
  */
 
 /**
+ * @typedef {Object} WfsFeatureTypeBrief
+ * @property {string} name
+ * @property {string} [title]
+ * @property {string} [abstract]
+ * @property {BoundingBox} [boundingBox] Expressed in latitudes and longitudes
+ */
+
+/**
  * @typedef {Object} WfsFeatureTypeSummary
  * @property {string} name
  * @property {string} [title]
  * @property {string} [abstract]
  * @property {BoundingBox} [boundingBox] Expressed in latitudes and longitudes
+ * @property {CrsCode} defaultCrs
+ * @property {CrsCode[]} otherCrs
+ * @property {MimeType[]} outputFormats
  */
 
 /**
@@ -145,7 +156,7 @@ export default class WfsEndpoint {
 
   /**
    * Returns an array of feature types
-   * @return {WfsFeatureTypeSummary[]|null}
+   * @return {WfsFeatureTypeBrief[]|null}
    */
   getFeatureTypes() {
     return this._featureTypes.map((featureType) => ({
@@ -161,7 +172,7 @@ export default class WfsEndpoint {
   /**
    * Returns a summary of a feature type, i.e. only information available in the capabilities document
    * @param {string} name Feature type name property (unique in the WFS service)
-   * @return {Promise<WfsFeatureTypeFull>|null} return null if layer was not found or endpoint is not ready
+   * @return {WfsFeatureTypeSummary|null} return null if layer was not found or endpoint is not ready
    */
   getFeatureTypeSummary(name) {
     if (!this._featureTypes) return null;
@@ -170,39 +181,17 @@ export default class WfsEndpoint {
     );
     if (!featureType) return null;
 
-    return useCache(
-      () => {
-        const describeUrl = generateDescribeFeatureTypeUrl(
-          this._capabilitiesUrl,
-          this._version,
-          name
-        );
-        const getFeatureUrl = generateGetFeatureUrl(
-          this._capabilitiesUrl,
-          this._version,
-          name,
-          undefined,
-          undefined,
-          true
-        );
-
-        return Promise.all([
-          queryXmlDocument(describeUrl),
-          queryXmlDocument(getFeatureUrl),
-        ]).then(([describeResponse, getFeatureResponse]) =>
-          parseFeatureTypeInfo(
-            featureType,
-            describeResponse,
-            getFeatureResponse,
-            this._version
-          )
-        );
-      },
-      'WFS',
-      'FEATURETYPEINFO',
-      this._capabilitiesUrl,
-      name
-    );
+    return {
+      name: featureType.name,
+      ...('title' in featureType && { title: featureType.title }),
+      ...('abstract' in featureType && { abstract: featureType.abstract }),
+      ...('latLonBoundingBox' in featureType && {
+        boundingBox: featureType.latLonBoundingBox,
+      }),
+      defaultCrs: featureType.defaultCrs,
+      otherCrs: featureType.otherCrs,
+      outputFormats: featureType.outputFormats,
+    };
   }
 
   /**
@@ -210,7 +199,7 @@ export default class WfsEndpoint {
    * @param {string} name Feature type name property (unique in the WFS service)
    * @return {Promise<WfsFeatureTypeFull>|null} return null if layer was not found or endpoint is not ready
    */
-  getFeatureTypeInformation(name) {
+  getFeatureTypeFull(name) {
     if (!this._featureTypes) return null;
     const featureType = this._featureTypes.find(
       (featureType) => featureType.name === name
@@ -258,7 +247,7 @@ export default class WfsEndpoint {
    * @return {Promise<WfsFeatureTypePropsDetails>|null} return null if layer was not found or endpoint is not ready
    */
   async getFeatureTypePropDetails(name) {
-    const featureTypeFull = await this.getFeatureTypeInformation(name);
+    const featureTypeFull = await this.getFeatureTypeFull(name);
     if (featureTypeFull === null) return null;
 
     return useCache(
