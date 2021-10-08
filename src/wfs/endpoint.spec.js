@@ -122,6 +122,14 @@ describe('WfsEndpoint', () => {
         ],
       });
     });
+    it('finds a feature type without namespace', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getFeatureTypeSummary('hierarchisation_l')).toMatchObject(
+        {
+          name: 'cd16:hierarchisation_l',
+        }
+      );
+    });
   });
 
   describe('#getFeatureTypeFull', () => {

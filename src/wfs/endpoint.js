@@ -4,6 +4,7 @@ import { queryXmlDocument } from '../shared/http-utils';
 import { parseFeatureTypeInfo } from './featuretypeinfo';
 import { useCache } from '../shared/cache';
 import { generateDescribeFeatureTypeUrl, generateGetFeatureUrl } from './url';
+import { stripNamespace } from '../shared/xml-utils';
 
 /**
  * @typedef {'1.0.0'|'1.1.0'|'2.0.0'} WfsVersion
@@ -170,15 +171,28 @@ export default class WfsEndpoint {
   }
 
   /**
+   * @param {string} name
+   * @returns {WfsFeatureTypeInternal || null}
+   */
+  _getFeatureTypeByName(name) {
+    if (!this._featureTypes) return null;
+    const isQualified = stripNamespace(name) !== name;
+    return (
+      this._featureTypes.find((featureType) =>
+        isQualified
+          ? featureType.name === name
+          : stripNamespace(featureType.name) === name
+      ) || null
+    );
+  }
+
+  /**
    * Returns a summary of a feature type, i.e. only information available in the capabilities document
    * @param {string} name Feature type name property (unique in the WFS service)
    * @return {WfsFeatureTypeSummary|null} return null if layer was not found or endpoint is not ready
    */
   getFeatureTypeSummary(name) {
-    if (!this._featureTypes) return null;
-    const featureType = this._featureTypes.find(
-      (featureType) => featureType.name === name
-    );
+    const featureType = this._getFeatureTypeByName(name);
     if (!featureType) return null;
 
     return {
@@ -195,15 +209,13 @@ export default class WfsEndpoint {
   }
 
   /**
-   * Returns a complete feature type by its name
+   * Returns a complete feature type by its name; if no namespace specified in the name, will match the
+   * first feature type matching the unqualified name.
    * @param {string} name Feature type name property (unique in the WFS service)
    * @return {Promise<WfsFeatureTypeFull>|null} return null if layer was not found or endpoint is not ready
    */
   getFeatureTypeFull(name) {
-    if (!this._featureTypes) return null;
-    const featureType = this._featureTypes.find(
-      (featureType) => featureType.name === name
-    );
+    const featureType = this._getFeatureTypeByName(name);
     if (!featureType) return null;
 
     return useCache(
