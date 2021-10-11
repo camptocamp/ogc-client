@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "A pure JS library for interacting with geospatial services.",
   "main": "dist/index.js",
+  "files": [
+    "dist/",
+    "src/"
+  ],
   "dependencies": {
     "@rgrove/parse-xml": "^3.0.0"
   },
@@ -28,7 +32,8 @@
     "test": "jest",
     "format:write": "prettier --write src demo",
     "format:check": "prettier --check src demo",
-    "generate-dist": "cd build && node ./generate-dist.js"
+    "generate-dist": "cd build && node ./generate-dist.js",
+    "prepublishOnly": "npm test && npm run generate-dist"
   },
   "author": "olivier.guyot@camptocamp.com",
   "license": "GPL-3.0-or-later"

@@ -31,8 +31,6 @@ To install **ogc-client**, run:
 $ npm install --save @camptocamp/ogc-client
 ```
 
-> DISCLAIMER: the package is not published yet and is WIP
-
 ### API
 
 > TODO
