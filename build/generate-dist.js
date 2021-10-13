@@ -4,6 +4,7 @@ const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const common = require('@rollup/plugin-commonjs');
 const { rollup } = require('rollup');
 const { terser } = require('rollup-plugin-terser');
+const json = require('@rollup/plugin-json');
 const fse = require('fs-extra');
 
 async function serializeWorker(entryPath) {
@@ -45,6 +46,21 @@ async function serializeWorker(entryPath) {
   return chunk.code;
 }
 
+async function serializeAllWorkersInCode(dir, code) {
+  let codeResult = code;
+  const workerMatches = codeResult.matchAll(/new Worker\('([^']+)'/g);
+  for (const match of workerMatches) {
+    const workerCode = await serializeWorker(path.join(dir, match[1]));
+    codeResult = codeResult.replace(
+      `new Worker('${match[1]}'`,
+      `new Worker(URL.createObjectURL(new Blob([${JSON.stringify(
+        workerCode
+      )}], {type: 'application/javascript'}))`
+    );
+  }
+  return codeResult;
+}
+
 async function main() {
   const dirname = path.resolve();
   const srcRoot = path.join(dirname, '../src/');
@@ -54,18 +70,7 @@ async function main() {
     if (filePath.endsWith('spec.js')) return;
     const dir = path.dirname(filePath);
     let code = await fse.readFile(filePath, 'utf8');
-
-    const workerMatches = code.matchAll(/new Worker\('([^']+)'/g);
-    for (const match of workerMatches) {
-      const workerCode = await serializeWorker(path.join(dir, match[1]));
-      code = code.replace(
-        `new Worker('${match[1]}'`,
-        `new Worker(URL.createObjectURL(new Blob([${JSON.stringify(
-          workerCode
-        )}], {type: 'application/javascript'}))`
-      );
-    }
-
+    code = await serializeAllWorkersInCode(dir, code);
     await fse.outputFile(outputPath, code, { flag: 'w' });
   }
 
@@ -87,6 +92,36 @@ async function main() {
   fse.rmdirSync(distRoot, { recursive: true });
 
   await copyFiles('.');
+
+  const nodeBundle = await rollup({
+    input: path.join(dirname, '../src-node/index.js'),
+    plugins: [
+      common({
+        include: /node_modules/,
+      }),
+      json(),
+      nodeResolve({
+        preferBuiltins: true,
+      }),
+      {
+        name: 'serialize workers to inline blobs',
+        async transform(code, moduleId) {
+          return await serializeAllWorkersInCode(path.dirname(moduleId), code);
+        },
+      },
+      babel({
+        babelHelpers: 'runtime',
+        presets: [['@babel/preset-env']],
+        exclude: /node_modules/,
+        plugins: [['@babel/transform-runtime']],
+      }),
+    ],
+    external: [/@babel\/runtime/],
+  });
+  await nodeBundle.write({
+    file: path.join(distRoot, './dist-node.js'),
+    format: 'cjs',
+  });
 }
 
 main().catch((err) => {
