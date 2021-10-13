@@ -27,7 +27,7 @@ export function getCacheExpiryDuration() {
  */
 export function storeCacheEntry(object, ...keys) {
   if (typeof window === 'undefined') {
-    throw new Error('Caching not available in workers');
+    return;
   }
   window.localStorage.setItem(
     ['VALUE', ...keys].join('#'),
@@ -44,6 +44,9 @@ export function storeCacheEntry(object, ...keys) {
  * @return {boolean}
  */
 export function hasValidCacheEntry(...keys) {
+  if (typeof window === 'undefined') {
+    return false;
+  }
   const time = parseInt(
     window.localStorage.getItem(['TIME', ...keys].join('#'))
   );
@@ -87,6 +90,7 @@ function sharedFetch(url) {
 /**
  * This will skip a long/expensive task and use a cached value if available,
  * otherwise the task will be run normally
+ * Note: outside of a browser's main thread, caching will never happen!
  * @param {function(): Object|Promise<Object>} factory A function encapsulating
  * the long/expensive task; non serializable properties of the returned object
  * will be set to null
