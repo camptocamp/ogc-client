@@ -1,6 +1,6 @@
 {
   "name": "@camptocamp/ogc-client",
-  "version": "0.2.0",
+  "version": "0.2.1-SNAPSHOT",
   "description": "A pure JS library for interacting with geospatial services.",
   "main": "dist/index.js",
   "repository": "https://github.com/camptocamp/ogc-client",
