@@ -1,9 +1,16 @@
 import { sendTaskRequest } from './utils';
 
 /** @type {Worker} */
-const workerInstance = new Worker('./worker.js', {
-  type: 'module',
-});
+let workerInstance;
+
+function getWorkerInstance() {
+  if (!workerInstance) {
+    workerInstance = new Worker('./worker.js', {
+      type: 'module',
+    });
+  }
+  return workerInstance;
+}
 
 /**
  * Parses the capabilities document and return all relevant information
@@ -11,7 +18,7 @@ const workerInstance = new Worker('./worker.js', {
  * @return {Promise<{version: WmsVersion, info: GenericEndpointInfo, layers: WmsLayerFull[]}>}
  */
 export function parseWmsCapabilities(capabilitiesUrl) {
-  return sendTaskRequest('parseWmsCapabilities', workerInstance, {
+  return sendTaskRequest('parseWmsCapabilities', getWorkerInstance(), {
     url: capabilitiesUrl,
   });
 }
@@ -22,7 +29,7 @@ export function parseWmsCapabilities(capabilitiesUrl) {
  * @return {Promise<{version: WfsVersion, info: GenericEndpointInfo, featureTypes: WfsFeatureTypeInternal[]}>}
  */
 export function parseWfsCapabilities(capabilitiesUrl) {
-  return sendTaskRequest('parseWfsCapabilities', workerInstance, {
+  return sendTaskRequest('parseWfsCapabilities', getWorkerInstance(), {
     url: capabilitiesUrl,
   });
 }
@@ -39,7 +46,7 @@ export function queryWfsFeatureTypeDetails(
   serviceVersion,
   featureTypeFull
 ) {
-  return sendTaskRequest('queryWfsFeatureTypeDetails', workerInstance, {
+  return sendTaskRequest('queryWfsFeatureTypeDetails', getWorkerInstance(), {
     url: capabilitiesUrl,
     serviceVersion,
     featureTypeFull,
