@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime';
 import mitt from 'mitt';
 import fetch from 'node-fetch';
-import { Blob, resolveObjectURL } from 'node:buffer';
+import { Blob, resolveObjectURL } from 'buffer';
 export * from '../src/index';
 
 global.Blob = Blob;
