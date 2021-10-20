@@ -1,7 +1,9 @@
 import {
   findChildElement,
   findChildrenElement,
+  getChildrenElement,
   getElementAttribute,
+  getElementName,
   getElementText,
   getRootElement,
 } from '../shared/xml-utils';
@@ -14,6 +16,43 @@ import { simplifyEpsgUrn } from '../shared/crs-utils';
  */
 export function readVersionFromCapabilities(capabilitiesDoc) {
   return getRootElement(capabilitiesDoc).attributes['version'];
+}
+
+/**
+ * Will read the supported output formats from the capabilities document; note that these might not be valid MIME types
+ * @param {XmlDocument} capabilitiesDoc Capabilities document
+ * @return {string[]|null} Advertised output formats
+ */
+export function readOutputFormatsFromCapabilities(capabilitiesDoc) {
+  const version = readVersionFromCapabilities(capabilitiesDoc);
+  let outputFormats;
+  if (version.startsWith('1.0')) {
+    const getFeature = findChildElement(
+      findChildElement(
+        findChildElement(getRootElement(capabilitiesDoc), 'Capability'),
+        'Request'
+      ),
+      'GetFeature'
+    );
+    outputFormats = getChildrenElement(
+      findChildElement(getFeature, 'ResultFormat')
+    ).map(getElementName);
+  } else {
+    const operations = findChildElement(
+      getRootElement(capabilitiesDoc),
+      'OperationsMetadata'
+    );
+    const getFeature = findChildrenElement(operations, 'Operation').find(
+      (el) => getElementAttribute(el, 'name') === 'GetFeature'
+    );
+    const parameter = findChildrenElement(getFeature, 'Parameter').find(
+      (el) => getElementAttribute(el, 'name') === 'outputFormat'
+    );
+    outputFormats = findChildrenElement(parameter, 'Value', true).map(
+      getElementText
+    );
+  }
+  return outputFormats;
 }
 
 /**
@@ -47,6 +86,7 @@ export function readInfoFromCapabilities(capabilitiesDoc) {
     fees: getElementText(findChildElement(service, 'Fees')),
     constraints: getElementText(findChildElement(service, 'AccessConstraints')),
     keywords,
+    outputFormats: readOutputFormatsFromCapabilities(capabilitiesDoc),
   };
 }
 
@@ -57,12 +97,13 @@ export function readInfoFromCapabilities(capabilitiesDoc) {
  */
 export function readFeatureTypesFromCapabilities(capabilitiesDoc) {
   const version = readVersionFromCapabilities(capabilitiesDoc);
+  const outputFormats = readOutputFormatsFromCapabilities(capabilitiesDoc);
   const capability = findChildElement(
     getRootElement(capabilitiesDoc),
     'FeatureTypeList'
   );
   return findChildrenElement(capability, 'FeatureType').map((featureTypeEl) =>
-    parseFeatureType(featureTypeEl, version)
+    parseFeatureType(featureTypeEl, version, outputFormats)
   );
 }
 
@@ -70,9 +111,10 @@ export function readFeatureTypesFromCapabilities(capabilitiesDoc) {
  * Parse a feature type in a capabilities doc
  * @param {XmlElement} featureTypeEl
  * @param {WfsVersion} serviceVersion
+ * @param {string[]} defaultOutputFormats
  * @return {WfsFeatureTypeInternal}
  */
-function parseFeatureType(featureTypeEl, serviceVersion) {
+function parseFeatureType(featureTypeEl, serviceVersion, defaultOutputFormats) {
   const srsTag = serviceVersion.startsWith('2.') ? 'CRS' : 'SRS';
   const defaultSrsTag = serviceVersion.startsWith('1.0')
     ? 'SRS'
@@ -111,7 +153,8 @@ function parseFeatureType(featureTypeEl, serviceVersion) {
       getElementText(findChildElement(featureTypeEl, defaultSrsTag))
     ),
     otherCrs,
-    outputFormats,
+    outputFormats:
+      outputFormats.length > 0 ? outputFormats : defaultOutputFormats,
     latLonBoundingBox: serviceVersion.startsWith('1.0')
       ? parseBBox100()
       : parseBBox(),

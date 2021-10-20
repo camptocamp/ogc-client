@@ -2,6 +2,7 @@ import { parseXmlString } from '../shared/xml-utils';
 import capabilities100 from '../../fixtures/wfs/capabilities-pigma-1-0-0.xml';
 import capabilities110 from '../../fixtures/wfs/capabilities-pigma-1-1-0.xml';
 import capabilities200 from '../../fixtures/wfs/capabilities-pigma-2-0-0.xml';
+import capabilities200_noFormats from '../../fixtures/wfs/capabilities-geo2france-2-0-0.xml';
 import {
   readFeatureTypesFromCapabilities,
   readInfoFromCapabilities,
@@ -99,16 +100,67 @@ describe('WFS capabilities', () => {
       }));
       expect(readFeatureTypesFromCapabilities(doc)).toEqual(typesWithGml3);
     });
-    it('reads the feature types (1.0.0)', () => {
+    it('reads the feature types (1.0.0), using endpoint formats', () => {
       const doc = parseXmlString(capabilities100);
-      const typesWithoutFormatAndCrs = expectedTypes.map((types) => ({
+      const typesWithoutCrsAndDefaultFormats = expectedTypes.map((types) => ({
         ...types,
-        outputFormats: [],
+        outputFormats: [
+          'DXF',
+          'excel',
+          'excel2007',
+          'KML',
+          'GML2',
+          'GML3',
+          'SHAPE-ZIP',
+          'CSV',
+          'JSONP',
+          'JSON',
+        ],
         otherCrs: [],
       }));
       expect(readFeatureTypesFromCapabilities(doc)).toEqual(
-        typesWithoutFormatAndCrs
+        typesWithoutCrsAndDefaultFormats
       );
+    });
+
+    describe('when a feature type does not specify its output formats', () => {
+      it('uses the output formats from the endpoint', () => {
+        const doc = parseXmlString(capabilities200_noFormats);
+        const featureTypes = readFeatureTypesFromCapabilities(doc);
+        expect(featureTypes[0]).toEqual({
+          abstract: 'Domaine public',
+          defaultCrs: 'EPSG:2154',
+          latLonBoundingBox: [
+            1.3472171890368316,
+            48.82764887581316,
+            4.285589467078578,
+            51.0896786738123,
+          ],
+          name: 'cr_hdf:domaine_public_hdf_com',
+          otherCrs: [],
+          outputFormats: [
+            'application/gml+xml; version=3.2',
+            'DXF',
+            'DXF-ZIP',
+            'GML2',
+            'KML',
+            'SHAPE-ZIP',
+            'application/json',
+            'application/vnd.google-earth.kml xml',
+            'application/vnd.google-earth.kml+xml',
+            'csv',
+            'excel',
+            'excel2007',
+            'gml3',
+            'gml32',
+            'json',
+            'text/xml; subtype=gml/2.1.2',
+            'text/xml; subtype=gml/3.1.1',
+            'text/xml; subtype=gml/3.2',
+          ],
+          title: 'Domaine public',
+        });
+      });
     });
   });
 
@@ -120,18 +172,79 @@ describe('WFS capabilities', () => {
       name: 'WFS',
       title: "Service WFS de l'IDS régionale PIGMA",
       keywords: ['WFS', 'WMS', 'GEOSERVER'],
+      outputFormats: [],
     };
     it('reads the service info (2.0.0)', () => {
       const doc = parseXmlString(capabilities200);
-      expect(readInfoFromCapabilities(doc)).toEqual(expectedInfo);
+      expect(readInfoFromCapabilities(doc)).toEqual({
+        ...expectedInfo,
+        outputFormats: [
+          'application/gml+xml; version=3.2',
+          'DXF',
+          'DXF-ZIP',
+          'GML2',
+          'KML',
+          'SHAPE-ZIP',
+          'application/json',
+          'application/vnd.google-earth.kml xml',
+          'application/vnd.google-earth.kml+xml',
+          'csv',
+          'excel',
+          'excel2007',
+          'gml3',
+          'gml32',
+          'json',
+          'text/javascript',
+          'text/xml; subtype=gml/2.1.2',
+          'text/xml; subtype=gml/3.1.1',
+          'text/xml; subtype=gml/3.2',
+        ],
+      });
     });
     it('reads the service info (1.1.0)', () => {
       const doc = parseXmlString(capabilities110);
-      expect(readInfoFromCapabilities(doc)).toEqual(expectedInfo);
+      expect(readInfoFromCapabilities(doc)).toEqual({
+        ...expectedInfo,
+        outputFormats: [
+          'text/xml; subtype=gml/3.1.1',
+          'DXF',
+          'DXF-ZIP',
+          'GML2',
+          'KML',
+          'SHAPE-ZIP',
+          'application/gml+xml; version=3.2',
+          'application/json',
+          'application/vnd.google-earth.kml xml',
+          'application/vnd.google-earth.kml+xml',
+          'csv',
+          'excel',
+          'excel2007',
+          'gml3',
+          'gml32',
+          'json',
+          'text/javascript',
+          'text/xml; subtype=gml/2.1.2',
+          'text/xml; subtype=gml/3.2',
+        ],
+      });
     });
     it('reads the service info (1.0.0)', () => {
       const doc = parseXmlString(capabilities100);
-      expect(readInfoFromCapabilities(doc)).toEqual(expectedInfo);
+      expect(readInfoFromCapabilities(doc)).toEqual({
+        ...expectedInfo,
+        outputFormats: [
+          'DXF',
+          'excel',
+          'excel2007',
+          'KML',
+          'GML2',
+          'GML3',
+          'SHAPE-ZIP',
+          'CSV',
+          'JSONP',
+          'JSON',
+        ],
+      });
     });
   });
 });

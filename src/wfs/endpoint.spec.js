@@ -188,6 +188,27 @@ describe('WfsEndpoint', () => {
         name: 'WFS',
         title: "Service WFS de l'IDS régionale PIGMA",
         keywords: ['WFS', 'WMS', 'GEOSERVER'],
+        outputFormats: [
+          'application/gml+xml; version=3.2',
+          'DXF',
+          'DXF-ZIP',
+          'GML2',
+          'KML',
+          'SHAPE-ZIP',
+          'application/json',
+          'application/vnd.google-earth.kml xml',
+          'application/vnd.google-earth.kml+xml',
+          'csv',
+          'excel',
+          'excel2007',
+          'gml3',
+          'gml32',
+          'json',
+          'text/javascript',
+          'text/xml; subtype=gml/2.1.2',
+          'text/xml; subtype=gml/3.1.1',
+          'text/xml; subtype=gml/3.2',
+        ],
       });
     });
   });

@@ -19,4 +19,5 @@
  * @property {string} fees
  * @property {string} constraints
  * @property {string[]} keywords
+ * @property {string[]} [outputFormats]
  */
