@@ -490,6 +490,7 @@
                 <Format>text/xml; subtype=gml/3.2.1</Format>
                 <Format>text/xml; subtype=gml/3.1.1</Format>
                 <Format>text/xml; subtype=gml/2.1.2</Format>
+                <Format>application/json</Format>
             </OutputFormats>
         </FeatureType>
         <FeatureType xmlns:cd16="http://pigma.org/cd16">

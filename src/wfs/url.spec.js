@@ -78,8 +78,27 @@ describe('WFS url helpers', () => {
         'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&OUTPUTFORMAT=application%2Fjson'
       );
     });
+    it('generates a correct URL (v2.0.0)', () => {
+      expect(
+        generateGetFeatureUrl(
+          'http://example.com/wfs',
+          '2.0.0',
+          'my:type',
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          'EPSG:2154',
+          [10, 20, 100, 200],
+          'EPSG:3857'
+        )
+      ).toBe(
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&SRSNAME=EPSG%3A2154&BBOX=10%2C20%2C100%2C200%2CEPSG%3A3857'
+      );
+    });
   });
-  describe('generateGetFeatureUrl', () => {
+
+  describe('generateDescribeFeatureTypeUrl', () => {
     it('generates a correct URL (v1.0.0)', () => {
       expect(
         generateDescribeFeatureTypeUrl(

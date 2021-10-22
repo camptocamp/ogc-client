@@ -1,10 +1,4 @@
-import {
-  readInfoFromCapabilities,
-  readLayersFromCapabilities,
-  readVersionFromCapabilities,
-} from './capabilities';
 import { EndpointError } from '../shared/errors';
-import { queryXmlDocument } from '../shared/http-utils';
 import { parseWmsCapabilities } from '../worker';
 import { useCache } from '../shared/cache';
 

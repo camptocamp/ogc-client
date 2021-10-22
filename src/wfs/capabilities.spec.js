@@ -64,6 +64,7 @@ describe('WFS capabilities', () => {
           'text/xml; subtype=gml/3.2.1',
           'text/xml; subtype=gml/3.1.1',
           'text/xml; subtype=gml/2.1.2',
+          'application/json',
         ],
         title: 'CD 16 - Comptages routiers',
       },
@@ -96,7 +97,9 @@ describe('WFS capabilities', () => {
       const doc = parseXmlString(capabilities110);
       const typesWithGml3 = expectedTypes.map((types) => ({
         ...types,
-        outputFormats: ['text/xml; subtype=gml/3.1.1'],
+        outputFormats: types.outputFormats.filter(
+          (f) => f.indexOf('3.2') === -1 && f.indexOf('2.1') === -1
+        ),
       }));
       expect(readFeatureTypesFromCapabilities(doc)).toEqual(typesWithGml3);
     });

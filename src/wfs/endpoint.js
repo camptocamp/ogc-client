@@ -285,23 +285,65 @@ export default class WfsEndpoint {
   }
 
   /**
+   * @param {string} featureType
+   * @return {string|null}
+   * @private
+   */
+  _getJsonCompatibleOutputFormat(featureType) {
+    const featureTypeInfo = this._getFeatureTypeByName(featureType);
+    if (!featureTypeInfo) return null;
+    const candidates = featureTypeInfo.outputFormats.filter(
+      (f) => f.toLowerCase().indexOf('json') > -1
+    );
+    if (!candidates.length) return null;
+    return candidates[0];
+  }
+
+  /**
+   * Returns true if the given feature type can be downloaded as GeoJSON
+   * @return {boolean|null}
+   */
+  supportsJson(featureType) {
+    if (!this._featureTypes) return null;
+    return !!this._getJsonCompatibleOutputFormat(featureType);
+  }
+
+  /**
    * Will build a GetFeature url based on the given parameters
-   * @param featureType
-   * @param {number} [maxFeatures] no limit if undefined
-   * @param {MimeType} [outputFormat] default format if undefined
+   * @param {string} featureType
+   * @param {Object} [options]
+   * @property {number} [options.maxFeatures] no limit if undefined
+   * @property {boolean} [options.asJson] if true, will ask for GeoJSON; will throw if the service does not support it
+   * @property {MimeType} [options.outputFormat] a supported output format (overridden by `asJson`)
+   * @property {CrsCode} [options.outputCrs] if unspecified, this will be the data native projection
+   * @property {BoundingBox} [options.extent] an extent to restrict returned objects
+   * @property {CrsCode} [options.extentCrs] if unspecified, `extent` should be in the data native projection
    * @returns {string|null} Returns null if endpoint is not ready
    */
-  getFeatureUrl(featureType, maxFeatures, outputFormat) {
+  getFeatureUrl(featureType, options) {
     if (!this._featureTypes) {
       return null;
     }
+    const { maxFeatures, asJson, outputFormat, outputCrs, extent, extentCrs } =
+      options || {};
     const internalFeatureType = this._getFeatureTypeByName(featureType);
     if (!internalFeatureType) {
       throw new Error(
         `The following feature type was not found in the service: ${featureType}`
       );
     }
-    if (internalFeatureType.outputFormats.indexOf(outputFormat) === -1) {
+    let format = outputFormat;
+    if (asJson) {
+      format = this._getJsonCompatibleOutputFormat(featureType) || undefined;
+      if (!format) {
+        throw new Error(
+          `The endpoint does not appear to support GeoJSON for the feature type ${internalFeatureType.name}`
+        );
+      }
+    } else if (
+      outputFormat &&
+      internalFeatureType.outputFormats.indexOf(outputFormat) === -1
+    ) {
       throw new Error(
         `The following output format type was not found in the feature type ${internalFeatureType.name}: ${outputFormat}`
       );
@@ -310,8 +352,13 @@ export default class WfsEndpoint {
       this._capabilitiesUrl,
       this._version,
       internalFeatureType.name,
-      outputFormat,
-      maxFeatures
+      format,
+      maxFeatures,
+      undefined,
+      undefined,
+      outputCrs,
+      extent,
+      extentCrs
     );
   }
 }

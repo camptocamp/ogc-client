@@ -26,14 +26,14 @@ describe('WfsEndpoint', () => {
       return 'error';
     };
     endpoint = new WfsEndpoint(
-      'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType&featureType=myfeatures'
+      'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType'
     );
   });
 
   it('makes a getcapabilities request', async () => {
     await endpoint.isReady();
     expect(window.fetch).toHaveBeenCalledWith(
-      'https://my.test.service/ogc/wfs?featureType=myfeatures&SERVICE=WFS&REQUEST=GetCapabilities'
+      'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetCapabilities'
     );
   });
 
@@ -402,28 +402,52 @@ describe('WfsEndpoint', () => {
     });
     it('returns a GetFeature url for a given feature type', () => {
       expect(
-        endpoint.getFeatureUrl(
-          'hierarchisation_l',
-          200,
-          'application/gml+xml; version=3.2'
-        )
+        endpoint.getFeatureUrl('hierarchisation_l', {
+          maxFeatures: 200,
+          outputFormat: 'application/gml+xml; version=3.2',
+        })
       ).toEqual(
-        'https://my.test.service/ogc/wfs?featureType=myfeatures&SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&OUTPUTFORMAT=application%2Fgml%2Bxml%3B+version%3D3.2&COUNT=200'
+        'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&OUTPUTFORMAT=application%2Fgml%2Bxml%3B+version%3D3.2&COUNT=200'
       );
     });
-    it('returns an error if the feature type was not found', () => {
+    it('returns a GetFeature requesting geojson url for a given feature type', () => {
+      expect(
+        endpoint.getFeatureUrl('comptages_routiers_l', {
+          asJson: true,
+        })
+      ).toEqual(
+        'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Acomptages_routiers_l&OUTPUTFORMAT=application%2Fjson'
+      );
+    });
+    it('returns a GetFeature with a bbox and output crs for a given feature type', () => {
+      expect(
+        endpoint.getFeatureUrl('hierarchisation_l', {
+          extent: [1, 2, 3, 4],
+          outputCrs: 'EPSG:2154',
+        })
+      ).toEqual(
+        'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&SRSNAME=EPSG%3A2154&BBOX=1%2C2%2C3%2C4'
+      );
+    });
+    it('throws an error if the feature type was not found', () => {
       expect(() => endpoint.getFeatureUrl('does_not_exist')).toThrow(
         'feature type'
       );
     });
-    it('returns an error if the required output format is not supported by the feature type', () => {
+    it('throws an error if the required output format is not supported by the feature type', () => {
       expect(() =>
-        endpoint.getFeatureUrl(
-          'hierarchisation_l',
-          200,
-          'application/invalid+mime+type'
-        )
+        endpoint.getFeatureUrl('hierarchisation_l', {
+          maxFeatures: 200,
+          outputFormat: 'application/invalid+mime+type',
+        })
       ).toThrow('output format');
+    });
+    it('throws an error if the the feature type does not support geojson', () => {
+      expect(() =>
+        endpoint.getFeatureUrl('hierarchisation_l', {
+          asJson: true,
+        })
+      ).toThrow('GeoJSON');
     });
   });
 });
