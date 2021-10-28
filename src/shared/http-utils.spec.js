@@ -5,7 +5,7 @@ describe('HTTP utils', () => {
   describe('queryXmlDocument', () => {
     const sampleXml = '<sample-xml><node1></node1><node2></node2></sample-xml>';
 
-    /** @type {'ok'|'httpError'|'corsError'} */
+    /** @type {'ok'|'httpError'|'corsError'|'delay'} */
     let fetchBehaviour;
 
     window.fetch_ = window.fetch; // keep reference of native impl
@@ -25,7 +25,15 @@ describe('HTTP utils', () => {
           });
         case 'corsError':
           return Promise.reject(new Error('Cross origin headers missing'));
+        case 'delay':
+          return new Promise((resolve) => {
+            setTimeout(() => resolve(xmlString), 10);
+          });
       }
+    });
+
+    beforeEach(() => {
+      jest.clearAllMocks();
     });
 
     describe('HTTP request returns success', () => {
@@ -78,6 +86,17 @@ describe('HTTP utils', () => {
         await expect(
           queryXmlDocument('<broken-xml</broken-xml>')
         ).rejects.toThrowError('Unclosed start tag for element `broken-xml`');
+      });
+    });
+    describe('multiple similar HTTP requests in parallel', () => {
+      beforeEach(() => {
+        fetchBehaviour = 'delay';
+        queryXmlDocument('https://abcd.com');
+        queryXmlDocument('https://abcd.com');
+        queryXmlDocument('https://abcd.com');
+      });
+      it('only fetches the document once', async () => {
+        expect(window.fetch).toHaveBeenCalledTimes(1);
       });
     });
 

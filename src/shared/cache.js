@@ -72,22 +72,6 @@ function readCacheEntry(...keys) {
 const tasksMap = new Map();
 
 /**
- * Returns a promise equivalent to `fetch(url)` but guarded against
- * identical concurrent requests
- * @param {string} url
- * @return {Promise<Response>}
- */
-function sharedFetch(url) {
-  if (fetchPromises.has(url)) {
-    return fetchPromises.get(url);
-  }
-  const promise = fetch(url);
-  promise.then(() => fetchPromises.delete(url));
-  fetchPromises.set(url, promise);
-  return promise;
-}
-
-/**
  * This will skip a long/expensive task and use a cached value if available,
  * otherwise the task will be run normally
  * Note: outside of a browser's main thread, caching will never happen!
