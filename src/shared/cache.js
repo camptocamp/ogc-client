@@ -2,9 +2,6 @@ let cacheExpiryDuration = 1000 * 60 * 60; // 1 day
 
 /**
  * Sets a new cache expiry duration, in ms.
- * This *will* affect existing cache entries, as entries are stored
- * relative to the request time; as such, increasing the expiry duration
- * will make existing entries last longer.
  * Setting this to a value <= 0 will disable the caching logic altogether
  * and not store cache entries at all
  * @param {number} value Duration in ms
@@ -29,14 +26,20 @@ export function storeCacheEntry(object, ...keys) {
   if (typeof window === 'undefined') {
     return;
   }
-  window.localStorage.setItem(
-    ['VALUE', ...keys].join('#'),
-    JSON.stringify(object)
-  );
-  window.localStorage.setItem(
-    ['TIME', ...keys].join('#'),
-    Date.now().toString(10)
-  );
+  try {
+    window.localStorage.setItem(
+      ['OGC-CLIENT', 'VALUE', ...keys].join('#'),
+      JSON.stringify(object)
+    );
+    window.localStorage.setItem(
+      ['OGC-CLIENT', 'EXPIRY', ...keys].join('#'),
+      (Date.now() + getCacheExpiryDuration()).toString(10)
+    );
+  } catch (e) {
+    console.info(
+      '[ogc-client] could not cache the latest operation (most likely due to a full storage)'
+    );
+  }
 }
 
 /**
@@ -48,20 +51,22 @@ export function hasValidCacheEntry(...keys) {
     return false;
   }
   const time = parseInt(
-    window.localStorage.getItem(['TIME', ...keys].join('#'))
+    window.localStorage.getItem(['OGC-CLIENT', 'EXPIRY', ...keys].join('#'))
   );
   if (isNaN(time)) {
     return false;
   }
-  return Date.now() < time + getCacheExpiryDuration();
+  return Date.now() < time;
 }
 
 /**
  * @param {string} keys
  * @return {Object}
  */
-function readCacheEntry(...keys) {
-  const entry = window.localStorage.getItem(['VALUE', ...keys].join('#'));
+export function readCacheEntry(...keys) {
+  const entry = window.localStorage.getItem(
+    ['OGC-CLIENT', 'VALUE', ...keys].join('#')
+  );
   return JSON.parse(entry);
 }
 
@@ -82,6 +87,7 @@ const tasksMap = new Map();
  * @return {Promise<Object>} Resolves to either a cached object or a fresh one
  */
 export async function useCache(factory, ...keys) {
+  purgeEntries();
   const taskKey = keys.join('#');
   if (tasksMap.has(taskKey)) {
     return tasksMap.get(taskKey);
@@ -97,4 +103,21 @@ export async function useCache(factory, ...keys) {
   const result = await taskRun;
   storeCacheEntry(result, ...keys);
   return result;
+}
+
+/**
+ * Removes all expired entries from the cache
+ */
+function purgeEntries() {
+  for (let i = 0; i < window.localStorage.length; i++) {
+    const key = window.localStorage.key(i);
+    if (key !== null && key.startsWith('OGC-CLIENT#EXPIRY')) {
+      const expiry = window.localStorage.getItem(key);
+      if (expiry > Date.now()) continue;
+      const valueKey = key.replace(/^OGC-CLIENT#EXPIRY/, 'OGC-CLIENT#VALUE');
+      window.localStorage.removeItem(key);
+      window.localStorage.removeItem(valueKey);
+      i -= 2; // accomodate for the fact that we removed two entries
+    }
+  }
 }
