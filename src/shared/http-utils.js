@@ -17,7 +17,7 @@ export function sharedFetch(url) {
     return fetchPromises.get(url);
   }
   const promise = fetch(url);
-  promise.then(() => fetchPromises.delete(url));
+  promise.finally(() => fetchPromises.delete(url));
   fetchPromises.set(url, promise);
   return promise;
 }
