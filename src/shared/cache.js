@@ -19,55 +19,51 @@ export function getCacheExpiryDuration() {
 }
 
 /**
+ * @type {Promise<Cache>|null}
+ */
+const cachePromise = 'caches' in self ? caches.open('ogc-client') : null;
+
+/**
  * @param {Object} object
  * @param {string} keys
  */
-export function storeCacheEntry(object, ...keys) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-  try {
-    window.localStorage.setItem(
-      ['OGC-CLIENT', 'VALUE', ...keys].join('#'),
-      JSON.stringify(object)
-    );
-    window.localStorage.setItem(
-      ['OGC-CLIENT', 'EXPIRY', ...keys].join('#'),
-      (Date.now() + getCacheExpiryDuration()).toString(10)
-    );
-  } catch (e) {
-    console.info(
-      '[ogc-client] could not cache the latest operation (most likely due to a full storage)'
-    );
-  }
+export async function storeCacheEntry(object, ...keys) {
+  if (!cachePromise) return;
+  const entryUrl = 'https://cache/' + keys.join('/');
+  const cache = await cachePromise;
+  await cache.put(
+    entryUrl,
+    new Response(JSON.stringify(object), {
+      headers: {
+        'x-expiry': (Date.now() + getCacheExpiryDuration()).toString(10),
+      },
+    })
+  );
 }
 
 /**
  * @param {string} keys
- * @return {boolean}
+ * @return {Promise<boolean>}
  */
-export function hasValidCacheEntry(...keys) {
-  if (typeof window === 'undefined') {
-    return false;
-  }
-  const time = parseInt(
-    window.localStorage.getItem(['OGC-CLIENT', 'EXPIRY', ...keys].join('#'))
-  );
-  if (isNaN(time)) {
-    return false;
-  }
-  return Date.now() < time;
+export async function hasValidCacheEntry(...keys) {
+  if (!cachePromise) return false;
+  const entryUrl = 'https://cache/' + keys.join('/');
+  const cache = await cachePromise;
+  return cache
+    .match(entryUrl)
+    .then((req) => !!req && parseInt(req.headers.get('x-expiry')) > Date.now());
 }
 
 /**
  * @param {string} keys
  * @return {Object}
  */
-export function readCacheEntry(...keys) {
-  const entry = window.localStorage.getItem(
-    ['OGC-CLIENT', 'VALUE', ...keys].join('#')
-  );
-  return JSON.parse(entry);
+export async function readCacheEntry(...keys) {
+  if (!cachePromise) return null;
+  const entryUrl = 'https://cache/' + keys.join('/');
+  const cache = await cachePromise;
+  const response = await cache.match(entryUrl);
+  return response ? response.clone().json() : null;
 }
 
 /**
@@ -87,13 +83,13 @@ const tasksMap = new Map();
  * @return {Promise<Object>} Resolves to either a cached object or a fresh one
  */
 export async function useCache(factory, ...keys) {
-  purgeEntries();
+  await purgeEntries();
+  if (await hasValidCacheEntry(...keys)) {
+    return readCacheEntry(...keys);
+  }
   const taskKey = keys.join('#');
   if (tasksMap.has(taskKey)) {
     return tasksMap.get(taskKey);
-  }
-  if (hasValidCacheEntry(...keys)) {
-    return readCacheEntry(...keys);
   }
   const taskRun = factory();
   if (taskRun instanceof Promise) {
@@ -101,23 +97,20 @@ export async function useCache(factory, ...keys) {
     tasksMap.set(taskKey, taskRun);
   }
   const result = await taskRun;
-  storeCacheEntry(result, ...keys);
+  await storeCacheEntry(result, ...keys);
   return result;
 }
 
 /**
  * Removes all expired entries from the cache
  */
-function purgeEntries() {
-  for (let i = 0; i < window.localStorage.length; i++) {
-    const key = window.localStorage.key(i);
-    if (key !== null && key.startsWith('OGC-CLIENT#EXPIRY')) {
-      const expiry = window.localStorage.getItem(key);
-      if (expiry > Date.now()) continue;
-      const valueKey = key.replace(/^OGC-CLIENT#EXPIRY/, 'OGC-CLIENT#VALUE');
-      window.localStorage.removeItem(key);
-      window.localStorage.removeItem(valueKey);
-      i -= 2; // accomodate for the fact that we removed two entries
-    }
+export async function purgeEntries() {
+  if (!cachePromise) return;
+  const cache = await cachePromise;
+  const keys = await cache.keys();
+  for (let key of keys) {
+    const resp = await cache.match(key);
+    if (parseInt(resp.headers.get('x-expiry')) <= Date.now())
+      await cache.delete(key);
   }
 }

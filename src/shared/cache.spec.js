@@ -1,5 +1,5 @@
 import {
-  hasValidCacheEntry,
+  purgeEntries,
   readCacheEntry,
   setCacheExpiryDuration,
   storeCacheEntry,
@@ -11,11 +11,16 @@ let NOW;
 Date.now = () => NOW;
 
 describe('cache utils', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks();
-    window.localStorage.clear();
-    NOW = 10000;
     setCacheExpiryDuration(1000);
+
+    // clear all cache entries
+    NOW = 50000;
+    await purgeEntries();
+
+    // set start time
+    NOW = 10000;
   });
   describe('useCache', () => {
     describe('when no cache entry is present', () => {
@@ -33,7 +38,7 @@ describe('cache utils', () => {
     describe('when an expired cache entry is present', () => {
       let result;
       beforeEach(async () => {
-        storeCacheEntry({ old: true }, 'test', 'entry', '02');
+        await storeCacheEntry({ old: true }, 'test', 'entry', '02');
         NOW = 12000;
         result = await useCache(factory, 'test', 'entry', '02');
       });
@@ -47,7 +52,7 @@ describe('cache utils', () => {
     describe('when a valid cache entry is present', () => {
       let result;
       beforeEach(async () => {
-        storeCacheEntry({ old: true }, 'test', 'entry', '03');
+        await storeCacheEntry({ old: true }, 'test', 'entry', '03');
         NOW = 10800;
         result = await useCache(factory, 'test', 'entry', '03');
       });
@@ -61,7 +66,7 @@ describe('cache utils', () => {
     describe('when no cache entry is present but a similar task is already running', () => {
       let result, longTask, produced;
       beforeEach(async () => {
-        produced = { fresh: true };
+        produced = { long: Math.random() };
         longTask = jest.fn(
           () =>
             new Promise((resolve) => {
@@ -83,35 +88,18 @@ describe('cache utils', () => {
     describe('when an expired cache entry is present (as well as unrelated entries) and a new cache entry is set', () => {
       let result;
       beforeEach(async () => {
-        window.localStorage.setItem('unrelated-1', 'unrelated');
-        storeCacheEntry({ old: true }, 'test', 'entry', '04');
-        window.localStorage.setItem('unrelated-2', 'unrelated');
+        await storeCacheEntry({ old: true }, 'test', 'entry', '04');
         NOW = 11200;
+        await storeCacheEntry({ unrelated: true }, 'unrelated');
         result = await useCache(factory, 'test', 'entry', '05');
       });
-      it('deletes the expired cache entry', () => {
-        expect(readCacheEntry('test', 'entry', '04')).toBeNull();
+      it('deletes the expired cache entry', async () => {
+        await expect(readCacheEntry('test', 'entry', '04')).resolves.toBeNull();
       });
-      it('preservs unrelated entries', () => {
-        expect(window.localStorage.getItem('unrelated-1')).toEqual('unrelated');
-        expect(window.localStorage.getItem('unrelated-2')).toEqual('unrelated');
-      });
-    });
-    describe('when saving the result in the cache fails (i.e. no space left)', () => {
-      let result;
-      beforeEach(async () => {
-        jest
-          .spyOn(window.localStorage.__proto__, 'setItem')
-          .mockImplementation(() => {
-            throw new Error('no more room');
-          });
-        result = await useCache(factory, 'test', 'entry', '06');
-      });
-      it('runs the task without error', () => {
-        expect(result).toEqual({ fresh: true });
-      });
-      it('does not save anything in cache', () => {
-        expect(hasValidCacheEntry('test', 'entry', '06')).toBeFalsy();
+      it('preserves unrelated entry', async () => {
+        await expect(readCacheEntry('unrelated')).resolves.toEqual({
+          unrelated: true,
+        });
       });
     });
   });

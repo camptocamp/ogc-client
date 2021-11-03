@@ -2,6 +2,8 @@ import 'regenerator-runtime/runtime';
 import mitt from 'mitt';
 import * as esbuild from 'esbuild';
 import * as util from 'util';
+import CacheMock from 'browser-cache-mock';
+import 'isomorphic-fetch';
 
 // mock the global fetch API
 window.fetchResponseFactory = (url) => '<empty></empty>';
@@ -12,6 +14,10 @@ window.fetch = jest.fn((url) =>
     ok: true,
   })
 );
+
+window.caches = {
+  open: async () => new CacheMock(),
+};
 
 // mock Worker class to work synchronously
 // requires an absolute file path
