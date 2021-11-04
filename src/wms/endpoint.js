@@ -61,18 +61,15 @@ export default class WmsEndpoint {
      * @private
      */
     this._capabilitiesPromise = useCache(
-      () =>
-        parseWmsCapabilities(capabilitiesUrl.toString()).then(
-          ({ info, layers, version }) => {
-            this._info = info;
-            this._layers = layers;
-            this._version = version;
-          }
-        ),
+      () => parseWmsCapabilities(capabilitiesUrl.toString()),
       'WMS',
       'CAPABILITIES',
       capabilitiesUrl.toString()
-    );
+    ).then(({ info, layers, version }) => {
+      this._info = info;
+      this._layers = layers;
+      this._version = version;
+    });
 
     /**
      * @type {GenericEndpointInfo|null}

@@ -37,8 +37,20 @@ describe('WfsEndpoint', () => {
     );
   });
 
-  it('uses cache', () => {
-    expect(useCache).toHaveBeenCalledTimes(1);
+  describe('caching', () => {
+    beforeEach(async () => {
+      await endpoint.isReady();
+    });
+    it('uses cache once', () => {
+      expect(useCache).toHaveBeenCalledTimes(1);
+    });
+    it('stores the parsed capabilities in cache', async () => {
+      await expect(useCache.mock.results[0].value).resolves.toMatchObject({
+        info: {
+          title: "Service WFS de l'IDS régionale PIGMA",
+        },
+      });
+    });
   });
 
   describe('#isReady', () => {
