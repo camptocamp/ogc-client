@@ -462,4 +462,21 @@ describe('WfsEndpoint', () => {
       ).toThrow('GeoJSON');
     });
   });
+
+  describe('#supportsJson', () => {
+    beforeEach(async () => {
+      await endpoint.isReady();
+    });
+    it('returns true if the feature type has at least one format containing json', () => {
+      expect(endpoint.supportsJson('cd16:comptages_routiers_l')).toBeTruthy();
+    });
+    it('returns false otherwise', () => {
+      expect(endpoint.supportsJson('cd16:hierarchisation_l')).toBeFalsy();
+    });
+    it('throws if the feature type is not found', () => {
+      expect(() => endpoint.supportsJson('not:valid')).toThrow(
+        'feature type was not found'
+      );
+    });
+  });
 });

@@ -291,7 +291,11 @@ export default class WfsEndpoint {
    */
   _getJsonCompatibleOutputFormat(featureType) {
     const featureTypeInfo = this._getFeatureTypeByName(featureType);
-    if (!featureTypeInfo) return null;
+    if (!featureTypeInfo) {
+      throw new Error(
+        `The following feature type was not found in the service: ${featureType}`
+      );
+    }
     const candidates = featureTypeInfo.outputFormats.filter(
       (f) => f.toLowerCase().indexOf('json') > -1
     );
