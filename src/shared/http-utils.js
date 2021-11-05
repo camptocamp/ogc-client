@@ -30,9 +30,24 @@ export function sharedFetch(url) {
  */
 export function queryXmlDocument(url) {
   return sharedFetch(url)
-    .catch((error) => {
-      throw new EndpointError(error.message, 0, true);
-    })
+    .catch(() =>
+      // attempt a HEAD to see if the failure comes from CORS or the service is generally unreachable
+      fetch(url, { method: 'HEAD', mode: 'no-cors' })
+        .catch((error) => {
+          throw new EndpointError(
+            `Fetching the document failed either due to network errors or unreachable host, error is: ${error.message}`,
+            0,
+            false
+          );
+        })
+        .then(() => {
+          throw new EndpointError(
+            `The document could not be fetched due to CORS limitations`,
+            0,
+            true
+          );
+        })
+    )
     .then(async (resp) => {
       const text = await resp.text();
       if (!resp.ok) {

@@ -5,11 +5,12 @@ describe('HTTP utils', () => {
   describe('queryXmlDocument', () => {
     const sampleXml = '<sample-xml><node1></node1><node2></node2></sample-xml>';
 
-    /** @type {'ok'|'httpError'|'corsError'|'delay'} */
+    /** @type {'ok'|'httpError'|'corsError'|'networkError'|'delay'} */
     let fetchBehaviour;
 
     window.fetch_ = window.fetch; // keep reference of native impl
-    window.fetch = jest.fn((xmlString) => {
+    window.fetch = jest.fn((xmlString, opts) => {
+      const noCors = opts && opts.mode === 'no-cors';
       switch (fetchBehaviour) {
         case 'ok':
           return Promise.resolve({
@@ -24,7 +25,14 @@ describe('HTTP utils', () => {
             ok: false,
           });
         case 'corsError':
+          if (noCors)
+            return Promise.resolve({
+              status: 200,
+              ok: true,
+            });
           return Promise.reject(new Error('Cross origin headers missing'));
+        case 'networkError':
+          return Promise.reject(new Error('General network error'));
         case 'delay':
           return new Promise((resolve) => {
             setTimeout(() => resolve(xmlString), 10);
@@ -74,7 +82,23 @@ describe('HTTP utils', () => {
       });
       it('rejects with an error', async () => {
         await expect(queryXmlDocument(sampleXml)).rejects.toEqual(
-          new EndpointError('Cross origin headers missing', 0, true)
+          new EndpointError(expect.stringContaining('due to CORS'), 0, true)
+        );
+      });
+    });
+    describe('HTTP fails for network reasons', () => {
+      beforeEach(() => {
+        fetchBehaviour = 'networkError';
+      });
+      it('rejects with an error', async () => {
+        await expect(queryXmlDocument(sampleXml)).rejects.toEqual(
+          new EndpointError(
+            expect.stringContaining(
+              'due to network errors or unreachable host'
+            ),
+            0,
+            false
+          )
         );
       });
     });
