@@ -6,8 +6,9 @@
 them in a user-friendly and consistent way.
 
 The following standards are partially implemented:
-* WMS - *Web Map Service*
-* WFS - *Web Feature Service*
+
+- WMS - _Web Map Service_
+- WFS - _Web Feature Service_
 
 Why no WMTS support? Because [openlayers](https://www.github.com/openlayers/openlayers) has a incredibly thorough and well-tested WMTS capabilities parser and you should just use it.
 Reimplementing it in **ogc-client** currently does not bring any significant value.
@@ -20,9 +21,9 @@ Reimplementing it in **ogc-client** currently does not bring any significant val
 2. **ogc-client** will handle XML so you only have to deal with native Javascript objects
 3. **ogc-client** will hide the complexity of OGC standards behind straightforward APIs
 4. **ogc-client** will run heavy tasks in a worker to avoid blocking the main thread
-4. **ogc-client** will keep a persistent cache of operations to minimize requests and processing
-5. **ogc-client** will handle errors in a graceful way and extract relevant messages for you
-6. **ogc-client** will tell you if a service is not usable for [CORS-related issues](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+5. **ogc-client** will keep a persistent cache of operations to minimize requests and processing
+6. **ogc-client** will handle errors in a graceful way and extract relevant messages for you
+7. **ogc-client** will tell you if a service is not usable for [CORS-related issues](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 
 ## Instructions
 
