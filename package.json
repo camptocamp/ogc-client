@@ -42,8 +42,8 @@
   },
   "scripts": {
     "test": "jest",
-    "format:write": "prettier --write src demo",
-    "format:check": "prettier --check src demo",
+    "format:write": "prettier --write src app",
+    "format:check": "prettier --check src app",
     "generate-dist": "cd build && node ./generate-dist.js",
     "prepublishOnly": "npm test && npm run generate-dist"
   },

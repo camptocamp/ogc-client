@@ -1,4 +1,8 @@
-# ogc-demo
+# ogc-client application
+
+This application provides the following:
+* A general and developer documentation
+* A simple demo
 
 ## Project setup
 ```

@@ -36,12 +36,13 @@ $ npm install --save @camptocamp/ogc-client
 
 > TODO
 
-### Demo
+### Application
 
-The demo app is located in the `demo` folder. To start it locally, clone the repository and run the following commands:
+A provided application containing the documentation and demo is located in the `app` folder.
+To start it locally, clone the repository and run the following commands:
 
 ```bash
-$ cd demo
+$ cd app
 $ npm install
 $ npm run serve
 ```
