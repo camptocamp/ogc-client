@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h3 class="mb-4">Exports</h3>
-
     <template v-for="exported in API.exports">
       <ClassCard v-if="exported.type === 'Class'" :api-element="exported" />
       <FunctionCard

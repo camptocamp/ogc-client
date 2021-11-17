@@ -20,6 +20,7 @@ div {
 }
 span {
   font-family: 'Comfortaa';
+  white-space: nowrap;
   color: white;
   font-weight: bolder;
   text-shadow: 0 0 0.3em rgb(124 50 67 / 47%), 0 0 0.1em rgb(124 50 67 / 35%);

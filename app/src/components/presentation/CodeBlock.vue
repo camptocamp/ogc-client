@@ -1,7 +1,5 @@
 <template>
-  <pre
-    class="rounded small"
-  ><code v-bind:class='lang + " p-3"'><slot></slot></code></pre>
+  <pre><code v-bind:class='lang + " border-0 rounded-2 p-3"'><slot></slot></code></pre>
 </template>
 
 <script>
