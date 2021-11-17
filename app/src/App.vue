@@ -164,175 +164,7 @@ async function getFeatureUrl() {
 
       <h2 class="mt-5 mb-4">API</h2>
 
-      <h5>WfsEndpoint</h5>
-
-      <h6>
-        <code>new WfsEndpoint(url: string)</code>
-      </h6>
-
-      <p>
-        Creates a new WFS endpoint; wait for the <code>isReady()</code>
-        promise before using the endpoint methods.
-      </p>
-
-      <h6><code>isReady(): Promise&lt;WfsEndpoint&gt;</code></h6>
-
-      <p>
-        Resolves when the endpoint is ready to use. Returns the same endpoint
-        object for convenience.
-      </p>
-
-      <h6><code>getServiceInfo(): ServiceInfo</code></h6>
-
-      <p>Returns the service info.</p>
-
-      <h6>
-        <code>getVersion(): string</code>
-      </h6>
-
-      <p>
-        Returns the highest protocol version that this WFS endpoint supports:
-        either <code>1.0.0</code>, <code>1.1.0</code> or <code>2.0.0</code>;
-      </p>
-
-      <h6><code>getFeatureTypes(): FeatureTypeBrief[]</code></h6>
-
-      <p>Returns the available feature types.</p>
-
-      <h6>
-        <code
-          >getFeatureTypeSummary(featureType: string): FeatureTypeSummary</code
-        >
-      </h6>
-
-      <p>
-        Returns the feature type in summary format. If a namespace is specified
-        in the name, this will be used for matching; otherwise, matching will be
-        done without taking namespaces into account.
-      </p>
-
-      <h6>
-        <code
-          >getFeatureTypeFull(featureType: string):
-          Promise&lt;FeatureTypeFull&gt;</code
-        >
-      </h6>
-
-      <p>
-        Returns a promise that will resolve with the full feature type
-        description, including properties with their types, geometry field and
-        total object count.
-      </p>
-
-      <h6>
-        <code
-          >getFeatureTypePropDetails(featureType: string):
-          Promise&lt;FeatureTypePropsDetails&gt;</code
-        >
-      </h6>
-
-      <p>
-        Returns a promise that will resolve with details on each of the feature
-        type properties; for now, this consists of a list of unique values in
-        the whole dataset.
-      </p>
-
-      <h6>
-        <code>supportsJson(featureType: string): boolean</code>
-      </h6>
-
-      <p>
-        Returns true if the endpoint is able to output the specified feature
-        type as GeoJSON.
-      </p>
-
-      <h6>
-        <code
-          >getFeatureUrl(featureType: string, options: GetFeatureUrlOptions):
-          string</code
-        >
-      </h6>
-
-      <p>
-        Returns a URL that can be used to query features from this feature type.
-      </p>
-
-      <h5>WmsEndpoint</h5>
-
-      <h6>
-        <code>new WmsEndpoint(url: string)</code>
-      </h6>
-
-      <p>
-        Creates a new WMS endpoint; wait for the <code>isReady()</code>
-        promise before using the endpoint methods.
-      </p>
-
-      <h6><code>isReady(): Promise&lt;WmsEndpoint&gt;</code></h6>
-
-      <p>
-        Resolves when the endpoint is ready to use. Returns the same endpoint
-        object for convenience.
-      </p>
-
-      <h6><code>getServiceInfo(): ServiceInfo</code></h6>
-
-      <p>Returns the service info.</p>
-
-      <h6>
-        <code>getVersion(): string</code>
-      </h6>
-
-      <p>
-        Returns the highest protocol version that this WMS endpoint supports:
-        either <code>1.1.0</code>, <code>1.1.1</code> or <code>1.3.0</code>;
-      </p>
-
-      <h6><code>getLayers(): LayerSummary[]</code></h6>
-
-      <p>
-        Returns the layers advertised in the endpoint. Note that WMS layers are
-        organized in a tree structure, so some layers may have children layers
-        as well
-      </p>
-
-      <h6>
-        <code>getLayerByName(layerName: string): LayerFull</code>
-      </h6>
-
-      <p>
-        Returns the full layer information, including supported coordinate
-        systems, available layers, bounding boxes etc. Layer name is case
-        sensitive.
-      </p>
-
-      <h5>Utilities</h5>
-
-      <h6>
-        <code>useCache(() => any, ...keys: string[]): Promise&lt;any&gt;</code>
-      </h6>
-
-      <p>
-        Will run the provided function and resolve to its return value. The
-        function return value will also be stored in cache, meaning that
-        subsequent runs will <strong>not</strong> execute the function but
-        simply return the cached value. Keys are an indeterminate amount of
-        string tokens that are used to uniquely identify the operation.
-      </p>
-
-      <p>
-        Cached values are kept for one hour. Each call to
-        <code>useCache</code> will first loop on the currently cached values and
-        clear the ones that have expired to make sure that the cache storage
-        does not grow indefinitely.
-      </p>
-
-      <p>
-        Also note that if <code>useCache</code> is called several times with the
-        same key without the first one having returned yet, all subsequent calls
-        will <strong>not</strong> trigger additional operations but simply
-        resolve at the same time as the first one.
-      </p>
+      <ApiDescription></ApiDescription>
     </div>
   </div>
 </template>
@@ -342,10 +174,11 @@ import './style/global.css';
 import LibName from './components/presentation/LibName';
 import LibLogo from './components/presentation/LibLogo';
 import CodeBlock from './components/presentation/CodeBlock';
+import ApiDescription from './components/api/ApiDescription';
 
 export default {
   name: 'App',
-  components: { CodeBlock, LibLogo, LibName },
+  components: { ApiDescription, CodeBlock, LibLogo, LibName },
 };
 </script>
 

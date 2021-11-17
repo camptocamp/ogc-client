@@ -4,6 +4,7 @@ body {
   --brand-darker: rgb(115, 100, 103);
   --brand-darker-shadow: rgba(115, 100, 103, 0.22);
   --brand-light: #ffc52d;
+  background: #f6f6f6;
 }
 
 h1,
@@ -12,9 +13,18 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--brand-darker);
+  color: #535353;
 }
 
 pre {
   margin: 0;
+}
+
+code {
+  display: inline-block;
+  background: #f6f6f6;
+  padding: 0.1em 0.4em 0;
+  border-radius: 0.2em;
+  border: 1px solid #ececec;
+  color: var(--brand-dark);
 }
