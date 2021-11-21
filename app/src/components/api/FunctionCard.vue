@@ -5,10 +5,8 @@
     </div>
     <div class="card-body pb-0">
       <h5 class="mb-3">
-        <code
-          >{{ apiElement.name }}() <span class="fs-5">⇢</span>
-          {{ apiElement.return.type }}</code
-        >
+        <code v-html="signature"></code> ⇢
+        <code v-html="returned">{{ returned }}</code>
       </h5>
       <CodeBlock lang="js" class="mb-3">
         <pre>
@@ -23,12 +21,22 @@ import { {{ apiElement.name }} } from '@camptocamp/ogc-client';</pre
 <script>
 import MarkdownBlock from '../presentation/MarkdownBlock';
 import CodeBlock from '../presentation/CodeBlock';
+import { formatFunctionToString, formatTypeToString } from '../../api-utils';
+import * as marked from 'marked';
 
 export default {
   name: 'FunctionCard',
   components: { MarkdownBlock, CodeBlock },
   props: {
     apiElement: Object,
+  },
+  computed: {
+    signature() {
+      return marked.parseInline(formatFunctionToString(this.apiElement));
+    },
+    returned() {
+      return marked.parseInline(formatTypeToString(this.apiElement.return));
+    },
   },
 };
 </script>

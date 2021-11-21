@@ -121,7 +121,7 @@ available layers, bounding boxes etc. Layer name is case sensitive.`,
       type: 'Function',
       description: `Will run the provided function and resolve to its return value.
 The function return value will also be stored in cache, meaning that subsequent runs will **not** execute the function but
-simply return the cached value. Keys are an indeterminate amount of string tokens that are used to uniquely identify the operation.
+simply return the cached value. \`keys\` are an indeterminate amount of string tokens that are used to uniquely identify the operation.
 
 Cached values are kept for one hour. Each call to \`useCache\` will first loop on the currently cached values and
 clear the ones that have expired to make sure that the cache storage does not grow indefinitely.
