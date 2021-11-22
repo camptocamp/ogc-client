@@ -9,6 +9,13 @@ export function formatFunctionToString(functionObj) {
   return `${functionObj.name}(${params})`;
 }
 
+export function formatConstructorToString(classObj) {
+  const params = classObj.constructor.params
+    .map((param) => `${param.name}: ${formatTypeToString(param)}`)
+    .join(', ');
+  return `new ${classObj.name}(${params})`;
+}
+
 export function formatTypeToString(typeObj) {
   if (!typeObj) return 'void';
   const subType = typeObj.subType ? formatTypeToString(typeObj.subType) : '';

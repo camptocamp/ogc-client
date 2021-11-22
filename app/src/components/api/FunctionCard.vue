@@ -1,19 +1,29 @@
 <template>
   <div class="card mb-4">
-    <div class="card-header text-uppercase fs-6">
-      <span class="me-3 fs-4">●</span>function
+    <div class="card-header text-uppercase small">
+      <span class="me-3 fs-6">●</span>function
     </div>
     <div class="card-body pb-0">
       <h5 class="mb-3">
-        <code v-html="signature"></code> ⇢
-        <code v-html="returned">{{ returned }}</code>
+        <code v-html="signature"></code>
       </h5>
       <CodeBlock lang="js" class="mb-3">
         <pre>
 import { {{ apiElement.name }} } from '@camptocamp/ogc-client';</pre
         >
       </CodeBlock>
-      <MarkdownBlock :text="apiElement.description" />
+      <div class="row pb-2">
+        <div
+          class="col-3 text-uppercase text-secondary fw-bold pt-1"
+          style="font-size: 0.8em"
+        >
+          🌱 returns
+        </div>
+        <div class="col">
+          <code v-html="returned"></code>
+        </div>
+      </div>
+      <MarkdownBlock class="small mt-2" :text="apiElement.description" />
     </div>
   </div>
 </template>
