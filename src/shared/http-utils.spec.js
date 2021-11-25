@@ -1,5 +1,5 @@
 import { EndpointError } from './errors';
-import { queryXmlDocument } from './http-utils';
+import { queryXmlDocument, setQueryParams } from './http-utils';
 
 describe('HTTP utils', () => {
   describe('queryXmlDocument', () => {
@@ -126,6 +126,55 @@ describe('HTTP utils', () => {
 
     afterAll(() => {
       window.fetch = window.fetch_; // restore original impl
+    });
+  });
+
+  describe('setQueryParams', () => {
+    it('adds new parameters if not present', () => {
+      expect(
+        setQueryParams('https://my.host/service?arg1=123', {
+          ARG2: '45',
+          Arg3: 'hello',
+        })
+      ).toBe('https://my.host/service?arg1=123&ARG2=45&Arg3=hello');
+    });
+    it('replaces existing parameters regardless of case', () => {
+      expect(
+        setQueryParams('https://my.host/service?ARG1=123&Arg2=bla&arg3', {
+          ARG2: '45',
+          Arg3: 'hello',
+        })
+      ).toBe('https://my.host/service?ARG1=123&ARG2=45&Arg3=hello');
+    });
+    it('sets a parameter without value if true', () => {
+      expect(
+        setQueryParams('https://my.host/service', {
+          ARG2: true,
+        })
+      ).toBe('https://my.host/service?ARG2=');
+    });
+    it('appends an encoded URL if found (HTTP)', () => {
+      expect(
+        setQueryParams('http://bad.proxy/?url=http%3A%2F%2Fmy.host%2Fservice', {
+          ARG2: '45',
+          Arg3: 'hello',
+        })
+      ).toBe(
+        'http://bad.proxy/?url=http%3A%2F%2Fmy.host%2Fservice%3FARG2%3D45%26Arg3%3Dhello'
+      );
+    });
+    it('appends an encoded URL if found (HTTPS)', () => {
+      expect(
+        setQueryParams(
+          'http://bad.proxy/?url=https%3A%2F%2Fmy.host%2Fservice',
+          {
+            ARG2: '45',
+            Arg3: 'hello',
+          }
+        )
+      ).toBe(
+        'http://bad.proxy/?url=https%3A%2F%2Fmy.host%2Fservice%3FARG2%3D45%26Arg3%3Dhello'
+      );
     });
   });
 });

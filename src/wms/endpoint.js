@@ -1,6 +1,7 @@
 import { EndpointError } from '../shared/errors';
 import { parseWmsCapabilities } from '../worker';
 import { useCache } from '../shared/cache';
+import { setQueryParams } from '../shared/http-utils';
 
 /**
  * @typedef {Object} LayerStyle
@@ -49,11 +50,10 @@ export default class WmsEndpoint {
    *   initialize the endpoint
    */
   constructor(url) {
-    const capabilitiesUrl = new URL(url);
-    capabilitiesUrl.searchParams.delete('service');
-    capabilitiesUrl.searchParams.set('SERVICE', 'WMS');
-    capabilitiesUrl.searchParams.delete('request');
-    capabilitiesUrl.searchParams.set('REQUEST', 'GetCapabilities');
+    const capabilitiesUrl = setQueryParams(url, {
+      SERVICE: 'WMS',
+      REQUEST: 'GetCapabilities',
+    });
 
     /**
      * This fetches the capabilities doc and parses its contents
@@ -61,10 +61,10 @@ export default class WmsEndpoint {
      * @private
      */
     this._capabilitiesPromise = useCache(
-      () => parseWmsCapabilities(capabilitiesUrl.toString()),
+      () => parseWmsCapabilities(capabilitiesUrl),
       'WMS',
       'CAPABILITIES',
-      capabilitiesUrl.toString()
+      capabilitiesUrl
     ).then(({ info, layers, version }) => {
       this._info = info;
       this._layers = layers;

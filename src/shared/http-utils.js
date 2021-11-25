@@ -61,3 +61,37 @@ export function queryXmlDocument(url) {
     })
     .then((xml) => parseXmlString(xml));
 }
+
+/**
+ * Add or replace query params in the url; note that params are considered case insensitive,
+ * meaning that existing params in different cases will be removed as well.
+ * Also, if the url ends with an encoded URL (typically in the case of urls run through a CORS
+ * proxy, which is an aberration and should be forbidden btw), then the encoded URL
+ * will be modified instead.
+ * @param {string} url
+ * @param {Object.<string, string>} params
+ * @returns {string}
+ */
+export function setQueryParams(url, params) {
+  const encodedUrlMatch = url.match(/(https?%3A%2F%2F[^/]+)$/);
+  if (encodedUrlMatch) {
+    const encodedUrl = encodedUrlMatch[1];
+    const modifiedUrl = setQueryParams(decodeURIComponent(encodedUrl), params);
+    return url.replace(encodedUrl, encodeURIComponent(modifiedUrl));
+  }
+
+  const urlObj = new URL(url);
+  const keys = Object.keys(params);
+  const keysLower = keys.map((key) => key.toLowerCase());
+  const toDelete = [];
+  for (const param of urlObj.searchParams.keys()) {
+    if (keysLower.indexOf(param.toLowerCase()) > -1) {
+      toDelete.push(param);
+    }
+  }
+  toDelete.map((param) => urlObj.searchParams.delete(param));
+  keys.forEach((key) =>
+    urlObj.searchParams.set(key, params[key] === true ? '' : params[key])
+  );
+  return urlObj.toString();
+}

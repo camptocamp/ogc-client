@@ -1,3 +1,5 @@
+import { setQueryParams } from '../shared/http-utils';
+
 /**
  * Generates an URL for a GetFeature operation
  * @param {string} serviceUrl
@@ -27,31 +29,29 @@ export function generateGetFeatureUrl(
 ) {
   const typeParam = version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
   const countParam = version === '2.0.0' ? 'COUNT' : 'MAXFEATURES';
-  const url = new URL(serviceUrl);
-  url.searchParams.set('SERVICE', 'WFS');
-  url.searchParams.set('REQUEST', 'GetFeature');
-  url.searchParams.set('VERSION', version);
-  url.searchParams.set(typeParam, featureType);
-  if (outputFormat !== undefined)
-    url.searchParams.set('OUTPUTFORMAT', outputFormat);
-  if (attributes !== undefined)
-    url.searchParams.set('PROPERTYNAME', attributes.join(','));
+
+  const newParams = {
+    SERVICE: 'WFS',
+    REQUEST: 'GetFeature',
+    VERSION: version,
+    [typeParam]: featureType,
+  };
+  if (outputFormat !== undefined) newParams.OUTPUTFORMAT = outputFormat;
+  if (attributes !== undefined) newParams.PROPERTYNAME = attributes.join(',');
   if (hitsOnly) {
-    url.searchParams.set('RESULTTYPE', 'hits');
-    url.searchParams.set(countParam, '1'); // in case the RESULTTYPE param is not supported
+    newParams.RESULTTYPE = 'hits';
+    newParams[countParam] = '1'; // in case the RESULTTYPE param is not supported
   } else if (maxFeatures !== undefined)
-    url.searchParams.set(countParam, maxFeatures.toString(10));
+    newParams[countParam] = maxFeatures.toString(10);
   if (outputCrs) {
-    url.searchParams.set('SRSNAME', outputCrs);
+    newParams.SRSNAME = outputCrs;
   }
   if (extent) {
     const extentJoined = extent.join(',');
-    url.searchParams.set(
-      'BBOX',
-      extentCrs ? `${extentJoined},${extentCrs}` : extentJoined
-    );
+    newParams.BBOX = extentCrs ? `${extentJoined},${extentCrs}` : extentJoined;
   }
-  return url.toString();
+
+  return setQueryParams(serviceUrl, newParams);
 }
 
 /**
@@ -67,10 +67,10 @@ export function generateDescribeFeatureTypeUrl(
   featureType
 ) {
   const typeParam = version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
-  const url = new URL(serviceUrl);
-  url.searchParams.set('SERVICE', 'WFS');
-  url.searchParams.set('REQUEST', 'DescribeFeatureType');
-  url.searchParams.set('VERSION', version);
-  url.searchParams.set(typeParam, featureType);
-  return url.toString();
+  return setQueryParams(serviceUrl, {
+    SERVICE: 'WFS',
+    REQUEST: 'DescribeFeatureType',
+    VERSION: version,
+    [typeParam]: featureType,
+  });
 }

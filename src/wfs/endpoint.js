@@ -1,6 +1,6 @@
 import { EndpointError } from '../shared/errors';
 import { parseWfsCapabilities, queryWfsFeatureTypeDetails } from '../worker';
-import { queryXmlDocument } from '../shared/http-utils';
+import { queryXmlDocument, setQueryParams } from '../shared/http-utils';
 import { parseFeatureTypeInfo } from './featuretypeinfo';
 import { useCache } from '../shared/cache';
 import { generateDescribeFeatureTypeUrl, generateGetFeatureUrl } from './url';
@@ -93,17 +93,14 @@ export default class WfsEndpoint {
    *   initialize the endpoint
    */
   constructor(url) {
-    const capabilitiesUrl = new URL(url);
-    capabilitiesUrl.searchParams.delete('service');
-    capabilitiesUrl.searchParams.set('SERVICE', 'WFS');
-    capabilitiesUrl.searchParams.delete('request');
-    capabilitiesUrl.searchParams.set('REQUEST', 'GetCapabilities');
-
     /**
      * @type {string}
      * @private
      */
-    this._capabilitiesUrl = capabilitiesUrl.toString();
+    this._capabilitiesUrl = setQueryParams(url, {
+      SERVICE: 'WFS',
+      REQUEST: 'GetCapabilities',
+    });
 
     /**
      * This fetches the capabilities doc and parses its contents
