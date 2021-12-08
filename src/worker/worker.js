@@ -10,7 +10,7 @@ import { generateGetFeatureUrl } from '../wfs/url';
 
 addTaskHandler(
   'parseWmsCapabilities',
-  /** @type {DedicatedWorkerGlobalScope} */ self,
+  /** @type {DedicatedWorkerGlobalScope|Window} */ self,
   /**
    * @param {string} url
    * @return {Promise<{info:GenericEndpointInfo,layers:WmsLayerFull[],version:WmsVersion}>}
@@ -25,7 +25,7 @@ addTaskHandler(
 
 addTaskHandler(
   'parseWfsCapabilities',
-  /** @type {DedicatedWorkerGlobalScope} */ self,
+  /** @type {DedicatedWorkerGlobalScope|Window} */ self,
   /**
    * @param {string} url
    * @return {Promise<{info:GenericEndpointInfo,featureTypes:WfsFeatureTypeInternal[],version:WfsVersion}>}
@@ -40,7 +40,7 @@ addTaskHandler(
 
 addTaskHandler(
   'queryWfsFeatureTypeDetails',
-  /** @type {DedicatedWorkerGlobalScope} */ self,
+  /** @type {DedicatedWorkerGlobalScope|Window} */ self,
   /**
    * @param {string} url
    * @param {WfsVersion} serviceVersion

@@ -33,6 +33,24 @@ To install **ogc-client**, run:
 $ npm install --save @camptocamp/ogc-client
 ```
 
+To use, import API symbols like so:
+
+```js
+import { WmsEndpoint, WfsEndpoint } from '@camptocamp/ogc-client';
+```
+
+Note: if you want to disable web worker usage, for example to solve issues with the `Referer` header on outgoing
+requests, use:
+
+```js
+import { enableFallbackWithoutWorker } from '@camptocamp/ogc-client';
+
+enableFallbackWithoutWorker()
+```
+
+All processing will be done on the main thread after this call, including HTTP requests.
+
+
 ### API
 
 > TODO

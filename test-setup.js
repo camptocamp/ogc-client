@@ -83,4 +83,7 @@ global.Worker = function Worker(filePath) {
       outside.emit('error', e);
       console.error(e);
     });
+
+  // mock global scope
+  global.WorkerGlobalScope = scope;
 };
