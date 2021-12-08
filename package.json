@@ -5,9 +5,12 @@
   "main": "./dist/dist-node.js",
   "browser": "./dist/index.js",
   "exports": {
-    "browser": "./dist/index.js",
-    "node": "./dist/dist-node.js",
-    "default": "./dist/dist-node.js"
+    ".": {
+      "browser": "./dist/index.js",
+      "node": "./dist/dist-node.js",
+      "default": "./dist/dist-node.js"
+    },
+    "./worker-fallback": "./dist/worker-fallback/index.js"
   },
   "repository": "https://github.com/camptocamp/ogc-client",
   "homepage": "https://github.com/camptocamp/ogc-client",
