@@ -1,9 +1,25 @@
 import { sendTaskRequest } from './utils';
 
+/** @type {boolean} */
+let fallbackWithoutWorker = false;
+
+/**
+ * Call once to disable Worker usage completely
+ */
+export function enableFallbackWithoutWorker() {
+  fallbackWithoutWorker = true;
+}
+
 /** @type {Worker} */
 let workerInstance;
 
+/**
+ * @returns {null|Worker} If null, use fallback without worker!
+ */
 function getWorkerInstance() {
+  if (fallbackWithoutWorker) {
+    return null;
+  }
   if (!workerInstance) {
     workerInstance = new Worker('./worker.js', {
       type: 'module',

@@ -16,61 +16,96 @@ import { getUniqueId } from '../shared/id';
 
 /**
  * @param {string} taskName
- * @param {Worker} workerInstance
+ * @param {Worker|null} workerInstance
  * @param {Object} params
  * @return {Promise<Object>}
  */
 export function sendTaskRequest(taskName, workerInstance, params) {
   return new Promise((resolve, reject) => {
     const requestId = getUniqueId();
-    workerInstance.postMessage(
-      /** @type {WorkerRequest} */ {
-        requestId,
-        taskName,
-        params,
-      }
-    );
-    /** @param {WorkerResponse} data */
-    const handler = ({ data }) => {
-      if (data.requestId === requestId) {
-        workerInstance.removeEventListener('message', handler);
-        if ('error' in data) {
-          reject(data.error);
+    const request = /** @type {WorkerRequest} */ {
+      requestId,
+      taskName,
+      params,
+    };
+    if (workerInstance === null) {
+      window.dispatchEvent(
+        new CustomEvent('ogc-client.request', {
+          detail: request,
+        })
+      );
+    } else {
+      workerInstance.postMessage(request);
+    }
+    /**
+     * Workers either with or without a worker
+     * @param {WorkerResponse} [detail]
+     * @param {WorkerResponse} [data]
+     */
+    const handler = ({ detail, data }) => {
+      const response = detail || data;
+      if (response.requestId === requestId) {
+        if (workerInstance === null) {
+          window.removeEventListener('message', handler);
         } else {
-          resolve(data.response);
+          workerInstance.removeEventListener('message', handler);
+        }
+        if ('error' in response) {
+          reject(response.error);
+        } else {
+          resolve(response.response);
         }
       }
     };
-    workerInstance.addEventListener('message', handler);
+    if (workerInstance === null) {
+      window.addEventListener('ogc-client.response', handler);
+    } else {
+      workerInstance.addEventListener('message', handler);
+    }
   });
 }
 
 /**
  * @param {string} taskName
- * @param {DedicatedWorkerGlobalScope} scope
+ * @param {DedicatedWorkerGlobalScope|Window} scope
  * @param {function(params: Object):Promise<Object>} handler
  */
 export function addTaskHandler(taskName, scope, handler) {
+  const useWorker = typeof WorkerGlobalScope !== 'undefined';
   /**
-   * @param {WorkerRequest} data
+   * Workers either with or without a worker
+   * @param {WorkerRequest} [detail]
+   * @param {WorkerRequest} [data]
    */
-  const eventListener = async ({ data }) => {
-    if (data.taskName === taskName) {
+  const eventHandler = async ({ detail, data }) => {
+    const request = detail || data;
+    if (request.taskName === taskName) {
       let response, error;
       try {
-        response = await handler(data.params);
+        response = await handler(request.params);
       } catch (e) {
         error = e;
       }
-      scope.postMessage(
-        /** @type {WorkerResponse} */ {
-          taskName,
-          requestId: data.requestId,
-          ...(response && { response }),
-          ...(error && { error }),
-        }
-      );
+      const message = /** @type {WorkerResponse} */ {
+        taskName,
+        requestId: request.requestId,
+        ...(response && { response }),
+        ...(error && { error }),
+      };
+      if (useWorker) {
+        scope.postMessage(message);
+      } else {
+        scope.dispatchEvent(
+          new CustomEvent('ogc-client.response', {
+            detail: message,
+          })
+        );
+      }
     }
   };
-  scope.addEventListener('message', eventListener);
+  if (useWorker) {
+    scope.addEventListener('message', eventHandler);
+  } else {
+    scope.addEventListener('ogc-client.request', eventHandler);
+  }
 }
