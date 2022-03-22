@@ -53,6 +53,7 @@ addTaskHandler(
       serviceVersion,
       featureTypeFull.name,
       undefined,
+      undefined,
       Object.keys(featureTypeFull.properties)
     );
     return queryXmlDocument(getFeatureUrl).then((getFeatureDoc) => ({
