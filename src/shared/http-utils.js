@@ -16,7 +16,18 @@ export function sharedFetch(url) {
   if (fetchPromises.has(url)) {
     return fetchPromises.get(url);
   }
-  const promise = fetch(url);
+  const promise = new Promise((resolve,reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.responseType = 'text';
+    xhr.onload = () => {
+      resolve(xhr);
+    }
+    xhr.onerror = () => {
+      reject()
+    }
+    xhr.send();
+  });
   promise.finally(() => fetchPromises.delete(url));
   fetchPromises.set(url, promise);
   return promise;
@@ -48,16 +59,15 @@ export function queryXmlDocument(url) {
           );
         })
     )
-    .then(async (resp) => {
-      const text = await resp.text();
-      if (!resp.ok) {
+    .then(async (xhr) => {
+      if(xhr.status < 200 || xhr.status > 299) {
         throw new EndpointError(
-          `Received an error with code ${resp.status}: ${text}`,
-          resp.status,
+          `Received an error with code ${xhr.status}: ${xhr.statusText}`,
+          xhr.status,
           false
         );
       }
-      return text;
+      return xhr.responseText;
     })
     .then((xml) => parseXmlString(xml));
 }
