@@ -1,0 +1,312 @@
+<?xml version='1.0' encoding="ISO-8859-15" standalone="no" ?>
+<!DOCTYPE WMT_MS_Capabilities SYSTEM "http://schemas.opengeospatial.net/wms/1.1.1/capabilities_1_1_1.dtd"
+        [
+                <!ELEMENT VendorSpecificCapabilities (inspire_vs:ExtendedCapabilities)><!ELEMENT inspire_vs:ExtendedCapabilities ((inspire_common:MetadataUrl, inspire_common:SupportedLanguages, inspire_common:ResponseLanguage) | (inspire_common:ResourceLocator+, inspire_common:ResourceType, inspire_common:TemporalReference+, inspire_common:Conformity+, inspire_common:MetadataPointOfContact+, inspire_common:MetadataDate, inspire_common:SpatialDataServiceType, inspire_common:MandatoryKeyword+, inspire_common:Keyword*, inspire_common:SupportedLanguages, inspire_common:ResponseLanguage, inspire_common:MetadataUrl?))><!ATTLIST inspire_vs:ExtendedCapabilities xmlns:inspire_vs CDATA #FIXED "http://inspire.ec.europa.eu/schemas/inspire_vs/1.0" ><!ELEMENT inspire_common:MetadataUrl (inspire_common:URL, inspire_common:MediaType*)><!ATTLIST inspire_common:MetadataUrl xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" xmlns:xsi CDATA #FIXED "http://www.w3.org/2001/XMLSchema-instance" xsi:type CDATA #FIXED "inspire_common:resourceLocatorType" ><!ELEMENT inspire_common:URL (#PCDATA)><!ATTLIST inspire_common:URL xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0"><!ELEMENT inspire_common:MediaType (#PCDATA)><!ATTLIST inspire_common:MediaType xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0"><!ELEMENT inspire_common:SupportedLanguages (inspire_common:DefaultLanguage, inspire_common:SupportedLanguage*)><!ATTLIST inspire_common:SupportedLanguages xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:DefaultLanguage (inspire_common:Language)><!ATTLIST inspire_common:DefaultLanguage xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:SupportedLanguage (inspire_common:Language)><!ATTLIST inspire_common:SupportedLanguage xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:ResponseLanguage (inspire_common:Language)><!ATTLIST inspire_common:ResponseLanguage xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:Language (#PCDATA)><!ATTLIST inspire_common:Language xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:ResourceLocator (inspire_common:URL, inspire_common:MediaType*)><!ATTLIST inspire_common:ResourceLocator xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0"><!ELEMENT inspire_common:ResourceType (#PCDATA)> <!ATTLIST inspire_common:ResourceType xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:TemporalReference (inspire_common:DateOfCreation?, inspire_common:DateOfLastRevision?, inspire_common:DateOfPublication*, inspire_common:TemporalExtent*)><!ATTLIST inspire_common:TemporalReference xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:DateOfCreation (#PCDATA)> <!ATTLIST inspire_common:DateOfCreation xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0"><!ELEMENT inspire_common:DateOfLastRevision (#PCDATA)><!ATTLIST inspire_common:DateOfLastRevision xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0"><!ELEMENT inspire_common:DateOfPublication (#PCDATA)><!ATTLIST inspire_common:DateOfPublication xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0"><!ELEMENT inspire_common:TemporalExtent (inspire_common:IndividualDate | inspire_common:IntervalOfDates)><!ATTLIST inspire_common:TemporalExtent xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:IndividualDate (#PCDATA)> <!ATTLIST inspire_common:IndividualDate xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0"><!ELEMENT inspire_common:IntervalOfDates (inspire_common:StartingDate, inspire_common:EndDate)><!ATTLIST inspire_common:IntervalOfDates xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:StartingDate (#PCDATA)><!ATTLIST inspire_common:StartingDate xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:EndDate (#PCDATA)><!ATTLIST inspire_common:EndDate xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:Conformity (inspire_common:Specification, inspire_common:Degree)><!ATTLIST inspire_common:Conformity xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:Specification (inspire_common:Title, (inspire_common:DateOfPublication | inspire_common:DateOfCreation | inspire_common:DateOfLastRevision), inspire_common:URI*, inspire_common:ResourceLocator*)><!ATTLIST inspire_common:Specification xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:Title (#PCDATA)><!ATTLIST inspire_common:Title xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:URI (#PCDATA)><!ATTLIST inspire_common:URI xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:Degree (#PCDATA)><!ATTLIST inspire_common:Degree xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:MetadataPointOfContact (inspire_common:OrganisationName, inspire_common:EmailAddress)><!ATTLIST inspire_common:MetadataPointOfContact xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:OrganisationName (#PCDATA)><!ATTLIST inspire_common:OrganisationName  xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:EmailAddress (#PCDATA)><!ATTLIST inspire_common:EmailAddress xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:MetadataDate (#PCDATA)><!ATTLIST inspire_common:MetadataDate xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:SpatialDataServiceType (#PCDATA)><!ATTLIST inspire_common:SpatialDataServiceType xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:MandatoryKeyword (inspire_common:KeywordValue)><!ATTLIST inspire_common:MandatoryKeyword xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:KeywordValue (#PCDATA)><!ATTLIST inspire_common:KeywordValue xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" ><!ELEMENT inspire_common:Keyword (inspire_common:OriginatingControlledVocabulary?, inspire_common:KeywordValue)><!ATTLIST inspire_common:Keyword xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0" xmlns:xsi CDATA #FIXED "http://www.w3.org/2001/XMLSchemainstance" xsi:type (inspire_common:inspireTheme_bul | inspire_common:inspireTheme_cze | inspire_common:inspireTheme_dan | inspire_common:inspireTheme_dut | inspire_common:inspireTheme_eng | inspire_common:inspireTheme_est | inspire_common:inspireTheme_fin | inspire_common:inspireTheme_fre | inspire_common:inspireTheme_ger | inspire_common:inspireTheme_gre | inspire_common:inspireTheme_hun | inspire_common:inspireTheme_gle | inspire_common:inspireTheme_ita | inspire_common:inspireTheme_lav | inspire_common:inspireTheme_lit | inspire_common:inspireTheme_mlt | inspire_common:inspireTheme_pol | inspire_common:inspireTheme_por | inspire_common:inspireTheme_rum | inspire_common:inspireTheme_slo | inspire_common:inspireTheme_slv | inspire_common:inspireTheme_spa | inspire_common:inspireTheme_swe) #IMPLIED ><!ELEMENT inspire_common:OriginatingControlledVocabulary (inspire_common:Title, (inspire_common:DateOfPublication | inspire_common:DateOfCreation | inspire_common:DateOfLastRevision), inspire_common:URI*, inspire_common:ResourceLocator*)><!ATTLIST inspire_common:OriginatingControlledVocabulary xmlns:inspire_common CDATA #FIXED "http://inspire.ec.europa.eu/schemas/common/1.0">
+                ]>  <!-- end of DOCTYPE declaration -->
+
+<WMT_MS_Capabilities version="1.1.1">
+
+    <!-- MapServer version 6.5-dev OUTPUT=PNG OUTPUT=JPEG SUPPORTS=PROJ SUPPORTS=AGG SUPPORTS=FREETYPE SUPPORTS=CAIRO SUPPORTS=SVG_SYMBOLS SUPPORTS=SVGCAIRO SUPPORTS=ICONV SUPPORTS=FRIBIDI SUPPORTS=WMS_SERVER SUPPORTS=WMS_CLIENT SUPPORTS=WFS_SERVER SUPPORTS=WFS_CLIENT SUPPORTS=WCS_SERVER SUPPORTS=SOS_SERVER SUPPORTS=FASTCGI SUPPORTS=GEOS INPUT=JPEG INPUT=POSTGIS INPUT=ORACLESPATIAL INPUT=OGR INPUT=GDAL INPUT=SHAPEFILE -->
+
+    <Service>
+        <Name>WMS</Name>
+        <Title>GéoServices : géologie, hydrogéologie et gravimétrie €</Title>
+        <Abstract>Ensemble des services d&#39;accès aux données sur la géologie, l&#39;hydrogéologie et la gravimétrie, diffusées par le BRGM</Abstract>
+        <KeywordList>
+            <Keyword>Géologie</Keyword>
+            <Keyword>BRGM</Keyword>
+            <Keyword>INSPIRE:ViewService</Keyword>
+            <Keyword>infoMapAccessService</Keyword>
+            <Keyword>WMS 1.1.1</Keyword>
+            <Keyword>WMS 1.3.0</Keyword>
+            <Keyword>SLD 1.1.0</Keyword>
+        </KeywordList>
+        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie"/>
+        <ContactInformation>
+            <ContactPersonPrimary>
+                <ContactPerson>Support BRGM</ContactPerson>
+                <ContactOrganization>BRGM</ContactOrganization>
+            </ContactPersonPrimary>
+            <ContactPosition>pointOfContact</ContactPosition>
+            <ContactAddress>
+                <AddressType>postal</AddressType>
+                <Address>3, Avenue Claude Guillemin, BP36009</Address>
+                <City>Orléans</City>
+                <StateOrProvince>Centre</StateOrProvince>
+                <PostCode>45060</PostCode>
+                <Country>France</Country>
+            </ContactAddress>
+            <ContactVoiceTelephone>+33(0)2 38 64 34 34</ContactVoiceTelephone>
+            <ContactFacsimileTelephone>+33(0)2 38 64 35 18</ContactFacsimileTelephone>
+            <ContactElectronicMailAddress>contact-brgm@brgm.fr</ContactElectronicMailAddress>
+        </ContactInformation>
+        <Fees>no conditions apply</Fees>
+        <AccessConstraints>None</AccessConstraints>
+    </Service>
+
+    <Capability>
+        <Request>
+            <GetCapabilities>
+                <Format>application/vnd.ogc.wms_xml</Format>
+                <DCPType>
+                    <HTTP>
+                        <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;"/></Get>
+                        <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;"/></Post>
+                    </HTTP>
+                </DCPType>
+            </GetCapabilities>
+            <GetMap>
+                <Format>image/png</Format>
+                <Format>image/gif</Format>
+                <Format>image/jpeg</Format>
+                <Format>image/ecw</Format>
+                <Format>image/tiff</Format>
+                <Format>image/png; mode=8bit</Format>
+                <Format>application/x-pdf</Format>
+                <Format>image/svg+xml</Format>
+                <DCPType>
+                    <HTTP>
+                        <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;"/></Get>
+                        <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;"/></Post>
+                    </HTTP>
+                </DCPType>
+            </GetMap>
+            <GetFeatureInfo>
+                <Format>text/plain</Format>
+                <Format>application/vnd.ogc.gml</Format>
+                <DCPType>
+                    <HTTP>
+                        <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;"/></Get>
+                        <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;"/></Post>
+                    </HTTP>
+                </DCPType>
+            </GetFeatureInfo>
+            <DescribeLayer>
+                <Format>text/xml</Format>
+                <DCPType>
+                    <HTTP>
+                        <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;"/></Get>
+                        <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;"/></Post>
+                    </HTTP>
+                </DCPType>
+            </DescribeLayer>
+            <GetLegendGraphic>
+                <Format>image/png</Format>
+                <Format>image/gif</Format>
+                <Format>image/jpeg</Format>
+                <Format>image/png; mode=8bit</Format>
+                <DCPType>
+                    <HTTP>
+                        <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;"/></Get>
+                        <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;"/></Post>
+                    </HTTP>
+                </DCPType>
+            </GetLegendGraphic>
+            <GetStyles>
+                <Format>text/xml</Format>
+                <DCPType>
+                    <HTTP>
+                        <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;"/></Get>
+                        <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;"/></Post>
+                    </HTTP>
+                </DCPType>
+            </GetStyles>
+        </Request>
+        <Exception>
+            <Format>application/vnd.ogc.se_xml</Format>
+            <Format>application/vnd.ogc.se_inimage</Format>
+            <Format>application/vnd.ogc.se_blank</Format>
+        </Exception>
+        <VendorSpecificCapabilities>
+            <inspire_vs:ExtendedCapabilities>
+                <inspire_common:MetadataUrl xsi:type="inspire_common:resourceLocatorType">
+                    <inspire_common:URL>		http://www.geocatalogue.fr/api-public/servicesRest?Service=CSW&amp;Request=GetRecordById&amp;Version=2.0.2&amp;id=3a6fbbd8-e99a-477a-9614-945ce1a21219&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full</inspire_common:URL>
+                    <inspire_common:MediaType>application/vnd.ogc.csw.capabilities.response_xml</inspire_common:MediaType>
+                </inspire_common:MetadataUrl>
+                <inspire_common:SupportedLanguages>
+                    <inspire_common:DefaultLanguage><inspire_common:Language>fre</inspire_common:Language></inspire_common:DefaultLanguage>
+                </inspire_common:SupportedLanguages>
+                <inspire_common:ResponseLanguage><inspire_common:Language>fre</inspire_common:Language></inspire_common:ResponseLanguage>
+            </inspire_vs:ExtendedCapabilities>
+        </VendorSpecificCapabilities>
+        <UserDefinedSymbolization SupportSLD="1" UserLayer="0" UserStyle="1" RemoteWFS="0"/>
+        <Layer>
+            <Name>GEOSERVICES_GEOLOGIE</Name>
+            <Title>GéoServices : géologie, hydrogéologie et gravimétrie</Title>
+            <Abstract>Ensemble des services d&#39;accès aux données sur la géologie, l&#39;hydrogéologie et la gravimétrie, diffusées par le BRGM</Abstract>
+            <KeywordList>
+                <Keyword>Géologie</Keyword>
+                <Keyword>BRGM</Keyword>
+                <Keyword>INSPIRE:ViewService</Keyword>
+                <Keyword>infoMapAccessService</Keyword>
+            </KeywordList>
+            <SRS>EPSG:4326</SRS>
+            <SRS>CRS:84</SRS>
+            <SRS>EPSG:3857</SRS>
+            <SRS>EPSG:4171</SRS>
+            <SRS>EPSG:2154</SRS>
+            <LatLonBoundingBox minx="-180" miny="-90" maxx="180" maxy="90" />
+            <BoundingBox SRS="EPSG:4326"
+                         minx="-180" miny="-90" maxx="180" maxy="90" />
+            <BoundingBox SRS="CRS:84"
+                         minx="-180" miny="-90" maxx="180" maxy="90" />
+            <BoundingBox SRS="EPSG:3857"
+                         minx="-1e+15" miny="-1e+15" maxx="1e+15" maxy="1e+15" />
+            <BoundingBox SRS="EPSG:4171"
+                         minx="-180" miny="-90" maxx="180" maxy="90" />
+            <BoundingBox SRS="EPSG:2154"
+                         minx="-1e+15" miny="-1e+15" maxx="1e+15" maxy="1e+15" />
+            <Attribution>
+                <Title>Brgm</Title>
+                <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.brgm.fr/"/>
+                <LogoURL width="143" height="50">
+                    <Format>image/png</Format>
+                    <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://mapsref.brgm.fr/legendes/brgm_logo.png"/>
+                </LogoURL>
+            </Attribution>
+            <Style>
+                <Name>default</Name>
+                <Title>default</Title>
+                <LegendURL width="729" height="9325">
+                    <Format>image/png</Format>
+                    <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://geoservices.brgm.fr/geologie?language=fre&amp;version=1.1.1&amp;service=WMS&amp;request=GetLegendGraphic&amp;layer=GEOSERVICES_GEOLOGIE&amp;format=image/png&amp;STYLE=default"/>
+                </LegendURL>
+            </Style>
+            <Layer>
+                <Name>GEOLOGIE</Name>
+                <Title>Cartes géologiques</Title>
+                <Abstract>Cartes géologiques</Abstract>
+                <Style>
+                    <Name>default</Name>
+                    <Title>default</Title>
+                </Style>
+                <Layer queryable="0" opaque="0" cascaded="0">
+                    <Name>SCAN_F_GEOL1M</Name>
+                    <Title>Carte géologique image de la France au million</Title>
+                    <Abstract>BD Scan-Million-Géol est la base de données géoréférencées de la carte géologique image à 1/1 000 000</Abstract>
+                    <KeywordList>
+                        <Keyword>Geologie</Keyword>
+                        <Keyword>INSPIRE:Geology</Keyword>
+                    </KeywordList>
+                    <SRS>EPSG:4326</SRS>
+                    <SRS>EPSG:3857</SRS>
+                    <SRS>CRS:84</SRS>
+                    <SRS>EPSG:32620</SRS>
+                    <SRS>EPSG:32621</SRS>
+                    <LatLonBoundingBox minx="-5.86764" miny="41.1701" maxx="11.0789" maxy="51.1419" />
+                    <BoundingBox SRS="EPSG:4326"
+                                 minx="-5.86764" miny="41.1701" maxx="11.0789" maxy="51.1419" />
+                    <BoundingBox SRS="EPSG:3857"
+                                 minx="-653183" miny="5.03746e+06" maxx="1.2333e+06" maxy="6.64644e+06" />
+                    <BoundingBox SRS="CRS:84"
+                                 minx="-5.86764" miny="41.1701" maxx="11.0789" maxy="51.1419" />
+                    <BoundingBox SRS="EPSG:32620"
+                                 minx="4.26677e+06" miny="6.57018e+06" maxx="6.28215e+06" maxy="8.59738e+06" />
+                    <BoundingBox SRS="EPSG:32621"
+                                 minx="3.93464e+06" miny="6.12146e+06" maxx="5.93425e+06" maxy="8.11543e+06" />
+                    <Attribution>
+                        <Title>BRGM (modified attribution)</Title>
+                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.brgm.fr/"/>
+                        <LogoURL width="158" height="82">
+                            <Format>image/png</Format>
+                            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://mapsref.brgm.fr/legendes/brgm_logo.png"/>
+                        </LogoURL>
+                    </Attribution>
+                    <AuthorityURL name="BRGM">
+                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="www.brgm.fr"/>
+                    </AuthorityURL>
+                    <Identifier authority="BRGM">http://id.geocatalogue.fr/BR_CAR_ADA</Identifier>
+                    <MetadataURL type="TC211">
+                        <Format>text/xml</Format>
+                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://www.geocatalogue.fr/api-public/servicesRest?Service=CSW&amp;Request=GetRecordById&amp;Version=2.0.2&amp;id=BR_CAR_ADA&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full"/>
+                    </MetadataURL>
+                    <Style>
+                        <Name>inspire_common:DEFAULT</Name>
+                        <Title>inspire_common:DEFAULT</Title>
+                        <LegendURL width="600" height="732">
+                            <Format>image/png</Format>
+                            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://mapsref.brgm.fr/legendes/geoservices/Geologie1000_legende.jpg"/>
+                        </LegendURL>
+                    </Style>
+                    <Style>
+                        <Name>inspire_common:OTHER</Name>
+                        <Title>inspire_common:OTHER</Title>
+                        <LegendURL width="600" height="732">
+                            <Format>image/png</Format>
+                            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://mapsref.brgm.fr/legendes/geoservices/Geologie1000_legende_other.jpg"/>
+                        </LegendURL>
+                    </Style>
+                    <ScaleHint min="74.8354272644456" max="3741.77136322228" />
+                </Layer>
+                <Layer queryable="0" opaque="0" cascaded="0">
+                    <Name>SCAN_F_GEOL250</Name>
+                    <Title>Carte géologique image de la France au 1/250000</Title>
+                    <Abstract>BD Scan-Géol-250 est la base de données géoréférencées des cartes géologiques image à 1/250 000. Utilisation scientifique, technique, pédagogique</Abstract>
+                    <KeywordList>
+                        <Keyword>Geologie</Keyword>
+                        <Keyword>INSPIRE:Geology</Keyword>
+                    </KeywordList>
+                    <SRS>EPSG:4326</SRS>
+                    <SRS>EPSG:3857</SRS>
+                    <SRS>CRS:84</SRS>
+                    <SRS>EPSG:32620</SRS>
+                    <SRS>EPSG:32621</SRS>
+                    <LatLonBoundingBox minx="-6.20495" miny="41.9671" maxx="12.2874" maxy="51.2917" />
+                    <BoundingBox SRS="EPSG:4326"
+                                 minx="-6.20495" miny="41.9671" maxx="12.2874" maxy="51.2917" />
+                    <BoundingBox SRS="EPSG:3857"
+                                 minx="-690732" miny="5.15606e+06" maxx="1.36783e+06" maxy="6.67306e+06" />
+                    <BoundingBox SRS="CRS:84"
+                                 minx="-6.20495" miny="41.9671" maxx="12.2874" maxy="51.2917" />
+                    <BoundingBox SRS="EPSG:32620"
+                                 minx="4.23619e+06" miny="6.6238e+06" maxx="6.21236e+06" maxy="8.70077e+06" />
+                    <BoundingBox SRS="EPSG:32621"
+                                 minx="3.9038e+06" miny="6.1856e+06" maxx="5.89555e+06" maxy="8.21306e+06" />
+                    <AuthorityURL name="BRGM">
+                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="www.brgm.fr"/>
+                    </AuthorityURL>
+                    <Identifier authority="BRGM">http://id.geocatalogue.fr/BR_CAR_ACA</Identifier>
+                    <MetadataURL type="TC211">
+                        <Format>text/xml</Format>
+                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://www.geocatalogue.fr/api-public/servicesRest?Service=CSW&amp;Request=GetRecordById&amp;Version=2.0.2&amp;id=BR_CAR_ACA&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full"/>
+                    </MetadataURL>
+                    <ScaleHint min="29.9341709057782" max="187.088568161114" />
+                </Layer>
+                <Layer queryable="0" opaque="0" cascaded="0">
+                    <Name>SCAN_D_GEOL50</Name>
+                    <Title>Carte géologique image de la France au 1/50 000e</Title>
+                    <Abstract>BD Scan-Géol-50 est la base de données géoréférencées des cartes géologiques &#39;papier&#39; à 1/50 000</Abstract>
+                    <KeywordList>
+                        <Keyword>Geologie</Keyword>
+                        <Keyword>INSPIRE:Geology</Keyword>
+                    </KeywordList>
+                    <SRS>EPSG:4326</SRS>
+                    <SRS>EPSG:3857</SRS>
+                    <SRS>CRS:84</SRS>
+                    <SRS>EPSG:32620</SRS>
+                    <SRS>EPSG:32621</SRS>
+                    <LatLonBoundingBox minx="-12.2064" miny="40.681" maxx="11.894" maxy="52.1672" />
+                    <BoundingBox SRS="EPSG:4326"
+                                 minx="-12.2064" miny="40.681" maxx="11.894" maxy="52.1672" />
+                    <BoundingBox SRS="EPSG:3857"
+                                 minx="-1.35881e+06" miny="4.96541e+06" maxx="1.32403e+06" maxy="6.83041e+06" />
+                    <BoundingBox SRS="CRS:84"
+                                 minx="-12.2064" miny="40.681" maxx="11.894" maxy="52.1672" />
+                    <BoundingBox SRS="EPSG:32620"
+                                 minx="3.88148e+06" miny="6.13796e+06" maxx="6.31307e+06" maxy="8.70752e+06" />
+                    <BoundingBox SRS="EPSG:32621"
+                                 minx="3.52434e+06" miny="5.74736e+06" maxx="5.97375e+06" maxy="8.23867e+06" />
+                    <AuthorityURL name="BRGM">
+                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="www.brgm.fr"/>
+                    </AuthorityURL>
+                    <Identifier authority="BRGM">http://id.geocatalogue.fr/72cc8d40-1bb6-41a3-8376-9734f23336ff</Identifier>
+                    <MetadataURL type="TC211">
+                        <Format>text/xml</Format>
+                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://www.geocatalogue.fr/api-public/servicesRest?Service=CSW&amp;Request=GetRecordById&amp;Version=2.0.2&amp;id=72cc8d40-1bb6-41a3-8376-9734f23336ff&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full"/>
+                    </MetadataURL>
+                    <ScaleHint min="3.36759422690005" max="93.9184612168792" />
+                </Layer>
+            </Layer>
+        </Layer>
+    </Capability>
+</WMT_MS_Capabilities>

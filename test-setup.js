@@ -4,16 +4,24 @@ import * as esbuild from 'esbuild';
 import * as util from 'util';
 import CacheMock from 'browser-cache-mock';
 import 'isomorphic-fetch';
+import { TextDecoder } from 'util';
 
 // mock the global fetch API
 window.fetchResponseFactory = (url) => '<empty></empty>';
-window.fetch = jest.fn((url) =>
+window.originalFetch = window.fetch;
+window.mockFetch = jest.fn((url) =>
   Promise.resolve({
     text: () => Promise.resolve(globalThis.fetchResponseFactory(url)),
+    arrayBuffer: () =>
+      Promise.resolve(
+        Buffer.from(globalThis.fetchResponseFactory(url), 'utf-8')
+      ),
     status: 200,
     ok: true,
+    headers: { get: () => null },
   })
 );
+window.fetch = window.mockFetch;
 
 window.caches = {
   open: async () => new CacheMock(),
@@ -87,3 +95,7 @@ global.Worker = function Worker(filePath) {
   // mock global scope
   global.WorkerGlobalScope = scope;
 };
+
+// global.TextDecoder = StringDecoder
+// global.TextDecoder.prototype.decode = StringDecoder.prototype.write
+global.TextDecoder = TextDecoder;

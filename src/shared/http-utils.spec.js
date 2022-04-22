@@ -11,12 +11,14 @@ describe('HTTP utils', () => {
     window.fetch_ = window.fetch; // keep reference of native impl
     window.fetch = jest.fn((xmlString, opts) => {
       const noCors = opts && opts.mode === 'no-cors';
+      const headers = { get: () => null };
       switch (fetchBehaviour) {
         case 'ok':
           return Promise.resolve({
-            text: () => Promise.resolve(xmlString),
+            arrayBuffer: () => Promise.resolve(Buffer.from(xmlString, 'utf-8')),
             status: 200,
             ok: true,
+            headers,
           });
         case 'httpError':
           return Promise.resolve({

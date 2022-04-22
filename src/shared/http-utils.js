@@ -1,5 +1,6 @@
-import { parseXmlString } from './xml-utils';
+import { parseXmlString, XmlParseError } from './xml-utils';
 import { EndpointError } from './errors';
+import { decodeString } from './encoding';
 
 /**
  * @type {Map<string, Promise<Response>>}
@@ -49,15 +50,17 @@ export function queryXmlDocument(url) {
         })
     )
     .then(async (resp) => {
-      const text = await resp.text();
       if (!resp.ok) {
+        const text = await resp.text();
         throw new EndpointError(
           `Received an error with code ${resp.status}: ${text}`,
           resp.status,
           false
         );
       }
-      return text;
+      const buffer = await resp.arrayBuffer();
+      const contentTypeHeader = resp.headers.get('Content-Type');
+      return decodeString(buffer, contentTypeHeader);
     })
     .then((xml) => parseXmlString(xml));
 }
