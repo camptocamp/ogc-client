@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-4">
-    <div class="card-header text-uppercase small">
-      <span class="me-3 fs-6">●</span>function
+    <div class="card-header text-uppercase small border-bottom-0 py-1 px-3">
+      function
     </div>
     <div class="card-body pb-0">
       <h5 class="mb-3">
@@ -55,5 +55,7 @@ export default {
 .card-header {
   color: rgb(38, 202, 81);
   background: rgba(38, 202, 81, 0.03);
+  letter-spacing: 2.5px;
+  opacity: 0.6;
 }
 </style>
