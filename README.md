@@ -5,6 +5,8 @@
 **ogc-client** is a pure Javascript library which implements several OGC standards and will help you interact with
 them in a user-friendly and consistent way.
 
+[Documentation and live demo here!](https://camptocamp.github.io/ogc-client/)
+
 The following standards are partially implemented:
 
 - WMS - _Web Map Service_
@@ -12,8 +14,6 @@ The following standards are partially implemented:
 
 Why no WMTS support? Because [openlayers](https://www.github.com/openlayers/openlayers) has a incredibly thorough and well-tested WMTS capabilities parser and you should just use it.
 Reimplementing it in **ogc-client** currently does not bring any significant value.
-
-> TODO: link to demo app on gh-pages
 
 ## Why use it?
 
