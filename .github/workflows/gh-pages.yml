@@ -1,0 +1,48 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint-test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Node & NPM
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16' # includes NPM 7
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install lib dependencies
+        run: npm ci
+
+      - name: Install app dependencies
+        working-directory: app
+        run: npm ci
+
+      - name: Build demo
+        working-directory: app
+        run: npm run build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./app/dist
+          keep_files: false
+          exclude_assets: '*.js.map'
