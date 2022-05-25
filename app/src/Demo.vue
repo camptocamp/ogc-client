@@ -62,9 +62,6 @@ section {
 </style>
 
 <script>
-import './style/reset.css';
-import './style/generics.css';
-import './style/helpers.css';
 import WmsEndpoint from './components/wms/WmsEndpoint';
 import WfsEndpoint from './components/wfs/WfsEndpoint';
 
