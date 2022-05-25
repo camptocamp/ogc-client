@@ -1,42 +1,41 @@
 <template>
   <div>
-    <div>
-      <input placeholder="Enter a WFS service URL here" v-model="url" />
+    <div class="d-flex flex-row">
+      <input
+        class="form-control me-3"
+        placeholder="Enter a WFS service URL here"
+        v-model="url"
+      />
       <div class="spacer-s"></div>
-      <button type="button" @click="createEndpoint()">Analyze</button>
+      <button type="button" class="btn btn-primary" @click="createEndpoint()">
+        Analyze
+      </button>
     </div>
-    <div class="spacer-s"></div>
     <div v-if="loading">Loading...</div>
     <div v-if="loaded">
       <InfoList :info="endpoint.getServiceInfo()"></InfoList>
-      <div class="spacer-s"></div>
-      <div class="flex-row flex-align-stretch" style="min-height: 200px">
-        <ItemsTree
-          :items="endpoint.getFeatureTypes()"
-          class="scroll-y flex-grow flex-shrink"
-        >
-          <template v-slot="{ item }">
-            <div :title="item.abstract">
-              <template v-if="item.name">
-                <a href @click="handleItemClick(item, $event)">{{
-                  item.title
-                }}</a>
-              </template>
-              <template v-else>
-                <span>{{ item.title }}</span>
-              </template>
-            </div>
-          </template>
-        </ItemsTree>
-        <div class="spacer-s"></div>
-        <div class="flex-grow">
-          <WfsFeatureTypeInfo
-            v-if="selectedFeatureType"
-            :feature-type="selectedFeatureType"
-            :endpoint="endpoint"
-          ></WfsFeatureTypeInfo>
-        </div>
-      </div>
+      <ItemsTree :items="endpoint.getFeatureTypes()" style="min-height: 200px">
+        <template v-slot="{ item }">
+          <div :title="item.abstract">
+            <template v-if="item.name">
+              <a
+                href
+                @click="handleItemClick(item, $event)"
+                class="link-light"
+                >{{ item.title }}</a
+              >
+            </template>
+            <template v-else>
+              <span>{{ item.title }}</span>
+            </template>
+          </div>
+        </template>
+      </ItemsTree>
+      <WfsFeatureTypeInfo
+        v-if="selectedFeatureType"
+        :feature-type="selectedFeatureType"
+        :endpoint="endpoint"
+      ></WfsFeatureTypeInfo>
     </div>
     <div v-if="error">Error: {{ error }}</div>
   </div>

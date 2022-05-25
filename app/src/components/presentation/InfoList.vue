@@ -1,7 +1,7 @@
 <template>
-  <dl class="text-s">
+  <dl class="small">
     <template v-for="prop in propList">
-      <dt class="text-light">{{ prop.title }}</dt>
+      <dt>{{ prop.title }}</dt>
       <dd>{{ prop.description }}</dd>
     </template>
   </dl>

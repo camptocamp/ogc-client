@@ -1,20 +1,17 @@
 <template>
   <div>
     <p>{{ featureType.name }}</p>
-    <div class="spacer-s"></div>
     <InfoList :info="featureTypeInfo"></InfoList>
-    <div class="spacer-s"></div>
     <p>Properties</p>
-    <div class="spacer-s"></div>
     <InfoList :info="featureProperties"></InfoList>
-    <div class="spacer-m"></div>
     <div v-if="featurePropsDetails === null && !loadingValues">
-      <button type="button" @click="loadValues()">Load unique values</button>
+      <button type="button" class="btn btn-primary" @click="loadValues()">
+        Load unique values
+      </button>
     </div>
     <div v-if="loadingValues">Loading unique values...</div>
     <div v-if="featurePropsDetails !== null">
       <p>Unique values</p>
-      <div class="spacer-s"></div>
       <InfoList :info="uniqueValues"></InfoList>
     </div>
   </div>

@@ -1,25 +1,28 @@
 <template>
   <div>
     <p>{{ layer.title }}</p>
-    <div class="spacer-s"></div>
     <InfoList :info="layerInfo"></InfoList>
-    <div class="spacer-s"></div>
-    <div>
-      Selected style:&nbsp;
-      <select v-model="selectedStyle">
-        <option v-for="style in layer.styles" :value="style.name">
-          {{ style.title }}
-        </option>
-      </select>
-      <div class="spacer-m"></div>
-      Selected CRS:&nbsp;
-      <select v-model="selectedCrs">
-        <option v-for="crs in layer.availableCrs">
-          {{ crs }}
-        </option>
-      </select>
+    <div class="d-flex flex-row justify-content-between">
+      <label>
+        Selected style:&nbsp;
+        <select
+          v-model="selectedStyle"
+          class="form-select d-inline-block w-auto"
+        >
+          <option v-for="style in layer.styles" :value="style.name">
+            {{ style.title }}
+          </option>
+        </select>
+      </label>
+      <label>
+        Selected CRS:&nbsp;
+        <select v-model="selectedCrs" class="form-select d-inline-block w-auto">
+          <option v-for="crs in layer.availableCrs">
+            {{ crs }}
+          </option>
+        </select>
+      </label>
     </div>
-    <div class="spacer-s"></div>
     <img :src="fullMapSrc" alt="layer preview" />
   </div>
 </template>

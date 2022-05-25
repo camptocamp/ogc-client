@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-dark text-white text-s padding-s">
+  <div class="bg-dark small text-white p-2 rounded-1">
     <div v-for="treeItem in items">
       <TreeItem :item="treeItem">
         <template v-slot="{ item }">
@@ -7,7 +7,6 @@
           <slot v-bind:item="item"></slot>
         </template>
       </TreeItem>
-      <div class="spacer-s"></div>
     </div>
   </div>
 </template>
