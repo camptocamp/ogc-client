@@ -60,6 +60,32 @@
       functionality.
     </p>
 
+    <div class="card text-bg-light mb-3">
+      <div class="card-header">A note on text encoding</div>
+      <div class="card-body">
+        <p class="card-text">
+          Even though <strong>UTF-8</strong> is the most common text encoding in
+          the web, some services might respond with other encodings such as
+          <strong>UTF-16</strong>,
+          <strong
+            ><a href="https://en.wikipedia.org/wiki/ISO/IEC_8859-1"
+              >ISO-8859-1</a
+            ></strong
+          >, etc.
+        </p>
+        <p class="card-text">
+          <LibName></LibName> will attempt to decode the responses using the
+          information at its disposal, and in most case decoding should succeed.
+          It may happen though that some unrecognized characters will remain;
+          please
+          <a href="https://github.com/camptocamp/ogc-client/issues/new"
+            >open an issue</a
+          >
+          if that is the case!
+        </p>
+      </div>
+    </div>
+
     <h2 class="mt-5 mb-4">Why use it?</h2>
 
     <p>
