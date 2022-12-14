@@ -345,7 +345,8 @@ export default class WfsEndpoint {
       outputFormat &&
       internalFeatureType.outputFormats.indexOf(outputFormat) === -1
     ) {
-      throw new Error(
+      // do not prevent using this output format, because it still might work! but give a warning at least
+      console.warn(
         `The following output format type was not found in the feature type ${internalFeatureType.name}: ${outputFormat}`
       );
     }
