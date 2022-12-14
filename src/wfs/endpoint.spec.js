@@ -15,6 +15,10 @@ describe('WfsEndpoint', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.spyOn(console, 'warn');
+  });
+
+  beforeEach(() => {
     window.fetchResponseFactory = (url) => {
       if (url.indexOf('GetCapabilities') > -1) return capabilities200;
       if (url.indexOf('GetFeature') > -1) {
@@ -446,13 +450,14 @@ describe('WfsEndpoint', () => {
         'feature type'
       );
     });
-    it('throws an error if the required output format is not supported by the feature type', () => {
-      expect(() =>
-        endpoint.getFeatureUrl('hierarchisation_l', {
-          maxFeatures: 200,
-          outputFormat: 'application/invalid+mime+type',
-        })
-      ).toThrow('output format');
+    it('logs a warning if the required output format is not supported by the feature type', () => {
+      endpoint.getFeatureUrl('hierarchisation_l', {
+        maxFeatures: 200,
+        outputFormat: 'application/invalid+mime+type',
+      });
+      expect(console.warn).toHaveBeenCalledWith(
+        expect.stringContaining('output format')
+      );
     });
     it('throws an error if the the feature type does not support geojson', () => {
       expect(() =>
