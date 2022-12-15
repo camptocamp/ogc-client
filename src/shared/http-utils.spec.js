@@ -8,38 +8,46 @@ describe('HTTP utils', () => {
     /** @type {'ok'|'httpError'|'corsError'|'networkError'|'delay'} */
     let fetchBehaviour;
 
-    window.fetch_ = window.fetch; // keep reference of native impl
-    window.fetch = jest.fn((xmlString, opts) => {
-      const noCors = opts && opts.mode === 'no-cors';
-      const headers = { get: () => null };
-      switch (fetchBehaviour) {
-        case 'ok':
-          return Promise.resolve({
-            arrayBuffer: () => Promise.resolve(Buffer.from(xmlString, 'utf-8')),
-            status: 200,
-            ok: true,
-            headers,
-          });
-        case 'httpError':
-          return Promise.resolve({
-            text: () => Promise.resolve('<error>Random error</error>'),
-            status: 401,
-            ok: false,
-          });
-        case 'corsError':
-          if (noCors)
+    beforeAll(() => {
+      fetchBehaviour = 'ok';
+      window.fetch_ = window.fetch; // keep reference of native impl
+      window.fetch = jest.fn((xmlString, opts) => {
+        const noCors = opts && opts.mode === 'no-cors';
+        const headers = { get: () => null };
+        switch (fetchBehaviour) {
+          case 'ok':
             return Promise.resolve({
+              arrayBuffer: () =>
+                Promise.resolve(Buffer.from(xmlString, 'utf-8')),
               status: 200,
               ok: true,
+              headers,
             });
-          return Promise.reject(new Error('Cross origin headers missing'));
-        case 'networkError':
-          return Promise.reject(new Error('General network error'));
-        case 'delay':
-          return new Promise((resolve) => {
-            setTimeout(() => resolve(xmlString), 10);
-          });
-      }
+          case 'httpError':
+            return Promise.resolve({
+              text: () => Promise.resolve('<error>Random error</error>'),
+              status: 401,
+              ok: false,
+            });
+          case 'corsError':
+            if (noCors)
+              return Promise.resolve({
+                status: 200,
+                ok: true,
+              });
+            return Promise.reject(new Error('Cross origin headers missing'));
+          case 'networkError':
+            return Promise.reject(new Error('General network error'));
+          case 'delay':
+            return new Promise((resolve) => {
+              setTimeout(() => resolve(xmlString), 10);
+            });
+        }
+      });
+    });
+
+    afterAll(() => {
+      window.fetch = window.fetch_; // restore original impl
     });
 
     beforeEach(() => {
@@ -124,10 +132,6 @@ describe('HTTP utils', () => {
       it('only fetches the document once', async () => {
         expect(window.fetch).toHaveBeenCalledTimes(1);
       });
-    });
-
-    afterAll(() => {
-      window.fetch = window.fetch_; // restore original impl
     });
   });
 
