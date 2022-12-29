@@ -16,7 +16,7 @@
     "src/"
   ],
   "dependencies": {
-    "@rgrove/parse-xml": "^3.0.0"
+    "@rgrove/parse-xml": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.13.14",
