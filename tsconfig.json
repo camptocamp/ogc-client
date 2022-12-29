@@ -3,7 +3,8 @@
     "outDir": "./dist",
     "target": "ES2017",
     "lib": ["es2017", "dom", "webworker"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "moduleResolution": "node"
   },
   "include": ["./src/**/*"]
 }

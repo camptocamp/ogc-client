@@ -5,28 +5,25 @@ import { parseXmlString, XmlParseError } from './xml-utils';
  * Note: a string might be successfully decoded with e.g. utf-8 but still
  * contain invalid chars; the correct encoding cannot be guessed and has to
  * be indicated with a header
- * @type {string[]}
  */
 const ENCODINGS = ['utf-8', 'utf-16', 'iso-8859-1'];
 
 const FALLBACK_ENCODING = 'utf-8';
 
-/**
- * @param {string} contentType
- * @return {string} encoding label or null if not found
- */
-function extractEncoding(contentType) {
+function extractEncoding(contentType: string) {
   const matches = /charset=([^;]+)/.exec(contentType);
   return matches ? matches[1] : null;
 }
 
 /**
- *
- * @param {ArrayBuffer} buffer Buffer containing the string to decode
- * @param {string} [contentType] Optional content type header, used to determine the response type
- * @returns {string|null} null if decoding failed
+ * @param buffer Buffer containing the string to decode
+ * @param [contentType] Optional content type header, used to determine the response type
+ * @returns null if decoding failed
  */
-export function decodeString(buffer, contentType) {
+export function decodeString(
+  buffer: ArrayBuffer,
+  contentType?: string
+): string | null {
   const encodingHint = contentType ? extractEncoding(contentType) : null;
   const encodingAttempts = encodingHint
     ? [encodingHint, ...ENCODINGS]

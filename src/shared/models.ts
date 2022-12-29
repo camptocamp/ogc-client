@@ -1,23 +1,18 @@
 /**
- * @typedef {[number, number, number, number]} BoundingBox
- *  Expressed as minx, miny, maxx, maxy
+ * Expressed as minx, miny, maxx, maxy
  */
+export type BoundingBox = [number, number, number, number];
 
-/**
- * @typedef {string} CrsCode
- */
+export type CrsCode = string;
 
-/**
- * @typedef {string} MimeType
- */
+export type GenericEndpointInfo = {
+  name: string;
+  title: string;
+  abstract: string;
+  fees: string;
+  constraints: string;
+  keywords: string[];
+  outputFormats?: MimeType[];
+};
 
-/**
- * @typedef {Object} GenericEndpointInfo
- * @property {string} name
- * @property {string} title
- * @property {string} abstract
- * @property {string} fees
- * @property {string} constraints
- * @property {string[]} keywords
- * @property {string[]} [outputFormats]
- */
+export type MimeType = string;

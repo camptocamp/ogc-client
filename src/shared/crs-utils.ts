@@ -1,3 +1,5 @@
+import { CrsCode } from './models';
+
 // This list was taken from GDAL
 // and may not be completely up-to-date
 const LatLonCrsList = [
@@ -72,10 +74,8 @@ const LatLonCrsList = [
 /**
  * Inverted coordinates is meant from the POV of a programmer, i.e. Y before X
  * Note: can handle full URNs for EPSG codes
- * @param {string} crsName
- * @return {boolean}
  */
-export function hasInvertedCoordinates(crsName) {
+export function hasInvertedCoordinates(crsName: CrsCode) {
   return LatLonCrsList.indexOf(simplifyEpsgUrn(crsName)) > -1;
 }
 
@@ -84,10 +84,8 @@ export function hasInvertedCoordinates(crsName) {
  * name, e.g.: `urn:ogc:def:crs:EPSG::2154` translates to `EPSG:2154`
  * On other kind of URNs (i.e. `urn:ogc:def:crs:OGC:1.3:CRS84`), returns the
  * URN untouched
- * @param {CrsCode} fullCrsName
- * @return {CrsCode}
  */
-export function simplifyEpsgUrn(fullCrsName) {
+export function simplifyEpsgUrn(fullCrsName: CrsCode): CrsCode {
   if (/^urn:(?:x-)?ogc:def:crs:epsg:/.test(fullCrsName.toLowerCase())) {
     const code = /([0-9]+)$/.exec(fullCrsName)[1];
     return `EPSG:${code}`;

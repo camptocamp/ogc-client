@@ -7,47 +7,36 @@ import {
   parseFeatureProps,
 } from '../wfs/featureprops';
 import { generateGetFeatureUrl } from '../wfs/url';
+import { WfsFeatureTypeFull, WfsVersion } from '../wfs/endpoint';
 
-addTaskHandler(
-  'parseWmsCapabilities',
-  /** @type {DedicatedWorkerGlobalScope|Window} */ self,
-  /**
-   * @param {string} url
-   * @return {Promise<{info:GenericEndpointInfo,layers:WmsLayerFull[],version:WmsVersion}>}
-   */
-  ({ url }) =>
-    queryXmlDocument(url).then((xmlDoc) => ({
-      info: wmsCapabilities.readInfoFromCapabilities(xmlDoc),
-      layers: wmsCapabilities.readLayersFromCapabilities(xmlDoc),
-      version: wmsCapabilities.readVersionFromCapabilities(xmlDoc),
-    }))
+addTaskHandler('parseWmsCapabilities', self, ({ url }: { url: string }) =>
+  queryXmlDocument(url).then((xmlDoc) => ({
+    info: wmsCapabilities.readInfoFromCapabilities(xmlDoc),
+    layers: wmsCapabilities.readLayersFromCapabilities(xmlDoc),
+    version: wmsCapabilities.readVersionFromCapabilities(xmlDoc),
+  }))
 );
 
-addTaskHandler(
-  'parseWfsCapabilities',
-  /** @type {DedicatedWorkerGlobalScope|Window} */ self,
-  /**
-   * @param {string} url
-   * @return {Promise<{info:GenericEndpointInfo,featureTypes:WfsFeatureTypeInternal[],version:WfsVersion}>}
-   */
-  ({ url }) =>
-    queryXmlDocument(url).then((xmlDoc) => ({
-      info: wfsCapabilities.readInfoFromCapabilities(xmlDoc),
-      featureTypes: wfsCapabilities.readFeatureTypesFromCapabilities(xmlDoc),
-      version: wfsCapabilities.readVersionFromCapabilities(xmlDoc),
-    }))
+addTaskHandler('parseWfsCapabilities', self, ({ url }: { url: string }) =>
+  queryXmlDocument(url).then((xmlDoc) => ({
+    info: wfsCapabilities.readInfoFromCapabilities(xmlDoc),
+    featureTypes: wfsCapabilities.readFeatureTypesFromCapabilities(xmlDoc),
+    version: wfsCapabilities.readVersionFromCapabilities(xmlDoc),
+  }))
 );
 
 addTaskHandler(
   'queryWfsFeatureTypeDetails',
-  /** @type {DedicatedWorkerGlobalScope|Window} */ self,
-  /**
-   * @param {string} url
-   * @param {WfsVersion} serviceVersion
-   * @param {WfsFeatureTypeFull} featureTypeFull
-   * @return {Promise<{props:WfsFeatureTypePropsDetails}>}
-   */
-  ({ url, serviceVersion, featureTypeFull }) => {
+  self,
+  ({
+    url,
+    serviceVersion,
+    featureTypeFull,
+  }: {
+    url: string;
+    serviceVersion: WfsVersion;
+    featureTypeFull: WfsFeatureTypeFull;
+  }) => {
     const getFeatureUrl = generateGetFeatureUrl(
       url,
       serviceVersion,

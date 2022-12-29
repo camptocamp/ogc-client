@@ -4,30 +4,23 @@ let cacheExpiryDuration = 1000 * 60 * 60; // 1 day
  * Sets a new cache expiry duration, in ms.
  * Setting this to a value <= 0 will disable the caching logic altogether
  * and not store cache entries at all
- * @param {number} value Duration in ms
+ * @param value Duration in ms
  */
-export function setCacheExpiryDuration(value) {
+export function setCacheExpiryDuration(value: number) {
   cacheExpiryDuration = value;
 }
 
 /**
  * Returns the current cache expiry duration in ms
- * @return {number}
  */
 export function getCacheExpiryDuration() {
   return cacheExpiryDuration;
 }
 
-/**
- * @type {Promise<Cache>|null}
- */
-const cachePromise = 'caches' in self ? caches.open('ogc-client') : null;
+const cachePromise: Promise<Cache> | null =
+  'caches' in self ? caches.open('ogc-client') : null;
 
-/**
- * @param {Object} object
- * @param {string} keys
- */
-export async function storeCacheEntry(object, ...keys) {
+export async function storeCacheEntry(object: unknown, ...keys: string[]) {
   if (!cachePromise) return;
   const entryUrl = 'https://cache/' + keys.join('/');
   const cache = await cachePromise;
@@ -41,11 +34,7 @@ export async function storeCacheEntry(object, ...keys) {
   );
 }
 
-/**
- * @param {string} keys
- * @return {Promise<boolean>}
- */
-export async function hasValidCacheEntry(...keys) {
+export async function hasValidCacheEntry(...keys: string[]) {
   if (!cachePromise) return false;
   const entryUrl = 'https://cache/' + keys.join('/');
   const cache = await cachePromise;
@@ -54,11 +43,7 @@ export async function hasValidCacheEntry(...keys) {
     .then((req) => !!req && parseInt(req.headers.get('x-expiry')) > Date.now());
 }
 
-/**
- * @param {string} keys
- * @return {Object}
- */
-export async function readCacheEntry(...keys) {
+export async function readCacheEntry(...keys: string[]) {
   if (!cachePromise) return null;
   const entryUrl = 'https://cache/' + keys.join('/');
   const cache = await cachePromise;
@@ -68,28 +53,30 @@ export async function readCacheEntry(...keys) {
 
 /**
  * Map of task promises; when a promise resolves the map entry is cleared
- * @type {Map<string, Promise<Object>>}
  */
-const tasksMap = new Map();
+const tasksMap: Map<string, Promise<unknown>> = new Map();
 
 /**
  * This will skip a long/expensive task and use a cached value if available,
  * otherwise the task will be run normally
  * Note: outside of a browser's main thread, caching will never happen!
- * @param {function(): Object|Promise<Object>} factory A function encapsulating
- * the long/expensive task; non serializable properties of the returned object
+ * @param factory A function encapsulating
+ * the long/expensive task; non-serializable properties of the returned object
  * will be set to null
- * @param {string} keys Keys will be concatenated for storage
- * @return {Promise<Object>} Resolves to either a cached object or a fresh one
+ * @param keys Keys will be concatenated for storage
+ * @return Resolves to either a cached object or a fresh one
  */
-export async function useCache(factory, ...keys) {
+export async function useCache<T>(
+  factory: () => T | Promise<T>,
+  ...keys: string[]
+): Promise<T> {
   await purgeEntries();
   if (await hasValidCacheEntry(...keys)) {
     return readCacheEntry(...keys);
   }
   const taskKey = keys.join('#');
   if (tasksMap.has(taskKey)) {
-    return tasksMap.get(taskKey);
+    return tasksMap.get(taskKey) as T;
   }
   const taskRun = factory();
   if (taskRun instanceof Promise) {

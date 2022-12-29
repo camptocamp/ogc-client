@@ -8,24 +8,31 @@ import {
   getRootElement,
 } from '../shared/xml-utils';
 import { simplifyEpsgUrn } from '../shared/crs-utils';
+import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
+import { WfsFeatureTypeInternal, WfsVersion } from './endpoint';
+import { BoundingBox, GenericEndpointInfo, MimeType } from '../shared/models';
 
 /**
  * Will read a WFS version from the capabilities doc
- * @param {XmlDocument} capabilitiesDoc Capabilities document
- * @return {WfsVersion|null} The parsed WFS version, or null if no version could be found
+ * @param capabilitiesDoc Capabilities document
+ * @return The parsed WFS version, or null if no version could be found
  */
-export function readVersionFromCapabilities(capabilitiesDoc) {
-  return getRootElement(capabilitiesDoc).attributes['version'];
+export function readVersionFromCapabilities(
+  capabilitiesDoc: XmlDocument
+): WfsVersion {
+  return getRootElement(capabilitiesDoc).attributes['version'] as WfsVersion;
 }
 
 /**
  * Will read the supported output formats from the capabilities document; note that these might not be valid MIME types
- * @param {XmlDocument} capabilitiesDoc Capabilities document
- * @return {string[]|null} Advertised output formats
+ * @param capabilitiesDoc Capabilities document
+ * @return Advertised output formats
  */
-export function readOutputFormatsFromCapabilities(capabilitiesDoc) {
+export function readOutputFormatsFromCapabilities(
+  capabilitiesDoc: XmlDocument
+): MimeType[] {
   const version = readVersionFromCapabilities(capabilitiesDoc);
-  let outputFormats;
+  let outputFormats: string[];
   if (version.startsWith('1.0')) {
     const getFeature = findChildElement(
       findChildElement(
@@ -57,10 +64,12 @@ export function readOutputFormatsFromCapabilities(capabilitiesDoc) {
 
 /**
  * Will read service-related info from the capabilities doc
- * @param {XmlDocument} capabilitiesDoc Capabilities document
- * @return {GenericEndpointInfo} Parsed service info
+ * @param capabilitiesDoc Capabilities document
+ * @return Parsed service info
  */
-export function readInfoFromCapabilities(capabilitiesDoc) {
+export function readInfoFromCapabilities(
+  capabilitiesDoc: XmlDocument
+): GenericEndpointInfo {
   const version = readVersionFromCapabilities(capabilitiesDoc);
   const serviceTag = version.startsWith('1.0')
     ? 'Service'
@@ -92,10 +101,10 @@ export function readInfoFromCapabilities(capabilitiesDoc) {
 
 /**
  * Will read all feature types present in the capabilities doc
- * @param {XmlDocument} capabilitiesDoc
- * @return {WfsFeatureTypeInternal[]}
  */
-export function readFeatureTypesFromCapabilities(capabilitiesDoc) {
+export function readFeatureTypesFromCapabilities(
+  capabilitiesDoc: XmlDocument
+): WfsFeatureTypeInternal[] {
   const version = readVersionFromCapabilities(capabilitiesDoc);
   const outputFormats = readOutputFormatsFromCapabilities(capabilitiesDoc);
   const capability = findChildElement(
@@ -109,12 +118,12 @@ export function readFeatureTypesFromCapabilities(capabilitiesDoc) {
 
 /**
  * Parse a feature type in a capabilities doc
- * @param {XmlElement} featureTypeEl
- * @param {WfsVersion} serviceVersion
- * @param {string[]} defaultOutputFormats
- * @return {WfsFeatureTypeInternal}
  */
-function parseFeatureType(featureTypeEl, serviceVersion, defaultOutputFormats) {
+function parseFeatureType(
+  featureTypeEl: XmlElement,
+  serviceVersion: WfsVersion,
+  defaultOutputFormats: MimeType[]
+): WfsFeatureTypeInternal {
   const srsTag = serviceVersion.startsWith('2.') ? 'CRS' : 'SRS';
   const defaultSrsTag = serviceVersion.startsWith('1.0')
     ? 'SRS'
@@ -123,7 +132,7 @@ function parseFeatureType(featureTypeEl, serviceVersion, defaultOutputFormats) {
     const bboxEl = findChildElement(featureTypeEl, 'LatLongBoundingBox');
     return ['minx', 'miny', 'maxx', 'maxy']
       .map((name) => getElementAttribute(bboxEl, name))
-      .map(parseFloat);
+      .map(parseFloat) as BoundingBox;
   }
   function parseBBox() {
     const bboxEl = findChildElement(featureTypeEl, 'WGS84BoundingBox');
@@ -131,14 +140,14 @@ function parseFeatureType(featureTypeEl, serviceVersion, defaultOutputFormats) {
       .map((elName) => findChildElement(bboxEl, elName))
       .map((cornerEl) => getElementText(cornerEl).split(' '))
       .reduce((prev, curr) => [...prev, ...curr])
-      .map(parseFloat);
+      .map(parseFloat) as BoundingBox;
   }
   const otherCrs = serviceVersion.startsWith('1.0')
     ? []
     : findChildrenElement(featureTypeEl, `Other${srsTag}`)
         .map(getElementText)
         .map(simplifyEpsgUrn);
-  const outputFormats = serviceVersion.startsWith('1.0')
+  const outputFormats: MimeType[] = serviceVersion.startsWith('1.0')
     ? []
     : findChildrenElement(
         findChildElement(featureTypeEl, 'OutputFormats'),

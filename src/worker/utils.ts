@@ -1,29 +1,28 @@
 import { getUniqueId } from '../shared/id';
 
-/**
- * @typedef {Object} WorkerRequest
- * @property {number} requestId
- * @property {string} taskName
- * @property {Object} params
- */
+type TaskParams = Record<string, unknown>;
+type TaskResponse = Record<string, unknown>;
 
-/**
- * @typedef {Object} WorkerResponse
- * @property {number} requestId
- * @property {Object} [error]
- * @property {Object} [response]
- */
+export type WorkerRequest = {
+  requestId: number;
+  taskName: string;
+  params: TaskParams;
+};
 
-/**
- * @param {string} taskName
- * @param {Worker|null} workerInstance
- * @param {Object} params
- * @return {Promise<Object>}
- */
-export function sendTaskRequest(taskName, workerInstance, params) {
+export type WorkerResponse = {
+  requestId: number;
+  error?: unknown;
+  response?: TaskResponse;
+};
+
+export function sendTaskRequest<T>(
+  taskName: string,
+  workerInstance: Worker,
+  params: TaskParams
+): Promise<T> {
   return new Promise((resolve, reject) => {
     const requestId = getUniqueId();
-    const request = /** @type {WorkerRequest} */ {
+    const request: WorkerRequest = {
       requestId,
       taskName,
       params,
@@ -37,30 +36,28 @@ export function sendTaskRequest(taskName, workerInstance, params) {
     } else {
       workerInstance.postMessage(request);
     }
-    /**
-     * Workers either with or without a worker
-     * @param {WorkerResponse} [detail]
-     * @param {WorkerResponse} [data]
-     */
-    const handler = ({ detail, data }) => {
-      const response = detail || data;
+
+    const handler = (response: WorkerResponse) => {
       if (response.requestId === requestId) {
         if (workerInstance === null) {
-          window.removeEventListener('message', handler);
+          window.removeEventListener('message', windowHandler);
         } else {
-          workerInstance.removeEventListener('message', handler);
+          workerInstance.removeEventListener('message', workerHandler);
         }
         if ('error' in response) {
           reject(response.error);
         } else {
-          resolve(response.response);
+          resolve(response.response as T);
         }
       }
     };
+    const windowHandler = (event) => handler(event.detail);
+    const workerHandler = (event) => handler(event.data);
+
     if (workerInstance === null) {
-      window.addEventListener('ogc-client.response', handler);
+      window.addEventListener('ogc-client.response', windowHandler);
     } else {
-      workerInstance.addEventListener('message', handler);
+      workerInstance.addEventListener('message', workerHandler);
     }
   });
 }
@@ -70,15 +67,14 @@ export function sendTaskRequest(taskName, workerInstance, params) {
  * @param {DedicatedWorkerGlobalScope|Window} scope
  * @param {function(params: Object):Promise<Object>} handler
  */
-export function addTaskHandler(taskName, scope, handler) {
+export function addTaskHandler(
+  taskName: string,
+  scope: DedicatedWorkerGlobalScope | Window,
+  handler: (params: TaskParams) => Promise<TaskResponse>
+) {
   const useWorker = typeof WorkerGlobalScope !== 'undefined';
-  /**
-   * Workers either with or without a worker
-   * @param {WorkerRequest} [detail]
-   * @param {WorkerRequest} [data]
-   */
-  const eventHandler = async ({ detail, data }) => {
-    const request = detail || data;
+
+  const eventHandler = async (request: WorkerRequest) => {
     if (request.taskName === taskName) {
       let response, error;
       try {
@@ -104,8 +100,10 @@ export function addTaskHandler(taskName, scope, handler) {
     }
   };
   if (useWorker) {
-    scope.addEventListener('message', eventHandler);
+    scope.addEventListener('message', (event) => eventHandler(event.data));
   } else {
-    scope.addEventListener('ogc-client.request', eventHandler);
+    scope.addEventListener('ogc-client.request', (event) =>
+      eventHandler(event.detail)
+    );
   }
 }

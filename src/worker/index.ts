@@ -1,6 +1,13 @@
 import { sendTaskRequest } from './utils';
+import {
+  WfsFeatureTypeFull,
+  WfsFeatureTypeInternal,
+  WfsFeatureTypePropsDetails,
+  WfsVersion,
+} from '../wfs/endpoint';
+import { GenericEndpointInfo } from '../shared/models';
+import { WmsLayerFull, WmsVersion } from '../wms/endpoint';
 
-/** @type {boolean} */
 let fallbackWithoutWorker = false;
 
 /**
@@ -10,8 +17,7 @@ export function enableFallbackWithoutWorker() {
   fallbackWithoutWorker = true;
 }
 
-/** @type {Worker} */
-let workerInstance;
+let workerInstance: Worker;
 
 /**
  * @returns {null|Worker} If null, use fallback without worker!
@@ -21,7 +27,7 @@ function getWorkerInstance() {
     return null;
   }
   if (!workerInstance) {
-    workerInstance = new Worker('./worker.js', {
+    workerInstance = new Worker('./worker.ts', {
       type: 'module',
     });
   }
@@ -30,10 +36,15 @@ function getWorkerInstance() {
 
 /**
  * Parses the capabilities document and return all relevant information
- * @param {string} capabilitiesUrl This url should point to the capabilities document
- * @return {Promise<{version: WmsVersion, info: GenericEndpointInfo, layers: WmsLayerFull[]}>}
+ * @param capabilitiesUrl This url should point to the capabilities document
  */
-export function parseWmsCapabilities(capabilitiesUrl) {
+export function parseWmsCapabilities(
+  capabilitiesUrl: string
+): Promise<{
+  version: WmsVersion;
+  info: GenericEndpointInfo;
+  layers: WmsLayerFull[];
+}> {
   return sendTaskRequest('parseWmsCapabilities', getWorkerInstance(), {
     url: capabilitiesUrl,
   });
@@ -41,10 +52,15 @@ export function parseWmsCapabilities(capabilitiesUrl) {
 
 /**
  * Parses the capabilities document and return all relevant information
- * @param {string} capabilitiesUrl This url should point to the capabilities document
- * @return {Promise<{version: WfsVersion, info: GenericEndpointInfo, featureTypes: WfsFeatureTypeInternal[]}>}
+ * @param capabilitiesUrl This url should point to the capabilities document
  */
-export function parseWfsCapabilities(capabilitiesUrl) {
+export function parseWfsCapabilities(
+  capabilitiesUrl: string
+): Promise<{
+  version: WfsVersion;
+  info: GenericEndpointInfo;
+  featureTypes: WfsFeatureTypeInternal[];
+}> {
   return sendTaskRequest('parseWfsCapabilities', getWorkerInstance(), {
     url: capabilitiesUrl,
   });
@@ -52,16 +68,15 @@ export function parseWfsCapabilities(capabilitiesUrl) {
 
 /**
  * Queries a feature type details
- * @param {string} capabilitiesUrl This url should point to the capabilities document
- * @param {WfsVersion} serviceVersion
- * @param {WfsFeatureTypeFull} featureTypeFull
- * @return {Promise<{props:WfsFeatureTypePropsDetails}>}
+ * @param capabilitiesUrl This url should point to the capabilities document
+ * @param serviceVersion
+ * @param featureTypeFull
  */
 export function queryWfsFeatureTypeDetails(
-  capabilitiesUrl,
-  serviceVersion,
-  featureTypeFull
-) {
+  capabilitiesUrl: string,
+  serviceVersion: WfsVersion,
+  featureTypeFull: WfsFeatureTypeFull
+): Promise<{ props: WfsFeatureTypePropsDetails }> {
   return sendTaskRequest('queryWfsFeatureTypeDetails', getWorkerInstance(), {
     url: capabilitiesUrl,
     serviceVersion,

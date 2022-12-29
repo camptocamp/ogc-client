@@ -2,54 +2,73 @@ import { EndpointError } from '../shared/errors';
 import { parseWmsCapabilities } from '../worker';
 import { useCache } from '../shared/cache';
 import { setQueryParams } from '../shared/http-utils';
+import { CrsCode, GenericEndpointInfo } from '../shared/models';
 
-/**
- * @typedef {Object} LayerStyle
- * @property {string} name
- * @property {string} title
- * @property {string} [legendUrl] May not be defined; a GetLegendGraphic operation should work in any case
- */
+export type LayerStyle = {
+  name: string;
+  title: string;
+  /**
+   * May not be defined; a GetLegendGraphic operation should work in any case
+   */
+  legendUrl?: string;
+};
 
-/**
- * @typedef {Object} LayerAttribution
- * @property {string} [title]
- * @property {string} [url]
- * @property {string} [logoUrl]
- */
+export type LayerAttribution = {
+  title?: string;
+  url?: string;
+  logoUrl?: string;
+};
 
-/**
- * @typedef {Object} WmsLayerSummary
- * @property {string} [name] The layer is renderable if defined
- * @property {string} title
- * @property {string} [abstract]
- * @property {WmsLayerSummary[]} [children] Not defined if the layer is a leaf in the tree
- */
+export type WmsLayerSummary = {
+  /**
+   * The layer is renderable if defined
+   */
+  name?: string;
+  title: string;
+  abstract?: string;
+  /**
+   * Not defined if the layer is a leaf in the tree
+   */
+  children?: WmsLayerSummary[];
+};
 
-/**
- * @typedef {Object} WmsLayerFull
- * @property {string} [name] The layer is renderable if defined
- * @property {string} title
- * @property {string} [abstract]
- * @property {CrsCode[]} availableCrs
- * @property {LayerStyle[]} styles
- * @property {Object.<CrsCode, BoundingBox>} boundingBoxes Dict of bounding boxes where keys are CRS codes
- * @property {LayerAttribution} [attribution]
- * @property {WmsLayerFull[]} [children] Not defined if the layer is a leaf in the tree
- */
+export type WmsLayerFull = {
+  /**
+   * The layer is renderable if defined
+   */
+  name?: string;
+  title: string;
+  abstract?: string;
+  availableCrs: CrsCode[];
+  styles: LayerStyle[];
+  /**
+   * Dict of bounding boxes where keys are CRS codes
+   */
+  boundingBoxes: any;
+  attribution?: LayerAttribution;
+  /**
+   * Not defined if the layer is a leaf in the tree
+   */
+  children?: WmsLayerFull[];
+};
 
-/**
- * @typedef {'1.1.0'|'1.1.1'|'1.3.0'} WmsVersion
- */
+export type WmsVersion = '1.1.0' | '1.1.1' | '1.3.0';
 
 /**
  * Represents a WMS endpoint advertising several layers arranged in a tree structure.
  */
 export default class WmsEndpoint {
+  private _capabilitiesUrl: string;
+  private _capabilitiesPromise: Promise<void>;
+  private _info: GenericEndpointInfo | null;
+  private _layers: WmsLayerFull[] | null;
+  private _version: WmsVersion | null;
+
   /**
-   * @param {string} url WMS endpoint url; can contain any query parameters, these will be used to
+   * @param url WMS endpoint url; can contain any query parameters, these will be used to
    *   initialize the endpoint
    */
-  constructor(url) {
+  constructor(url: string) {
     const capabilitiesUrl = setQueryParams(url, {
       SERVICE: 'WMS',
       REQUEST: 'GetCapabilities',
@@ -57,8 +76,6 @@ export default class WmsEndpoint {
 
     /**
      * This fetches the capabilities doc and parses its contents
-     * @type {Promise<XmlDocument>}
-     * @private
      */
     this._capabilitiesPromise = useCache(
       () => parseWmsCapabilities(capabilitiesUrl),
@@ -70,37 +87,15 @@ export default class WmsEndpoint {
       this._layers = layers;
       this._version = version;
     });
-
-    /**
-     * @type {GenericEndpointInfo|null}
-     * @private
-     */
-    this._info = null;
-
-    /**
-     * @type {WmsLayerFull[]|null}
-     * @private
-     */
-    this._layers = null;
-
-    /**
-     * @type {WmsVersion|null}
-     * @private
-     */
-    this._version = null;
   }
 
   /**
    * @throws {EndpointError}
-   * @return {Promise<WmsEndpoint>}
    */
   isReady() {
     return this._capabilitiesPromise.then(() => this);
   }
 
-  /**
-   * @return {GenericEndpointInfo|null}
-   */
   getServiceInfo() {
     return this._info;
   }
@@ -108,7 +103,6 @@ export default class WmsEndpoint {
   /**
    * Returns an array of layers in summary format; use the `path` property
    * to rebuild the tree structure if needed
-   * @return {WmsLayerSummary[]|null}
    */
   getLayers() {
     function layerSummaryMapper(layerFull) {
@@ -119,7 +113,7 @@ export default class WmsEndpoint {
         ...('children' in layerFull && {
           children: layerFull.children.map(layerSummaryMapper),
         }),
-      };
+      } as WmsLayerSummary;
     }
     return this._layers.map(layerSummaryMapper);
   }
@@ -127,11 +121,11 @@ export default class WmsEndpoint {
   /**
    * Returns a complete layer based on its name
    * Note: the first matching layer will be returned
-   * @param {string} name Layer name property (unique in the WMS service)
-   * @return {WmsLayerFull|null} return null if layer was not found
+   * @param name Layer name property (unique in the WMS service)
+   * @return return null if layer was not found
    */
-  getLayerByName(name) {
-    let result = null;
+  getLayerByName(name: string) {
+    let result: WmsLayerFull = null;
     function layerLookup(layer) {
       if (result !== null) return;
       if (layer.name === name) {
@@ -146,9 +140,6 @@ export default class WmsEndpoint {
     return result;
   }
 
-  /**
-   * @return {WmsVersion|null}
-   */
   getVersion() {
     return this._version;
   }

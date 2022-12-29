@@ -1,19 +1,14 @@
-import { parseXmlString, XmlParseError } from './xml-utils';
+import { parseXmlString } from './xml-utils';
 import { EndpointError } from './errors';
 import { decodeString } from './encoding';
 
-/**
- * @type {Map<string, Promise<Response>>}
- */
-const fetchPromises = new Map();
+const fetchPromises: Map<string, Promise<Response>> = new Map();
 
 /**
  * Returns a promise equivalent to `fetch(url)` but guarded against
  * identical concurrent requests
- * @param {string} url
- * @return {Promise<Response>}
  */
-export function sharedFetch(url) {
+export function sharedFetch(url: string) {
   if (fetchPromises.has(url)) {
     return fetchPromises.get(url);
   }
@@ -26,10 +21,8 @@ export function sharedFetch(url) {
 /**
  * Runs a GET HTTP request to the provided URL and resolves to the
  * XmlDocument
- * @param {string} url
- * @return {Promise<XmlDocument>}
  */
-export function queryXmlDocument(url) {
+export function queryXmlDocument(url: string) {
   return sharedFetch(url)
     .catch(() =>
       // attempt a HEAD to see if the failure comes from CORS or the service is generally unreachable
@@ -66,16 +59,16 @@ export function queryXmlDocument(url) {
 }
 
 /**
- * Add or replace query params in the url; note that params are considered case insensitive,
+ * Add or replace query params in the url; note that params are considered case-insensitive,
  * meaning that existing params in different cases will be removed as well.
  * Also, if the url ends with an encoded URL (typically in the case of urls run through a CORS
  * proxy, which is an aberration and should be forbidden btw), then the encoded URL
  * will be modified instead.
- * @param {string} url
- * @param {Object.<string, string>} params
- * @returns {string}
  */
-export function setQueryParams(url, params) {
+export function setQueryParams(
+  url: string,
+  params: Record<string, string>
+): string {
   const encodedUrlMatch = url.match(/(https?%3A%2F%2F[^/]+)$/);
   if (encodedUrlMatch) {
     const encodedUrl = encodedUrlMatch[1];
@@ -94,6 +87,7 @@ export function setQueryParams(url, params) {
   }
   toDelete.map((param) => urlObj.searchParams.delete(param));
   keys.forEach((key) =>
+    // FIXME: wtf???
     urlObj.searchParams.set(key, params[key] === true ? '' : params[key])
   );
   return urlObj.toString();

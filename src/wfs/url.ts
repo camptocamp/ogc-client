@@ -1,31 +1,32 @@
 import { setQueryParams } from '../shared/http-utils';
+import { WfsVersion } from './endpoint';
+import { BoundingBox, CrsCode, MimeType } from '../shared/models';
 
 /**
  * Generates an URL for a GetFeature operation
- * @param {string} serviceUrl
- * @param {WfsVersion} version
- * @param {string} featureType
- * @param {MimeType} [outputFormat]
- * @param {number} [maxFeatures] if not defined, all features will be returned
- * @param {string[]} [attributes] if not defined, all attributes will be included
- * @param {boolean} [hitsOnly] if true, will not return feature data, only hit count
+ * @param serviceUrl
+ * @param version
+ * @param featureType
+ * @param [outputFormat]
+ * @param [maxFeatures] if not defined, all features will be returned
+ * @param [attributes] if not defined, all attributes will be included
+ * @param [hitsOnly] if true, will not return feature data, only hit count
  *   note: this might not work for WFS version < 2
- * @param {CrsCode} [outputCrs] if unspecified, this will be the data native projection
- * @param {BoundingBox} [extent] an extent to restrict returned objects
- * @param {CrsCode} [extentCrs] if unspecified, `extent` should be in the data native projection
- * @return {string}
+ * @param [outputCrs] if unspecified, this will be the data native projection
+ * @param [extent] an extent to restrict returned objects
+ * @param [extentCrs] if unspecified, `extent` should be in the data native projection
  */
 export function generateGetFeatureUrl(
-  serviceUrl,
-  version,
-  featureType,
-  outputFormat,
-  maxFeatures,
-  attributes,
-  hitsOnly,
-  outputCrs,
-  extent,
-  extentCrs
+  serviceUrl: string,
+  version: WfsVersion,
+  featureType: string,
+  outputFormat?: MimeType,
+  maxFeatures?: number,
+  attributes?: string[],
+  hitsOnly?: boolean,
+  outputCrs?: CrsCode,
+  extent?: BoundingBox,
+  extentCrs?: CrsCode
 ) {
   const typeParam = version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
   const countParam = version === '2.0.0' ? 'COUNT' : 'MAXFEATURES';
@@ -56,15 +57,11 @@ export function generateGetFeatureUrl(
 
 /**
  * Generates an URL for a DescribeFeatureType operation
- * @param {string} serviceUrl
- * @param {WfsVersion} version
- * @param {string} featureType
- * @return {string}
  */
 export function generateDescribeFeatureTypeUrl(
-  serviceUrl,
-  version,
-  featureType
+  serviceUrl: string,
+  version: WfsVersion,
+  featureType: string
 ) {
   const typeParam = version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
   return setQueryParams(serviceUrl, {

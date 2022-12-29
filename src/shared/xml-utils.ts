@@ -1,4 +1,4 @@
-import parser from '@rgrove/parse-xml';
+import { parseXml, XmlDocument, XmlElement, XmlText } from '@rgrove/parse-xml';
 
 export class XmlParseError extends Error {
   constructor(message) {
@@ -7,34 +7,16 @@ export class XmlParseError extends Error {
 }
 
 /**
- * @typedef {import('@rgrove/parse-xml').XmlDocument} XmlDocument
- */
-/**
- * @typedef {import('@rgrove/parse-xml').XmlElement} XmlElement
- */
-
-/**
  * Parses a XML document as string, return a document object
- * @param {string} xmlString
- * @return {XmlDocument}
  */
-export function parseXmlString(xmlString) {
-  let doc = null;
+export function parseXmlString(xmlString: string) {
+  let doc: XmlDocument = null;
   try {
-    doc = parser(xmlString);
+    doc = parseXml(xmlString);
   } catch (e) {
     throw new XmlParseError(e.message);
   }
   return doc;
-}
-
-/**
- * Return the root element
- * @param {XmlDocument} xmlDoc
- * @return {XmlElement}
- */
-export function getRootElement(xmlDoc) {
-  return xmlDoc.children[0];
 }
 
 /**
@@ -47,23 +29,26 @@ export function stripNamespace(name) {
   return colon > -1 ? name.substr(colon + 1) : name;
 }
 
-/**
- * Return the element name
- * @param {XmlElement} element
- * @return {string}
- */
-export function getElementName(element) {
+export function getRootElement(xmlDoc: XmlDocument) {
+  return xmlDoc.children[0] as XmlElement;
+}
+
+export function getElementName(element: XmlElement) {
   return element.name || '';
 }
 
 /**
  * Will return all matching elements (namespace will be ignored)
- * @param {XmlElement} element Element to look into
- * @param {string} name element name
- * @param {boolean} [nested=false] if true, will lookup children of children too
- * @return {XmlElement[]} Returns an empty array if no match found
+ * @param element Element to look into
+ * @param name element name
+ * @param [nested] if true, will lookup children of children too
+ * @return Returns an empty array if no match found
  */
-export function findChildrenElement(element, name, nested) {
+export function findChildrenElement(
+  element: XmlElement,
+  name: string,
+  nested: boolean = false
+): XmlElement[] {
   const strippedName = stripNamespace(name);
   function reducer(prev, curr) {
     if (stripNamespace(getElementName(curr)) === strippedName) {
@@ -84,13 +69,17 @@ export function findChildrenElement(element, name, nested) {
 
 /**
  * Will return the first matching element
- * @param {XmlElement} element Element to look into
- * @param {string} name element name
- * @param {boolean} [nested=false] if true, will lookup children of children too
- * @return {XmlElement} Returns null if no matching element found
+ * @param element Element to look into
+ * @param name element name
+ * @param [nested] if true, will lookup children of children too
+ * @return Returns null if no matching element found
  */
-export function findChildElement(element, name, nested) {
-  return findChildrenElement(element, name, nested)[0] || null;
+export function findChildElement(
+  element: XmlElement,
+  name: string,
+  nested: boolean = false
+) {
+  return (findChildrenElement(element, name, nested)[0] as XmlElement) || null;
 }
 
 /**
@@ -98,22 +87,26 @@ export function findChildElement(element, name, nested) {
  * @param {XmlElement} element Element to look into
  * @return {XmlElement[]} Returns empty array if no element found
  */
-export function getChildrenElement(element) {
+export function getChildrenElement(element: XmlElement) {
   return element && Array.isArray(element.children)
-    ? [...element.children.filter((el) => el.constructor.name === 'XmlElement')]
+    ? [
+        ...(element.children.filter(
+          (el) => el instanceof XmlElement
+        ) as XmlElement[]),
+      ]
     : [];
 }
 
 /**
  * Returns the text node in the element. Note that giving an null element
  * will simply return an empty string.
- * @param {XmlElement} element
- * @return {string} found text or empty string if no text node found
+ * @param element
+ * @return found text or empty string if no text node found
  */
-export function getElementText(element) {
+export function getElementText(element: XmlElement) {
   const textNode =
     element && Array.isArray(element.children)
-      ? element.children.find((node) => node.type === 'text')
+      ? (element.children.find((node) => node.type === 'text') as XmlText)
       : null;
   return textNode ? textNode.text : '';
 }
@@ -121,10 +114,10 @@ export function getElementText(element) {
 /**
  * Returns the element's attribute value. Note that giving an null element
  * will simply return an empty string.
- * @param {XmlElement} element
- * @param {string} attrName
- * @return {string} found attribute value or empty if non existent
+ * @param element
+ * @param attrName
+ * @return found attribute value or empty if non-existent
  */
-export function getElementAttribute(element, attrName) {
+export function getElementAttribute(element: XmlElement, attrName: string) {
   return (element && element.attributes[attrName]) || '';
 }

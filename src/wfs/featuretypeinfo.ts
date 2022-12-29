@@ -3,22 +3,25 @@ import {
   getElementAttribute,
   getRootElement,
 } from '../shared/xml-utils';
+import {
+  FeatureGeometryType,
+  FeaturePropertyType,
+  WfsFeatureTypeFull,
+  WfsFeatureTypeInternal,
+  WfsVersion,
+} from './endpoint';
+import { XmlDocument } from '@rgrove/parse-xml';
 
 /**
  * Parses a DescribeFeatureType and GetFeature (with hits) document
  * This requires providing the base feature type object from the GetCapabilities document
- * @param {WfsFeatureTypeInternal} featureType
- * @param {XmlDocument} describeFeatureTypeDoc
- * @param {XmlDocument} getFeatureHitsDoc
- * @param {WfsVersion} serviceVersion
- * @return {WfsFeatureTypeFull}
  */
 export function parseFeatureTypeInfo(
-  featureType,
-  describeFeatureTypeDoc,
-  getFeatureHitsDoc,
-  serviceVersion
-) {
+  featureType: WfsFeatureTypeInternal,
+  describeFeatureTypeDoc: XmlDocument,
+  getFeatureHitsDoc: XmlDocument,
+  serviceVersion: WfsVersion
+): WfsFeatureTypeFull {
   const {
     name,
     title,
@@ -77,11 +80,7 @@ export function parseFeatureTypeInfo(
   };
 }
 
-/**
- * @param {string} xsdType
- * @return {FeaturePropertyType}
- */
-function getTypeFromXsdType(xsdType) {
+function getTypeFromXsdType(xsdType: string): FeaturePropertyType {
   const xsdTypeNoNamespace =
     xsdType.indexOf(':') > -1
       ? xsdType.substr(xsdType.indexOf(':') + 1)
@@ -115,11 +114,7 @@ function getTypeFromXsdType(xsdType) {
   }
 }
 
-/**
- * @param {string} gmlType
- * @return {FeatureGeometryType}
- */
-function getGeomTypeFromGmlType(gmlType) {
+function getGeomTypeFromGmlType(gmlType: string): FeatureGeometryType {
   const gmlTypeNoNamespace =
     gmlType.indexOf(':') > -1
       ? gmlType.substr(gmlType.indexOf(':') + 1)

@@ -5,98 +5,128 @@ import { parseFeatureTypeInfo } from './featuretypeinfo';
 import { useCache } from '../shared/cache';
 import { generateDescribeFeatureTypeUrl, generateGetFeatureUrl } from './url';
 import { stripNamespace } from '../shared/xml-utils';
+import {
+  BoundingBox,
+  CrsCode,
+  GenericEndpointInfo,
+  MimeType,
+} from '../shared/models';
 
-/**
- * @typedef {'1.0.0'|'1.1.0'|'2.0.0'} WfsVersion
- */
+export type WfsVersion = '1.0.0' | '1.1.0' | '2.0.0';
 
-/**
- * @typedef {Object} WfsFeatureTypeInternal
- * @property {string} name
- * @property {string} [title]
- * @property {string} [abstract]
- * @property {CrsCode} defaultCrs
- * @property {CrsCode[]} otherCrs
- * @property {MimeType[]} outputFormats
- * @property {BoundingBox} [latLonBoundingBox]
- */
+export type WfsFeatureTypeInternal = {
+  name: string;
+  title?: string;
+  abstract?: string;
+  defaultCrs: CrsCode;
+  otherCrs: CrsCode[];
+  outputFormats: MimeType[];
+  latLonBoundingBox?: BoundingBox;
+};
 
-/**
- * @typedef {'string'|'float'|'integer'|'boolean'} FeaturePropertyType
- */
+export type FeaturePropertyType = string | number | boolean;
 
-/**
- * @typedef {'linestring'|'polygon'|'point'|'multilinestring'|'multipolygon'|'multipoint'|'unknown'} FeatureGeometryType
- */
+export type FeatureGeometryType =
+  | 'linestring'
+  | 'polygon'
+  | 'point'
+  | 'multilinestring'
+  | 'multipolygon'
+  | 'multipoint'
+  | 'unknown';
 
-/**
- * @typedef {Object} WfsFeatureTypeBrief
- * @property {string} name
- * @property {string} [title]
- * @property {string} [abstract]
- * @property {BoundingBox} [boundingBox] Expressed in latitudes and longitudes
- */
+export type WfsFeatureTypeBrief = {
+  name: string;
+  title?: string;
+  abstract?: string;
+  /**
+   * Expressed in latitudes and longitudes
+   */
+  boundingBox?: BoundingBox;
+};
 
-/**
- * @typedef {Object} WfsFeatureTypeSummary
- * @property {string} name
- * @property {string} [title]
- * @property {string} [abstract]
- * @property {BoundingBox} [boundingBox] Expressed in latitudes and longitudes
- * @property {CrsCode} defaultCrs
- * @property {CrsCode[]} otherCrs
- * @property {MimeType[]} outputFormats
- */
+export type WfsFeatureTypeSummary = {
+  name: string;
+  title?: string;
+  abstract?: string;
+  /**
+   * Expressed in latitudes and longitudes
+   */
+  boundingBox?: BoundingBox;
+  defaultCrs: CrsCode;
+  otherCrs: CrsCode[];
+  outputFormats: MimeType[];
+};
 
-/**
- * @typedef {Object} WfsFeatureTypeFull
- * @property {string} name
- * @property {string} [title]
- * @property {string} [abstract]
- * @property {BoundingBox} [boundingBox] Expressed in latitudes and longitudes
- * @property {CrsCode} defaultCrs
- * @property {CrsCode[]} otherCrs
- * @property {MimeType[]} outputFormats
- * @property {Object.<string,FeaturePropertyType>} properties These properties will *not* include the feature geometry
- * @property {string} [geometryName] Not defined if no geometry present
- * @property {FeatureGeometryType} [geometryType] Not defined if no geometry present
- * @property {number} [objectCount] Not defined if object count could not be determined
- */
+export type WfsFeatureTypeFull = {
+  name: string;
+  title?: string;
+  abstract?: string;
+  /**
+   * Expressed in latitudes and longitudes
+   */
+  boundingBox?: BoundingBox;
+  defaultCrs: CrsCode;
+  otherCrs: CrsCode[];
+  outputFormats: MimeType[];
+  /**
+   * These properties will *not* include the feature geometry
+   */
+  properties: Record<string, FeaturePropertyType>;
+  /**
+   * Not defined if no geometry present
+   */
+  geometryName?: string;
+  /**
+   * Not defined if no geometry present
+   */
+  geometryType?: FeatureGeometryType;
+  /**
+   * Not defined if object count could not be determined
+   */
+  objectCount?: number;
+};
 
-/**
- * @typedef {Object} WfsFeatureWithProps
- * @property {string} id Feature id
- * @property {Object.<string, FeaturePropertyType>} properties Feature properties
- */
+export type WfsFeatureWithProps = {
+  /**
+   * Feature id
+   */
+  id: string;
+  /**
+   * Feature properties
+   */
+  properties: Record<string, FeaturePropertyType>;
+};
 
-/**
- * @typedef {Object} WfsFeatureTypeUniqueValue
- * @property {number|boolean|string} value
- * @property {number} count
- */
+export type WfsFeatureTypeUniqueValue = {
+  value: number | boolean | string;
+  count: number;
+};
 
-/**
- * @typedef {Object} WfsFeatureTypePropDetails
- * @property {WfsFeatureTypeUniqueValue[]} uniqueValues
- */
+export type WfsFeatureTypePropDetails = {
+  uniqueValues: WfsFeatureTypeUniqueValue[];
+};
 
-/**
- * @typedef {Object.<string, WfsFeatureTypePropDetails>} WfsFeatureTypePropsDetails
- */
+export type WfsFeatureTypePropsDetails = Record<
+  string,
+  WfsFeatureTypePropDetails
+>;
 
 /**
  * Represents a WFS endpoint advertising several feature types
  */
 export default class WfsEndpoint {
+  private _capabilitiesUrl: string;
+  private _capabilitiesPromise: Promise<void>;
+  private _info: GenericEndpointInfo | null;
+  private _featureTypes: WfsFeatureTypeInternal[] | null;
+  private _version: WfsVersion | null;
+
   /**
-   * @param {string} url WFS endpoint url; can contain any query parameters, these will be used to
+   * @param url WFS endpoint url; can contain any query parameters, these will be used to
    *   initialize the endpoint
    */
-  constructor(url) {
-    /**
-     * @type {string}
-     * @private
-     */
+  constructor(url: string) {
     this._capabilitiesUrl = setQueryParams(url, {
       SERVICE: 'WFS',
       REQUEST: 'GetCapabilities',
@@ -104,8 +134,6 @@ export default class WfsEndpoint {
 
     /**
      * This fetches the capabilities doc and parses its contents
-     * @type {Promise<XmlDocument>}
-     * @private
      */
     this._capabilitiesPromise = useCache(
       () => parseWfsCapabilities(this._capabilitiesUrl),
@@ -117,61 +145,37 @@ export default class WfsEndpoint {
       this._featureTypes = featureTypes;
       this._version = version;
     });
-
-    /**
-     * @type {GenericEndpointInfo|null}
-     * @private
-     */
-    this._info = null;
-
-    /**
-     * @type {WfsFeatureTypeInternal[]|null}
-     * @private
-     */
-    this._featureTypes = null;
-
-    /**
-     * @type {WfsVersion|null}
-     * @private
-     */
-    this._version = null;
   }
 
   /**
    * @throws {EndpointError}
-   * @return {Promise<WfsEndpoint>}
    */
   isReady() {
     return this._capabilitiesPromise.then(() => this);
   }
 
-  /**
-   * @return {GenericEndpointInfo|null}
-   */
   getServiceInfo() {
     return this._info;
   }
 
   /**
    * Returns an array of feature types
-   * @return {WfsFeatureTypeBrief[]|null}
    */
   getFeatureTypes() {
-    return this._featureTypes.map((featureType) => ({
-      name: featureType.name,
-      ...('title' in featureType && { title: featureType.title }),
-      ...('abstract' in featureType && { abstract: featureType.abstract }),
-      ...('latLonBoundingBox' in featureType && {
-        boundingBox: featureType.latLonBoundingBox,
-      }),
-    }));
+    return this._featureTypes.map(
+      (featureType) =>
+        ({
+          name: featureType.name,
+          ...('title' in featureType && { title: featureType.title }),
+          ...('abstract' in featureType && { abstract: featureType.abstract }),
+          ...('latLonBoundingBox' in featureType && {
+            boundingBox: featureType.latLonBoundingBox,
+          }),
+        } as WfsFeatureTypeBrief)
+    );
   }
 
-  /**
-   * @param {string} name
-   * @returns {WfsFeatureTypeInternal || null}
-   */
-  _getFeatureTypeByName(name) {
+  private _getFeatureTypeByName(name: string) {
     if (!this._featureTypes) return null;
     const isQualified = stripNamespace(name) !== name;
     return (
@@ -185,10 +189,10 @@ export default class WfsEndpoint {
 
   /**
    * Returns a summary of a feature type, i.e. only information available in the capabilities document
-   * @param {string} name Feature type name property (unique in the WFS service)
-   * @return {WfsFeatureTypeSummary|null} return null if layer was not found or endpoint is not ready
+   * @param name Feature type name property (unique in the WFS service)
+   * @return return null if layer was not found or endpoint is not ready
    */
-  getFeatureTypeSummary(name) {
+  getFeatureTypeSummary(name: string) {
     const featureType = this._getFeatureTypeByName(name);
     if (!featureType) return null;
 
@@ -202,16 +206,16 @@ export default class WfsEndpoint {
       defaultCrs: featureType.defaultCrs,
       otherCrs: featureType.otherCrs,
       outputFormats: featureType.outputFormats,
-    };
+    } as WfsFeatureTypeSummary;
   }
 
   /**
    * Returns a complete feature type by its name; if no namespace specified in the name, will match the
    * first feature type matching the unqualified name.
-   * @param {string} name Feature type name property (unique in the WFS service)
+   * @param name Feature type name property (unique in the WFS service)
    * @return {Promise<WfsFeatureTypeFull>|null} return null if layer was not found or endpoint is not ready
    */
-  getFeatureTypeFull(name) {
+  getFeatureTypeFull(name: string) {
     const featureType = this._getFeatureTypeByName(name);
     if (!featureType) return null;
 
@@ -253,10 +257,10 @@ export default class WfsEndpoint {
 
   /**
    * Returns details regarding properties of a given feature type
-   * @param {string} name Feature type name property (unique in the WFS service)
-   * @return {Promise<WfsFeatureTypePropsDetails>|null} return null if layer was not found or endpoint is not ready
+   * @param name Feature type name property (unique in the WFS service)
+   * @return return null if layer was not found or endpoint is not ready
    */
-  async getFeatureTypePropDetails(name) {
+  async getFeatureTypePropDetails(name: string) {
     const featureTypeFull = await this.getFeatureTypeFull(name);
     if (featureTypeFull === null) return null;
 
@@ -274,19 +278,11 @@ export default class WfsEndpoint {
     );
   }
 
-  /**
-   * @return {WfsVersion|null}
-   */
   getVersion() {
     return this._version;
   }
 
-  /**
-   * @param {string} featureType
-   * @return {string|null}
-   * @private
-   */
-  _getJsonCompatibleOutputFormat(featureType) {
+  private _getJsonCompatibleOutputFormat(featureType: string) {
     const featureTypeInfo = this._getFeatureTypeByName(featureType);
     if (!featureTypeInfo) {
       throw new Error(
@@ -302,26 +298,35 @@ export default class WfsEndpoint {
 
   /**
    * Returns true if the given feature type can be downloaded as GeoJSON
-   * @return {boolean|null}
    */
-  supportsJson(featureType) {
+  supportsJson(featureType: string) {
     if (!this._featureTypes) return null;
     return !!this._getJsonCompatibleOutputFormat(featureType);
   }
 
   /**
    * Will build a GetFeature url based on the given parameters
-   * @param {string} featureType
+   * @param featureType
    * @param {Object} [options]
-   * @property {number} [options.maxFeatures] no limit if undefined
-   * @property {boolean} [options.asJson] if true, will ask for GeoJSON; will throw if the service does not support it
-   * @property {MimeType} [options.outputFormat] a supported output format (overridden by `asJson`)
-   * @property {CrsCode} [options.outputCrs] if unspecified, this will be the data native projection
-   * @property {BoundingBox} [options.extent] an extent to restrict returned objects
-   * @property {CrsCode} [options.extentCrs] if unspecified, `extent` should be in the data native projection
-   * @returns {string|null} Returns null if endpoint is not ready
+   * @property [options.maxFeatures] no limit if undefined
+   * @property [options.asJson] if true, will ask for GeoJSON; will throw if the service does not support it
+   * @property [options.outputFormat] a supported output format (overridden by `asJson`)
+   * @property [options.outputCrs] if unspecified, this will be the data native projection
+   * @property [options.extent] an extent to restrict returned objects
+   * @property [options.extentCrs] if unspecified, `extent` should be in the data native projection
+   * @returns Returns null if endpoint is not ready
    */
-  getFeatureUrl(featureType, options) {
+  getFeatureUrl(
+    featureType: string,
+    options: {
+      maxFeatures?: number;
+      asJson?: boolean;
+      outputFormat?: MimeType;
+      outputCrs?: CrsCode;
+      extent?: BoundingBox;
+      extentCrs?: CrsCode;
+    }
+  ) {
     if (!this._featureTypes) {
       return null;
     }

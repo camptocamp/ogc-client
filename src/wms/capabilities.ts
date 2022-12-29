@@ -6,22 +6,30 @@ import {
   getRootElement,
 } from '../shared/xml-utils';
 import { hasInvertedCoordinates } from '../shared/crs-utils';
+import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
+import {
+  LayerAttribution,
+  LayerStyle,
+  WmsLayerFull,
+  WmsVersion,
+} from './endpoint';
+import { CrsCode, GenericEndpointInfo } from '../shared/models';
 
 /**
  * Will read a WMS version from the capabilities doc
- * @param {XmlDocument} capabilitiesDoc Capabilities document
- * @return {WmsVersion|null} The parsed WMS version, or null if no version could be found
+ * @param capabilitiesDoc Capabilities document
+ * @return The parsed WMS version, or null if no version could be found
  */
-export function readVersionFromCapabilities(capabilitiesDoc) {
-  return getRootElement(capabilitiesDoc).attributes['version'];
+export function readVersionFromCapabilities(capabilitiesDoc: XmlDocument) {
+  return getRootElement(capabilitiesDoc).attributes['version'] as WmsVersion;
 }
 
 /**
  * Will read all layers present in the capabilities doc and return them in a tree structure
- * @param {XmlDocument} capabilitiesDoc Capabilities document
- * @return {WmsLayerFull[]} Parsed layers
+ * @param capabilitiesDoc Capabilities document
+ * @return Parsed layers
  */
-export function readLayersFromCapabilities(capabilitiesDoc) {
+export function readLayersFromCapabilities(capabilitiesDoc: XmlDocument) {
   const version = readVersionFromCapabilities(capabilitiesDoc);
   const capability = findChildElement(
     getRootElement(capabilitiesDoc),
@@ -34,10 +42,12 @@ export function readLayersFromCapabilities(capabilitiesDoc) {
 
 /**
  * Will read service-related info from the capabilities doc
- * @param {XmlDocument} capabilitiesDoc Capabilities document
- * @return {GenericEndpointInfo} Parsed service info
+ * @param capabilitiesDoc Capabilities document
+ * @return Parsed service info
  */
-export function readInfoFromCapabilities(capabilitiesDoc) {
+export function readInfoFromCapabilities(
+  capabilitiesDoc: XmlDocument
+): GenericEndpointInfo {
   const service = findChildElement(getRootElement(capabilitiesDoc), 'Service');
   const keywords = findChildrenElement(
     findChildElement(service, 'KeywordList'),
@@ -58,20 +68,14 @@ export function readInfoFromCapabilities(capabilitiesDoc) {
 
 /**
  * Parse a layer in a capabilities doc
- * @param {XmlElement} layerEl
- * @param {WmsVersion} version
- * @param {CrsCode[]} [inheritedSrs]
- * @param {LayerStyle[]} [inheritedStyles]
- * @param {LayerAttribution} [inheritedAttribution]
- * @return {WmsLayerFull}
  */
 function parseLayer(
-  layerEl,
-  version,
-  inheritedSrs = [],
-  inheritedStyles = [],
-  inheritedAttribution = null
-) {
+  layerEl: XmlElement,
+  version: WmsVersion,
+  inheritedSrs: CrsCode[] = [],
+  inheritedStyles: LayerStyle[] = [],
+  inheritedAttribution: LayerAttribution = null
+): WmsLayerFull {
   const srsTag = version === '1.3.0' ? 'CRS' : 'SRS';
   const srsList = findChildrenElement(layerEl, srsTag).map(getElementText);
   const availableCrs = srsList.length > 0 ? srsList : inheritedSrs;
@@ -113,11 +117,7 @@ function parseLayer(
   };
 }
 
-/**
- * @param {XmlElement} styleEl
- * @return {LayerStyle}
- */
-function parseLayerStyle(styleEl) {
+function parseLayerStyle(styleEl: XmlElement): LayerStyle {
   const legendUrl = getElementAttribute(
     findChildElement(findChildElement(styleEl, 'LegendURL'), 'OnlineResource'),
     'xlink:href'
@@ -129,11 +129,7 @@ function parseLayerStyle(styleEl) {
   };
 }
 
-/**
- * @param {XmlElement} attributionEl
- * @return {LayerAttribution}
- */
-function parseLayerAttribution(attributionEl) {
+function parseLayerAttribution(attributionEl: XmlElement): LayerAttribution {
   const logoUrl = getElementAttribute(
     findChildElement(
       findChildElement(attributionEl, 'LogoURL'),

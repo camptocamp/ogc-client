@@ -8,21 +8,24 @@ import {
   getRootElement,
   stripNamespace,
 } from '../shared/xml-utils';
+import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
+import {
+  WfsFeatureTypeFull,
+  WfsFeatureTypePropsDetails,
+  WfsFeatureWithProps,
+  WfsVersion,
+} from './endpoint';
 
 /**
  * Returns an array of features with their id and properties
- * @param {XmlDocument} getFeaturesDoc
- * @param {WfsFeatureTypeFull} featureTypeFull
- * @param {WfsVersion} serviceVersion
- * @return {WfsFeatureWithProps[]}
  */
 export function parseFeatureProps(
-  getFeaturesDoc,
-  featureTypeFull,
-  serviceVersion
-) {
+  getFeaturesDoc: XmlDocument,
+  featureTypeFull: WfsFeatureTypeFull,
+  serviceVersion: WfsVersion
+): WfsFeatureWithProps[] {
   const collection = getRootElement(getFeaturesDoc);
-  let members;
+  let members: XmlElement[];
   if (serviceVersion.startsWith('2.0')) {
     members = findChildrenElement(collection, 'member').map(
       (parent) => getChildrenElement(parent)[0]
@@ -75,10 +78,10 @@ export function parseFeatureProps(
 
 /**
  * Returns an array of features with their id and properties
- * @param {Object} getFeaturesGeojson
- * @return {WfsFeatureWithProps[]}
  */
-export function parseFeaturePropsGeojson(getFeaturesGeojson) {
+export function parseFeaturePropsGeojson(
+  getFeaturesGeojson: Record<string, unknown>
+): WfsFeatureWithProps[] {
   if (
     !('features' in getFeaturesGeojson) ||
     !Array.isArray(getFeaturesGeojson.features)
@@ -93,10 +96,10 @@ export function parseFeaturePropsGeojson(getFeaturesGeojson) {
 
 /**
  * Returns details regarding the features prop values
- * @param {WfsFeatureWithProps[]} featuresWithProps
- * @return {WfsFeatureTypePropsDetails}
  */
-export function computeFeaturePropsDetails(featuresWithProps) {
+export function computeFeaturePropsDetails(
+  featuresWithProps: WfsFeatureWithProps[]
+): WfsFeatureTypePropsDetails {
   return featuresWithProps.reduce((prev, curr) => {
     for (const propName in curr.properties) {
       const propValue = curr.properties[propName];
