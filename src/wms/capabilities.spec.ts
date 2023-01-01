@@ -3,7 +3,9 @@ import {
   readLayersFromCapabilities,
   readVersionFromCapabilities,
 } from './capabilities';
+// @ts-ignore
 import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
+// @ts-ignore
 import capabilities111 from '../../fixtures/wms/capabilities-brgm-1-1-1.xml';
 import { parseXmlString } from '../shared/xml-utils';
 

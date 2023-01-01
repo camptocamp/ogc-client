@@ -1,3 +1,4 @@
+// @ts-nocheck
 import 'regenerator-runtime/runtime';
 import mitt from 'mitt';
 import * as esbuild from 'esbuild';

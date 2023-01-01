@@ -1,7 +1,11 @@
 import { parseXmlString } from '../shared/xml-utils';
+// @ts-ignore
 import capabilities100 from '../../fixtures/wfs/capabilities-pigma-1-0-0.xml';
+// @ts-ignore
 import capabilities110 from '../../fixtures/wfs/capabilities-pigma-1-1-0.xml';
+// @ts-ignore
 import capabilities200 from '../../fixtures/wfs/capabilities-pigma-2-0-0.xml';
+// @ts-ignore
 import capabilities200_noFormats from '../../fixtures/wfs/capabilities-geo2france-2-0-0.xml';
 import {
   readFeatureTypesFromCapabilities,

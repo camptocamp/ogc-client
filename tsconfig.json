@@ -4,7 +4,8 @@
     "target": "ES2017",
     "lib": ["es2017", "dom", "webworker"],
     "skipLibCheck": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "esModuleInterop": true
   },
   "include": ["./src/**/*"]
 }

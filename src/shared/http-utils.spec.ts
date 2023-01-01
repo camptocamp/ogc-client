@@ -1,17 +1,23 @@
 import { EndpointError } from './errors';
 import { queryXmlDocument, setQueryParams } from './http-utils';
 
+const global = window as any;
+
 describe('HTTP utils', () => {
   describe('queryXmlDocument', () => {
     const sampleXml = '<sample-xml><node1></node1><node2></node2></sample-xml>';
 
-    /** @type {'ok'|'httpError'|'corsError'|'networkError'|'delay'} */
-    let fetchBehaviour;
+    let fetchBehaviour:
+      | 'ok'
+      | 'httpError'
+      | 'corsError'
+      | 'networkError'
+      | 'delay';
 
     beforeAll(() => {
       fetchBehaviour = 'ok';
-      window.fetch_ = window.fetch; // keep reference of native impl
-      window.fetch = jest.fn((xmlString, opts) => {
+      global.fetch_ = global.fetch; // keep reference of native impl
+      global.fetch = jest.fn((xmlString, opts) => {
         const noCors = opts && opts.mode === 'no-cors';
         const headers = { get: () => null };
         switch (fetchBehaviour) {
@@ -47,7 +53,7 @@ describe('HTTP utils', () => {
     });
 
     afterAll(() => {
-      window.fetch = window.fetch_; // restore original impl
+      global.fetch = global.fetch_; // restore original impl
     });
 
     beforeEach(() => {
@@ -130,7 +136,7 @@ describe('HTTP utils', () => {
         queryXmlDocument('https://abcd.com');
       });
       it('only fetches the document once', async () => {
-        expect(window.fetch).toHaveBeenCalledTimes(1);
+        expect(global.fetch).toHaveBeenCalledTimes(1);
       });
     });
   });

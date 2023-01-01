@@ -1,9 +1,16 @@
+// @ts-ignore
 import getFeatureCities100 from '../../fixtures/wfs/getfeature-props-cities-1-0-0.xml';
+// @ts-ignore
 import getFeatureCities110 from '../../fixtures/wfs/getfeature-props-cities-1-1-0.xml';
+// @ts-ignore
 import getFeatureCities200 from '../../fixtures/wfs/getfeature-props-cities-2-0-0.xml';
+// @ts-ignore
 import getFeatureStates100 from '../../fixtures/wfs/getfeature-props-states-1-0-0.xml';
+// @ts-ignore
 import getFeatureStates110 from '../../fixtures/wfs/getfeature-props-states-1-1-0.xml';
+// @ts-ignore
 import getFeatureStates200 from '../../fixtures/wfs/getfeature-props-states-2-0-0.xml';
+// @ts-ignore
 import getFeatureStates200Geojson from '../../fixtures/wfs/getfeature-props-states-2-0-0.json';
 import {
   computeFeaturePropsDetails,
@@ -11,12 +18,15 @@ import {
   parseFeaturePropsGeojson,
 } from './featureprops';
 import { parseXmlString } from '../shared/xml-utils';
+import { WfsFeatureTypeFull } from './endpoint';
 
 describe('feature props utils', () => {
   describe('parseFeatureProps and parseFeaturePropsGeojson', () => {
     describe('cities dataset (mapserver)', () => {
-      /** @type {WfsFeatureTypeFull} */
-      const featureTypeFull = {
+      const featureTypeFull: WfsFeatureTypeFull = {
+        defaultCrs: '',
+        otherCrs: [],
+        outputFormats: [],
         name: 'ms:cities',
         properties: {
           NAME: 'string',
@@ -124,8 +134,10 @@ describe('feature props utils', () => {
       });
     });
     describe('states dataset (geoserver)', () => {
-      /** @type {WfsFeatureTypeFull} */
-      const featureTypeFull = {
+      const featureTypeFull: WfsFeatureTypeFull = {
+        defaultCrs: '',
+        otherCrs: [],
+        outputFormats: [],
         name: 'usa:states',
         properties: {
           AREA_LAND: 'float',
@@ -311,8 +323,10 @@ describe('feature props utils', () => {
       });
     });
     describe('additional props not present in the feature info', () => {
-      /** @type {WfsFeatureTypeFull} */
-      const featureTypeFull = {
+      const featureTypeFull: WfsFeatureTypeFull = {
+        defaultCrs: '',
+        otherCrs: [],
+        outputFormats: [],
         name: 'usa:states',
         properties: {
           AREA_LAND: 'float',
@@ -346,8 +360,10 @@ describe('feature props utils', () => {
       });
     });
     describe('missing props in some features', () => {
-      /** @type {WfsFeatureTypeFull} */
-      const featureTypeFull = {
+      const featureTypeFull: WfsFeatureTypeFull = {
+        defaultCrs: '',
+        otherCrs: [],
+        outputFormats: [],
         name: 'usa:states',
         properties: {
           AREA_LAND: 'float',

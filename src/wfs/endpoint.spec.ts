@@ -1,6 +1,10 @@
+// @ts-ignore
 import capabilities200 from '../../fixtures/wfs/capabilities-pigma-2-0-0.xml';
+// @ts-ignore
 import getfeature200hits from '../../fixtures/wfs/getfeature-hits-pigma-2-0-0.xml';
+// @ts-ignore
 import getfeature200full from '../../fixtures/wfs/getfeature-props-pigma-2-0-0.xml';
+// @ts-ignore
 import describefeaturetype200 from '../../fixtures/wfs/describefeaturetype-pigma-2-0-0-xsd.xml';
 import WfsEndpoint from './endpoint';
 import { useCache } from '../shared/cache';
@@ -9,9 +13,10 @@ jest.mock('../shared/cache', () => ({
   useCache: jest.fn((factory) => factory()),
 }));
 
+const global = window as any;
+
 describe('WfsEndpoint', () => {
-  /** @type {WfsEndpoint} */
-  let endpoint;
+  let endpoint: WfsEndpoint;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -19,7 +24,7 @@ describe('WfsEndpoint', () => {
   });
 
   beforeEach(() => {
-    window.fetchResponseFactory = (url) => {
+    global.fetchResponseFactory = (url) => {
       if (url.indexOf('GetCapabilities') > -1) return capabilities200;
       if (url.indexOf('GetFeature') > -1) {
         if (url.indexOf('RESULTTYPE=hits') > -1) return getfeature200hits;
@@ -36,7 +41,7 @@ describe('WfsEndpoint', () => {
 
   it('makes a getcapabilities request', async () => {
     await endpoint.isReady();
-    expect(window.fetch).toHaveBeenCalledWith(
+    expect(global.fetch).toHaveBeenCalledWith(
       'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetCapabilities'
     );
   });
@@ -49,7 +54,9 @@ describe('WfsEndpoint', () => {
       expect(useCache).toHaveBeenCalledTimes(1);
     });
     it('stores the parsed capabilities in cache', async () => {
-      await expect(useCache.mock.results[0].value).resolves.toMatchObject({
+      await expect(
+        (useCache as any).mock.results[0].value
+      ).resolves.toMatchObject({
         info: {
           title: "Service WFS de l'IDS régionale PIGMA",
         },
@@ -446,7 +453,7 @@ describe('WfsEndpoint', () => {
       );
     });
     it('throws an error if the feature type was not found', () => {
-      expect(() => endpoint.getFeatureUrl('does_not_exist')).toThrow(
+      expect(() => endpoint.getFeatureUrl('does_not_exist', {})).toThrow(
         'feature type'
       );
     });

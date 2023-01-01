@@ -3,11 +3,13 @@ import { readInfoFromCapabilities } from '../wms/capabilities';
 const { join } = require('path');
 const { readFileSync } = require('fs');
 
+const global = window as any;
+
 describe('parse XML documents with alternate encodings', () => {
   let responseCharset;
 
   beforeAll(() => {
-    window.fetch = jest.fn((fileUrl) => {
+    global.fetch = jest.fn((fileUrl) => {
       const pathFromRoot = new URL(fileUrl).pathname;
       const filePath = join(__dirname, '../..', pathFromRoot);
       const buffer = readFileSync(filePath);
@@ -27,7 +29,7 @@ describe('parse XML documents with alternate encodings', () => {
     });
   });
   afterAll(() => {
-    window.fetch = window.mockFetch;
+    global.fetch = global.mockFetch;
   });
   beforeEach(() => {
     responseCharset = null;

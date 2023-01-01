@@ -1,8 +1,9 @@
+// @ts-ignore
 import wmsCapabilities from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
+// @ts-ignore
 import wfsCapabilities from '../../fixtures/wfs/capabilities-geo2france-2-0-0.xml';
 import WmsEndpoint from '../wms/endpoint';
 import WfsEndpoint from '../wfs/endpoint';
-import { useCache } from '../shared/cache';
 import { enableFallbackWithoutWorker } from '../worker';
 import '../worker/worker';
 
@@ -12,17 +13,18 @@ jest.mock('../shared/cache', () => ({
 
 enableFallbackWithoutWorker();
 
+const global = window as any;
+
 describe('Worker fallback', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   describe('WmsEndpoint', () => {
-    /** @type {WmsEndpoint} */
-    let endpoint;
+    let endpoint: WmsEndpoint;
 
     beforeEach(() => {
-      window.fetchResponseFactory = () => wmsCapabilities;
+      global.fetchResponseFactory = () => wmsCapabilities;
       endpoint = new WmsEndpoint(
         'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb'
       );
@@ -37,11 +39,10 @@ describe('Worker fallback', () => {
   });
 
   describe('WfsEndpoint', () => {
-    /** @type {WfsEndpoint} */
-    let endpoint;
+    let endpoint: WfsEndpoint;
 
     beforeEach(() => {
-      window.fetchResponseFactory = () => wfsCapabilities;
+      global.fetchResponseFactory = () => wfsCapabilities;
       endpoint = new WfsEndpoint(
         'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType'
       );

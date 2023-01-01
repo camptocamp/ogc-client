@@ -67,7 +67,7 @@ export function queryXmlDocument(url: string) {
  */
 export function setQueryParams(
   url: string,
-  params: Record<string, string>
+  params: Record<string, string | boolean>
 ): string {
   const encodedUrlMatch = url.match(/(https?%3A%2F%2F[^/]+)$/);
   if (encodedUrlMatch) {
@@ -87,8 +87,10 @@ export function setQueryParams(
   }
   toDelete.map((param) => urlObj.searchParams.delete(param));
   keys.forEach((key) =>
-    // FIXME: wtf???
-    urlObj.searchParams.set(key, params[key] === true ? '' : params[key])
+    urlObj.searchParams.set(
+      key,
+      params[key] === true ? '' : (params[key] as string)
+    )
   );
   return urlObj.toString();
 }

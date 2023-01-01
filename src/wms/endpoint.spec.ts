@@ -1,3 +1,4 @@
+// @ts-ignore
 import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
 import WmsEndpoint from './endpoint';
 import { useCache } from '../shared/cache';
@@ -6,13 +7,14 @@ jest.mock('../shared/cache', () => ({
   useCache: jest.fn((factory) => factory()),
 }));
 
+const global = window as any;
+
 describe('WmsEndpoint', () => {
-  /** @type {WmsEndpoint} */
-  let endpoint;
+  let endpoint: WmsEndpoint;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    window.fetchResponseFactory = () => capabilities130;
+    global.fetchResponseFactory = () => capabilities130;
     endpoint = new WmsEndpoint(
       'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb'
     );
@@ -20,7 +22,7 @@ describe('WmsEndpoint', () => {
 
   it('makes a getcapabilities request', async () => {
     await endpoint.isReady();
-    expect(window.fetch).toHaveBeenCalledWith(
+    expect(global.fetch).toHaveBeenCalledWith(
       'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetCapabilities'
     );
   });
@@ -33,7 +35,9 @@ describe('WmsEndpoint', () => {
       expect(useCache).toHaveBeenCalledTimes(1);
     });
     it('stores the parsed capabilities in cache', async () => {
-      await expect(useCache.mock.results[0].value).resolves.toMatchObject({
+      await expect(
+        (useCache as any).mock.results[0].value
+      ).resolves.toMatchObject({
         info: {
           title: 'GéoServices : géologie, hydrogéologie et gravimétrie',
         },

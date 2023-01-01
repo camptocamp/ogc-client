@@ -1,14 +1,18 @@
+// @ts-ignore
 import getFeatureHits110 from '../../fixtures/wfs/getfeature-hits-pigma-1-1-0.xml';
+// @ts-ignore
 import getFeatureHits200 from '../../fixtures/wfs/getfeature-hits-pigma-2-0-0.xml';
+// @ts-ignore
 import describeFeatureType110 from '../../fixtures/wfs/describefeaturetype-pigma-1-1-0-xsd.xml';
+// @ts-ignore
 import describeFeatureType200 from '../../fixtures/wfs/describefeaturetype-pigma-2-0-0-xsd.xml';
 import { parseFeatureTypeInfo } from './featuretypeinfo';
 import { parseXmlString } from '../shared/xml-utils';
+import { WfsFeatureTypeFull, WfsFeatureTypeInternal } from './endpoint';
 
 describe('feature type info', () => {
   describe('parseFeatureTypeInfo', () => {
-    /** @type {WfsFeatureTypeInternal} */
-    const featureType = {
+    const featureType: WfsFeatureTypeInternal = {
       abstract:
         'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',
       defaultCrs: 'EPSG:2154',
@@ -29,8 +33,7 @@ describe('feature type info', () => {
       title: 'CD 16 - Hiérarchisation du réseau',
     };
 
-    /** @type {WfsFeatureTypeFull} */
-    const expectedFeatureTypeInfo = {
+    const expectedFeatureTypeInfo: WfsFeatureTypeFull = {
       name: 'cd16:hierarchisation_l',
       title: 'CD 16 - Hiérarchisation du réseau',
       abstract:
@@ -87,7 +90,10 @@ describe('feature type info', () => {
     });
 
     it('parses the feature type info (incomplete result)', () => {
-      const incompleteFeatureType = {
+      const incompleteFeatureType: WfsFeatureTypeInternal = {
+        defaultCrs: '',
+        otherCrs: [],
+        outputFormats: [],
         name: 'cd16:hierarchisation_l',
         latLonBoundingBox: [
           -0.4832134559131876,
@@ -136,6 +142,8 @@ describe('feature type info', () => {
           cumuld: 'integer',
           cumulf: 'integer',
         },
+        otherCrs: [],
+        outputFormats: [],
       });
     });
   });
