@@ -1,31 +1,23 @@
 const path = require('path');
-const { babel } = require('@rollup/plugin-babel');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const common = require('@rollup/plugin-commonjs');
 const { rollup } = require('rollup');
 const { terser } = require('rollup-plugin-terser');
 const json = require('@rollup/plugin-json');
+const typescript = require('@rollup/plugin-typescript');
 const fse = require('fs-extra');
+const ts = require('typescript');
+const tsConfig = require('../tsconfig.json');
+
+const projectRoot = path.resolve();
+const srcRoot = path.join(projectRoot, './src/');
+const distRoot = path.join(projectRoot, './dist/');
 
 async function serializeWorker(entryPath) {
-  const plugins = [
-    common(),
-    nodeResolve(),
-    babel({
-      babelHelpers: 'runtime',
-      presets: [
-        [
-          '@babel/preset-env',
-          {
-            modules: false,
-            targets: 'last 2 versions, not dead',
-          },
-        ],
-      ],
-      plugins: [['@babel/transform-runtime']],
-    }),
-    terser(),
-  ];
+  console.log(
+    `      (serializing worker at ${path.relative(srcRoot, entryPath)})`
+  );
+  const plugins = [common(), nodeResolve(), typescript(), terser()];
 
   const bundle = await rollup({
     input: entryPath,
@@ -61,40 +53,48 @@ async function serializeAllWorkersInCode(dir, code) {
   return codeResult;
 }
 
-async function main() {
-  const dirname = path.resolve();
-  const srcRoot = path.join(dirname, '../src/');
-  const distRoot = path.join(dirname, '../dist/');
+async function processFile(filePath, outputPath) {
+  if (filePath.endsWith('spec.ts')) return;
+  const dir = path.dirname(filePath);
+  console.log('  ', path.relative(srcRoot, filePath));
+  let code = await fse.readFile(filePath, 'utf8');
 
-  async function processFile(filePath, outputPath) {
-    if (filePath.endsWith('spec.js')) return;
-    const dir = path.dirname(filePath);
-    let code = await fse.readFile(filePath, 'utf8');
-    code = await serializeAllWorkersInCode(dir, code);
-    await fse.outputFile(outputPath, code, { flag: 'w' });
-  }
+  // TS file
+  code = await serializeAllWorkersInCode(dir, code);
+  await fse.outputFile(outputPath, code, { flag: 'w' });
 
-  async function copyFiles(fileOrDirPath) {
-    console.log('copying ', fileOrDirPath);
-    const fullSrcPath = path.join(srcRoot, fileOrDirPath);
-    const fullDistPath = path.join(distRoot, fileOrDirPath);
-    const stats = await fse.lstat(fullSrcPath);
-    if (stats.isFile(fullSrcPath)) {
-      await processFile(fullSrcPath, fullDistPath);
-    } else if (stats.isDirectory(fullSrcPath)) {
-      const entries = await fse.readdir(fullSrcPath);
-      for (const entry of entries) {
-        await copyFiles(path.join(fileOrDirPath, entry));
-      }
+  // JS file (using typescript compiler)
+  let jsCode = ts.transpileModule(code, tsConfig).outputText;
+  await fse.outputFile(outputPath.replace(/\.ts$/, '.js'), jsCode, {
+    flag: 'w',
+  });
+}
+
+async function copyFiles(fileOrDirPath) {
+  const fullSrcPath = path.join(srcRoot, fileOrDirPath);
+  const fullDistPath = path.join(distRoot, fileOrDirPath);
+  const stats = await fse.lstat(fullSrcPath);
+  if (stats.isFile(fullSrcPath)) {
+    await processFile(fullSrcPath, fullDistPath);
+  } else if (stats.isDirectory(fullSrcPath)) {
+    const entries = await fse.readdir(fullSrcPath);
+    for (const entry of entries) {
+      await copyFiles(path.join(fileOrDirPath, entry));
     }
   }
+}
 
-  fse.rmdirSync(distRoot, { recursive: true });
+async function main() {
+  fse.rmSync(distRoot, { force: true, recursive: true });
 
+  console.log(
+    '\n> copying source files in TS and JS, serializing worker code...'
+  );
   await copyFiles('.');
 
+  console.log('\n> generating full node-compatible bundle');
   const nodeBundle = await rollup({
-    input: path.join(dirname, '../src-node/index.js'),
+    input: path.join(projectRoot, './src-node/index.ts'),
     plugins: [
       common({
         include: /node_modules/,
@@ -103,18 +103,13 @@ async function main() {
       nodeResolve({
         preferBuiltins: true,
       }),
+      typescript(),
       {
         name: 'serialize workers to inline blobs',
         async transform(code, moduleId) {
           return await serializeAllWorkersInCode(path.dirname(moduleId), code);
         },
       },
-      babel({
-        babelHelpers: 'runtime',
-        presets: [['@babel/preset-env']],
-        exclude: /node_modules/,
-        plugins: [['@babel/transform-runtime']],
-      }),
     ],
     external: [/@babel\/runtime/],
   });
@@ -122,6 +117,11 @@ async function main() {
     file: path.join(distRoot, './dist-node.js'),
     format: 'cjs',
   });
+
+  console.log(
+    `
+> files successfully build in ${distRoot} folder.`
+  );
 }
 
 main().catch((err) => {
