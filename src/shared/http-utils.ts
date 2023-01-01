@@ -7,15 +7,26 @@ const fetchPromises: Map<string, Promise<Response>> = new Map();
 /**
  * Returns a promise equivalent to `fetch(url)` but guarded against
  * identical concurrent requests
+ * Note: this should only be used for GET requests!
  */
 export function sharedFetch(url: string) {
   if (fetchPromises.has(url)) {
     return fetchPromises.get(url);
   }
-  const promise = fetch(url);
-  promise.finally(() => fetchPromises.delete(url));
+  // to avoid unhandled promise rejections this promise will never reject,
+  // but only return errors as a normal value
+  const promise = fetch(url)
+    .catch((e) => e)
+    .then((resp) => {
+      fetchPromises.delete(url);
+      return resp;
+    });
   fetchPromises.set(url, promise);
-  return promise;
+  // if an error is received then the promise will reject with it
+  return promise.then((resp) => {
+    if (resp instanceof Error) throw resp;
+    return resp;
+  });
 }
 
 /**

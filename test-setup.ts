@@ -100,6 +100,3 @@ global.Worker = function Worker(filePath) {
 // global.TextDecoder = StringDecoder
 // global.TextDecoder.prototype.decode = StringDecoder.prototype.write
 global.TextDecoder = TextDecoder;
-
-// ignore unhandled promise rejections for now
-process.on('unhandledRejection', () => {});
