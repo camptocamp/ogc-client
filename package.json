@@ -46,7 +46,8 @@
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
     "build": "node build/generate-dist.js",
-    "prepublishOnly": "npm test && npm run build"
+    "prepublishOnly": "npm run typecheck && npm test && npm run build",
+    "typecheck": "tsc --noEmit"
   },
   "author": "olivier.guyot@camptocamp.com",
   "license": "GPL-3.0-or-later"
