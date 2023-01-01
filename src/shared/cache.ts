@@ -18,7 +18,7 @@ export function getCacheExpiryDuration() {
 }
 
 const cachePromise: Promise<Cache> | null =
-  'caches' in self ? caches.open('ogc-client') : null;
+  'caches' in globalThis ? caches.open('ogc-client') : null;
 
 export async function storeCacheEntry(object: unknown, ...keys: string[]) {
   if (!cachePromise) return;

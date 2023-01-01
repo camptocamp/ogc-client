@@ -1,6 +1,6 @@
 const path = require('path');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
-const common = require('@rollup/plugin-commonjs');
+const commonjs = require('@rollup/plugin-commonjs');
 const { rollup } = require('rollup');
 const { terser } = require('rollup-plugin-terser');
 const json = require('@rollup/plugin-json');
@@ -17,7 +17,7 @@ async function serializeWorker(entryPath) {
   console.log(
     `      (serializing worker at ${path.relative(srcRoot, entryPath)})`
   );
-  const plugins = [common(), nodeResolve(), typescript(), terser()];
+  const plugins = [commonjs(), nodeResolve(), typescript(), terser()];
 
   const bundle = await rollup({
     input: entryPath,
@@ -96,7 +96,7 @@ async function main() {
   const nodeBundle = await rollup({
     input: path.join(projectRoot, './src-node/index.ts'),
     plugins: [
-      common({
+      commonjs({
         include: /node_modules/,
       }),
       json(),
@@ -104,14 +104,8 @@ async function main() {
         preferBuiltins: true,
       }),
       typescript(),
-      {
-        name: 'serialize workers to inline blobs',
-        async transform(code, moduleId) {
-          return await serializeAllWorkersInCode(path.dirname(moduleId), code);
-        },
-      },
     ],
-    external: [/@babel\/runtime/],
+    inlineDynamicImports: true,
   });
   await nodeBundle.write({
     file: path.join(distRoot, './dist-node.js'),

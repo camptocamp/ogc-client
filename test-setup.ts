@@ -76,7 +76,7 @@ global.Worker = function Worker(filePath) {
       const code = new util.TextDecoder('utf-8').decode(
         result.outputFiles[0].contents
       );
-      let vars = 'var self=this,global=self';
+      let vars = 'var self=this,global=self,globalThis=self';
       for (let k in scope) vars += `,${k}=self.${k}`;
       getScopeVar = Function(
         vars +

@@ -9,7 +9,7 @@ import {
 import { generateGetFeatureUrl } from '../wfs/url';
 import { WfsFeatureTypeFull, WfsVersion } from '../wfs/endpoint';
 
-addTaskHandler('parseWmsCapabilities', self, ({ url }: { url: string }) =>
+addTaskHandler('parseWmsCapabilities', globalThis, ({ url }: { url: string }) =>
   queryXmlDocument(url).then((xmlDoc) => ({
     info: wmsCapabilities.readInfoFromCapabilities(xmlDoc),
     layers: wmsCapabilities.readLayersFromCapabilities(xmlDoc),
@@ -17,7 +17,7 @@ addTaskHandler('parseWmsCapabilities', self, ({ url }: { url: string }) =>
   }))
 );
 
-addTaskHandler('parseWfsCapabilities', self, ({ url }: { url: string }) =>
+addTaskHandler('parseWfsCapabilities', globalThis, ({ url }: { url: string }) =>
   queryXmlDocument(url).then((xmlDoc) => ({
     info: wfsCapabilities.readInfoFromCapabilities(xmlDoc),
     featureTypes: wfsCapabilities.readFeatureTypesFromCapabilities(xmlDoc),
@@ -27,7 +27,7 @@ addTaskHandler('parseWfsCapabilities', self, ({ url }: { url: string }) =>
 
 addTaskHandler(
   'queryWfsFeatureTypeDetails',
-  self,
+  globalThis,
   ({
     url,
     serviceVersion,

@@ -28,7 +28,7 @@ export function sendTaskRequest<T>(
       params,
     };
     if (workerInstance === null) {
-      window.dispatchEvent(
+      globalThis.dispatchEvent(
         new CustomEvent('ogc-client.request', {
           detail: request,
         })
@@ -40,7 +40,7 @@ export function sendTaskRequest<T>(
     const handler = (response: WorkerResponse) => {
       if (response.requestId === requestId) {
         if (workerInstance === null) {
-          window.removeEventListener('message', windowHandler);
+          globalThis.removeEventListener('message', windowHandler);
         } else {
           workerInstance.removeEventListener('message', workerHandler);
         }
@@ -55,7 +55,7 @@ export function sendTaskRequest<T>(
     const workerHandler = (event) => handler(event.data);
 
     if (workerInstance === null) {
-      window.addEventListener('ogc-client.response', windowHandler);
+      globalThis.addEventListener('ogc-client.response', windowHandler);
     } else {
       workerInstance.addEventListener('message', workerHandler);
     }
@@ -69,7 +69,7 @@ export function sendTaskRequest<T>(
  */
 export function addTaskHandler(
   taskName: string,
-  scope: DedicatedWorkerGlobalScope | Window,
+  scope: DedicatedWorkerGlobalScope | Window | typeof globalThis,
   handler: (params: TaskParams) => Promise<TaskResponse>
 ) {
   const useWorker = typeof WorkerGlobalScope !== 'undefined';
