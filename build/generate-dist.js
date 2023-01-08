@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const path = require('path');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
@@ -7,16 +9,12 @@ const json = require('@rollup/plugin-json');
 const typescript = require('@rollup/plugin-typescript');
 const fse = require('fs-extra');
 const ts = require('typescript');
-const tsConfig = require('../tsconfig.json');
 
 const projectRoot = path.resolve();
 const srcRoot = path.join(projectRoot, './src/');
 const distRoot = path.join(projectRoot, './dist/');
 
 async function serializeWorker(entryPath) {
-  console.log(
-    `      (serializing worker at ${path.relative(srcRoot, entryPath)})`
-  );
   const plugins = [commonjs(), nodeResolve(), typescript(), terser()];
 
   const bundle = await rollup({
@@ -38,11 +36,22 @@ async function serializeWorker(entryPath) {
   return chunk.code;
 }
 
-async function serializeAllWorkersInCode(dir, code) {
+async function serializeAllWorkersInCode(fileName, code) {
   let codeResult = code;
+  const dir = path.join(
+    srcRoot,
+    path.relative(distRoot, path.dirname(fileName))
+  );
   const workerMatches = codeResult.matchAll(/new Worker\('([^']+)'/g);
   for (const match of workerMatches) {
-    const workerCode = await serializeWorker(path.join(dir, match[1]));
+    const workerPath = path.join(dir, match[1]);
+    console.log(
+      `   serializing worker from ${path.relative(
+        projectRoot,
+        workerPath
+      )} in ${path.relative(projectRoot, fileName)}`
+    );
+    const workerCode = await serializeWorker(workerPath);
     codeResult = codeResult.replace(
       `new Worker('${match[1]}'`,
       `new Worker(URL.createObjectURL(new Blob([${JSON.stringify(
@@ -53,44 +62,34 @@ async function serializeAllWorkersInCode(dir, code) {
   return codeResult;
 }
 
-async function processFile(filePath, outputPath) {
-  if (filePath.endsWith('spec.ts')) return;
-  const dir = path.dirname(filePath);
-  console.log('  ', path.relative(srcRoot, filePath));
-  let code = await fse.readFile(filePath, 'utf8');
-
-  // TS file
-  code = await serializeAllWorkersInCode(dir, code);
-  await fse.outputFile(outputPath, code, { flag: 'w' });
-
-  // JS file (using typescript compiler)
-  let jsCode = ts.transpileModule(code, tsConfig).outputText;
-  await fse.outputFile(outputPath.replace(/\.ts$/, '.js'), jsCode, {
-    flag: 'w',
-  });
-}
-
-async function copyFiles(fileOrDirPath) {
-  const fullSrcPath = path.join(srcRoot, fileOrDirPath);
-  const fullDistPath = path.join(distRoot, fileOrDirPath);
-  const stats = await fse.lstat(fullSrcPath);
-  if (stats.isFile(fullSrcPath)) {
-    await processFile(fullSrcPath, fullDistPath);
-  } else if (stats.isDirectory(fullSrcPath)) {
-    const entries = await fse.readdir(fullSrcPath);
-    for (const entry of entries) {
-      await copyFiles(path.join(fileOrDirPath, entry));
-    }
-  }
-}
-
 async function main() {
   fse.rmSync(distRoot, { force: true, recursive: true });
 
   console.log(
     '\n> copying source files in TS and JS, serializing worker code...'
   );
-  await copyFiles('.');
+  const tsOptions = {
+    outDir: distRoot,
+    target: 'ES2017',
+    lib: ['es2017', 'dom', 'webworker'],
+    skipLibCheck: true,
+    declaration: true,
+  };
+  const host = ts.createCompilerHost(tsOptions);
+  host.writeFile = async (fileName, contents) => {
+    let code = await serializeAllWorkersInCode(fileName, contents);
+    await fse.outputFile(fileName, code, {
+      flag: 'w',
+    });
+  };
+
+  // Prepare and emit the d.ts files
+  const program = ts.createProgram(
+    [path.join(srcRoot, 'index.ts')],
+    tsOptions,
+    host
+  );
+  program.emit();
 
   console.log('\n> generating full node-compatible bundle');
   const nodeBundle = await rollup({
