@@ -35,6 +35,9 @@ jobs:
         working-directory: app
         run: npm ci
 
+      - name: Build library output
+        run: npm run build
+
       - name: Build demo
         working-directory: app
         run: npm run build

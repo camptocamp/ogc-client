@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import WfsEndpoint from '../../../../src/wfs/endpoint';
+import WfsEndpoint from '../../../../dist/wfs/endpoint';
 import InfoList from '../presentation/InfoList';
 import ItemsTree from '../presentation/ItemsTree';
 import WfsFeatureTypeInfo from './WfsFeatureTypeInfo';
