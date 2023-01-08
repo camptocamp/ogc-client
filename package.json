@@ -4,11 +4,7 @@
   "description": "A pure JS library for interacting with geospatial services.",
   "main": "./dist/dist-node.js",
   "browser": "./dist/index.js",
-  "exports": {
-    "browser": "./dist/index.js",
-    "node": "./dist/dist-node.js",
-    "default": "./dist/dist-node.js"
-  },
+  "typings": "./dist/index.d.ts",
   "repository": "https://github.com/camptocamp/ogc-client",
   "homepage": "https://github.com/camptocamp/ogc-client",
   "files": [
@@ -16,36 +12,38 @@
     "src/"
   ],
   "dependencies": {
-    "@rgrove/parse-xml": "^3.0.0"
+    "@rgrove/parse-xml": "^4.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.14",
-    "@babel/plugin-transform-runtime": "^7.15.8",
-    "@babel/preset-env": "^7.13.12",
-    "@jest/create-cache-key-function": "^26.6.2",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^21.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.5",
-    "babel-jest": "^26.6.3",
+    "@rollup/plugin-typescript": "^10.0.1",
+    "@types/jest": "^29.2.4",
+    "@types/node": "^18.11.18",
     "browser-cache-mock": "^0.1.7",
     "esbuild": "^0.12.15",
     "fs-extra": "^10.0.0",
     "isomorphic-fetch": "^3.0.0",
-    "jest": "^26.6.3",
-    "mitt": "^3.0.0",
-    "node-fetch": "^3.0.0",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
+    "node-fetch": "^3.3.0",
     "prettier": "2.2.1",
     "regenerator-runtime": "^0.13.7",
-    "rollup": "^2.58.0",
-    "rollup-plugin-terser": "^7.0.2"
+    "rollup": "^2.59.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "ts-jest": "^29.0.3",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.4"
   },
   "scripts": {
     "test": "jest",
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
-    "generate-dist": "cd build && node ./generate-dist.js",
-    "prepublishOnly": "npm test && npm run generate-dist"
+    "build": "node build/generate-dist.js",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build",
+    "typecheck": "tsc --noEmit"
   },
   "author": "olivier.guyot@camptocamp.com",
   "license": "GPL-3.0-or-later"

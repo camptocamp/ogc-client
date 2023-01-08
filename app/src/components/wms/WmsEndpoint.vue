@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import WmsEndpoint from '../../../../src/wms/endpoint';
+import WmsEndpoint from '../../../../dist/wms/endpoint';
 import InfoList from '../presentation/InfoList';
 import ItemsTree from '../presentation/ItemsTree';
 import WmsLayerInfo from './WmsLayerInfo';

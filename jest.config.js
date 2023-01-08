@@ -1,7 +1,13 @@
 module.exports = {
+  testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.js$': '<rootDir>/fixtures/transformers/js-transformer.js',
-    '^.+\\.xml$': '<rootDir>/fixtures/transformers/xml-transformer.js',
+    '^.+\\.(js|ts|xml)$': [
+      '<rootDir>/jest.ts-transformer.js',
+      {
+        isolatedModules: true,
+        stringifyContentPathRegex: '\\.(xml)$',
+      },
+    ],
   },
-  setupFilesAfterEnv: ['./test-setup.js'],
+  setupFilesAfterEnv: ['./test-setup.ts'],
 };
