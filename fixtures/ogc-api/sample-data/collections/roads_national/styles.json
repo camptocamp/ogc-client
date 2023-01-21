@@ -1,0 +1,156 @@
+{
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document",
+      "href": "https://my.server.org/sample-data/collections/roads_national/styles?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML",
+      "href": "https://my.server.org/sample-data/collections/roads_national/styles?f=html"
+    }
+  ],
+  "styles": [
+    {
+      "title": "Deuteranopia",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.qgis.qml",
+          "title": "Style in format 'QGIS'",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Deuteranopia?f=qml"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "title": "Style in format 'SLD 1.0'",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Deuteranopia?f=sld10"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Deuteranopia/metadata"
+        }
+      ],
+      "id": "Deuteranopia"
+    },
+    {
+      "title": "Light",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.qgis.qml",
+          "title": "Style in format 'QGIS'",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Light?f=qml"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "title": "Style in format 'SLD 1.0'",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Light?f=sld10"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Light/metadata"
+        }
+      ],
+      "id": "Light"
+    },
+    {
+      "title": "Night",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.qgis.qml",
+          "title": "Style in format 'QGIS'",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Night?f=qml"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "title": "Style in format 'SLD 1.0'",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Night?f=sld10"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Night/metadata"
+        }
+      ],
+      "id": "Night"
+    },
+    {
+      "title": "Outdoor",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.qgis.qml",
+          "title": "Style in format 'QGIS'",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Outdoor?f=qml"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "title": "Style in format 'SLD 1.0'",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Outdoor?f=sld10"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Outdoor/metadata"
+        }
+      ],
+      "id": "Outdoor"
+    },
+    {
+      "title": "Road",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.qgis.qml",
+          "title": "Style in format 'QGIS'",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Road?f=qml"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "title": "Style in format 'SLD 1.0'",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Road?f=sld10"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Road/metadata"
+        }
+      ],
+      "id": "Road"
+    },
+    {
+      "title": "Tritanopia",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.qgis.qml",
+          "title": "Style in format 'QGIS'",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Tritanopia?f=qml"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "title": "Style in format 'SLD 1.0'",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Tritanopia?f=sld10"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/roads_national/styles/Tritanopia/metadata"
+        }
+      ],
+      "id": "Tritanopia"
+    }
+  ]
+}

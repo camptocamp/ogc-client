@@ -1,0 +1,227 @@
+{
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document",
+      "href": "https://my.server.org/sample-data/collections/airports/styles?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML",
+      "href": "https://my.server.org/sample-data/collections/airports/styles?f=html"
+    }
+  ],
+  "styles": [
+    {
+      "title": "Deuteranopia",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.qgis.qml",
+          "title": "Style in format 'QGIS'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Deuteranopia?f=qml"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "title": "Style in format 'SLD 1.0'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Deuteranopia?f=sld10"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Deuteranopia/metadata"
+        }
+      ],
+      "id": "Deuteranopia"
+    },
+    {
+      "title": "Light",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.qgis.qml",
+          "title": "Style in format 'QGIS'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Light?f=qml"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "title": "Style in format 'SLD 1.0'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Light?f=sld10"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "text/html",
+          "title": "Web map using the style",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Light?f=html"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.mapbox.style+json",
+          "title": "Style in format 'Mapbox'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Light?f=mbs"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Light/metadata"
+        }
+      ],
+      "id": "Light"
+    },
+    {
+      "title": "Night",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.qgis.qml",
+          "title": "Style in format 'QGIS'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Night?f=qml"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "title": "Style in format 'SLD 1.0'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Night?f=sld10"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "text/html",
+          "title": "Web map using the style",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Night?f=html"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.mapbox.style+json",
+          "title": "Style in format 'Mapbox'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Night?f=mbs"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Night/metadata"
+        }
+      ],
+      "id": "Night"
+    },
+    {
+      "title": "Outdoor",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.qgis.qml",
+          "title": "Style in format 'QGIS'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Outdoor?f=qml"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "title": "Style in format 'SLD 1.0'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Outdoor?f=sld10"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "text/html",
+          "title": "Web map using the style",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Outdoor?f=html"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.mapbox.style+json",
+          "title": "Style in format 'Mapbox'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Outdoor?f=mbs"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Outdoor/metadata"
+        }
+      ],
+      "id": "Outdoor"
+    },
+    {
+      "title": "Road",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.qgis.qml",
+          "title": "Style in format 'QGIS'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Road?f=qml"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "title": "Style in format 'SLD 1.0'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Road?f=sld10"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "text/html",
+          "title": "Web map using the style",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Road?f=html"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.mapbox.style+json",
+          "title": "Style in format 'Mapbox'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Road?f=mbs"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Road/metadata"
+        }
+      ],
+      "id": "Road"
+    },
+    {
+      "title": "Tritanopia",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.qgis.qml",
+          "title": "Style in format 'QGIS'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Tritanopia?f=qml"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "title": "Style in format 'SLD 1.0'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Tritanopia?f=sld10"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/Tritanopia/metadata"
+        }
+      ],
+      "id": "Tritanopia"
+    },
+    {
+      "title": "OS Open Zoomstack - Outdoor with Hillshade",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "text/html",
+          "title": "Web map using the style",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/OutdoorHillshade?f=html"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.mapbox.style+json",
+          "title": "Style in format 'Mapbox'",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/OutdoorHillshade?f=mbs"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/collections/airports/styles/OutdoorHillshade/metadata"
+        }
+      ],
+      "id": "OutdoorHillshade"
+    }
+  ]
+}

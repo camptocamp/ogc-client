@@ -1,0 +1,746 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "35149dfb-31d3-431c-a8bc-12a4034dac48",
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [4.690751953125, 52.358740234375],
+            [4.690751953125, 52.6333984375],
+            [5.020341796875, 52.6333984375],
+            [5.020341796875, 52.358740234375],
+            [4.690751953125, 52.358740234375]
+          ]
+        ]
+      },
+      "properties": {
+        "recordCreated": "2021-12-08",
+        "recordUpdated": "2022-06-10T01:27:47Z",
+        "type": "dataset",
+        "title": "Kaartboeck 1635",
+        "description": "Data uit kaartboeken van de periode 1635 tot 1775. De kaartboeken werden door het waterschap gebruikt om er op toe te zien dat de eigenaren geen water in beslag namen door demping.\nDe percelen op de kaart zijn naar de huidige maatstaven vrij nauwkeurig gemeten en voorzien van een administratie met de eigenaren. bijzondere locaties van molens werven en beroepen worden in de boeken vermeld. Alle 97 kaarten aan een geven een zeer gedetailleerd beeld van de Voorzaan, Nieuwe Haven en de Achterzaan. De bladen Oost en West van de zaan zijn vrij nauwkeurig. De bladen aan de Voorzaan zijn een schetsmatige weergave van de situatie. De kaart van de Nieuwe Haven si weer nauwkeurig te noemen.",
+        "providers": [
+          "Team Geo, geo-informatie@zaanstad.nl, Gemeente Zaanstad"
+        ],
+        "externalIds": [
+          {
+            "scheme": "default",
+            "value": "35149dfb-31d3-431c-a8bc-12a4034dac48"
+          }
+        ],
+        "themes": [
+          {
+            "concepts": [
+              "ARGEOLOGIE",
+              "MONUMENTEN",
+              "KADASTER",
+              "KAARTBOEK",
+              "KAARTBOECK",
+              "HISTORIE"
+            ]
+          }
+        ],
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [4.690751953125, 52.358740234375, 5.020341796875, 52.6333984375]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          },
+          "temporal": {
+            "interval": [null, null],
+            "trs": "http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"
+          }
+        }
+      },
+      "links": [
+        {
+          "href": "https://maps-intern.zaanstad.gem.local/geoserver/wms?SERVICE=WMS",
+          "rel": "item",
+          "title": "geo:kaartboeck",
+          "type": "OGC:WMS"
+        },
+        {
+          "href": "https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS",
+          "rel": "item",
+          "title": "geo:kaartboeck",
+          "type": "OGC:WFS"
+        },
+        {
+          "href": "https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=csv",
+          "rel": "item",
+          "type": "download"
+        },
+        {
+          "href": "https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=shape-zip",
+          "rel": "item",
+          "type": "download"
+        }
+      ]
+    },
+    {
+      "id": "ffffffaa-4087-59ec-9ea7-8416f58e99dd",
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [4.4552947, 52.3348457],
+            [4.4552947, 53.388444],
+            [7.135964, 53.388444],
+            [7.135964, 52.3348457],
+            [4.4552947, 52.3348457]
+          ]
+        ]
+      },
+      "properties": {
+        "recordCreated": "2022-06-01",
+        "recordUpdated": "2022-06-10T01:27:47Z",
+        "type": "dataset",
+        "title": "Diepteligging onderkant keileem (t.o.v. NAP)",
+        "description": "Diepteligging van de onderkant (basis) van keileem in Drenthe, in meters ten opzichte van NAP.",
+        "providers": [
+          "Team Gis/Cartografie, post@drenthe.nl, Provincie Drenthe"
+        ],
+        "externalIds": [
+          {
+            "scheme": "default",
+            "value": "ffffffaa-4087-59ec-9ea7-8416f58e99dd"
+          }
+        ],
+        "themes": [
+          {
+            "concepts": [
+              "beleidsinstrument",
+              "bodem",
+              "grondwaterstand",
+              "landbouw",
+              "landbouwgrond",
+              "waterhuishouding"
+            ],
+            "scheme": null
+          }
+        ],
+        "extent": {
+          "spatial": {
+            "bbox": [[4.4552947, 52.3348457, 7.135964, 53.388444]],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          },
+          "temporal": {
+            "interval": [null, null],
+            "trs": "http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"
+          }
+        }
+      },
+      "links": [
+        {
+          "href": "https://kaartportaal.drenthe.nl/server/services/GDB_actueel/GBI_KEILEEM_DIEPTE_ONDER_NAP_R/MapServer/WMSServer",
+          "rel": "item",
+          "title": "0",
+          "type": "OGC:WMS"
+        }
+      ]
+    },
+    {
+      "id": "59352e7f-3792-4e17-bd73-9bba84a98890",
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [4.79, 51.857],
+            [4.79, 52.305],
+            [5.63, 52.305],
+            [5.63, 51.857],
+            [4.79, 51.857]
+          ]
+        ]
+      },
+      "properties": {
+        "recordCreated": "2021-06-30",
+        "recordUpdated": "2022-06-10T01:27:47Z",
+        "type": "dataset",
+        "title": "Clusters geluid - wegen gecumuleerd",
+        "description": "Clusters (omtreklijn) gebaseerd op gemeentegrenzen. Per cluster zijn de aantallen woningen en gevoelige bestemmingen per GES-score geteld. Bij de gevoelige bestemmingen is onderscheid gemaakt in 3 categorien: Ziekenhuizen, Scholen en dagverblijven voor jeugd, Verpleeg en verzorgingshuizen.",
+        "providers": ["GIS, GIS@provincie-utrecht.nl, Provincie Utrecht"],
+        "externalIds": [
+          {
+            "scheme": "default",
+            "value": "59352e7f-3792-4e17-bd73-9bba84a98890"
+          }
+        ],
+        "themes": [
+          {
+            "concepts": [
+              "GELUIDHINDER",
+              "GELUIDSZONES",
+              "PROVINCIALE WEGEN",
+              "VERKEERSLAWAAI",
+              "WET GELUIDHINDER"
+            ],
+            "scheme": null
+          },
+          {
+            "concepts": ["Informatief"],
+            "scheme": null
+          }
+        ],
+        "extent": {
+          "spatial": {
+            "bbox": [[4.79, 51.857, 5.63, 52.305]],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          },
+          "temporal": {
+            "interval": [null, null],
+            "trs": "http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"
+          }
+        }
+      },
+      "links": [
+        {
+          "href": "https://download.geodata-utrecht.nl/download/vector/59352e7f-3792-4e17-bd73-9bba84a98890",
+          "rel": "item",
+          "type": "landingpage"
+        },
+        {
+          "href": "https://services.geodata-utrecht.nl/geoserver/m01_4_overlast_hinder_mgkp/wfs",
+          "rel": "item",
+          "title": "Clusters_geluid_-_wegen_gecumuleerd",
+          "type": "OGC:WFS"
+        },
+        {
+          "href": "https://services.geodata-utrecht.nl/geoserver/m01_4_overlast_hinder_mgkp/wms",
+          "rel": "item",
+          "title": "Clusters_geluid_-_wegen_gecumuleerd",
+          "type": "OGC:WMS"
+        }
+      ]
+    },
+    {
+      "id": "0ec79c96-898f-40da-adc7-673eb4749685",
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [4.1407, 52.004],
+            [4.1407, 52.9215],
+            [4.8927, 52.9215],
+            [4.8927, 52.004],
+            [4.1407, 52.004]
+          ]
+        ]
+      },
+      "properties": {
+        "recordCreated": "2022-02-02",
+        "recordUpdated": "2022-06-10T01:27:47Z",
+        "type": "dataset",
+        "title": "Geesten van Holland",
+        "description": "In de dataset 'Geesten' zijn de locaties opgenomen van middeleeuwse akkercomplexen op de strandwallen in Noord- en Zuid-Holland.",
+        "providers": [
+          "InfoDesk, info@cultureelerfgoed.nl, Rijksdienst voor het Cultureel Erfgoed"
+        ],
+        "externalIds": [
+          {
+            "scheme": "default",
+            "value": "0ec79c96-898f-40da-adc7-673eb4749685"
+          }
+        ],
+        "themes": [
+          {
+            "concepts": []
+          }
+        ],
+        "extent": {
+          "spatial": {
+            "bbox": [[4.1407, 52.004, 4.8927, 52.9215]],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          },
+          "temporal": {
+            "interval": [null, null],
+            "trs": "http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"
+          }
+        }
+      },
+      "links": [
+        {
+          "href": "https://services.rce.geovoorziening.nl/landschapsatlas/wms?&request=GetCapabilities",
+          "rel": "item",
+          "title": "Geesten"
+        },
+        {
+          "href": "https://services.rce.geovoorziening.nl/landschapsatlas/wfs?&request=GetCapabilities",
+          "rel": "item",
+          "title": "landschapsatlas:Geesten"
+        }
+      ]
+    },
+    {
+      "id": "364c5d7a-d6ec-11ea-87d0-0242ac130003",
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [3.2, 50.75],
+            [3.2, 53.7],
+            [7.22, 53.7],
+            [7.22, 50.75],
+            [3.2, 50.75]
+          ]
+        ]
+      },
+      "properties": {
+        "recordCreated": "2021-06-18",
+        "recordUpdated": "2022-06-10T01:27:47Z",
+        "type": "service",
+        "title": "Grondwaterstandsonderzoek, downloadservice",
+        "description": "Gegevens over grondwaterstandsonderzoek (Groundwaterlevel data in het Engels) zijn opgeslagen in de basisregistratie ondergrond (BRO). Het registratieobject grondwaterstandonderzoek bevat de metingen van de variatie in de stand van het grondwater dat in een bekende grondwatermonitoringput met een zekere buis wordt ontsloten.\nMet het monitoren van het grondwater gebeurt al lange tijd, op vele locaties in ons land. Met die informatie is het mogelijk om karakteristieke kenmerken van de beweging van het grondwater vast te stellen, ruimtelijke patronen te herkennen en trendmatige veranderingen te analyseren.\nBelangrijke kenmerken zijn bijvoorbeeld de hoogste en laatste grondwaterstand die in een bepaald gebied zijn te verwachten als gevolg van het jaarlijkse seizoenpatroon. Die kennis is niet alleen van belang voor de landbouw en natuurontwikkeling, maar ook voor het ontwerpen van nieuwe woonwijken en infrastructuur.\nDe meetgegevens geven inzicht in de reactie van het grondwater op  veranderingen zoals de verlaging van een polderpeil, of grondwaterwinning. Op basis van die informatie kunnen voorspellingen worden gedaan over het verloop van de grondwaterstand in de toekomst. Hoe langer de tijdreeksen zijn, des te nauwkeuriger de voorspellingen zijn over het lange termijn gedrag van het grondwater.\nEen van de belangrijke uitdagingen van nu is het voorspellen van de invloed van de klimaatverandering op het grondwatersysteem. Zowel in nationaal als internationaal verband worden richtlijnen ontwikkeld voor een duurzaam beleid en beheer van onze grondwatersystemen.",
+        "providers": [
+          "support@broservicedesk.nl, TNO Geologische Dienst Nederland"
+        ],
+        "externalIds": [
+          {
+            "scheme": "default",
+            "value": "364c5d7a-d6ec-11ea-87d0-0242ac130003"
+          }
+        ],
+        "themes": [
+          {
+            "concepts": ["infoMapAccessService"]
+          },
+          {
+            "concepts": [
+              "basisregistratie ondergrond",
+              "bro",
+              "GMN",
+              "grondwatermonitoring",
+              "grondwatermonitoringnet",
+              "grondwateronderzoek",
+              "grondwaterstand"
+            ],
+            "scheme": null
+          }
+        ],
+        "extent": {
+          "spatial": {
+            "bbox": [[3.2, 50.75, 7.22, 53.7]],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          },
+          "temporal": {
+            "interval": [null, null],
+            "trs": "http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"
+          }
+        }
+      },
+      "links": []
+    },
+    {
+      "id": "7B40133214B7456CE053D2041EACD771",
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [6.105, 52.601],
+            [6.105, 53.213],
+            [7.109, 53.213],
+            [7.109, 52.601],
+            [6.105, 52.601]
+          ]
+        ]
+      },
+      "properties": {
+        "recordCreated": "2022-06-01",
+        "recordUpdated": "2022-06-10T01:27:47Z",
+        "type": "dataset",
+        "title": "Hemelhelderheidskaart",
+        "description": "Hemelhelderheid Drenthe met kasverlichting gedoofd (2015-2016). De grootheid luminantie (helderheid) kent verschillende eenheden en die worden in de kaart weergegeven. De eenheid candela per vierkante meter is de eenheid die verlichtingsdeskundigen gebruiken om te meten hoeveel licht ergens op straalt. De gebruikte eenheid mcd/m2 is een duizendste cd/m2. De eenheid magnitude wordt gebruikt door sterrenkundigen. Hoe helderder de hemel, hoe hoger het getal in candela per vierkante meter, hoe meer licht er van de hemel komt.",
+        "providers": [
+          "Team Gis/Cartografie, post@drenthe.nl, Provincie Drenthe"
+        ],
+        "externalIds": [
+          {
+            "scheme": "default",
+            "value": "7B40133214B7456CE053D2041EACD771"
+          }
+        ],
+        "themes": [
+          {
+            "concepts": ["locaties"],
+            "scheme": null
+          }
+        ],
+        "extent": {
+          "spatial": {
+            "bbox": [[6.105, 52.601, 7.109, 53.213]],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          },
+          "temporal": {
+            "interval": [null, null],
+            "trs": "http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"
+          }
+        }
+      },
+      "links": [
+        {
+          "href": "https://kaartportaal.drenthe.nl/server/services/GDB_actueel/GBI_MILIEU_HEMELHELDERHEID_V/MapServer/WMSServer",
+          "rel": "item",
+          "title": "0",
+          "type": "OGC:WMS"
+        },
+        {
+          "href": "https://kaartportaal.drenthe.nl/server/services/GDB_actueel/GBI_MILIEU_HEMELHELDERHEID_V/MapServer/WFSServer",
+          "rel": "item",
+          "title": "esri:Hemelhelderheidskaart",
+          "type": "OGC:WFS"
+        }
+      ]
+    },
+    {
+      "id": "1da54925-0085-4972-bdec-47bef653fc16",
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [3.15, 50.6],
+            [3.15, 53.6],
+            [7.3, 53.6],
+            [7.3, 50.6],
+            [3.15, 50.6]
+          ]
+        ]
+      },
+      "properties": {
+        "recordCreated": "2020-12-21",
+        "recordUpdated": "2022-06-10T01:27:47Z",
+        "type": "service",
+        "title": "WarmteAtlas WMS",
+        "description": "Atlas voor kaarten over het warmte gebruik (industrie, glastuinbouw en huishoudens) en potentieel kaarten voor de productie van duurzame warmte en de aanwezigheid van nog niet benutte restwarmte.",
+        "providers": [
+          "klantcontact, klantcontact@rvo.nl, Rijksdienst voor Ondernemend Nederland (RvO)"
+        ],
+        "externalIds": [
+          {
+            "scheme": "default",
+            "value": "1da54925-0085-4972-bdec-47bef653fc16"
+          }
+        ],
+        "themes": [
+          {
+            "concepts": [
+              "infoMapAccessService",
+              "Energie",
+              "Warmte",
+              "Biogas",
+              "Aardwarmte",
+              "Thermische Energie Oppervlaktewater TEO",
+              "Warmte Koude Opslag WKO",
+              "Gebouwde Omgeving",
+              "Industrie",
+              "CO2 emissie",
+              "Glastuinbouw",
+              "Grote Stook Installaties",
+              "IBIS Bedrijventerreinen",
+              "Grote Gebouwen",
+              "Warmtenetten",
+              "Aardwarmte",
+              "Biomassa",
+              "Energie vraag",
+              "Woonkernen",
+              "Kassen",
+              "WarmteAtlas"
+            ]
+          },
+          {
+            "concepts": ["Energiebronnen"],
+            "scheme": null
+          },
+          {
+            "concepts": [
+              "Energie",
+              "Warmte",
+              "Industrie",
+              "Kassen",
+              "Bedrijventerreinen",
+              "Grote Stook Installaties",
+              "Grote Gebouwen",
+              "Woonkernen",
+              "Warmtenetten",
+              "Warmte Vraag",
+              "Warmte Potentieel",
+              "Nationaal",
+              "Glastuinbouw",
+              "WarmteAtlas",
+              "Energie Verbruik",
+              "Energie",
+              null
+            ],
+            "scheme": null
+          }
+        ],
+        "extent": {
+          "spatial": {
+            "bbox": [[3.15, 50.6, 7.3, 53.6]],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          },
+          "temporal": {
+            "interval": [null, null],
+            "trs": "http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"
+          }
+        }
+      },
+      "links": [
+        {
+          "href": "https://rvo.b3p.nl/geoserver/WarmteAtlas/wms?",
+          "rel": "item",
+          "title": "WarmteAtlas WMS",
+          "type": "OGC:WMS"
+        }
+      ]
+    },
+    {
+      "id": "efc55744-a8f5-40e1-8d15-1ffa7a018988",
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [3.37087, 50.7539],
+            [3.37087, 53.4658],
+            [7.21097, 53.4658],
+            [7.21097, 50.7539],
+            [3.37087, 50.7539]
+          ]
+        ]
+      },
+      "properties": {
+        "recordCreated": "2021-12-22",
+        "recordUpdated": "2022-06-10T01:27:47Z",
+        "type": "dataset",
+        "title": "DANK-Delfstofwinning op land: zand, grind en klei",
+        "description": "De kaart geeft de geologische winbare hoeveelheid zand, grind en klei weer wanneer er niet meer dan maximaal 5 meter aan deklaag moet worden afgegraven.\n\n                    Voor de productie van veel bouwmaterialen wordt gebruik gemaakt van oppervlaktedelfstoffen. In Nederland is jaarlijks circa 150 miljoen ton aan bouwgrondstoffen nodig. Een deel daarvan komt uit het buitenland, een deel wordt verkregen door hergebruik (15 tot 20 %), maar nog steeds wordt een groot deel verkregen uit primaire winning.\n\n                    Sinds 1900 is de winning van ophoogzand op verschillende locaties uitgevoerd door maaiveldverlaging in het kader van\n                    landbouwkundige verbeteringen (ruilverkaveling).\n                    Sinds de jaren zeventig is er een afname in oppervlakkig ontgronden door toenemende maatschappelijke weerstand en strengere wetgevingen. Zandwinning vindt nu voornamelijk plaats in geconcentreerde winputten. Aanvullend vindt winning plaats middels het \"werk met werk maken\" principe. Hierin wordt bijvoorbeeld in nieuwbouwprojecten zand gewonnen voor gebruik in het project en tegelijkertijd waterberging gecre\u00eberd.\n                    Voor winning van oppervlaktedelfstoffen is per jaar circa 400 hectare oppervlakte van ons land noodzakelijk. Ongeveer de helft daarvan, circa 200 hectare, blijft achter als diep water. De andere 200 hectare krijgt via herinrichting een nieuwe ruimtelijke bestemming, bijvoorbeeld als natuur- of recreatiegebied. Alternatief is de winning van zand uit het IJsselmeer, de Randmeren en de Noordzee. De winning van grind is vooral voorzien plaats te vinden uit de maaswerken in Limburg.\n                    De winning en reservering van zand en grind zijn bij de wet geregeld en land based winlocaties worden door de provincie aangewezen. De winning van zand en grind legt een ruimtebeslag die enerzijds kan conflicteren met ander gebruik, anderzijds kan ook de winning samengaan met inrichtingsvraagstukken zoals het geven van ruimte voor de rivieren en tijdelijke waterberging.",
+        "providers": [
+          "atlasnatuurlijkkapitaal@rivm.nl, Atlas Natuurlijk Kapitaal"
+        ],
+        "externalIds": [
+          {
+            "scheme": "default",
+            "value": "efc55744-a8f5-40e1-8d15-1ffa7a018988"
+          }
+        ],
+        "themes": [
+          {
+            "concepts": ["winning zand grid diepte nederland"]
+          }
+        ],
+        "extent": {
+          "spatial": {
+            "bbox": [[3.37087, 50.7539, 7.21097, 53.4658]],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          },
+          "temporal": {
+            "interval": [null, null],
+            "trs": "http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"
+          }
+        }
+      },
+      "links": [
+        {
+          "href": "http://data.rivm.nl/geo/ank/wms?",
+          "rel": "item",
+          "title": "d022_delftstofwinning_op_land_en_in_binnenwateren_rivier",
+          "type": "OGC:WMS"
+        },
+        {
+          "href": "https://data.rivm.nl/meta/srv/api/records/efc55744-a8f5-40e1-8d15-1ffa7a018988/attachments/DANK022_delfstofwinning_op_land_en_in_binnenwateren_rivier.zip",
+          "rel": "item",
+          "title": "DANK022_delfstofwinning_op_land_en_in_binnenwateren_rivier.zip",
+          "type": "download"
+        }
+      ]
+    },
+    {
+      "id": "826735d1-1467-4888-9829-61019c033431",
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [4.690751953125, 52.358740234375],
+            [4.690751953125, 52.6333984375],
+            [5.020341796875, 52.6333984375],
+            [5.020341796875, 52.358740234375],
+            [4.690751953125, 52.358740234375]
+          ]
+        ]
+      },
+      "properties": {
+        "recordCreated": "2021-11-17",
+        "recordUpdated": "2022-06-10T01:27:47Z",
+        "type": "dataset",
+        "title": "Luchtfoto 2018",
+        "description": "Een luchtfoto is een afbeelding van een gedeelte van het aardoppervlak, gefotografeerd van uit een hoog standpunt los van het aardoppervlak, veelal vanuit een luchtvaartuig.",
+        "providers": [
+          "Team Geo, geo-informatie@zaanstad.nl, Gemeente Zaanstad"
+        ],
+        "externalIds": [
+          {
+            "scheme": "default",
+            "value": "826735d1-1467-4888-9829-61019c033431"
+          }
+        ],
+        "themes": [
+          {
+            "concepts": [
+              "FOTO",
+              "LUCHTFOTO",
+              "REFERENTIEKAART",
+              "TOPOGRAFIE",
+              "2018",
+              "LUFO",
+              null
+            ]
+          }
+        ],
+        "extent": {
+          "spatial": {
+            "bbox": [
+              [4.690751953125, 52.358740234375, 5.020341796875, 52.6333984375]
+            ],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          },
+          "temporal": {
+            "interval": [null, null],
+            "trs": "http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"
+          }
+        }
+      },
+      "links": [
+        {
+          "href": "https://tiles.zaanstad.nl/mapproxy/service?SERVICE=WMS",
+          "rel": "item",
+          "title": "Lufo2018-kleur",
+          "type": "OGC:WMS"
+        },
+        {
+          "href": "https://tiles.zaanstad.nl/mapproxy/service?SERVICE=WFS",
+          "rel": "item",
+          "title": "Lufo2018-kleur",
+          "type": "OGC:WFS"
+        },
+        {
+          "href": "https://tiles.zaanstad.nl/mapproxy/service?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=Lufo2018-kleur&outputFormat=csv",
+          "rel": "item",
+          "title": "CSV",
+          "type": "download"
+        },
+        {
+          "href": "https://tiles.zaanstad.nl/mapproxy/service?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=Lufo2018-kleur&outputFormat=shape-zip",
+          "rel": "item",
+          "title": "Shape-zip",
+          "type": "download"
+        }
+      ]
+    },
+    {
+      "id": "b7d2fd24-8cd8-4965-a997-69eb1a987b5a",
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [3.37087, 50.7539],
+            [3.37087, 53.4658],
+            [7.21097, 53.4658],
+            [7.21097, 50.7539],
+            [3.37087, 50.7539]
+          ]
+        ]
+      },
+      "properties": {
+        "recordCreated": "2019-04-16",
+        "recordUpdated": "2022-06-10T01:27:47Z",
+        "type": "dataset",
+        "title": "Zonpotentie velden",
+        "description": "In deze kaartlaag zijn denkbare locaties voor zonnepanelen in veldopstelling aangegeven. Het gaat hier om kleine terreinen (tussen 0,5 en 1,0 hectare), middelgrote terreinen (tussen 1,0 en 3,0 hectare) en grote terreinen (3,0 hectare en groter). Te zien zijn gras- en akkerlanden buiten de bebouwing, exclusief gebieden die tot Natura2000 behoren.\n\nVoor iedere locatie is aangegeven wat het plaatsbare schaduwvrije zon-PV-vermogen is, uitgaande van schaduwvrije velden en 0,65 MWp vermogen per hectare grond.\n\nTevens is de verwachte jaarlijkse kWh-opbrengst aangeduid (900 kWh/kWp), evenals het aantal huishoudens dat van groene stroom kan worden voorzien met deze opbrengst (3.300 kWh/huishouden).\nDe selectie van locaties is expliciet niet gemaakt op basis van politieke voorkeuren of richtlijnen van gemeenten dan wel provincies, bijvoorbeeld met betrekking tot de (on)wenselijkheid van zonnevelden op landbouwgronden.\n\nToekomstige uitbreiding (1)\nGewerkt wordt aan een weergave van de kaartlaag met daarin relevante netdata verwerkt. Concreet gaat dit dan om de afstanden van denkbare locaties tot aan het middenspanningsnet of het dichtstbijzijnde onder-, regel- of schakelstation.\n\nToekomstige uitbreiding (2)\nTevens wordt gewerkt aan weergave van de kaartlaag met daarin zoninstralingsdata op de denkbare locaties voor zonnepanelen in veldopstelling. Hiermee wordt het schaduweffect van objecten op en rond het terrein inzichtelijk gemaakt.",
+        "providers": ["atlasleefomgeving@rivm.nl, Atlas Leefomgeving"],
+        "externalIds": [
+          {
+            "scheme": "default",
+            "value": "b7d2fd24-8cd8-4965-a997-69eb1a987b5a"
+          }
+        ],
+        "themes": [
+          {
+            "concepts": ["zonnepanelen", "energie"],
+            "scheme": null
+          }
+        ],
+        "extent": {
+          "spatial": {
+            "bbox": [[3.37087, 50.7539, 7.21097, 53.4658]],
+            "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+          },
+          "temporal": {
+            "interval": [null, null],
+            "trs": "http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"
+          }
+        }
+      },
+      "links": [
+        {
+          "href": "http://geodata.rivm.nl/geoserver/nea/wms?",
+          "rel": "item",
+          "title": "Greenspread_20181101_v_zonnevelden",
+          "type": "OGC:WMS"
+        },
+        {
+          "href": "http://geodata.rivm.nl/geoserver/nea/wms?",
+          "rel": "item",
+          "title": "Greenspread_20181101_v_zonnevelden",
+          "type": "OGC:WFS"
+        }
+      ]
+    }
+  ],
+  "numberMatched": 308,
+  "numberReturned": 10,
+  "links": [
+    {
+      "type": "application/geo+json",
+      "rel": "self",
+      "title": "This document as GeoJSON",
+      "href": "https://my.server.org/sample-data/collections/dutch-metadata/items?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "application/ld+json",
+      "title": "This document as RDF (JSON-LD)",
+      "href": "https://my.server.org/sample-data/collections/dutch-metadata/items?f=jsonld"
+    },
+    {
+      "type": "text/html",
+      "rel": "alternate",
+      "title": "This document as HTML",
+      "href": "https://my.server.org/sample-data/collections/dutch-metadata/items?f=html"
+    },
+    {
+      "type": "application/geo+json",
+      "rel": "next",
+      "title": "items (next)",
+      "href": "https://my.server.org/sample-data/collections/dutch-metadata/items?offset=10"
+    },
+    {
+      "type": "application/json",
+      "title": "Sample metadata records from Dutch Nationaal georegister",
+      "rel": "collection",
+      "href": "https://my.server.org/sample-data/collections/dutch-metadata/items"
+    }
+  ],
+  "timeStamp": "2023-01-28T21:41:57.278222Z"
+}

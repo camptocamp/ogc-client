@@ -1,0 +1,382 @@
+{
+  "title": "OS Open Zoomstack",
+  "description": "OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document",
+      "href": "https://my.server.org/sample-data/tiles?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML",
+      "href": "https://my.server.org/sample-data/tiles?f=html"
+    }
+  ],
+  "tilesets": [
+    {
+      "links": [
+        {
+          "rel": "self",
+          "title": "Access the data as tiles in the tile matrix set 'WebMercatorQuad'",
+          "href": "https://my.server.org/sample-data/tiles/WebMercatorQuad"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-scheme",
+          "title": "Definition of the tiling scheme",
+          "href": "https://my.server.org/sample-data/tileMatrixSets/WebMercatorQuad"
+        },
+        {
+          "rel": "item",
+          "type": "application/vnd.mapbox-vector-tile",
+          "title": "Mapbox vector tiles; the link is a URI template where {tileMatrix}/{tileRow}/{tileCol} is the tile in the tiling scheme 'WebMercatorQuad'",
+          "href": "https://my.server.org/sample-data/tiles/WebMercatorQuad/{tileMatrix}/{tileRow}/{tileCol}?f=mvt",
+          "templated": true
+        }
+      ],
+      "dataType": "vector",
+      "tileMatrixSetId": "WebMercatorQuad",
+      "tileMatrixSetURI": "http://www.opengis.net/def/tilematrixset/OGC/1.0/WebMercatorQuad",
+      "tileMatrixSetLimits": [
+        {
+          "numberOfTiles": 1,
+          "tileMatrix": "0",
+          "minTileRow": 0,
+          "maxTileRow": 0,
+          "minTileCol": 0,
+          "maxTileCol": 0
+        },
+        {
+          "numberOfTiles": 2,
+          "tileMatrix": "1",
+          "minTileRow": 0,
+          "maxTileRow": 0,
+          "minTileCol": 0,
+          "maxTileCol": 1
+        },
+        {
+          "numberOfTiles": 2,
+          "tileMatrix": "2",
+          "minTileRow": 1,
+          "maxTileRow": 1,
+          "minTileCol": 1,
+          "maxTileCol": 2
+        },
+        {
+          "numberOfTiles": 2,
+          "tileMatrix": "3",
+          "minTileRow": 2,
+          "maxTileRow": 2,
+          "minTileCol": 3,
+          "maxTileCol": 4
+        },
+        {
+          "numberOfTiles": 4,
+          "tileMatrix": "4",
+          "minTileRow": 4,
+          "maxTileRow": 5,
+          "minTileCol": 7,
+          "maxTileCol": 8
+        },
+        {
+          "numberOfTiles": 4,
+          "tileMatrix": "5",
+          "minTileRow": 9,
+          "maxTileRow": 10,
+          "minTileCol": 15,
+          "maxTileCol": 16
+        },
+        {
+          "numberOfTiles": 12,
+          "tileMatrix": "6",
+          "minTileRow": 18,
+          "maxTileRow": 21,
+          "minTileCol": 30,
+          "maxTileCol": 32
+        },
+        {
+          "numberOfTiles": 40,
+          "tileMatrix": "7",
+          "minTileRow": 36,
+          "maxTileRow": 43,
+          "minTileCol": 60,
+          "maxTileCol": 64
+        },
+        {
+          "numberOfTiles": 135,
+          "tileMatrix": "8",
+          "minTileRow": 73,
+          "maxTileRow": 87,
+          "minTileCol": 121,
+          "maxTileCol": 129
+        },
+        {
+          "numberOfTiles": 522,
+          "tileMatrix": "9",
+          "minTileRow": 146,
+          "maxTileRow": 174,
+          "minTileCol": 242,
+          "maxTileCol": 259
+        },
+        {
+          "numberOfTiles": 1995,
+          "tileMatrix": "10",
+          "minTileRow": 292,
+          "maxTileRow": 348,
+          "minTileCol": 485,
+          "maxTileCol": 519
+        },
+        {
+          "numberOfTiles": 7728,
+          "tileMatrix": "11",
+          "minTileRow": 585,
+          "maxTileRow": 696,
+          "minTileCol": 971,
+          "maxTileCol": 1039
+        },
+        {
+          "numberOfTiles": 30414,
+          "tileMatrix": "12",
+          "minTileRow": 1171,
+          "maxTileRow": 1392,
+          "minTileCol": 1942,
+          "maxTileCol": 2078
+        },
+        {
+          "numberOfTiles": 120939,
+          "tileMatrix": "13",
+          "minTileRow": 2342,
+          "maxTileRow": 2784,
+          "minTileCol": 3885,
+          "maxTileCol": 4157
+        },
+        {
+          "numberOfTiles": 481440,
+          "tileMatrix": "14",
+          "minTileRow": 4685,
+          "maxTileRow": 5569,
+          "minTileCol": 7771,
+          "maxTileCol": 8314
+        }
+      ],
+      "boundingBox": {
+        "lowerLeft": [-9.2305667, 49.8168025],
+        "upperRight": [2.6954786, 60.7838866],
+        "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+      },
+      "centerPoint": {
+        "coordinates": [-3.2835, 58.6359],
+        "tileMatrix": "10"
+      },
+      "layers": [
+        {
+          "title": "sea",
+          "id": "sea",
+          "dataType": "vector"
+        },
+        {
+          "title": "names",
+          "id": "names",
+          "dataType": "vector",
+          "propertiesSchema": {
+            "properties": {
+              "type": {
+                "type": "string"
+              },
+              "name2language": {
+                "type": "string"
+              },
+              "name1language": {
+                "type": "string"
+              },
+              "name1": {
+                "type": "string"
+              },
+              "name2": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "title": "rail",
+          "id": "rail",
+          "dataType": "vector",
+          "propertiesSchema": {
+            "properties": {
+              "type": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "title": "waterlines",
+          "id": "waterlines",
+          "dataType": "vector",
+          "propertiesSchema": {
+            "properties": {
+              "type": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "title": "etl",
+          "id": "etl",
+          "dataType": "vector"
+        },
+        {
+          "title": "foreshore",
+          "id": "foreshore",
+          "dataType": "vector"
+        },
+        {
+          "title": "sites",
+          "id": "sites",
+          "dataType": "vector",
+          "propertiesSchema": {
+            "properties": {
+              "type": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "title": "railwaystations",
+          "id": "railwaystations",
+          "dataType": "vector",
+          "propertiesSchema": {
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "title": "roads",
+          "id": "roads",
+          "dataType": "vector",
+          "propertiesSchema": {
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "level": {
+                "type": "number"
+              },
+              "number": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "title": "greenspaces",
+          "id": "greenspaces",
+          "dataType": "vector",
+          "propertiesSchema": {
+            "properties": {
+              "type": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "title": "contours",
+          "id": "contours",
+          "dataType": "vector",
+          "propertiesSchema": {
+            "properties": {
+              "height": {
+                "type": "number"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "title": "buildings",
+          "id": "buildings",
+          "dataType": "vector",
+          "propertiesSchema": {
+            "properties": {
+              "uuid": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "title": "boundaries",
+          "id": "boundaries",
+          "dataType": "vector",
+          "propertiesSchema": {
+            "properties": {
+              "type": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "title": "airports",
+          "id": "airports",
+          "dataType": "vector",
+          "propertiesSchema": {
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "title": "woodland",
+          "id": "woodland",
+          "dataType": "vector"
+        },
+        {
+          "title": "national_parks",
+          "id": "national_parks",
+          "dataType": "vector"
+        },
+        {
+          "title": "urban_areas",
+          "id": "urban_areas",
+          "dataType": "vector"
+        },
+        {
+          "title": "surfacewater",
+          "id": "surfacewater",
+          "dataType": "vector"
+        }
+      ]
+    }
+  ]
+}

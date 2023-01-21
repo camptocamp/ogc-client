@@ -1,0 +1,31 @@
+{
+  "title": "National Roads",
+  "description": "Lines representing the road network. A road is defined as a metalled way for vehicles.",
+  "properties": {
+    "type": {
+      "title": "Type",
+      "type": "string",
+      "enum": ["Primary", "Motorway"]
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "number": {
+      "title": "Number",
+      "type": "string"
+    },
+    "level": {
+      "title": "Level",
+      "type": "integer",
+      "enum": [0, 1, 2]
+    },
+    "geom": {
+      "$ref": "https://geojson.org/schema/LineString.json"
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "https://my.server.org/sample-data/collections/roads_national/queryables"
+}

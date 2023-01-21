@@ -1,0 +1,79 @@
+{
+  "title": "Airports",
+  "description": "A centre point for all major airports including a name.",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["Feature"]
+    },
+    "links": {
+      "items": {
+        "$ref": "#/$defs/Link"
+      },
+      "type": "array"
+    },
+    "id": {
+      "type": "integer"
+    },
+    "geometry": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "title": "GeoJSON Point",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["Point"]
+            },
+            "coordinates": {
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 3,
+              "type": "array"
+            }
+          },
+          "type": "object",
+          "required": ["type", "coordinates"]
+        }
+      ]
+    },
+    "properties": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "required": ["type", "geometry", "properties"],
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "https://my.server.org/sample-data/collections/airports/schemas/feature",
+  "$defs": {
+    "Link": {
+      "properties": {
+        "href": {
+          "format": "uri-reference",
+          "type": "string"
+        },
+        "rel": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": ["href"]
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document",
+      "href": "https://my.server.org/sample-data/conformance?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML",
+      "href": "https://my.server.org/sample-data/conformance?f=html"
+    }
+  ],
+  "conformsTo": [
+    "http://www.opengis.net/spec/cql2/0.0/conf/advanced-comparison-operators",
+    "http://www.opengis.net/spec/cql2/0.0/conf/array-operators",
+    "http://www.opengis.net/spec/cql2/0.0/conf/basic-cql2",
+    "http://www.opengis.net/spec/cql2/0.0/conf/basic-spatial-operators",
+    "http://www.opengis.net/spec/cql2/0.0/conf/case-insensitive-comparison",
+    "http://www.opengis.net/spec/cql2/0.0/conf/cql2-json",
+    "http://www.opengis.net/spec/cql2/0.0/conf/cql2-text",
+    "http://www.opengis.net/spec/cql2/0.0/conf/property-property",
+    "http://www.opengis.net/spec/cql2/0.0/conf/spatial-operators",
+    "http://www.opengis.net/spec/cql2/0.0/conf/temporal-operators",
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/html",
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json",
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/oas30",
+    "http://www.opengis.net/spec/ogcapi-common-2/0.0/conf/collections",
+    "http://www.opengis.net/spec/ogcapi-common-2/0.0/conf/html",
+    "http://www.opengis.net/spec/ogcapi-common-2/0.0/conf/json",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/geojson",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/html",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/oas30",
+    "http://www.opengis.net/spec/ogcapi-features-2/1.0/conf/crs",
+    "http://www.opengis.net/spec/ogcapi-features-3/0.0/conf/features-filter",
+    "http://www.opengis.net/spec/ogcapi-features-3/0.0/conf/filter",
+    "http://www.opengis.net/spec/ogcapi-styles-1/0.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-styles-1/0.0/conf/manage-styles",
+    "http://www.opengis.net/spec/ogcapi-styles-1/0.0/conf/mapbox-styles",
+    "http://www.opengis.net/spec/ogcapi-styles-1/0.0/conf/sld-10",
+    "http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/dataset-tilesets",
+    "http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/mvt",
+    "http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/tileset",
+    "http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/tilesets-list",
+    "http://www.opengis.net/spec/tms/2.0/conf/json-tilematrixset",
+    "http://www.opengis.net/spec/tms/2.0/conf/json-tilematrixsetlimits",
+    "http://www.opengis.net/spec/tms/2.0/conf/json-tilesetmetadata",
+    "http://www.opengis.net/spec/tms/2.0/conf/tilematrixset",
+    "http://www.opengis.net/spec/tms/2.0/conf/tilematrixsetlimits",
+    "http://www.opengis.net/spec/tms/2.0/conf/tilesetmetadata"
+  ]
+}
