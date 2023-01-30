@@ -52,6 +52,11 @@
     "http://www.opengis.net/spec/tms/2.0/conf/json-tilesetmetadata",
     "http://www.opengis.net/spec/tms/2.0/conf/tilematrixset",
     "http://www.opengis.net/spec/tms/2.0/conf/tilematrixsetlimits",
-    "http://www.opengis.net/spec/tms/2.0/conf/tilesetmetadata"
+    "http://www.opengis.net/spec/tms/2.0/conf/tilesetmetadata",
+    "http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/html",
+    "http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/json",
+    "http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/opensearch",
+    "http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/sorting"
   ]
 }
