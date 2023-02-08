@@ -1,7 +1,13 @@
 import { EndpointError } from './errors';
-import { queryXmlDocument, setQueryParams } from './http-utils';
+import { queryXmlDocument, setQueryParams, sharedFetch } from './http-utils';
 
 const global = window as any;
+
+jest.useFakeTimers();
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('HTTP utils', () => {
   describe('queryXmlDocument', () => {
@@ -14,9 +20,11 @@ describe('HTTP utils', () => {
       | 'networkError'
       | 'delay';
 
+    let originalFetch;
+
     beforeAll(() => {
       fetchBehaviour = 'ok';
-      global.fetch_ = global.fetch; // keep reference of native impl
+      originalFetch = global.fetch; // keep reference of native impl
       global.fetch = jest.fn((xmlString, opts) => {
         const noCors = opts && opts.mode === 'no-cors';
         const headers = { get: () => null };
@@ -46,18 +54,24 @@ describe('HTTP utils', () => {
             return Promise.reject(new Error('General network error'));
           case 'delay':
             return new Promise((resolve) => {
-              setTimeout(() => resolve(xmlString), 10);
+              setTimeout(
+                () =>
+                  resolve({
+                    ok: true,
+                    status: 200,
+                    headers,
+                    arrayBuffer: () =>
+                      Promise.resolve(Buffer.from(sampleXml, 'utf-8')),
+                  }),
+                10
+              );
             });
         }
       });
     });
 
     afterAll(() => {
-      global.fetch = global.fetch_; // restore original impl
-    });
-
-    beforeEach(() => {
-      jest.clearAllMocks();
+      global.fetch = originalFetch; // restore original impl
     });
 
     describe('HTTP request returns success', () => {
@@ -187,6 +201,157 @@ describe('HTTP utils', () => {
       ).toBe(
         'http://bad.proxy/?url=https%3A%2F%2Fmy.host%2Fservice%3FARG2%3D45%26Arg3%3Dhello'
       );
+    });
+  });
+
+  describe('sharedFetch', () => {
+    let originalFetch;
+
+    beforeAll(() => {
+      originalFetch = global.fetch; // keep reference of native impl
+      global.fetch = jest.fn(
+        () =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              // return a different result every time
+              resolve(`request result: ${Math.floor(Math.random() * 100000)}`);
+            }, 10);
+          })
+      );
+    });
+    afterAll(() => {
+      global.fetch = originalFetch; // restore original impl
+    });
+
+    describe('multiple GET and HEAD requests on same resource', () => {
+      let getResults, headResults;
+      beforeEach(async () => {
+        getResults = [];
+        headResults = [];
+
+        // these requests will be shared
+        sharedFetch('http://test.org/resource1').then(
+          (r) => (getResults[0] = r)
+        );
+        sharedFetch('http://test.org/resource1', 'HEAD').then(
+          (r) => (headResults[0] = r)
+        );
+        jest.advanceTimersByTime(2);
+        sharedFetch('http://test.org/resource1').then(
+          (r) => (getResults[1] = r)
+        );
+        sharedFetch('http://test.org/resource1', 'HEAD').then(
+          (r) => (headResults[1] = r)
+        );
+        jest.advanceTimersByTime(3);
+        sharedFetch('http://test.org/resource1').then(
+          (r) => (getResults[2] = r)
+        );
+        sharedFetch('http://test.org/resource1', 'HEAD').then(
+          (r) => (headResults[2] = r)
+        );
+        await jest.advanceTimersByTime(10);
+        await jest.runOnlyPendingTimers();
+
+        // first batch has resolved
+        sharedFetch('http://test.org/resource1', 'HEAD').then(
+          (r) => (headResults[3] = r)
+        );
+        sharedFetch('http://test.org/resource1').then(
+          (r) => (getResults[3] = r)
+        );
+        await jest.advanceTimersByTime(10);
+        await jest.runOnlyPendingTimers();
+      });
+      it('only triggers two GET requests and two HEAD requests', () => {
+        expect(global.fetch).toHaveBeenCalledTimes(4);
+        expect((global.fetch as jest.Mock).mock.calls).toEqual([
+          [
+            'http://test.org/resource1',
+            expect.objectContaining({ method: 'GET' }),
+          ],
+          [
+            'http://test.org/resource1',
+            expect.objectContaining({ method: 'HEAD' }),
+          ],
+          [
+            'http://test.org/resource1',
+            expect.objectContaining({ method: 'HEAD' }),
+          ],
+          [
+            'http://test.org/resource1',
+            expect.objectContaining({ method: 'GET' }),
+          ],
+        ]);
+      });
+      it('shares result for simultaneous GET requests and not subsequent ones', () => {
+        const sharedResult = getResults[0];
+        expect(getResults).toEqual([
+          sharedResult,
+          sharedResult,
+          sharedResult,
+          expect.not.stringContaining(sharedResult),
+        ]);
+      });
+      it('shares result for simultaneous HEAD requests and not subsequent ones', () => {
+        const sharedResult = headResults[0];
+        expect(headResults).toEqual([
+          sharedResult,
+          sharedResult,
+          sharedResult,
+          expect.not.stringContaining(sharedResult),
+        ]);
+      });
+    });
+    describe('GET and HEAD requests on different resources', () => {
+      let getResults, headResults;
+      beforeEach(async () => {
+        getResults = [];
+        headResults = [];
+
+        // these requests will be shared
+        sharedFetch('http://test.org/resource1').then(
+          (r) => (getResults[0] = r)
+        );
+        sharedFetch('http://test.org/resource2', 'HEAD').then(
+          (r) => (headResults[0] = r)
+        );
+        sharedFetch('http://test.org/resource3').then(
+          (r) => (getResults[1] = r)
+        );
+        sharedFetch('http://test.org/resource4', 'HEAD').then(
+          (r) => (headResults[1] = r)
+        );
+        await jest.advanceTimersByTime(40);
+        await jest.runOnlyPendingTimers();
+      });
+      it('triggers two GET requests and two HEAD requests', () => {
+        expect(global.fetch).toHaveBeenCalledTimes(4);
+        expect((global.fetch as jest.Mock).mock.calls).toEqual([
+          [
+            'http://test.org/resource1',
+            expect.objectContaining({ method: 'GET' }),
+          ],
+          [
+            'http://test.org/resource2',
+            expect.objectContaining({ method: 'HEAD' }),
+          ],
+          [
+            'http://test.org/resource3',
+            expect.objectContaining({ method: 'GET' }),
+          ],
+          [
+            'http://test.org/resource4',
+            expect.objectContaining({ method: 'HEAD' }),
+          ],
+        ]);
+      });
+      it('does not share GET results', () => {
+        expect(getResults[0]).not.toBe(getResults[1]);
+      });
+      it('does not share HEAD results', () => {
+        expect(headResults[0]).not.toBe(headResults[1]);
+      });
     });
   });
 });

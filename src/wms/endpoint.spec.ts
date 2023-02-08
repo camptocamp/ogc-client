@@ -22,8 +22,11 @@ describe('WmsEndpoint', () => {
 
   it('makes a getcapabilities request', async () => {
     await endpoint.isReady();
-    expect(global.fetch).toHaveBeenCalledWith(
-      'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetCapabilities'
+    expect(
+      global.fetch
+    ).toHaveBeenCalledWith(
+      'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetCapabilities',
+      { method: 'GET' }
     );
   });
 

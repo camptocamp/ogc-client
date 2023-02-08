@@ -9,19 +9,20 @@ const fetchPromises: Map<string, Promise<Response>> = new Map();
  * identical concurrent requests
  * Note: this should only be used for GET requests!
  */
-export function sharedFetch(url: string) {
-  if (fetchPromises.has(url)) {
-    return fetchPromises.get(url);
+export function sharedFetch(url: string, method: 'GET' | 'HEAD' = 'GET') {
+  const fetchKey = `${method}#${url}`;
+  if (fetchPromises.has(fetchKey)) {
+    return fetchPromises.get(fetchKey);
   }
   // to avoid unhandled promise rejections this promise will never reject,
   // but only return errors as a normal value
-  const promise = fetch(url)
+  const promise = fetch(url, { method })
     .catch((e) => e)
     .then((resp) => {
-      fetchPromises.delete(url);
+      fetchPromises.delete(fetchKey);
       return resp;
     });
-  fetchPromises.set(url, promise);
+  fetchPromises.set(fetchKey, promise);
   // if an error is received then the promise will reject with it
   return promise.then((resp) => {
     if (resp instanceof Error) throw resp;

@@ -41,8 +41,11 @@ describe('WfsEndpoint', () => {
 
   it('makes a getcapabilities request', async () => {
     await endpoint.isReady();
-    expect(global.fetch).toHaveBeenCalledWith(
-      'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetCapabilities'
+    expect(
+      global.fetch
+    ).toHaveBeenCalledWith(
+      'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetCapabilities',
+      { method: 'GET' }
     );
   });
 
