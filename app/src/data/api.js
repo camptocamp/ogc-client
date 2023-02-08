@@ -141,8 +141,11 @@ Cache entries might be removed by the browser without notice. The identifying ke
       name: 'sharedFetch',
       type: 'Function',
       description: `Returns a promise equivalent to \`fetch(url)\` but guarded against identical concurrent requests.
-Requests are considered identical if they share the _exact_ same url.`,
-      params: [{ name: 'url', type: 'string' }],
+Requests are considered identical if they share the _exact_ same url and method.`,
+      params: [
+        { name: 'url', type: 'string' },
+        { name: 'method', type: `'GET' | 'HEAD'` },
+      ],
       return: { type: 'Promise', subType: 'Response' },
     },
   ],
