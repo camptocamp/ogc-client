@@ -1,3 +1,4 @@
+import { Feature } from 'geojson';
 import { BoundingBox, CrsCode } from '../shared/models';
 
 export type ConformanceClass = string;
@@ -34,7 +35,7 @@ export interface OgcApiCollectionInfo {
   license?: string;
 }
 
-export interface OgcApiCollectionItem {}
+export type OgcApiCollectionItem = Feature | unknown;
 
 export type OgcApiDocument = {
   links: {

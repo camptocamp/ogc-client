@@ -44,7 +44,7 @@ describe('OgcApiEndpoint', () => {
         });
       });
     });
-    describe('#conformanceClasses', () => {
+    describe('#confitemsormanceClasses', () => {
       it('returns conformance classes', async () => {
         await expect(endpoint.conformanceClasses).resolves.toEqual([
           'http://www.opengis.net/spec/cql2/0.0/conf/advanced-comparison-operators',
@@ -259,6 +259,1169 @@ describe('OgcApiEndpoint', () => {
           ],
           storageCrs: 'http://www.opengis.net/def/crs/EPSG/0/27700',
           itemCount: 123905,
+        });
+      });
+    });
+    describe('#getCollectionItems', () => {
+      it('returns airports collection items', async () => {
+        await expect(
+          endpoint.getCollectionItems('airports')
+        ).resolves.toStrictEqual([
+          {
+            type: 'Feature',
+            id: 1,
+            geometry: { type: 'Point', coordinates: [-1.2918826, 59.8783475] },
+            properties: { name: 'Sumburgh Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 2,
+            geometry: { type: 'Point', coordinates: [-1.2438161, 60.1918282] },
+            properties: { name: 'Tingwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 3,
+            geometry: { type: 'Point', coordinates: [-2.8998525, 58.9579506] },
+            properties: { name: 'Kirkwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 4,
+            geometry: { type: 'Point', coordinates: [-6.3295078, 58.2138995] },
+            properties: { name: 'Port-Adhair Steòrnabhaigh/Stornoway Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 5,
+            geometry: { type: 'Point', coordinates: [-3.094033, 58.458363] },
+            properties: { name: "Wick John O'Groats Airport" },
+          },
+          {
+            type: 'Feature',
+            id: 6,
+            geometry: { type: 'Point', coordinates: [-7.3610346, 57.4843261] },
+            properties: {
+              name: 'Port-adhair Bheinn na Faoghla/Benbecula Airport',
+            },
+          },
+          {
+            type: 'Feature',
+            id: 7,
+            geometry: { type: 'Point', coordinates: [-7.4487268, 57.0254269] },
+            properties: { name: 'Port-adhair Bharraigh/Barra Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 8,
+            geometry: { type: 'Point', coordinates: [-4.0493507, 57.5431458] },
+            properties: { name: 'Inverness Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 9,
+            geometry: { type: 'Point', coordinates: [-2.200068, 57.202807] },
+            properties: { name: 'Aberdeen International Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 10,
+            geometry: { type: 'Point', coordinates: [-6.869044, 56.5011563] },
+            properties: { name: 'Tiree Airport' },
+          },
+        ]);
+      });
+      it('returns dutch-metadata collection items', async () => {
+        await expect(
+          endpoint.getCollectionItems('dutch-metadata')
+        ).resolves.toStrictEqual([
+          {
+            id: '35149dfb-31d3-431c-a8bc-12a4034dac48',
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [4.690751953125, 52.358740234375],
+                  [4.690751953125, 52.6333984375],
+                  [5.020341796875, 52.6333984375],
+                  [5.020341796875, 52.358740234375],
+                  [4.690751953125, 52.358740234375],
+                ],
+              ],
+            },
+            properties: {
+              recordCreated: '2021-12-08',
+              recordUpdated: '2022-06-10T01:27:47Z',
+              type: 'dataset',
+              title: 'Kaartboeck 1635',
+              description:
+                'Data uit kaartboeken van de periode 1635 tot 1775. De kaartboeken werden door het waterschap gebruikt om er op toe te zien dat de eigenaren geen water in beslag namen door demping.\nDe percelen op de kaart zijn naar de huidige maatstaven vrij nauwkeurig gemeten en voorzien van een administratie met de eigenaren. bijzondere locaties van molens werven en beroepen worden in de boeken vermeld. Alle 97 kaarten aan een geven een zeer gedetailleerd beeld van de Voorzaan, Nieuwe Haven en de Achterzaan. De bladen Oost en West van de zaan zijn vrij nauwkeurig. De bladen aan de Voorzaan zijn een schetsmatige weergave van de situatie. De kaart van de Nieuwe Haven si weer nauwkeurig te noemen.',
+              providers: [
+                'Team Geo, geo-informatie@zaanstad.nl, Gemeente Zaanstad',
+              ],
+              externalIds: [
+                {
+                  scheme: 'default',
+                  value: '35149dfb-31d3-431c-a8bc-12a4034dac48',
+                },
+              ],
+              themes: [
+                {
+                  concepts: [
+                    'ARGEOLOGIE',
+                    'MONUMENTEN',
+                    'KADASTER',
+                    'KAARTBOEK',
+                    'KAARTBOECK',
+                    'HISTORIE',
+                  ],
+                },
+              ],
+              extent: {
+                spatial: {
+                  bbox: [
+                    [
+                      4.690751953125,
+                      52.358740234375,
+                      5.020341796875,
+                      52.6333984375,
+                    ],
+                  ],
+                  crs: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+                },
+                temporal: {
+                  interval: [null, null],
+                  trs: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+                },
+              },
+            },
+            links: [
+              {
+                href:
+                  'https://maps-intern.zaanstad.gem.local/geoserver/wms?SERVICE=WMS',
+                rel: 'item',
+                title: 'geo:kaartboeck',
+                type: 'OGC:WMS',
+              },
+              {
+                href:
+                  'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS',
+                rel: 'item',
+                title: 'geo:kaartboeck',
+                type: 'OGC:WFS',
+              },
+              {
+                href:
+                  'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=csv',
+                rel: 'item',
+                type: 'download',
+              },
+              {
+                href:
+                  'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=shape-zip',
+                rel: 'item',
+                type: 'download',
+              },
+            ],
+          },
+          {
+            id: 'ffffffaa-4087-59ec-9ea7-8416f58e99dd',
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [4.4552947, 52.3348457],
+                  [4.4552947, 53.388444],
+                  [7.135964, 53.388444],
+                  [7.135964, 52.3348457],
+                  [4.4552947, 52.3348457],
+                ],
+              ],
+            },
+            properties: {
+              recordCreated: '2022-06-01',
+              recordUpdated: '2022-06-10T01:27:47Z',
+              type: 'dataset',
+              title: 'Diepteligging onderkant keileem (t.o.v. NAP)',
+              description:
+                'Diepteligging van de onderkant (basis) van keileem in Drenthe, in meters ten opzichte van NAP.',
+              providers: [
+                'Team Gis/Cartografie, post@drenthe.nl, Provincie Drenthe',
+              ],
+              externalIds: [
+                {
+                  scheme: 'default',
+                  value: 'ffffffaa-4087-59ec-9ea7-8416f58e99dd',
+                },
+              ],
+              themes: [
+                {
+                  concepts: [
+                    'beleidsinstrument',
+                    'bodem',
+                    'grondwaterstand',
+                    'landbouw',
+                    'landbouwgrond',
+                    'waterhuishouding',
+                  ],
+                  scheme: null,
+                },
+              ],
+              extent: {
+                spatial: {
+                  bbox: [[4.4552947, 52.3348457, 7.135964, 53.388444]],
+                  crs: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+                },
+                temporal: {
+                  interval: [null, null],
+                  trs: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+                },
+              },
+            },
+            links: [
+              {
+                href:
+                  'https://kaartportaal.drenthe.nl/server/services/GDB_actueel/GBI_KEILEEM_DIEPTE_ONDER_NAP_R/MapServer/WMSServer',
+                rel: 'item',
+                title: '0',
+                type: 'OGC:WMS',
+              },
+            ],
+          },
+          {
+            id: '59352e7f-3792-4e17-bd73-9bba84a98890',
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [4.79, 51.857],
+                  [4.79, 52.305],
+                  [5.63, 52.305],
+                  [5.63, 51.857],
+                  [4.79, 51.857],
+                ],
+              ],
+            },
+            properties: {
+              recordCreated: '2021-06-30',
+              recordUpdated: '2022-06-10T01:27:47Z',
+              type: 'dataset',
+              title: 'Clusters geluid - wegen gecumuleerd',
+              description:
+                'Clusters (omtreklijn) gebaseerd op gemeentegrenzen. Per cluster zijn de aantallen woningen en gevoelige bestemmingen per GES-score geteld. Bij de gevoelige bestemmingen is onderscheid gemaakt in 3 categorien: Ziekenhuizen, Scholen en dagverblijven voor jeugd, Verpleeg en verzorgingshuizen.',
+              providers: ['GIS, GIS@provincie-utrecht.nl, Provincie Utrecht'],
+              externalIds: [
+                {
+                  scheme: 'default',
+                  value: '59352e7f-3792-4e17-bd73-9bba84a98890',
+                },
+              ],
+              themes: [
+                {
+                  concepts: [
+                    'GELUIDHINDER',
+                    'GELUIDSZONES',
+                    'PROVINCIALE WEGEN',
+                    'VERKEERSLAWAAI',
+                    'WET GELUIDHINDER',
+                  ],
+                  scheme: null,
+                },
+                {
+                  concepts: ['Informatief'],
+                  scheme: null,
+                },
+              ],
+              extent: {
+                spatial: {
+                  bbox: [[4.79, 51.857, 5.63, 52.305]],
+                  crs: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+                },
+                temporal: {
+                  interval: [null, null],
+                  trs: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+                },
+              },
+            },
+            links: [
+              {
+                href:
+                  'https://download.geodata-utrecht.nl/download/vector/59352e7f-3792-4e17-bd73-9bba84a98890',
+                rel: 'item',
+                type: 'landingpage',
+              },
+              {
+                href:
+                  'https://services.geodata-utrecht.nl/geoserver/m01_4_overlast_hinder_mgkp/wfs',
+                rel: 'item',
+                title: 'Clusters_geluid_-_wegen_gecumuleerd',
+                type: 'OGC:WFS',
+              },
+              {
+                href:
+                  'https://services.geodata-utrecht.nl/geoserver/m01_4_overlast_hinder_mgkp/wms',
+                rel: 'item',
+                title: 'Clusters_geluid_-_wegen_gecumuleerd',
+                type: 'OGC:WMS',
+              },
+            ],
+          },
+          {
+            id: '0ec79c96-898f-40da-adc7-673eb4749685',
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [4.1407, 52.004],
+                  [4.1407, 52.9215],
+                  [4.8927, 52.9215],
+                  [4.8927, 52.004],
+                  [4.1407, 52.004],
+                ],
+              ],
+            },
+            properties: {
+              recordCreated: '2022-02-02',
+              recordUpdated: '2022-06-10T01:27:47Z',
+              type: 'dataset',
+              title: 'Geesten van Holland',
+              description:
+                "In de dataset 'Geesten' zijn de locaties opgenomen van middeleeuwse akkercomplexen op de strandwallen in Noord- en Zuid-Holland.",
+              providers: [
+                'InfoDesk, info@cultureelerfgoed.nl, Rijksdienst voor het Cultureel Erfgoed',
+              ],
+              externalIds: [
+                {
+                  scheme: 'default',
+                  value: '0ec79c96-898f-40da-adc7-673eb4749685',
+                },
+              ],
+              themes: [
+                {
+                  concepts: [],
+                },
+              ],
+              extent: {
+                spatial: {
+                  bbox: [[4.1407, 52.004, 4.8927, 52.9215]],
+                  crs: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+                },
+                temporal: {
+                  interval: [null, null],
+                  trs: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+                },
+              },
+            },
+            links: [
+              {
+                href:
+                  'https://services.rce.geovoorziening.nl/landschapsatlas/wms?&request=GetCapabilities',
+                rel: 'item',
+                title: 'Geesten',
+              },
+              {
+                href:
+                  'https://services.rce.geovoorziening.nl/landschapsatlas/wfs?&request=GetCapabilities',
+                rel: 'item',
+                title: 'landschapsatlas:Geesten',
+              },
+            ],
+          },
+          {
+            id: '364c5d7a-d6ec-11ea-87d0-0242ac130003',
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [3.2, 50.75],
+                  [3.2, 53.7],
+                  [7.22, 53.7],
+                  [7.22, 50.75],
+                  [3.2, 50.75],
+                ],
+              ],
+            },
+            properties: {
+              recordCreated: '2021-06-18',
+              recordUpdated: '2022-06-10T01:27:47Z',
+              type: 'service',
+              title: 'Grondwaterstandsonderzoek, downloadservice',
+              description:
+                'Gegevens over grondwaterstandsonderzoek (Groundwaterlevel data in het Engels) zijn opgeslagen in de basisregistratie ondergrond (BRO). Het registratieobject grondwaterstandonderzoek bevat de metingen van de variatie in de stand van het grondwater dat in een bekende grondwatermonitoringput met een zekere buis wordt ontsloten.\nMet het monitoren van het grondwater gebeurt al lange tijd, op vele locaties in ons land. Met die informatie is het mogelijk om karakteristieke kenmerken van de beweging van het grondwater vast te stellen, ruimtelijke patronen te herkennen en trendmatige veranderingen te analyseren.\nBelangrijke kenmerken zijn bijvoorbeeld de hoogste en laatste grondwaterstand die in een bepaald gebied zijn te verwachten als gevolg van het jaarlijkse seizoenpatroon. Die kennis is niet alleen van belang voor de landbouw en natuurontwikkeling, maar ook voor het ontwerpen van nieuwe woonwijken en infrastructuur.\nDe meetgegevens geven inzicht in de reactie van het grondwater op  veranderingen zoals de verlaging van een polderpeil, of grondwaterwinning. Op basis van die informatie kunnen voorspellingen worden gedaan over het verloop van de grondwaterstand in de toekomst. Hoe langer de tijdreeksen zijn, des te nauwkeuriger de voorspellingen zijn over het lange termijn gedrag van het grondwater.\nEen van de belangrijke uitdagingen van nu is het voorspellen van de invloed van de klimaatverandering op het grondwatersysteem. Zowel in nationaal als internationaal verband worden richtlijnen ontwikkeld voor een duurzaam beleid en beheer van onze grondwatersystemen.',
+              providers: [
+                'support@broservicedesk.nl, TNO Geologische Dienst Nederland',
+              ],
+              externalIds: [
+                {
+                  scheme: 'default',
+                  value: '364c5d7a-d6ec-11ea-87d0-0242ac130003',
+                },
+              ],
+              themes: [
+                {
+                  concepts: ['infoMapAccessService'],
+                },
+                {
+                  concepts: [
+                    'basisregistratie ondergrond',
+                    'bro',
+                    'GMN',
+                    'grondwatermonitoring',
+                    'grondwatermonitoringnet',
+                    'grondwateronderzoek',
+                    'grondwaterstand',
+                  ],
+                  scheme: null,
+                },
+              ],
+              extent: {
+                spatial: {
+                  bbox: [[3.2, 50.75, 7.22, 53.7]],
+                  crs: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+                },
+                temporal: {
+                  interval: [null, null],
+                  trs: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+                },
+              },
+            },
+            links: [],
+          },
+          {
+            id: '7B40133214B7456CE053D2041EACD771',
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [6.105, 52.601],
+                  [6.105, 53.213],
+                  [7.109, 53.213],
+                  [7.109, 52.601],
+                  [6.105, 52.601],
+                ],
+              ],
+            },
+            properties: {
+              recordCreated: '2022-06-01',
+              recordUpdated: '2022-06-10T01:27:47Z',
+              type: 'dataset',
+              title: 'Hemelhelderheidskaart',
+              description:
+                'Hemelhelderheid Drenthe met kasverlichting gedoofd (2015-2016). De grootheid luminantie (helderheid) kent verschillende eenheden en die worden in de kaart weergegeven. De eenheid candela per vierkante meter is de eenheid die verlichtingsdeskundigen gebruiken om te meten hoeveel licht ergens op straalt. De gebruikte eenheid mcd/m2 is een duizendste cd/m2. De eenheid magnitude wordt gebruikt door sterrenkundigen. Hoe helderder de hemel, hoe hoger het getal in candela per vierkante meter, hoe meer licht er van de hemel komt.',
+              providers: [
+                'Team Gis/Cartografie, post@drenthe.nl, Provincie Drenthe',
+              ],
+              externalIds: [
+                {
+                  scheme: 'default',
+                  value: '7B40133214B7456CE053D2041EACD771',
+                },
+              ],
+              themes: [
+                {
+                  concepts: ['locaties'],
+                  scheme: null,
+                },
+              ],
+              extent: {
+                spatial: {
+                  bbox: [[6.105, 52.601, 7.109, 53.213]],
+                  crs: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+                },
+                temporal: {
+                  interval: [null, null],
+                  trs: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+                },
+              },
+            },
+            links: [
+              {
+                href:
+                  'https://kaartportaal.drenthe.nl/server/services/GDB_actueel/GBI_MILIEU_HEMELHELDERHEID_V/MapServer/WMSServer',
+                rel: 'item',
+                title: '0',
+                type: 'OGC:WMS',
+              },
+              {
+                href:
+                  'https://kaartportaal.drenthe.nl/server/services/GDB_actueel/GBI_MILIEU_HEMELHELDERHEID_V/MapServer/WFSServer',
+                rel: 'item',
+                title: 'esri:Hemelhelderheidskaart',
+                type: 'OGC:WFS',
+              },
+            ],
+          },
+          {
+            id: '1da54925-0085-4972-bdec-47bef653fc16',
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [3.15, 50.6],
+                  [3.15, 53.6],
+                  [7.3, 53.6],
+                  [7.3, 50.6],
+                  [3.15, 50.6],
+                ],
+              ],
+            },
+            properties: {
+              recordCreated: '2020-12-21',
+              recordUpdated: '2022-06-10T01:27:47Z',
+              type: 'service',
+              title: 'WarmteAtlas WMS',
+              description:
+                'Atlas voor kaarten over het warmte gebruik (industrie, glastuinbouw en huishoudens) en potentieel kaarten voor de productie van duurzame warmte en de aanwezigheid van nog niet benutte restwarmte.',
+              providers: [
+                'klantcontact, klantcontact@rvo.nl, Rijksdienst voor Ondernemend Nederland (RvO)',
+              ],
+              externalIds: [
+                {
+                  scheme: 'default',
+                  value: '1da54925-0085-4972-bdec-47bef653fc16',
+                },
+              ],
+              themes: [
+                {
+                  concepts: [
+                    'infoMapAccessService',
+                    'Energie',
+                    'Warmte',
+                    'Biogas',
+                    'Aardwarmte',
+                    'Thermische Energie Oppervlaktewater TEO',
+                    'Warmte Koude Opslag WKO',
+                    'Gebouwde Omgeving',
+                    'Industrie',
+                    'CO2 emissie',
+                    'Glastuinbouw',
+                    'Grote Stook Installaties',
+                    'IBIS Bedrijventerreinen',
+                    'Grote Gebouwen',
+                    'Warmtenetten',
+                    'Aardwarmte',
+                    'Biomassa',
+                    'Energie vraag',
+                    'Woonkernen',
+                    'Kassen',
+                    'WarmteAtlas',
+                  ],
+                },
+                {
+                  concepts: ['Energiebronnen'],
+                  scheme: null,
+                },
+                {
+                  concepts: [
+                    'Energie',
+                    'Warmte',
+                    'Industrie',
+                    'Kassen',
+                    'Bedrijventerreinen',
+                    'Grote Stook Installaties',
+                    'Grote Gebouwen',
+                    'Woonkernen',
+                    'Warmtenetten',
+                    'Warmte Vraag',
+                    'Warmte Potentieel',
+                    'Nationaal',
+                    'Glastuinbouw',
+                    'WarmteAtlas',
+                    'Energie Verbruik',
+                    'Energie',
+                    null,
+                  ],
+                  scheme: null,
+                },
+              ],
+              extent: {
+                spatial: {
+                  bbox: [[3.15, 50.6, 7.3, 53.6]],
+                  crs: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+                },
+                temporal: {
+                  interval: [null, null],
+                  trs: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+                },
+              },
+            },
+            links: [
+              {
+                href: 'https://rvo.b3p.nl/geoserver/WarmteAtlas/wms?',
+                rel: 'item',
+                title: 'WarmteAtlas WMS',
+                type: 'OGC:WMS',
+              },
+            ],
+          },
+          {
+            id: 'efc55744-a8f5-40e1-8d15-1ffa7a018988',
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [3.37087, 50.7539],
+                  [3.37087, 53.4658],
+                  [7.21097, 53.4658],
+                  [7.21097, 50.7539],
+                  [3.37087, 50.7539],
+                ],
+              ],
+            },
+            properties: {
+              recordCreated: '2021-12-22',
+              recordUpdated: '2022-06-10T01:27:47Z',
+              type: 'dataset',
+              title: 'DANK-Delfstofwinning op land: zand, grind en klei',
+              description:
+                'De kaart geeft de geologische winbare hoeveelheid zand, grind en klei weer wanneer er niet meer dan maximaal 5 meter aan deklaag moet worden afgegraven.\n\n                    Voor de productie van veel bouwmaterialen wordt gebruik gemaakt van oppervlaktedelfstoffen. In Nederland is jaarlijks circa 150 miljoen ton aan bouwgrondstoffen nodig. Een deel daarvan komt uit het buitenland, een deel wordt verkregen door hergebruik (15 tot 20 %), maar nog steeds wordt een groot deel verkregen uit primaire winning.\n\n                    Sinds 1900 is de winning van ophoogzand op verschillende locaties uitgevoerd door maaiveldverlaging in het kader van\n                    landbouwkundige verbeteringen (ruilverkaveling).\n                    Sinds de jaren zeventig is er een afname in oppervlakkig ontgronden door toenemende maatschappelijke weerstand en strengere wetgevingen. Zandwinning vindt nu voornamelijk plaats in geconcentreerde winputten. Aanvullend vindt winning plaats middels het "werk met werk maken" principe. Hierin wordt bijvoorbeeld in nieuwbouwprojecten zand gewonnen voor gebruik in het project en tegelijkertijd waterberging gecre\u00eberd.\n                    Voor winning van oppervlaktedelfstoffen is per jaar circa 400 hectare oppervlakte van ons land noodzakelijk. Ongeveer de helft daarvan, circa 200 hectare, blijft achter als diep water. De andere 200 hectare krijgt via herinrichting een nieuwe ruimtelijke bestemming, bijvoorbeeld als natuur- of recreatiegebied. Alternatief is de winning van zand uit het IJsselmeer, de Randmeren en de Noordzee. De winning van grind is vooral voorzien plaats te vinden uit de maaswerken in Limburg.\n                    De winning en reservering van zand en grind zijn bij de wet geregeld en land based winlocaties worden door de provincie aangewezen. De winning van zand en grind legt een ruimtebeslag die enerzijds kan conflicteren met ander gebruik, anderzijds kan ook de winning samengaan met inrichtingsvraagstukken zoals het geven van ruimte voor de rivieren en tijdelijke waterberging.',
+              providers: [
+                'atlasnatuurlijkkapitaal@rivm.nl, Atlas Natuurlijk Kapitaal',
+              ],
+              externalIds: [
+                {
+                  scheme: 'default',
+                  value: 'efc55744-a8f5-40e1-8d15-1ffa7a018988',
+                },
+              ],
+              themes: [
+                {
+                  concepts: ['winning zand grid diepte nederland'],
+                },
+              ],
+              extent: {
+                spatial: {
+                  bbox: [[3.37087, 50.7539, 7.21097, 53.4658]],
+                  crs: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+                },
+                temporal: {
+                  interval: [null, null],
+                  trs: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+                },
+              },
+            },
+            links: [
+              {
+                href: 'http://data.rivm.nl/geo/ank/wms?',
+                rel: 'item',
+                title:
+                  'd022_delftstofwinning_op_land_en_in_binnenwateren_rivier',
+                type: 'OGC:WMS',
+              },
+              {
+                href:
+                  'https://data.rivm.nl/meta/srv/api/records/efc55744-a8f5-40e1-8d15-1ffa7a018988/attachments/DANK022_delfstofwinning_op_land_en_in_binnenwateren_rivier.zip',
+                rel: 'item',
+                title:
+                  'DANK022_delfstofwinning_op_land_en_in_binnenwateren_rivier.zip',
+                type: 'download',
+              },
+            ],
+          },
+          {
+            id: '826735d1-1467-4888-9829-61019c033431',
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [4.690751953125, 52.358740234375],
+                  [4.690751953125, 52.6333984375],
+                  [5.020341796875, 52.6333984375],
+                  [5.020341796875, 52.358740234375],
+                  [4.690751953125, 52.358740234375],
+                ],
+              ],
+            },
+            properties: {
+              recordCreated: '2021-11-17',
+              recordUpdated: '2022-06-10T01:27:47Z',
+              type: 'dataset',
+              title: 'Luchtfoto 2018',
+              description:
+                'Een luchtfoto is een afbeelding van een gedeelte van het aardoppervlak, gefotografeerd van uit een hoog standpunt los van het aardoppervlak, veelal vanuit een luchtvaartuig.',
+              providers: [
+                'Team Geo, geo-informatie@zaanstad.nl, Gemeente Zaanstad',
+              ],
+              externalIds: [
+                {
+                  scheme: 'default',
+                  value: '826735d1-1467-4888-9829-61019c033431',
+                },
+              ],
+              themes: [
+                {
+                  concepts: [
+                    'FOTO',
+                    'LUCHTFOTO',
+                    'REFERENTIEKAART',
+                    'TOPOGRAFIE',
+                    '2018',
+                    'LUFO',
+                    null,
+                  ],
+                },
+              ],
+              extent: {
+                spatial: {
+                  bbox: [
+                    [
+                      4.690751953125,
+                      52.358740234375,
+                      5.020341796875,
+                      52.6333984375,
+                    ],
+                  ],
+                  crs: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+                },
+                temporal: {
+                  interval: [null, null],
+                  trs: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+                },
+              },
+            },
+            links: [
+              {
+                href: 'https://tiles.zaanstad.nl/mapproxy/service?SERVICE=WMS',
+                rel: 'item',
+                title: 'Lufo2018-kleur',
+                type: 'OGC:WMS',
+              },
+              {
+                href: 'https://tiles.zaanstad.nl/mapproxy/service?SERVICE=WFS',
+                rel: 'item',
+                title: 'Lufo2018-kleur',
+                type: 'OGC:WFS',
+              },
+              {
+                href:
+                  'https://tiles.zaanstad.nl/mapproxy/service?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=Lufo2018-kleur&outputFormat=csv',
+                rel: 'item',
+                title: 'CSV',
+                type: 'download',
+              },
+              {
+                href:
+                  'https://tiles.zaanstad.nl/mapproxy/service?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=Lufo2018-kleur&outputFormat=shape-zip',
+                rel: 'item',
+                title: 'Shape-zip',
+                type: 'download',
+              },
+            ],
+          },
+          {
+            id: 'b7d2fd24-8cd8-4965-a997-69eb1a987b5a',
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [3.37087, 50.7539],
+                  [3.37087, 53.4658],
+                  [7.21097, 53.4658],
+                  [7.21097, 50.7539],
+                  [3.37087, 50.7539],
+                ],
+              ],
+            },
+            properties: {
+              recordCreated: '2019-04-16',
+              recordUpdated: '2022-06-10T01:27:47Z',
+              type: 'dataset',
+              title: 'Zonpotentie velden',
+              description:
+                'In deze kaartlaag zijn denkbare locaties voor zonnepanelen in veldopstelling aangegeven. Het gaat hier om kleine terreinen (tussen 0,5 en 1,0 hectare), middelgrote terreinen (tussen 1,0 en 3,0 hectare) en grote terreinen (3,0 hectare en groter). Te zien zijn gras- en akkerlanden buiten de bebouwing, exclusief gebieden die tot Natura2000 behoren.\n\nVoor iedere locatie is aangegeven wat het plaatsbare schaduwvrije zon-PV-vermogen is, uitgaande van schaduwvrije velden en 0,65 MWp vermogen per hectare grond.\n\nTevens is de verwachte jaarlijkse kWh-opbrengst aangeduid (900 kWh/kWp), evenals het aantal huishoudens dat van groene stroom kan worden voorzien met deze opbrengst (3.300 kWh/huishouden).\nDe selectie van locaties is expliciet niet gemaakt op basis van politieke voorkeuren of richtlijnen van gemeenten dan wel provincies, bijvoorbeeld met betrekking tot de (on)wenselijkheid van zonnevelden op landbouwgronden.\n\nToekomstige uitbreiding (1)\nGewerkt wordt aan een weergave van de kaartlaag met daarin relevante netdata verwerkt. Concreet gaat dit dan om de afstanden van denkbare locaties tot aan het middenspanningsnet of het dichtstbijzijnde onder-, regel- of schakelstation.\n\nToekomstige uitbreiding (2)\nTevens wordt gewerkt aan weergave van de kaartlaag met daarin zoninstralingsdata op de denkbare locaties voor zonnepanelen in veldopstelling. Hiermee wordt het schaduweffect van objecten op en rond het terrein inzichtelijk gemaakt.',
+              providers: ['atlasleefomgeving@rivm.nl, Atlas Leefomgeving'],
+              externalIds: [
+                {
+                  scheme: 'default',
+                  value: 'b7d2fd24-8cd8-4965-a997-69eb1a987b5a',
+                },
+              ],
+              themes: [
+                {
+                  concepts: ['zonnepanelen', 'energie'],
+                  scheme: null,
+                },
+              ],
+              extent: {
+                spatial: {
+                  bbox: [[3.37087, 50.7539, 7.21097, 53.4658]],
+                  crs: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+                },
+                temporal: {
+                  interval: [null, null],
+                  trs: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+                },
+              },
+            },
+            links: [
+              {
+                href: 'http://geodata.rivm.nl/geoserver/nea/wms?',
+                rel: 'item',
+                title: 'Greenspread_20181101_v_zonnevelden',
+                type: 'OGC:WMS',
+              },
+              {
+                href: 'http://geodata.rivm.nl/geoserver/nea/wms?',
+                rel: 'item',
+                title: 'Greenspread_20181101_v_zonnevelden',
+                type: 'OGC:WFS',
+              },
+            ],
+          },
+        ]);
+      });
+      it('returns roads_national collection items', async () => {
+        await expect(
+          endpoint.getCollectionItems('roads_national')
+        ).resolves.toStrictEqual([
+          {
+            type: 'Feature',
+            id: 1,
+            geometry: {
+              type: 'LineString',
+              coordinates: [
+                [-3.7146553, 58.0895513],
+                [-3.7171409, 58.0885901],
+              ],
+            },
+            properties: { type: 'Primary', number: 'A9', level: 0 },
+          },
+          {
+            type: 'Feature',
+            id: 2,
+            geometry: {
+              type: 'LineString',
+              coordinates: [
+                [-3.7461507, 58.0813773],
+                [-3.7469084, 58.0810599],
+                [-3.7506235, 58.0802469],
+              ],
+            },
+            properties: { type: 'Primary', number: 'A9', level: 0 },
+          },
+          {
+            type: 'Feature',
+            id: 3,
+            geometry: {
+              type: 'LineString',
+              coordinates: [
+                [-3.7450719, 58.0818592],
+                [-3.7461507, 58.0813773],
+              ],
+            },
+            properties: { type: 'Primary', number: 'A9', level: 0 },
+          },
+          {
+            type: 'Feature',
+            id: 4,
+            geometry: {
+              type: 'LineString',
+              coordinates: [
+                [-3.7380837, 58.0842815],
+                [-3.7401187, 58.08358],
+                [-3.7420469, 58.0831224],
+                [-3.7437685, 58.0826047],
+                [-3.7450719, 58.0818592],
+              ],
+            },
+            properties: { type: 'Primary', number: 'A9', level: 0 },
+          },
+          {
+            type: 'Feature',
+            id: 5,
+            geometry: {
+              type: 'LineString',
+              coordinates: [
+                [-3.7373997, 58.0845154],
+                [-3.7380837, 58.0842815],
+              ],
+            },
+            properties: { type: 'Primary', number: 'A9', level: 0 },
+          },
+          {
+            type: 'Feature',
+            id: 6,
+            geometry: {
+              type: 'LineString',
+              coordinates: [
+                [-3.7171409, 58.0885901],
+                [-3.7174653, 58.0884718],
+                [-3.7195617, 58.087902],
+                [-3.721399, 58.0875031],
+                [-3.7256251, 58.0868944],
+                [-3.7289353, 58.0862476],
+                [-3.7321928, 58.0859159],
+                [-3.7333858, 58.0856841],
+                [-3.7353467, 58.0851992],
+                [-3.7373997, 58.0845154],
+              ],
+            },
+            properties: { type: 'Primary', number: 'A9', level: 0 },
+          },
+          {
+            type: 'Feature',
+            id: 7,
+            geometry: {
+              type: 'LineString',
+              coordinates: [
+                [-3.7638606, 58.0763091],
+                [-3.7704891, 58.0745642],
+              ],
+            },
+            properties: { type: 'Primary', number: 'A9', level: 0 },
+          },
+          {
+            type: 'Feature',
+            id: 8,
+            geometry: {
+              type: 'LineString',
+              coordinates: [
+                [-3.7099634, 58.0917321],
+                [-3.71127, 58.0910318],
+                [-3.7127532, 58.0903683],
+                [-3.7146553, 58.0895513],
+              ],
+            },
+            properties: { type: 'Primary', number: 'A9', level: 0 },
+          },
+          {
+            type: 'Feature',
+            id: 9,
+            geometry: {
+              type: 'LineString',
+              coordinates: [
+                [-3.7036866, 58.0950811],
+                [-3.7038614, 58.0950389],
+                [-3.7056711, 58.0945655],
+                [-3.7064724, 58.0942942],
+                [-3.7072678, 58.0938973],
+                [-3.707711, 58.0935859],
+                [-3.7088797, 58.0924832],
+                [-3.7099634, 58.0917321],
+              ],
+            },
+            properties: { type: 'Primary', number: 'A9', level: 0 },
+          },
+          {
+            type: 'Feature',
+            id: 10,
+            geometry: {
+              type: 'LineString',
+              coordinates: [
+                [-3.7036866, 58.0950811],
+                [-3.7029109, 58.0952652],
+              ],
+            },
+            properties: { type: 'Primary', number: 'A9', level: 0 },
+          },
+        ]);
+      });
+    });
+    describe('#getCollectionItem', () => {
+      it('returns one airports collection item', async () => {
+        await expect(
+          endpoint.getCollectionItem('airports', '1')
+        ).resolves.toStrictEqual({
+          geometry: {
+            coordinates: [-1.2918826, 59.8783475],
+            type: 'Point',
+          },
+          id: 1,
+          links: [
+            {
+              href:
+                'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=json',
+              rel: 'self',
+              title: 'This document',
+              type: 'application/geo+json',
+            },
+            {
+              href:
+                'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=jsonfgc',
+              rel: 'alternate',
+              title: 'This document as JSON-FG (GeoJSON Compatibility Mode)',
+              type: 'application/vnd.ogc.fg+json;compatibility=geojson',
+            },
+            {
+              href:
+                'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=fgb',
+              rel: 'alternate',
+              title: 'This document as FlatGeobuf',
+              type: 'application/flatgeobuf',
+            },
+            {
+              href:
+                'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=html',
+              rel: 'alternate',
+              title: 'This document as HTML',
+              type: 'text/html',
+            },
+            {
+              href:
+                'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=jsonfg',
+              rel: 'alternate',
+              title: 'This document as JSON-FG',
+              type: 'application/vnd.ogc.fg+json',
+            },
+            {
+              href:
+                'https://demo.ldproxy.net/zoomstack/collections/airports?f=json',
+              rel: 'collection',
+              title: 'The collection the feature belongs to',
+              type: 'application/json',
+            },
+          ],
+          properties: {
+            name: 'Sumburgh Airport',
+          },
+          type: 'Feature',
+        });
+      });
+      it('returns dutch-metadata collection item', async () => {
+        await expect(
+          endpoint.getCollectionItem(
+            'dutch-metadata',
+            '35149dfb-31d3-431c-a8bc-12a4034dac48'
+          )
+        ).resolves.toStrictEqual({
+          geometry: {
+            coordinates: [
+              [
+                [4.690751953125, 52.358740234375],
+                [4.690751953125, 52.6333984375],
+                [5.020341796875, 52.6333984375],
+                [5.020341796875, 52.358740234375],
+                [4.690751953125, 52.358740234375],
+              ],
+            ],
+            type: 'Polygon',
+          },
+          id: '35149dfb-31d3-431c-a8bc-12a4034dac48',
+          links: [
+            {
+              href:
+                'https://maps-intern.zaanstad.gem.local/geoserver/wms?SERVICE=WMS',
+              rel: 'item',
+              title: 'geo:kaartboeck',
+              type: 'OGC:WMS',
+            },
+            {
+              href:
+                'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS',
+              rel: 'item',
+              title: 'geo:kaartboeck',
+              type: 'OGC:WFS',
+            },
+            {
+              href:
+                'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=csv',
+              rel: 'item',
+              type: 'download',
+            },
+            {
+              href:
+                'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=shape-zip',
+              rel: 'item',
+              type: 'download',
+            },
+            {
+              href: 'https://demo.pygeoapi.io/master?f=json',
+              rel: 'root',
+              title: 'The landing page of this server as JSON',
+              type: 'application/json',
+            },
+            {
+              href: 'https://demo.pygeoapi.io/master?f=html',
+              rel: 'root',
+              title: 'The landing page of this server as HTML',
+              type: 'text/html',
+            },
+            {
+              href:
+                'https://demo.pygeoapi.io/master/collections/dutch-metadata/items/35149dfb-31d3-431c-a8bc-12a4034dac48?f=json',
+              rel: 'self',
+              title: 'This document as GeoJSON',
+              type: 'application/geo+json',
+            },
+            {
+              href:
+                'https://demo.pygeoapi.io/master/collections/dutch-metadata/items/35149dfb-31d3-431c-a8bc-12a4034dac48?f=jsonld',
+              rel: 'alternate',
+              title: 'This document as RDF (JSON-LD)',
+              type: 'application/ld+json',
+            },
+            {
+              href:
+                'https://demo.pygeoapi.io/master/collections/dutch-metadata/items/35149dfb-31d3-431c-a8bc-12a4034dac48?f=html',
+              rel: 'alternate',
+              title: 'This document as HTML',
+              type: 'text/html',
+            },
+            {
+              href:
+                'https://demo.pygeoapi.io/master/collections/dutch-metadata',
+              rel: 'collection',
+              title: 'Sample metadata records from Dutch Nationaal georegister',
+              type: 'application/json',
+            },
+          ],
+          properties: {
+            description:
+              'Data uit kaartboeken van de periode 1635 tot 1775. De kaartboeken werden door het waterschap gebruikt om er op toe te zien dat de eigenaren geen water in beslag namen door demping.\nDe percelen op de kaart zijn naar de huidige maatstaven vrij nauwkeurig gemeten en voorzien van een administratie met de eigenaren. bijzondere locaties van molens werven en beroepen worden in de boeken vermeld. Alle 97 kaarten aan een geven een zeer gedetailleerd beeld van de Voorzaan, Nieuwe Haven en de Achterzaan. De bladen Oost en West van de zaan zijn vrij nauwkeurig. De bladen aan de Voorzaan zijn een schetsmatige weergave van de situatie. De kaart van de Nieuwe Haven si weer nauwkeurig te noemen.',
+            extent: {
+              spatial: {
+                bbox: [
+                  [
+                    4.690751953125,
+                    52.358740234375,
+                    5.020341796875,
+                    52.6333984375,
+                  ],
+                ],
+                crs: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+              },
+              temporal: {
+                interval: [null, null],
+                trs: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+              },
+            },
+            externalIds: [
+              {
+                scheme: 'default',
+                value: '35149dfb-31d3-431c-a8bc-12a4034dac48',
+              },
+            ],
+            providers: [
+              'Team Geo, geo-informatie@zaanstad.nl, Gemeente Zaanstad',
+            ],
+            recordCreated: '2021-12-08',
+            recordUpdated: '2022-06-10T01:27:47Z',
+            themes: [
+              {
+                concepts: [
+                  'ARGEOLOGIE',
+                  'MONUMENTEN',
+                  'KADASTER',
+                  'KAARTBOEK',
+                  'KAARTBOECK',
+                  'HISTORIE',
+                ],
+              },
+            ],
+            title: 'Kaartboeck 1635',
+            type: 'dataset',
+          },
+          type: 'Feature',
         });
       });
     });

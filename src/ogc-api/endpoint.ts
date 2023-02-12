@@ -15,7 +15,7 @@ import {
   OgcApiDocument,
   OgcApiEndpointInfo,
 } from './model';
-import { fetchLink, fetchRoot } from './link-utils';
+import { fetchDocument, fetchLink, fetchRoot, getLinkUrl } from './link-utils';
 import { EndpointError } from '../shared/errors';
 
 export default class OgcApiEndpoint {
@@ -64,7 +64,7 @@ export default class OgcApiEndpoint {
       this.conformanceClasses,
     ]).then(checkHasRecords);
   }
-  getCollectionInfo(collectionId: string): Promise<OgcApiCollectionInfo> {
+  private getCollectionDocument(collectionId: string): Promise<OgcApiDocument> {
     return Promise.all([this.allCollections, this.data])
       .then(([collections, data]) => {
         if (collections.indexOf(collectionId) === -1)
@@ -73,10 +73,54 @@ export default class OgcApiEndpoint {
           (collection) => collection.id === collectionId
         );
       })
-      .then((collection) => fetchLink(collection, 'self'))
-      .then(parseCollectionInfo);
+      .then((collection) => fetchLink(collection, 'self'));
   }
-  getCollectionItems(collectionId: string): Promise<OgcApiCollectionItem[]> {
-    return Promise.resolve([]);
+  getCollectionInfo(collectionId: string): Promise<OgcApiCollectionInfo> {
+    return this.getCollectionDocument(collectionId).then(parseCollectionInfo);
+  }
+  getCollectionItems(
+    collectionId: string,
+    limit: number = 10,
+    offset: number = 0,
+    skipGeometry: boolean = null,
+    sortby: string[] = null,
+    bbox: [number, number, number, number] = null,
+    properties: string[] = null
+  ): Promise<OgcApiCollectionItem[]> {
+    return this.getCollectionDocument(collectionId)
+      .then((collectionDoc) => {
+        const url = new URL(
+          getLinkUrl(collectionDoc, 'items'),
+          window.location.toString()
+        );
+        url.searchParams.set('limit', limit.toString());
+        url.searchParams.set('offset', offset.toString());
+        if (skipGeometry !== null)
+          url.searchParams.set('skipGeometry', skipGeometry.toString());
+        if (sortby !== null)
+          url.searchParams.set('sortby', sortby.join(',').toString());
+        if (bbox !== null)
+          url.searchParams.set('bbox', bbox.join(',').toString());
+        if (properties !== null)
+          url.searchParams.set('properties', properties.join(',').toString());
+        return url.toString();
+      })
+      .then(fetchDocument)
+      .then((doc) => doc.features as OgcApiCollectionItem[]);
+  }
+  getCollectionItem(
+    collectionId: string,
+    itemId: string
+  ): Promise<OgcApiCollectionItem> {
+    return this.getCollectionDocument(collectionId)
+      .then((collectionDoc) => {
+        const url = new URL(
+          getLinkUrl(collectionDoc, 'items'),
+          window.location.toString()
+        );
+        url.pathname += `/${itemId}`;
+        return url.toString();
+      })
+      .then(fetchDocument);
   }
 }
