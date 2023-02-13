@@ -5,9 +5,10 @@ module.exports = {
       '<rootDir>/jest.ts-transformer.js',
       {
         isolatedModules: true,
-        stringifyContentPathRegex: '\\.(xml)$',
+        stringifyContentPathRegex: '.(xml)$',
       },
     ],
   },
   setupFilesAfterEnv: ['./test-setup.ts'],
+  coveragePathIgnorePatterns: ['.(xml)$'],
 };
