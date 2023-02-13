@@ -1,8 +1,8 @@
 # ogc-client
 
-> A javascript library for interacting with [OGC-compliant services](https://www.ogc.org/docs/is)
+> A Typescript library for interacting with [OGC-compliant services](https://www.ogc.org/docs/is)
 
-**ogc-client** is a pure Javascript library which implements several OGC standards and will help you interact with
+**ogc-client** is a Typescript library which implements several OGC standards and will help you interact with
 them in a user-friendly and consistent way.
 
 [Documentation and live demo here!](https://camptocamp.github.io/ogc-client/)
