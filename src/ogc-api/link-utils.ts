@@ -9,14 +9,14 @@ export function fetchDocument(url: string): Promise<OgcApiDocument> {
   }).then((resp) => resp.json());
 }
 
-// look for root document?
 export function fetchRoot(url: string) {
   return fetchDocument(url);
 }
 
 export function getLinkUrl(
   doc: OgcApiDocument,
-  relType: string | string[]
+  relType: string | string[],
+  baseUrl?: string
 ): string {
   const links = doc.links.filter((link) =>
     Array.isArray(relType)
@@ -24,11 +24,18 @@ export function getLinkUrl(
       : link.rel === relType
   );
   if (!links.length) return null;
-  return links[0].href;
+  return new URL(
+    links[0].href,
+    baseUrl || window.location.toString()
+  ).toString();
 }
 
-export function fetchLink(doc: OgcApiDocument, relType: string | string[]) {
-  const url = getLinkUrl(doc, relType);
+export function fetchLink(
+  doc: OgcApiDocument,
+  relType: string | string[],
+  baseUrl?: string
+) {
+  const url = getLinkUrl(doc, relType, baseUrl);
   if (!url)
     return Promise.reject(
       new EndpointError(`Could not find link with type: ${relType}`)

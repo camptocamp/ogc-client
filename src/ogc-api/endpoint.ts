@@ -21,9 +21,11 @@ import { EndpointError } from '../shared/errors';
 export default class OgcApiEndpoint {
   private root = fetchRoot(this.baseUrl);
   private conformance = this.root.then((root) =>
-    fetchLink(root, 'conformance')
+    fetchLink(root, 'conformance', this.baseUrl)
   );
-  private data = this.root.then((root) => fetchLink(root, 'data'));
+  private data = this.root.then((root) =>
+    fetchLink(root, 'data', this.baseUrl)
+  );
 
   constructor(private baseUrl: string) {}
 
@@ -73,7 +75,7 @@ export default class OgcApiEndpoint {
           (collection) => collection.id === collectionId
         );
       })
-      .then((collection) => fetchLink(collection, 'self'));
+      .then((collection) => fetchLink(collection, 'self', this.baseUrl));
   }
   getCollectionInfo(collectionId: string): Promise<OgcApiCollectionInfo> {
     return this.getCollectionDocument(collectionId).then(parseCollectionInfo);
@@ -90,7 +92,7 @@ export default class OgcApiEndpoint {
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
         const url = new URL(
-          getLinkUrl(collectionDoc, 'items'),
+          getLinkUrl(collectionDoc, 'items', this.baseUrl),
           window.location.toString()
         );
         url.searchParams.set('limit', limit.toString());
@@ -115,7 +117,7 @@ export default class OgcApiEndpoint {
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
         const url = new URL(
-          getLinkUrl(collectionDoc, 'items'),
+          getLinkUrl(collectionDoc, 'items', this.baseUrl),
           window.location.toString()
         );
         url.pathname += `/${itemId}`;
