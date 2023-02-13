@@ -20,13 +20,10 @@
 <script>
 export default {
   name: 'TreeItem',
-  props: {
-    /** @type {{new (): TreeItem}} */
-    item: Object,
-  },
+  props: ['item'],
   computed: {
     hasChildren() {
-      return 'children' in this.item;
+      return this.item instanceof Object && 'children' in this.item;
     },
     children() {
       return this.item.children;

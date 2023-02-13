@@ -1,0 +1,95 @@
+{
+  "title": "OS Open Zoomstack",
+  "description": "OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document",
+      "href": "https://my.server.org/sample-data?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML",
+      "href": "https://my.server.org/sample-data?f=html"
+    },
+    {
+      "rel": "conformance",
+      "title": "OGC API conformance classes implemented by this server",
+      "href": "https://my.server.org/sample-data/conformance"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/conformance",
+      "title": "OGC API conformance classes implemented by this server",
+      "href": "https://my.server.org/sample-data/conformance"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/styles",
+      "title": "Styles to render the data in maps",
+      "href": "https://my.server.org/sample-data/styles"
+    },
+    {
+      "rel": "ldp-map",
+      "title": "Access a web map with the data",
+      "href": "https://my.server.org/sample-data/styles/Road?f=html"
+    },
+    {
+      "rel": "resources",
+      "title": "Resources for rendering the data in maps",
+      "href": "https://my.server.org/sample-data/resources"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+      "title": "Access the data as tiles",
+      "href": "https://my.server.org/sample-data/tiles"
+    },
+    {
+      "rel": "service-doc",
+      "type": "text/html",
+      "title": "Documentation of the API",
+      "href": "https://my.server.org/sample-data/api?f=html"
+    },
+    {
+      "rel": "service-desc",
+      "type": "application/vnd.oai.openapi+json;version=3.0",
+      "title": "Definition of the API in OpenAPI 3.0",
+      "href": "https://my.server.org/sample-data/api?f=json"
+    },
+    {
+      "rel": "service-desc",
+      "type": "application/vnd.oai.openapi;version=3.0",
+      "title": "Definition of the API in OpenAPI 3.0",
+      "href": "https://my.server.org/sample-data/api?f=yaml"
+    },
+    {
+      "rel": "data",
+      "title": "Access the data",
+      "href": "https://my.server.org/sample-data/collections"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/data",
+      "title": "Access the data",
+      "href": "https://my.server.org/sample-data/collections"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+      "title": "List of tile matrix sets implemented by this API",
+      "href": "https://my.server.org/sample-data/tileMatrixSets"
+    }
+  ],
+  "attribution": "Contains OS data © Crown copyright and database right 2021.",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -9.23056668252574,
+          49.81680248396912,
+          2.69547862504583,
+          60.78388658611872
+        ]
+      ],
+      "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+    }
+  }
+}

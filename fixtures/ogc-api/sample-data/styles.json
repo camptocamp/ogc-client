@@ -1,0 +1,191 @@
+{
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document",
+      "href": "https://my.server.org/sample-data/styles?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML",
+      "href": "https://my.server.org/sample-data/styles?f=html"
+    }
+  ],
+  "styles": [
+    {
+      "title": "Deuteranopia",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.esri.lyr",
+          "title": "Style in format 'ArcGIS'",
+          "href": "https://my.server.org/sample-data/styles/Deuteranopia?f=lyr"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/styles/Deuteranopia/metadata"
+        }
+      ],
+      "id": "Deuteranopia"
+    },
+    {
+      "title": "OS Open Zoomstack - Light",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.esri.lyr",
+          "title": "Style in format 'ArcGIS'",
+          "href": "https://my.server.org/sample-data/styles/Light?f=lyr"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "text/html",
+          "title": "Web map using the style",
+          "href": "https://my.server.org/sample-data/styles/Light?f=html"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.mapbox.style+json",
+          "title": "Style in format 'Mapbox'",
+          "href": "https://my.server.org/sample-data/styles/Light?f=mbs"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/styles/Light/metadata"
+        }
+      ],
+      "id": "Light"
+    },
+    {
+      "title": "OS Open Zoomstack - Night",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.esri.lyr",
+          "title": "Style in format 'ArcGIS'",
+          "href": "https://my.server.org/sample-data/styles/Night?f=lyr"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "text/html",
+          "title": "Web map using the style",
+          "href": "https://my.server.org/sample-data/styles/Night?f=html"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.mapbox.style+json",
+          "title": "Style in format 'Mapbox'",
+          "href": "https://my.server.org/sample-data/styles/Night?f=mbs"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/styles/Night/metadata"
+        }
+      ],
+      "id": "Night"
+    },
+    {
+      "title": "OS Open Zoomstack - Outdoor",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.esri.lyr",
+          "title": "Style in format 'ArcGIS'",
+          "href": "https://my.server.org/sample-data/styles/Outdoor?f=lyr"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "text/html",
+          "title": "Web map using the style",
+          "href": "https://my.server.org/sample-data/styles/Outdoor?f=html"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.mapbox.style+json",
+          "title": "Style in format 'Mapbox'",
+          "href": "https://my.server.org/sample-data/styles/Outdoor?f=mbs"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/styles/Outdoor/metadata"
+        }
+      ],
+      "id": "Outdoor"
+    },
+    {
+      "title": "OS Open Zoomstack - Outdoor with Hillshade",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "text/html",
+          "title": "Web map using the style",
+          "href": "https://my.server.org/sample-data/styles/OutdoorHillshade?f=html"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.mapbox.style+json",
+          "title": "Style in format 'Mapbox'",
+          "href": "https://my.server.org/sample-data/styles/OutdoorHillshade?f=mbs"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/styles/OutdoorHillshade/metadata"
+        }
+      ],
+      "id": "OutdoorHillshade"
+    },
+    {
+      "title": "OS Open Zoomstack - Road",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.esri.lyr",
+          "title": "Style in format 'ArcGIS'",
+          "href": "https://my.server.org/sample-data/styles/Road?f=lyr"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "text/html",
+          "title": "Web map using the style",
+          "href": "https://my.server.org/sample-data/styles/Road?f=html"
+        },
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.mapbox.style+json",
+          "title": "Style in format 'Mapbox'",
+          "href": "https://my.server.org/sample-data/styles/Road?f=mbs"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/styles/Road/metadata"
+        }
+      ],
+      "id": "Road"
+    },
+    {
+      "title": "Tritanopia",
+      "links": [
+        {
+          "rel": "stylesheet",
+          "type": "application/vnd.esri.lyr",
+          "title": "Style in format 'ArcGIS'",
+          "href": "https://my.server.org/sample-data/styles/Tritanopia?f=lyr"
+        },
+        {
+          "rel": "describedby",
+          "title": "Style metadata",
+          "href": "https://my.server.org/sample-data/styles/Tritanopia/metadata"
+        }
+      ],
+      "id": "Tritanopia"
+    }
+  ]
+}

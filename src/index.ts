@@ -19,6 +19,7 @@ export {
   LayerStyle,
   LayerAttribution,
 } from './wms/endpoint';
+export { default as OgcApiEndpoint } from './ogc-api/endpoint';
 export { useCache } from './shared/cache';
 export { sharedFetch } from './shared/http-utils';
 

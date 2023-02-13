@@ -1,0 +1,97 @@
+{
+  "title": "National Roads",
+  "description": "Lines representing the road network. A road is defined as a metalled way for vehicles.",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["Feature"]
+    },
+    "links": {
+      "items": {
+        "$ref": "#/$defs/Link"
+      },
+      "type": "array"
+    },
+    "id": {
+      "type": "integer"
+    },
+    "geometry": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "title": "GeoJSON LineString",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["LineString"]
+            },
+            "coordinates": {
+              "items": {
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 3,
+                "type": "array"
+              },
+              "minItems": 2,
+              "type": "array"
+            }
+          },
+          "type": "object",
+          "required": ["type", "coordinates"]
+        }
+      ]
+    },
+    "properties": {
+      "properties": {
+        "type": {
+          "title": "Type",
+          "type": "string",
+          "enum": ["Primary", "Motorway"]
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "number": {
+          "title": "Number",
+          "type": "string"
+        },
+        "level": {
+          "title": "Level",
+          "type": "integer",
+          "enum": [0, 1, 2]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "required": ["type", "geometry", "properties"],
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "https://my.server.org/sample-data/collections/roads_national/schemas/feature",
+  "$defs": {
+    "Link": {
+      "properties": {
+        "href": {
+          "format": "uri-reference",
+          "type": "string"
+        },
+        "rel": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": ["href"]
+    }
+  }
+}

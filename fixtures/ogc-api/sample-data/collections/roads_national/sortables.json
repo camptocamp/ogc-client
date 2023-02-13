@@ -1,0 +1,18 @@
+{
+  "title": "National Roads",
+  "description": "Lines representing the road network. A road is defined as a metalled way for vehicles.",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "number": {
+      "title": "Number",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "https://my.server.org/sample-data/collections/roads_national/sortables"
+}

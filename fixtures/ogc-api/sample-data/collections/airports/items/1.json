@@ -1,0 +1,44 @@
+{
+  "type": "Feature",
+  "id": 1,
+  "geometry": { "type": "Point", "coordinates": [-1.2918826, 59.8783475] },
+  "properties": { "name": "Sumburgh Airport" },
+  "links": [
+    {
+      "href": "https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=json",
+      "rel": "self",
+      "type": "application/geo+json",
+      "title": "This document"
+    },
+    {
+      "href": "https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=jsonfgc",
+      "rel": "alternate",
+      "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+      "title": "This document as JSON-FG (GeoJSON Compatibility Mode)"
+    },
+    {
+      "href": "https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=fgb",
+      "rel": "alternate",
+      "type": "application/flatgeobuf",
+      "title": "This document as FlatGeobuf"
+    },
+    {
+      "href": "https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=html",
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML"
+    },
+    {
+      "href": "https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=jsonfg",
+      "rel": "alternate",
+      "type": "application/vnd.ogc.fg+json",
+      "title": "This document as JSON-FG"
+    },
+    {
+      "href": "https://demo.ldproxy.net/zoomstack/collections/airports?f=json",
+      "rel": "collection",
+      "type": "application/json",
+      "title": "The collection the feature belongs to"
+    }
+  ]
+}

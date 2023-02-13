@@ -1,0 +1,30 @@
+{
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document",
+      "href": "https://demo.ldproxy.net/zoomstack/tileMatrixSets?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML",
+      "href": "https://demo.ldproxy.net/zoomstack/tileMatrixSets?f=html"
+    }
+  ],
+  "tileMatrixSets": [
+    {
+      "title": "Google Maps Compatible for the World",
+      "links": [
+        {
+          "rel": "self",
+          "title": "Tile matrix set 'WebMercatorQuad'",
+          "href": "https://demo.ldproxy.net/zoomstack/tileMatrixSets/WebMercatorQuad"
+        }
+      ],
+      "id": "WebMercatorQuad",
+      "uri": "http://www.opengis.net/def/tilematrixset/OGC/1.0/WebMercatorQuad"
+    }
+  ]
+}

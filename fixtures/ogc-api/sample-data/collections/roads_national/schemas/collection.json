@@ -1,0 +1,57 @@
+{
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["FeatureCollection"]
+    },
+    "links": {
+      "items": {
+        "$ref": "#/$defs/Link"
+      },
+      "type": "array"
+    },
+    "timeStamp": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "numberMatched": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "numberReturned": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "features": {
+      "items": {
+        "$ref": "https://my.server.org/sample-data/collections/roads_national/schemas/feature"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "required": ["type", "features"],
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "https://my.server.org/sample-data/collections/roads_national/schemas/collection",
+  "$defs": {
+    "Link": {
+      "properties": {
+        "href": {
+          "format": "uri-reference",
+          "type": "string"
+        },
+        "rel": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "required": ["href"]
+    }
+  }
+}

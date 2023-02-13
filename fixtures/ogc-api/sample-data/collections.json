@@ -1,0 +1,1365 @@
+{
+  "title": "OS Open Zoomstack",
+  "description": "OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document",
+      "href": "https://my.server.org/sample-data/collections?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML",
+      "href": "https://my.server.org/sample-data/collections?f=html"
+    },
+    {
+      "rel": "alternate",
+      "type": "application/xml",
+      "title": "This document as XML",
+      "href": "https://my.server.org/sample-data/collections?f=xml"
+    },
+    {
+      "rel": "license",
+      "title": "Open Government Licence (OGL)",
+      "href": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+    },
+    {
+      "rel": "enclosure",
+      "type": "application/geopackage+sqlite3",
+      "title": "OS Open Zoomstack as a GeoPackage",
+      "href": "https://api.os.uk/downloads/v1/products/OpenZoomstack/downloads?area=GB&format=GeoPackage"
+    }
+  ],
+  "crs": [
+    "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+    "http://www.opengis.net/def/crs/EPSG/0/27700",
+    "http://www.opengis.net/def/crs/EPSG/0/4258",
+    "http://www.opengis.net/def/crs/EPSG/0/4326",
+    "http://www.opengis.net/def/crs/EPSG/0/3857"
+  ],
+  "collections": [
+    {
+      "title": "Airports",
+      "description": "A centre point for all major airports including a name.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Airports' feature collection",
+          "href": "https://my.server.org/sample-data/collections/airports"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Airports' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/airports/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Airports' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/airports/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Airports' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/airports/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Airports' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/airports/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Airports' as HTML",
+          "href": "https://my.server.org/sample-data/collections/airports/items?f=html"
+        }
+      ],
+      "id": "airports",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -7.942759150065165,
+              49.901607895996534,
+              1.9957427933628138,
+              60.133709755754
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 46
+    },
+    {
+      "title": "Boundaries",
+      "description": "National boundary lines between England - Scotland and England - Wales.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Boundaries' feature collection",
+          "href": "https://my.server.org/sample-data/collections/boundaries"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Boundaries' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/boundaries/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Boundaries' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/boundaries/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Boundaries' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/boundaries/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Boundaries' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/boundaries/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Boundaries' as HTML",
+          "href": "https://my.server.org/sample-data/collections/boundaries/items?f=html"
+        }
+      ],
+      "id": "boundaries",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -3.353443758684184,
+              51.56539937427431,
+              -2.030006856546504,
+              55.81167771035611
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 32
+    },
+    {
+      "title": "Contours",
+      "description": "These contours lines have a 10-metre interval with an index every 50 metres. Each contour contains a value.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Contours' feature collection",
+          "href": "https://my.server.org/sample-data/collections/contours"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Contours' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/contours/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Contours' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/contours/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Contours' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/contours/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Contours' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/contours/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Contours' as HTML",
+          "href": "https://my.server.org/sample-data/collections/contours/items?f=html"
+        }
+      ],
+      "id": "contours",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -9.229436317495699,
+              49.82026221571111,
+              2.6868283140378657,
+              60.77919884922387
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 952689
+    },
+    {
+      "title": "District Buildings",
+      "description": "Generalised building footprints at district resolution.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'District Buildings' feature collection",
+          "href": "https://my.server.org/sample-data/collections/district_buildings"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'District Buildings' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/district_buildings/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'District Buildings' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/district_buildings/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'District Buildings' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/district_buildings/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'District Buildings' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/district_buildings/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'District Buildings' as HTML",
+          "href": "https://my.server.org/sample-data/collections/district_buildings/items?f=html"
+        }
+      ],
+      "id": "district_buildings",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -9.161386312800703,
+              49.83051579969082,
+              2.6926347822219707,
+              60.77807759733313
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 2756155
+    },
+    {
+      "title": "ETL",
+      "description": "Electricity Transmission Lines.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'ETL' feature collection",
+          "href": "https://my.server.org/sample-data/collections/etl"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'ETL' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/etl/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'ETL' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/etl/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'ETL' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/etl/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'ETL' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/etl/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'ETL' as HTML",
+          "href": "https://my.server.org/sample-data/collections/etl/items?f=html"
+        }
+      ],
+      "id": "etl",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -6.289748340048653,
+              50.14037477109227,
+              2.33600775696539,
+              58.515541995093926
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 3456
+    },
+    {
+      "title": "Foreshore",
+      "description": "These polygons depict the part of the shore or beach which lies between the Mean Low Water Mark and Mean High Water Mark.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Foreshore' feature collection",
+          "href": "https://my.server.org/sample-data/collections/foreshore"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Foreshore' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/foreshore/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Foreshore' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/foreshore/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Foreshore' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/foreshore/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Foreshore' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/foreshore/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Foreshore' as HTML",
+          "href": "https://my.server.org/sample-data/collections/foreshore/items?f=html"
+        }
+      ],
+      "id": "foreshore",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -9.229007463313069,
+              49.81685890446522,
+              2.69547862504583,
+              60.783438341201155
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 36931
+    },
+    {
+      "title": "Greenspace",
+      "description": "Polygon features representing the extent of places such as parks and sports facilities that are likely to be accessible to the public.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Greenspace' feature collection",
+          "href": "https://my.server.org/sample-data/collections/greenspace"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Greenspace' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/greenspace/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Greenspace' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/greenspace/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Greenspace' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/greenspace/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Greenspace' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/greenspace/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Greenspace' as HTML",
+          "href": "https://my.server.org/sample-data/collections/greenspace/items?f=html"
+        }
+      ],
+      "id": "greenspace",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -9.140209405918318,
+              49.847346158649266,
+              2.6798173070292117,
+              60.72844339242528
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 163772
+    },
+    {
+      "title": "Land",
+      "description": "This layer depicts the shape of Great Britain.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Land' feature collection",
+          "href": "https://my.server.org/sample-data/collections/land"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Land' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/land/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Land' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/land/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Land' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/land/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Land' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/land/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Land' as HTML",
+          "href": "https://my.server.org/sample-data/collections/land/items?f=html"
+        }
+      ],
+      "id": "land",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -9.230549516889134,
+              49.81687027180851,
+              2.6954553633653067,
+              60.78336234918871
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 47845
+    },
+    {
+      "title": "Local Buildings",
+      "description": "Generalised building footprints at local resolution. The buildings have a unique identifier which can be used to style features distinctly. The identifier will not be persistent between product versions and therefore there will be no change history information for a feature.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Local Buildings' feature collection",
+          "href": "https://my.server.org/sample-data/collections/local_buildings"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Local Buildings' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/local_buildings/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Local Buildings' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/local_buildings/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Local Buildings' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/local_buildings/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Local Buildings' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/local_buildings/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Local Buildings' as HTML",
+          "href": "https://my.server.org/sample-data/collections/local_buildings/items?f=html"
+        }
+      ],
+      "id": "local_buildings",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -9.161552750416005,
+              49.84423409871862,
+              2.693061112022058,
+              60.77806491151261
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 14767492
+    },
+    {
+      "title": "Names",
+      "description": "Use this point layer to render contextual labels on your map.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Names' feature collection",
+          "href": "https://my.server.org/sample-data/collections/names"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Names' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/names/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Names' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/names/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Names' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/names/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Names' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/names/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Names' as HTML",
+          "href": "https://my.server.org/sample-data/collections/names/items?f=html"
+        }
+      ],
+      "id": "names",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -9.223028104021813,
+              49.8211736840672,
+              2.6872590240033913,
+              60.77819537105956
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 663624
+    },
+    {
+      "title": "National Parks",
+      "description": "Theses polygons depict the extent of the 15 National Parks in Great Britain.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'National Parks' feature collection",
+          "href": "https://my.server.org/sample-data/collections/national_parks"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'National Parks' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/national_parks/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'National Parks' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/national_parks/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'National Parks' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/national_parks/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'National Parks' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/national_parks/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'National Parks' as HTML",
+          "href": "https://my.server.org/sample-data/collections/national_parks/items?f=html"
+        }
+      ],
+      "id": "national_parks",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -6.000951880798203,
+              50.350225515433486,
+              2.197829108619243,
+              57.35677547861099
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 39
+    },
+    {
+      "title": "Rail",
+      "description": "Lines representing the railway network. They are broken where they pass under bridges, buildings or other obstructing detail.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Rail' feature collection",
+          "href": "https://my.server.org/sample-data/collections/rail"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Rail' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/rail/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Rail' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/rail/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Rail' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/rail/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Rail' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/rail/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Rail' as HTML",
+          "href": "https://my.server.org/sample-data/collections/rail/items?f=html"
+        }
+      ],
+      "id": "rail",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -6.57793449730909,
+              50.11274051097212,
+              2.616645763341211,
+              60.35171925328691
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 105582
+    },
+    {
+      "title": "Railway Stations",
+      "description": "This layer contains a point for all stations and includes a name.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Railway Stations' feature collection",
+          "href": "https://my.server.org/sample-data/collections/railway_stations"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Railway Stations' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/railway_stations/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Railway Stations' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/railway_stations/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Railway Stations' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/railway_stations/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Railway Stations' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/railway_stations/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Railway Stations' as HTML",
+          "href": "https://my.server.org/sample-data/collections/railway_stations/items?f=html"
+        }
+      ],
+      "id": "railway_stations",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -6.336940205377114,
+              50.11281330079447,
+              2.373901529064454,
+              58.525818197436486
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 3473
+    },
+    {
+      "title": "Local Roads",
+      "description": "Lines representing the road network. A road is defined as a metalled way for vehicles.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Local Roads' feature collection",
+          "href": "https://my.server.org/sample-data/collections/roads_local"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Local Roads' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/roads_local/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Local Roads' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/roads_local/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Local Roads' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/roads_local/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Local Roads' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/roads_local/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Local Roads' as HTML",
+          "href": "https://my.server.org/sample-data/collections/roads_local/items?f=html"
+        }
+      ],
+      "id": "roads_local",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -9.157833237161705,
+              49.844845328102735,
+              2.6891998217837148,
+              60.75074152255422
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 3179639
+    },
+    {
+      "title": "National Roads",
+      "description": "Lines representing the road network. A road is defined as a metalled way for vehicles.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'National Roads' feature collection",
+          "href": "https://my.server.org/sample-data/collections/roads_national"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'National Roads' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/roads_national/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'National Roads' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/roads_national/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'National Roads' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/roads_national/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'National Roads' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/roads_national/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'National Roads' as HTML",
+          "href": "https://my.server.org/sample-data/collections/roads_national/items?f=html"
+        }
+      ],
+      "id": "roads_national",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -6.4956758012099645,
+              50.08021976237488,
+              2.383883951687144,
+              58.54688148276149
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 123905
+    },
+    {
+      "title": "Regional Roads",
+      "description": "Lines representing the road network. A road is defined as a metalled way for vehicles.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Regional Roads' feature collection",
+          "href": "https://my.server.org/sample-data/collections/roads_regional"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Regional Roads' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/roads_regional/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Regional Roads' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/roads_regional/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Regional Roads' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/roads_regional/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Regional Roads' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/roads_regional/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Regional Roads' as HTML",
+          "href": "https://my.server.org/sample-data/collections/roads_regional/items?f=html"
+        }
+      ],
+      "id": "roads_regional",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -8.140045163468065,
+              49.897828949470515,
+              2.678925679725326,
+              60.72856279715021
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 342709
+    },
+    {
+      "title": "Sites",
+      "description": "Polygon features that represent the area or extent of certain types of function or activity.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Sites' feature collection",
+          "href": "https://my.server.org/sample-data/collections/sites"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Sites' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/sites/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Sites' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/sites/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Sites' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/sites/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Sites' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/sites/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Sites' as HTML",
+          "href": "https://my.server.org/sample-data/collections/sites/items?f=html"
+        }
+      ],
+      "id": "sites",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -8.114938143586947,
+              49.88033059118879,
+              2.6783629940894356,
+              60.68320893890659
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 36163
+    },
+    {
+      "title": "Surface Water",
+      "description": "These polygons represent inland water bodies that are sufficiently wide enough to be captured as an area.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Surface Water' feature collection",
+          "href": "https://my.server.org/sample-data/collections/surfacewater"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Surface Water' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/surfacewater/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Surface Water' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/surfacewater/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Surface Water' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/surfacewater/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Surface Water' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/surfacewater/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Surface Water' as HTML",
+          "href": "https://my.server.org/sample-data/collections/surfacewater/items?f=html"
+        }
+      ],
+      "id": "surfacewater",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -9.149150953572926,
+              49.849552493410215,
+              2.6791066928139706,
+              60.78388658611872
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 520687
+    },
+    {
+      "title": "Urban Areas",
+      "description": "These are generalised polygons representing built-up areas for use at smaller scales.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Urban Areas' feature collection",
+          "href": "https://my.server.org/sample-data/collections/urban_areas"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Urban Areas' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/urban_areas/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Urban Areas' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/urban_areas/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Urban Areas' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/urban_areas/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Urban Areas' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/urban_areas/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Urban Areas' as HTML",
+          "href": "https://my.server.org/sample-data/collections/urban_areas/items?f=html"
+        }
+      ],
+      "id": "urban_areas",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -8.053765984889685,
+              49.89774857169156,
+              2.6293155160795716,
+              60.3210966112084
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 5499
+    },
+    {
+      "title": "Waterlines",
+      "description": "Lines representing rivers, canals, drains and other linear bodies of water.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Waterlines' feature collection",
+          "href": "https://my.server.org/sample-data/collections/waterlines"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Waterlines' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/waterlines/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Waterlines' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/waterlines/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Waterlines' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/waterlines/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Waterlines' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/waterlines/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Waterlines' as HTML",
+          "href": "https://my.server.org/sample-data/collections/waterlines/items?f=html"
+        }
+      ],
+      "id": "waterlines",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -9.23056668252574,
+              49.81680248396912,
+              2.69547862504583,
+              60.783438341201155
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 2503541
+    },
+    {
+      "title": "Woodland",
+      "description": "The polygons represent areas of trees: coniferous, non-coniferous and mixed.",
+      "links": [
+        {
+          "rel": "self",
+          "title": "The 'Woodland' feature collection",
+          "href": "https://my.server.org/sample-data/collections/woodland"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json",
+          "title": "Access the features in the collection 'Woodland' as JSON-FG",
+          "href": "https://my.server.org/sample-data/collections/woodland/items?f=jsonfg"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Access the features in the collection 'Woodland' as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/woodland/items?f=json"
+        },
+        {
+          "rel": "items",
+          "type": "application/flatgeobuf",
+          "title": "Access the features in the collection 'Woodland' as FlatGeobuf",
+          "href": "https://my.server.org/sample-data/collections/woodland/items?f=fgb"
+        },
+        {
+          "rel": "items",
+          "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+          "title": "Access the features in the collection 'Woodland' as JSON-FG (GeoJSON Compatibility Mode)",
+          "href": "https://my.server.org/sample-data/collections/woodland/items?f=jsonfgc"
+        },
+        {
+          "rel": "items",
+          "type": "text/html",
+          "title": "Access the features in the collection 'Woodland' as HTML",
+          "href": "https://my.server.org/sample-data/collections/woodland/items?f=html"
+        }
+      ],
+      "id": "woodland",
+      "extent": {
+        "spatial": {
+          "bbox": [
+            [
+              -8.115229230492005,
+              49.87727148846909,
+              2.67341949373892,
+              60.687673069835824
+            ]
+          ],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "feature",
+      "crs": ["#/crs"],
+      "storageCrs": "http://www.opengis.net/def/crs/EPSG/0/27700",
+      "itemCount": 1285805
+    },
+    {
+      "id": "dutch-metadata",
+      "title": "Sample metadata records from Dutch Nationaal georegister",
+      "description": "Sample metadata records from Dutch Nationaal georegister",
+      "keywords": ["netherlands", "open data", "georegister"],
+      "links": [
+        {
+          "type": "text/html",
+          "rel": "canonical",
+          "title": "information",
+          "href": "https://www.nationaalgeoregister.nl",
+          "hreflang": "nl-NL"
+        },
+        {
+          "type": "application/json",
+          "rel": "root",
+          "title": "The landing page of this server as JSON",
+          "href": "https://my.server.org/sample-data?f=json"
+        },
+        {
+          "type": "text/html",
+          "rel": "root",
+          "title": "The landing page of this server as HTML",
+          "href": "https://my.server.org/sample-data?f=html"
+        },
+        {
+          "type": "application/json",
+          "rel": "self",
+          "title": "This document as JSON",
+          "href": "https://my.server.org/sample-data/collections/dutch-metadata?f=json"
+        },
+        {
+          "type": "application/ld+json",
+          "rel": "alternate",
+          "title": "This document as RDF (JSON-LD)",
+          "href": "https://my.server.org/sample-data/collections/dutch-metadata?f=jsonld"
+        },
+        {
+          "type": "text/html",
+          "rel": "alternate",
+          "title": "This document as HTML",
+          "href": "https://my.server.org/sample-data/collections/dutch-metadata?f=html"
+        },
+        {
+          "type": "application/json",
+          "rel": "queryables",
+          "title": "Queryables for this collection as JSON",
+          "href": "https://my.server.org/sample-data/collections/dutch-metadata/queryables?f=json"
+        },
+        {
+          "type": "text/html",
+          "rel": "queryables",
+          "title": "Queryables for this collection as HTML",
+          "href": "https://my.server.org/sample-data/collections/dutch-metadata/queryables?f=html"
+        },
+        {
+          "type": "application/geo+json",
+          "rel": "items",
+          "title": "items as GeoJSON",
+          "href": "https://my.server.org/sample-data/collections/dutch-metadata/items?f=json"
+        },
+        {
+          "type": "application/ld+json",
+          "rel": "items",
+          "title": "items as RDF (GeoJSON-LD)",
+          "href": "https://my.server.org/sample-data/collections/dutch-metadata/items?f=jsonld"
+        },
+        {
+          "type": "text/html",
+          "rel": "items",
+          "title": "Items as HTML",
+          "href": "https://my.server.org/sample-data/collections/dutch-metadata/items?f=html"
+        }
+      ],
+      "extent": {
+        "spatial": {
+          "bbox": [[3.37, 50.75, 7.21, 53.47]],
+          "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+      },
+      "itemType": "record"
+    }
+  ]
+}

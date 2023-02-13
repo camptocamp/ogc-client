@@ -1,0 +1,107 @@
+{
+  "type": "FeatureCollection",
+  "numberReturned": 10,
+  "timeStamp": "2023-01-08T12:25:28Z",
+  "features": [
+    {
+      "type": "Feature",
+      "id": 1,
+      "geometry": { "type": "Point", "coordinates": [-1.2918826, 59.8783475] },
+      "properties": { "name": "Sumburgh Airport" }
+    },
+    {
+      "type": "Feature",
+      "id": 2,
+      "geometry": { "type": "Point", "coordinates": [-1.2438161, 60.1918282] },
+      "properties": { "name": "Tingwall Airport" }
+    },
+    {
+      "type": "Feature",
+      "id": 3,
+      "geometry": { "type": "Point", "coordinates": [-2.8998525, 58.9579506] },
+      "properties": { "name": "Kirkwall Airport" }
+    },
+    {
+      "type": "Feature",
+      "id": 4,
+      "geometry": { "type": "Point", "coordinates": [-6.3295078, 58.2138995] },
+      "properties": { "name": "Port-Adhair Steòrnabhaigh/Stornoway Airport" }
+    },
+    {
+      "type": "Feature",
+      "id": 5,
+      "geometry": { "type": "Point", "coordinates": [-3.094033, 58.458363] },
+      "properties": { "name": "Wick John O'Groats Airport" }
+    },
+    {
+      "type": "Feature",
+      "id": 6,
+      "geometry": { "type": "Point", "coordinates": [-7.3610346, 57.4843261] },
+      "properties": {
+        "name": "Port-adhair Bheinn na Faoghla/Benbecula Airport"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 7,
+      "geometry": { "type": "Point", "coordinates": [-7.4487268, 57.0254269] },
+      "properties": { "name": "Port-adhair Bharraigh/Barra Airport" }
+    },
+    {
+      "type": "Feature",
+      "id": 8,
+      "geometry": { "type": "Point", "coordinates": [-4.0493507, 57.5431458] },
+      "properties": { "name": "Inverness Airport" }
+    },
+    {
+      "type": "Feature",
+      "id": 9,
+      "geometry": { "type": "Point", "coordinates": [-2.200068, 57.202807] },
+      "properties": { "name": "Aberdeen International Airport" }
+    },
+    {
+      "type": "Feature",
+      "id": 10,
+      "geometry": { "type": "Point", "coordinates": [-6.869044, 56.5011563] },
+      "properties": { "name": "Tiree Airport" }
+    }
+  ],
+  "links": [
+    {
+      "href": "https://my.server.org/sample-data/collections/airports/items?f=json",
+      "rel": "self",
+      "type": "application/geo+json",
+      "title": "This document"
+    },
+    {
+      "href": "https://my.server.org/sample-data/collections/airports/items?f=jsonfgc",
+      "rel": "alternate",
+      "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+      "title": "This document as JSON-FG (GeoJSON Compatibility Mode)"
+    },
+    {
+      "href": "https://my.server.org/sample-data/collections/airports/items?f=fgb",
+      "rel": "alternate",
+      "type": "application/flatgeobuf",
+      "title": "This document as FlatGeobuf"
+    },
+    {
+      "href": "https://my.server.org/sample-data/collections/airports/items?f=html",
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML"
+    },
+    {
+      "href": "https://my.server.org/sample-data/collections/airports/items?f=jsonfg",
+      "rel": "alternate",
+      "type": "application/vnd.ogc.fg+json",
+      "title": "This document as JSON-FG"
+    },
+    {
+      "href": "https://my.server.org/sample-data/collections/airports/items?f=json&offset=10",
+      "rel": "next",
+      "type": "application/geo+json",
+      "title": "Next page"
+    }
+  ]
+}

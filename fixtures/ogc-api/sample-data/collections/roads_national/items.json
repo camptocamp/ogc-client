@@ -1,0 +1,185 @@
+{
+  "type": "FeatureCollection",
+  "numberReturned": 10,
+  "timeStamp": "2023-01-08T12:25:44Z",
+  "features": [
+    {
+      "type": "Feature",
+      "id": 1,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.7146553, 58.0895513],
+          [-3.7171409, 58.0885901]
+        ]
+      },
+      "properties": { "type": "Primary", "number": "A9", "level": 0 }
+    },
+    {
+      "type": "Feature",
+      "id": 2,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.7461507, 58.0813773],
+          [-3.7469084, 58.0810599],
+          [-3.7506235, 58.0802469]
+        ]
+      },
+      "properties": { "type": "Primary", "number": "A9", "level": 0 }
+    },
+    {
+      "type": "Feature",
+      "id": 3,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.7450719, 58.0818592],
+          [-3.7461507, 58.0813773]
+        ]
+      },
+      "properties": { "type": "Primary", "number": "A9", "level": 0 }
+    },
+    {
+      "type": "Feature",
+      "id": 4,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.7380837, 58.0842815],
+          [-3.7401187, 58.08358],
+          [-3.7420469, 58.0831224],
+          [-3.7437685, 58.0826047],
+          [-3.7450719, 58.0818592]
+        ]
+      },
+      "properties": { "type": "Primary", "number": "A9", "level": 0 }
+    },
+    {
+      "type": "Feature",
+      "id": 5,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.7373997, 58.0845154],
+          [-3.7380837, 58.0842815]
+        ]
+      },
+      "properties": { "type": "Primary", "number": "A9", "level": 0 }
+    },
+    {
+      "type": "Feature",
+      "id": 6,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.7171409, 58.0885901],
+          [-3.7174653, 58.0884718],
+          [-3.7195617, 58.087902],
+          [-3.721399, 58.0875031],
+          [-3.7256251, 58.0868944],
+          [-3.7289353, 58.0862476],
+          [-3.7321928, 58.0859159],
+          [-3.7333858, 58.0856841],
+          [-3.7353467, 58.0851992],
+          [-3.7373997, 58.0845154]
+        ]
+      },
+      "properties": { "type": "Primary", "number": "A9", "level": 0 }
+    },
+    {
+      "type": "Feature",
+      "id": 7,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.7638606, 58.0763091],
+          [-3.7704891, 58.0745642]
+        ]
+      },
+      "properties": { "type": "Primary", "number": "A9", "level": 0 }
+    },
+    {
+      "type": "Feature",
+      "id": 8,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.7099634, 58.0917321],
+          [-3.71127, 58.0910318],
+          [-3.7127532, 58.0903683],
+          [-3.7146553, 58.0895513]
+        ]
+      },
+      "properties": { "type": "Primary", "number": "A9", "level": 0 }
+    },
+    {
+      "type": "Feature",
+      "id": 9,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.7036866, 58.0950811],
+          [-3.7038614, 58.0950389],
+          [-3.7056711, 58.0945655],
+          [-3.7064724, 58.0942942],
+          [-3.7072678, 58.0938973],
+          [-3.707711, 58.0935859],
+          [-3.7088797, 58.0924832],
+          [-3.7099634, 58.0917321]
+        ]
+      },
+      "properties": { "type": "Primary", "number": "A9", "level": 0 }
+    },
+    {
+      "type": "Feature",
+      "id": 10,
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.7036866, 58.0950811],
+          [-3.7029109, 58.0952652]
+        ]
+      },
+      "properties": { "type": "Primary", "number": "A9", "level": 0 }
+    }
+  ],
+  "links": [
+    {
+      "href": "https://my.server.org/sample-data/collections/roads_national/items?f=json",
+      "rel": "self",
+      "type": "application/geo+json",
+      "title": "This document"
+    },
+    {
+      "href": "https://my.server.org/sample-data/collections/roads_national/items?f=jsonfgc",
+      "rel": "alternate",
+      "type": "application/vnd.ogc.fg+json;compatibility=geojson",
+      "title": "This document as JSON-FG (GeoJSON Compatibility Mode)"
+    },
+    {
+      "href": "https://my.server.org/sample-data/collections/roads_national/items?f=fgb",
+      "rel": "alternate",
+      "type": "application/flatgeobuf",
+      "title": "This document as FlatGeobuf"
+    },
+    {
+      "href": "https://my.server.org/sample-data/collections/roads_national/items?f=html",
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML"
+    },
+    {
+      "href": "https://my.server.org/sample-data/collections/roads_national/items?f=jsonfg",
+      "rel": "alternate",
+      "type": "application/vnd.ogc.fg+json",
+      "title": "This document as JSON-FG"
+    },
+    {
+      "href": "https://my.server.org/sample-data/collections/roads_national/items?f=json&offset=10",
+      "rel": "next",
+      "type": "application/geo+json",
+      "title": "Next page"
+    }
+  ]
+}

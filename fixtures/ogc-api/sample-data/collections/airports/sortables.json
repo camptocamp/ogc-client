@@ -1,0 +1,14 @@
+{
+  "title": "Airports",
+  "description": "A centre point for all major airports including a name.",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "https://my.server.org/sample-data/collections/airports/sortables"
+}
