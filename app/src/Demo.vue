@@ -13,6 +13,13 @@
       feature types from it.
     </p>
     <WfsEndpoint></WfsEndpoint>
+
+    <h2 class="my-4">OGC API</h2>
+    <p>
+      Enter an OGC API endpoint URL below to get some information and a list of
+      collections from it.
+    </p>
+    <OgcApiEndpoint></OgcApiEndpoint>
   </div>
 </template>
 
@@ -21,9 +28,10 @@
 <script>
 import WmsEndpoint from './components/wms/WmsEndpoint';
 import WfsEndpoint from './components/wfs/WfsEndpoint';
+import OgcApiEndpoint from './components/ogc-api/OgcApiEndpoint.vue';
 
 export default {
   name: 'App',
-  components: { WfsEndpoint, WmsEndpoint },
+  components: { OgcApiEndpoint, WfsEndpoint, WmsEndpoint },
 };
 </script>

@@ -44,7 +44,7 @@ describe('OgcApiEndpoint', () => {
         });
       });
     });
-    describe('#confitemsormanceClasses', () => {
+    describe('#conformanceClasses', () => {
       it('returns conformance classes', async () => {
         await expect(endpoint.conformanceClasses).resolves.toEqual([
           'http://www.opengis.net/spec/cql2/0.0/conf/advanced-comparison-operators',
