@@ -117,6 +117,133 @@ available layers, bounding boxes etc. Layer name is case sensitive.`,
       ],
     },
     {
+      name: 'OgcApiEndpoint',
+      type: 'Class',
+      constructor: {
+        params: [{ name: 'url', type: 'string' }],
+        description: `Creates a new OGC API endpoint.`,
+      },
+      properties: [
+        {
+          name: 'info',
+          description: `A Promise which resolves to the endpoint info.`,
+          type: 'Promise',
+          subType: 'OgcApiEndpointInfo',
+        },
+        {
+          name: 'conformanceClasses',
+          description: `A Promise which resolves to an array of conformance classes.`,
+          type: 'Promise',
+          subType: {
+            type: 'Array',
+            subType: 'string',
+          },
+        },
+        {
+          name: 'allCollections',
+          description: `A Promise which resolves to an array of all collection identifiers as strings.`,
+          type: 'Promise',
+          subType: {
+            type: 'Array',
+            subType: 'string',
+          },
+        },
+        {
+          name: 'recordCollections',
+          description: `A Promise which resolves to an array of records collection identifiers as strings.`,
+          type: 'Promise',
+          subType: {
+            type: 'Array',
+            subType: 'string',
+          },
+        },
+        {
+          name: 'featureCollections',
+          description: `A Promise which resolves to an array of feature collection identifiers as strings.`,
+          type: 'Promise',
+          subType: {
+            type: 'Array',
+            subType: 'string',
+          },
+        },
+        {
+          name: 'hasTiles',
+          description: `A Promise which resolves to a boolean indicating whether the endpoint offer tiles.`,
+          type: 'Promise',
+          subType: 'boolean',
+        },
+        {
+          name: 'hasStyles',
+          description: `A Promise which resolves to a boolean indicating whether the endpoint offer styles.`,
+          type: 'Promise',
+          subType: 'boolean',
+        },
+        {
+          name: 'hasFeatures',
+          description: `A Promise which resolves to a boolean indicating whether the endpoint offer feature collections.`,
+          type: 'Promise',
+          subType: 'boolean',
+        },
+        {
+          name: 'hasRecords',
+          description: `A Promise which resolves to a boolean indicating whether the endpoint offer record collections.`,
+          type: 'Promise',
+          subType: 'boolean',
+        },
+      ],
+      methods: [
+        {
+          name: 'getCollectionInfo',
+          description: `Returns a promise resolving to a document describing the specified collection.`,
+          params: [{ name: 'collectionId', type: 'string' }],
+          return: { type: 'Promise', subType: 'OgcApiCollectionInfo' },
+        },
+        {
+          name: 'getCollectionItems',
+          description: `Returns a promise resolving to an array of items from a collection with the given query parameters.`,
+          params: [
+            { name: 'collectionId', type: 'string' },
+            { name: 'limit', type: 'number', default: 10 },
+            { name: 'offset', type: 'number', default: 0 },
+            { name: 'skipGeometry', type: 'boolean', optional: true },
+            {
+              name: 'sortby',
+              type: 'Array',
+              subType: 'string',
+              optional: true,
+            },
+            {
+              name: 'bbox',
+              type: '[number, number, number, number]',
+              optional: true,
+            },
+            {
+              name: 'properties',
+              type: 'Array',
+              subType: 'string',
+              optional: true,
+            },
+          ],
+          return: {
+            type: 'Promise',
+            subType: {
+              type: 'Array',
+              subType: 'OgcApiCollectionItem',
+            },
+          },
+        },
+        {
+          name: 'getCollectionItem',
+          description: `Returns a promise resolving to a specific item from a collection.`,
+          params: [
+            { name: 'collectionId', type: 'string' },
+            { name: 'itemId', type: 'string' },
+          ],
+          return: { type: 'Promise', subType: 'OgcApiCollectionItem' },
+        },
+      ],
+    },
+    {
       name: 'useCache',
       type: 'Function',
       description: `Will run the provided function and resolve to its return value.
@@ -390,6 +517,25 @@ Requests are considered identical if they share the _exact_ same url and method.
       subTypes: ['number', 'number', 'number', 'number'],
       description:
         'Values are `minX`, `minY`, `maxX` and `maxY` expressed in latitudes and longitudes',
+    },
+    {
+      name: 'OgcApiEndpointInfo',
+      type: 'Object',
+      subTypes: ['number', 'number', 'number', 'number'],
+      description: 'Information related to an OGC API endpoint.',
+    },
+    {
+      name: 'OgcApiCollectionInfo',
+      type: 'Object',
+      subTypes: ['number', 'number', 'number', 'number'],
+      description:
+        'Information on a specific collection of an OGC API endpoint.',
+    },
+    {
+      name: 'OgcApiCollectionItem',
+      type: 'Object',
+      subTypes: ['number', 'number', 'number', 'number'],
+      description: 'An item coming from an OGC API endpoint',
     },
   ],
 };

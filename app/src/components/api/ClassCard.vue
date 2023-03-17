@@ -28,6 +28,22 @@ import { {{ apiElement.name }} } from '@camptocamp/ogc-client';</pre
           />
         </div>
       </div>
+      <div class="row" v-for="property in apiElement.properties">
+        <div
+          class="col-3 text-uppercase text-secondary fw-bold pt-1"
+          style="font-size: 0.8em"
+        >
+          💡 property
+        </div>
+        <div class="col">
+          <code class="mb-2" v-html="formatProperty(property)"></code>
+          <MarkdownBlock
+            v-if="property.description"
+            class="mb-2 small"
+            :text="property.description"
+          />
+        </div>
+      </div>
       <div class="row" v-for="method in apiElement.methods">
         <div
           class="col-3 text-uppercase text-secondary fw-bold pt-1"
@@ -83,6 +99,11 @@ export default {
     },
     formatMethodReturned(method) {
       return marked.parseInline(formatTypeToString(method.return));
+    },
+    formatProperty(property) {
+      return marked.parseInline(
+        `${property.name}: ${formatTypeToString(property)}`
+      );
     },
   },
   computed: {

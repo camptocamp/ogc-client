@@ -4,7 +4,12 @@ export function formatClassToString(classObj) {
 
 export function formatFunctionToString(functionObj) {
   const params = functionObj.params
-    .map((param) => `${param.name}: ${formatTypeToString(param)}`)
+    .map(
+      (param) =>
+        `${param.name}${param.optional ? '?' : ''}: ${formatTypeToString(
+          param
+        )}`
+    )
     .join(', ');
   return `${functionObj.name}(${params})`;
 }

@@ -23,6 +23,16 @@ async function getFeatureUrl() {
   return url;
 }`,
   },
+  {
+    description: 'Query the first 10 items of an OGC API Records collection',
+    code: `import { OgcApiEndpoint } from '@camptocamp/ogc-client';
+
+async function getFirstTenRecords() {
+  const endpoint = await new OgcApiEndpoint('https://my.server.org/main')
+  const firstCollection = (await endpoint.recordCollections)[0];
+  return endpoint.getCollectionItems(firstCollection, 10, 0);
+}`,
+  },
 ];
 
 export default EXAMPLES;
