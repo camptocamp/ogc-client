@@ -47,6 +47,6 @@
     "prepublishOnly": "npm run typecheck && npm test && npm run build",
     "typecheck": "tsc --noEmit"
   },
-  "author": "olivier.guyot@camptocamp.com",
-  "license": "GPL-3.0-or-later"
+  "author": "olivia.guyot@camptocamp.com",
+  "license": "BSD-3-Clause"
 }
