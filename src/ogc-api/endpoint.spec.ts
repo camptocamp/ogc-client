@@ -208,6 +208,24 @@ describe('OgcApiEndpoint', () => {
           ],
           storageCrs: 'http://www.opengis.net/def/crs/EPSG/0/27700',
           itemCount: 46,
+          queryables: [
+            {
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+            },
+            {
+              name: 'geom',
+              type: 'point',
+            },
+          ],
+          sortables: [
+            {
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+            },
+          ],
         });
       });
       it('returns dutch-metadata collection info', async () => {
@@ -259,6 +277,44 @@ describe('OgcApiEndpoint', () => {
           ],
           storageCrs: 'http://www.opengis.net/def/crs/EPSG/0/27700',
           itemCount: 123905,
+          queryables: [
+            {
+              name: 'type',
+              title: 'Type',
+              type: 'string',
+            },
+            {
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+            },
+            {
+              name: 'number',
+              title: 'Number',
+              type: 'string',
+            },
+            {
+              name: 'level',
+              title: 'Level',
+              type: 'integer',
+            },
+            {
+              name: 'geom',
+              type: 'linestring',
+            },
+          ],
+          sortables: [
+            {
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+            },
+            {
+              name: 'number',
+              title: 'Number',
+              type: 'string',
+            },
+          ],
         });
       });
     });

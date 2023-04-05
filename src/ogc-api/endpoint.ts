@@ -3,7 +3,8 @@ import {
   checkHasRecords,
   checkStyleConformance,
   checkTileConformance,
-  parseCollectionInfo,
+  parseBaseCollectionInfo,
+  parseCollectionParameters,
   parseCollections,
   parseConformance,
   parseEndpointInfo,
@@ -77,8 +78,26 @@ export default class OgcApiEndpoint {
       })
       .then((collection) => fetchLink(collection, 'self', this.baseUrl));
   }
-  getCollectionInfo(collectionId: string): Promise<OgcApiCollectionInfo> {
-    return this.getCollectionDocument(collectionId).then(parseCollectionInfo);
+  async getCollectionInfo(collectionId: string): Promise<OgcApiCollectionInfo> {
+    const collectionDoc = await this.getCollectionDocument(collectionId);
+    const baseInfo = parseBaseCollectionInfo(collectionDoc);
+    const [queryables, sortables] = await Promise.all([
+      fetchLink(
+        collectionDoc,
+        'http://www.opengis.net/def/rel/ogc/1.0/queryables',
+        this.baseUrl
+      ).then(parseCollectionParameters),
+      fetchLink(
+        collectionDoc,
+        'http://www.opengis.net/def/rel/ogc/1.0/sortables',
+        this.baseUrl
+      ).then(parseCollectionParameters),
+    ]);
+    return {
+      ...baseInfo,
+      queryables,
+      sortables,
+    };
   }
   getCollectionItems(
     collectionId: string,
