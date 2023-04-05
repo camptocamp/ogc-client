@@ -22,10 +22,18 @@ import { EndpointError } from '../shared/errors';
 export default class OgcApiEndpoint {
   private root = fetchRoot(this.baseUrl);
   private conformance = this.root.then((root) =>
-    fetchLink(root, 'conformance', this.baseUrl)
+    fetchLink(
+      root,
+      ['conformance', 'http://www.opengis.net/def/rel/ogc/1.0/conformance'],
+      this.baseUrl
+    )
   );
   private data = this.root.then((root) =>
-    fetchLink(root, 'data', this.baseUrl)
+    fetchLink(
+      root,
+      ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data'],
+      this.baseUrl
+    )
   );
 
   constructor(private baseUrl: string) {}

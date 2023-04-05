@@ -1,6 +1,7 @@
 import OgcApiEndpoint from './endpoint';
 import { readFile } from 'fs/promises';
 import * as path from 'path';
+import { EndpointError } from '../shared/errors';
 
 const FIXTURES_ROOT = path.join(__dirname, '../../fixtures/ogc-api');
 
@@ -1479,6 +1480,21 @@ describe('OgcApiEndpoint', () => {
           },
           type: 'Feature',
         });
+      });
+    });
+  });
+  describe('a failure happens while parsing the endpoint capabilities', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint('http://local/sample-data/styles'); // not pointing at the root path
+    });
+    describe('#info', () => {
+      it('throws an explicit error', async () => {
+        await expect(endpoint.info).rejects.toEqual(
+          new EndpointError(
+            `The endpoint appears non-conforming, the following error was encountered:
+Could not find link with type: data,http://www.opengis.net/def/rel/ogc/1.0/data`
+          )
+        );
       });
     });
   });

@@ -42,3 +42,12 @@ export function fetchLink(
     );
   return fetchDocument(url);
 }
+
+export function assertHasLinks(
+  doc: OgcApiDocument,
+  relType: string | string[]
+) {
+  const url = getLinkUrl(doc, relType);
+  if (!url)
+    throw new EndpointError(`Could not find link with type: ${relType}`);
+}

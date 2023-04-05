@@ -7,8 +7,23 @@ import {
   OgcApiDocument,
   OgcApiEndpointInfo,
 } from './model';
+import { assertHasLinks } from './link-utils';
+import { EndpointError } from '../shared/errors';
 
 export function parseEndpointInfo(rootDoc: OgcApiDocument): OgcApiEndpointInfo {
+  try {
+    assertHasLinks(rootDoc, [
+      'data',
+      'http://www.opengis.net/def/rel/ogc/1.0/data',
+    ]);
+    assertHasLinks(rootDoc, [
+      'conformance',
+      'http://www.opengis.net/def/rel/ogc/1.0/conformance',
+    ]);
+  } catch (e) {
+    throw new EndpointError(`The endpoint appears non-conforming, the following error was encountered:
+${e.message}`);
+  }
   return {
     title: rootDoc.title as string,
     description: rootDoc.description as string,
