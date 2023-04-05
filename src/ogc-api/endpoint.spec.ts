@@ -1,6 +1,7 @@
 import OgcApiEndpoint from './endpoint';
 import { readFile } from 'fs/promises';
 import * as path from 'path';
+import { EndpointError } from '../shared/errors';
 
 const FIXTURES_ROOT = path.join(__dirname, '../../fixtures/ogc-api');
 
@@ -208,6 +209,24 @@ describe('OgcApiEndpoint', () => {
           ],
           storageCrs: 'http://www.opengis.net/def/crs/EPSG/0/27700',
           itemCount: 46,
+          queryables: [
+            {
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+            },
+            {
+              name: 'geom',
+              type: 'point',
+            },
+          ],
+          sortables: [
+            {
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+            },
+          ],
         });
       });
       it('returns dutch-metadata collection info', async () => {
@@ -226,6 +245,58 @@ describe('OgcApiEndpoint', () => {
             },
           },
           itemType: 'record',
+          queryables: [
+            {
+              name: 'geometry',
+              type: 'geometry',
+            },
+            {
+              name: 'recordCreated',
+              title: 'recordCreated',
+              type: 'string',
+            },
+            {
+              name: 'recordUpdated',
+              title: 'recordUpdated',
+              type: 'string',
+            },
+            {
+              name: 'type',
+              title: 'type',
+              type: 'string',
+            },
+            {
+              name: 'title',
+              title: 'title',
+              type: 'string',
+            },
+            {
+              name: 'description',
+              title: 'description',
+              type: 'string',
+            },
+            {
+              name: 'providers',
+              title: 'providers',
+              type: 'string',
+            },
+            {
+              name: 'externalIds',
+              title: 'externalIds',
+              type: 'string',
+            },
+            {
+              name: 'themes',
+              title: 'themes',
+              type: 'string',
+            },
+            {
+              name: 'q',
+              title: 'q',
+              type: 'string',
+            },
+          ],
+          sortables: [],
         });
       });
       it('returns roads_national collection info', async () => {
@@ -259,6 +330,44 @@ describe('OgcApiEndpoint', () => {
           ],
           storageCrs: 'http://www.opengis.net/def/crs/EPSG/0/27700',
           itemCount: 123905,
+          queryables: [
+            {
+              name: 'type',
+              title: 'Type',
+              type: 'string',
+            },
+            {
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+            },
+            {
+              name: 'number',
+              title: 'Number',
+              type: 'string',
+            },
+            {
+              name: 'level',
+              title: 'Level',
+              type: 'integer',
+            },
+            {
+              name: 'geom',
+              type: 'linestring',
+            },
+          ],
+          sortables: [
+            {
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+            },
+            {
+              name: 'number',
+              title: 'Number',
+              type: 'string',
+            },
+          ],
         });
       });
     });
@@ -1423,6 +1532,21 @@ describe('OgcApiEndpoint', () => {
           },
           type: 'Feature',
         });
+      });
+    });
+  });
+  describe('a failure happens while parsing the endpoint capabilities', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint('http://local/sample-data/styles'); // not pointing at the root path
+    });
+    describe('#info', () => {
+      it('throws an explicit error', async () => {
+        await expect(endpoint.info).rejects.toEqual(
+          new EndpointError(
+            `The endpoint appears non-conforming, the following error was encountered:
+Could not find link with type: data,http://www.opengis.net/def/rel/ogc/1.0/data`
+          )
+        );
       });
     });
   });

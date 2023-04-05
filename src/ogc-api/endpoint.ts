@@ -3,7 +3,8 @@ import {
   checkHasRecords,
   checkStyleConformance,
   checkTileConformance,
-  parseCollectionInfo,
+  parseBaseCollectionInfo,
+  parseCollectionParameters,
   parseCollections,
   parseConformance,
   parseEndpointInfo,
@@ -20,12 +21,24 @@ import { EndpointError } from '../shared/errors';
 
 export default class OgcApiEndpoint {
   private root = fetchRoot(this.baseUrl);
-  private conformance = this.root.then((root) =>
-    fetchLink(root, 'conformance', this.baseUrl)
-  );
-  private data = this.root.then((root) =>
-    fetchLink(root, 'data', this.baseUrl)
-  );
+  private conformance = this.root
+    .then((root) =>
+      fetchLink(
+        root,
+        ['conformance', 'http://www.opengis.net/def/rel/ogc/1.0/conformance'],
+        this.baseUrl
+      )
+    )
+    .catch(() => null);
+  private data = this.root
+    .then((root) =>
+      fetchLink(
+        root,
+        ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data'],
+        this.baseUrl
+      )
+    )
+    .catch(() => null);
 
   constructor(private baseUrl: string) {}
 
@@ -77,8 +90,30 @@ export default class OgcApiEndpoint {
       })
       .then((collection) => fetchLink(collection, 'self', this.baseUrl));
   }
-  getCollectionInfo(collectionId: string): Promise<OgcApiCollectionInfo> {
-    return this.getCollectionDocument(collectionId).then(parseCollectionInfo);
+  async getCollectionInfo(collectionId: string): Promise<OgcApiCollectionInfo> {
+    const collectionDoc = await this.getCollectionDocument(collectionId);
+    const baseInfo = parseBaseCollectionInfo(collectionDoc);
+    const [queryables, sortables] = await Promise.all([
+      fetchLink(
+        collectionDoc,
+        ['queryables', 'http://www.opengis.net/def/rel/ogc/1.0/queryables'],
+        this.baseUrl
+      )
+        .then(parseCollectionParameters)
+        .catch(() => []),
+      fetchLink(
+        collectionDoc,
+        ['sortables', 'http://www.opengis.net/def/rel/ogc/1.0/sortables'],
+        this.baseUrl
+      )
+        .then(parseCollectionParameters)
+        .catch(() => []),
+    ]);
+    return {
+      ...baseInfo,
+      queryables,
+      sortables,
+    };
   }
   getCollectionItems(
     collectionId: string,

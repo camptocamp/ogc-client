@@ -9,6 +9,23 @@ export interface OgcApiEndpointInfo {
   attribution?: string;
 }
 
+export const CollectionParameterTypes = [
+  'string',
+  'number',
+  'integer',
+  'date',
+  'point',
+  'linestring',
+  'polygon',
+  'geometry',
+] as const;
+export type CollectionParameterType = typeof CollectionParameterTypes[number];
+export interface CollectionParameter {
+  name: string;
+  title?: string;
+  type: CollectionParameterType;
+}
+
 export interface OgcApiCollectionInfo {
   title: string;
   description: string;
@@ -33,6 +50,8 @@ export interface OgcApiCollectionInfo {
     };
   };
   license?: string;
+  queryables: CollectionParameter[];
+  sortables: CollectionParameter[];
 }
 
 export type OgcApiCollectionItem = Feature | unknown;

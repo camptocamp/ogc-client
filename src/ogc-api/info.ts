@@ -1,11 +1,29 @@
 import {
+  CollectionParameter,
+  CollectionParameterType,
+  CollectionParameterTypes,
   ConformanceClass,
   OgcApiCollectionInfo,
   OgcApiDocument,
   OgcApiEndpointInfo,
 } from './model';
+import { assertHasLinks } from './link-utils';
+import { EndpointError } from '../shared/errors';
 
 export function parseEndpointInfo(rootDoc: OgcApiDocument): OgcApiEndpointInfo {
+  try {
+    assertHasLinks(rootDoc, [
+      'data',
+      'http://www.opengis.net/def/rel/ogc/1.0/data',
+    ]);
+    assertHasLinks(rootDoc, [
+      'conformance',
+      'http://www.opengis.net/def/rel/ogc/1.0/conformance',
+    ]);
+  } catch (e) {
+    throw new EndpointError(`The endpoint appears non-conforming, the following error was encountered:
+${e.message}`);
+  }
   return {
     title: rootDoc.title as string,
     description: rootDoc.description as string,
@@ -74,7 +92,47 @@ export function checkHasFeatures([collections, conformance]: [
   );
 }
 
-export function parseCollectionInfo(doc: OgcApiDocument): OgcApiCollectionInfo {
+/**
+ * This does not include queryables and sortables!
+ */
+export function parseBaseCollectionInfo(
+  doc: OgcApiDocument
+): OgcApiCollectionInfo {
   const { links, ...props } = doc;
   return (props as unknown) as OgcApiCollectionInfo;
+}
+
+export function parseCollectionParameters(
+  doc: OgcApiDocument
+): CollectionParameter[] {
+  if ('properties' in doc && typeof doc.properties === 'object') {
+    return Object.keys(doc.properties).map((name) => {
+      const prop = doc.properties[name];
+      let type: CollectionParameterType = 'string';
+      if (typeof prop.$ref === 'string') {
+        const schemaRef = prop.$ref.toLowerCase();
+        if (schemaRef.indexOf('point') > -1) type = 'point';
+        else if (schemaRef.indexOf('linestring') > -1) type = 'linestring';
+        else if (schemaRef.indexOf('polygon') > -1) type = 'polygon';
+        else if (schemaRef.indexOf('geometry') > -1) type = 'geometry';
+      } else if (
+        typeof prop.type === 'string' &&
+        CollectionParameterTypes.indexOf(prop.type.toLowerCase()) > -1
+      ) {
+        type = prop.type.toLowerCase();
+      }
+      return {
+        name,
+        type,
+        ...(typeof prop.title === 'string' && { title: prop.title }),
+      };
+    });
+  }
+  if (Array.isArray(doc)) {
+    return doc.map((prop) => ({
+      name: prop,
+      type: 'string',
+    }));
+  }
+  return [];
 }
