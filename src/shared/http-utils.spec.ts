@@ -111,8 +111,10 @@ describe('HTTP utils', () => {
         fetchBehaviour = 'corsError';
       });
       it('rejects with an error', async () => {
-        await expect(queryXmlDocument(sampleXml)).rejects.toEqual(
-          new EndpointError(expect.stringContaining('due to CORS'), 0, true)
+        await expect(queryXmlDocument(sampleXml)).rejects.toThrowError(
+          new EndpointError(
+            `The document could not be fetched due to CORS limitations`
+          )
         );
       });
     });
@@ -123,11 +125,7 @@ describe('HTTP utils', () => {
       it('rejects with an error', async () => {
         await expect(queryXmlDocument(sampleXml)).rejects.toEqual(
           new EndpointError(
-            expect.stringContaining(
-              'due to network errors or unreachable host'
-            ),
-            0,
-            false
+            'Fetching the document failed either due to network errors or unreachable host, error is: General network error'
           )
         );
       });
