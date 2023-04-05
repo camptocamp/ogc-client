@@ -245,6 +245,58 @@ describe('OgcApiEndpoint', () => {
             },
           },
           itemType: 'record',
+          queryables: [
+            {
+              name: 'geometry',
+              type: 'geometry',
+            },
+            {
+              name: 'recordCreated',
+              title: 'recordCreated',
+              type: 'string',
+            },
+            {
+              name: 'recordUpdated',
+              title: 'recordUpdated',
+              type: 'string',
+            },
+            {
+              name: 'type',
+              title: 'type',
+              type: 'string',
+            },
+            {
+              name: 'title',
+              title: 'title',
+              type: 'string',
+            },
+            {
+              name: 'description',
+              title: 'description',
+              type: 'string',
+            },
+            {
+              name: 'providers',
+              title: 'providers',
+              type: 'string',
+            },
+            {
+              name: 'externalIds',
+              title: 'externalIds',
+              type: 'string',
+            },
+            {
+              name: 'themes',
+              title: 'themes',
+              type: 'string',
+            },
+            {
+              name: 'q',
+              title: 'q',
+              type: 'string',
+            },
+          ],
+          sortables: [],
         });
       });
       it('returns roads_national collection info', async () => {

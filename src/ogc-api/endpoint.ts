@@ -21,20 +21,24 @@ import { EndpointError } from '../shared/errors';
 
 export default class OgcApiEndpoint {
   private root = fetchRoot(this.baseUrl);
-  private conformance = this.root.then((root) =>
-    fetchLink(
-      root,
-      ['conformance', 'http://www.opengis.net/def/rel/ogc/1.0/conformance'],
-      this.baseUrl
+  private conformance = this.root
+    .then((root) =>
+      fetchLink(
+        root,
+        ['conformance', 'http://www.opengis.net/def/rel/ogc/1.0/conformance'],
+        this.baseUrl
+      )
     )
-  );
-  private data = this.root.then((root) =>
-    fetchLink(
-      root,
-      ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data'],
-      this.baseUrl
+    .catch(() => null);
+  private data = this.root
+    .then((root) =>
+      fetchLink(
+        root,
+        ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data'],
+        this.baseUrl
+      )
     )
-  );
+    .catch(() => null);
 
   constructor(private baseUrl: string) {}
 
@@ -92,14 +96,18 @@ export default class OgcApiEndpoint {
     const [queryables, sortables] = await Promise.all([
       fetchLink(
         collectionDoc,
-        'http://www.opengis.net/def/rel/ogc/1.0/queryables',
+        ['queryables', 'http://www.opengis.net/def/rel/ogc/1.0/queryables'],
         this.baseUrl
-      ).then(parseCollectionParameters),
+      )
+        .then(parseCollectionParameters)
+        .catch(() => []),
       fetchLink(
         collectionDoc,
-        'http://www.opengis.net/def/rel/ogc/1.0/sortables',
+        ['sortables', 'http://www.opengis.net/def/rel/ogc/1.0/sortables'],
         this.baseUrl
-      ).then(parseCollectionParameters),
+      )
+        .then(parseCollectionParameters)
+        .catch(() => []),
     ]);
     return {
       ...baseInfo,
