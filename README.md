@@ -11,7 +11,7 @@ The following standards are partially implemented:
 
 - WMS - _Web Map Service_
 - WFS - _Web Feature Service_
-- OGC API
+- OGC API (Records and Features)
 
 Why no WMTS support? Because [openlayers](https://www.github.com/openlayers/openlayers) has an incredibly thorough and well-tested WMTS capabilities parser and you should just use it.
 Reimplementing it in **ogc-client** currently does not bring any significant value.
