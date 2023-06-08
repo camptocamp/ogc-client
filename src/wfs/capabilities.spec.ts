@@ -53,7 +53,7 @@ describe('WFS capabilities', () => {
       },
       {
         abstract:
-          'Représentation des moyennes journalières des trafics routiers sur les routes départementales de la\n                Charente (16) au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',
+          'Représentation des moyennes journalières des trafics routiers sur les routes départementales de la\n                Charente (16) au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
         defaultCrs: 'EPSG:2154',
         latLonBoundingBox: [
           -0.4906009184568518,
@@ -74,7 +74,7 @@ describe('WFS capabilities', () => {
       },
       {
         abstract:
-          'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',
+          'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
         defaultCrs: 'EPSG:2154',
         latLonBoundingBox: [
           -0.4832134559131876,

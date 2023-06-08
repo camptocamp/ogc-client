@@ -98,7 +98,7 @@ describe('WfsEndpoint', () => {
         },
         {
           abstract:
-            'Représentation des moyennes journalières des trafics routiers sur les routes départementales de la\n                Charente (16) au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',
+            'Représentation des moyennes journalières des trafics routiers sur les routes départementales de la\n                Charente (16) au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
           boundingBox: [
             -0.4906009184568518,
             45.175543885638376,
@@ -110,7 +110,7 @@ describe('WfsEndpoint', () => {
         },
         {
           abstract:
-            'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',
+            'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
           boundingBox: [
             -0.4832134559131876,
             45.18037755571674,
@@ -129,7 +129,7 @@ describe('WfsEndpoint', () => {
       await endpoint.isReady();
       expect(endpoint.getFeatureTypeSummary('cd16:hierarchisation_l')).toEqual({
         abstract:
-          'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',
+          'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
         name: 'cd16:hierarchisation_l',
         title: 'CD 16 - Hiérarchisation du réseau',
         boundingBox: [
@@ -170,7 +170,7 @@ describe('WfsEndpoint', () => {
         endpoint.getFeatureTypeFull('cd16:hierarchisation_l')
       ).resolves.toEqual({
         abstract:
-          'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',
+          'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
         name: 'cd16:hierarchisation_l',
         title: 'CD 16 - Hiérarchisation du réseau',
         boundingBox: [

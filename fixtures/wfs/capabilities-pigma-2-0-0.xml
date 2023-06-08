@@ -464,8 +464,8 @@
             <Name>cd16:comptages_routiers_l</Name>
             <Title>CD 16 - Comptages routiers</Title>
             <Abstract>Représentation des moyennes journalières des trafics routiers sur les routes départementales de la
-                Charente (16) au 1er Janvier 2021.&#13;
-                &#13;
+                Charente (16) au 1er Janvier 2021.
+
                 Mise à jour : Mars 2021
             </Abstract>
             <ows:Keywords>
@@ -497,8 +497,8 @@
             <Name>cd16:hierarchisation_l</Name>
             <Title>CD 16 - Hiérarchisation du réseau</Title>
             <Abstract>Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section
-                de route et de son usage au 1er Janvier 2021.&#13;
-                &#13;
+                de route et de son usage au 1er Janvier 2021.
+
                 Mise à jour : Mars 2021
             </Abstract>
             <ows:Keywords>

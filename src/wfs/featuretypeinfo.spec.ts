@@ -14,7 +14,7 @@ describe('feature type info', () => {
   describe('parseFeatureTypeInfo', () => {
     const featureType: WfsFeatureTypeInternal = {
       abstract:
-        'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',
+        'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
       defaultCrs: 'EPSG:2154',
       latLonBoundingBox: [
         -0.4832134559131876,
@@ -37,7 +37,7 @@ describe('feature type info', () => {
       name: 'cd16:hierarchisation_l',
       title: 'CD 16 - Hiérarchisation du réseau',
       abstract:
-        'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\r\n                \r\n                Mise à jour : Mars 2021\n            ',
+        'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
       boundingBox: [
         -0.4832134559131876,
         45.18037755571674,
