@@ -8,8 +8,8 @@
       "properties": {
         "STATE_ABBR": "WY",
         "STATE_NAME": "Wyoming",
-        "AREA_LAND": 2.51470069067E11,
-        "AREA_WATER": 1.864445306E9,
+        "AREA_LAND": 2.51470069067e11,
+        "AREA_WATER": 1.864445306e9,
         "PERSONS": 563626
       }
     },
@@ -20,8 +20,8 @@
       "properties": {
         "STATE_ABBR": "PA",
         "STATE_NAME": "Pennsylvania",
-        "AREA_LAND": 1.15883064314E11,
-        "AREA_WATER": 3.397122731E9,
+        "AREA_LAND": 1.15883064314e11,
+        "AREA_WATER": 3.397122731e9,
         "PERSONS": 12702379
       }
     },
@@ -32,8 +32,8 @@
       "properties": {
         "STATE_ABBR": "OH",
         "STATE_NAME": "Ohio",
-        "AREA_LAND": 1.05828706692E11,
-        "AREA_WATER": 1.0269012119E10,
+        "AREA_LAND": 1.05828706692e11,
+        "AREA_WATER": 1.0269012119e10,
         "PERSONS": 11536504
       }
     },
@@ -44,8 +44,8 @@
       "properties": {
         "STATE_ABBR": "NM",
         "STATE_NAME": "New Mexico",
-        "AREA_LAND": 3.1416074824E11,
-        "AREA_WATER": 7.56659673E8,
+        "AREA_LAND": 3.1416074824e11,
+        "AREA_WATER": 7.56659673e8,
         "PERSONS": 2059179
       }
     },
@@ -56,8 +56,8 @@
       "properties": {
         "STATE_ABBR": "MD",
         "STATE_NAME": "Maryland",
-        "AREA_LAND": 2.5141638381E10,
-        "AREA_WATER": 6.989579585E9,
+        "AREA_LAND": 2.5141638381e10,
+        "AREA_WATER": 6.989579585e9,
         "PERSONS": 5773552
       }
     },
@@ -68,8 +68,8 @@
       "properties": {
         "STATE_ABBR": "RI",
         "STATE_NAME": "Rhode Island",
-        "AREA_LAND": 2.677566454E9,
-        "AREA_WATER": 1.323668539E9,
+        "AREA_LAND": 2.677566454e9,
+        "AREA_WATER": 1.323668539e9,
         "PERSONS": 1052567
       }
     },
@@ -80,8 +80,8 @@
       "properties": {
         "STATE_ABBR": "OR",
         "STATE_NAME": "Oregon",
-        "AREA_LAND": 2.48607802255E11,
-        "AREA_WATER": 6.191433228E9,
+        "AREA_LAND": 2.48607802255e11,
+        "AREA_WATER": 6.191433228e9,
         "PERSONS": 3831074
       }
     },
@@ -92,8 +92,8 @@
       "properties": {
         "STATE_ABBR": "PR",
         "STATE_NAME": "Puerto Rico",
-        "AREA_LAND": 8.867536532E9,
-        "AREA_WATER": 4.923745357E9,
+        "AREA_LAND": 8.867536532e9,
+        "AREA_WATER": 4.923745357e9,
         "PERSONS": 3725789
       }
     },
@@ -104,8 +104,8 @@
       "properties": {
         "STATE_ABBR": "WI",
         "STATE_NAME": "Wisconsin",
-        "AREA_LAND": 1.40268064888E11,
-        "AREA_WATER": 2.9366760483E10,
+        "AREA_LAND": 1.40268064888e11,
+        "AREA_WATER": 2.9366760483e10,
         "PERSONS": 5686986
       }
     },
@@ -116,8 +116,8 @@
       "properties": {
         "STATE_ABBR": "ND",
         "STATE_NAME": "North Dakota",
-        "AREA_LAND": 1.78711239147E11,
-        "AREA_WATER": 4.396568298E9,
+        "AREA_LAND": 1.78711239147e11,
+        "AREA_WATER": 4.396568298e9,
         "PERSONS": 672591
       }
     },
@@ -128,8 +128,8 @@
       "properties": {
         "STATE_ABBR": "NV",
         "STATE_NAME": "Nevada",
-        "AREA_LAND": 2.84331937541E11,
-        "AREA_WATER": 2.047761678E9,
+        "AREA_LAND": 2.84331937541e11,
+        "AREA_WATER": 2.047761678e9,
         "PERSONS": 2700551
       }
     },
@@ -140,8 +140,8 @@
       "properties": {
         "STATE_ABBR": "GA",
         "STATE_NAME": "Georgia",
-        "AREA_LAND": 1.48959236603E11,
-        "AREA_WATER": 4.951196915E9,
+        "AREA_LAND": 1.48959236603e11,
+        "AREA_WATER": 4.951196915e9,
         "PERSONS": 9687653
       }
     },
@@ -152,8 +152,8 @@
       "properties": {
         "STATE_ABBR": "NY",
         "STATE_NAME": "New York",
-        "AREA_LAND": 1.22056806947E11,
-        "AREA_WATER": 1.92399241E10,
+        "AREA_LAND": 1.22056806947e11,
+        "AREA_WATER": 1.92399241e10,
         "PERSONS": 19378102
       }
     },
@@ -164,8 +164,8 @@
       "properties": {
         "STATE_ABBR": "AR",
         "STATE_NAME": "Arkansas",
-        "AREA_LAND": 1.34771261408E11,
-        "AREA_WATER": 2.960539257E9,
+        "AREA_LAND": 1.34771261408e11,
+        "AREA_WATER": 2.960539257e9,
         "PERSONS": 2915918
       }
     }

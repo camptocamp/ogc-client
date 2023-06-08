@@ -17,9 +17,7 @@ describe('feature type info', () => {
         'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
       defaultCrs: 'EPSG:2154',
       latLonBoundingBox: [
-        -0.4832134559131876,
-        45.18037755571674,
-        0.9725372441782966,
+        -0.4832134559131876, 45.18037755571674, 0.9725372441782966,
         46.13877580094452,
       ],
       name: 'cd16:hierarchisation_l',
@@ -39,9 +37,7 @@ describe('feature type info', () => {
       abstract:
         'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
       boundingBox: [
-        -0.4832134559131876,
-        45.18037755571674,
-        0.9725372441782966,
+        -0.4832134559131876, 45.18037755571674, 0.9725372441782966,
         46.13877580094452,
       ],
       properties: {
@@ -96,9 +92,7 @@ describe('feature type info', () => {
         outputFormats: [],
         name: 'cd16:hierarchisation_l',
         latLonBoundingBox: [
-          -0.4832134559131876,
-          45.18037755571674,
-          0.9725372441782966,
+          -0.4832134559131876, 45.18037755571674, 0.9725372441782966,
           46.13877580094452,
         ],
       };
@@ -132,9 +126,7 @@ describe('feature type info', () => {
       ).toEqual({
         name: 'cd16:hierarchisation_l',
         boundingBox: [
-          -0.4832134559131876,
-          45.18037755571674,
-          0.9725372441782966,
+          -0.4832134559131876, 45.18037755571674, 0.9725372441782966,
           46.13877580094452,
         ],
         properties: {

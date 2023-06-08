@@ -41,9 +41,7 @@ describe('WfsEndpoint', () => {
 
   it('makes a getcapabilities request', async () => {
     await endpoint.isReady();
-    expect(
-      global.fetch
-    ).toHaveBeenCalledWith(
+    expect(global.fetch).toHaveBeenCalledWith(
       'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetCapabilities',
       { method: 'GET' }
     );
@@ -88,9 +86,7 @@ describe('WfsEndpoint', () => {
           abstract:
             'Registre Parcellaire Graphique 2010 en Aquitaine - Agence de Service et de Paiement',
           boundingBox: [
-            -1.9540704007796161,
-            42.73286181824404,
-            1.496463327812538,
+            -1.9540704007796161, 42.73286181824404, 1.496463327812538,
             45.717071228823876,
           ],
           name: 'asp:asp_rpg2010',
@@ -100,9 +96,7 @@ describe('WfsEndpoint', () => {
           abstract:
             'Représentation des moyennes journalières des trafics routiers sur les routes départementales de la\n                Charente (16) au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
           boundingBox: [
-            -0.4906009184568518,
-            45.175543885638376,
-            0.9778719979726385,
+            -0.4906009184568518, 45.175543885638376, 0.9778719979726385,
             46.14349349624617,
           ],
           name: 'cd16:comptages_routiers_l',
@@ -112,9 +106,7 @@ describe('WfsEndpoint', () => {
           abstract:
             'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
           boundingBox: [
-            -0.4832134559131876,
-            45.18037755571674,
-            0.9725372441782966,
+            -0.4832134559131876, 45.18037755571674, 0.9725372441782966,
             46.13877580094452,
           ],
           name: 'cd16:hierarchisation_l',
@@ -133,9 +125,7 @@ describe('WfsEndpoint', () => {
         name: 'cd16:hierarchisation_l',
         title: 'CD 16 - Hiérarchisation du réseau',
         boundingBox: [
-          -0.4832134559131876,
-          45.18037755571674,
-          0.9725372441782966,
+          -0.4832134559131876, 45.18037755571674, 0.9725372441782966,
           46.13877580094452,
         ],
         defaultCrs: 'EPSG:2154',
@@ -174,9 +164,7 @@ describe('WfsEndpoint', () => {
         name: 'cd16:hierarchisation_l',
         title: 'CD 16 - Hiérarchisation du réseau',
         boundingBox: [
-          -0.4832134559131876,
-          45.18037755571674,
-          0.9725372441782966,
+          -0.4832134559131876, 45.18037755571674, 0.9725372441782966,
           46.13877580094452,
         ],
         defaultCrs: 'EPSG:2154',

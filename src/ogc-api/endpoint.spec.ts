@@ -190,9 +190,7 @@ describe('OgcApiEndpoint', () => {
             spatial: {
               bbox: [
                 [
-                  -7.942759150065165,
-                  49.901607895996534,
-                  1.9957427933628138,
+                  -7.942759150065165, 49.901607895996534, 1.9957427933628138,
                   60.133709755754,
                 ],
               ],
@@ -311,9 +309,7 @@ describe('OgcApiEndpoint', () => {
             spatial: {
               bbox: [
                 [
-                  -6.4956758012099645,
-                  50.08021976237488,
-                  2.383883951687144,
+                  -6.4956758012099645, 50.08021976237488, 2.383883951687144,
                   58.54688148276149,
                 ],
               ],
@@ -491,9 +487,7 @@ describe('OgcApiEndpoint', () => {
                 spatial: {
                   bbox: [
                     [
-                      4.690751953125,
-                      52.358740234375,
-                      5.020341796875,
+                      4.690751953125, 52.358740234375, 5.020341796875,
                       52.6333984375,
                     ],
                   ],
@@ -507,28 +501,24 @@ describe('OgcApiEndpoint', () => {
             },
             links: [
               {
-                href:
-                  'https://maps-intern.zaanstad.gem.local/geoserver/wms?SERVICE=WMS',
+                href: 'https://maps-intern.zaanstad.gem.local/geoserver/wms?SERVICE=WMS',
                 rel: 'item',
                 title: 'geo:kaartboeck',
                 type: 'OGC:WMS',
               },
               {
-                href:
-                  'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS',
+                href: 'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS',
                 rel: 'item',
                 title: 'geo:kaartboeck',
                 type: 'OGC:WFS',
               },
               {
-                href:
-                  'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=csv',
+                href: 'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=csv',
                 rel: 'item',
                 type: 'download',
               },
               {
-                href:
-                  'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=shape-zip',
+                href: 'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=shape-zip',
                 rel: 'item',
                 type: 'download',
               },
@@ -591,8 +581,7 @@ describe('OgcApiEndpoint', () => {
             },
             links: [
               {
-                href:
-                  'https://kaartportaal.drenthe.nl/server/services/GDB_actueel/GBI_KEILEEM_DIEPTE_ONDER_NAP_R/MapServer/WMSServer',
+                href: 'https://kaartportaal.drenthe.nl/server/services/GDB_actueel/GBI_KEILEEM_DIEPTE_ONDER_NAP_R/MapServer/WMSServer',
                 rel: 'item',
                 title: '0',
                 type: 'OGC:WMS',
@@ -657,21 +646,18 @@ describe('OgcApiEndpoint', () => {
             },
             links: [
               {
-                href:
-                  'https://download.geodata-utrecht.nl/download/vector/59352e7f-3792-4e17-bd73-9bba84a98890',
+                href: 'https://download.geodata-utrecht.nl/download/vector/59352e7f-3792-4e17-bd73-9bba84a98890',
                 rel: 'item',
                 type: 'landingpage',
               },
               {
-                href:
-                  'https://services.geodata-utrecht.nl/geoserver/m01_4_overlast_hinder_mgkp/wfs',
+                href: 'https://services.geodata-utrecht.nl/geoserver/m01_4_overlast_hinder_mgkp/wfs',
                 rel: 'item',
                 title: 'Clusters_geluid_-_wegen_gecumuleerd',
                 type: 'OGC:WFS',
               },
               {
-                href:
-                  'https://services.geodata-utrecht.nl/geoserver/m01_4_overlast_hinder_mgkp/wms',
+                href: 'https://services.geodata-utrecht.nl/geoserver/m01_4_overlast_hinder_mgkp/wms',
                 rel: 'item',
                 title: 'Clusters_geluid_-_wegen_gecumuleerd',
                 type: 'OGC:WMS',
@@ -727,14 +713,12 @@ describe('OgcApiEndpoint', () => {
             },
             links: [
               {
-                href:
-                  'https://services.rce.geovoorziening.nl/landschapsatlas/wms?&request=GetCapabilities',
+                href: 'https://services.rce.geovoorziening.nl/landschapsatlas/wms?&request=GetCapabilities',
                 rel: 'item',
                 title: 'Geesten',
               },
               {
-                href:
-                  'https://services.rce.geovoorziening.nl/landschapsatlas/wfs?&request=GetCapabilities',
+                href: 'https://services.rce.geovoorziening.nl/landschapsatlas/wfs?&request=GetCapabilities',
                 rel: 'item',
                 title: 'landschapsatlas:Geesten',
               },
@@ -851,15 +835,13 @@ describe('OgcApiEndpoint', () => {
             },
             links: [
               {
-                href:
-                  'https://kaartportaal.drenthe.nl/server/services/GDB_actueel/GBI_MILIEU_HEMELHELDERHEID_V/MapServer/WMSServer',
+                href: 'https://kaartportaal.drenthe.nl/server/services/GDB_actueel/GBI_MILIEU_HEMELHELDERHEID_V/MapServer/WMSServer',
                 rel: 'item',
                 title: '0',
                 type: 'OGC:WMS',
               },
               {
-                href:
-                  'https://kaartportaal.drenthe.nl/server/services/GDB_actueel/GBI_MILIEU_HEMELHELDERHEID_V/MapServer/WFSServer',
+                href: 'https://kaartportaal.drenthe.nl/server/services/GDB_actueel/GBI_MILIEU_HEMELHELDERHEID_V/MapServer/WFSServer',
                 rel: 'item',
                 title: 'esri:Hemelhelderheidskaart',
                 type: 'OGC:WFS',
@@ -1026,8 +1008,7 @@ describe('OgcApiEndpoint', () => {
                 type: 'OGC:WMS',
               },
               {
-                href:
-                  'https://data.rivm.nl/meta/srv/api/records/efc55744-a8f5-40e1-8d15-1ffa7a018988/attachments/DANK022_delfstofwinning_op_land_en_in_binnenwateren_rivier.zip',
+                href: 'https://data.rivm.nl/meta/srv/api/records/efc55744-a8f5-40e1-8d15-1ffa7a018988/attachments/DANK022_delfstofwinning_op_land_en_in_binnenwateren_rivier.zip',
                 rel: 'item',
                 title:
                   'DANK022_delfstofwinning_op_land_en_in_binnenwateren_rivier.zip',
@@ -1083,9 +1064,7 @@ describe('OgcApiEndpoint', () => {
                 spatial: {
                   bbox: [
                     [
-                      4.690751953125,
-                      52.358740234375,
-                      5.020341796875,
+                      4.690751953125, 52.358740234375, 5.020341796875,
                       52.6333984375,
                     ],
                   ],
@@ -1111,15 +1090,13 @@ describe('OgcApiEndpoint', () => {
                 type: 'OGC:WFS',
               },
               {
-                href:
-                  'https://tiles.zaanstad.nl/mapproxy/service?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=Lufo2018-kleur&outputFormat=csv',
+                href: 'https://tiles.zaanstad.nl/mapproxy/service?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=Lufo2018-kleur&outputFormat=csv',
                 rel: 'item',
                 title: 'CSV',
                 type: 'download',
               },
               {
-                href:
-                  'https://tiles.zaanstad.nl/mapproxy/service?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=Lufo2018-kleur&outputFormat=shape-zip',
+                href: 'https://tiles.zaanstad.nl/mapproxy/service?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=Lufo2018-kleur&outputFormat=shape-zip',
                 rel: 'item',
                 title: 'Shape-zip',
                 type: 'download',
@@ -1348,43 +1325,37 @@ describe('OgcApiEndpoint', () => {
           id: 1,
           links: [
             {
-              href:
-                'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=json',
+              href: 'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=json',
               rel: 'self',
               title: 'This document',
               type: 'application/geo+json',
             },
             {
-              href:
-                'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=jsonfgc',
+              href: 'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=jsonfgc',
               rel: 'alternate',
               title: 'This document as JSON-FG (GeoJSON Compatibility Mode)',
               type: 'application/vnd.ogc.fg+json;compatibility=geojson',
             },
             {
-              href:
-                'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=fgb',
+              href: 'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=fgb',
               rel: 'alternate',
               title: 'This document as FlatGeobuf',
               type: 'application/flatgeobuf',
             },
             {
-              href:
-                'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=html',
+              href: 'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=html',
               rel: 'alternate',
               title: 'This document as HTML',
               type: 'text/html',
             },
             {
-              href:
-                'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=jsonfg',
+              href: 'https://demo.ldproxy.net/zoomstack/collections/airports/items/1?f=jsonfg',
               rel: 'alternate',
               title: 'This document as JSON-FG',
               type: 'application/vnd.ogc.fg+json',
             },
             {
-              href:
-                'https://demo.ldproxy.net/zoomstack/collections/airports?f=json',
+              href: 'https://demo.ldproxy.net/zoomstack/collections/airports?f=json',
               rel: 'collection',
               title: 'The collection the feature belongs to',
               type: 'application/json',
@@ -1418,28 +1389,24 @@ describe('OgcApiEndpoint', () => {
           id: '35149dfb-31d3-431c-a8bc-12a4034dac48',
           links: [
             {
-              href:
-                'https://maps-intern.zaanstad.gem.local/geoserver/wms?SERVICE=WMS',
+              href: 'https://maps-intern.zaanstad.gem.local/geoserver/wms?SERVICE=WMS',
               rel: 'item',
               title: 'geo:kaartboeck',
               type: 'OGC:WMS',
             },
             {
-              href:
-                'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS',
+              href: 'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS',
               rel: 'item',
               title: 'geo:kaartboeck',
               type: 'OGC:WFS',
             },
             {
-              href:
-                'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=csv',
+              href: 'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=csv',
               rel: 'item',
               type: 'download',
             },
             {
-              href:
-                'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=shape-zip',
+              href: 'https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=shape-zip',
               rel: 'item',
               type: 'download',
             },
@@ -1456,29 +1423,25 @@ describe('OgcApiEndpoint', () => {
               type: 'text/html',
             },
             {
-              href:
-                'https://demo.pygeoapi.io/master/collections/dutch-metadata/items/35149dfb-31d3-431c-a8bc-12a4034dac48?f=json',
+              href: 'https://demo.pygeoapi.io/master/collections/dutch-metadata/items/35149dfb-31d3-431c-a8bc-12a4034dac48?f=json',
               rel: 'self',
               title: 'This document as GeoJSON',
               type: 'application/geo+json',
             },
             {
-              href:
-                'https://demo.pygeoapi.io/master/collections/dutch-metadata/items/35149dfb-31d3-431c-a8bc-12a4034dac48?f=jsonld',
+              href: 'https://demo.pygeoapi.io/master/collections/dutch-metadata/items/35149dfb-31d3-431c-a8bc-12a4034dac48?f=jsonld',
               rel: 'alternate',
               title: 'This document as RDF (JSON-LD)',
               type: 'application/ld+json',
             },
             {
-              href:
-                'https://demo.pygeoapi.io/master/collections/dutch-metadata/items/35149dfb-31d3-431c-a8bc-12a4034dac48?f=html',
+              href: 'https://demo.pygeoapi.io/master/collections/dutch-metadata/items/35149dfb-31d3-431c-a8bc-12a4034dac48?f=html',
               rel: 'alternate',
               title: 'This document as HTML',
               type: 'text/html',
             },
             {
-              href:
-                'https://demo.pygeoapi.io/master/collections/dutch-metadata',
+              href: 'https://demo.pygeoapi.io/master/collections/dutch-metadata',
               rel: 'collection',
               title: 'Sample metadata records from Dutch Nationaal georegister',
               type: 'application/json',
@@ -1491,9 +1454,7 @@ describe('OgcApiEndpoint', () => {
               spatial: {
                 bbox: [
                   [
-                    4.690751953125,
-                    52.358740234375,
-                    5.020341796875,
+                    4.690751953125, 52.358740234375, 5.020341796875,
                     52.6333984375,
                   ],
                 ],

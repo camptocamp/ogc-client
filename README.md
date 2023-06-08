@@ -46,11 +46,10 @@ requests, use:
 ```js
 import { enableFallbackWithoutWorker } from '@camptocamp/ogc-client';
 
-enableFallbackWithoutWorker()
+enableFallbackWithoutWorker();
 ```
 
 All processing will be done on the main thread after this call, including HTTP requests.
-
 
 ### API
 

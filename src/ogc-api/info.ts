@@ -99,7 +99,7 @@ export function parseBaseCollectionInfo(
   doc: OgcApiDocument
 ): OgcApiCollectionInfo {
   const { links, ...props } = doc;
-  return (props as unknown) as OgcApiCollectionInfo;
+  return props as unknown as OgcApiCollectionInfo;
 }
 
 export function parseCollectionParameters(

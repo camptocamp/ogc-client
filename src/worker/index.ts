@@ -38,9 +38,7 @@ function getWorkerInstance() {
  * Parses the capabilities document and return all relevant information
  * @param capabilitiesUrl This url should point to the capabilities document
  */
-export function parseWmsCapabilities(
-  capabilitiesUrl: string
-): Promise<{
+export function parseWmsCapabilities(capabilitiesUrl: string): Promise<{
   version: WmsVersion;
   info: GenericEndpointInfo;
   layers: WmsLayerFull[];
@@ -54,9 +52,7 @@ export function parseWmsCapabilities(
  * Parses the capabilities document and return all relevant information
  * @param capabilitiesUrl This url should point to the capabilities document
  */
-export function parseWfsCapabilities(
-  capabilitiesUrl: string
-): Promise<{
+export function parseWfsCapabilities(capabilitiesUrl: string): Promise<{
   version: WfsVersion;
   info: GenericEndpointInfo;
   featureTypes: WfsFeatureTypeInternal[];
