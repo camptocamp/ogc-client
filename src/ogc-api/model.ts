@@ -19,7 +19,7 @@ export const CollectionParameterTypes = [
   'polygon',
   'geometry',
 ] as const;
-export type CollectionParameterType = typeof CollectionParameterTypes[number];
+export type CollectionParameterType = (typeof CollectionParameterTypes)[number];
 export interface CollectionParameter {
   name: string;
   title?: string;

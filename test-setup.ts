@@ -1,11 +1,13 @@
 // @ts-nocheck
 import 'regenerator-runtime/runtime';
 import mitt from 'mitt';
-import * as esbuild from 'esbuild';
 import * as util from 'util';
 import CacheMock from 'browser-cache-mock';
 import 'isomorphic-fetch';
 import { TextDecoder } from 'util';
+import { Buffer } from './node_modules/buffer';
+
+globalThis.Buffer = Buffer;
 
 // mock the global fetch API
 window.fetchResponseFactory = (url) => '<empty></empty>';
@@ -66,12 +68,14 @@ global.Worker = function Worker(filePath) {
   };
 
   // bundle the worker code and create a function from it
-  esbuild
-    .build({
-      entryPoints: [filePath],
-      bundle: true,
-      write: false,
-    })
+  import('esbuild')
+    .then((esbuild) =>
+      esbuild.build({
+        entryPoints: [filePath],
+        bundle: true,
+        write: false,
+      })
+    )
     .then((result) => {
       const code = new util.TextDecoder('utf-8').decode(
         result.outputFiles[0].contents

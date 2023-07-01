@@ -34,8 +34,7 @@ describe('info parsing utilities', () => {
           additionalProperties: false,
           type: 'object',
           $schema: 'https://json-schema.org/draft/2019-09/schema',
-          $id:
-            'https://my.server.org/sample-data/collections/airports/queryables',
+          $id: 'https://my.server.org/sample-data/collections/airports/queryables',
         };
       });
       it('parses the parameters', () => {
