@@ -42,10 +42,10 @@
 </template>
 
 <script>
-import WfsEndpoint from '../../../../dist/wfs/endpoint';
-import InfoList from '../presentation/InfoList';
-import ItemsTree from '../presentation/ItemsTree';
-import WfsFeatureTypeInfo from './WfsFeatureTypeInfo';
+import InfoList from '../presentation/InfoList.vue';
+import ItemsTree from '../presentation/ItemsTree.vue';
+import WfsFeatureTypeInfo from './WfsFeatureTypeInfo.vue';
+import WfsEndpoint from '../../../../src/wfs/endpoint';
 
 export default {
   name: 'WfsEndpoint',

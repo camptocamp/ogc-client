@@ -77,8 +77,8 @@ import { {{ apiElement.name }} } from '@camptocamp/ogc-client';</pre
 </template>
 
 <script>
-import MarkdownBlock from '../presentation/MarkdownBlock';
-import CodeBlock from '../presentation/CodeBlock';
+import MarkdownBlock from '../presentation/MarkdownBlock.vue';
+import CodeBlock from '../presentation/CodeBlock.vue';
 import * as marked from 'marked';
 import {
   formatClassToString,

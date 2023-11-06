@@ -12,8 +12,8 @@
 
 <script>
 import API from '../../data/api';
-import ClassCard from './ClassCard';
-import FunctionCard from './FunctionCard';
+import ClassCard from './ClassCard.vue';
+import FunctionCard from './FunctionCard.vue';
 
 export default {
   name: 'ApiDescription',

@@ -1,20 +1,23 @@
 {
   "name": "ogc-client-app",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "NODE_OPTIONS='--openssl-legacy-provider' vue-cli-service build"
+    "start": "npm run dev",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "core-js": "^3.30.2",
     "marked": "^5.0.5",
-    "vue": "^2.7.14"
+    "marked-gfm-heading-id": "^3.1.0",
+    "marked-mangle": "^1.1.4",
+    "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.19",
-    "@vue/cli-service": "~4.5.19",
-    "vue-template-compiler": "^2.7.14",
+    "@vitejs/plugin-vue": "^4.4.0",
+    "vite": "^4.4.11",
     "worker-plugin": "^5.0.1"
   }
 }

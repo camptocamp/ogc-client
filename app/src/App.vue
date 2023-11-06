@@ -1,3 +1,16 @@
+<script>
+import Docs from './Docs.vue';
+import LibLogo from './components/presentation/LibLogo.vue';
+import Demo from './Demo.vue';
+
+export default {
+  name: 'App',
+  components: { Docs, LibLogo, Demo },
+  data: () => ({
+    demoTabEnabled: false,
+  }),
+};
+</script>
 <template>
   <div class="container">
     <div class="col-8 offset-2">
@@ -35,21 +48,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import './style/global.css';
-import LibLogo from './components/presentation/LibLogo';
-import Docs from './Docs';
-import Demo from './Demo';
-
-export default {
-  name: 'App',
-  components: { Docs, LibLogo, Demo },
-  data: () => ({
-    demoTabEnabled: false,
-  }),
-};
-</script>
 
 <style scoped>
 .tab-toggle {
