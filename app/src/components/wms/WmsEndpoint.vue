@@ -41,10 +41,10 @@
 </template>
 
 <script>
-import WmsEndpoint from '../../../../dist/wms/endpoint';
-import InfoList from '../presentation/InfoList';
-import ItemsTree from '../presentation/ItemsTree';
-import WmsLayerInfo from './WmsLayerInfo';
+import InfoList from '../presentation/InfoList.vue';
+import ItemsTree from '../presentation/ItemsTree.vue';
+import WmsLayerInfo from './WmsLayerInfo.vue';
+import WmsEndpoint from '../../../../src/wms/endpoint';
 
 export default {
   name: 'WmsEndpoint',

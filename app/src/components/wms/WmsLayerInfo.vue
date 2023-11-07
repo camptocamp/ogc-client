@@ -30,7 +30,7 @@
 <style scoped></style>
 
 <script>
-import InfoList from '../presentation/InfoList';
+import InfoList from '../presentation/InfoList.vue';
 export default {
   name: 'WmsLayerInfo',
   components: { InfoList },

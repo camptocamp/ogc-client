@@ -201,13 +201,16 @@
 </template>
 
 <script>
-import CodeBlock from './components/presentation/CodeBlock';
-import ApiDescription from './components/api/ApiDescription';
-import LibName from './components/presentation/LibName';
+import CodeBlock from './components/presentation/CodeBlock.vue';
+import ApiDescription from './components/api/ApiDescription.vue';
+import LibName from './components/presentation/LibName.vue';
 
 export default {
   name: 'Docs',
   components: { CodeBlock, ApiDescription, LibName },
+  async mounted() {
+    hljs.highlightAll();
+  },
 };
 </script>
 

@@ -1,10 +1,11 @@
-import Vue from 'vue';
+import './assets/main.css';
+import { marked } from 'marked';
+import { mangle } from 'marked-mangle';
+import { createApp } from 'vue';
 import App from './App.vue';
+import { gfmHeadingId } from 'marked-gfm-heading-id';
 
-hljs.initHighlightingOnLoad();
+marked.use(mangle());
+marked.use(gfmHeadingId());
 
-Vue.config.productionTip = false;
-
-new Vue({
-  render: (h) => h(App),
-}).$mount('#app');
+createApp(App).mount('#app');

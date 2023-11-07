@@ -56,6 +56,13 @@ export interface OgcApiCollectionInfo {
 
 export type OgcApiCollectionItem = Feature | unknown;
 
+export interface OgcApiDocumentLinks {
+  rel: string;
+  type: string;
+  title: string;
+  href: string;
+}
+
 export type OgcApiDocument = {
   links: {
     rel: string;
@@ -64,3 +71,41 @@ export type OgcApiDocument = {
     href: string;
   }[];
 } & Record<string, unknown>;
+
+interface OgcApiItemExternalId {
+  scheme: string;
+  value: string;
+}
+interface OgcApiRecordThemeConcept {
+  id: string;
+}
+
+interface OgcApiRecordTheme {
+  concepts: OgcApiRecordThemeConcept[];
+  scheme: string;
+}
+export interface OgcApiRecordContact {
+  name: string;
+  links: OgcApiDocumentLinks[];
+  contactInstructions: string;
+  roles: string[];
+}
+export interface OgcApiRecordProperties {
+  recordCreated: Date;
+  recordUpdated: Date;
+  providers: string[];
+  type: string;
+  title: string;
+  description: string;
+  externalId: OgcApiItemExternalId[];
+  themes: OgcApiRecordTheme[];
+  keywords: string[];
+  language: string;
+  contacts: OgcApiRecordContact[];
+  formats: string[];
+  license: string;
+}
+
+export type OgcRecord = Feature<OgcApiRecordProperties> & {
+  links: OgcApiDocumentLinks[];
+};

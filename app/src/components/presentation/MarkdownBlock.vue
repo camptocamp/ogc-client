@@ -10,7 +10,7 @@ export default {
   },
   computed: {
     parsed() {
-      return marked.parse(this.text);
+      return this.text ? marked.parse(this.text) : '';
     },
   },
 };

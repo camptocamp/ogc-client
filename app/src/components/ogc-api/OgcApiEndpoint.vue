@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row my-4">
       <input
         class="form-control me-3"
         placeholder="Enter an OGC API endpoint URL here"
@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import InfoList from '../presentation/InfoList';
-import ItemsTree from '../presentation/ItemsTree';
-import Async from '../presentation/Async';
-import OgcApiEndpoint from '../../../../dist/ogc-api/endpoint';
+import InfoList from '../presentation/InfoList.vue';
+import ItemsTree from '../presentation/ItemsTree.vue';
+import Async from '../presentation/Async.vue';
+import OgcApiEndpoint from '../../../../src/ogc-api/endpoint';
 
 export default {
   name: 'OgcApiEndpoint',

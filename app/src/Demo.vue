@@ -26,8 +26,8 @@
 <style></style>
 
 <script>
-import WmsEndpoint from './components/wms/WmsEndpoint';
-import WfsEndpoint from './components/wfs/WfsEndpoint';
+import WmsEndpoint from './components/wms/WmsEndpoint.vue';
+import WfsEndpoint from './components/wfs/WfsEndpoint.vue';
 import OgcApiEndpoint from './components/ogc-api/OgcApiEndpoint.vue';
 
 export default {

@@ -14,7 +14,7 @@
 <style scoped></style>
 
 <script>
-import TreeItem from './TreeItem';
+import TreeItem from './TreeItem.vue';
 /**
  * @typedef {Object} TreeItem
  * @property {TreeItem[]} [children]
