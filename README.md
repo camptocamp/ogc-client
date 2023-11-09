@@ -66,5 +66,5 @@ $ npm install
 $ npm run serve
 ```
 
-The app is based on [Vue.js 2](https://vuejs.org/) and will showcase most features implemented in the library.
+The app is based on [Vue.js](https://vuejs.org/) and will showcase most features implemented in the library.
 You will need to supply it with valid OGC service urls.
