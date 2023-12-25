@@ -7,6 +7,7 @@ import {
 } from '../wfs/endpoint';
 import { GenericEndpointInfo } from '../shared/models';
 import { WmsLayerFull, WmsVersion } from '../wms/endpoint';
+import { setFetchOptionsUpdateCallback } from '../shared/http-utils';
 
 let fallbackWithoutWorker = false;
 
@@ -79,3 +80,9 @@ export function queryWfsFeatureTypeDetails(
     featureTypeFull,
   });
 }
+
+setFetchOptionsUpdateCallback((options) => {
+  const worker = getWorkerInstance();
+  if (!worker) return;
+  sendTaskRequest('updateFetchOptions', getWorkerInstance(), { options });
+});

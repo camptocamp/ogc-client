@@ -1,5 +1,14 @@
 import { EndpointError } from './errors';
-import { queryXmlDocument, setQueryParams, sharedFetch } from './http-utils';
+import {
+  queryXmlDocument,
+  setFetchOptions,
+  setQueryParams,
+  sharedFetch,
+} from './http-utils';
+import { fetchDocument } from '../ogc-api/link-utils';
+import WfsEndpoint from '../wfs/endpoint';
+// @ts-ignore
+import capabilities200 from '../../fixtures/wfs/capabilities-pigma-2-0-0.xml';
 
 const global = window as any;
 
@@ -349,6 +358,81 @@ describe('HTTP utils', () => {
       });
       it('does not share HEAD results', () => {
         expect(headResults[0]).not.toBe(headResults[1]);
+      });
+    });
+  });
+
+  describe('fetch options', () => {
+    const sampleOptions = {
+      referrer: 'abcd',
+      mode: 'cors',
+      headers: { hello: 'world' },
+      credentials: 'include',
+      integrity: 'abcdefg',
+      redirect: 'follow',
+    } as const;
+
+    describe('used in queryXmlDocument', () => {
+      beforeEach(() => {
+        setFetchOptions(sampleOptions);
+        queryXmlDocument('./hello.xml');
+      });
+      it('is used in the fetch() call', () => {
+        expect(global.fetch).toHaveBeenCalledWith('./hello.xml', {
+          ...sampleOptions,
+          method: 'GET',
+        });
+      });
+    });
+    describe('used in sharedFetch', () => {
+      beforeEach(() => {
+        setFetchOptions(sampleOptions);
+        sharedFetch('./hello.xml', 'HEAD');
+      });
+      it('is used in the fetch() call', () => {
+        expect(global.fetch).toHaveBeenCalledWith('./hello.xml', {
+          ...sampleOptions,
+          method: 'HEAD',
+        });
+      });
+    });
+    describe('used in ogc-api fetchDocument', () => {
+      beforeEach(() => {
+        setFetchOptions(sampleOptions);
+        global.fetchResponseFactory = () => '{ "hello": "world" }';
+        fetchDocument('./hello.json');
+      });
+      it('is used in the fetch() call', () => {
+        expect(global.fetch).toHaveBeenCalledWith(
+          'http://localhost/hello.json?f=json',
+          {
+            ...sampleOptions,
+            headers: {
+              ...sampleOptions.headers,
+              Accept: 'application/json',
+            },
+          }
+        );
+      });
+    });
+    describe('used in worker', () => {
+      let endpoint;
+      beforeEach(() => {
+        global.fetchResponseFactory = () => capabilities200;
+        setFetchOptions(sampleOptions);
+        endpoint = new WfsEndpoint(
+          'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType'
+        );
+      });
+      it('is used in the fetch() call', async () => {
+        await endpoint.isReady();
+        expect(global.fetch).toHaveBeenCalledWith(
+          'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetCapabilities',
+          {
+            ...sampleOptions,
+            method: 'GET',
+          }
+        );
       });
     });
   });
