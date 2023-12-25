@@ -275,6 +275,18 @@ Requests are considered identical if they share the _exact_ same url and method.
       ],
       return: { type: 'Promise', subType: 'Response' },
     },
+    {
+      name: 'setFetchOptions',
+      type: 'Function',
+      description: `Allows setting custom options that will be used for every subsequent \`fetch()\` call; see https://developer.mozilla.org/en-US/docs/Web/API/fetch#options for more information.`,
+      params: [{ name: 'options', type: 'FetchOptions' }],
+    },
+    {
+      name: 'enableFallbackWithoutWorker',
+      type: 'Function',
+      description: `If called, the use of a web worker for carious operations will be prevented; everything will be run on the main thread (this can have performance implications).`,
+      params: [],
+    },
   ],
   types: [
     {
@@ -521,21 +533,31 @@ Requests are considered identical if they share the _exact_ same url and method.
     {
       name: 'OgcApiEndpointInfo',
       type: 'Object',
-      subTypes: ['number', 'number', 'number', 'number'],
       description: 'Information related to an OGC API endpoint.',
     },
     {
       name: 'OgcApiCollectionInfo',
       type: 'Object',
-      subTypes: ['number', 'number', 'number', 'number'],
       description:
         'Information on a specific collection of an OGC API endpoint.',
     },
     {
       name: 'OgcApiCollectionItem',
       type: 'Object',
-      subTypes: ['number', 'number', 'number', 'number'],
-      description: 'An item coming from an OGC API endpoint',
+      description: 'An item coming from an OGC API endpoint.',
+    },
+    {
+      name: 'FetchOptions',
+      type: 'Object',
+      properties: [
+        { type: 'Object', name: 'headers' },
+        { type: 'string', name: 'mode' },
+        { type: 'string', name: 'credentials' },
+        { type: 'string', name: 'redirect' },
+        { type: 'string', name: 'referrer' },
+        { type: 'string', name: 'integrity' },
+      ],
+      description: 'A set of options for `fetch()`.',
     },
   ],
 };

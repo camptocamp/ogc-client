@@ -21,7 +21,11 @@ export {
 } from './wms/endpoint';
 export { default as OgcApiEndpoint } from './ogc-api/endpoint';
 export { useCache } from './shared/cache';
-export { sharedFetch } from './shared/http-utils';
+export {
+  sharedFetch,
+  setFetchOptions,
+  resetFetchOptions,
+} from './shared/http-utils';
 
 export { enableFallbackWithoutWorker } from './worker/index';
 import './worker-fallback';
