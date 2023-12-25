@@ -5,7 +5,8 @@
     "lib": ["es2017", "dom", "webworker"],
     "skipLibCheck": true,
     "moduleResolution": "nodenext",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "module": "esnext"
   },
   "include": ["./src/**/*", "./src-node/**/*"]
 }
