@@ -352,7 +352,7 @@ export default class WfsEndpoint {
     ) {
       // do not prevent using this output format, because it still might work! but give a warning at least
       console.warn(
-        `The following output format type was not found in the feature type ${internalFeatureType.name}: ${outputFormat}`
+        `[ogc-client] The following output format type was not found in the feature type ${internalFeatureType.name}: ${outputFormat}`
       );
     }
     return generateGetFeatureUrl(

@@ -17,13 +17,32 @@ export function getCacheExpiryDuration() {
   return cacheExpiryDuration;
 }
 
-const cachePromise: Promise<Cache> | null =
-  'caches' in globalThis ? caches.open('ogc-client') : null;
+let cachePromise: Promise<Cache | null>;
+function getCache() {
+  if (cachePromise !== undefined) return cachePromise;
+  if (!('caches' in globalThis)) {
+    cachePromise = Promise.resolve(null);
+    return cachePromise;
+  }
+  cachePromise = caches.open('ogc-client').catch((e) => {
+    console.info(
+      '[ogc-client] Cache could not be accessed for the following reason:',
+      e
+    );
+    return null;
+  });
+  return cachePromise;
+}
+
+// use only in tests
+export function _resetCache() {
+  cachePromise = undefined;
+}
 
 export async function storeCacheEntry(object: unknown, ...keys: string[]) {
-  if (!cachePromise) return;
+  const cache = await getCache();
+  if (!cache) return;
   const entryUrl = 'https://cache/' + keys.join('/');
-  const cache = await cachePromise;
   await cache.put(
     entryUrl,
     new Response(JSON.stringify(object), {
@@ -35,18 +54,18 @@ export async function storeCacheEntry(object: unknown, ...keys: string[]) {
 }
 
 export async function hasValidCacheEntry(...keys: string[]) {
-  if (!cachePromise) return false;
+  const cache = await getCache();
+  if (!cache) return;
   const entryUrl = 'https://cache/' + keys.join('/');
-  const cache = await cachePromise;
   return cache
     .match(entryUrl)
     .then((req) => !!req && parseInt(req.headers.get('x-expiry')) > Date.now());
 }
 
 export async function readCacheEntry(...keys: string[]) {
-  if (!cachePromise) return null;
+  const cache = await getCache();
+  if (!cache) return;
   const entryUrl = 'https://cache/' + keys.join('/');
-  const cache = await cachePromise;
   const response = await cache.match(entryUrl);
   return response ? response.clone().json() : null;
 }
@@ -92,8 +111,8 @@ export async function useCache<T>(
  * Removes all expired entries from the cache
  */
 export async function purgeEntries() {
-  if (!cachePromise) return;
-  const cache = await cachePromise;
+  const cache = await getCache();
+  if (!cache) return;
   const keys = await cache.keys();
   for (let key of keys) {
     const resp = await cache.match(key);
