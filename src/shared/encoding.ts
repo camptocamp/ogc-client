@@ -38,7 +38,7 @@ export function decodeString(
   }
   // if all else fails, decode using fallback and hope for the best
   console.warn(
-    `XML document encoding could not be determined, falling back to ${FALLBACK_ENCODING}.`
+    `[ogc-client] XML document encoding could not be determined, falling back to ${FALLBACK_ENCODING}.`
   );
   return new TextDecoder(FALLBACK_ENCODING).decode(buffer);
 }
