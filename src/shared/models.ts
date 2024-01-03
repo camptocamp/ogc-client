@@ -16,3 +16,12 @@ export type GenericEndpointInfo = {
 };
 
 export type MimeType = string;
+
+export interface FetchOptions {
+  headers?: Record<string, string>;
+  mode?: 'same-origin' | 'cors' | 'no-cors';
+  credentials?: 'same-origin' | 'include' | 'omit';
+  redirect?: 'follow' | 'error';
+  referrer?: string;
+  integrity?: string;
+}

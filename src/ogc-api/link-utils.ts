@@ -1,11 +1,15 @@
 import { OgcApiDocument } from './model';
 import { EndpointError } from '../shared/errors';
+import { getFetchOptions } from '../shared/http-utils';
 
 export function fetchDocument(url: string): Promise<OgcApiDocument> {
   const urlObj = new URL(url, window.location.toString());
   urlObj.searchParams.set('f', 'json');
+  const options = getFetchOptions();
+  const optionsHeaders = 'headers' in options ? options.headers : {};
   return fetch(urlObj.toString(), {
-    headers: { Accept: 'application/json' },
+    ...options,
+    headers: { ...optionsHeaders, Accept: 'application/json' },
   }).then((resp) => resp.json());
 }
 

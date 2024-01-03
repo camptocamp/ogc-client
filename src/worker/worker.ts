@@ -1,5 +1,5 @@
 import { addTaskHandler } from './utils';
-import { queryXmlDocument } from '../shared/http-utils';
+import { queryXmlDocument, setFetchOptions } from '../shared/http-utils';
 import * as wmsCapabilities from '../wms/capabilities';
 import * as wfsCapabilities from '../wfs/capabilities';
 import {
@@ -8,6 +8,7 @@ import {
 } from '../wfs/featureprops';
 import { generateGetFeatureUrl } from '../wfs/url';
 import { WfsFeatureTypeFull, WfsVersion } from '../wfs/endpoint';
+import { FetchOptions } from '../shared/models';
 
 addTaskHandler('parseWmsCapabilities', globalThis, ({ url }: { url: string }) =>
   queryXmlDocument(url).then((xmlDoc) => ({
@@ -50,5 +51,14 @@ addTaskHandler(
         parseFeatureProps(getFeatureDoc, featureTypeFull, serviceVersion)
       ),
     }));
+  }
+);
+
+addTaskHandler(
+  'updateFetchOptions',
+  globalThis,
+  ({ options }: { options: FetchOptions }) => {
+    setFetchOptions(options);
+    return Promise.resolve({});
   }
 );

@@ -1,8 +1,42 @@
 import { parseXmlString } from './xml-utils';
 import { EndpointError } from './errors';
 import { decodeString } from './encoding';
+import { FetchOptions } from './models';
 
 const fetchPromises: Map<string, Promise<Response>> = new Map();
+
+let fetchOptions: FetchOptions = {};
+let fetchOptionsUpdateCallback: (options: FetchOptions) => void = null;
+
+/**
+ * Set advanced options to be used by all fetch() calls
+ * @param options
+ */
+export function setFetchOptions(options: FetchOptions) {
+  fetchOptions = options;
+  if (fetchOptionsUpdateCallback) fetchOptionsUpdateCallback(options);
+}
+
+/**
+ * Returns current fetch() options
+ */
+export function getFetchOptions() {
+  return fetchOptions;
+}
+
+/**
+ * Resets advanced fetch() options to their defaults
+ */
+export function resetFetchOptions() {
+  fetchOptions = {};
+  if (fetchOptionsUpdateCallback) fetchOptionsUpdateCallback({});
+}
+
+export function setFetchOptionsUpdateCallback(
+  callback: (options: FetchOptions) => void
+) {
+  fetchOptionsUpdateCallback = callback;
+}
 
 /**
  * Returns a promise equivalent to `fetch(url)` but guarded against
@@ -16,7 +50,7 @@ export function sharedFetch(url: string, method: 'GET' | 'HEAD' = 'GET') {
   }
   // to avoid unhandled promise rejections this promise will never reject,
   // but only return errors as a normal value
-  const promise = fetch(url, { method })
+  const promise = fetch(url, { ...getFetchOptions(), method })
     .catch((e) => e)
     .then((resp) => {
       fetchPromises.delete(fetchKey);
@@ -38,7 +72,7 @@ export function queryXmlDocument(url: string) {
   return sharedFetch(url)
     .catch(() =>
       // attempt a HEAD to see if the failure comes from CORS or the service is generally unreachable
-      fetch(url, { method: 'HEAD', mode: 'no-cors' })
+      fetch(url, { ...getFetchOptions(), method: 'HEAD', mode: 'no-cors' })
         .catch((error) => {
           throw new EndpointError(
             `Fetching the document failed either due to network errors or unreachable host, error is: ${error.message}`,

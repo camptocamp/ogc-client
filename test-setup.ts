@@ -15,6 +15,8 @@ window.originalFetch = window.fetch;
 window.mockFetch = jest.fn((url) =>
   Promise.resolve({
     text: () => Promise.resolve(globalThis.fetchResponseFactory(url)),
+    json: () =>
+      Promise.resolve(JSON.parse(globalThis.fetchResponseFactory(url))),
     arrayBuffer: () =>
       Promise.resolve(
         Buffer.from(globalThis.fetchResponseFactory(url), 'utf-8')
@@ -26,13 +28,18 @@ window.mockFetch = jest.fn((url) =>
 );
 window.fetch = window.mockFetch;
 
+// reset fetch response to XML by default
+beforeEach(() => {
+  window.fetchResponseFactory = (url) => '<empty></empty>';
+});
+
 window.caches = {
   open: async () => new CacheMock(),
 };
 
 // mock Worker class to work synchronously
 // requires an absolute file path
-// this is mainly ripped off https://github.com/developit/jsdom-worker
+// this is mainly ripped off of https://github.com/developit/jsdom-worker
 global.Worker = function Worker(filePath) {
   let getScopeVar;
   let messageQueue = [];
