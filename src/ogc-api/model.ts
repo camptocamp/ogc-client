@@ -1,4 +1,4 @@
-import { Feature } from 'geojson';
+import { Feature, Geometry } from 'geojson';
 import { BoundingBox, CrsCode } from '../shared/models';
 
 export type ConformanceClass = string;
@@ -54,8 +54,6 @@ export interface OgcApiCollectionInfo {
   sortables: CollectionParameter[];
 }
 
-export type OgcApiCollectionItem = Feature | unknown;
-
 export interface OgcApiDocumentLinks {
   rel: string;
   type: string;
@@ -84,6 +82,12 @@ interface OgcApiRecordTheme {
   concepts: OgcApiRecordThemeConcept[];
   scheme: string;
 }
+interface OgcApiTime {
+  date?: string;
+  timestamp?: string;
+  interval?: [string, string];
+  resolution?: string;
+}
 export interface OgcApiRecordContact {
   name: string;
   links: OgcApiDocumentLinks[];
@@ -91,21 +95,29 @@ export interface OgcApiRecordContact {
   roles: string[];
 }
 export interface OgcApiRecordProperties {
-  recordCreated: Date;
-  recordUpdated: Date;
-  providers: string[];
   type: string;
   title: string;
-  description: string;
-  externalId: OgcApiItemExternalId[];
-  themes: OgcApiRecordTheme[];
-  keywords: string[];
-  language: string;
-  contacts: OgcApiRecordContact[];
-  formats: string[];
-  license: string;
+  recordCreated?: Date;
+  recordUpdated?: Date;
+  providers?: string[];
+  description?: string;
+  externalId?: OgcApiItemExternalId[];
+  themes?: OgcApiRecordTheme[];
+  keywords?: string[];
+  language?: string;
+  contacts?: OgcApiRecordContact[];
+  formats?: string[];
+  license?: string;
 }
 
-export type OgcRecord = Feature<OgcApiRecordProperties> & {
+export type OgcApiRecord = {
+  id: string;
+  type: string;
+  time: OgcApiTime;
+  geometry: Geometry;
+  properties: OgcApiRecordProperties;
   links: OgcApiDocumentLinks[];
+  conformsTo?: string[];
 };
+
+export type OgcApiCollectionItem = OgcApiRecord;

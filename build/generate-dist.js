@@ -20,9 +20,11 @@ async function serializeWorker(entryPath) {
   const bundle = await rollup({
     input: entryPath,
     plugins,
+  });
+  const { output } = await bundle.generate({
+    format: 'es',
     inlineDynamicImports: true,
   });
-  const { output } = await bundle.generate({ format: 'es' });
 
   if (output.length !== 1) {
     throw new Error(`Unexpected output length: ${output.length}`);
@@ -42,7 +44,9 @@ async function serializeAllWorkersInCode(fileName, code) {
     srcRoot,
     path.relative(distRoot, path.dirname(fileName))
   );
-  const workerMatches = codeResult.matchAll(/new Worker\('([^']+)'/g);
+  const workerMatches = codeResult.matchAll(
+    /new Worker\(new URL\('(.+)', import\.meta\.url\)/g
+  );
   for (const match of workerMatches) {
     const workerPath = path.join(dir, match[1]);
     console.log(
@@ -53,7 +57,7 @@ async function serializeAllWorkersInCode(fileName, code) {
     );
     const workerCode = await serializeWorker(workerPath);
     codeResult = codeResult.replace(
-      `new Worker('${match[1]}'`,
+      `new Worker(new URL('${match[1]}', import.meta.url)`,
       `new Worker(URL.createObjectURL(new Blob([${JSON.stringify(
         workerCode
       )}], {type: 'application/javascript'}))`
@@ -104,16 +108,16 @@ async function main() {
       }),
       typescript(),
     ],
-    inlineDynamicImports: true,
   });
   await nodeBundle.write({
     file: path.join(distRoot, './dist-node.js'),
     format: 'cjs',
+    inlineDynamicImports: true,
   });
 
   console.log(
     `
-> files successfully build in ${distRoot} folder.`
+> files successfully built in ${distRoot} folder.`
   );
 }
 

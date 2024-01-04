@@ -2,7 +2,9 @@ import { OgcApiDocument } from './model';
 import { EndpointError } from '../shared/errors';
 import { getFetchOptions } from '../shared/http-utils';
 
-export function fetchDocument(url: string): Promise<OgcApiDocument> {
+export function fetchDocument<T extends OgcApiDocument>(
+  url: string
+): Promise<T> {
   const urlObj = new URL(url, window.location.toString());
   urlObj.searchParams.set('f', 'json');
   const options = getFetchOptions();
@@ -10,7 +12,7 @@ export function fetchDocument(url: string): Promise<OgcApiDocument> {
   return fetch(urlObj.toString(), {
     ...options,
     headers: { ...optionsHeaders, Accept: 'application/json' },
-  }).then((resp) => resp.json());
+  }).then((resp) => resp.json() as Promise<T>);
 }
 
 export function fetchRoot(url: string) {
