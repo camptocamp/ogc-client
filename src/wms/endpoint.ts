@@ -2,7 +2,7 @@ import { EndpointError } from '../shared/errors';
 import { parseWmsCapabilities } from '../worker';
 import { useCache } from '../shared/cache';
 import { setQueryParams } from '../shared/http-utils';
-import { CrsCode, GenericEndpointInfo } from '../shared/models';
+import { BoundingBox, CrsCode, GenericEndpointInfo } from '../shared/models';
 
 export type LayerStyle = {
   name: string;
@@ -44,7 +44,7 @@ export type WmsLayerFull = {
   /**
    * Dict of bounding boxes where keys are CRS codes
    */
-  boundingBoxes: any;
+  boundingBoxes: Record<CrsCode, BoundingBox>;
   attribution?: LayerAttribution;
   /**
    * Not defined if the layer is a leaf in the tree

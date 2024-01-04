@@ -205,8 +205,6 @@
                         <southBoundLatitude>41.1701</southBoundLatitude>
                         <northBoundLatitude>51.1419</northBoundLatitude>
                     </EX_GeographicBoundingBox>
-                    <BoundingBox CRS="EPSG:4326"
-                                 minx="41.1701" miny="-5.86764" maxx="51.1419" maxy="11.0789" />
                     <BoundingBox CRS="EPSG:3857"
                                  minx="-653183" miny="5.03746e+06" maxx="1.2333e+06" maxy="6.64644e+06" />
                     <BoundingBox CRS="CRS:84"
@@ -331,6 +329,10 @@
                     </MetadataURL>
                     <MinScaleDenominator>9000</MinScaleDenominator>
                     <MaxScaleDenominator>251000</MaxScaleDenominator>
+                </Layer>
+                <Layer queryable="0" opaque="0" cascaded="0">
+                    <Name>INHERIT_BBOX</Name>
+                    <Title>Inherited bounding boxes</Title>
                 </Layer>
             </Layer>
         </Layer>
