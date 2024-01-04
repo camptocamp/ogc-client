@@ -158,6 +158,6 @@ export default class OgcApiEndpoint {
         url.pathname += `/${itemId}`;
         return url.toString();
       })
-      .then(fetchDocument);
+      .then(fetchDocument<OgcApiCollectionItem>);
   }
 }
