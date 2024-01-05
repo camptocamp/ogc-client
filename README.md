@@ -13,7 +13,7 @@ The following standards are partially implemented:
 - WFS - _Web Feature Service_
 - OGC API (Records and Features)
 
-Why no WMTS support? Because [openlayers](https://www.github.com/openlayers/openlayers) has an incredibly thorough and well-tested WMTS capabilities parser and you should just use it.
+Why no WMTS support? Because [OpenLayers](https://www.github.com/openlayers/openlayers) has an incredibly thorough and well-tested WMTS capabilities parser and you should just use it.
 Reimplementing it in **ogc-client** currently does not bring any significant value.
 
 ## Why use it?
@@ -50,10 +50,6 @@ enableFallbackWithoutWorker();
 ```
 
 All processing will be done on the main thread after this call, including HTTP requests.
-
-### API
-
-> TODO
 
 ### Application
 
