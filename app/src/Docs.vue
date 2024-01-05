@@ -49,9 +49,12 @@
         <pre>
   import { WfsEndpoint } from '@camptocamp/ogc-client';
 
-  new WfsEndpoint('https://my.server.org/ows')
-    .then(endpoint => endpoint.supportsJson());</pre
-        >
+  new WfsEndpoint("https://my.server.org/ows")
+    .isReady()
+    .then(
+      (endpoint) => console.log(endpoint.getFeatureTypes())
+      )
+    </pre>
       </CodeBlock>
     </p>
 
