@@ -194,8 +194,6 @@
                     <SRS>EPSG:32620</SRS>
                     <SRS>EPSG:32621</SRS>
                     <LatLonBoundingBox minx="-5.86764" miny="41.1701" maxx="11.0789" maxy="51.1419" />
-                    <BoundingBox SRS="EPSG:4326"
-                                 minx="-5.86764" miny="41.1701" maxx="11.0789" maxy="51.1419" />
                     <BoundingBox SRS="EPSG:3857"
                                  minx="-653183" miny="5.03746e+06" maxx="1.2333e+06" maxy="6.64644e+06" />
                     <BoundingBox SRS="CRS:84"
@@ -305,6 +303,10 @@
                         <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://www.geocatalogue.fr/api-public/servicesRest?Service=CSW&amp;Request=GetRecordById&amp;Version=2.0.2&amp;id=72cc8d40-1bb6-41a3-8376-9734f23336ff&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full"/>
                     </MetadataURL>
                     <ScaleHint min="3.36759422690005" max="93.9184612168792" />
+                </Layer>
+                <Layer queryable="0" opaque="0" cascaded="0">
+                    <Name>INHERIT_BBOX</Name>
+                    <Title>Inherited bounding boxes</Title>
                 </Layer>
             </Layer>
         </Layer>

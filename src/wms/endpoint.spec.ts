@@ -88,6 +88,11 @@ describe('WmsEndpoint', () => {
                   name: 'SCAN_D_GEOL50',
                   title: 'Carte géologique image de la France au 1/50 000e',
                 },
+                {
+                  abstract: '',
+                  name: 'INHERIT_BBOX',
+                  title: 'Inherited bounding boxes',
+                },
               ],
               name: 'GEOLOGIE',
               title: 'Cartes géologiques',
@@ -117,7 +122,13 @@ describe('WmsEndpoint', () => {
           'EPSG:4171',
           'EPSG:2154',
         ],
-        boundingBoxes: {},
+        boundingBoxes: {
+          'CRS:84': ['-180', '-90', '180', '90'],
+          'EPSG:2154': ['-1e+15', '-1e+15', '1e+15', '1e+15'],
+          'EPSG:3857': ['-1e+15', '-1e+15', '1e+15', '1e+15'],
+          'EPSG:4171': ['-180', '-90', '180', '90'],
+          'EPSG:4326': ['-180', '-90', '180', '90'],
+        },
         name: 'GEOLOGIE',
         styles: [
           {

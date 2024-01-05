@@ -13,7 +13,7 @@ import {
   WmsLayerFull,
   WmsVersion,
 } from './endpoint';
-import { CrsCode, GenericEndpointInfo } from '../shared/models';
+import { BoundingBox, CrsCode, GenericEndpointInfo } from '../shared/models';
 
 /**
  * Will read a WMS version from the capabilities doc
@@ -74,7 +74,8 @@ function parseLayer(
   version: WmsVersion,
   inheritedSrs: CrsCode[] = [],
   inheritedStyles: LayerStyle[] = [],
-  inheritedAttribution: LayerAttribution = null
+  inheritedAttribution: LayerAttribution = null,
+  inheritedBoundingBoxes: Record<CrsCode, BoundingBox> = null
 ): WmsLayerFull {
   const srsTag = version === '1.3.0' ? 'CRS' : 'SRS';
   const srsList = findChildrenElement(layerEl, srsTag).map(getElementText);
@@ -91,13 +92,48 @@ function parseLayer(
         : ['minx', 'miny', 'maxx', 'maxy'];
     return attrs.map((name) => getElementAttribute(bboxEl, name));
   }
+  function parseExGeographicBoundingBox(bboxEl) {
+    return [
+      'westBoundLongitude',
+      'southBoundLatitude',
+      'eastBoundLongitude',
+      'northBoundLatitude',
+    ].map((name) => getElementText(findChildElement(bboxEl, name)));
+  }
+  function parseLatLonBoundingBox(bboxEl) {
+    return ['minx', 'miny', 'maxx', 'maxy'].map((name) =>
+      getElementAttribute(bboxEl, name)
+    );
+  }
   const attributionEl = findChildElement(layerEl, 'Attribution');
   const attribution =
     attributionEl !== null
       ? parseLayerAttribution(attributionEl)
       : inheritedAttribution;
+  const latLonBboxEl =
+    version === '1.3.0'
+      ? findChildElement(layerEl, 'EX_GeographicBoundingBox')
+      : findChildElement(layerEl, 'LatLonBoundingBox');
+  const baseBoundingBox = {};
+  if (latLonBboxEl) {
+    baseBoundingBox['EPSG:4326'] =
+      version === '1.3.0'
+        ? parseExGeographicBoundingBox(latLonBboxEl)
+        : parseLatLonBoundingBox(latLonBboxEl);
+  }
+  let boundingBoxes = findChildrenElement(layerEl, 'BoundingBox').reduce(
+    (prev, bboxEl) => ({
+      ...prev,
+      [getElementAttribute(bboxEl, srsTag)]: parseBBox(bboxEl),
+    }),
+    baseBoundingBox
+  );
+  boundingBoxes =
+    Object.keys(boundingBoxes).length > 0 || inheritedBoundingBoxes === null
+      ? boundingBoxes
+      : inheritedBoundingBoxes;
   const children = findChildrenElement(layerEl, 'Layer').map((layer) =>
-    parseLayer(layer, version, availableCrs, styles, attribution)
+    parseLayer(layer, version, availableCrs, styles, attribution, boundingBoxes)
   );
   return {
     name: getElementText(findChildElement(layerEl, 'Name')),
@@ -106,13 +142,7 @@ function parseLayer(
     availableCrs,
     styles,
     attribution,
-    boundingBoxes: findChildrenElement(layerEl, 'BoundingBox').reduce(
-      (prev, bboxEl) => ({
-        ...prev,
-        [getElementAttribute(bboxEl, srsTag)]: parseBBox(bboxEl),
-      }),
-      {}
-    ),
+    boundingBoxes,
     ...(children.length && { children }),
   };
 }
