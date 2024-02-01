@@ -1,7 +1,7 @@
 module.exports = {
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.(js|ts|xml)$': [
+    '^.+\\.(ts|xml)$': [
       '<rootDir>/jest.ts-transformer.js',
       {
         isolatedModules: true,
