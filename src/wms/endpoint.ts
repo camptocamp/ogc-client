@@ -58,7 +58,6 @@ export type WmsVersion = '1.1.0' | '1.1.1' | '1.3.0';
  * Represents a WMS endpoint advertising several layers arranged in a tree structure.
  */
 export default class WmsEndpoint {
-  private _capabilitiesUrl: string;
   private _capabilitiesPromise: Promise<void>;
   private _info: GenericEndpointInfo | null;
   private _layers: WmsLayerFull[] | null;
@@ -101,8 +100,8 @@ export default class WmsEndpoint {
   }
 
   /**
-   * Returns an array of layers in summary format; use the `path` property
-   * to rebuild the tree structure if needed
+   * Returns an array of layers in summary format; layers are organized in a tree
+   * structure with each aving an optional `children` property
    */
   getLayers() {
     function layerSummaryMapper(layerFull) {
@@ -120,7 +119,6 @@ export default class WmsEndpoint {
 
   /**
    * Returns a complete layer based on its name
-   * Note: the first matching layer will be returned
    * @param name Layer name property (unique in the WMS service)
    * @return return null if layer was not found
    */
