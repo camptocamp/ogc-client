@@ -11,10 +11,8 @@ The following standards are partially implemented:
 
 - WMS - _Web Map Service_
 - WFS - _Web Feature Service_
+- WMTS - _Web Map Tile Service_
 - OGC API (Records and Features)
-
-Why no WMTS support? Because [OpenLayers](https://www.github.com/openlayers/openlayers) has an incredibly thorough and well-tested WMTS capabilities parser and you should just use it.
-Reimplementing it in **ogc-client** currently does not bring any significant value.
 
 ## Why use it?
 
@@ -23,8 +21,7 @@ Reimplementing it in **ogc-client** currently does not bring any significant val
 3. **ogc-client** will hide the complexity of OGC standards behind straightforward APIs
 4. **ogc-client** will run heavy tasks in a worker to avoid blocking the main thread
 5. **ogc-client** will keep a persistent cache of operations to minimize requests and processing
-6. **ogc-client** will handle errors in a graceful way and extract relevant messages for you
-7. **ogc-client** will tell you if a service is not usable for [CORS-related issues](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+6. **ogc-client** will tell you if a service is not usable for [CORS-related issues](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 
 ## Instructions
 
@@ -59,7 +56,7 @@ To start it locally, clone the repository and run the following commands:
 ```bash
 $ cd app
 $ npm install
-$ npm run serve
+$ npm start
 ```
 
 The app is based on [Vue.js](https://vuejs.org/) and will showcase most features implemented in the library.

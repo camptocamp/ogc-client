@@ -244,6 +244,93 @@ available layers, bounding boxes etc. Layer name is case sensitive.`,
       ],
     },
     {
+      name: 'WmtsEndpoint',
+      type: 'Class',
+      constructor: {
+        params: [{ name: 'url', type: 'string' }],
+        description: `Creates a new WMTS endpoint; wait for the \`isReady()\` promise before using the endpoint methods.`,
+      },
+      methods: [
+        {
+          name: 'isReady',
+          description: `Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.`,
+          params: [],
+          return: { type: 'Promise', subType: 'WmtsEndpoint' },
+        },
+        {
+          name: 'getServiceInfo',
+          description: `Returns the service info.`,
+          params: [],
+          return: { type: 'WmtsEndpointInfo' },
+        },
+        {
+          name: 'getLayers',
+          description: `Returns the layers advertised in the endpoint.`,
+          params: [],
+          return: { type: 'Array', subType: 'WmtsLayer' },
+        },
+        {
+          name: 'getMatrixSets',
+          description: `Returns the matrix sets available for that endpoint. Each matrix set contains a list of tile matrices
+as well as a supported CRS.`,
+          params: [],
+          return: { type: 'Array', subType: 'WmtsMatrixSet' },
+        },
+        {
+          name: 'getLayerByName',
+          description: `Returns a layer object based on its name.`,
+          params: [{ name: 'name', type: 'string' }],
+          return: { type: 'WmtsLayer' },
+        },
+        {
+          name: 'getMatrixSetByIdentifier',
+          description: `Returns a matrix set object based on its identifier.`,
+          params: [{ name: 'identifier', type: 'string' }],
+          return: { type: 'WmtsMatrixSet' },
+        },
+        {
+          name: 'getLayerResourceUrl',
+          description: `Returns a layer resource info. If no type hint is specified, the first resource will be returned. A resource
+info contains a URL as well as an image format and a request encoding (KVP or REST).`,
+          params: [
+            { name: 'layerName', type: 'string' },
+            { name: 'formatHint', type: 'MimeType', optional: true },
+          ],
+          return: { type: 'LayerResourceUrl' },
+        },
+        {
+          name: 'getTileUrl',
+          description: `Generates a tile URL for a layer and a set of parameters.`,
+          params: [
+            { name: 'layerName', type: 'string' },
+            { name: 'styleName', type: 'string' },
+            { name: 'matrixSetName', type: 'string' },
+            { name: 'tileMatrix', type: 'string' },
+            { name: 'tileRow', type: 'number' },
+            { name: 'tileCol', type: 'number' },
+            { name: 'outputFormat', type: 'MimeType' },
+          ],
+          return: { type: 'string' },
+        },
+        {
+          name: 'getDefaultDimensions',
+          description: `Return an object with all defined dimensions for the layer, as well as their default values.`,
+          params: [{ name: 'layerName', type: 'string' }],
+          return: { type: 'Record', subType: 'LayerDimensionValue' },
+        },
+        {
+          name: 'getOpenLayersTileGrid',
+          description: `Creates a \`WMTSTileGrid\` instance from the [\`ol\` package](https://www.npmjs.com/package/ol), for a given layer. Optionally, a matrix set
+   can be provided. Will return \`null\` if the \`ol\` package is not present (as it is considered an optional peer dependency).`,
+          params: [
+            { name: 'layerName', type: 'string' },
+            { name: 'matrixSetIdentifier', type: 'string', optional: true },
+          ],
+          return: { type: 'WMTSTileGrid' },
+        },
+      ],
+    },
+    {
       name: 'useCache',
       type: 'Function',
       description: `Will run the provided function and resolve to its return value.

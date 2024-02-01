@@ -27,6 +27,8 @@ export function formatTypeToString(typeObj) {
   switch (typeObj.type || typeObj) {
     case 'Array':
       return `${subType}[]`;
+    case 'Record':
+      return `Record<string, ${subType}>`;
     case 'Response':
       return `[Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)`;
     case 'Promise':
