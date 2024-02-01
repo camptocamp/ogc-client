@@ -20,6 +20,13 @@
       collections from it.
     </p>
     <OgcApiEndpoint></OgcApiEndpoint>
+
+    <h2 class="my-4">WMTS</h2>
+    <p>
+      Enter a WMTS endpoint URL below to get some information and a list of
+      layers from it.
+    </p>
+    <WmtsEndpoint></WmtsEndpoint>
   </div>
 </template>
 
@@ -29,9 +36,10 @@
 import WmsEndpoint from './components/wms/WmsEndpoint.vue';
 import WfsEndpoint from './components/wfs/WfsEndpoint.vue';
 import OgcApiEndpoint from './components/ogc-api/OgcApiEndpoint.vue';
+import WmtsEndpoint from '@/components/wmts/WmtsEndpoint.vue';
 
 export default {
   name: 'App',
-  components: { OgcApiEndpoint, WfsEndpoint, WmsEndpoint },
+  components: { WmtsEndpoint, OgcApiEndpoint, WfsEndpoint, WmsEndpoint },
 };
 </script>

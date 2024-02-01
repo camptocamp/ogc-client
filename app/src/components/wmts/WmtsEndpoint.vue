@@ -3,10 +3,9 @@
     <div class="d-flex flex-row my-4">
       <input
         class="form-control me-3"
-        placeholder="Enter a WFS service URL here"
+        placeholder="Enter a WMS service URL here"
         v-model="url"
       />
-      <div class="spacer-s"></div>
       <button type="button" class="btn btn-primary" @click="createEndpoint()">
         Analyze
       </button>
@@ -14,13 +13,13 @@
     <div v-if="loading">Loading...</div>
     <div v-if="loaded">
       <InfoList :info="endpoint.getServiceInfo()"></InfoList>
-      <ItemsTree :items="endpoint.getFeatureTypes()" style="min-height: 200px">
+      <ItemsTree :items="endpoint.getLayers()" style="min-height: 200px">
         <template v-slot="{ item }">
           <div :title="item.abstract">
             <template v-if="item.name">
               <a
                 href
-                @click="handleItemClick(item, $event)"
+                @click="handleLayerClick(item, $event)"
                 class="link-light"
                 >{{ item.title }}</a
               >
@@ -31,11 +30,11 @@
           </div>
         </template>
       </ItemsTree>
-      <WfsFeatureTypeInfo
-        v-if="selectedFeatureType"
-        :feature-type="selectedFeatureType"
+      <WmtsLayerInfo
+        v-if="selectedLayer"
+        :layer="selectedLayer"
         :endpoint="endpoint"
-      ></WfsFeatureTypeInfo>
+      ></WmtsLayerInfo>
     </div>
     <div v-if="error">Error: {{ error }}</div>
   </div>
@@ -44,18 +43,18 @@
 <script>
 import InfoList from '../presentation/InfoList.vue';
 import ItemsTree from '../presentation/ItemsTree.vue';
-import WfsFeatureTypeInfo from './WfsFeatureTypeInfo.vue';
-import WfsEndpoint from '../../../../src/wfs/endpoint';
+import WmtsEndpoint from '../../../../src/wmts/endpoint';
+import WmtsLayerInfo from '@/components/wmts/WmtsLayerInfo.vue';
 
 export default {
-  name: 'WfsEndpoint',
-  components: { WfsFeatureTypeInfo, ItemsTree, InfoList },
+  name: 'WmtsEndpoint',
+  components: { WmtsLayerInfo, ItemsTree, InfoList },
   data: () => ({
     loading: false,
     error: null,
     endpoint: null,
-    url: 'https://ahocevar.com/geoserver/wfs',
-    selectedFeatureType: null,
+    url: 'https://basemap.at/wmts/1.0.0/WMTSCapabilities.xml',
+    selectedLayer: null,
   }),
   computed: {
     loaded() {
@@ -66,7 +65,7 @@ export default {
     async createEndpoint() {
       this.error = null;
       this.loading = true;
-      this.endpoint = new WfsEndpoint(this.url);
+      this.endpoint = new WmtsEndpoint(this.url);
       try {
         await this.endpoint.isReady();
       } catch (e) {
@@ -74,11 +73,9 @@ export default {
       }
       this.loading = false;
     },
-    async handleItemClick(layer, event) {
+    handleLayerClick(layer, event) {
+      this.selectedLayer = this.endpoint.getLayerByName(layer.name);
       event.preventDefault();
-      this.selectedFeatureType = await this.endpoint.getFeatureTypeFull(
-        layer.name
-      );
     },
   },
 };

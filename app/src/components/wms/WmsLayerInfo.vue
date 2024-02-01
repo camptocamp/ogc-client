@@ -10,7 +10,7 @@
           class="form-select d-inline-block w-auto"
         >
           <option v-for="style in layer.styles" :value="style.name">
-            {{ style.title }}
+            {{ style.title || style.name }}
           </option>
         </select>
       </label>

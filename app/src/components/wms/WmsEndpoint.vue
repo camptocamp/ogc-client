@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row my-4">
       <input
         class="form-control me-3"
         placeholder="Enter a WMS service URL here"
