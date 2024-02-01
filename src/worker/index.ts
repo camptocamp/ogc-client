@@ -8,6 +8,7 @@ import {
 import { GenericEndpointInfo } from '../shared/models';
 import { WmsLayerFull, WmsVersion } from '../wms/endpoint';
 import { setFetchOptionsUpdateCallback } from '../shared/http-utils';
+import { WmtsEndpointInfo, WmtsLayer, WmtsMatrixSet } from '../wmts/model';
 
 let fallbackWithoutWorker = false;
 
@@ -78,6 +79,20 @@ export function queryWfsFeatureTypeDetails(
     url: capabilitiesUrl,
     serviceVersion,
     featureTypeFull,
+  });
+}
+
+/**
+ * Parses the capabilities document and return all relevant information
+ * @param capabilitiesUrl This url should point to the capabilities document
+ */
+export function parseWmtsCapabilities(capabilitiesUrl: string): Promise<{
+  info: WmtsEndpointInfo;
+  layers: WmtsLayer[];
+  matrixSets: WmtsMatrixSet[];
+}> {
+  return sendTaskRequest('parseWmtsCapabilities', getWorkerInstance(), {
+    url: capabilitiesUrl,
   });
 }
 
