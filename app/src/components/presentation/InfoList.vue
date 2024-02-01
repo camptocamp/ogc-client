@@ -1,8 +1,23 @@
 <template>
   <dl class="small">
     <template v-for="prop in propList">
-      <dt>{{ prop.title }}</dt>
-      <dd>{{ prop.description }}</dd>
+      <dt class="d-flex flex-row" style="gap: 0.5rem">
+        <span>{{ prop.title }}</span>
+        <div
+          class="flex-grow-1"
+          style="
+            border-top: 2px solid #e0e0e0;
+            margin-top: 0.7em;
+            min-width: 6px;
+          "
+        ></div>
+      </dt>
+      <dd>
+        <span v-if="typeof prop.description === 'string'">{{
+          prop.description
+        }}</span>
+        <InfoList v-else :info="prop.description"></InfoList>
+      </dd>
     </template>
   </dl>
 </template>
@@ -30,8 +45,11 @@ export default {
   computed: {
     propList() {
       return Object.keys(this.info).map((key) => ({
-        title: `${key.substr(0, 1).toUpperCase()}${key.substr(1)}`,
-        description: `${this.info[key]}`,
+        title: `${key.substring(0, 1).toUpperCase()}${key.substring(1)}`,
+        description:
+          this.info[key] instanceof Object
+            ? this.info[key]
+            : `${this.info[key]}`,
       }));
     },
   },

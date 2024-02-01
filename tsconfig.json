@@ -4,7 +4,7 @@
     "target": "ES2017",
     "lib": ["es2017", "dom", "webworker"],
     "skipLibCheck": true,
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "module": "esnext"
   },

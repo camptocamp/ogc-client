@@ -17,8 +17,10 @@
 
     <ul>
       <li>
-        Support for <a href="https://www.ogc.org/standards/wfs">WFS</a> and
-        <a href="https://www.ogc.org/standards/wms">WMS</a> protocols
+        Support for <a href="https://www.ogc.org/standards/wfs">WFS</a>,
+        <a href="https://www.ogc.org/standards/wms">WMS</a>,
+        <a href="https://www.ogc.org/standards/wmts">WMTS</a> and
+        <a href="https://ogcapi.ogc.org/">OGC API</a> protocols
       </li>
       <li>Elaborate cache system to minimize network requests</li>
       <li>
@@ -47,14 +49,15 @@
     <p>
       <CodeBlock lang="js">
         <pre>
-  import { WfsEndpoint } from '@camptocamp/ogc-client';
+import { WfsEndpoint } from '@camptocamp/ogc-client';
 
-  new WfsEndpoint("https://my.server.org/ows")
-    .isReady()
-    .then(
-      (endpoint) => console.log(endpoint.getFeatureTypes())
-      )
-    </pre>
+new WfsEndpoint("https://my.server.org/ows")
+  .isReady()
+  .then(
+    (endpoint) => console.log(endpoint.getFeatureTypes())
+  )
+    </pre
+        >
       </CodeBlock>
     </p>
 
@@ -125,23 +128,12 @@
 
     <ul>
       <li>
-        No <a href="https://www.ogc.org/standards/wmts">WMTS</a> parsing:
-        alternatives already exist, such as the OpenLayers
-        <a
-          href="https://openlayers.org/en/latest/apidoc/module-ol_format_WMTSCapabilities-WMTSCapabilities.html"
-          >WMTS Capabilities</a
-        >
-        class (<a
-          href="https://openlayers.org/en/latest/examples/wmts-capabilities.html"
-          >example</a
-        >)
-      </li>
-      <li>
-        No GML geometry parsing: again,
+        No GML geometry parsing: the
         <a
           href="https://openlayers.org/en/latest/apidoc/module-ol_format_GML32-GML32.html"
-          >alternatives do exist</a
+          >OpenLayers GML parser</a
         >
+        offers extensive support of the GML format
       </li>
     </ul>
 
@@ -152,13 +144,13 @@
     <p>
       <CodeBlock lang="js">
         <pre>
-  import { WmsEndpoint } from '@camptocamp/ogc-client';
+import { WmsEndpoint } from '@camptocamp/ogc-client';
 
-  async function readExtent() {
-    const endpoint = await new WmsEndpoint('https://my.server.org/ows').isReady();
-    const layer = endpoint.getLayerByName();
-    const extent = layer.boundingBoxes['EPSG:4326'];
-  }</pre
+async function readExtent() {
+  const endpoint = await new WmsEndpoint('https://my.server.org/ows').isReady();
+  const layer = endpoint.getLayerByName();
+  const extent = layer.boundingBoxes['EPSG:4326'];
+}</pre
         >
       </CodeBlock>
     </p>
@@ -168,15 +160,15 @@
     <p>
       <CodeBlock lang="js">
         <pre>
-  import { WfsEndpoint } from '@camptocamp/ogc-client';
+import { WfsEndpoint } from '@camptocamp/ogc-client';
 
-  async function getFeatureUrl() {
-    const endpoint = await new WfsEndpoint('https://my.server.org/ows').isReady();
-    const url = endpoint.getFeatureUrl('my:featureType', {
-      asJson: true,
-      maxFeature: 1000
-    });
-  }</pre
+async function getFeatureUrl() {
+  const endpoint = await new WfsEndpoint('https://my.server.org/ows').isReady();
+  const url = endpoint.getFeatureUrl('my:featureType', {
+    asJson: true,
+    maxFeature: 1000
+  });
+}</pre
         >
       </CodeBlock>
     </p>
@@ -186,13 +178,57 @@
     <p>
       <CodeBlock lang="js">
         <pre>
-  import { OgcApiEndpoint } from '@camptocamp/ogc-client';
+import { OgcApiEndpoint } from '@camptocamp/ogc-client';
 
-  async function getFirstTenRecords() {
-    const endpoint = await new OgcApiEndpoint('https://my.server.org/main')
-    const firstCollection = (await endpoint.recordCollections)[0];
-    return endpoint.getCollectionItems(firstCollection, 10, 0);
-  }</pre
+async function getFirstTenRecords() {
+  const endpoint = await new OgcApiEndpoint('https://my.server.org/main')
+  const firstCollection = (await endpoint.recordCollections)[0];
+  return endpoint.getCollectionItems(firstCollection, 10, 0);
+}</pre
+        >
+      </CodeBlock>
+    </p>
+
+    <h5>
+      Add a WMTS layer to an
+      <a href="https://openlayers.org/">OpenLayers</a> map
+    </h5>
+
+    <p>
+      <CodeBlock lang="js">
+        <pre>
+import TileLayer from 'ol/layer/Tile';
+import WMTS from 'ol/source/WMTS';
+import { WmtsEndpoint } from '@camptocamp/ogc-client';
+
+// create the OpenLayers map
+// ...
+
+async function addWmtsLayer() {
+  const endpoint = await new WmtsEndpoint('https://my.server.org/wmts').isReady();
+  const layer = endpoint.getLayers()[0];
+  const matrixSet = layer.matrixSets[0];
+  const tileGrid = await endpoint.getOpenLayersTileGrid(
+    layer.name,
+    matrixSet.identifier
+  );
+  const resourceUrl = layer.resourceUrls[0];
+  const dimensions = endpoint.getDefaultDimensions(layer.name);
+  const layer = new TileLayer({
+    source: new WMTS({
+      layer: layer.name,
+      style: layer.defaultStyle,
+      matrixSet: matrixSet.identifier,
+      format: resourceUrl.format,
+      url: resourceUrl.url,
+      requestEncoding: resourceUrl.encoding,
+      tileGrid,
+      projection: matrixSet.crs,
+      dimensions,
+    }),
+  });
+  openLayersMap.addLayer(layer);
+}</pre
         >
       </CodeBlock>
     </p>

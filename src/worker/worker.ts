@@ -2,6 +2,7 @@ import { addTaskHandler } from './utils';
 import { queryXmlDocument, setFetchOptions } from '../shared/http-utils';
 import * as wmsCapabilities from '../wms/capabilities';
 import * as wfsCapabilities from '../wfs/capabilities';
+import * as wmtsCapabilities from '../wmts/capabilities';
 import {
   computeFeaturePropsDetails,
   parseFeatureProps,
@@ -61,4 +62,15 @@ addTaskHandler(
     setFetchOptions(options);
     return Promise.resolve({});
   }
+);
+
+addTaskHandler(
+  'parseWmtsCapabilities',
+  globalThis,
+  ({ url }: { url: string }) =>
+    queryXmlDocument(url).then((xmlDoc) => ({
+      info: wmtsCapabilities.readInfoFromCapabilities(xmlDoc),
+      layers: wmtsCapabilities.readLayersFromCapabilities(xmlDoc),
+      matrixSets: wmtsCapabilities.readMatrixSetsFromCapabilities(xmlDoc),
+    }))
 );
