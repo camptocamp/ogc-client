@@ -3,14 +3,14 @@ import {
   getElementAttribute,
   getRootElement,
 } from '../shared/xml-utils';
+import { XmlDocument } from '@rgrove/parse-xml';
 import {
   FeatureGeometryType,
   FeaturePropertyType,
   WfsFeatureTypeFull,
   WfsFeatureTypeInternal,
   WfsVersion,
-} from './endpoint';
-import { XmlDocument } from '@rgrove/parse-xml';
+} from './model';
 
 /**
  * Parses a DescribeFeatureType and GetFeature (with hits) document

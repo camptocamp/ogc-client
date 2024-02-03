@@ -14,7 +14,7 @@ import {
   WfsFeatureTypePropsDetails,
   WfsFeatureWithProps,
   WfsVersion,
-} from './endpoint';
+} from './model';
 
 /**
  * Returns an array of features with their id and properties

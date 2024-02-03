@@ -7,13 +7,13 @@ import {
 } from '../shared/xml-utils';
 import { hasInvertedCoordinates } from '../shared/crs-utils';
 import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
+import { BoundingBox, CrsCode, GenericEndpointInfo } from '../shared/models';
 import {
   LayerAttribution,
   LayerStyle,
   WmsLayerFull,
   WmsVersion,
-} from './endpoint';
-import { BoundingBox, CrsCode, GenericEndpointInfo } from '../shared/models';
+} from './model';
 
 /**
  * Will read a WMS version from the capabilities doc

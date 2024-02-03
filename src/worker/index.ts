@@ -1,14 +1,14 @@
 import { sendTaskRequest } from './utils';
+import { GenericEndpointInfo } from '../shared/models';
+import { setFetchOptionsUpdateCallback } from '../shared/http-utils';
+import { WmtsEndpointInfo, WmtsLayer, WmtsMatrixSet } from '../wmts/model';
 import {
   WfsFeatureTypeFull,
   WfsFeatureTypeInternal,
   WfsFeatureTypePropsDetails,
   WfsVersion,
-} from '../wfs/endpoint';
-import { GenericEndpointInfo } from '../shared/models';
-import { WmsLayerFull, WmsVersion } from '../wms/endpoint';
-import { setFetchOptionsUpdateCallback } from '../shared/http-utils';
-import { WmtsEndpointInfo, WmtsLayer, WmtsMatrixSet } from '../wmts/model';
+} from '../wfs/model';
+import { WmsLayerFull, WmsVersion } from '../wms/model';
 
 let fallbackWithoutWorker = false;
 
