@@ -19,6 +19,14 @@ export {
   LayerStyle,
   LayerAttribution,
 } from './wms/endpoint';
+export { default as WmtsEndpoint } from './wmts/endpoint';
+export {
+  LayerDimensionValue,
+  LayerResourceUrl,
+  WmtsEndpointInfo,
+  WmtsLayer,
+  WmtsMatrixSet,
+} from './wmts/model';
 export { default as OgcApiEndpoint } from './ogc-api/endpoint';
 export { useCache } from './shared/cache';
 export {
