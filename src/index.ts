@@ -16,17 +16,17 @@ export {
   WmsLayerFull,
   WmsVersion,
   WmsLayerSummary,
-  LayerStyle,
-  LayerAttribution,
+  WmtsLayerAttribution,
 } from './wms/model';
 export { default as WmtsEndpoint } from './wmts/endpoint';
 export {
-  LayerDimensionValue,
-  LayerResourceUrl,
+  WmtsLayerDimensionValue,
+  WmtsLayerResourceLink,
   WmtsEndpointInfo,
   WmtsLayer,
   WmtsMatrixSet,
 } from './wmts/model';
+export { LayerStyle, BoundingBox, FetchOptions } from './shared/models';
 export { default as OgcApiEndpoint } from './ogc-api/endpoint';
 export { useCache } from './shared/cache';
 export {

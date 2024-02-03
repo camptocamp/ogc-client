@@ -8,7 +8,7 @@ import describeFeatureType110 from '../../fixtures/wfs/describefeaturetype-pigma
 import describeFeatureType200 from '../../fixtures/wfs/describefeaturetype-pigma-2-0-0-xsd.xml';
 import { parseFeatureTypeInfo } from './featuretypeinfo';
 import { parseXmlString } from '../shared/xml-utils';
-import { WfsFeatureTypeFull, WfsFeatureTypeInternal } from './endpoint';
+import { WfsFeatureTypeFull, WfsFeatureTypeInternal } from './model';
 
 describe('feature type info', () => {
   describe('parseFeatureTypeInfo', () => {

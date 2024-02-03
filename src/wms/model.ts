@@ -1,15 +1,6 @@
-import { BoundingBox, CrsCode } from '../shared/models';
+import { BoundingBox, CrsCode, LayerStyle } from '../shared/models';
 
-export type LayerStyle = {
-  name: string;
-  title: string;
-  /**
-   * May not be defined; a GetLegendGraphic operation should work in any case
-   */
-  legendUrl?: string;
-};
-
-export type LayerAttribution = {
+export type WmtsLayerAttribution = {
   title?: string;
   url?: string;
   logoUrl?: string;
@@ -41,7 +32,7 @@ export type WmsLayerFull = {
    * Dict of bounding boxes where keys are CRS codes
    */
   boundingBoxes: Record<CrsCode, BoundingBox>;
-  attribution?: LayerAttribution;
+  attribution?: WmtsLayerAttribution;
   /**
    * Not defined if the layer is a leaf in the tree
    */

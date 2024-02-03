@@ -3,8 +3,8 @@ import { setQueryParams } from '../shared/http-utils';
 import { useCache } from '../shared/cache';
 import { parseWmtsCapabilities } from '../worker';
 import {
-  LayerDimensionValue,
-  LayerResourceUrl,
+  WmtsLayerDimensionValue,
+  WmtsLayerResourceLink,
   WmtsEndpointInfo,
   WmtsLayer,
   WmtsMatrixSet,
@@ -93,7 +93,7 @@ export default class WmtsEndpoint {
   getLayerResourceUrl(
     layerName: string,
     formatHint?: MimeType
-  ): LayerResourceUrl {
+  ): WmtsLayerResourceLink {
     if (!this._layers) return null;
     const layer = this.getLayerByName(layerName);
     let resourceUrlIndex = 0;
@@ -143,7 +143,9 @@ export default class WmtsEndpoint {
    * Return an object with all defined dimensions for the layer, as well as their default values.
    * @param layerName
    */
-  getDefaultDimensions(layerName: string): Record<string, LayerDimensionValue> {
+  getDefaultDimensions(
+    layerName: string
+  ): Record<string, WmtsLayerDimensionValue> {
     if (!this._layers) return null;
     const layer = this.getLayerByName(layerName);
     if (!layer.dimensions) return {};

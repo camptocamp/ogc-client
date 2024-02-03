@@ -18,7 +18,7 @@ import {
   parseFeaturePropsGeojson,
 } from './featureprops';
 import { parseXmlString } from '../shared/xml-utils';
-import { WfsFeatureTypeFull } from './endpoint';
+import { WfsFeatureTypeFull } from './model';
 
 describe('feature props utils', () => {
   describe('parseFeatureProps and parseFeaturePropsGeojson', () => {

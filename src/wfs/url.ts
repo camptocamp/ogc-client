@@ -1,6 +1,6 @@
 import { setQueryParams } from '../shared/http-utils';
-import { WfsVersion } from './endpoint';
 import { BoundingBox, CrsCode, MimeType } from '../shared/models';
+import { WfsVersion } from './model';
 
 /**
  * Generates an URL for a GetFeature operation
