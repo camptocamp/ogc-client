@@ -88,6 +88,25 @@ export default class WmsEndpoint {
     return result;
   }
 
+  /**
+   * If only one single renderable layer is available, return its name; otherwise, returns null;
+   */
+  getSingleLayerName(): string | null {
+    if (!this._layers) return null;
+    let layers: WmsLayerFull[] = [];
+    function layerLookup(layer: WmsLayerFull) {
+      if (!!layer.name) {
+        layers.push(layer);
+      }
+      if ('children' in layer) {
+        layer.children.map(layerLookup);
+      }
+    }
+    this._layers.map(layerLookup);
+    if (layers.length === 1) return layers[0].name;
+    return null;
+  }
+
   getVersion() {
     return this._version;
   }

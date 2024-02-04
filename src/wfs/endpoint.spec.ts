@@ -6,6 +6,8 @@ import getfeature200hits from '../../fixtures/wfs/getfeature-hits-pigma-2-0-0.xm
 import getfeature200full from '../../fixtures/wfs/getfeature-props-pigma-2-0-0.xml';
 // @ts-ignore
 import describefeaturetype200 from '../../fixtures/wfs/describefeaturetype-pigma-2-0-0-xsd.xml';
+// @ts-ignore
+import capabilitiesStates from '../../fixtures/wfs/capabilities-states-2-0-0.xml';
 import WfsEndpoint from './endpoint';
 import { useCache } from '../shared/cache';
 
@@ -188,6 +190,26 @@ describe('WfsEndpoint', () => {
         geometryName: 'geom',
         geometryType: 'linestring',
         objectCount: 364237,
+      });
+    });
+  });
+
+  describe('#getSingleFeatureTypeName', () => {
+    it('returns null (multiple feature types)', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getSingleFeatureTypeName()).toBe(null);
+    });
+
+    describe('with a single feature type', () => {
+      beforeEach(() => {
+        global.fetchResponseFactory = () => capabilitiesStates;
+        endpoint = new WfsEndpoint(
+          'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType'
+        );
+      });
+      it('returns the single feature type name', async () => {
+        await endpoint.isReady();
+        expect(endpoint.getSingleFeatureTypeName()).toBe('usa:states');
       });
     });
   });

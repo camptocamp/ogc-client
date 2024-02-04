@@ -11,6 +11,7 @@ import {
 } from './model';
 import { generateGetTileUrl } from './url';
 import type WMTSTileGrid from 'ol/tilegrid/WMTS';
+import { WmsLayerFull } from '../wms/model';
 
 /**
  * Represents a WMTS endpoint advertising several layers.
@@ -88,6 +89,15 @@ export default class WmtsEndpoint {
   getLayerByName(name: string): WmtsLayer {
     if (!this._layers) return null;
     return this._layers.find((layer) => layer.name === name) ?? null;
+  }
+
+  /**
+   * If only one single layer is available, return its name; otherwise, returns null;
+   */
+  getSingleLayerName(): string | null {
+    if (!this._layers) return null;
+    if (this._layers.length === 1) return this._layers[0].name;
+    return null;
   }
 
   getLayerResourceUrl(

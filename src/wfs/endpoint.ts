@@ -161,6 +161,15 @@ export default class WfsEndpoint {
   }
 
   /**
+   * If only one single feature type is available, return its name; otherwise, returns null;
+   */
+  getSingleFeatureTypeName(): string | null {
+    if (!this._featureTypes) return null;
+    if (this._featureTypes.length === 1) return this._featureTypes[0].name;
+    return null;
+  }
+
+  /**
    * Returns details regarding properties of a given feature type
    * @param name Feature type name property (unique in the WFS service)
    * @return return null if layer was not found or endpoint is not ready

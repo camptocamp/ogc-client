@@ -45,6 +45,28 @@
             <ResourceURL format="image/png" resourceType="tile"
                          template="https://example.com/wmts/baselayer/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}.png"/>
         </Layer>
+        <Layer>
+            <ows:Title>Baselayer 2</ows:Title>
+            <ows:Abstract>Baselayer 2</ows:Abstract>
+            <ows:Identifier>baselayer2</ows:Identifier>
+            <ows:WGS84BoundingBox>
+                <ows:LowerCorner>-180.0 -90.0</ows:LowerCorner>
+                <ows:UpperCorner>180.0 90.0</ows:UpperCorner>
+            </ows:WGS84BoundingBox>
+            <ows:BoundingBox crs="urn:ogc:def:crs:EPSG::4326">
+                <ows:LowerCorner>-90.0 -180.0</ows:LowerCorner>
+                <ows:UpperCorner>90.0 180.0</ows:UpperCorner>
+            </ows:BoundingBox>
+            <Style>
+                <ows:Identifier>default</ows:Identifier>
+            </Style>
+            <Format>image/png</Format>
+            <TileMatrixSetLink>
+                <TileMatrixSet>inspire_quad</TileMatrixSet>
+            </TileMatrixSetLink>
+            <ResourceURL format="image/png" resourceType="tile"
+                         template="https://example.com/wmts/baselayer/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}.png"/>
+        </Layer>
         <TileMatrixSet>
             <ows:Title>InspireCRS84Quad</ows:Title>
             <ows:Identifier>inspire_quad</ows:Identifier>
