@@ -1,5 +1,4 @@
-import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
-import { BoundingBox, LayerStyle } from '../shared/models';
+import type { BoundingBox, LayerStyle } from '../shared/models';
 import {
   findChildElement,
   findChildrenElement,
@@ -7,7 +6,7 @@ import {
   getElementText,
   getRootElement,
 } from '../shared/xml-utils';
-import {
+import type {
   WmtsLayerResourceLink,
   MatrixSetLink,
   TileMatrix,
@@ -15,6 +14,7 @@ import {
   WmtsLayer,
   WmtsMatrixSet,
 } from './model';
+import type { XmlDocument, XmlElement } from '@rgrove/parse-xml';
 
 function parseBBox(xmlElement: XmlElement): BoundingBox {
   const result = ['LowerCorner', 'UpperCorner']

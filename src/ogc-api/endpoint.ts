@@ -20,27 +20,31 @@ import { fetchDocument, fetchLink, fetchRoot, getLinkUrl } from './link-utils';
 import { EndpointError } from '../shared/errors';
 
 export default class OgcApiEndpoint {
-  private root = fetchRoot(this.baseUrl);
-  private conformance = this.root
-    .then((root) =>
-      fetchLink(
-        root,
-        ['conformance', 'http://www.opengis.net/def/rel/ogc/1.0/conformance'],
-        this.baseUrl
-      )
-    )
-    .catch(() => null);
-  private data = this.root
-    .then((root) =>
-      fetchLink(
-        root,
-        ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data'],
-        this.baseUrl
-      )
-    )
-    .catch(() => null);
+  private root: Promise<OgcApiDocument>;
+  private conformance: Promise<OgcApiDocument>;
+  private data: Promise<OgcApiDocument>;
 
-  constructor(private baseUrl: string) {}
+  constructor(private baseUrl: string) {
+    this.root = fetchRoot(this.baseUrl);
+    this.conformance = this.root
+      .then((root) =>
+        fetchLink(
+          root,
+          ['conformance', 'http://www.opengis.net/def/rel/ogc/1.0/conformance'],
+          this.baseUrl
+        )
+      )
+      .catch(() => null);
+    this.data = this.root
+      .then((root) =>
+        fetchLink(
+          root,
+          ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data'],
+          this.baseUrl
+        )
+      )
+      .catch(() => null);
+  }
 
   get info(): Promise<OgcApiEndpointInfo> {
     return this.root.then(parseEndpointInfo);

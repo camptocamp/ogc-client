@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "target": "ES2017",
-    "lib": ["es2017", "dom", "webworker"],
+    "target": "ESNext",
+    "lib": ["es2020", "dom", "webworker"],
     "skipLibCheck": true,
+    "module": "ESNext",
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "module": "esnext"
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true
   },
   "include": ["./src/**/*", "./src-node/**/*"]
 }

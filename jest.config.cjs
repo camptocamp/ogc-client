@@ -2,7 +2,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   transform: {
     '^.+\\.(ts|xml)$': [
-      '<rootDir>/jest.ts-transformer.js',
+      '<rootDir>/jest.ts-transformer.cjs',
       {
         isolatedModules: true,
         stringifyContentPathRegex: '.(xml)$',
