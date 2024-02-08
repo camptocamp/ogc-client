@@ -8,8 +8,8 @@ import {
   parseFeatureProps,
 } from '../wfs/featureprops';
 import { generateGetFeatureUrl } from '../wfs/url';
-import { WfsFeatureTypeFull, WfsVersion } from '../wfs/endpoint';
 import { FetchOptions } from '../shared/models';
+import { WfsFeatureTypeFull, WfsVersion } from '../wfs/model';
 
 addTaskHandler('parseWmsCapabilities', globalThis, ({ url }: { url: string }) =>
   queryXmlDocument(url).then((xmlDoc) => ({

@@ -1,5 +1,5 @@
+export { default as WfsEndpoint } from './wfs/endpoint';
 export {
-  default as WfsEndpoint,
   WfsVersion,
   WfsFeatureWithProps,
   WfsFeatureTypeSummary,
@@ -10,15 +10,23 @@ export {
   WfsFeatureTypePropDetails,
   WfsFeatureTypePropsDetails,
   WfsFeatureTypeUniqueValue,
-} from './wfs/endpoint';
+} from './wfs/model';
+export { default as WmsEndpoint } from './wms/endpoint';
 export {
-  default as WmsEndpoint,
   WmsLayerFull,
   WmsVersion,
   WmsLayerSummary,
-  LayerStyle,
-  LayerAttribution,
-} from './wms/endpoint';
+  WmtsLayerAttribution,
+} from './wms/model';
+export { default as WmtsEndpoint } from './wmts/endpoint';
+export {
+  WmtsLayerDimensionValue,
+  WmtsLayerResourceLink,
+  WmtsEndpointInfo,
+  WmtsLayer,
+  WmtsMatrixSet,
+} from './wmts/model';
+export { LayerStyle, BoundingBox, FetchOptions } from './shared/models';
 export { default as OgcApiEndpoint } from './ogc-api/endpoint';
 export { useCache } from './shared/cache';
 export {

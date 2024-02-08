@@ -8,12 +8,12 @@ import {
 import { hasInvertedCoordinates } from '../shared/crs-utils';
 import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
 import {
-  LayerAttribution,
+  BoundingBox,
+  CrsCode,
+  GenericEndpointInfo,
   LayerStyle,
-  WmsLayerFull,
-  WmsVersion,
-} from './endpoint';
-import { BoundingBox, CrsCode, GenericEndpointInfo } from '../shared/models';
+} from '../shared/models';
+import { WmtsLayerAttribution, WmsLayerFull, WmsVersion } from './model';
 
 /**
  * Will read a WMS version from the capabilities doc
@@ -74,7 +74,7 @@ function parseLayer(
   version: WmsVersion,
   inheritedSrs: CrsCode[] = [],
   inheritedStyles: LayerStyle[] = [],
-  inheritedAttribution: LayerAttribution = null,
+  inheritedAttribution: WmtsLayerAttribution = null,
   inheritedBoundingBoxes: Record<CrsCode, BoundingBox> = null
 ): WmsLayerFull {
   const srsTag = version === '1.3.0' ? 'CRS' : 'SRS';
@@ -159,7 +159,9 @@ function parseLayerStyle(styleEl: XmlElement): LayerStyle {
   };
 }
 
-function parseLayerAttribution(attributionEl: XmlElement): LayerAttribution {
+function parseLayerAttribution(
+  attributionEl: XmlElement
+): WmtsLayerAttribution {
   const logoUrl = getElementAttribute(
     findChildElement(
       findChildElement(attributionEl, 'LogoURL'),

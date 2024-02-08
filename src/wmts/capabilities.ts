@@ -1,5 +1,5 @@
 import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
-import { BoundingBox } from '../shared/models';
+import { BoundingBox, LayerStyle } from '../shared/models';
 import {
   findChildElement,
   findChildrenElement,
@@ -8,8 +8,7 @@ import {
   getRootElement,
 } from '../shared/xml-utils';
 import {
-  LayerResourceUrl,
-  LayerStyle,
+  WmtsLayerResourceLink,
   MatrixSetLink,
   TileMatrix,
   WmtsEndpointInfo,
@@ -182,7 +181,7 @@ export function readLayersFromCapabilities(
     const outputFormats = findChildrenElement(element, 'Format').map(
       getElementText
     );
-    const resourceUrls: LayerResourceUrl[] = findChildrenElement(
+    const resourceUrls: WmtsLayerResourceLink[] = findChildrenElement(
       element,
       'ResourceURL'
     )

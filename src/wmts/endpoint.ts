@@ -3,14 +3,15 @@ import { setQueryParams } from '../shared/http-utils';
 import { useCache } from '../shared/cache';
 import { parseWmtsCapabilities } from '../worker';
 import {
-  LayerDimensionValue,
-  LayerResourceUrl,
+  WmtsLayerDimensionValue,
+  WmtsLayerResourceLink,
   WmtsEndpointInfo,
   WmtsLayer,
   WmtsMatrixSet,
 } from './model';
 import { generateGetTileUrl } from './url';
 import type WMTSTileGrid from 'ol/tilegrid/WMTS';
+import { WmsLayerFull } from '../wms/model';
 
 /**
  * Represents a WMTS endpoint advertising several layers.
@@ -90,10 +91,19 @@ export default class WmtsEndpoint {
     return this._layers.find((layer) => layer.name === name) ?? null;
   }
 
+  /**
+   * If only one single layer is available, return its name; otherwise, returns null;
+   */
+  getSingleLayerName(): string | null {
+    if (!this._layers) return null;
+    if (this._layers.length === 1) return this._layers[0].name;
+    return null;
+  }
+
   getLayerResourceUrl(
     layerName: string,
     formatHint?: MimeType
-  ): LayerResourceUrl {
+  ): WmtsLayerResourceLink {
     if (!this._layers) return null;
     const layer = this.getLayerByName(layerName);
     let resourceUrlIndex = 0;
@@ -143,7 +153,9 @@ export default class WmtsEndpoint {
    * Return an object with all defined dimensions for the layer, as well as their default values.
    * @param layerName
    */
-  getDefaultDimensions(layerName: string): Record<string, LayerDimensionValue> {
+  getDefaultDimensions(
+    layerName: string
+  ): Record<string, WmtsLayerDimensionValue> {
     if (!this._layers) return null;
     const layer = this.getLayerByName(layerName);
     if (!layer.dimensions) return {};

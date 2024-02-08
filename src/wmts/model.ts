@@ -2,6 +2,7 @@ import {
   BoundingBox,
   CrsCode,
   GenericEndpointInfo,
+  LayerStyle,
   MimeType,
 } from '../shared/models';
 
@@ -46,12 +47,6 @@ export interface WmtsMatrixSet {
   tileMatrices: TileMatrix[];
 }
 
-export interface LayerStyle {
-  name: string;
-  title: string;
-  legendUrl?: string;
-}
-
 export interface MatrixSetLink {
   identifier: string;
   crs: string;
@@ -66,38 +61,28 @@ export interface MatrixSetLimit {
   maxTileCol: number;
 }
 
-export interface LayerResourceUrl {
+export interface WmtsLayerResourceLink {
   url: string;
   encoding: WmtsRequestEncoding;
   format: MimeType;
 }
 
-export type LayerDimensionValue = string;
+export type WmtsLayerDimensionValue = string;
 
 export interface LayerDimension {
   identifier: string;
-  defaultValue: LayerDimensionValue;
-  values: LayerDimensionValue[];
+  defaultValue: WmtsLayerDimensionValue;
+  values: WmtsLayerDimensionValue[];
 }
 
 export interface WmtsLayer {
   name: string;
-  resourceUrls: LayerResourceUrl[];
+  resourceUrls: WmtsLayerResourceLink[];
   styles: LayerStyle[];
   defaultStyle: string;
   matrixSets: MatrixSetLink[];
   latLonBoundingBox?: BoundingBox;
   dimensions?: LayerDimension[];
-}
-
-export interface WmtsTileGrid {
-  minZoom: number;
-  /**
-   * for these arrays the index is the zoom value, so items with an index lower than minZoom are undefined
-   */
-  origins: [number, number][];
-  sizes: [number, number][];
-  tileSizes: [number, number][];
 }
 
 export type WmtsRequestEncoding = 'KVP' | 'REST';

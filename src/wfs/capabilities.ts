@@ -9,8 +9,8 @@ import {
 } from '../shared/xml-utils';
 import { simplifyEpsgUrn } from '../shared/crs-utils';
 import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
-import { WfsFeatureTypeInternal, WfsVersion } from './endpoint';
 import { BoundingBox, GenericEndpointInfo, MimeType } from '../shared/models';
+import { WfsFeatureTypeInternal, WfsVersion } from './model';
 
 /**
  * Will read a WFS version from the capabilities doc

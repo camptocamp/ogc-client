@@ -6,7 +6,10 @@ import ogcsample from '../../fixtures/wmts/ogcsample.xml';
 import arcgis from '../../fixtures/wmts/arcgis.xml';
 // @ts-ignore
 import ign from '../../fixtures/wmts/ign.xml';
+// @ts-ignore
+import capabilitiesWgs84 from '../../fixtures/wmts/capabilities_wgs84.xml';
 import { buildOpenLayersTileGrid } from './ol-tilegrid';
+import WmsEndpoint from '../wms/endpoint';
 
 jest.mock('../shared/cache', () => ({
   useCache: jest.fn((factory) => factory()),
@@ -121,6 +124,13 @@ describe('WmtsEndpoint', () => {
           format: 'image/jpeg',
           url: 'http://www.maps.bob/cgi-bin/MiraMon5_0.cgi?',
         });
+      });
+    });
+
+    describe('#getSingleLayerName', () => {
+      it('returns the layer name', async () => {
+        await endpoint.isReady();
+        expect(endpoint.getSingleLayerName()).toBe('BlueMarbleNextGeneration');
       });
     });
 
@@ -436,6 +446,19 @@ describe('WmtsEndpoint', () => {
             },
           ])
         );
+      });
+    });
+  });
+
+  describe('WMTS with 2 layers', () => {
+    beforeEach(() => {
+      global.fetchResponseFactory = () => capabilitiesWgs84;
+      endpoint = new WmtsEndpoint('https://my.test.service/ogc/wmts?bb=c');
+    });
+    describe('getSingleLayerName', () => {
+      it('returns null', async () => {
+        await endpoint.isReady();
+        expect(endpoint.getSingleLayerName()).toBe(null);
       });
     });
   });

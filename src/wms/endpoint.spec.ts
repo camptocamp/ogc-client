@@ -1,5 +1,7 @@
 // @ts-ignore
 import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
+// @ts-ignore
+import capabilitiesStates from '../../fixtures/wms/capabilities-states-1-3-0.xml';
 import WmsEndpoint from './endpoint';
 import { useCache } from '../shared/cache';
 
@@ -138,6 +140,26 @@ describe('WmsEndpoint', () => {
         ],
         title: 'Cartes géologiques',
         children: expect.any(Array),
+      });
+    });
+  });
+
+  describe('#getSingleLayerName', () => {
+    it('returns null (multiple feature types)', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getSingleLayerName()).toBe(null);
+    });
+
+    describe('with a single feature type', () => {
+      beforeEach(() => {
+        global.fetchResponseFactory = () => capabilitiesStates;
+        endpoint = new WmsEndpoint(
+          'https://my.test.service/ogc/wms?service=wfs&request=DescribeFeatureType'
+        );
+      });
+      it('returns the single feature type name', async () => {
+        await endpoint.isReady();
+        expect(endpoint.getSingleLayerName()).toBe('usa:states');
       });
     });
   });

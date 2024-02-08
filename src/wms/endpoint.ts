@@ -1,58 +1,8 @@
-import { EndpointError } from '../shared/errors';
 import { parseWmsCapabilities } from '../worker';
 import { useCache } from '../shared/cache';
 import { setQueryParams } from '../shared/http-utils';
-import { BoundingBox, CrsCode, GenericEndpointInfo } from '../shared/models';
-
-export type LayerStyle = {
-  name: string;
-  title: string;
-  /**
-   * May not be defined; a GetLegendGraphic operation should work in any case
-   */
-  legendUrl?: string;
-};
-
-export type LayerAttribution = {
-  title?: string;
-  url?: string;
-  logoUrl?: string;
-};
-
-export type WmsLayerSummary = {
-  /**
-   * The layer is renderable if defined
-   */
-  name?: string;
-  title: string;
-  abstract?: string;
-  /**
-   * Not defined if the layer is a leaf in the tree
-   */
-  children?: WmsLayerSummary[];
-};
-
-export type WmsLayerFull = {
-  /**
-   * The layer is renderable if defined
-   */
-  name?: string;
-  title: string;
-  abstract?: string;
-  availableCrs: CrsCode[];
-  styles: LayerStyle[];
-  /**
-   * Dict of bounding boxes where keys are CRS codes
-   */
-  boundingBoxes: Record<CrsCode, BoundingBox>;
-  attribution?: LayerAttribution;
-  /**
-   * Not defined if the layer is a leaf in the tree
-   */
-  children?: WmsLayerFull[];
-};
-
-export type WmsVersion = '1.1.0' | '1.1.1' | '1.3.0';
+import { GenericEndpointInfo } from '../shared/models';
+import { WmsLayerFull, WmsLayerSummary, WmsVersion } from './model';
 
 /**
  * Represents a WMS endpoint advertising several layers arranged in a tree structure.
@@ -136,6 +86,25 @@ export default class WmsEndpoint {
     }
     this._layers.map(layerLookup);
     return result;
+  }
+
+  /**
+   * If only one single renderable layer is available, return its name; otherwise, returns null;
+   */
+  getSingleLayerName(): string | null {
+    if (!this._layers) return null;
+    let layers: WmsLayerFull[] = [];
+    function layerLookup(layer: WmsLayerFull) {
+      if (!!layer.name) {
+        layers.push(layer);
+      }
+      if ('children' in layer) {
+        layer.children.map(layerLookup);
+      }
+    }
+    this._layers.map(layerLookup);
+    if (layers.length === 1) return layers[0].name;
+    return null;
   }
 
   getVersion() {
