@@ -9,6 +9,8 @@ import {
   WfsVersion,
 } from '../wfs/model';
 import { WmsLayerFull, WmsVersion } from '../wms/model';
+// @ts-ignore
+import OgcClientWorker from './worker?worker&inline';
 
 let fallbackWithoutWorker = false;
 
@@ -29,9 +31,7 @@ function getWorkerInstance() {
     return null;
   }
   if (!workerInstance) {
-    workerInstance = new Worker(new URL('./worker.ts', import.meta.url), {
-      type: 'module',
-    });
+    workerInstance = new OgcClientWorker();
   }
   return workerInstance;
 }

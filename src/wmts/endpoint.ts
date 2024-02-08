@@ -11,7 +11,6 @@ import {
 } from './model';
 import { generateGetTileUrl } from './url';
 import type WMTSTileGrid from 'ol/tilegrid/WMTS';
-import { WmsLayerFull } from '../wms/model';
 
 /**
  * Represents a WMTS endpoint advertising several layers.
