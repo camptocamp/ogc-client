@@ -1,5 +1,5 @@
 import OgcApiEndpoint from './endpoint';
-import { readFile } from 'fs/promises';
+import { readFile, stat } from 'fs/promises';
 import * as path from 'path';
 import { EndpointError } from '../shared/errors';
 
@@ -17,6 +17,17 @@ beforeAll(() => {
       const queryPath = url.pathname;
       const format = url.searchParams.get('f') || 'html';
       const filePath = `${path.join(FIXTURES_ROOT, queryPath)}.${format}`;
+      try {
+        await stat(filePath);
+      } catch (e) {
+        resolve({
+          ok: false,
+          status: 400,
+          headers: new Headers(),
+          json: () => Promise.resolve({ links: [] }),
+        } as Response);
+        return;
+      }
       const contents = await readFile(filePath, {
         encoding: 'utf8',
       });
@@ -1513,7 +1524,7 @@ describe('OgcApiEndpoint', () => {
   });
   describe('a failure happens while parsing the endpoint capabilities', () => {
     beforeEach(() => {
-      endpoint = new OgcApiEndpoint('http://local/sample-data/styles'); // not pointing at the root path
+      endpoint = new OgcApiEndpoint('http://local/sample-data/blargz'); // invalid path
     });
     describe('#info', () => {
       it('throws an explicit error', async () => {
@@ -1524,6 +1535,92 @@ Could not find link with type: data,http://www.opengis.net/def/rel/ogc/1.0/data`
           )
         );
       });
+    });
+  });
+
+  describe('querying a nested path of the endpoint', () => {
+    describe('on collections path', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/sample-data/collections');
+      });
+      it('correctly parses endpoint info and collections', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          title: 'OS Open Zoomstack',
+          description:
+            'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+          attribution:
+            'Contains OS data © Crown copyright and database right 2021.',
+        });
+        await expect(endpoint.featureCollections).resolves.toEqual([
+          'airports',
+          'boundaries',
+          'contours',
+          'district_buildings',
+          'etl',
+          'foreshore',
+          'greenspace',
+          'land',
+          'local_buildings',
+          'names',
+          'national_parks',
+          'rail',
+          'railway_stations',
+          'roads_local',
+          'roads_national',
+          'roads_regional',
+          'sites',
+          'surfacewater',
+          'urban_areas',
+          'waterlines',
+          'woodland',
+        ]);
+      });
+    });
+  });
+  describe('on a single collection path', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint(
+        'http://local/sample-data/collections/airports'
+      );
+    });
+    it('correctly parses endpoint info, keep a single collection', async () => {
+      await expect(endpoint.info).resolves.toEqual({
+        title: 'OS Open Zoomstack',
+        description:
+          'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+        attribution:
+          'Contains OS data © Crown copyright and database right 2021.',
+      });
+      await expect(endpoint.featureCollections).resolves.toEqual(['airports']);
+    });
+  });
+  describe('on a single collection items path', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint(
+        'http://local/sample-data/collections/airports/items'
+      );
+    });
+    it('correctly parses endpoint info, keep a single collection', async () => {
+      await expect(endpoint.info).resolves.toEqual({
+        title: 'OS Open Zoomstack',
+        description:
+          'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+        attribution:
+          'Contains OS data © Crown copyright and database right 2021.',
+      });
+      await expect(endpoint.featureCollections).resolves.toEqual(['airports']);
+    });
+  });
+  describe('on a JSON document which is not part of a valid endpoint', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint('http://local/invalid');
+    });
+    it('throws an explicit error', async () => {
+      await expect(endpoint.info).rejects.toEqual(
+        new EndpointError(
+          `Could not find the root document, this might not be a valid OGC API endpoint`
+        )
+      );
     });
   });
 });

@@ -32,7 +32,7 @@ export interface OgcApiCollectionInfo {
   id: string;
   itemType: 'feature' | 'record';
   formats: MimeType[];
-  crs: ['#/crs'];
+  crs: CrsCode[];
   storageCrs?: CrsCode;
   itemCount: number;
   keywords?: string[];

@@ -16,7 +16,16 @@ export function fetchDocument<T extends OgcApiDocument>(
 }
 
 export function fetchRoot(url: string) {
-  return fetchDocument(url);
+  return fetchDocument(url).then((doc) => {
+    // if no data link, attempt to look at the parent
+    if (
+      !hasLinks(doc, ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data']) &&
+      hasLinks(doc, ['self'])
+    ) {
+      return fetchRoot(getParentPath(url));
+    }
+    return doc;
+  });
 }
 
 export function getLinkUrl(
@@ -49,11 +58,29 @@ export function fetchLink(
   return fetchDocument(url);
 }
 
+export function hasLinks(
+  doc: OgcApiDocument,
+  relType: string | string[]
+): boolean {
+  const url = getLinkUrl(doc, relType);
+  return !!url;
+}
+
 export function assertHasLinks(
   doc: OgcApiDocument,
   relType: string | string[]
 ) {
-  const url = getLinkUrl(doc, relType);
-  if (!url)
+  if (!hasLinks(doc, relType))
     throw new EndpointError(`Could not find link with type: ${relType}`);
+}
+
+export function getParentPath(url: string): string {
+  const urlObj = new URL(url, window.location.toString());
+  const pathParts = urlObj.pathname.split('/');
+  if (pathParts.length <= 2) {
+    throw new EndpointError(
+      'Could not find the root document, this might not be a valid OGC API endpoint'
+    );
+  }
+  return pathParts.slice(0, -1).join('/');
 }
