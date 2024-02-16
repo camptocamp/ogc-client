@@ -1,5 +1,5 @@
-import { Feature, Geometry } from 'geojson';
-import { BoundingBox, CrsCode } from '../shared/models';
+import { Geometry } from 'geojson';
+import { BoundingBox, CrsCode, MimeType } from '../shared/models';
 
 export type ConformanceClass = string;
 
@@ -31,6 +31,7 @@ export interface OgcApiCollectionInfo {
   description: string;
   id: string;
   itemType: 'feature' | 'record';
+  formats: MimeType[];
   crs: ['#/crs'];
   storageCrs?: CrsCode;
   itemCount: number;

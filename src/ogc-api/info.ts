@@ -37,7 +37,7 @@ export function parseConformance(doc: OgcApiDocument): ConformanceClass[] {
 
 export function parseCollections(
   itemType: 'record' | 'feature' | null = null
-): (doc: OgcApiDocument) => ConformanceClass[] {
+): (doc: OgcApiDocument) => string[] {
   return (doc: OgcApiDocument) =>
     (doc.collections as OgcApiCollectionInfo[])
       .filter(
@@ -99,7 +99,10 @@ export function parseBaseCollectionInfo(
   doc: OgcApiDocument
 ): OgcApiCollectionInfo {
   const { links, ...props } = doc;
-  return props as unknown as OgcApiCollectionInfo;
+  const formats = links
+    .filter((link) => link.rel === 'items')
+    .map((link) => link.type);
+  return { formats, ...(props as unknown) } as OgcApiCollectionInfo;
 }
 
 export function parseCollectionParameters(

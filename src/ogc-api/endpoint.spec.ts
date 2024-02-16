@@ -186,6 +186,13 @@ describe('OgcApiEndpoint', () => {
           description:
             'A centre point for all major airports including a name.',
           id: 'airports',
+          formats: [
+            'application/vnd.ogc.fg+json',
+            'application/geo+json',
+            'application/flatgeobuf',
+            'application/vnd.ogc.fg+json;compatibility=geojson',
+            'text/html',
+          ],
           extent: {
             spatial: {
               bbox: [
@@ -235,6 +242,7 @@ describe('OgcApiEndpoint', () => {
           title: 'Sample metadata records from Dutch Nationaal georegister',
           description:
             'Sample metadata records from Dutch Nationaal georegister',
+          formats: ['application/geo+json', 'application/ld+json', 'text/html'],
           keywords: ['netherlands', 'open data', 'georegister'],
           extent: {
             spatial: {
@@ -305,6 +313,13 @@ describe('OgcApiEndpoint', () => {
           description:
             'Lines representing the road network. A road is defined as a metalled way for vehicles.',
           id: 'roads_national',
+          formats: [
+            'application/vnd.ogc.fg+json',
+            'application/geo+json',
+            'application/flatgeobuf',
+            'application/vnd.ogc.fg+json;compatibility=geojson',
+            'text/html',
+          ],
           extent: {
             spatial: {
               bbox: [
