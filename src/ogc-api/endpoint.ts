@@ -16,7 +16,13 @@ import {
   OgcApiDocument,
   OgcApiEndpointInfo,
 } from './model';
-import { fetchDocument, fetchLink, fetchRoot, getLinkUrl } from './link-utils';
+import {
+  fetchCollectionRoot,
+  fetchDocument,
+  fetchLink,
+  fetchRoot,
+  getLinkUrl,
+} from './link-utils';
 import { EndpointError } from '../shared/errors';
 
 export default class OgcApiEndpoint {
@@ -43,6 +49,16 @@ export default class OgcApiEndpoint {
           this.baseUrl
         )
       )
+      .then(async (data) => {
+        // check if there's a collection in the path; if yes, keep only this one
+        const singleCollection = await fetchCollectionRoot(this.baseUrl);
+        if (singleCollection !== null && Array.isArray(data.collections)) {
+          data.collections = data.collections.filter(
+            (collection) => collection.id === singleCollection.id
+          );
+        }
+        return data;
+      })
       .catch(() => null);
   }
 
