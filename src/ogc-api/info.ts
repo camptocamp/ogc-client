@@ -102,7 +102,7 @@ export function parseBaseCollectionInfo(
   const formats = links
     .filter((link) => link.rel === 'items')
     .map((link) => link.type);
-  return { formats, ...(props as unknown) } as OgcApiCollectionInfo;
+  return { formats, ...props } as OgcApiCollectionInfo;
 }
 
 export function parseCollectionParameters(
