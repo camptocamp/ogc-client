@@ -12,7 +12,7 @@
 import { {{ apiElement.name }} } from '@camptocamp/ogc-client';</pre
         >
       </CodeBlock>
-      <div class="row pb-2">
+      <div class="row pb-2" v-if="returned && returned !== 'void'">
         <div
           class="col-3 text-uppercase text-secondary fw-bold pt-1"
           style="font-size: 0.8em"
@@ -23,32 +23,33 @@ import { {{ apiElement.name }} } from '@camptocamp/ogc-client';</pre
           <code v-html="returned"></code>
         </div>
       </div>
-      <MarkdownBlock class="small mt-2" :text="apiElement.description" />
+      <MarkdownBlock class="small mt-2" :text="getDescription(apiElement)" />
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import MarkdownBlock from '../presentation/MarkdownBlock.vue';
 import CodeBlock from '../presentation/CodeBlock.vue';
-import { formatFunctionToString, formatTypeToString } from '../../api-utils';
+import {
+  formatFunctionToString,
+  formatTypeToString,
+  getDescription,
+} from '../../api-utils';
 import * as marked from 'marked';
+import { computed } from 'vue';
 
-export default {
-  name: 'FunctionCard',
-  components: { MarkdownBlock, CodeBlock },
-  props: {
-    apiElement: Object,
-  },
-  computed: {
-    signature() {
-      return marked.parseInline(formatFunctionToString(this.apiElement));
-    },
-    returned() {
-      return marked.parseInline(formatTypeToString(this.apiElement.return));
-    },
-  },
-};
+const props = defineProps(['apiElement']);
+const apiElement = props.apiElement;
+
+const signature = computed(() => {
+  return marked.parseInline(formatFunctionToString(apiElement));
+});
+const returned = computed(() => {
+  return marked.parseInline(
+    formatTypeToString(apiElement?.signatures?.[0]?.type)
+  );
+});
 </script>
 
 <style scoped>

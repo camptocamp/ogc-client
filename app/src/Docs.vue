@@ -234,19 +234,16 @@ async function addWmtsLayer() {
     </p>
 
     <h2 class="mt-5 mb-4">API</h2>
-
-    <ApiDescription></ApiDescription>
   </div>
 </template>
 
 <script>
 import CodeBlock from './components/presentation/CodeBlock.vue';
-import ApiDescription from './components/api/ApiDescription.vue';
 import LibName from './components/presentation/LibName.vue';
 
 export default {
   name: 'Docs',
-  components: { CodeBlock, ApiDescription, LibName },
+  components: { CodeBlock, LibName },
   async mounted() {
     hljs.highlightAll();
   },

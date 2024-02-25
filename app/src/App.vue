@@ -2,12 +2,13 @@
 import Docs from './Docs.vue';
 import LibLogo from './components/presentation/LibLogo.vue';
 import Demo from './Demo.vue';
+import Api from '@/Api.vue';
 
 export default {
   name: 'App',
-  components: { Docs, LibLogo, Demo },
+  components: { Docs, LibLogo, Demo, Api },
   data: () => ({
-    demoTabEnabled: false,
+    tab: 'docs',
   }),
 };
 </script>
@@ -28,23 +29,32 @@ export default {
         <button
           type="button"
           class="btn btn-primary tab-toggle m-3"
-          :class="{ 'tab-toggle-enabled': !demoTabEnabled }"
-          @click="demoTabEnabled = false"
+          :class="{ 'tab-toggle-enabled': tab === 'docs' }"
+          @click="tab = 'docs'"
         >
           DOCS
         </button>
         <button
           type="button"
           class="btn btn-primary tab-toggle m-3"
-          :class="{ 'tab-toggle-enabled': demoTabEnabled }"
-          @click="demoTabEnabled = true"
+          :class="{ 'tab-toggle-enabled': tab === 'api' }"
+          @click="tab = 'api'"
+        >
+          API
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary tab-toggle m-3"
+          :class="{ 'tab-toggle-enabled': tab === 'demo' }"
+          @click="tab = 'demo'"
         >
           TRY IT!
         </button>
       </div>
 
-      <Docs v-if="!demoTabEnabled"></Docs>
-      <Demo v-if="demoTabEnabled"></Demo>
+      <Docs v-if="tab === 'docs'"></Docs>
+      <Api v-if="tab === 'api'"></Api>
+      <Demo v-if="tab === 'demo'"></Demo>
     </div>
   </div>
 </template>
