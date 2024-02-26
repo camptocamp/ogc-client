@@ -15,7 +15,8 @@
     "marked-mangle": "^1.1.4",
     "ol": "^8.2.0",
     "proj4": "^2.10.0",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.4.0",

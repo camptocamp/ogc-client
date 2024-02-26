@@ -2,14 +2,11 @@
 import Docs from './Docs.vue';
 import LibLogo from './components/presentation/LibLogo.vue';
 import Demo from './Demo.vue';
-import Api from '@/Api.vue';
+import Api from './Api.vue';
 
 export default {
   name: 'App',
   components: { Docs, LibLogo, Demo, Api },
-  data: () => ({
-    tab: 'docs',
-  }),
 };
 </script>
 <template>
@@ -26,35 +23,39 @@ export default {
         class="d-flex flex-row justify-content-center"
         style="margin-bottom: 70px"
       >
-        <button
-          type="button"
-          class="btn btn-primary tab-toggle m-3"
-          :class="{ 'tab-toggle-enabled': tab === 'docs' }"
-          @click="tab = 'docs'"
-        >
-          DOCS
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary tab-toggle m-3"
-          :class="{ 'tab-toggle-enabled': tab === 'api' }"
-          @click="tab = 'api'"
-        >
-          API
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary tab-toggle m-3"
-          :class="{ 'tab-toggle-enabled': tab === 'demo' }"
-          @click="tab = 'demo'"
-        >
-          TRY IT!
-        </button>
+        <router-link to="/" v-slot="{ isActive }">
+          <button
+            type="button"
+            class="btn btn-primary tab-toggle m-3"
+            :class="{ 'tab-toggle-enabled': isActive }"
+            @click="tab = 'docs'"
+          >
+            DOCS
+          </button>
+        </router-link>
+        <router-link to="/api" v-slot="{ isActive }">
+          <button
+            type="button"
+            class="btn btn-primary tab-toggle m-3"
+            :class="{ 'tab-toggle-enabled': isActive }"
+            @click="tab = 'api'"
+          >
+            API
+          </button>
+        </router-link>
+        <router-link to="/demo" v-slot="{ isActive }">
+          <button
+            type="button"
+            class="btn btn-primary tab-toggle m-3"
+            :class="{ 'tab-toggle-enabled': isActive }"
+            @click="tab = 'demo'"
+          >
+            TRY IT!
+          </button>
+        </router-link>
       </div>
 
-      <Docs v-if="tab === 'docs'"></Docs>
-      <Api v-if="tab === 'api'"></Api>
-      <Demo v-if="tab === 'demo'"></Demo>
+      <router-view></router-view>
     </div>
   </div>
 </template>
