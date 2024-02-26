@@ -212,16 +212,16 @@ async function addWmtsLayer() {
     layer.name,
     matrixSet.identifier
   );
-  const resourceUrl = layer.resourceUrls[0];
+  const resourceLink = layer.resourceLinks[0];
   const dimensions = endpoint.getDefaultDimensions(layer.name);
   const layer = new TileLayer({
     source: new WMTS({
       layer: layer.name,
       style: layer.defaultStyle,
       matrixSet: matrixSet.identifier,
-      format: resourceUrl.format,
-      url: resourceUrl.url,
-      requestEncoding: resourceUrl.encoding,
+      format: resourceLink.format,
+      url: resourceLink.url,
+      requestEncoding: resourceLink.encoding,
       tileGrid,
       projection: matrixSet.crs,
       dimensions,

@@ -25,11 +25,19 @@ import {
 } from './link-utils';
 import { EndpointError } from '../shared/errors';
 
+/**
+ * Represents an OGC API endpoint advertising various collections and services.
+ */
 export default class OgcApiEndpoint {
   private root: Promise<OgcApiDocument>;
   private conformance: Promise<OgcApiDocument>;
   private data: Promise<OgcApiDocument>;
 
+  /**
+   * Creates a new OGC API endpoint.
+   * @param baseUrl Base URL used to query the endpoint. Note that this can point to nested
+   * documents inside the endpoint, such as `/collections`, `/collections/items` etc.
+   */
   constructor(private baseUrl: string) {
     this.root = fetchRoot(this.baseUrl);
     this.conformance = this.root
@@ -62,43 +70,78 @@ export default class OgcApiEndpoint {
       .catch(() => null);
   }
 
+  /**
+   * A Promise which resolves to the endpoint information.
+   */
   get info(): Promise<OgcApiEndpointInfo> {
     return this.root.then(parseEndpointInfo);
   }
+
+  /**
+   * A Promise which resolves to an array of conformance classes.
+   */
   get conformanceClasses(): Promise<ConformanceClass[]> {
     return this.conformance.then(parseConformance);
   }
+  /**
+   * A Promise which resolves to an array of all collection identifiers as strings.
+   */
   get allCollections(): Promise<string[]> {
     return this.data.then(parseCollections());
   }
+
+  /**
+   * A Promise which resolves to an array of records collection identifiers as strings.
+   */
   get recordCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasRecords])
       .then(([data, hasRecords]) => (hasRecords ? data : { collections: [] }))
       .then(parseCollections('record'));
   }
+
+  /**
+   * A Promise which resolves to an array of feature collection identifiers as strings.
+   */
   get featureCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasFeatures])
       .then(([data, hasFeatures]) => (hasFeatures ? data : { collections: [] }))
       .then(parseCollections('feature'));
   }
+
+  /**
+   * A Promise which resolves to a boolean indicating whether the endpoint offer tiles.
+   */
   get hasTiles(): Promise<boolean> {
     return this.conformanceClasses.then(checkTileConformance);
   }
+
+  /**
+   * A Promise which resolves to a boolean indicating whether the endpoint offer styles.
+   */
   get hasStyles(): Promise<boolean> {
     return this.conformanceClasses.then(checkStyleConformance);
   }
+
+  /**
+   * A Promise which resolves to a boolean indicating whether the endpoint offer feature collections.
+   */
   get hasFeatures(): Promise<boolean> {
     return Promise.all([
       this.data.then((data) => data.collections),
       this.conformanceClasses,
     ]).then(checkHasFeatures);
   }
+
+  /**
+   * A Promise which resolves to a boolean indicating whether the endpoint offer record collections.
+   */
   get hasRecords(): Promise<boolean> {
     return Promise.all([
       this.data.then((data) => data.collections),
       this.conformanceClasses,
     ]).then(checkHasRecords);
   }
+
   private getCollectionDocument(collectionId: string): Promise<OgcApiDocument> {
     return Promise.all([this.allCollections, this.data])
       .then(([collections, data]) => {
@@ -110,6 +153,11 @@ export default class OgcApiEndpoint {
       })
       .then((collection) => fetchLink(collection, 'self', this.baseUrl));
   }
+
+  /**
+   * Returns a promise resolving to a document describing the specified collection.
+   * @param collectionId
+   */
   async getCollectionInfo(collectionId: string): Promise<OgcApiCollectionInfo> {
     const collectionDoc = await this.getCollectionDocument(collectionId);
     const baseInfo = parseBaseCollectionInfo(collectionDoc);
@@ -135,6 +183,17 @@ export default class OgcApiEndpoint {
       sortables,
     };
   }
+
+  /**
+   * Returns a promise resolving to an array of items from a collection with the given query parameters.
+   * @param collectionId
+   * @param limit
+   * @param offset
+   * @param skipGeometry
+   * @param sortby
+   * @param bbox
+   * @param properties
+   */
   getCollectionItems(
     collectionId: string,
     limit: number = 10,
@@ -165,6 +224,12 @@ export default class OgcApiEndpoint {
       .then(fetchDocument)
       .then((doc) => doc.features as OgcApiCollectionItem[]);
   }
+
+  /**
+   * Returns a promise resolving to a specific item from a collection.
+   * @param collectionId
+   * @param itemId
+   */
   getCollectionItem(
     collectionId: string,
     itemId: string

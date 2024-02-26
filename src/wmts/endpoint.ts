@@ -22,6 +22,7 @@ export default class WmtsEndpoint {
   private _matrixSets: WmtsMatrixSet[] = null;
 
   /**
+   * Creates a new WMTS endpoint; wait for the `isReady()` promise before using the endpoint methods.
    * @param url WMTS endpoint url; can contain any query parameters, these will be used to
    *   initialize the endpoint
    */
@@ -47,20 +48,30 @@ export default class WmtsEndpoint {
   }
 
   /**
+   * Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.
    * @throws {EndpointError}
    */
   isReady() {
     return this._capabilitiesPromise.then(() => this);
   }
 
+  /**
+   * A Promise which resolves to the endpoint information.
+   */
   getServiceInfo() {
     return this._info;
   }
 
+  /**
+   * Returns the layers advertised in the endpoint.
+   */
   getLayers() {
     return this._layers;
   }
 
+  /**
+   * Returns the matrix sets available for that endpoint. Each matrix set contains a list of tile matrices as well as a supported CRS.
+   */
   getMatrixSets() {
     return this._matrixSets;
   }
@@ -99,26 +110,32 @@ export default class WmtsEndpoint {
     return null;
   }
 
-  getLayerResourceUrl(
+  /**
+   * Returns a layer resource link. If no type hint is specified, the first resource will be returned.
+   * A resource link contains a URL as well as an image format and a request encoding (KVP or REST).
+   * @param layerName
+   * @param formatHint
+   */
+  getLayerResourceLink(
     layerName: string,
     formatHint?: MimeType
   ): WmtsLayerResourceLink {
     if (!this._layers) return null;
     const layer = this.getLayerByName(layerName);
-    let resourceUrlIndex = 0;
+    let resourceLinkIndex = 0;
     if (formatHint) {
-      resourceUrlIndex =
-        layer.resourceUrls.findIndex(
-          (resourceUrl) => resourceUrl.format === formatHint
+      resourceLinkIndex =
+        layer.resourceLinks.findIndex(
+          (resourceLink) => resourceLink.format === formatHint
         ) || 0;
     }
-    const resourceUrl = layer.resourceUrls[resourceUrlIndex];
-    if (formatHint && resourceUrl.format !== formatHint) {
+    const resourceLink = layer.resourceLinks[resourceLinkIndex];
+    if (formatHint && resourceLink.format !== formatHint) {
       console.warn(
-        `[ogc-client] Requested '${formatHint}' format for the WMTS layer but it is not available in REST encoding, falling back to '${resourceUrl.format}'`
+        `[ogc-client] Requested '${formatHint}' format for the WMTS layer but it is not available in REST encoding, falling back to '${resourceLink.format}'`
       );
     }
-    return resourceUrl;
+    return resourceLink;
   }
 
   /**
@@ -134,17 +151,17 @@ export default class WmtsEndpoint {
     outputFormat?: MimeType
   ): string {
     if (!this._layers) return null;
-    const resourceUrl = this.getLayerResourceUrl(layerName, outputFormat);
+    const resourceLink = this.getLayerResourceLink(layerName, outputFormat);
     return generateGetTileUrl(
-      resourceUrl.url,
-      resourceUrl.encoding,
+      resourceLink.url,
+      resourceLink.encoding,
       layerName,
       styleName,
       matrixSetName,
       tileMatrix,
       tileRow,
       tileCol,
-      resourceUrl.format
+      resourceLink.format
     );
   }
 
@@ -164,7 +181,7 @@ export default class WmtsEndpoint {
     );
   }
 
-  tileGridModule: Promise<typeof import('./ol-tilegrid')>;
+  private tileGridModule: Promise<typeof import('./ol-tilegrid')>;
 
   /**
    * Creates a WMTSTileGrid instance from the 'ol' package, for a given layer. Optionally, a matrix set

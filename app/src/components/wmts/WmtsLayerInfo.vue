@@ -58,15 +58,15 @@ async function addWmtsLayer(olMap) {
     layer.name,
     matrixSetLink.identifier
   );
-  const resourceUrl = layer.resourceUrls[0];
+  const resourceLink = layer.resourceLinks[0];
   const dimensions = endpoint.getDefaultDimensions(layer.name);
   const olLayer = new TileLayer({
     source: new WMTS({
       layer: this.layer.name,
       matrixSet: matrixSetLink.identifier,
-      format: resourceUrl.format,
-      url: resourceUrl.url,
-      requestEncoding: resourceUrl.encoding,
+      format: resourceLink.format,
+      url: resourceLink.url,
+      requestEncoding: resourceLink.encoding,
       tileGrid,
       projection: matrixSetLink.crs,
       dimensions,
@@ -122,16 +122,16 @@ export default {
         } else {
           this.olMap.getLayers().pop();
         }
-        const resourceUrl = this.layer.resourceUrls[0];
+        const resourceLink = this.layer.resourceLinks[0];
         const dimensions = this.endpoint.getDefaultDimensions(this.layer.name);
         const layer = new TileLayer({
           source: new WMTS({
             layer: this.layer.name,
             style: this.selectedStyle,
             matrixSet: matrixSetLink.identifier,
-            format: resourceUrl.format,
-            url: resourceUrl.url,
-            requestEncoding: resourceUrl.encoding,
+            format: resourceLink.format,
+            url: resourceLink.url,
+            requestEncoding: resourceLink.encoding,
             tileGrid,
             projection: matrixSetLink.crs,
             dimensions,
