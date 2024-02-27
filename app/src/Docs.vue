@@ -212,16 +212,16 @@ async function addWmtsLayer() {
     layer.name,
     matrixSet.identifier
   );
-  const resourceUrl = layer.resourceUrls[0];
+  const resourceLink = layer.resourceLinks[0];
   const dimensions = endpoint.getDefaultDimensions(layer.name);
   const layer = new TileLayer({
     source: new WMTS({
       layer: layer.name,
       style: layer.defaultStyle,
       matrixSet: matrixSet.identifier,
-      format: resourceUrl.format,
-      url: resourceUrl.url,
-      requestEncoding: resourceUrl.encoding,
+      format: resourceLink.format,
+      url: resourceLink.url,
+      requestEncoding: resourceLink.encoding,
       tileGrid,
       projection: matrixSet.crs,
       dimensions,
@@ -234,19 +234,16 @@ async function addWmtsLayer() {
     </p>
 
     <h2 class="mt-5 mb-4">API</h2>
-
-    <ApiDescription></ApiDescription>
   </div>
 </template>
 
 <script>
 import CodeBlock from './components/presentation/CodeBlock.vue';
-import ApiDescription from './components/api/ApiDescription.vue';
 import LibName from './components/presentation/LibName.vue';
 
 export default {
   name: 'Docs',
-  components: { CodeBlock, ApiDescription, LibName },
+  components: { CodeBlock, LibName },
   async mounted() {
     hljs.highlightAll();
   },

@@ -2,13 +2,11 @@
 import Docs from './Docs.vue';
 import LibLogo from './components/presentation/LibLogo.vue';
 import Demo from './Demo.vue';
+import Api from './Api.vue';
 
 export default {
   name: 'App',
-  components: { Docs, LibLogo, Demo },
-  data: () => ({
-    demoTabEnabled: false,
-  }),
+  components: { Docs, LibLogo, Demo, Api },
 };
 </script>
 <template>
@@ -25,26 +23,39 @@ export default {
         class="d-flex flex-row justify-content-center"
         style="margin-bottom: 70px"
       >
-        <button
-          type="button"
-          class="btn btn-primary tab-toggle m-3"
-          :class="{ 'tab-toggle-enabled': !demoTabEnabled }"
-          @click="demoTabEnabled = false"
-        >
-          DOCS
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary tab-toggle m-3"
-          :class="{ 'tab-toggle-enabled': demoTabEnabled }"
-          @click="demoTabEnabled = true"
-        >
-          TRY IT!
-        </button>
+        <router-link to="/" v-slot="{ isActive }">
+          <button
+            type="button"
+            class="btn btn-primary tab-toggle m-3"
+            :class="{ 'tab-toggle-enabled': isActive }"
+            @click="tab = 'docs'"
+          >
+            DOCS
+          </button>
+        </router-link>
+        <router-link to="/api" v-slot="{ isActive }">
+          <button
+            type="button"
+            class="btn btn-primary tab-toggle m-3"
+            :class="{ 'tab-toggle-enabled': isActive }"
+            @click="tab = 'api'"
+          >
+            API
+          </button>
+        </router-link>
+        <router-link to="/demo" v-slot="{ isActive }">
+          <button
+            type="button"
+            class="btn btn-primary tab-toggle m-3"
+            :class="{ 'tab-toggle-enabled': isActive }"
+            @click="tab = 'demo'"
+          >
+            TRY IT!
+          </button>
+        </router-link>
       </div>
 
-      <Docs v-if="!demoTabEnabled"></Docs>
-      <Demo v-if="demoTabEnabled"></Demo>
+      <router-view></router-view>
     </div>
   </div>
 </template>

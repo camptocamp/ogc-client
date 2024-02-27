@@ -77,7 +77,7 @@ export interface LayerDimension {
 
 export interface WmtsLayer {
   name: string;
-  resourceUrls: WmtsLayerResourceLink[];
+  resourceLinks: WmtsLayerResourceLink[];
   styles: LayerStyle[];
   defaultStyle: string;
   matrixSets: MatrixSetLink[];

@@ -181,7 +181,7 @@ export function readLayersFromCapabilities(
     const outputFormats = findChildrenElement(element, 'Format').map(
       getElementText
     );
-    const resourceUrls: WmtsLayerResourceLink[] = findChildrenElement(
+    const resourceLinks: WmtsLayerResourceLink[] = findChildrenElement(
       element,
       'ResourceURL'
     )
@@ -194,7 +194,7 @@ export function readLayersFromCapabilities(
         return { format, url, encoding: 'REST' as const };
       });
     if (getKvpUrl) {
-      resourceUrls.push(
+      resourceLinks.push(
         ...outputFormats.map((format) => ({
           encoding: 'KVP' as const,
           url: getKvpUrl,
@@ -224,7 +224,7 @@ export function readLayersFromCapabilities(
       title: getElementText(findChildElement(element, 'Title')),
       abstract: getElementText(findChildElement(element, 'Abstract')),
       styles,
-      resourceUrls,
+      resourceLinks,
       matrixSets,
       defaultStyle,
       ...(latLonBoundingBox && { latLonBoundingBox }),

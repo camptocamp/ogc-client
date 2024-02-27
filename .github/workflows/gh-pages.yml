@@ -28,6 +28,9 @@ jobs:
       - name: Build library output
         run: npm run build
 
+      - name: Build library docs
+        run: npm run docs
+
       - name: Build demo
         working-directory: app
         run: npm run build

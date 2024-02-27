@@ -572,7 +572,7 @@ describe('WMTS Capabilities', () => {
                 limits: [],
               },
             ],
-            resourceUrls: [
+            resourceLinks: [
               {
                 encoding: 'REST',
                 format: 'image/png',
@@ -637,7 +637,7 @@ describe('WMTS Capabilities', () => {
               },
             ],
             title: 'Demographics_USA_Population_Density',
-            resourceUrls: [
+            resourceLinks: [
               {
                 encoding: 'REST',
                 format: 'image/png',
@@ -717,7 +717,7 @@ describe('WMTS Capabilities', () => {
               },
             ],
             name: 'ORTHOIMAGERY.ORTHOPHOTOS',
-            resourceUrls: [
+            resourceLinks: [
               {
                 encoding: 'KVP',
                 format: 'image/jpeg',

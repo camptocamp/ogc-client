@@ -39,19 +39,23 @@ export default class WmsEndpoint {
   }
 
   /**
+   * Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.
    * @throws {EndpointError}
    */
   isReady() {
     return this._capabilitiesPromise.then(() => this);
   }
 
+  /**
+   * Returns the service information.
+   */
   getServiceInfo() {
     return this._info;
   }
 
   /**
    * Returns an array of layers in summary format; layers are organized in a tree
-   * structure with each aving an optional `children` property
+   * structure with each having an optional `children` property
    */
   getLayers() {
     function layerSummaryMapper(layerFull) {
@@ -68,7 +72,8 @@ export default class WmsEndpoint {
   }
 
   /**
-   * Returns a complete layer based on its name
+   * Returns the full layer information, including supported coordinate systems, available layers, bounding boxes etc.
+   * Layer name is case-sensitive.
    * @param name Layer name property (unique in the WMS service)
    * @return return null if layer was not found
    */
@@ -107,6 +112,11 @@ export default class WmsEndpoint {
     return null;
   }
 
+  /**
+   * Returns the highest protocol version that this WMS endpoint supports.
+   * Note that if the url used for initialization does specify a version (e.g. 1.1.0),
+   * this version will most likely be used instead of the highest supported one.
+   */
   getVersion() {
     return this._version;
   }

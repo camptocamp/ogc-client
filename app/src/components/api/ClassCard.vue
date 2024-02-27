@@ -1,5 +1,6 @@
 <template>
   <div class="card mb-4">
+    <AnchorLink :href="apiElement.name"></AnchorLink>
     <div class="card-header text-uppercase small border-bottom-0 py-1 px-3">
       class
     </div>
@@ -22,13 +23,13 @@ import { {{ apiElement.name }} } from '@camptocamp/ogc-client';</pre
         <div class="col">
           <code class="mb-2" v-html="constructorSignature"></code>
           <MarkdownBlock
-            v-if="apiElement.constructor.description"
+            v-if="getDescription(constructorElement)"
             class="mb-2 small"
-            :text="apiElement.constructor.description"
+            :text="getDescription(constructorElement)"
           />
         </div>
       </div>
-      <div class="row" v-for="property in apiElement.properties">
+      <div class="row" v-for="property in properties">
         <div
           class="col-3 text-uppercase text-secondary fw-bold pt-1"
           style="font-size: 0.8em"
@@ -38,13 +39,13 @@ import { {{ apiElement.name }} } from '@camptocamp/ogc-client';</pre
         <div class="col">
           <code class="mb-2" v-html="formatProperty(property)"></code>
           <MarkdownBlock
-            v-if="property.description"
+            v-if="getDescription(property)"
             class="mb-2 small"
-            :text="property.description"
+            :text="getDescription(property)"
           />
         </div>
       </div>
-      <div class="row" v-for="method in apiElement.methods">
+      <div class="row" v-for="method in methods">
         <div
           class="col-3 text-uppercase text-secondary fw-bold pt-1"
           style="font-size: 0.8em"
@@ -65,18 +66,21 @@ import { {{ apiElement.name }} } from '@camptocamp/ogc-client';</pre
             </div>
           </div>
           <MarkdownBlock
-            v-if="method.description"
+            v-if="getDescription(method)"
             class="mb-2 small"
-            :text="method.description"
+            :text="getDescription(method)"
           />
         </div>
       </div>
-      <MarkdownBlock class="mb-3 mt-2 small" :text="apiElement.description" />
+      <MarkdownBlock
+        class="mb-3 mt-2 small"
+        :text="getDescription(apiElement)"
+      />
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import MarkdownBlock from '../presentation/MarkdownBlock.vue';
 import CodeBlock from '../presentation/CodeBlock.vue';
 import * as marked from 'marked';
@@ -85,36 +89,47 @@ import {
   formatConstructorToString,
   formatFunctionToString,
   formatTypeToString,
+  getDescription,
 } from '../../api-utils';
+import { computed } from 'vue';
+import AnchorLink from '@/components/presentation/AnchorLink.vue';
 
-export default {
-  name: 'ClassCard',
-  components: { MarkdownBlock, CodeBlock },
-  props: {
-    apiElement: Object,
-  },
-  methods: {
-    formatMethod(method) {
-      return marked.parseInline(formatFunctionToString(method));
-    },
-    formatMethodReturned(method) {
-      return marked.parseInline(formatTypeToString(method.return));
-    },
-    formatProperty(property) {
-      return marked.parseInline(
-        `${property.name}: ${formatTypeToString(property)}`
-      );
-    },
-  },
-  computed: {
-    className() {
-      return marked.parseInline(formatClassToString(this.apiElement));
-    },
-    constructorSignature() {
-      return marked.parseInline(formatConstructorToString(this.apiElement));
-    },
-  },
-};
+const props = defineProps(['apiElement']);
+
+const apiElement = props.apiElement;
+const constructorElement = computed(() =>
+  apiElement.children.find((item) => item.name === 'constructor')
+);
+const properties = computed(() =>
+  apiElement.children.filter(
+    (item) => item.kind & 262144 /* ReflectionKind.Accessor */
+  )
+);
+const methods = computed(() =>
+  apiElement.children.filter(
+    (item) => item.kind & 2048 /* ReflectionKind.Method */
+  )
+);
+
+function formatMethod(method) {
+  return marked.parseInline(formatFunctionToString(method));
+}
+function formatMethodReturned(method) {
+  return marked.parseInline(formatTypeToString(method?.signatures?.[0]?.type));
+}
+function formatProperty(property) {
+  return marked.parseInline(
+    `${property.name}: ${formatTypeToString(property.getSignature.type)}`
+  );
+}
+const className = computed(() =>
+  marked.parseInline(formatClassToString(apiElement))
+);
+const constructorSignature = computed(() =>
+  marked.parseInline(
+    formatConstructorToString(apiElement, constructorElement.value)
+  )
+);
 </script>
 
 <style scoped>

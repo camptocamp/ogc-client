@@ -28,6 +28,7 @@ export default class WfsEndpoint {
   private _version: WfsVersion | null;
 
   /**
+   * Creates a new WFS endpoint; wait for the `isReady()` promise before using the endpoint methods.
    * @param url WFS endpoint url; can contain any query parameters, these will be used to
    *   initialize the endpoint
    */
@@ -53,12 +54,16 @@ export default class WfsEndpoint {
   }
 
   /**
+   * Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.
    * @throws {EndpointError}
    */
   isReady() {
     return this._capabilitiesPromise.then(() => this);
   }
 
+  /**
+   * A Promise which resolves to the endpoint information.
+   */
   getServiceInfo() {
     return this._info;
   }
@@ -93,7 +98,8 @@ export default class WfsEndpoint {
   }
 
   /**
-   * Returns a summary of a feature type, i.e. only information available in the capabilities document
+   * Returns the feature type in summary format. If a namespace is specified in the name,
+   * this will be used for matching; otherwise, matching will be done without taking namespaces into account.
    * @param name Feature type name property (unique in the WFS service)
    * @return return null if layer was not found or endpoint is not ready
    */
@@ -115,8 +121,8 @@ export default class WfsEndpoint {
   }
 
   /**
-   * Returns a complete feature type by its name; if no namespace specified in the name, will match the
-   * first feature type matching the unqualified name.
+   * Returns the complete feature type. If a namespace is specified in the name,
+   * this will be used for matching; otherwise, matching will be done without taking namespaces into account.
    * @param name Feature type name property (unique in the WFS service)
    * @return {Promise<WfsFeatureTypeFull>|null} return null if layer was not found or endpoint is not ready
    */
@@ -170,7 +176,8 @@ export default class WfsEndpoint {
   }
 
   /**
-   * Returns details regarding properties of a given feature type
+   * Returns a promise that will resolve with details on each of the feature type properties;
+   * for now, this consists of a list of unique values in the whole dataset.
    * @param name Feature type name property (unique in the WFS service)
    * @return return null if layer was not found or endpoint is not ready
    */
@@ -192,6 +199,11 @@ export default class WfsEndpoint {
     );
   }
 
+  /**
+   * Returns the highest protocol version that this WFS endpoint supports.
+   * Note that if the url used for initialization does specify a version (e.g. 1.0.0),
+   * this version will most likely be used instead of the highest supported one.
+   */
   getVersion() {
     return this._version;
   }
@@ -219,7 +231,7 @@ export default class WfsEndpoint {
   }
 
   /**
-   * Will build a GetFeature url based on the given parameters
+   * Returns a URL that can be used to query features from this feature type.
    * @param featureType
    * @param {Object} [options]
    * @property [options.maxFeatures] no limit if undefined

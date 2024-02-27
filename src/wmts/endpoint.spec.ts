@@ -108,7 +108,7 @@ describe('WmtsEndpoint', () => {
       it('returns a layer resource url without type hint', async () => {
         await endpoint.isReady();
         expect(
-          endpoint.getLayerResourceUrl('BlueMarbleNextGeneration')
+          endpoint.getLayerResourceLink('BlueMarbleNextGeneration')
         ).toEqual({
           encoding: 'REST',
           format: 'image/png',
@@ -118,7 +118,10 @@ describe('WmtsEndpoint', () => {
       it('returns a layer resource url with type hint', async () => {
         await endpoint.isReady();
         expect(
-          endpoint.getLayerResourceUrl('BlueMarbleNextGeneration', 'image/jpeg')
+          endpoint.getLayerResourceLink(
+            'BlueMarbleNextGeneration',
+            'image/jpeg'
+          )
         ).toEqual({
           encoding: 'KVP',
           format: 'image/jpeg',

@@ -26,8 +26,14 @@ export type {
   WmtsLayer,
   WmtsMatrixSet,
 } from './wmts/model';
-export type { LayerStyle, BoundingBox, FetchOptions } from './shared/models';
+export type {
+  LayerStyle,
+  BoundingBox,
+  FetchOptions,
+  GenericEndpointInfo,
+} from './shared/models';
 export { default as OgcApiEndpoint } from './ogc-api/endpoint';
+export * from './ogc-api/model';
 export { useCache } from './shared/cache';
 export {
   sharedFetch,
