@@ -6,6 +6,9 @@
     <template v-for="f in functions">
       <FunctionCard :api-element="f" />
     </template>
+    <template v-for="t in types">
+      <TypeCard :api-element="t" />
+    </template>
   </div>
 </template>
 
@@ -14,6 +17,7 @@ import ClassCard from '@/components/api/ClassCard.vue';
 import FunctionCard from '@/components/api/FunctionCard.vue';
 import API from '@/data/api.json';
 import { onMounted } from 'vue';
+import TypeCard from '@/components/api/TypeCard.vue';
 
 onMounted(() => {
   hljs.highlightAll();
@@ -21,6 +25,7 @@ onMounted(() => {
 
 const classes = API.children.filter((item) => item.kind === 128);
 const functions = API.children.filter((item) => item.kind === 64);
+const types = API.children.filter((item) => item.kind === 256);
 </script>
 
 <style scoped></style>

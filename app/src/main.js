@@ -15,7 +15,7 @@ marked.use(gfmHeadingId());
 
 const routes = [
   { path: '/', component: Docs },
-  { path: '/api', component: Api },
+  { path: '/api/:symbol?', component: Api },
   { path: '/demo', component: Demo },
 ];
 const router = VueRouter.createRouter({
