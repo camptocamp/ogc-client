@@ -8,7 +8,12 @@
       <h5 class="mb-3">
         <code v-html="apiElement.name"></code>
       </h5>
-      <div class="row" v-for="property in properties">
+      <div class="row" v-if="isAlias">
+        <div class="col">
+          <code class="mb-2" v-html="formatType(apiElement.type)"></code>
+        </div>
+      </div>
+      <div class="row" v-if="isInterface" v-for="property in properties">
         <div
           class="col-3 text-uppercase text-secondary fw-bold pt-1"
           style="font-size: 0.8em"
@@ -39,13 +44,36 @@ import AnchorLink from '@/components/presentation/AnchorLink.vue';
 const props = defineProps(['apiElement']);
 const apiElement = props.apiElement;
 
-const properties = computed(() =>
-  apiElement.children.filter((item) => item.kind === 1024)
+const isInterface = computed(
+  () =>
+    apiElement.kind & 256 /* ReflectionKind.Interface */ ||
+    apiElement.kind & 65536 /* ReflectionKind.TypeLiteral */ ||
+    (apiElement.kind & 2097152 /* ReflectionKind.TypeAlias */ &&
+      apiElement.type.type === 'reflection' &&
+      apiElement.type.declaration)
 );
+const isAlias = computed(
+  () =>
+    apiElement.kind & 2097152 /* ReflectionKind.TypeAlias */ &&
+    !isInterface.value
+);
+
+const properties = computed(() => {
+  const children =
+    (apiElement.kind & 2097152) > 0
+      ? apiElement.type.declaration.children
+      : apiElement.children;
+  return children.filter(
+    (item) => item.kind & 1024 /* ReflectionKind.Property */
+  );
+});
 function formatProperty(property) {
   return marked.parseInline(
     `${property.name}: ${formatTypeToString(property.type)}`
   );
+}
+function formatType(typeEl) {
+  return marked.parseInline(formatTypeToString(typeEl));
 }
 </script>
 

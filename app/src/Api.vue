@@ -23,9 +23,17 @@ onMounted(() => {
   hljs.highlightAll();
 });
 
-const classes = API.children.filter((item) => item.kind === 128);
-const functions = API.children.filter((item) => item.kind === 64);
-const types = API.children.filter((item) => item.kind === 256);
+const classes = API.children.filter(
+  (item) => item.kind & 128 /* ReflectionKind.Class */
+);
+const functions = API.children.filter(
+  (item) => item.kind & 64 /* ReflectionKind.Function */
+);
+const types = API.children.filter(
+  (item) =>
+    item.kind & 256 /* ReflectionKind.Interface */ ||
+    item.kind & 2097152 /* ReflectionKind.TypeAlias */
+);
 </script>
 
 <style scoped></style>

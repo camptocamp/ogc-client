@@ -29,3 +29,7 @@ code {
   border: 1px solid #ececec;
   color: var(--brand-dark);
 }
+
+code a {
+  color: var(--brand-darker);
+}

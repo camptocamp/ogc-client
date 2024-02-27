@@ -1,5 +1,6 @@
 <template>
   <div class="card mb-4">
+    <AnchorLink :href="apiElement.name"></AnchorLink>
     <div class="card-header text-uppercase small border-bottom-0 py-1 px-3">
       class
     </div>
@@ -91,6 +92,7 @@ import {
   getDescription,
 } from '../../api-utils';
 import { computed } from 'vue';
+import AnchorLink from '@/components/presentation/AnchorLink.vue';
 
 const props = defineProps(['apiElement']);
 
@@ -99,10 +101,14 @@ const constructorElement = computed(() =>
   apiElement.children.find((item) => item.name === 'constructor')
 );
 const properties = computed(() =>
-  apiElement.children.filter((item) => item.kind === 262144)
+  apiElement.children.filter(
+    (item) => item.kind & 262144 /* ReflectionKind.Accessor */
+  )
 );
 const methods = computed(() =>
-  apiElement.children.filter((item) => item.kind === 2048)
+  apiElement.children.filter(
+    (item) => item.kind & 2048 /* ReflectionKind.Method */
+  )
 );
 
 function formatMethod(method) {

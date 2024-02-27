@@ -1,3 +1,5 @@
+import API from './data/api.json';
+
 export function formatClassToString(classObj) {
   return classObj.name;
 }
@@ -40,6 +42,9 @@ export function formatTypeToString(typeObj) {
   if (typeObj.type === 'union') {
     return typeObj.types.map(formatTypeToString).join(' | ');
   }
+  if (typeObj.type === 'intersection') {
+    return typeObj.types.map(formatTypeToString).join(' & ');
+  }
   if (typeObj.type === 'literal') {
     return `'${typeObj.value}'`;
   }
@@ -50,15 +55,37 @@ export function formatTypeToString(typeObj) {
     const returnType = typeObj.declaration?.signatures?.[0]?.type;
     return `() => ${formatTypeToString(returnType)}`;
   }
-  switch (typeObj.name) {
-    case 'Record':
-      return `Record<${formatTypeToString(
-        typeObj.typeArguments[0]
-      )}, ${formatTypeToString(typeObj.typeArguments[1])}>`;
-    case 'Response':
-      return `[Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)`;
-    case 'Promise':
-      return `Promise&lt;${formatTypeToString(typeObj.typeArguments[0])}&gt;`;
+  if (typeObj.type === 'reference') {
+    switch (typeObj.name) {
+      case 'Record':
+        return `Record\\<${formatTypeToString(
+          typeObj.typeArguments[0]
+        )}, ${formatTypeToString(typeObj.typeArguments[1])}\\>`;
+      case 'Response':
+        return `[Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)`;
+      case 'Promise':
+        return `Promise&lt;${formatTypeToString(typeObj.typeArguments[0])}&gt;`;
+    }
+    const ref = API.children.find((el) => el.id === typeObj.target);
+    if (ref) {
+      return `[${ref.name}](#/api/${ref.name})`;
+    }
+    return typeObj.name;
+  }
+  if (typeObj.type === 'query') {
+    const ref = API.children.find((el) => el.id === typeObj.queryType.target);
+    if (ref) {
+      return ref;
+    }
+    return typeObj.queryType.name;
+  }
+  if (typeObj.type === 'indexedAccess') {
+    return `${formatTypeToString(typeObj.objectType)}[${formatTypeToString(
+      typeObj.indexType
+    )}]`;
+  }
+  if (typeObj.type === 'tuple') {
+    return `[${typeObj.elements.map(formatTypeToString).join(', ')}]`;
   }
   return typeObj.name;
 }

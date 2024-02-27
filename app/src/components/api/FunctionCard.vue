@@ -1,5 +1,6 @@
 <template>
   <div class="card mb-4">
+    <AnchorLink :href="apiElement.name"></AnchorLink>
     <div class="card-header text-uppercase small border-bottom-0 py-1 px-3">
       function
     </div>
@@ -38,6 +39,7 @@ import {
 } from '../../api-utils';
 import * as marked from 'marked';
 import { computed } from 'vue';
+import AnchorLink from '@/components/presentation/AnchorLink.vue';
 
 const props = defineProps(['apiElement']);
 const apiElement = props.apiElement;
