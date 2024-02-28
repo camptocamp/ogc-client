@@ -1,4 +1,4 @@
-export { default as WfsEndpoint } from './wfs/endpoint';
+export { default as WfsEndpoint } from './wfs/endpoint.js';
 export type {
   WfsVersion,
   WfsFeatureWithProps,
@@ -10,36 +10,36 @@ export type {
   WfsFeatureTypePropDetails,
   WfsFeatureTypePropsDetails,
   WfsFeatureTypeUniqueValue,
-} from './wfs/model';
-export { default as WmsEndpoint } from './wms/endpoint';
+} from './wfs/model.js';
+export { default as WmsEndpoint } from './wms/endpoint.js';
 export type {
   WmsLayerFull,
   WmsVersion,
   WmsLayerSummary,
   WmtsLayerAttribution,
-} from './wms/model';
-export { default as WmtsEndpoint } from './wmts/endpoint';
+} from './wms/model.js';
+export { default as WmtsEndpoint } from './wmts/endpoint.js';
 export type {
   WmtsLayerDimensionValue,
   WmtsLayerResourceLink,
   WmtsEndpointInfo,
   WmtsLayer,
   WmtsMatrixSet,
-} from './wmts/model';
+} from './wmts/model.js';
 export type {
   LayerStyle,
   BoundingBox,
   FetchOptions,
   GenericEndpointInfo,
-} from './shared/models';
-export { default as OgcApiEndpoint } from './ogc-api/endpoint';
-export * from './ogc-api/model';
-export { useCache } from './shared/cache';
+} from './shared/models.js';
+export { default as OgcApiEndpoint } from './ogc-api/endpoint.js';
+export * from './ogc-api/model.js';
+export { useCache } from './shared/cache.js';
 export {
   sharedFetch,
   setFetchOptions,
   resetFetchOptions,
-} from './shared/http-utils';
+} from './shared/http-utils.js';
 
-export { enableFallbackWithoutWorker } from './worker/index';
-import './worker-fallback';
+export { enableFallbackWithoutWorker } from './worker/index.js';
+import './worker-fallback/index.js';
