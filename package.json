@@ -55,7 +55,7 @@
     "test": "jest",
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
-    "build": "vite build",
+    "build": "vite build && esbuild $(find ./src -name \"*.ts\" -type f -not -path '*worker/index.ts' -not -path '*.spec.ts') --outdir=./dist --platform=neutral --format=esm",
     "prepublishOnly": "npm run typecheck && npm test && npm run build",
     "typecheck": "tsc --noEmit",
     "docs": "typedoc src/index.ts --json app/src/data/api.json --pretty --excludePrivate"

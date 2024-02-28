@@ -9,9 +9,9 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: 'src/index.ts',
+      entry: 'src/worker/index.ts',
       formats: ['es'],
-      fileName: (format, entryName) => `${entryName}.js`,
+      fileName: `worker/index`,
     },
     rollupOptions: {
       external: [/^ol/, 'proj4'],
