@@ -1,4 +1,4 @@
-import { generateGetTileUrl } from './url';
+import { generateGetTileUrl } from './url.js';
 
 describe('URL utils', () => {
   describe('generateGetTileUrl', () => {

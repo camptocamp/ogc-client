@@ -1,4 +1,4 @@
-import { BoundingBox, CrsCode, LayerStyle } from '../shared/models';
+import { BoundingBox, CrsCode, LayerStyle } from '../shared/models.js';
 
 export type WmtsLayerAttribution = {
   title?: string;

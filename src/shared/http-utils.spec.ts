@@ -1,13 +1,13 @@
-import { EndpointError } from './errors';
+import { EndpointError } from './errors.js';
 import {
   queryXmlDocument,
   setFetchOptions,
   setQueryParams,
   sharedFetch,
-} from './http-utils';
-import { fetchDocument } from '../ogc-api/link-utils';
-import WfsEndpoint from '../wfs/endpoint';
-// @ts-ignore
+} from './http-utils.js';
+import { fetchDocument } from '../ogc-api/link-utils.js';
+import WfsEndpoint from '../wfs/endpoint.js';
+// @ts-expect-error ts-migrate(7016)
 import capabilities200 from '../../fixtures/wfs/capabilities-pigma-2-0-0.xml';
 
 const global = window as any;

@@ -1,7 +1,7 @@
-import { queryXmlDocument } from './http-utils';
-import { readInfoFromCapabilities } from '../wms/capabilities';
-const { join } = require('path');
-const { readFileSync } = require('fs');
+import { queryXmlDocument } from './http-utils.js';
+import { readInfoFromCapabilities } from '../wms/capabilities.js';
+import { join } from 'path';
+import { readFileSync } from 'fs';
 
 const global = window as any;
 

@@ -1,8 +1,8 @@
-import { parseWmsCapabilities } from '../worker';
-import { useCache } from '../shared/cache';
-import { setQueryParams } from '../shared/http-utils';
-import { GenericEndpointInfo } from '../shared/models';
-import { WmsLayerFull, WmsLayerSummary, WmsVersion } from './model';
+import { parseWmsCapabilities } from '../worker/index.js';
+import { useCache } from '../shared/cache.js';
+import { setQueryParams } from '../shared/http-utils.js';
+import { GenericEndpointInfo } from '../shared/models.js';
+import { WmsLayerFull, WmsLayerSummary, WmsVersion } from './model.js';
 
 /**
  * Represents a WMS endpoint advertising several layers arranged in a tree structure.
@@ -98,9 +98,9 @@ export default class WmsEndpoint {
    */
   getSingleLayerName(): string | null {
     if (!this._layers) return null;
-    let layers: WmsLayerFull[] = [];
+    const layers: WmsLayerFull[] = [];
     function layerLookup(layer: WmsLayerFull) {
-      if (!!layer.name) {
+      if (layer.name) {
         layers.push(layer);
       }
       if ('children' in layer) {

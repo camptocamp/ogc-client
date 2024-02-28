@@ -4,7 +4,7 @@ import {
   GenericEndpointInfo,
   LayerStyle,
   MimeType,
-} from '../shared/models';
+} from '../shared/models.js';
 
 export interface WmtsEndpointInfo extends GenericEndpointInfo {
   getTileUrls: {

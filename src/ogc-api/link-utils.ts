@@ -1,6 +1,6 @@
-import { OgcApiDocument } from './model';
-import { EndpointError } from '../shared/errors';
-import { getFetchOptions } from '../shared/http-utils';
+import { OgcApiDocument } from './model.js';
+import { EndpointError } from '../shared/errors.js';
+import { getFetchOptions } from '../shared/http-utils.js';
 
 export function fetchDocument<T extends OgcApiDocument>(
   url: string

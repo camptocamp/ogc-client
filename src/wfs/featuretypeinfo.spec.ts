@@ -1,14 +1,14 @@
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import getFeatureHits110 from '../../fixtures/wfs/getfeature-hits-pigma-1-1-0.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import getFeatureHits200 from '../../fixtures/wfs/getfeature-hits-pigma-2-0-0.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import describeFeatureType110 from '../../fixtures/wfs/describefeaturetype-pigma-1-1-0-xsd.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import describeFeatureType200 from '../../fixtures/wfs/describefeaturetype-pigma-2-0-0-xsd.xml';
-import { parseFeatureTypeInfo } from './featuretypeinfo';
-import { parseXmlString } from '../shared/xml-utils';
-import { WfsFeatureTypeFull, WfsFeatureTypeInternal } from './model';
+import { parseFeatureTypeInfo } from './featuretypeinfo.js';
+import { parseXmlString } from '../shared/xml-utils.js';
+import { WfsFeatureTypeFull, WfsFeatureTypeInternal } from './model.js';
 
 describe('feature type info', () => {
   describe('parseFeatureTypeInfo', () => {

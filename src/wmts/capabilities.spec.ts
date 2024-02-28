@@ -2,13 +2,13 @@ import {
   readInfoFromCapabilities,
   readLayersFromCapabilities,
   readMatrixSetsFromCapabilities,
-} from './capabilities';
-import { parseXmlString } from '../shared/xml-utils';
-// @ts-ignore
+} from './capabilities.js';
+import { parseXmlString } from '../shared/xml-utils.js';
+// @ts-expect-error ts-migrate(7016)
 import ogcsample from '../../fixtures/wmts/ogcsample.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import arcgis from '../../fixtures/wmts/arcgis.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import ign from '../../fixtures/wmts/ign.xml';
 
 describe('WMTS Capabilities', () => {

@@ -2,7 +2,7 @@ import {
   findChildrenElement,
   getElementAttribute,
   getRootElement,
-} from '../shared/xml-utils';
+} from '../shared/xml-utils.js';
 import { XmlDocument } from '@rgrove/parse-xml';
 import {
   FeatureGeometryType,
@@ -10,7 +10,7 @@ import {
   WfsFeatureTypeFull,
   WfsFeatureTypeInternal,
   WfsVersion,
-} from './model';
+} from './model.js';
 
 /**
  * Parses a DescribeFeatureType and GetFeature (with hits) document

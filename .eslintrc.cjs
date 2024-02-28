@@ -32,5 +32,6 @@ module.exports = {
         "require-extensions"
     ],
     "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
     }
 }

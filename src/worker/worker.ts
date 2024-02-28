@@ -1,15 +1,15 @@
-import { addTaskHandler } from './utils';
-import { queryXmlDocument, setFetchOptions } from '../shared/http-utils';
-import * as wmsCapabilities from '../wms/capabilities';
-import * as wfsCapabilities from '../wfs/capabilities';
-import * as wmtsCapabilities from '../wmts/capabilities';
+import { addTaskHandler } from './utils.js';
+import { queryXmlDocument, setFetchOptions } from '../shared/http-utils.js';
+import * as wmsCapabilities from '../wms/capabilities.js';
+import * as wfsCapabilities from '../wfs/capabilities.js';
+import * as wmtsCapabilities from '../wmts/capabilities.js';
 import {
   computeFeaturePropsDetails,
   parseFeatureProps,
-} from '../wfs/featureprops';
-import { generateGetFeatureUrl } from '../wfs/url';
-import { FetchOptions } from '../shared/models';
-import { WfsFeatureTypeFull, WfsVersion } from '../wfs/model';
+} from '../wfs/featureprops.js';
+import { generateGetFeatureUrl } from '../wfs/url.js';
+import { FetchOptions } from '../shared/models.js';
+import { WfsFeatureTypeFull, WfsVersion } from '../wfs/model.js';
 
 addTaskHandler('parseWmsCapabilities', globalThis, ({ url }: { url: string }) =>
   queryXmlDocument(url).then((xmlDoc) => ({

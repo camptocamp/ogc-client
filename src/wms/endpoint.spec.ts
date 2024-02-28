@@ -1,9 +1,9 @@
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import capabilitiesStates from '../../fixtures/wms/capabilities-states-1-3-0.xml';
-import WmsEndpoint from './endpoint';
-import { useCache } from '../shared/cache';
+import WmsEndpoint from './endpoint.js';
+import { useCache } from '../shared/cache.js';
 
 jest.mock('../shared/cache', () => ({
   useCache: jest.fn((factory) => factory()),

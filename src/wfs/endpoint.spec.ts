@@ -1,15 +1,15 @@
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import capabilities200 from '../../fixtures/wfs/capabilities-pigma-2-0-0.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import getfeature200hits from '../../fixtures/wfs/getfeature-hits-pigma-2-0-0.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import getfeature200full from '../../fixtures/wfs/getfeature-props-pigma-2-0-0.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import describefeaturetype200 from '../../fixtures/wfs/describefeaturetype-pigma-2-0-0-xsd.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import capabilitiesStates from '../../fixtures/wfs/capabilities-states-2-0-0.xml';
-import WfsEndpoint from './endpoint';
-import { useCache } from '../shared/cache';
+import WfsEndpoint from './endpoint.js';
+import { useCache } from '../shared/cache.js';
 
 jest.mock('../shared/cache', () => ({
   useCache: jest.fn((factory) => factory()),

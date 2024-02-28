@@ -4,16 +4,16 @@ import {
   getElementAttribute,
   getElementText,
   getRootElement,
-} from '../shared/xml-utils';
-import { hasInvertedCoordinates } from '../shared/crs-utils';
+} from '../shared/xml-utils.js';
+import { hasInvertedCoordinates } from '../shared/crs-utils.js';
 import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
 import {
   BoundingBox,
   CrsCode,
   GenericEndpointInfo,
   LayerStyle,
-} from '../shared/models';
-import { WmtsLayerAttribution, WmsLayerFull, WmsVersion } from './model';
+} from '../shared/models.js';
+import { WmtsLayerAttribution, WmsLayerFull, WmsVersion } from './model.js';
 
 /**
  * Will read a WMS version from the capabilities doc

@@ -6,11 +6,11 @@ import {
   getElementName,
   getElementText,
   getRootElement,
-} from '../shared/xml-utils';
-import { simplifyEpsgUrn } from '../shared/crs-utils';
+} from '../shared/xml-utils.js';
+import { simplifyEpsgUrn } from '../shared/crs-utils.js';
 import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
-import { BoundingBox, GenericEndpointInfo, MimeType } from '../shared/models';
-import { WfsFeatureTypeInternal, WfsVersion } from './model';
+import { BoundingBox, GenericEndpointInfo, MimeType } from '../shared/models.js';
+import { WfsFeatureTypeInternal, WfsVersion } from './model.js';
 
 /**
  * Will read a WFS version from the capabilities doc

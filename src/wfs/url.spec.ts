@@ -1,4 +1,4 @@
-import { generateDescribeFeatureTypeUrl, generateGetFeatureUrl } from './url';
+import { generateDescribeFeatureTypeUrl, generateGetFeatureUrl } from './url.js';
 
 describe('WFS url helpers', () => {
   describe('generateGetFeatureUrl', () => {

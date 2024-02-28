@@ -1,4 +1,4 @@
-import { hasInvertedCoordinates, simplifyEpsgUrn } from './crs-utils';
+import { hasInvertedCoordinates, simplifyEpsgUrn } from './crs-utils.js';
 
 describe('CRS utils', () => {
   describe('hasInvertedCoordinates', () => {

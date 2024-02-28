@@ -8,22 +8,22 @@ import {
   parseCollections,
   parseConformance,
   parseEndpointInfo,
-} from './info';
+} from './info.js';
 import {
   ConformanceClass,
   OgcApiCollectionInfo,
   OgcApiCollectionItem,
   OgcApiDocument,
   OgcApiEndpointInfo,
-} from './model';
+} from './model.js';
 import {
   fetchCollectionRoot,
   fetchDocument,
   fetchLink,
   fetchRoot,
   getLinkUrl,
-} from './link-utils';
-import { EndpointError } from '../shared/errors';
+} from './link-utils.js';
+import { EndpointError } from '../shared/errors.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.

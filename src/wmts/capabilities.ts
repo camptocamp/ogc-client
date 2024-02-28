@@ -1,11 +1,11 @@
-import type { BoundingBox, LayerStyle } from '../shared/models';
+import type { BoundingBox, LayerStyle } from '../shared/models.js';
 import {
   findChildElement,
   findChildrenElement,
   getElementAttribute,
   getElementText,
   getRootElement,
-} from '../shared/xml-utils';
+} from '../shared/xml-utils.js';
 import type {
   WmtsLayerResourceLink,
   MatrixSetLink,
@@ -13,7 +13,7 @@ import type {
   WmtsEndpointInfo,
   WmtsLayer,
   WmtsMatrixSet,
-} from './model';
+} from './model.js';
 import type { XmlDocument, XmlElement } from '@rgrove/parse-xml';
 
 function parseBBox(xmlElement: XmlElement): BoundingBox {

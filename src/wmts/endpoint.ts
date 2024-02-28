@@ -1,15 +1,15 @@
-import { MimeType } from '../shared/models';
-import { setQueryParams } from '../shared/http-utils';
-import { useCache } from '../shared/cache';
-import { parseWmtsCapabilities } from '../worker';
+import { MimeType } from '../shared/models.js';
+import { setQueryParams } from '../shared/http-utils.js';
+import { useCache } from '../shared/cache.js';
+import { parseWmtsCapabilities } from '../worker/index.js';
 import {
   WmtsLayerDimensionValue,
   WmtsLayerResourceLink,
   WmtsEndpointInfo,
   WmtsLayer,
   WmtsMatrixSet,
-} from './model';
-import { generateGetTileUrl } from './url';
+} from './model.js';
+import { generateGetTileUrl } from './url.js';
 import type WMTSTileGrid from 'ol/tilegrid/WMTS';
 
 /**

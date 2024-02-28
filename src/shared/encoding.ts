@@ -1,5 +1,3 @@
-import { parseXmlString, XmlParseError } from './xml-utils';
-
 /**
  * A list of encodings that will be used in order when decoding a string
  * Note: a string might be successfully decoded with e.g. utf-8 but still

@@ -1,15 +1,14 @@
-import WmtsEndpoint from './endpoint';
-import { useCache } from '../shared/cache';
-// @ts-ignore
+import WmtsEndpoint from './endpoint.js';
+import { useCache } from '../shared/cache.js';
+// @ts-expect-error ts-migrate(7016)
 import ogcsample from '../../fixtures/wmts/ogcsample.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import arcgis from '../../fixtures/wmts/arcgis.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import ign from '../../fixtures/wmts/ign.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import capabilitiesWgs84 from '../../fixtures/wmts/capabilities_wgs84.xml';
-import { buildOpenLayersTileGrid } from './ol-tilegrid';
-import WmsEndpoint from '../wms/endpoint';
+import { buildOpenLayersTileGrid } from './ol-tilegrid.js';
 
 jest.mock('../shared/cache', () => ({
   useCache: jest.fn((factory) => factory()),
