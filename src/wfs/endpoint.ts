@@ -1,8 +1,14 @@
-import { parseWfsCapabilities, queryWfsFeatureTypeDetails } from '../worker/index.js';
+import {
+  parseWfsCapabilities,
+  queryWfsFeatureTypeDetails,
+} from '../worker/index.js';
 import { queryXmlDocument, setQueryParams } from '../shared/http-utils.js';
 import { parseFeatureTypeInfo } from './featuretypeinfo.js';
 import { useCache } from '../shared/cache.js';
-import { generateDescribeFeatureTypeUrl, generateGetFeatureUrl } from './url.js';
+import {
+  generateDescribeFeatureTypeUrl,
+  generateGetFeatureUrl,
+} from './url.js';
 import { stripNamespace } from '../shared/xml-utils.js';
 import {
   BoundingBox,

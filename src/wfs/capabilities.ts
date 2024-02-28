@@ -9,7 +9,11 @@ import {
 } from '../shared/xml-utils.js';
 import { simplifyEpsgUrn } from '../shared/crs-utils.js';
 import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
-import { BoundingBox, GenericEndpointInfo, MimeType } from '../shared/models.js';
+import {
+  BoundingBox,
+  GenericEndpointInfo,
+  MimeType,
+} from '../shared/models.js';
 import { WfsFeatureTypeInternal, WfsVersion } from './model.js';
 
 /**
