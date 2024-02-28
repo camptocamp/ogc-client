@@ -114,7 +114,7 @@ export async function purgeEntries() {
   const cache = await getCache();
   if (!cache) return;
   const keys = await cache.keys();
-  for (let key of keys) {
+  for (const key of keys) {
     const resp = await cache.match(key);
     if (parseInt(resp.headers.get('x-expiry')) <= Date.now())
       await cache.delete(key);

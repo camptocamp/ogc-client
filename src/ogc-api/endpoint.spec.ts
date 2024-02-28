@@ -1,42 +1,40 @@
-import OgcApiEndpoint from './endpoint';
+import OgcApiEndpoint from './endpoint.js';
 import { readFile, stat } from 'fs/promises';
 import * as path from 'path';
-import { EndpointError } from '../shared/errors';
+import { EndpointError } from '../shared/errors.js';
 
 const FIXTURES_ROOT = path.join(__dirname, '../../fixtures/ogc-api');
 
 // setup fetch to read local fixtures
 beforeAll(() => {
-  window.fetch = (urlOrInfo) =>
-    new Promise(async (resolve) => {
-      const url = new URL(
-        urlOrInfo instanceof URL || typeof urlOrInfo === 'string'
-          ? urlOrInfo
-          : urlOrInfo.url
-      );
-      const queryPath = url.pathname;
-      const format = url.searchParams.get('f') || 'html';
-      const filePath = `${path.join(FIXTURES_ROOT, queryPath)}.${format}`;
-      try {
-        await stat(filePath);
-      } catch (e) {
-        resolve({
-          ok: false,
-          status: 400,
-          headers: new Headers(),
-          json: () => Promise.resolve({ links: [] }),
-        } as Response);
-        return;
-      }
-      const contents = await readFile(filePath, {
-        encoding: 'utf8',
-      });
-      resolve({
-        ok: true,
+  window.fetch = async (urlOrInfo) => {
+    const url = new URL(
+      urlOrInfo instanceof URL || typeof urlOrInfo === 'string'
+        ? urlOrInfo
+        : urlOrInfo.url
+    );
+    const queryPath = url.pathname;
+    const format = url.searchParams.get('f') || 'html';
+    const filePath = `${path.join(FIXTURES_ROOT, queryPath)}.${format}`;
+    try {
+      await stat(filePath);
+    } catch (e) {
+      return {
+        ok: false,
+        status: 400,
         headers: new Headers(),
-        json: () => Promise.resolve(JSON.parse(contents)),
-      } as Response);
+        json: () => Promise.resolve({ links: [] }),
+      } as Response;
+    }
+    const contents = await readFile(filePath, {
+      encoding: 'utf8',
     });
+    return {
+      ok: true,
+      headers: new Headers(),
+      json: () => Promise.resolve(JSON.parse(contents)),
+    } as Response;
+  };
 });
 
 describe('OgcApiEndpoint', () => {

@@ -1,5 +1,5 @@
 import { Geometry } from 'geojson';
-import { BoundingBox, CrsCode, MimeType } from '../shared/models';
+import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
 
 export type ConformanceClass = string;
 

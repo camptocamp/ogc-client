@@ -1,15 +1,16 @@
-import { sendTaskRequest } from './utils';
-import { GenericEndpointInfo } from '../shared/models';
-import { setFetchOptionsUpdateCallback } from '../shared/http-utils';
-import { WmtsEndpointInfo, WmtsLayer, WmtsMatrixSet } from '../wmts/model';
+import { sendTaskRequest } from './utils.js';
+import { GenericEndpointInfo } from '../shared/models.js';
+import { setFetchOptionsUpdateCallback } from '../shared/http-utils.js';
+import { WmtsEndpointInfo, WmtsLayer, WmtsMatrixSet } from '../wmts/model.js';
 import {
   WfsFeatureTypeFull,
   WfsFeatureTypeInternal,
   WfsFeatureTypePropsDetails,
   WfsVersion,
-} from '../wfs/model';
-import { WmsLayerFull, WmsVersion } from '../wms/model';
-// @ts-ignore
+} from '../wfs/model.js';
+import { WmsLayerFull, WmsVersion } from '../wms/model.js';
+// @ts-expect-error TS2307
+// eslint-disable-next-line require-extensions/require-extensions
 import OgcClientWorker from './worker?worker&inline';
 
 let fallbackWithoutWorker = false;

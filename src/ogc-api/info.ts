@@ -6,9 +6,9 @@ import {
   OgcApiCollectionInfo,
   OgcApiDocument,
   OgcApiEndpointInfo,
-} from './model';
-import { assertHasLinks } from './link-utils';
-import { EndpointError } from '../shared/errors';
+} from './model.js';
+import { assertHasLinks } from './link-utils.js';
+import { EndpointError } from '../shared/errors.js';
 
 export function parseEndpointInfo(rootDoc: OgcApiDocument): OgcApiEndpointInfo {
   try {

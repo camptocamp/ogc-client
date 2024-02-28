@@ -11,4 +11,8 @@ module.exports = {
   },
   setupFilesAfterEnv: ['./test-setup.ts'],
   coveragePathIgnorePatterns: ['.(xml)$'],
+  // this is required because imports end in ".js"
+  moduleNameMapper: {
+    '^(..?/.+).jsx?$': '$1',
+  },
 };

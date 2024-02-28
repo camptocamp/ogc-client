@@ -1,5 +1,5 @@
 import { createFromCapabilitiesMatrixSet } from 'ol/tilegrid/WMTS';
-import { buildOpenLayersTileGrid } from './ol-tilegrid';
+import { buildOpenLayersTileGrid } from './ol-tilegrid.js';
 
 describe('buildOpenLayersTileGrid', () => {
   it('calls the OL function accordingly', () => {

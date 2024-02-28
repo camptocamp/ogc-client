@@ -1,4 +1,4 @@
-import { getUniqueId } from '../shared/id';
+import { getUniqueId } from '../shared/id.js';
 
 type TaskParams = Record<string, unknown>;
 type TaskResponse = Record<string, unknown>;

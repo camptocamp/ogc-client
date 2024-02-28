@@ -1,4 +1,4 @@
-import { MatrixSetLimit, WmtsMatrixSet } from './model';
+import { MatrixSetLimit, WmtsMatrixSet } from './model.js';
 import WMTSTileGrid, {
   createFromCapabilitiesMatrixSet,
 } from 'ol/tilegrid/WMTS';

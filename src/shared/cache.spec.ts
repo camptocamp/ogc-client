@@ -5,7 +5,7 @@ import {
   setCacheExpiryDuration,
   storeCacheEntry,
   useCache,
-} from './cache';
+} from './cache.js';
 
 const factory = jest.fn(() => ({ fresh: true }));
 let NOW;

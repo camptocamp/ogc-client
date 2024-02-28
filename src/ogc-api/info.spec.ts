@@ -1,4 +1,4 @@
-import { parseCollectionParameters } from './info';
+import { parseCollectionParameters } from './info.js';
 
 describe('info parsing utilities', () => {
   describe('parseCollectionParameters', () => {

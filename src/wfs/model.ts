@@ -1,4 +1,4 @@
-import { BoundingBox, CrsCode, MimeType } from '../shared/models';
+import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
 
 export type WfsVersion = '1.0.0' | '1.1.0' | '2.0.0';
 

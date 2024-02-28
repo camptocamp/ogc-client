@@ -1,21 +1,27 @@
-import { parseWfsCapabilities, queryWfsFeatureTypeDetails } from '../worker';
-import { queryXmlDocument, setQueryParams } from '../shared/http-utils';
-import { parseFeatureTypeInfo } from './featuretypeinfo';
-import { useCache } from '../shared/cache';
-import { generateDescribeFeatureTypeUrl, generateGetFeatureUrl } from './url';
-import { stripNamespace } from '../shared/xml-utils';
+import {
+  parseWfsCapabilities,
+  queryWfsFeatureTypeDetails,
+} from '../worker/index.js';
+import { queryXmlDocument, setQueryParams } from '../shared/http-utils.js';
+import { parseFeatureTypeInfo } from './featuretypeinfo.js';
+import { useCache } from '../shared/cache.js';
+import {
+  generateDescribeFeatureTypeUrl,
+  generateGetFeatureUrl,
+} from './url.js';
+import { stripNamespace } from '../shared/xml-utils.js';
 import {
   BoundingBox,
   CrsCode,
   GenericEndpointInfo,
   MimeType,
-} from '../shared/models';
+} from '../shared/models.js';
 import {
   WfsFeatureTypeBrief,
   WfsFeatureTypeInternal,
   WfsFeatureTypeSummary,
   WfsVersion,
-} from './model';
+} from './model.js';
 
 /**
  * Represents a WFS endpoint advertising several feature types

@@ -2,12 +2,12 @@ import {
   readInfoFromCapabilities,
   readLayersFromCapabilities,
   readVersionFromCapabilities,
-} from './capabilities';
-// @ts-ignore
+} from './capabilities.js';
+// @ts-expect-error ts-migrate(7016)
 import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
-// @ts-ignore
+// @ts-expect-error ts-migrate(7016)
 import capabilities111 from '../../fixtures/wms/capabilities-brgm-1-1-1.xml';
-import { parseXmlString } from '../shared/xml-utils';
+import { parseXmlString } from '../shared/xml-utils.js';
 
 describe('WMS capabilities', () => {
   describe('readVersionFromCapabilities', () => {

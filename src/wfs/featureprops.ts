@@ -7,14 +7,14 @@ import {
   getElementText,
   getRootElement,
   stripNamespace,
-} from '../shared/xml-utils';
+} from '../shared/xml-utils.js';
 import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
 import {
   WfsFeatureTypeFull,
   WfsFeatureTypePropsDetails,
   WfsFeatureWithProps,
   WfsVersion,
-} from './model';
+} from './model.js';
 
 /**
  * Returns an array of features with their id and properties

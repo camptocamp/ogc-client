@@ -1,4 +1,4 @@
-import { CrsCode } from './models';
+import { CrsCode } from './models.js';
 
 // This list was taken from GDAL
 // and may not be completely up-to-date
