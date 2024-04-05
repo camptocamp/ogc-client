@@ -1519,6 +1519,19 @@ describe('OgcApiEndpoint', () => {
         });
       });
     });
+    describe('#getCollectionItemsUrl', () => {
+      it('returns the correct URL for the collection items', () => {
+        expect(
+          endpoint.getCollectionItemsUrl('airports', {
+            maxFeatures: 101,
+            query: 'name=Sumburgh Airport',
+            outputFormat: 'json',
+          })
+        ).resolves.toEqual(
+          'https://my.server.org/sample-data/collections/airports/items?f=json&name=Sumburgh+Airport&limit=101'
+        );
+      });
+    });
   });
   describe('a failure happens while parsing the endpoint capabilities', () => {
     beforeEach(() => {

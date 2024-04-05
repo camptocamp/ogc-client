@@ -286,14 +286,22 @@ export default class OgcApiEndpoint {
         url.searchParams.set('f', format);
 
         // Inline conditional statements for other options
-        if (options.query !== undefined) url.search += (url.search ? '&' : '') + options.query;
-        if (options.maxFeatures !== undefined) url.searchParams.set('limit', options.maxFeatures.toString());
-        if (options.offset !== undefined) url.searchParams.set('offset', options.offset.toString());
-        if (options.skipGeometry !== undefined) url.searchParams.set('skipGeometry', options.skipGeometry.toString());
-        if (options.outputCrs !== undefined) url.searchParams.set('outputCrs', options.outputCrs);
-        if (options.extent !== undefined && options.extent.length === 4) url.searchParams.set('bbox', options.extent.join(','));
-        if (options.extentCrs !== undefined) url.searchParams.set('bbox-crs', options.extentCrs);
-        if (options.properties !== undefined && options.properties.length > 0) url.searchParams.set('properties', options.properties.join(','));
+        if (options.query !== undefined)
+          url.search += (url.search ? '&' : '') + options.query;
+        if (options.maxFeatures !== undefined)
+          url.searchParams.set('limit', options.maxFeatures.toString());
+        if (options.offset !== undefined)
+          url.searchParams.set('offset', options.offset.toString());
+        if (options.skipGeometry !== undefined)
+          url.searchParams.set('skipGeometry', options.skipGeometry.toString());
+        if (options.outputCrs !== undefined)
+          url.searchParams.set('outputCrs', options.outputCrs);
+        if (options.extent !== undefined && options.extent.length === 4)
+          url.searchParams.set('bbox', options.extent.join(','));
+        if (options.extentCrs !== undefined)
+          url.searchParams.set('bbox-crs', options.extentCrs);
+        if (options.properties !== undefined && options.properties.length > 0)
+          url.searchParams.set('properties', options.properties.join(','));
 
         return url.toString();
       })
