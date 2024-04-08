@@ -24,6 +24,7 @@ import {
   getLinkUrl,
 } from './link-utils.js';
 import { EndpointError } from '../shared/errors.js';
+import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -252,28 +253,24 @@ export default class OgcApiEndpoint {
    * @param options - An object containing optional parameters:
    *  - query: Additional query parameters to be included in the URL.
    *  - outputFormat: The MIME type for the output format. Default is 'json'.
-   *  - maxFeatures: The maximum number of features to include.
-   *  - skipGeometry: Flag to skip geometry data in the response.
+   *  - limit: The maximum number of features to include.
    *  - extent: Bounding box to limit the features.
    *  - offset: Pagination offset for the returned results.
    *  - outputCrs: Coordinate Reference System code for the output.
    *  - extentCrs: Coordinate Reference System code for the bounding box.
-   *  - properties: An array of property names to be returned.
    * @returns A promise that resolves to the URL as a string or rejects if an error occurs.
    */
   getCollectionItemsUrl(
     collectionId: string,
     options: {
       query?: string;
-      outputFormat?: string;
-      maxFeatures?: number;
-      skipGeometry?: boolean;
+      outputFormat?: MimeType;
+      limit?: number;
       offset?: number;
-      outputCrs?: string;
-      extent?: number[];
-      extentCrs?: string;
-      properties?: string[];
-    } = {} // Make options optional and default to an empty object
+      outputCrs?: CrsCode;
+      extent?: BoundingBox;
+      extentCrs?: CrsCode;
+    } = {}
   ): Promise<string> {
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
@@ -285,23 +282,18 @@ export default class OgcApiEndpoint {
         const format = options.outputFormat || 'json';
         url.searchParams.set('f', format);
 
-        // Inline conditional statements for other options
         if (options.query !== undefined)
           url.search += (url.search ? '&' : '') + options.query;
-        if (options.maxFeatures !== undefined)
-          url.searchParams.set('limit', options.maxFeatures.toString());
+        if (options.limit !== undefined)
+          url.searchParams.set('limit', options.limit.toString());
         if (options.offset !== undefined)
           url.searchParams.set('offset', options.offset.toString());
-        if (options.skipGeometry !== undefined)
-          url.searchParams.set('skipGeometry', options.skipGeometry.toString());
         if (options.outputCrs !== undefined)
-          url.searchParams.set('outputCrs', options.outputCrs);
+          url.searchParams.set('crs', options.outputCrs);
         if (options.extent !== undefined && options.extent.length === 4)
           url.searchParams.set('bbox', options.extent.join(','));
         if (options.extentCrs !== undefined)
           url.searchParams.set('bbox-crs', options.extentCrs);
-        if (options.properties !== undefined && options.properties.length > 0)
-          url.searchParams.set('properties', options.properties.join(','));
 
         return url.toString();
       })

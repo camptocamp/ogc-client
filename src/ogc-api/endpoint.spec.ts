@@ -1523,7 +1523,7 @@ describe('OgcApiEndpoint', () => {
       it('returns the correct URL for the collection items', () => {
         expect(
           endpoint.getCollectionItemsUrl('airports', {
-            maxFeatures: 101,
+            limit: 101,
             query: 'name=Sumburgh Airport',
             outputFormat: 'json',
           })
