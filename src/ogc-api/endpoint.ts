@@ -24,6 +24,7 @@ import {
   getLinkUrl,
 } from './link-utils.js';
 import { EndpointError } from '../shared/errors.js';
+import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -244,5 +245,61 @@ export default class OgcApiEndpoint {
         return url.toString();
       })
       .then(fetchDocument<OgcApiCollectionItem>);
+  }
+
+  /**
+   * Asynchronously retrieves a URL for the items of a specified collection, with optional query parameters.
+   * @param collectionId - The unique identifier for the collection.
+   * @param options - An object containing optional parameters:
+   *  - query: Additional query parameters to be included in the URL.
+   *  - outputFormat: The MIME type for the output format. Default is 'json'.
+   *  - limit: The maximum number of features to include.
+   *  - extent: Bounding box to limit the features.
+   *  - offset: Pagination offset for the returned results.
+   *  - outputCrs: Coordinate Reference System code for the output.
+   *  - extentCrs: Coordinate Reference System code for the bounding box.
+   * @returns A promise that resolves to the URL as a string or rejects if an error occurs.
+   */
+  getCollectionItemsUrl(
+    collectionId: string,
+    options: {
+      query?: string;
+      outputFormat?: MimeType;
+      limit?: number;
+      offset?: number;
+      outputCrs?: CrsCode;
+      extent?: BoundingBox;
+      extentCrs?: CrsCode;
+    } = {}
+  ): Promise<string> {
+    return this.getCollectionDocument(collectionId)
+      .then((collectionDoc) => {
+        const baseUrl = this.baseUrl || '';
+        const itemsLink = getLinkUrl(collectionDoc, 'items', baseUrl);
+        const url = new URL(itemsLink);
+
+        // Set the format to JSON if not specified
+        const format = options.outputFormat || 'json';
+        url.searchParams.set('f', format);
+
+        if (options.query !== undefined)
+          url.search += (url.search ? '&' : '') + options.query;
+        if (options.limit !== undefined)
+          url.searchParams.set('limit', options.limit.toString());
+        if (options.offset !== undefined)
+          url.searchParams.set('offset', options.offset.toString());
+        if (options.outputCrs !== undefined)
+          url.searchParams.set('crs', options.outputCrs);
+        if (options.extent !== undefined && options.extent.length === 4)
+          url.searchParams.set('bbox', options.extent.join(','));
+        if (options.extentCrs !== undefined)
+          url.searchParams.set('bbox-crs', options.extentCrs);
+
+        return url.toString();
+      })
+      .catch((error) => {
+        console.error('Error fetching collection items URL:', error);
+        throw error;
+      });
   }
 }
