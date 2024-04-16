@@ -1,4 +1,4 @@
-import API from './data/api.json';
+import API from './data/api.js';
 
 export function formatClassToString(classObj) {
   return classObj.name;

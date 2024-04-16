@@ -19,7 +19,7 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.4.0",
+    "@vitejs/plugin-vue": "^4.6.2",
     "vite": "^4.4.11",
     "worker-plugin": "^5.0.1"
   }

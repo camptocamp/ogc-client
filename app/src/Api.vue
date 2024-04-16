@@ -15,7 +15,7 @@
 <script setup>
 import ClassCard from '@/components/api/ClassCard.vue';
 import FunctionCard from '@/components/api/FunctionCard.vue';
-import API from '@/data/api.json';
+import API from '@/data/api.js';
 import { onMounted } from 'vue';
 import TypeCard from '@/components/api/TypeCard.vue';
 

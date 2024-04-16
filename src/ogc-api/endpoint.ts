@@ -66,6 +66,7 @@ export default class OgcApiEndpoint {
             (collection) => collection.id === singleCollection.id
           );
         }
+        console.log(data)
         return data;
       })
       .catch(() => null);
@@ -76,6 +77,13 @@ export default class OgcApiEndpoint {
    */
   get info(): Promise<OgcApiEndpointInfo> {
     return this.root.then(parseEndpointInfo);
+  }
+
+    /**
+   * A Promise which resolves to an array of available output formats.
+   */
+  get links(): Promise<string[]> {
+    return this.data.then((doc) => doc.links.map((link) => link.type).filter(Boolean));
   }
 
   /**

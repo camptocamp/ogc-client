@@ -71,6 +71,7 @@ export function fetchLink(
   baseUrl?: string
 ): Promise<OgcApiDocument> {
   const url = getLinkUrl(doc, relType, baseUrl);
+  console.log(url)
   if (!url)
     return Promise.reject(
       new EndpointError(`Could not find link with type: ${relType}`)
