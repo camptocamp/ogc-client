@@ -6,6 +6,7 @@ import {
   OgcApiCollectionInfo,
   OgcApiDocument,
   OgcApiEndpointInfo,
+  TileMatrixSet,
 } from './model.js';
 import { assertHasLinks } from './link-utils.js';
 import { EndpointError } from '../shared/errors.js';
@@ -37,11 +38,13 @@ export function parseConformance(doc: OgcApiDocument): ConformanceClass[] {
 
 export function parseCollections(
   itemType: 'record' | 'feature' | null = null
+  // dataType: 'vector' | null = null
 ): (doc: OgcApiDocument) => string[] {
   return (doc: OgcApiDocument) =>
     (doc.collections as OgcApiCollectionInfo[])
       .filter(
         (collection) => itemType === null || collection.itemType === itemType
+        // && (dataType === null || collection.dataType === dataType)
       )
       .map((collection) => collection.id as string);
 }
@@ -146,6 +149,18 @@ export function parseCollectionParameters(
       name: prop,
       type: 'string',
     }));
+  }
+  return [];
+}
+
+export function parseTileMatrixSets(doc: OgcApiDocument): TileMatrixSet[] {
+  if (Array.isArray(doc.tileMatrixSets)) {
+    return doc.tileMatrixSets.map((set) => {
+      return {
+        id: set.id,
+        uri: set.uri,
+      };
+    });
   }
   return [];
 }

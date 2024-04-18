@@ -1,0 +1,229 @@
+{
+  "tileMatrixSets": [
+    {
+      "id": "CDB1GlobalGrid",
+      "title": "CDB1GlobalGrid",
+      "links": [
+        {
+          "rel": "self",
+          "type": "text/html",
+          "title": "The HTML representation of the CDB1GlobalGrid tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/CDB1GlobalGrid?f=html"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "The JSON representation of the CDB1GlobalGrid tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/CDB1GlobalGrid?f=json"
+        },
+        {
+          "rel": "self",
+          "type": "text/plain",
+          "title": "The ECON representation of the CDB1GlobalGrid tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/CDB1GlobalGrid?f=econ"
+        }
+      ],
+      "uri": "http://www.opengis.net/def/tilematrixset/OGC/1.0/CDB1GlobalGrid"
+    },
+    {
+      "id": "GlobalCRS84Pixel",
+      "title": "GlobalCRS84Pixel",
+      "links": [
+        {
+          "rel": "self",
+          "type": "text/html",
+          "title": "The HTML representation of the GlobalCRS84Pixel tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/GlobalCRS84Pixel?f=html"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "The JSON representation of the GlobalCRS84Pixel tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/GlobalCRS84Pixel?f=json"
+        },
+        {
+          "rel": "self",
+          "type": "text/plain",
+          "title": "The ECON representation of the GlobalCRS84Pixel tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/GlobalCRS84Pixel?f=econ"
+        }
+      ],
+      "uri": "http://www.opengis.net/def/tilematrixset/OGC/1.0/GlobalCRS84Pixel"
+    },
+    {
+      "id": "GlobalCRS84Scale",
+      "title": "GlobalCRS84Scale",
+      "links": [
+        {
+          "rel": "self",
+          "type": "text/html",
+          "title": "The HTML representation of the GlobalCRS84Scale tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/GlobalCRS84Scale?f=html"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "The JSON representation of the GlobalCRS84Scale tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/GlobalCRS84Scale?f=json"
+        },
+        {
+          "rel": "self",
+          "type": "text/plain",
+          "title": "The ECON representation of the GlobalCRS84Scale tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/GlobalCRS84Scale?f=econ"
+        }
+      ],
+      "uri": "http://www.opengis.net/def/tilematrixset/OGC/1.0/GlobalCRS84Scale"
+    },
+    {
+      "id": "GNOSISGlobalGrid",
+      "title": "GNOSISGlobalGrid",
+      "links": [
+        {
+          "rel": "self",
+          "type": "text/html",
+          "title": "The HTML representation of the GNOSISGlobalGrid tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/GNOSISGlobalGrid?f=html"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "The JSON representation of the GNOSISGlobalGrid tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/GNOSISGlobalGrid?f=json"
+        },
+        {
+          "rel": "self",
+          "type": "text/plain",
+          "title": "The ECON representation of the GNOSISGlobalGrid tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/GNOSISGlobalGrid?f=econ"
+        }
+      ],
+      "uri": "http://www.opengis.net/def/tilematrixset/OGC/1.0/GNOSISGlobalGrid"
+    },
+    {
+      "id": "GoogleCRS84Quad",
+      "title": "GoogleCRS84Quad",
+      "links": [
+        {
+          "rel": "self",
+          "type": "text/html",
+          "title": "The HTML representation of the GoogleCRS84Quad tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/GoogleCRS84Quad?f=html"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "The JSON representation of the GoogleCRS84Quad tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/GoogleCRS84Quad?f=json"
+        },
+        {
+          "rel": "self",
+          "type": "text/plain",
+          "title": "The ECON representation of the GoogleCRS84Quad tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/GoogleCRS84Quad?f=econ"
+        }
+      ],
+      "uri": "http://www.opengis.net/def/tilematrixset/OGC/1.0/GoogleCRS84Quad"
+    },
+    {
+      "id": "ISEA9R",
+      "title": "ISEA9R",
+      "links": [
+        {
+          "rel": "self",
+          "type": "text/html",
+          "title": "The HTML representation of the ISEA9R tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/ISEA9R?f=html"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "The JSON representation of the ISEA9R tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/ISEA9R?f=json"
+        },
+        {
+          "rel": "self",
+          "type": "text/plain",
+          "title": "The ECON representation of the ISEA9R tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/ISEA9R?f=econ"
+        }
+      ],
+      "uri": "http://www.opengis.net/def/tilematrixset/OGC/1.0/ISEA9R"
+    },
+    {
+      "id": "WebMercatorQuad",
+      "title": "WebMercatorQuad",
+      "links": [
+        {
+          "rel": "self",
+          "type": "text/html",
+          "title": "The HTML representation of the WebMercatorQuad tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/WebMercatorQuad?f=html"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "The JSON representation of the WebMercatorQuad tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/WebMercatorQuad?f=json"
+        },
+        {
+          "rel": "self",
+          "type": "text/plain",
+          "title": "The ECON representation of the WebMercatorQuad tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/WebMercatorQuad?f=econ"
+        }
+      ],
+      "uri": "http://www.opengis.net/def/tilematrixset/OGC/1.0/WebMercatorQuad"
+    },
+    {
+      "id": "WorldCRS84Quad",
+      "title": "WorldCRS84Quad",
+      "links": [
+        {
+          "rel": "self",
+          "type": "text/html",
+          "title": "The HTML representation of the WorldCRS84Quad tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/WorldCRS84Quad?f=html"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "The JSON representation of the WorldCRS84Quad tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/WorldCRS84Quad?f=json"
+        },
+        {
+          "rel": "self",
+          "type": "text/plain",
+          "title": "The ECON representation of the WorldCRS84Quad tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/WorldCRS84Quad?f=econ"
+        }
+      ],
+      "uri": "http://www.opengis.net/def/tilematrixset/OGC/1.0/WorldCRS84Quad"
+    },
+    {
+      "id": "WorldMercatorWGS84Quad",
+      "title": "WorldMercatorWGS84Quad",
+      "links": [
+        {
+          "rel": "self",
+          "type": "text/html",
+          "title": "The HTML representation of the WorldMercatorWGS84Quad tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/WorldMercatorWGS84Quad?f=html"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "The JSON representation of the WorldMercatorWGS84Quad tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/WorldMercatorWGS84Quad?f=json"
+        },
+        {
+          "rel": "self",
+          "type": "text/plain",
+          "title": "The ECON representation of the WorldMercatorWGS84Quad tiling scheme definition",
+          "href": "/gnosis-earth/tileMatrixSets/WorldMercatorWGS84Quad?f=econ"
+        }
+      ],
+      "uri": "http://www.opengis.net/def/tilematrixset/OGC/1.0/WorldMercatorWGS84Quad"
+    }
+  ]
+}

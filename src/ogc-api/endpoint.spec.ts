@@ -264,6 +264,9 @@ describe('OgcApiEndpoint', () => {
               type: 'string',
             },
           ],
+          supportedTileMatrixSet: [],
+          mapTileFormats: [],
+          vectorTileFormats: [],
         });
       });
       it('returns dutch-metadata collection info', async () => {
@@ -340,6 +343,9 @@ describe('OgcApiEndpoint', () => {
             },
           ],
           sortables: [],
+          supportedTileMatrixSet: [],
+          mapTileFormats: [],
+          vectorTileFormats: [],
         });
       });
       it('returns roads_national collection info', async () => {
@@ -417,6 +423,9 @@ describe('OgcApiEndpoint', () => {
               type: 'string',
             },
           ],
+          supportedTileMatrixSet: [],
+          mapTileFormats: [],
+          vectorTileFormats: [],
         });
       });
     });
@@ -1561,6 +1570,12 @@ describe('OgcApiEndpoint', () => {
         );
       });
     });
+    describe('#tileMatrixSets', () => {
+      it('returns the correct tile matrix sets', async () => {
+        const result = await endpoint.tileMatrixSets;
+        expect(result).toEqual(['WebMercatorQuad']);
+      });
+    });
   });
   describe('a failure happens while parsing the endpoint capabilities', () => {
     beforeEach(() => {
@@ -1754,6 +1769,59 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             sortables: [],
             title: 'aires-covoiturage',
           });
+        });
+      });
+    });
+  });
+
+  describe('endpoint with tiles', () => {
+    describe('nominal case', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/gnosis-earth/');
+      });
+      describe('#hasTiles', () => {
+        it('returns true', async () => {
+          await expect(endpoint.hasTiles).resolves.toBe(true);
+        });
+      });
+      describe('#tileMatrixSets', () => {
+        it('returns tile matrix sets', async () => {
+          await expect(endpoint.tileMatrixSets).resolves.toEqual([
+            'CDB1GlobalGrid',
+            'GlobalCRS84Pixel',
+            'GlobalCRS84Scale',
+            'GNOSISGlobalGrid',
+            'GoogleCRS84Quad',
+            'ISEA9R',
+            'WebMercatorQuad',
+            'WorldCRS84Quad',
+            'WorldMercatorWGS84Quad',
+          ]);
+        });
+      });
+      describe('#allCollections', () => {
+        it('returns collection ids', async () => {
+          await expect(endpoint.allCollections).resolves.toEqual([
+            'NaturalEarth',
+            'NaturalEarth:raster',
+            'NaturalEarth:raster:HYP_HR_SR_OB_DR',
+            'NaturalEarth:raster:NE1_HR_LC_SR_W_DR',
+            'NaturalEarth:raster:NE2_HR_LC_SR_W_DR',
+            'NaturalEarth:physical',
+            'NaturalEarth:physical:ne_10m_lakes_pluvial',
+          ]);
+        });
+      });
+      describe('#getCollectionTileUrl', () => {
+        it('returns the correct url', async () => {
+          await expect(
+            endpoint.getCollectionTilesetUrl(
+              'NaturalEarth:physical:ne_10m_lakes_pluvial',
+              'GlobalCRS84Pixel'
+            )
+          ).resolves.toEqual(
+            'http://local/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=json'
+          );
         });
       });
     });
