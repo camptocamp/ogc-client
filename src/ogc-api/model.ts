@@ -31,6 +31,7 @@ export interface OgcApiCollectionInfo {
   description: string;
   id: string;
   itemType: 'feature' | 'record';
+  dataType: 'vector';
   formats: MimeType[];
   crs: CrsCode[];
   storageCrs?: CrsCode;

@@ -166,6 +166,11 @@ describe('OgcApiEndpoint', () => {
         ]);
       });
     });
+    describe('#tileCollections', () => {
+      it('returns collection ids', async () => {
+        await expect(endpoint.tileCollections).resolves.toEqual([]);
+      });
+    });
     describe('#hasTiles', () => {
       it('returns true', async () => {
         await expect(endpoint.hasTiles).resolves.toBe(true);

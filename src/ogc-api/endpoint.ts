@@ -97,7 +97,7 @@ export default class OgcApiEndpoint {
   get recordCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasRecords])
       .then(([data, hasRecords]) => (hasRecords ? data : { collections: [] }))
-      .then(parseCollections('record'));
+      .then(parseCollections('record', null));
   }
 
   /**
@@ -106,7 +106,16 @@ export default class OgcApiEndpoint {
   get featureCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasFeatures])
       .then(([data, hasFeatures]) => (hasFeatures ? data : { collections: [] }))
-      .then(parseCollections('feature'));
+      .then(parseCollections('feature', null));
+  }
+
+  /**
+   * A Promise which resolves to an array of tile collection identifiers as strings.
+   */
+  get tileCollections(): Promise<string[]> {
+    return Promise.all([this.data, this.hasTiles])
+      .then(([data, hasTiles]) => (hasTiles ? data : { collections: [] }))
+      .then(parseCollections(null, 'vector'));
   }
 
   /**

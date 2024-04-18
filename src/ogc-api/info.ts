@@ -36,12 +36,15 @@ export function parseConformance(doc: OgcApiDocument): ConformanceClass[] {
 }
 
 export function parseCollections(
-  itemType: 'record' | 'feature' | null = null
+  itemType: 'record' | 'feature' | null = null,
+  dataType: 'vector' | null = null
 ): (doc: OgcApiDocument) => string[] {
   return (doc: OgcApiDocument) =>
     (doc.collections as OgcApiCollectionInfo[])
       .filter(
-        (collection) => itemType === null || collection.itemType === itemType
+        (collection) =>
+          (itemType === null || collection.itemType === itemType) &&
+          (dataType === null || collection.dataType === dataType)
       )
       .map((collection) => collection.id as string);
 }
