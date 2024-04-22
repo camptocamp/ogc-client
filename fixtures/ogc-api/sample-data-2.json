@@ -1,0 +1,36 @@
+{
+  "title": "geOrchestra Data API",
+  "description": "data-api provides an API to access datas",
+  "links": [
+    {
+      "href": "https://my.server.org/sample-data-2/",
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document as JSON"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/conformance",
+      "rel": "conformance",
+      "type": "application/json",
+      "title": "Conformance"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/collections",
+      "rel": "data",
+      "type": "application/json",
+      "title": "Collections"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/../v3/api-docs",
+      "rel": "service-desc",
+      "type": "application/vnd.oai.openapi+json;version=3.0",
+      "title": "OpenAPI definition in JSON format"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/../swagger-ui/index.html",
+      "rel": "service-doc",
+      "type": "text/html",
+      "title": "OpenAPI definition in HTML format"
+    }
+  ]
+}

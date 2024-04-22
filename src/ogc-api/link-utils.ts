@@ -12,17 +12,35 @@ export function fetchDocument<T extends OgcApiDocument>(
   return fetch(urlObj.toString(), {
     ...options,
     headers: { ...optionsHeaders, Accept: 'application/json' },
-  }).then((resp) => resp.json() as Promise<T>);
+  }).then((resp) => {
+    if (!resp.ok) {
+      throw new Error(`The document at ${urlObj} could not be fetched.`);
+    }
+    return resp.json().catch(() => {
+      throw new Error(
+        `The document at ${urlObj} does not appear to be valid JSON.`
+      );
+    }) as Promise<T>;
+  });
 }
 
 export function fetchRoot(url: string): Promise<OgcApiDocument> {
   return fetchDocument(url).then((doc) => {
     // if no data link, attempt to look at the parent
     if (
-      !hasLinks(doc, ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data']) &&
-      hasLinks(doc, ['self'])
+      !hasLinks(doc, ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data']) ||
+      !hasLinks(doc, [
+        'conformance',
+        'http://www.opengis.net/def/rel/ogc/1.0/conformance',
+      ])
     ) {
-      return fetchRoot(getParentPath(url));
+      const parentUrl = getParentPath(url);
+      if (!parentUrl) {
+        throw new Error(
+          `Could not find a root JSON document containing both a link with rel='data' and a link with rel='conformance'.`
+        );
+      }
+      return fetchRoot(parentUrl);
     }
     return doc;
   });
@@ -53,12 +71,12 @@ export function getLinkUrl(
   relType: string | string[],
   baseUrl?: string
 ): string {
-  const links = doc.links.filter((link) =>
+  const links = doc.links?.filter((link) =>
     Array.isArray(relType)
       ? relType.indexOf(link.rel) > -1
       : link.rel === relType
   );
-  if (!links.length) return null;
+  if (!links?.length) return null;
   return new URL(
     links[0].href,
     baseUrl || window.location.toString()
@@ -94,13 +112,11 @@ export function assertHasLinks(
     throw new EndpointError(`Could not find link with type: ${relType}`);
 }
 
-export function getParentPath(url: string): string {
+export function getParentPath(url: string): string | null {
   const urlObj = new URL(url, window.location.toString());
   const pathParts = urlObj.pathname.split('/');
   if (pathParts.length <= 2) {
-    throw new EndpointError(
-      'Could not find the root document, this might not be a valid OGC API endpoint'
-    );
+    return null;
   }
   urlObj.pathname = pathParts.slice(0, -1).join('/');
   return urlObj.toString();

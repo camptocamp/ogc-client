@@ -21,9 +21,9 @@ beforeAll(() => {
     } catch (e) {
       return {
         ok: false,
-        status: 400,
+        status: 404,
         headers: new Headers(),
-        json: () => Promise.resolve({ links: [] }),
+        json: () => Promise.resolve(JSON.parse('missing')),
       } as Response;
     }
     const contents = await readFile(filePath, {
@@ -32,7 +32,10 @@ beforeAll(() => {
     return {
       ok: true,
       headers: new Headers(),
-      json: () => Promise.resolve(JSON.parse(contents)),
+      json: () =>
+        new Promise((resolve) => {
+          resolve(JSON.parse(contents));
+        }),
     } as Response;
   };
 });
@@ -1535,14 +1538,14 @@ describe('OgcApiEndpoint', () => {
   });
   describe('a failure happens while parsing the endpoint capabilities', () => {
     beforeEach(() => {
-      endpoint = new OgcApiEndpoint('http://local/sample-data/blargz'); // invalid path
+      endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
     });
     describe('#info', () => {
       it('throws an explicit error', async () => {
         await expect(endpoint.info).rejects.toEqual(
           new EndpointError(
             `The endpoint appears non-conforming, the following error was encountered:
-Could not find link with type: data,http://www.opengis.net/def/rel/ogc/1.0/data`
+The document at http://local/sample-data/notjson?f=json does not appear to be valid JSON.`
           )
         );
       });
@@ -1629,9 +1632,76 @@ Could not find link with type: data,http://www.opengis.net/def/rel/ogc/1.0/data`
     it('throws an explicit error', async () => {
       await expect(endpoint.info).rejects.toEqual(
         new EndpointError(
-          `Could not find the root document, this might not be a valid OGC API endpoint`
+          `The endpoint appears non-conforming, the following error was encountered:
+Could not find a root JSON document containing both a link with rel='data' and a link with rel='conformance'.`
         )
       );
+    });
+  });
+  describe('on a non-existing link', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint('http://local/nonexisting');
+    });
+    it('throws an explicit error', async () => {
+      await expect(endpoint.info).rejects.toEqual(
+        new EndpointError(
+          `The endpoint appears non-conforming, the following error was encountered:
+The document at http://local/nonexisting?f=json could not be fetched.`
+        )
+      );
+    });
+  });
+
+  describe('alternate implementation', () => {
+    describe('nominal case', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/sample-data-2/collections');
+      });
+      describe('#info', () => {
+        it('returns endpoint info', async () => {
+          await expect(endpoint.info).resolves.toEqual({
+            description: 'data-api provides an API to access datas',
+            title: 'geOrchestra Data API',
+          });
+        });
+      });
+      describe('#conformanceClasses', () => {
+        it('returns conformance classes', async () => {
+          await expect(endpoint.conformanceClasses).resolves.toEqual([
+            'http://www.opengis.net/spec/ogcapi-features-1/1.0/req/oas30',
+            'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json',
+            'http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core',
+            'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/oas30',
+            'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/landing-page',
+            'http://www.opengis.net/spec/ogcapi-features-2/1.0/conf/crs',
+            'http://www.opengis.net/spec/ogcapi-common-2/1.0/conf/collections',
+            'http://www.opengis.net/spec/ogcapi-features-5/1.0/conf/schemas',
+            'http://www.opengis.net/spec/ogcapi-features-3/1.0/conf/queryables',
+            'http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/geojson',
+            'http://www.opengis.net/spec/ogcapi-features-3/1.0/conf/queryables-query-parameters',
+            'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/core',
+            'http://www.opengis.net/spec/ogcapi-features-5/1.0/req/core-roles-features',
+            'http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/html',
+          ]);
+        });
+      });
+      describe('#allCollections', () => {
+        it('returns collection ids', async () => {
+          await expect(endpoint.allCollections).resolves.toEqual([
+            'aires-covoiturage',
+            'antenne',
+            'armoires',
+            'boite_branchement',
+            'collecteur_gravitaire',
+            'equipements_culturels',
+            'etalab_parcelle',
+            'gendarmeries',
+            'mel_commune_llh',
+            'ne_10m_admin_0_countries',
+            'ouvrage_surfacique',
+          ]);
+        });
+      });
     });
   });
 });
