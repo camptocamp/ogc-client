@@ -1,4 +1,5 @@
 fixtures/**/*.xml
+fixtures/**/notjson.json
 dist
 app/dist
 node_modules
