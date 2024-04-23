@@ -22,6 +22,7 @@ import {
   fetchLink,
   fetchRoot,
   getLinkUrl,
+  hasLinks,
 } from './link-utils.js';
 import { EndpointError } from '../shared/errors.js';
 import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
@@ -32,6 +33,7 @@ import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
 export default class OgcApiEndpoint {
   private root: Promise<OgcApiDocument>;
   private conformance: Promise<OgcApiDocument>;
+  private collectionsUrl: Promise<string>;
   private data: Promise<OgcApiDocument>;
 
   /**
@@ -53,14 +55,15 @@ ${e.message}`);
         )
       )
       .catch(() => null);
-    this.data = this.root
-      .then((root) =>
-        fetchLink(
-          root,
-          ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data'],
-          this.baseUrl
-        )
+    this.collectionsUrl = this.root.then((root) =>
+      getLinkUrl(
+        root,
+        ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data'],
+        this.baseUrl
       )
+    );
+    this.data = this.collectionsUrl
+      .then(fetchDocument)
       .then(async (data) => {
         // check if there's a collection in the path; if yes, keep only this one
         const singleCollection = await fetchCollectionRoot(this.baseUrl);
@@ -155,7 +158,14 @@ ${e.message}`);
           (collection) => collection.id === collectionId
         );
       })
-      .then((collection) => fetchLink(collection, 'self', this.baseUrl));
+      .then(async (collection) => {
+        // if a self link is there, use it!
+        if (hasLinks(collection, ['self'])) {
+          return fetchLink(collection, 'self', this.baseUrl);
+        }
+        // otherwise build a URL for the collection
+        return fetchDocument(`${await this.collectionsUrl}/${collectionId}`);
+      });
   }
 
   /**

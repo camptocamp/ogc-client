@@ -1713,6 +1713,21 @@ The document at http://local/nonexisting?f=json could not be fetched.`
           ]);
         });
       });
+      describe('#getCollectionInfo', () => {
+        it('returns a collection info', async () => {
+          await expect(
+            endpoint.getCollectionInfo('aires-covoiturage')
+          ).resolves.toStrictEqual({
+            crs: ['http://www.opengis.net/def/crs/OGC/1.3/CRS84', 'EPSG:4326'],
+            formats: ['application/geo+json'],
+            id: 'aires-covoiturage',
+            itemType: 'feature',
+            queryables: [],
+            sortables: [],
+            title: 'aires-covoiturage',
+          });
+        });
+      });
     });
   });
 });
