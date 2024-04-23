@@ -13,7 +13,19 @@ beforeAll(() => {
         ? urlOrInfo
         : urlOrInfo.url
     );
-    const queryPath = url.pathname;
+
+    // if we're on the root path (e.g. /sample-data/), only answer if there's a trailing slash
+    // this is made to mimic the behavior of a webapp deployed on http://host.com/webapp/, where
+    // querying http://host.com/webapp would return a 404
+    if (url.pathname.split('/').length === 2 && !url.pathname.endsWith('/')) {
+      return {
+        ok: false,
+        status: 404,
+        headers: new Headers(),
+      } as Response;
+    }
+
+    const queryPath = url.pathname.replace(/\/$/, ''); // remove trailing slash
     const format = url.searchParams.get('f') || 'html';
     const filePath = `${path.join(FIXTURES_ROOT, queryPath)}.${format}`;
     try {
@@ -23,7 +35,6 @@ beforeAll(() => {
         ok: false,
         status: 404,
         headers: new Headers(),
-        json: () => Promise.resolve(JSON.parse('missing')),
       } as Response;
     }
     const contents = await readFile(filePath, {
@@ -44,7 +55,7 @@ describe('OgcApiEndpoint', () => {
   let endpoint: OgcApiEndpoint;
   describe('nominal case', () => {
     beforeEach(() => {
-      endpoint = new OgcApiEndpoint('http://local/sample-data');
+      endpoint = new OgcApiEndpoint('http://local/sample-data/');
     });
     describe('#info', () => {
       it('returns endpoint info', async () => {
@@ -1627,7 +1638,7 @@ The document at http://local/sample-data/notjson?f=json does not appear to be va
   });
   describe('on a JSON document which is not part of a valid endpoint', () => {
     beforeEach(() => {
-      endpoint = new OgcApiEndpoint('http://local/invalid');
+      endpoint = new OgcApiEndpoint('http://local/invalid/');
     });
     it('throws an explicit error', async () => {
       await expect(endpoint.info).rejects.toEqual(

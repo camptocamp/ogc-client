@@ -34,11 +34,15 @@ export function fetchRoot(url: string): Promise<OgcApiDocument> {
         'http://www.opengis.net/def/rel/ogc/1.0/conformance',
       ])
     ) {
-      const parentUrl = getParentPath(url);
+      let parentUrl = getParentPath(url);
       if (!parentUrl) {
         throw new Error(
           `Could not find a root JSON document containing both a link with rel='data' and a link with rel='conformance'.`
         );
+      }
+      // if there is a collections array, we expect the parent path to end with slash
+      if ('collections' in doc) {
+        parentUrl = `${parentUrl}/`;
       }
       return fetchRoot(parentUrl);
     }
@@ -58,11 +62,16 @@ export function fetchCollectionRoot(
     ) {
       return null;
     }
+    let parentUrl = getParentPath(url);
     // this looks like a collection; return it
     if (hasLinks(doc, ['items'])) {
       return doc;
     }
-    return fetchCollectionRoot(getParentPath(url));
+    // if there is a collections array, we expect the parent path to end with slash
+    if ('collections' in doc) {
+      parentUrl = `${parentUrl}/`;
+    }
+    return fetchCollectionRoot(parentUrl);
   });
 }
 
@@ -114,7 +123,7 @@ export function assertHasLinks(
 
 export function getParentPath(url: string): string | null {
   const urlObj = new URL(url, window.location.toString());
-  const pathParts = urlObj.pathname.split('/');
+  const pathParts = urlObj.pathname.replace(/\/$/, '').split('/');
   if (pathParts.length <= 2) {
     return null;
   }
