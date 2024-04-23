@@ -1,0 +1,44 @@
+{
+  "id": "aires-covoiturage",
+  "title": "aires-covoiturage",
+  "links": [
+    {
+      "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson",
+      "rel": "items",
+      "type": "application/geo+json",
+      "title": "aires-covoiturage"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=json&limit=-1",
+      "rel": "enclosure",
+      "type": "application/json",
+      "title": "Bulk download (JSON)"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson&limit=-1",
+      "rel": "enclosure",
+      "type": "application/geo+json",
+      "title": "Bulk download (GeoJSON)"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=shapefile&limit=-1",
+      "rel": "enclosure",
+      "type": "application/x-shapefile",
+      "title": "Bulk download (Esri Shapefile)"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=csv&limit=-1",
+      "rel": "enclosure",
+      "type": "text/csv;charset=UTF-8",
+      "title": "Bulk download (Comma Separated Values)"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=ooxml&limit=-1",
+      "rel": "enclosure",
+      "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "title": "Bulk download (Excel 2007 / OOXML)"
+    }
+  ],
+  "itemType": "feature",
+  "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84", "EPSG:4326"]
+}

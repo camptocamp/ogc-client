@@ -40,7 +40,10 @@ export default class OgcApiEndpoint {
    * documents inside the endpoint, such as `/collections`, `/collections/items` etc.
    */
   constructor(private baseUrl: string) {
-    this.root = fetchRoot(this.baseUrl);
+    this.root = fetchRoot(this.baseUrl).catch((e) => {
+      throw new Error(`The endpoint appears non-conforming, the following error was encountered:
+${e.message}`);
+    });
     this.conformance = this.root
       .then((root) =>
         fetchLink(

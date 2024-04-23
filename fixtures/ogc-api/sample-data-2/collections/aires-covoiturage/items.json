@@ -1,0 +1,376 @@
+{
+  "type": "FeatureCollection",
+  "timeStamp": "2024-04-22T16:13:04.314635813Z",
+  "numberMatched": 19,
+  "numberReturned": 10,
+  "features": [
+    {
+      "type": "Feature",
+      "@typeName": "aires-covoiturage",
+      "@id": "1",
+      "geometry": {
+        "type": "Point",
+        "@name": "the_geom",
+        "@srs": "EPSG:4326",
+        "coordinates": [3.1357683190685193, 50.754946172495444]
+      },
+      "properties": {
+        "id_lieu": "59508-C-001",
+        "nom_lieu": "CIT",
+        "ad_lieu": "CIT Avenue de l'Europe, 59223 Roncq",
+        "com_lieu": "RONCQ",
+        "insee": 59508.0,
+        "type": "Parking",
+        "date_maj": "2020-08-01 02:00:00+02:00",
+        "ouvert": "true",
+        "source": 2.4590041e8,
+        "xlong": 3.135088,
+        "ylat": 50.751979,
+        "nbre_pl": 49.0,
+        "nbre_pmr": 1.0,
+        "duree": "",
+        "horaires": "",
+        "proprio": "Aire amenagee par la MEL",
+        "lumiere": "",
+        "comm": "",
+        "velo_pl": "",
+        "nb_bornes": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "@typeName": "aires-covoiturage",
+      "@id": "2",
+      "geometry": {
+        "type": "Point",
+        "@name": "the_geom",
+        "@srs": "EPSG:4326",
+        "coordinates": [2.954210661381357, 50.73591302198993]
+      },
+      "properties": {
+        "id_lieu": "59173-C-001",
+        "nom_lieu": "Bellevue",
+        "ad_lieu": "1 Domaine de la Bellevue, 59890 Deulemont",
+        "com_lieu": "DEULEMONT",
+        "insee": 59173.0,
+        "type": "Parking",
+        "date_maj": "2019-08-29 02:00:00+02:00",
+        "ouvert": "true",
+        "source": 2.4590041e8,
+        "xlong": 2.9542959322,
+        "ylat": 50.7359050653,
+        "nbre_pl": 10.0,
+        "nbre_pmr": 1.0,
+        "duree": "",
+        "horaires": "",
+        "proprio": "Aire amenagee par la MEL",
+        "lumiere": "",
+        "comm": "",
+        "velo_pl": "",
+        "nb_bornes": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "@typeName": "aires-covoiturage",
+      "@id": "3",
+      "geometry": {
+        "type": "Point",
+        "@name": "the_geom",
+        "@srs": "EPSG:4326",
+        "coordinates": [2.905488724207134, 50.668981775292224]
+      },
+      "properties": {
+        "id_lieu": "59143-C-001",
+        "nom_lieu": "Birchington",
+        "ad_lieu": "401 Route Nationale, 59930 La Chapelle-d'Armentieres",
+        "com_lieu": "LA CHAPELLE D'ARMENTIERES",
+        "insee": 59143.0,
+        "type": "Aire de covoiturage",
+        "date_maj": "2019-08-29 02:00:00+02:00",
+        "ouvert": "true",
+        "source": 2.4590041e8,
+        "xlong": 2.9053705079,
+        "ylat": 50.6696197055,
+        "nbre_pl": 53.0,
+        "nbre_pmr": 2.0,
+        "duree": "",
+        "horaires": "",
+        "proprio": "Aire amenagee par la MEL",
+        "lumiere": "",
+        "comm": "",
+        "velo_pl": "",
+        "nb_bornes": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "@typeName": "aires-covoiturage",
+      "@id": "4",
+      "geometry": {
+        "type": "Point",
+        "@name": "the_geom",
+        "@srs": "EPSG:4326",
+        "coordinates": [3.0534896632801045, 50.75305283212758]
+      },
+      "properties": {
+        "id_lieu": "59656-C-001",
+        "nom_lieu": "Haut Cornet",
+        "ad_lieu": "Boulevard de la Lys, 59117 Wervicq Sud",
+        "com_lieu": "WERVICQ-SUD",
+        "insee": 59656.0,
+        "type": "Aire de covoiturage",
+        "date_maj": "2020-08-01 02:00:00+02:00",
+        "ouvert": "true",
+        "source": 2.4590041e8,
+        "xlong": 3.052046,
+        "ylat": 50.753217,
+        "nbre_pl": 28.0,
+        "nbre_pmr": 2.0,
+        "duree": "",
+        "horaires": "",
+        "proprio": "Aire amenagee par la MEL",
+        "lumiere": "",
+        "comm": "",
+        "velo_pl": "",
+        "nb_bornes": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "@typeName": "aires-covoiturage",
+      "@id": "5",
+      "geometry": {
+        "type": "Point",
+        "@name": "the_geom",
+        "@srs": "EPSG:4326",
+        "coordinates": [3.082628412204827, 50.581063179093086]
+      },
+      "properties": {
+        "id_lieu": "59220-C-001",
+        "nom_lieu": "Centre Commercial",
+        "ad_lieu": "Centre Commercial Auchan,  59155 Faches Thumesnil",
+        "com_lieu": "FACHES-THUMESNIL",
+        "insee": 59220.0,
+        "type": "Supermarche",
+        "date_maj": "2020-08-01 02:00:00+02:00",
+        "ouvert": "true",
+        "source": 2.4590041e8,
+        "xlong": 3.083038,
+        "ylat": 50.582269,
+        "nbre_pl": 34.0,
+        "nbre_pmr": null,
+        "duree": "",
+        "horaires": "",
+        "proprio": "Partenariat AUCHAN et MEL",
+        "lumiere": "",
+        "comm": "",
+        "velo_pl": "",
+        "nb_bornes": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "@typeName": "aires-covoiturage",
+      "@id": "6",
+      "geometry": {
+        "type": "Point",
+        "@name": "the_geom",
+        "@srs": "EPSG:4326",
+        "coordinates": [2.838448766230576, 50.54249938763095]
+      },
+      "properties": {
+        "id_lieu": "59550-C-001",
+        "nom_lieu": "Gare",
+        "ad_lieu": "92 rue Jules Ferry, D141, 59496 Salome",
+        "com_lieu": "SALOME",
+        "insee": 59550.0,
+        "type": "Parking",
+        "date_maj": "2020-08-09 02:00:00+02:00",
+        "ouvert": "true",
+        "source": 2.4590041e8,
+        "xlong": 2.8384107791,
+        "ylat": 50.542594446,
+        "nbre_pl": 4.0,
+        "nbre_pmr": 0.0,
+        "duree": "",
+        "horaires": "",
+        "proprio": "Aire amenagee par la MEL",
+        "lumiere": "",
+        "comm": "",
+        "velo_pl": "",
+        "nb_bornes": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "@typeName": "aires-covoiturage",
+      "@id": "7",
+      "geometry": {
+        "type": "Point",
+        "@name": "the_geom",
+        "@srs": "EPSG:4326",
+        "coordinates": [3.1638432206296834, 50.75611189926129]
+      },
+      "properties": {
+        "id_lieu": "59426-C-001",
+        "nom_lieu": "Rocheville",
+        "ad_lieu": "24 Rue du Vertuquet, 59960 Neuville-en-Ferrain",
+        "com_lieu": "NEUVILLE-EN-FERRAIN",
+        "insee": 59426.0,
+        "type": "Parking",
+        "date_maj": "2019-08-29 02:00:00+02:00",
+        "ouvert": "true",
+        "source": 2.4590041e8,
+        "xlong": 3.163904009,
+        "ylat": 50.7561291145,
+        "nbre_pl": 14.0,
+        "nbre_pmr": 0.0,
+        "duree": "",
+        "horaires": "",
+        "proprio": "Aire amenagee par la MEL",
+        "lumiere": "",
+        "comm": "",
+        "velo_pl": "",
+        "nb_bornes": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "@typeName": "aires-covoiturage",
+      "@id": "8",
+      "geometry": {
+        "type": "Point",
+        "@name": "the_geom",
+        "@srs": "EPSG:4326",
+        "coordinates": [3.1349350190442946, 50.62895038854565]
+      },
+      "properties": {
+        "id_lieu": "59009-C-001",
+        "nom_lieu": "Palacium",
+        "ad_lieu": "Avenue du Pont de Bois, 59650 Villeneuve d'Ascq",
+        "com_lieu": "VILLENEUVE D'ASCQ",
+        "insee": 59009.0,
+        "type": "Parking",
+        "date_maj": "2020-08-09 02:00:00+02:00",
+        "ouvert": "true",
+        "source": 2.4590041e8,
+        "xlong": 3.1347821842,
+        "ylat": 50.6281655379,
+        "nbre_pl": 15.0,
+        "nbre_pmr": null,
+        "duree": "",
+        "horaires": "",
+        "proprio": "Aire amenagee par la MEL",
+        "lumiere": "",
+        "comm": "",
+        "velo_pl": "",
+        "nb_bornes": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "@typeName": "aires-covoiturage",
+      "@id": "9",
+      "geometry": {
+        "type": "Point",
+        "@name": "the_geom",
+        "@srs": "EPSG:4326",
+        "coordinates": [2.9517943739393564, 50.60689170093367]
+      },
+      "properties": {
+        "id_lieu": "",
+        "nom_lieu": "La Colle",
+        "ad_lieu": "2 Rue de l'Égalité, 59320 Hallennes-lez-Haubourdin",
+        "com_lieu": "HALLENNES-LEZ-HAUBOURDIN",
+        "insee": 59320.0,
+        "type": "Aire de covoiturage",
+        "date_maj": "2021-12-22 01:00:00+01:00",
+        "ouvert": "true",
+        "source": null,
+        "xlong": 2.951905,
+        "ylat": 50.606907,
+        "nbre_pl": 10.0,
+        "nbre_pmr": 1.0,
+        "duree": "",
+        "horaires": "",
+        "proprio": "Aire amenagee par la MEL",
+        "lumiere": "",
+        "comm": "",
+        "velo_pl": "",
+        "nb_bornes": ""
+      }
+    },
+    {
+      "type": "Feature",
+      "@typeName": "aires-covoiturage",
+      "@id": "10",
+      "geometry": {
+        "type": "Point",
+        "@name": "the_geom",
+        "@srs": "EPSG:4326",
+        "coordinates": [3.0831245801213734, 50.6201191251297]
+      },
+      "properties": {
+        "id_lieu": "59350-C-001",
+        "nom_lieu": "Petit Maroc",
+        "ad_lieu": "B'Twin Village, Rue du Professeur Langevin, 59000 Lille",
+        "com_lieu": "LILLE",
+        "insee": 59350.0,
+        "type": "Parking",
+        "date_maj": "2020-08-09 02:00:00+02:00",
+        "ouvert": "true",
+        "source": 2.4590041e8,
+        "xlong": 3.0833456182,
+        "ylat": 50.6201221014,
+        "nbre_pl": 15.0,
+        "nbre_pmr": null,
+        "duree": "",
+        "horaires": "",
+        "proprio": "Partenariat DECATHLON et MEL",
+        "lumiere": "",
+        "comm": "",
+        "velo_pl": "",
+        "nb_bornes": ""
+      }
+    }
+  ],
+  "links": [
+    {
+      "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items",
+      "rel": "self",
+      "type": "application/geo+json",
+      "title": "This document"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson&offset=10&limit=10",
+      "rel": "next",
+      "type": "application/geo+json",
+      "title": "Next page"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=json",
+      "rel": "alternate",
+      "type": "application/json",
+      "title": "This document as JSON"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=shapefile",
+      "rel": "alternate",
+      "type": "application/x-shapefile",
+      "title": "This document as Esri Shapefile"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=csv",
+      "rel": "alternate",
+      "type": "text/csv;charset=UTF-8",
+      "title": "This document as Comma Separated Values"
+    },
+    {
+      "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=ooxml",
+      "rel": "alternate",
+      "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "title": "This document as Excel 2007 / OOXML"
+    }
+  ]
+}

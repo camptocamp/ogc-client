@@ -1,0 +1,474 @@
+{
+  "collections": [
+    {
+      "id": "aires-covoiturage",
+      "title": "aires-covoiturage",
+      "links": [
+        {
+          "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "aires-covoiturage"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=shapefile&limit=-1",
+          "rel": "enclosure",
+          "type": "application/x-shapefile",
+          "title": "Bulk download (Esri Shapefile)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "feature",
+      "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84", "EPSG:4326"]
+    },
+    {
+      "id": "antenne",
+      "title": "antenne",
+      "links": [
+        {
+          "href": "https://my.server.org/sample-data-2/collections/antenne/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "antenne"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/antenne/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/antenne/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/antenne/items?f=shapefile&limit=-1",
+          "rel": "enclosure",
+          "type": "application/x-shapefile",
+          "title": "Bulk download (Esri Shapefile)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/antenne/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/antenne/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "feature",
+      "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84", "EPSG:2154"]
+    },
+    {
+      "id": "armoires",
+      "title": "armoires",
+      "links": [
+        {
+          "href": "https://my.server.org/sample-data-2/collections/armoires/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "armoires"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/armoires/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/armoires/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/armoires/items?f=shapefile&limit=-1",
+          "rel": "enclosure",
+          "type": "application/x-shapefile",
+          "title": "Bulk download (Esri Shapefile)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/armoires/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/armoires/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "feature",
+      "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84", "EPSG:4326"]
+    },
+    {
+      "id": "boite_branchement",
+      "title": "boite_branchement",
+      "links": [
+        {
+          "href": "https://my.server.org/sample-data-2/collections/boite_branchement/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "boite_branchement"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/boite_branchement/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/boite_branchement/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/boite_branchement/items?f=shapefile&limit=-1",
+          "rel": "enclosure",
+          "type": "application/x-shapefile",
+          "title": "Bulk download (Esri Shapefile)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/boite_branchement/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/boite_branchement/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "feature",
+      "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84", "EPSG:2154"]
+    },
+    {
+      "id": "collecteur_gravitaire",
+      "title": "collecteur_gravitaire",
+      "links": [
+        {
+          "href": "https://my.server.org/sample-data-2/collections/collecteur_gravitaire/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "collecteur_gravitaire"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/collecteur_gravitaire/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/collecteur_gravitaire/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/collecteur_gravitaire/items?f=shapefile&limit=-1",
+          "rel": "enclosure",
+          "type": "application/x-shapefile",
+          "title": "Bulk download (Esri Shapefile)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/collecteur_gravitaire/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/collecteur_gravitaire/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "feature",
+      "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84", "EPSG:2154"]
+    },
+    {
+      "id": "equipements_culturels",
+      "title": "equipements_culturels",
+      "links": [
+        {
+          "href": "https://my.server.org/sample-data-2/collections/equipements_culturels/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "equipements_culturels"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/equipements_culturels/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/equipements_culturels/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/equipements_culturels/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/equipements_culturels/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "record"
+    },
+    {
+      "id": "etalab_parcelle",
+      "title": "etalab_parcelle",
+      "links": [
+        {
+          "href": "https://my.server.org/sample-data-2/collections/etalab_parcelle/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "etalab_parcelle"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/etalab_parcelle/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/etalab_parcelle/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/etalab_parcelle/items?f=shapefile&limit=-1",
+          "rel": "enclosure",
+          "type": "application/x-shapefile",
+          "title": "Bulk download (Esri Shapefile)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/etalab_parcelle/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/etalab_parcelle/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "feature",
+      "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84", "EPSG:2154"]
+    },
+    {
+      "id": "gendarmeries",
+      "title": "gendarmeries",
+      "links": [
+        {
+          "href": "https://my.server.org/sample-data-2/collections/gendarmeries/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "gendarmeries"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/gendarmeries/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/gendarmeries/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/gendarmeries/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/gendarmeries/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "record"
+    },
+    {
+      "id": "mel_commune_llh",
+      "title": "mel_commune_llh",
+      "links": [
+        {
+          "href": "https://my.server.org/sample-data-2/collections/mel_commune_llh/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "mel_commune_llh"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/mel_commune_llh/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/mel_commune_llh/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/mel_commune_llh/items?f=shapefile&limit=-1",
+          "rel": "enclosure",
+          "type": "application/x-shapefile",
+          "title": "Bulk download (Esri Shapefile)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/mel_commune_llh/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/mel_commune_llh/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "feature",
+      "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84", "EPSG:2154"]
+    },
+    {
+      "id": "ne_10m_admin_0_countries",
+      "title": "ne_10m_admin_0_countries",
+      "links": [
+        {
+          "href": "https://my.server.org/sample-data-2/collections/ne_10m_admin_0_countries/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "ne_10m_admin_0_countries"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/ne_10m_admin_0_countries/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/ne_10m_admin_0_countries/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/ne_10m_admin_0_countries/items?f=shapefile&limit=-1",
+          "rel": "enclosure",
+          "type": "application/x-shapefile",
+          "title": "Bulk download (Esri Shapefile)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/ne_10m_admin_0_countries/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/ne_10m_admin_0_countries/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "feature",
+      "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84", "EPSG:4326"]
+    },
+    {
+      "id": "ouvrage_surfacique",
+      "title": "ouvrage_surfacique",
+      "links": [
+        {
+          "href": "https://my.server.org/sample-data-2/collections/ouvrage_surfacique/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "ouvrage_surfacique"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/ouvrage_surfacique/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/ouvrage_surfacique/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/ouvrage_surfacique/items?f=shapefile&limit=-1",
+          "rel": "enclosure",
+          "type": "application/x-shapefile",
+          "title": "Bulk download (Esri Shapefile)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/ouvrage_surfacique/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://my.server.org/sample-data-2/collections/ouvrage_surfacique/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "feature",
+      "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84", "EPSG:2154"]
+    }
+  ]
+}
