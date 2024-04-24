@@ -31,7 +31,7 @@ export interface OgcApiCollectionInfo {
   description: string;
   id: string;
   itemType: 'feature' | 'record';
-  formats: MimeType[]; // these formats are accessible through the /items API
+  itemFormats: MimeType[]; // these formats are accessible through the /items API
   bulkDownloadLinks: Record<string, MimeType>; // map between formats and bulk download links (no filtering, pagination etc.)
   crs: CrsCode[];
   storageCrs?: CrsCode;

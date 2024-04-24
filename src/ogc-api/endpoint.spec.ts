@@ -217,7 +217,7 @@ describe('OgcApiEndpoint', () => {
           description:
             'A centre point for all major airports including a name.',
           id: 'airports',
-          formats: [
+          itemFormats: [
             'application/vnd.ogc.fg+json',
             'application/geo+json',
             'application/flatgeobuf',
@@ -274,7 +274,11 @@ describe('OgcApiEndpoint', () => {
           title: 'Sample metadata records from Dutch Nationaal georegister',
           description:
             'Sample metadata records from Dutch Nationaal georegister',
-          formats: ['application/geo+json', 'application/ld+json', 'text/html'],
+          itemFormats: [
+            'application/geo+json',
+            'application/ld+json',
+            'text/html',
+          ],
           bulkDownloadLinks: {},
           keywords: ['netherlands', 'open data', 'georegister'],
           extent: {
@@ -346,7 +350,7 @@ describe('OgcApiEndpoint', () => {
           description:
             'Lines representing the road network. A road is defined as a metalled way for vehicles.',
           id: 'roads_national',
-          formats: [
+          itemFormats: [
             'application/vnd.ogc.fg+json',
             'application/geo+json',
             'application/flatgeobuf',
@@ -1731,7 +1735,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             endpoint.getCollectionInfo('aires-covoiturage')
           ).resolves.toStrictEqual({
             crs: ['http://www.opengis.net/def/crs/OGC/1.3/CRS84', 'EPSG:4326'],
-            formats: ['application/geo+json'],
+            itemFormats: ['application/geo+json'],
             bulkDownloadLinks: {
               'application/geo+json':
                 'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson&limit=-1',

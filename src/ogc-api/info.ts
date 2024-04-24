@@ -99,7 +99,7 @@ export function parseBaseCollectionInfo(
   doc: OgcApiDocument
 ): OgcApiCollectionInfo {
   const { links, ...props } = doc;
-  const formats = links
+  const itemFormats = links
     .filter((link) => link.rel === 'items')
     .map((link) => link.type);
   const bulkDownloadLinks = links
@@ -108,7 +108,11 @@ export function parseBaseCollectionInfo(
       acc[link.type] = link.href;
       return acc;
     }, {});
-  return { formats, bulkDownloadLinks, ...props } as OgcApiCollectionInfo;
+  return {
+    itemFormats: itemFormats,
+    bulkDownloadLinks,
+    ...props,
+  } as OgcApiCollectionInfo;
 }
 
 export function parseCollectionParameters(

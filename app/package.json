@@ -4,9 +4,10 @@
   "private": false,
   "scripts": {
     "start": "npm run dev",
-    "dev": "vite",
+    "dev": "npm run docs && vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docs": "typedoc ../src/index.ts --json src/data/api.json --pretty --excludePrivate"
   },
   "dependencies": {
     "core-js": "^3.30.2",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.4.0",
+    "typedoc": "^0.25.13",
     "vite": "^4.4.11",
     "worker-plugin": "^5.0.1"
   }
