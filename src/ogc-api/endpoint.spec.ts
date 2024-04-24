@@ -51,8 +51,16 @@ beforeAll(() => {
   };
 });
 
+jest.useFakeTimers();
+
 describe('OgcApiEndpoint', () => {
   let endpoint: OgcApiEndpoint;
+
+  afterEach(async () => {
+    // this will exhaust all microtasks, effectively preventing rejected promises from leaking between tests
+    await jest.runAllTimersAsync();
+  });
+
   describe('nominal case', () => {
     beforeEach(() => {
       endpoint = new OgcApiEndpoint('http://local/sample-data/');
@@ -1549,10 +1557,11 @@ describe('OgcApiEndpoint', () => {
   });
   describe('a failure happens while parsing the endpoint capabilities', () => {
     beforeEach(() => {
-      endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
+      // endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
     });
     describe('#info', () => {
       it('throws an explicit error', async () => {
+        endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
         await expect(endpoint.info).rejects.toEqual(
           new EndpointError(
             `The endpoint appears non-conforming, the following error was encountered:

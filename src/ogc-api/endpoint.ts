@@ -31,51 +31,66 @@ import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
  * Represents an OGC API endpoint advertising various collections and services.
  */
 export default class OgcApiEndpoint {
-  private root: Promise<OgcApiDocument>;
-  private conformance: Promise<OgcApiDocument>;
-  private collectionsUrl: Promise<string>;
-  private data: Promise<OgcApiDocument>;
+  // these are cached results because the getters rely on HTTP requests; to avoid
+  // unhandled promise rejections the getters are evaluated lazily
+  private root_: Promise<OgcApiDocument>;
+  private conformance_: Promise<OgcApiDocument>;
+  private data_: Promise<OgcApiDocument>;
 
-  /**
-   * Creates a new OGC API endpoint.
-   * @param baseUrl Base URL used to query the endpoint. Note that this can point to nested
-   * documents inside the endpoint, such as `/collections`, `/collections/items` etc.
-   */
-  constructor(private baseUrl: string) {
-    this.root = fetchRoot(this.baseUrl).catch((e) => {
-      throw new Error(`The endpoint appears non-conforming, the following error was encountered:
+  private get root(): Promise<OgcApiDocument> {
+    if (!this.root_) {
+      this.root_ = fetchRoot(this.baseUrl).catch((e) => {
+        throw new Error(`The endpoint appears non-conforming, the following error was encountered:
 ${e.message}`);
-    });
-    this.conformance = this.root
-      .then((root) =>
+      });
+    }
+    return this.root_;
+  }
+  private get conformance(): Promise<OgcApiDocument> {
+    if (!this.conformance_) {
+      this.conformance_ = this.root.then((root) =>
         fetchLink(
           root,
           ['conformance', 'http://www.opengis.net/def/rel/ogc/1.0/conformance'],
           this.baseUrl
         )
-      )
-      .catch(() => null);
-    this.collectionsUrl = this.root.then((root) =>
+      );
+    }
+    return this.conformance_;
+  }
+  private get collectionsUrl(): Promise<string> {
+    return this.root.then((root) =>
       getLinkUrl(
         root,
         ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data'],
         this.baseUrl
       )
     );
-    this.data = this.collectionsUrl
-      .then(fetchDocument)
-      .then(async (data) => {
-        // check if there's a collection in the path; if yes, keep only this one
-        const singleCollection = await fetchCollectionRoot(this.baseUrl);
-        if (singleCollection !== null && Array.isArray(data.collections)) {
-          data.collections = data.collections.filter(
-            (collection) => collection.id === singleCollection.id
-          );
-        }
-        return data;
-      })
-      .catch(() => null);
   }
+  private get data(): Promise<OgcApiDocument> {
+    if (!this.data_) {
+      this.data_ = this.collectionsUrl
+        .then(fetchDocument)
+        .then(async (data) => {
+          // check if there's a collection in the path; if yes, keep only this one
+          const singleCollection = await fetchCollectionRoot(this.baseUrl);
+          if (singleCollection !== null && Array.isArray(data.collections)) {
+            data.collections = data.collections.filter(
+              (collection) => collection.id === singleCollection.id
+            );
+          }
+          return data;
+        });
+    }
+    return this.data_;
+  }
+
+  /**
+   * Creates a new OGC API endpoint.
+   * @param baseUrl Base URL used to query the endpoint. Note that this can point to nested
+   * documents inside the endpoint, such as `/collections`, `/collections/items` etc.
+   */
+  constructor(private baseUrl: string) {}
 
   /**
    * A Promise which resolves to the endpoint information.
