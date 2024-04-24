@@ -224,6 +224,7 @@ describe('OgcApiEndpoint', () => {
             'application/vnd.ogc.fg+json;compatibility=geojson',
             'text/html',
           ],
+          bulkDownloadLinks: {},
           extent: {
             spatial: {
               bbox: [
@@ -274,6 +275,7 @@ describe('OgcApiEndpoint', () => {
           description:
             'Sample metadata records from Dutch Nationaal georegister',
           formats: ['application/geo+json', 'application/ld+json', 'text/html'],
+          bulkDownloadLinks: {},
           keywords: ['netherlands', 'open data', 'georegister'],
           extent: {
             spatial: {
@@ -351,6 +353,7 @@ describe('OgcApiEndpoint', () => {
             'application/vnd.ogc.fg+json;compatibility=geojson',
             'text/html',
           ],
+          bulkDownloadLinks: {},
           extent: {
             spatial: {
               bbox: [
@@ -1729,6 +1732,18 @@ The document at http://local/nonexisting?f=json could not be fetched.`
           ).resolves.toStrictEqual({
             crs: ['http://www.opengis.net/def/crs/OGC/1.3/CRS84', 'EPSG:4326'],
             formats: ['application/geo+json'],
+            bulkDownloadLinks: {
+              'application/geo+json':
+                'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson&limit=-1',
+              'application/json':
+                'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=json&limit=-1',
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=ooxml&limit=-1',
+              'application/x-shapefile':
+                'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=shapefile&limit=-1',
+              'text/csv;charset=UTF-8':
+                'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=csv&limit=-1',
+            },
             id: 'aires-covoiturage',
             itemType: 'feature',
             queryables: [],
