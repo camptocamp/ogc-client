@@ -38,7 +38,6 @@
     "regenerator-runtime": "^0.13.11",
     "ts-jest": "^29.1.1",
     "tslib": "^2.6.2",
-    "typedoc": "^0.25.8",
     "typescript": "^5.3.3",
     "vite": "^5.1.0",
     "vite-plugin-dts": "^3.7.2"
@@ -63,8 +62,7 @@
     "lint:fix": "npm run lint -- --fix",
     "build": "vite build && esbuild $(find ./src -name \"*.ts\" -type f -not -path '*worker/index.ts' -not -path '*.spec.ts') --outdir=./dist --platform=neutral --format=esm --sourcemap",
     "prepublishOnly": "npm run typecheck && npm test && npm run build",
-    "typecheck": "tsc --noEmit",
-    "docs": "typedoc src/index.ts --json app/src/data/api.json --pretty --excludePrivate"
+    "typecheck": "tsc --noEmit"
   },
   "author": "olivia.guyot@camptocamp.com",
   "license": "BSD-3-Clause"
