@@ -51,8 +51,16 @@ beforeAll(() => {
   };
 });
 
+jest.useFakeTimers();
+
 describe('OgcApiEndpoint', () => {
   let endpoint: OgcApiEndpoint;
+
+  afterEach(async () => {
+    // this will exhaust all microtasks, effectively preventing rejected promises from leaking between tests
+    await jest.runAllTimersAsync();
+  });
+
   describe('nominal case', () => {
     beforeEach(() => {
       endpoint = new OgcApiEndpoint('http://local/sample-data/');
@@ -216,6 +224,7 @@ describe('OgcApiEndpoint', () => {
             'application/vnd.ogc.fg+json;compatibility=geojson',
             'text/html',
           ],
+          bulkDownloadLinks: {},
           extent: {
             spatial: {
               bbox: [
@@ -266,6 +275,7 @@ describe('OgcApiEndpoint', () => {
           description:
             'Sample metadata records from Dutch Nationaal georegister',
           formats: ['application/geo+json', 'application/ld+json', 'text/html'],
+          bulkDownloadLinks: {},
           keywords: ['netherlands', 'open data', 'georegister'],
           extent: {
             spatial: {
@@ -343,6 +353,7 @@ describe('OgcApiEndpoint', () => {
             'application/vnd.ogc.fg+json;compatibility=geojson',
             'text/html',
           ],
+          bulkDownloadLinks: {},
           extent: {
             spatial: {
               bbox: [
@@ -1549,10 +1560,11 @@ describe('OgcApiEndpoint', () => {
   });
   describe('a failure happens while parsing the endpoint capabilities', () => {
     beforeEach(() => {
-      endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
+      // endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
     });
     describe('#info', () => {
       it('throws an explicit error', async () => {
+        endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
         await expect(endpoint.info).rejects.toEqual(
           new EndpointError(
             `The endpoint appears non-conforming, the following error was encountered:
@@ -1711,6 +1723,33 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             'ne_10m_admin_0_countries',
             'ouvrage_surfacique',
           ]);
+        });
+      });
+      describe('#getCollectionInfo', () => {
+        it('returns a collection info', async () => {
+          await expect(
+            endpoint.getCollectionInfo('aires-covoiturage')
+          ).resolves.toStrictEqual({
+            crs: ['http://www.opengis.net/def/crs/OGC/1.3/CRS84', 'EPSG:4326'],
+            formats: ['application/geo+json'],
+            bulkDownloadLinks: {
+              'application/geo+json':
+                'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson&limit=-1',
+              'application/json':
+                'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=json&limit=-1',
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=ooxml&limit=-1',
+              'application/x-shapefile':
+                'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=shapefile&limit=-1',
+              'text/csv;charset=UTF-8':
+                'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=csv&limit=-1',
+            },
+            id: 'aires-covoiturage',
+            itemType: 'feature',
+            queryables: [],
+            sortables: [],
+            title: 'aires-covoiturage',
+          });
         });
       });
     });
