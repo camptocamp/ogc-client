@@ -1,4 +1,4 @@
-import { OgcApiDocument } from './model.js';
+import { OgcApiDocument, OgcApiDocumentLink } from './model.js';
 import { EndpointError } from '../shared/errors.js';
 import { getFetchOptions } from '../shared/http-utils.js';
 
@@ -75,21 +75,27 @@ export function fetchCollectionRoot(
   });
 }
 
+export function getLinks(
+  doc: OgcApiDocument,
+  relType: string | string[]
+): OgcApiDocumentLink[] {
+  return (
+    doc.links?.filter((link) =>
+      Array.isArray(relType)
+        ? relType.indexOf(link.rel) > -1
+        : link.rel === relType
+    ) || []
+  );
+}
+
 export function getLinkUrl(
   doc: OgcApiDocument,
   relType: string | string[],
   baseUrl?: string
-): string {
-  const links = doc.links?.filter((link) =>
-    Array.isArray(relType)
-      ? relType.indexOf(link.rel) > -1
-      : link.rel === relType
-  );
-  if (!links?.length) return null;
-  return new URL(
-    links[0].href,
-    baseUrl || window.location.toString()
-  ).toString();
+): string | null {
+  const link = getLinks(doc, relType)[0];
+  if (!link) return null;
+  return new URL(link.href, baseUrl || window.location.toString()).toString();
 }
 
 export function fetchLink(

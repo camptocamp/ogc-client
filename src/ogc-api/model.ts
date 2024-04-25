@@ -56,7 +56,7 @@ export interface OgcApiCollectionInfo {
   sortables: CollectionParameter[];
 }
 
-export interface OgcApiDocumentLinks {
+export interface OgcApiDocumentLink {
   rel: string;
   type: string;
   title: string;
@@ -92,7 +92,7 @@ interface OgcApiTime {
 }
 export interface OgcApiRecordContact {
   name: string;
-  links: OgcApiDocumentLinks[];
+  links: OgcApiDocumentLink[];
   contactInstructions: string;
   roles: string[];
 }
@@ -118,7 +118,7 @@ export type OgcApiRecord = {
   time: OgcApiTime;
   geometry: Geometry;
   properties: OgcApiRecordProperties;
-  links: OgcApiDocumentLinks[];
+  links: OgcApiDocumentLink[];
   conformsTo?: string[];
 };
 

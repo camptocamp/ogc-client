@@ -21,6 +21,7 @@ import {
   fetchDocument,
   fetchLink,
   fetchRoot,
+  getLinks,
   getLinkUrl,
   hasLinks,
 } from './link-utils.js';
@@ -303,12 +304,23 @@ ${e.message}`);
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
         const baseUrl = this.baseUrl || '';
-        const itemsLink = getLinkUrl(collectionDoc, 'items', baseUrl);
-        const url = new URL(itemsLink);
-
-        // Set the format to JSON if not specified
-        const format = options.outputFormat || 'json';
-        url.searchParams.set('f', format);
+        const itemLinks = getLinks(collectionDoc, 'items');
+        const linkWithFormat = itemLinks.find(
+          (link) => link.type === options?.outputFormat
+        );
+        let url: URL;
+        if (options?.outputFormat && !linkWithFormat) {
+          // do not prevent using this output format, because it still might work! but give a warning at least
+          console.warn(
+            `[ogc-client] The following output format type was not found in the collection '${collectionId}': ${options.outputFormat}`
+          );
+          url = new URL(itemLinks[0].href, baseUrl);
+          url.searchParams.set('f', options.outputFormat);
+        } else if (linkWithFormat) {
+          url = new URL(linkWithFormat.href, baseUrl);
+        } else {
+          url = new URL(itemLinks[0].href, baseUrl);
+        }
 
         if (options.query !== undefined)
           url.search += (url.search ? '&' : '') + options.query;

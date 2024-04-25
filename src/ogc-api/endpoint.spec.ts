@@ -1549,26 +1549,52 @@ describe('OgcApiEndpoint', () => {
       });
     });
     describe('#getCollectionItemsUrl', () => {
-      it('returns the correct URL for the collection items', () => {
-        expect(
+      beforeEach(() => {
+        jest.clearAllMocks();
+        jest.spyOn(console, 'warn');
+      });
+      it('returns the first available URL for the collection items if no mime-type specified', async () => {
+        await expect(
+          endpoint.getCollectionItemsUrl('airports')
+        ).resolves.toEqual(
+          'https://my.server.org/sample-data/collections/airports/items?f=jsonfg'
+        );
+      });
+      it('returns the correct URL for the collection items an a given mime-type', async () => {
+        await expect(
           endpoint.getCollectionItemsUrl('airports', {
             limit: 101,
             query: 'name=Sumburgh Airport',
-            outputFormat: 'json',
+            outputFormat: 'application/geo+json',
           })
         ).resolves.toEqual(
           'https://my.server.org/sample-data/collections/airports/items?f=json&name=Sumburgh+Airport&limit=101'
+        );
+      });
+      it('outputs a warning if the required format is not a known mime-type for the collection', async () => {
+        await expect(
+          endpoint.getCollectionItemsUrl('airports', {
+            limit: 101,
+            query: 'name=Sumburgh Airport',
+            outputFormat: 'shapefile',
+          })
+        ).resolves.toEqual(
+          'https://my.server.org/sample-data/collections/airports/items?f=shapefile&name=Sumburgh+Airport&limit=101'
+        );
+        expect(console.warn).toHaveBeenCalledWith(
+          expect.stringContaining(
+            'The following output format type was not found in the collection'
+          )
         );
       });
     });
   });
   describe('a failure happens while parsing the endpoint capabilities', () => {
     beforeEach(() => {
-      // endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
+      endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
     });
     describe('#info', () => {
       it('throws an explicit error', async () => {
-        endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
         await expect(endpoint.info).rejects.toEqual(
           new EndpointError(
             `The endpoint appears non-conforming, the following error was encountered:
