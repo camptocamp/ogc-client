@@ -99,7 +99,6 @@ ${e.message}`);
       });
     }
     return this.tileMatrixSetsFull_;
-
   }
 
   /**
@@ -215,30 +214,80 @@ ${e.message}`);
   async getCollectionInfo(collectionId: string): Promise<OgcApiCollectionInfo> {
     const collectionDoc = await this.getCollectionDocument(collectionId);
     const baseInfo = parseBaseCollectionInfo(collectionDoc);
-    const [queryables, sortables] = await Promise.all([
-      fetchLink(
-        collectionDoc,
-        ['queryables', 'http://www.opengis.net/def/rel/ogc/1.0/queryables'],
-        this.baseUrl
+    const [queryables, sortables, tilesetsVector, tilesetsMap] =
+      await Promise.all([
+        fetchLink(
+          collectionDoc,
+          ['queryables', 'http://www.opengis.net/def/rel/ogc/1.0/queryables'],
+          this.baseUrl
+        )
+          .then(parseCollectionParameters)
+          .catch(() => []),
+        fetchLink(
+          collectionDoc,
+          ['sortables', 'http://www.opengis.net/def/rel/ogc/1.0/sortables'],
+          this.baseUrl
+        )
+          .then(parseCollectionParameters)
+          .catch(() => []),
+        fetchLink(
+          collectionDoc,
+          ['http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector'],
+          this.baseUrl
+        )
+          .then((tilesetDoc) => tilesetDoc.tilesets)
+          .catch(() => []),
+        fetchLink(
+          collectionDoc,
+          ['http://www.opengis.net/def/rel/ogc/1.0/tilesets-map'],
+          this.baseUrl
+        )
+          .then((tilesetDoc) => tilesetDoc.tilesets)
+          .catch(() => []),
+      ]);
+
+    const tileMatrixSetsFull = await this.tileMatrixSetsFull;
+    const supportedTileMatrixSet = tilesetsVector
+      .map(
+        (tileset) =>
+          tileMatrixSetsFull.find((set) => set.uri === tileset.tileMatrixSetURI)
+            ?.id
       )
-        .then(parseCollectionParameters)
-        .catch(() => []),
-      fetchLink(
-        collectionDoc,
-        ['sortables', 'http://www.opengis.net/def/rel/ogc/1.0/sortables'],
-        this.baseUrl
-      )
-        .then(parseCollectionParameters)
-        .catch(() => []),
-    ]);
-    // TODO: read map/vector tile formats and tile matrix sets
+      .filter(Boolean);
+
+    const firstTilesetVector = tilesetsVector[0];
+    let vectorTileFormats = [];
+    if (firstTilesetVector) {
+      const tilesetUrl = getLinkUrl(firstTilesetVector, 'self', this.baseUrl);
+      if (!tilesetUrl) {
+        throw new Error('No links found for the tileset');
+      }
+      const tilesetDoc = await fetchDocument(tilesetUrl);
+      vectorTileFormats = tilesetDoc.links
+        .filter((link) => link.rel === 'item')
+        .map((link) => link.type);
+    }
+
+    const firstTilesetMap = tilesetsMap[0];
+    let mapTileFormats = [];
+    if (firstTilesetMap) {
+      const tilesetUrl = getLinkUrl(firstTilesetMap, 'self', this.baseUrl);
+      if (!tilesetUrl) {
+        throw new Error('No links found for the tileset');
+      }
+      const tilesetDoc = await fetchDocument(tilesetUrl);
+      mapTileFormats = tilesetDoc.links
+        .filter((link) => link.rel === 'item')
+        .map((link) => link.type);
+    }
+
     return {
       ...baseInfo,
       queryables,
       sortables,
-      mapTileFormats: [],
-      vectorTileFormats: [],
-      supportedTileMatrixSet: [],
+      mapTileFormats,
+      vectorTileFormats,
+      supportedTileMatrixSet,
     };
   }
 

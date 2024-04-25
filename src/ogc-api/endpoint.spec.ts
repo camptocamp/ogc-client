@@ -1765,9 +1765,12 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             },
             id: 'aires-covoiturage',
             itemType: 'feature',
+            mapTileFormats: [],
             queryables: [],
             sortables: [],
+            supportedTileMatrixSet: [],
             title: 'aires-covoiturage',
+            vectorTileFormats: [],
           });
         });
       });
