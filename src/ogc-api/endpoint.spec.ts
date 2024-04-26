@@ -1815,6 +1815,13 @@ The document at http://local/nonexisting?f=json could not be fetched.`
           ]);
         });
       });
+      describe('#vectorTileCollections', () => {
+        it('returns vector tile collection ids', async () => {
+          await expect(endpoint.vectorTileCollections).resolves.toEqual([
+            'NaturalEarth:physical:ne_10m_lakes_pluvial',
+          ]);
+        });
+      });
       describe('#getCollectionTileUrl', () => {
         it('returns the correct url', async () => {
           await expect(

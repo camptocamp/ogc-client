@@ -148,6 +148,29 @@ ${e.message}`);
   }
 
   /**
+   * A Promise which resolves to an array of vector tile collection identifiers as strings.
+   */
+  get vectorTileCollections(): Promise<string[]> {
+    return Promise.all([this.data, this.hasTiles])
+      .then(([data, hasTiles]) => (hasTiles ? data : { collections: [] }))
+      .then(async (data) => {
+        const collections = data.collections as OgcApiDocument[];
+        const vectorTileCollections = [];
+
+        for (const collection of collections) {
+          const collectionInfo = await this.getCollectionInfo(
+            collection.id as string
+          );
+          if (collectionInfo.vectorTileFormats.length > 0) {
+            vectorTileCollections.push(collection.id);
+          }
+        }
+
+        return vectorTileCollections;
+      });
+  }
+
+  /**
    * A Promise which resolves to a boolean indicating whether the endpoint offer tiles.
    */
   get hasTiles(): Promise<boolean> {
