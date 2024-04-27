@@ -125,7 +125,15 @@ ${e.message}`);
   /**
    * A Promise which resolves to an array of all collection identifiers as strings.
    */
-  get allCollections(): Promise<string[]> {
+  get allCollections(): Promise<
+    {
+      name: string;
+      hasRecords?: boolean;
+      hasFeatures?: boolean;
+      hasVectorTiles?: boolean;
+      hasMapTiles?: boolean;
+    }[]
+  > {
     return this.data.then(parseCollections());
   }
 
@@ -135,7 +143,8 @@ ${e.message}`);
   get recordCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasRecords])
       .then(([data, hasRecords]) => (hasRecords ? data : { collections: [] }))
-      .then(parseCollections('record'));
+      .then(parseCollections('record'))
+      .then((collections) => collections.map((collection) => collection.name));
   }
 
   /**
@@ -144,7 +153,8 @@ ${e.message}`);
   get featureCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasFeatures])
       .then(([data, hasFeatures]) => (hasFeatures ? data : { collections: [] }))
-      .then(parseCollections('feature'));
+      .then(parseCollections('feature'))
+      .then((collections) => collections.map((collection) => collection.name));
   }
 
   /**
@@ -153,21 +163,24 @@ ${e.message}`);
   get vectorTileCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasTiles])
       .then(([data, hasTiles]) => (hasTiles ? data : { collections: [] }))
-      .then(async (data) => {
-        const collections = data.collections as OgcApiDocument[];
-        const vectorTileCollections = [];
+      .then(parseCollections())
+      .then((collections) =>
+        collections.filter((collection) => collection.hasVectorTiles)
+      )
+      .then((collections) => collections.map((collection) => collection.name));
+  }
 
-        for (const collection of collections) {
-          const collectionInfo = await this.getCollectionInfo(
-            collection.id as string
-          );
-          if (collectionInfo.vectorTileFormats.length > 0) {
-            vectorTileCollections.push(collection.id);
-          }
-        }
-
-        return vectorTileCollections;
-      });
+  /**
+   * A Promise which resolves to an array of map tile collection identifiers as strings.
+   */
+  get mapTileCollections(): Promise<string[]> {
+    return Promise.all([this.data, this.hasTiles])
+      .then(([data, hasTiles]) => (hasTiles ? data : { collections: [] }))
+      .then(parseCollections())
+      .then((collections) =>
+        collections.filter((collection) => collection.hasMapTiles)
+      )
+      .then((collections) => collections.map((collection) => collection.name));
   }
 
   /**
@@ -214,7 +227,7 @@ ${e.message}`);
   private getCollectionDocument(collectionId: string): Promise<OgcApiDocument> {
     return Promise.all([this.allCollections, this.data])
       .then(([collections, data]) => {
-        if (collections.indexOf(collectionId) === -1)
+        if (!collections.find((collection) => collection.name === collectionId))
           throw new EndpointError(`Collection not found: ${collectionId}`);
         return (data.collections as OgcApiDocument[]).find(
           (collection) => collection.id === collectionId
@@ -270,7 +283,7 @@ ${e.message}`);
       ]);
 
     const tileMatrixSetsFull = await this.tileMatrixSetsFull;
-    const supportedTileMatrixSet = tilesetsVector
+    const supportedTileMatrixSets = tilesetsVector
       .map(
         (tileset) =>
           tileMatrixSetsFull.find((set) => set.uri === tileset.tileMatrixSetURI)
@@ -310,7 +323,7 @@ ${e.message}`);
       sortables,
       mapTileFormats,
       vectorTileFormats,
-      supportedTileMatrixSet,
+      supportedTileMatrixSets,
     };
   }
 
@@ -433,11 +446,11 @@ ${e.message}`);
   }
 
   /**
-   * Asynchronously retrieves a URL to render a specified collection as tiles, with a given tile matrix set.
+   * Asynchronously retrieves a URL to render a specified collection as vector tiles, with a given tile matrix set.
    * @param collectionId - The unique identifier for the collection.
    * @param tileMatrixSet - The identifier of the tile matrix set to use. Default is 'WebMercatorQuad'.
    */
-  getCollectionTilesetUrl(
+  getVectorTilesetUrl(
     collectionId: string,
     tileMatrixSet = 'WebMercatorQuad'
   ): Promise<string> {
@@ -446,6 +459,51 @@ ${e.message}`);
         const collectionTilesLink = getLinkUrl(
           collectionDoc,
           'http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector',
+          this.baseUrl
+        );
+        const collectionTiles = await fetchDocument(collectionTilesLink);
+        const matrixSet = (await this.tileMatrixSetsFull).find(
+          (set) => set.id === tileMatrixSet
+        );
+        if (!matrixSet) {
+          throw new Error(
+            `The following tile matrix set does not exist on this endpoint: '${tileMatrixSet}'.`
+          );
+        }
+        const tileset = collectionTiles.tilesets.find(
+          (tileset) => tileset.tileMatrixSetURI === matrixSet.uri
+        );
+        if (!tileset) {
+          throw new Error(
+            `The collection '${collectionId}' does not support the tile matrix set '${tileMatrixSet}'.`
+          );
+        }
+        const tilesetUrl = getLinkUrl(tileset, 'self', this.baseUrl);
+        if (!tilesetUrl) {
+          throw new Error('No links found for the tileset');
+        }
+        return tilesetUrl;
+      })
+      .catch((error) => {
+        console.error('Error fetching collection tileset URL:', error.message);
+        throw error;
+      });
+  }
+
+  /**
+   * Asynchronously retrieves a URL to render a specified collection as map tiles, with a given tile matrix set.
+   * @param collectionId - The unique identifier for the collection.
+   * @param tileMatrixSet - The identifier of the tile matrix set to use. Default is 'WebMercatorQuad'.
+   */
+  getMapTilesetUrl(
+    collectionId: string,
+    tileMatrixSet = 'WebMercatorQuad'
+  ): Promise<string> {
+    return this.getCollectionDocument(collectionId)
+      .then(async (collectionDoc) => {
+        const collectionTilesLink = getLinkUrl(
+          collectionDoc,
+          'http://www.opengis.net/def/rel/ogc/1.0/tilesets-map',
           this.baseUrl
         );
         const collectionTiles = await fetchDocument(collectionTilesLink);

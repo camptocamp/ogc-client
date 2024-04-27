@@ -38,15 +38,54 @@ export function parseConformance(doc: OgcApiDocument): ConformanceClass[] {
 
 export function parseCollections(
   itemType: 'record' | 'feature' | null = null
-  // dataType: 'vector' | null = null
-): (doc: OgcApiDocument) => string[] {
+): (doc: OgcApiDocument) => Array<{
+  name: string;
+  hasRecords?: boolean;
+  hasFeatures?: boolean;
+  hasVectorTiles?: boolean;
+  hasMapTiles?: boolean;
+}> {
   return (doc: OgcApiDocument) =>
     (doc.collections as OgcApiCollectionInfo[])
       .filter(
         (collection) => itemType === null || collection.itemType === itemType
-        // && (dataType === null || collection.dataType === dataType)
       )
-      .map((collection) => collection.id as string);
+      .map((collection) => {
+        const result: {
+          name: string;
+          hasRecords?: boolean;
+          hasFeatures?: boolean;
+          hasVectorTiles?: boolean;
+          hasMapTiles?: boolean;
+        } = {
+          name: collection.id as string,
+        };
+        if (collection.itemType === 'record') {
+          result.hasRecords = true;
+        }
+        if (collection.itemType === 'feature') {
+          result.hasFeatures = true;
+        }
+        if (
+          collection.links.some(
+            (link) =>
+              link.rel ===
+              'http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector'
+          )
+        ) {
+          result.hasVectorTiles = true;
+        }
+        if (
+          collection.links.some(
+            (link) =>
+              link.rel === 'http://www.opengis.net/def/rel/ogc/1.0/tilesets-map'
+          )
+        ) {
+          result.hasMapTiles = true;
+        }
+
+        return result;
+      });
 }
 
 export function checkTileConformance(conformance: ConformanceClass[]) {

@@ -27,6 +27,7 @@ export interface CollectionParameter {
 }
 
 export interface OgcApiCollectionInfo {
+  links: any;
   title: string;
   description: string;
   id: string;
@@ -57,10 +58,10 @@ export interface OgcApiCollectionInfo {
   // will be empty if the endpoint does not support tiles
   mapTileFormats: MimeType[];
   vectorTileFormats: MimeType[];
-  supportedTileMatrixSet: string[]; // identifiers
+  supportedTileMatrixSets: string[]; // identifiers
 }
 
-export interface OgcApiDocumentLinks {
+export interface OgcApiDocumentLink {
   rel: string;
   type: string;
   title: string;
@@ -79,7 +80,7 @@ export type OgcApiDocument = {
     tileMatrixSetURI: string;
     crs: string;
     dataType: string;
-    links: OgcApiDocumentLinks[];
+    links: OgcApiDocumentLink[];
   }[];
 } & Record<string, unknown>;
 
@@ -103,7 +104,7 @@ interface OgcApiTime {
 }
 export interface OgcApiRecordContact {
   name: string;
-  links: OgcApiDocumentLinks[];
+  links: OgcApiDocumentLink[];
   contactInstructions: string;
   roles: string[];
 }
@@ -129,7 +130,7 @@ export type OgcApiRecord = {
   time: OgcApiTime;
   geometry: Geometry;
   properties: OgcApiRecordProperties;
-  links: OgcApiDocumentLinks[];
+  links: OgcApiDocumentLink[];
   conformsTo?: string[];
 };
 

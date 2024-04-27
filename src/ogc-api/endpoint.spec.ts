@@ -129,28 +129,28 @@ describe('OgcApiEndpoint', () => {
     describe('#allCollections', () => {
       it('returns collection ids', async () => {
         await expect(endpoint.allCollections).resolves.toEqual([
-          'airports',
-          'boundaries',
-          'contours',
-          'district_buildings',
-          'etl',
-          'foreshore',
-          'greenspace',
-          'land',
-          'local_buildings',
-          'names',
-          'national_parks',
-          'rail',
-          'railway_stations',
-          'roads_local',
-          'roads_national',
-          'roads_regional',
-          'sites',
-          'surfacewater',
-          'urban_areas',
-          'waterlines',
-          'woodland',
-          'dutch-metadata',
+          { name: 'airports', hasFeatures: true },
+          { name: 'boundaries', hasFeatures: true },
+          { name: 'contours', hasFeatures: true },
+          { name: 'district_buildings', hasFeatures: true },
+          { name: 'etl', hasFeatures: true },
+          { name: 'foreshore', hasFeatures: true },
+          { name: 'greenspace', hasFeatures: true },
+          { name: 'land', hasFeatures: true },
+          { name: 'local_buildings', hasFeatures: true },
+          { name: 'names', hasFeatures: true },
+          { name: 'national_parks', hasFeatures: true },
+          { name: 'rail', hasFeatures: true },
+          { name: 'railway_stations', hasFeatures: true },
+          { name: 'roads_local', hasFeatures: true },
+          { name: 'roads_national', hasFeatures: true },
+          { name: 'roads_regional', hasFeatures: true },
+          { name: 'sites', hasFeatures: true },
+          { name: 'surfacewater', hasFeatures: true },
+          { name: 'urban_areas', hasFeatures: true },
+          { name: 'waterlines', hasFeatures: true },
+          { name: 'woodland', hasFeatures: true },
+          { name: 'dutch-metadata', hasRecords: true },
         ]);
       });
     });
@@ -264,7 +264,7 @@ describe('OgcApiEndpoint', () => {
               type: 'string',
             },
           ],
-          supportedTileMatrixSet: [],
+          supportedTileMatrixSets: [],
           mapTileFormats: [],
           vectorTileFormats: [],
         });
@@ -343,7 +343,7 @@ describe('OgcApiEndpoint', () => {
             },
           ],
           sortables: [],
-          supportedTileMatrixSet: [],
+          supportedTileMatrixSets: [],
           mapTileFormats: [],
           vectorTileFormats: [],
         });
@@ -423,7 +423,7 @@ describe('OgcApiEndpoint', () => {
               type: 'string',
             },
           ],
-          supportedTileMatrixSet: [],
+          supportedTileMatrixSets: [],
           mapTileFormats: [],
           vectorTileFormats: [],
         });
@@ -1730,17 +1730,17 @@ The document at http://local/nonexisting?f=json could not be fetched.`
       describe('#allCollections', () => {
         it('returns collection ids', async () => {
           await expect(endpoint.allCollections).resolves.toEqual([
-            'aires-covoiturage',
-            'antenne',
-            'armoires',
-            'boite_branchement',
-            'collecteur_gravitaire',
-            'equipements_culturels',
-            'etalab_parcelle',
-            'gendarmeries',
-            'mel_commune_llh',
-            'ne_10m_admin_0_countries',
-            'ouvrage_surfacique',
+            { name: 'aires-covoiturage', hasFeatures: true },
+            { name: 'antenne', hasFeatures: true },
+            { name: 'armoires', hasFeatures: true },
+            { name: 'boite_branchement', hasFeatures: true },
+            { name: 'collecteur_gravitaire', hasFeatures: true },
+            { name: 'equipements_culturels', hasRecords: true },
+            { name: 'etalab_parcelle', hasFeatures: true },
+            { name: 'gendarmeries', hasRecords: true },
+            { name: 'mel_commune_llh', hasFeatures: true },
+            { name: 'ne_10m_admin_0_countries', hasFeatures: true },
+            { name: 'ouvrage_surfacique', hasFeatures: true },
           ]);
         });
       });
@@ -1768,7 +1768,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             mapTileFormats: [],
             queryables: [],
             sortables: [],
-            supportedTileMatrixSet: [],
+            supportedTileMatrixSets: [],
             title: 'aires-covoiturage',
             vectorTileFormats: [],
           });
@@ -1805,13 +1805,23 @@ The document at http://local/nonexisting?f=json could not be fetched.`
       describe('#allCollections', () => {
         it('returns collection ids', async () => {
           await expect(endpoint.allCollections).resolves.toEqual([
-            'NaturalEarth',
-            'NaturalEarth:raster',
-            'NaturalEarth:raster:HYP_HR_SR_OB_DR',
-            'NaturalEarth:raster:NE1_HR_LC_SR_W_DR',
-            'NaturalEarth:raster:NE2_HR_LC_SR_W_DR',
-            'NaturalEarth:physical',
-            'NaturalEarth:physical:ne_10m_lakes_pluvial',
+            { name: 'NaturalEarth' },
+            { name: 'NaturalEarth:raster' },
+            { name: 'NaturalEarth:raster:HYP_HR_SR_OB_DR', hasMapTiles: true },
+            {
+              name: 'NaturalEarth:raster:NE1_HR_LC_SR_W_DR',
+              hasMapTiles: true,
+            },
+            {
+              name: 'NaturalEarth:raster:NE2_HR_LC_SR_W_DR',
+              hasMapTiles: true,
+            },
+            { name: 'NaturalEarth:physical' },
+            {
+              name: 'NaturalEarth:physical:ne_10m_lakes_pluvial',
+              hasMapTiles: true,
+              hasVectorTiles: true,
+            },
           ]);
         });
       });
@@ -1822,15 +1832,37 @@ The document at http://local/nonexisting?f=json could not be fetched.`
           ]);
         });
       });
-      describe('#getCollectionTileUrl', () => {
+      describe('#mapTileCollections', () => {
+        it('returns map tile collection ids', async () => {
+          await expect(endpoint.mapTileCollections).resolves.toEqual([
+            'NaturalEarth:raster:HYP_HR_SR_OB_DR',
+            'NaturalEarth:raster:NE1_HR_LC_SR_W_DR',
+            'NaturalEarth:raster:NE2_HR_LC_SR_W_DR',
+            'NaturalEarth:physical:ne_10m_lakes_pluvial',
+          ]);
+        });
+      });
+      describe('#getVectorTileUrl', () => {
         it('returns the correct url', async () => {
           await expect(
-            endpoint.getCollectionTilesetUrl(
+            endpoint.getVectorTilesetUrl(
               'NaturalEarth:physical:ne_10m_lakes_pluvial',
               'GlobalCRS84Pixel'
             )
           ).resolves.toEqual(
             'http://local/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=json'
+          );
+        });
+      });
+      describe('#getMapTileUrl', () => {
+        it('returns the correct url', async () => {
+          await expect(
+            endpoint.getMapTilesetUrl(
+              'NaturalEarth:physical:ne_10m_lakes_pluvial',
+              'GlobalCRS84Pixel'
+            )
+          ).resolves.toEqual(
+            'http://local/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Pixel?f=json'
           );
         });
       });
