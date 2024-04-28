@@ -57,6 +57,12 @@
     },
     {
       "rel": "items",
+      "type": "text/html",
+      "title": "Access the features in the collection 'Airports' as HTML",
+      "href": "https://my.server.org/sample-data/collections/airports/items?f=html"
+    },
+    {
+      "rel": "items",
       "type": "application/vnd.ogc.fg+json",
       "title": "Access the features in the collection 'Airports' as JSON-FG",
       "href": "https://my.server.org/sample-data/collections/airports/items?f=jsonfg"
@@ -78,12 +84,6 @@
       "type": "application/vnd.ogc.fg+json;compatibility=geojson",
       "title": "Access the features in the collection 'Airports' as JSON-FG (GeoJSON Compatibility Mode)",
       "href": "https://my.server.org/sample-data/collections/airports/items?f=jsonfgc"
-    },
-    {
-      "rel": "items",
-      "type": "text/html",
-      "title": "Access the features in the collection 'Airports' as HTML",
-      "href": "https://my.server.org/sample-data/collections/airports/items?f=html"
     }
   ],
   "id": "airports",

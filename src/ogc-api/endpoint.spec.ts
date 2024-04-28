@@ -218,11 +218,11 @@ describe('OgcApiEndpoint', () => {
             'A centre point for all major airports including a name.',
           id: 'airports',
           itemFormats: [
+            'text/html',
             'application/vnd.ogc.fg+json',
             'application/geo+json',
             'application/flatgeobuf',
             'application/vnd.ogc.fg+json;compatibility=geojson',
-            'text/html',
           ],
           bulkDownloadLinks: {},
           extent: {
@@ -1549,26 +1549,61 @@ describe('OgcApiEndpoint', () => {
       });
     });
     describe('#getCollectionItemsUrl', () => {
-      it('returns the correct URL for the collection items', () => {
-        expect(
+      beforeEach(() => {
+        jest.clearAllMocks();
+        jest.spyOn(console, 'warn');
+      });
+      it('returns the first available URL for the collection items if no mime-type specified', async () => {
+        await expect(
+          endpoint.getCollectionItemsUrl('airports')
+        ).resolves.toEqual(
+          'https://my.server.org/sample-data/collections/airports/items?f=html'
+        );
+      });
+      it('selects the URL using JSON-FG if asJson is specified', async () => {
+        await expect(
+          endpoint.getCollectionItemsUrl('airports', {
+            asJson: true,
+          })
+        ).resolves.toEqual(
+          'https://my.server.org/sample-data/collections/airports/items?f=jsonfg'
+        );
+      });
+      it('returns the correct URL for the collection items an a given mime-type', async () => {
+        await expect(
           endpoint.getCollectionItemsUrl('airports', {
             limit: 101,
             query: 'name=Sumburgh Airport',
-            outputFormat: 'json',
+            outputFormat: 'application/geo+json',
           })
         ).resolves.toEqual(
           'https://my.server.org/sample-data/collections/airports/items?f=json&name=Sumburgh+Airport&limit=101'
+        );
+      });
+      it('outputs a warning if the required format is not a known mime-type for the collection', async () => {
+        await expect(
+          endpoint.getCollectionItemsUrl('airports', {
+            limit: 101,
+            query: 'name=Sumburgh Airport',
+            outputFormat: 'shapefile',
+          })
+        ).resolves.toEqual(
+          'https://my.server.org/sample-data/collections/airports/items?f=shapefile&name=Sumburgh+Airport&limit=101'
+        );
+        expect(console.warn).toHaveBeenCalledWith(
+          expect.stringContaining(
+            'The following output format type was not found in the collection'
+          )
         );
       });
     });
   });
   describe('a failure happens while parsing the endpoint capabilities', () => {
     beforeEach(() => {
-      // endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
+      endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
     });
     describe('#info', () => {
       it('throws an explicit error', async () => {
-        endpoint = new OgcApiEndpoint('http://local/sample-data/notjson'); // not actually json
         await expect(endpoint.info).rejects.toEqual(
           new EndpointError(
             `The endpoint appears non-conforming, the following error was encountered:
@@ -1735,7 +1770,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             endpoint.getCollectionInfo('aires-covoiturage')
           ).resolves.toStrictEqual({
             crs: ['http://www.opengis.net/def/crs/OGC/1.3/CRS84', 'EPSG:4326'],
-            itemFormats: ['application/geo+json'],
+            itemFormats: ['text/html', 'application/geo+json'],
             bulkDownloadLinks: {
               'application/geo+json':
                 'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson&limit=-1',
@@ -1754,6 +1789,18 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             sortables: [],
             title: 'aires-covoiturage',
           });
+        });
+      });
+
+      describe('#getCollectionItemsUrl', () => {
+        it('selects the URL using GeoJson if asJson is specified', async () => {
+          await expect(
+            endpoint.getCollectionItemsUrl('aires-covoiturage', {
+              asJson: true,
+            })
+          ).resolves.toEqual(
+            'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson'
+          );
         });
       });
     });

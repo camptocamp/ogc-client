@@ -22,6 +22,7 @@ import {
   WfsFeatureTypeSummary,
   WfsVersion,
 } from './model.js';
+import { isMimeTypeJson } from '../shared/mime-type.js';
 
 /**
  * Represents a WFS endpoint advertising several feature types
@@ -221,9 +222,7 @@ export default class WfsEndpoint {
         `The following feature type was not found in the service: ${featureType}`
       );
     }
-    const candidates = featureTypeInfo.outputFormats.filter(
-      (f) => f.toLowerCase().indexOf('json') > -1
-    );
+    const candidates = featureTypeInfo.outputFormats.filter(isMimeTypeJson);
     if (!candidates.length) return null;
     return candidates[0];
   }
