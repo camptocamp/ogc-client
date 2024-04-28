@@ -218,11 +218,11 @@ describe('OgcApiEndpoint', () => {
             'A centre point for all major airports including a name.',
           id: 'airports',
           itemFormats: [
+            'text/html',
             'application/vnd.ogc.fg+json',
             'application/geo+json',
             'application/flatgeobuf',
             'application/vnd.ogc.fg+json;compatibility=geojson',
-            'text/html',
           ],
           bulkDownloadLinks: {},
           extent: {
@@ -1557,6 +1557,15 @@ describe('OgcApiEndpoint', () => {
         await expect(
           endpoint.getCollectionItemsUrl('airports')
         ).resolves.toEqual(
+          'https://my.server.org/sample-data/collections/airports/items?f=html'
+        );
+      });
+      it('selects the URL using JSON-FG if asJson is specified', async () => {
+        await expect(
+          endpoint.getCollectionItemsUrl('airports', {
+            asJson: true,
+          })
+        ).resolves.toEqual(
           'https://my.server.org/sample-data/collections/airports/items?f=jsonfg'
         );
       });
@@ -1761,7 +1770,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             endpoint.getCollectionInfo('aires-covoiturage')
           ).resolves.toStrictEqual({
             crs: ['http://www.opengis.net/def/crs/OGC/1.3/CRS84', 'EPSG:4326'],
-            itemFormats: ['application/geo+json'],
+            itemFormats: ['text/html', 'application/geo+json'],
             bulkDownloadLinks: {
               'application/geo+json':
                 'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson&limit=-1',
@@ -1780,6 +1789,18 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             sortables: [],
             title: 'aires-covoiturage',
           });
+        });
+      });
+
+      describe('#getCollectionItemsUrl', () => {
+        it('selects the URL using GeoJson if asJson is specified', async () => {
+          await expect(
+            endpoint.getCollectionItemsUrl('aires-covoiturage', {
+              asJson: true,
+            })
+          ).resolves.toEqual(
+            'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson'
+          );
         });
       });
     });

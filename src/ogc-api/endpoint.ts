@@ -27,6 +27,7 @@ import {
 } from './link-utils.js';
 import { EndpointError } from '../shared/errors.js';
 import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
+import { isMimeTypeJson, isMimeTypeJsonFg } from '../shared/mime-type.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -281,7 +282,8 @@ ${e.message}`);
    * @param collectionId - The unique identifier for the collection.
    * @param options - An object containing optional parameters:
    *  - query: Additional query parameters to be included in the URL.
-   *  - outputFormat: The MIME type for the output format. Default is 'json'.
+   *  - asJson: Will query items as GeoJson or JSON-FG if available; takes precedence on `outputFormat`.
+   *  - outputFormat: The MIME type for the output format.
    *  - limit: The maximum number of features to include.
    *  - extent: Bounding box to limit the features.
    *  - offset: Pagination offset for the returned results.
@@ -293,6 +295,7 @@ ${e.message}`);
     collectionId: string,
     options: {
       query?: string;
+      asJson?: boolean;
       outputFormat?: MimeType;
       limit?: number;
       offset?: number;
@@ -305,10 +308,20 @@ ${e.message}`);
       .then((collectionDoc) => {
         const baseUrl = this.baseUrl || '';
         const itemLinks = getLinks(collectionDoc, 'items');
-        const linkWithFormat = itemLinks.find(
+        let linkWithFormat = itemLinks.find(
           (link) => link.type === options?.outputFormat
         );
         let url: URL;
+        if (options.asJson) {
+          // try json-fg
+          linkWithFormat = itemLinks.find((link) =>
+            isMimeTypeJsonFg(link.type)
+          );
+          // try geojson
+          linkWithFormat =
+            linkWithFormat ??
+            itemLinks.find((link) => isMimeTypeJson(link.type));
+        }
         if (options?.outputFormat && !linkWithFormat) {
           // do not prevent using this output format, because it still might work! but give a warning at least
           console.warn(
