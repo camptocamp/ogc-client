@@ -27,7 +27,11 @@ import {
 } from './link-utils.js';
 import { EndpointError } from '../shared/errors.js';
 import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
-import { isMimeTypeJson, isMimeTypeJsonFg } from '../shared/mime-type.js';
+import {
+  isMimeTypeGeoJson,
+  isMimeTypeJson,
+  isMimeTypeJsonFg,
+} from '../shared/mime-type.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -313,13 +317,10 @@ ${e.message}`);
         );
         let url: URL;
         if (options.asJson) {
-          // try json-fg
-          linkWithFormat = itemLinks.find((link) =>
-            isMimeTypeJsonFg(link.type)
-          );
-          // try geojson
+          // try json-fg, geojson and json
           linkWithFormat =
-            linkWithFormat ??
+            itemLinks.find((link) => isMimeTypeJsonFg(link.type)) ||
+            itemLinks.find((link) => isMimeTypeGeoJson(link.type)) ||
             itemLinks.find((link) => isMimeTypeJson(link.type));
         }
         if (options?.outputFormat && !linkWithFormat) {

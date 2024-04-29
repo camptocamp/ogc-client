@@ -9,6 +9,11 @@ import {
 } from './model.js';
 import { assertHasLinks } from './link-utils.js';
 import { EndpointError } from '../shared/errors.js';
+import {
+  isMimeTypeGeoJson,
+  isMimeTypeJson,
+  isMimeTypeJsonFg,
+} from '../shared/mime-type.js';
 
 export function parseEndpointInfo(rootDoc: OgcApiDocument): OgcApiEndpointInfo {
   try {
@@ -108,9 +113,18 @@ export function parseBaseCollectionInfo(
       acc[link.type] = link.href;
       return acc;
     }, {});
+  const mimeTypes = Object.keys(bulkDownloadLinks);
+  const jsonMimeType =
+    mimeTypes.find(isMimeTypeJsonFg) ||
+    mimeTypes.find(isMimeTypeGeoJson) ||
+    mimeTypes.find(isMimeTypeJson);
+  const jsonDownloadLink = jsonMimeType
+    ? bulkDownloadLinks[jsonMimeType]
+    : null;
   return {
     itemFormats: itemFormats,
     bulkDownloadLinks,
+    jsonDownloadLink,
     ...props,
   } as OgcApiCollectionInfo;
 }

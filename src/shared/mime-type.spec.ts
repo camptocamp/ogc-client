@@ -1,13 +1,25 @@
-import { isMimeTypeJson, isMimeTypeJsonFg } from './mime-type.js';
+import {
+  isMimeTypeGeoJson,
+  isMimeTypeJson,
+  isMimeTypeJsonFg,
+} from './mime-type.js';
 
 describe('mime type utils', () => {
-  it('isMimeTypeGeoJson', () => {
+  it('isMimeTypeJson', () => {
     expect(isMimeTypeJson('application/geo+json')).toBe(true);
     expect(isMimeTypeJson('application/vnd.geo+json')).toBe(true);
     expect(isMimeTypeJson('geo+json')).toBe(true);
     expect(isMimeTypeJson('geojson')).toBe(true);
     expect(isMimeTypeJson('application/json')).toBe(true);
     expect(isMimeTypeJson('json')).toBe(true);
+  });
+  it('isMimeTypeGeoJson', () => {
+    expect(isMimeTypeGeoJson('application/geo+json')).toBe(true);
+    expect(isMimeTypeGeoJson('application/vnd.geo+json')).toBe(true);
+    expect(isMimeTypeGeoJson('geo+json')).toBe(true);
+    expect(isMimeTypeGeoJson('geojson')).toBe(true);
+    expect(isMimeTypeGeoJson('application/json')).toBe(false);
+    expect(isMimeTypeGeoJson('json')).toBe(false);
   });
   it('isMimeTypeJsonFg', () => {
     expect(isMimeTypeJsonFg('application/vnd.ogc.fg+json')).toBe(true);
