@@ -1810,4 +1810,23 @@ The document at http://local/nonexisting?f=json could not be fetched.`
       });
     });
   });
+
+  describe('url with trailing ?', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint(
+        'http://local/sample-data/collections/airports/items?'
+      );
+    });
+    describe('#info', () => {
+      it('returns endpoint info', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          title: 'OS Open Zoomstack',
+          description:
+            'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+          attribution:
+            'Contains OS data © Crown copyright and database right 2021.',
+        });
+      });
+    });
+  });
 });
