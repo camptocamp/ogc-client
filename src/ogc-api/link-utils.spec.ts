@@ -18,5 +18,13 @@ describe('link utils', () => {
         'http://example.com/foo'
       );
     });
+    it('should keep query params', () => {
+      expect(getParentPath('http://example.com/foo/bar?aa=bb')).toBe(
+        'http://example.com/foo?aa=bb'
+      );
+      expect(getParentPath('http://example.com/foo/bar?')).toBe(
+        'http://example.com/foo?'
+      );
+    });
   });
 });

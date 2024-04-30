@@ -42,7 +42,9 @@ export function fetchRoot(url: string): Promise<OgcApiDocument> {
       }
       // if there is a collections array, we expect the parent path to end with slash
       if ('collections' in doc) {
-        parentUrl = `${parentUrl}/`;
+        const urlObj = new URL(parentUrl);
+        urlObj.pathname = `${urlObj.pathname}/`;
+        parentUrl = urlObj.toString();
       }
       return fetchRoot(parentUrl);
     }

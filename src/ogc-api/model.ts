@@ -35,6 +35,7 @@ export interface CollectionParameter {
  * @property itemFormats These mime types are available through the `/items` endpoint;
  *  use the `getCollectionItemsUrl` function to generate a URL using one of those formats
  * @property bulkDownloadLinks Map between formats and bulk download links (no filtering, pagination etc.)
+ * @property jsonDownloadLink Link to the first bulk download link using JSON-FG or GeoJSON; null if no link found
  * @property crs
  * @property storageCrs
  * @property itemCount
@@ -54,6 +55,7 @@ export interface OgcApiCollectionInfo {
   itemType: 'feature' | 'record';
   itemFormats: MimeType[];
   bulkDownloadLinks: Record<string, MimeType>;
+  jsonDownloadLink: string;
   crs: CrsCode[];
   storageCrs?: CrsCode;
   itemCount: number;
