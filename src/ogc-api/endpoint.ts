@@ -8,6 +8,7 @@ import {
   parseCollections,
   parseConformance,
   parseEndpointInfo,
+  parseTileMatrixSets,
 } from './info.js';
 import {
   ConformanceClass,
@@ -15,6 +16,7 @@ import {
   OgcApiCollectionItem,
   OgcApiDocument,
   OgcApiEndpointInfo,
+  TileMatrixSet,
 } from './model.js';
 import {
   fetchCollectionRoot,
@@ -42,6 +44,7 @@ export default class OgcApiEndpoint {
   private root_: Promise<OgcApiDocument>;
   private conformance_: Promise<OgcApiDocument>;
   private data_: Promise<OgcApiDocument>;
+  private tileMatrixSetsFull_: Promise<TileMatrixSet[]>;
 
   private get root(): Promise<OgcApiDocument> {
     if (!this.root_) {
@@ -90,6 +93,19 @@ ${e.message}`);
     }
     return this.data_;
   }
+  private get tileMatrixSetsFull(): Promise<TileMatrixSet[]> {
+    if (!this.tileMatrixSetsFull_) {
+      this.tileMatrixSetsFull_ = this.root.then(async (root) => {
+        if (!(await this.hasTiles)) return [];
+        return fetchLink(
+          root,
+          ['http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes'],
+          this.baseUrl
+        ).then(parseTileMatrixSets);
+      });
+    }
+    return this.tileMatrixSetsFull_;
+  }
 
   /**
    * Creates a new OGC API endpoint.
@@ -111,10 +127,19 @@ ${e.message}`);
   get conformanceClasses(): Promise<ConformanceClass[]> {
     return this.conformance.then(parseConformance);
   }
+
   /**
    * A Promise which resolves to an array of all collection identifiers as strings.
    */
-  get allCollections(): Promise<string[]> {
+  get allCollections(): Promise<
+    {
+      name: string;
+      hasRecords?: boolean;
+      hasFeatures?: boolean;
+      hasVectorTiles?: boolean;
+      hasMapTiles?: boolean;
+    }[]
+  > {
     return this.data.then(parseCollections());
   }
 
@@ -124,7 +149,8 @@ ${e.message}`);
   get recordCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasRecords])
       .then(([data, hasRecords]) => (hasRecords ? data : { collections: [] }))
-      .then(parseCollections('record'));
+      .then(parseCollections('record'))
+      .then((collections) => collections.map((collection) => collection.name));
   }
 
   /**
@@ -133,7 +159,34 @@ ${e.message}`);
   get featureCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasFeatures])
       .then(([data, hasFeatures]) => (hasFeatures ? data : { collections: [] }))
-      .then(parseCollections('feature'));
+      .then(parseCollections('feature'))
+      .then((collections) => collections.map((collection) => collection.name));
+  }
+
+  /**
+   * A Promise which resolves to an array of vector tile collection identifiers as strings.
+   */
+  get vectorTileCollections(): Promise<string[]> {
+    return Promise.all([this.data, this.hasTiles])
+      .then(([data, hasTiles]) => (hasTiles ? data : { collections: [] }))
+      .then(parseCollections())
+      .then((collections) =>
+        collections.filter((collection) => collection.hasVectorTiles)
+      )
+      .then((collections) => collections.map((collection) => collection.name));
+  }
+
+  /**
+   * A Promise which resolves to an array of map tile collection identifiers as strings.
+   */
+  get mapTileCollections(): Promise<string[]> {
+    return Promise.all([this.data, this.hasTiles])
+      .then(([data, hasTiles]) => (hasTiles ? data : { collections: [] }))
+      .then(parseCollections())
+      .then((collections) =>
+        collections.filter((collection) => collection.hasMapTiles)
+      )
+      .then((collections) => collections.map((collection) => collection.name));
   }
 
   /**
@@ -170,10 +223,17 @@ ${e.message}`);
     ]).then(checkHasRecords);
   }
 
+  /**
+   * Retrieve the tile matrix sets identifiers advertised by the endpoint. Empty if tiles are not supported
+   */
+  get tileMatrixSets(): Promise<string[]> {
+    return this.tileMatrixSetsFull.then((sets) => sets.map((set) => set.id));
+  }
+
   private getCollectionDocument(collectionId: string): Promise<OgcApiDocument> {
     return Promise.all([this.allCollections, this.data])
       .then(([collections, data]) => {
-        if (collections.indexOf(collectionId) === -1)
+        if (!collections.find((collection) => collection.name === collectionId))
           throw new EndpointError(`Collection not found: ${collectionId}`);
         return (data.collections as OgcApiDocument[]).find(
           (collection) => collection.id === collectionId
@@ -196,26 +256,80 @@ ${e.message}`);
   async getCollectionInfo(collectionId: string): Promise<OgcApiCollectionInfo> {
     const collectionDoc = await this.getCollectionDocument(collectionId);
     const baseInfo = parseBaseCollectionInfo(collectionDoc);
-    const [queryables, sortables] = await Promise.all([
-      fetchLink(
-        collectionDoc,
-        ['queryables', 'http://www.opengis.net/def/rel/ogc/1.0/queryables'],
-        this.baseUrl
+    const [queryables, sortables, tilesetsVector, tilesetsMap] =
+      await Promise.all([
+        fetchLink(
+          collectionDoc,
+          ['queryables', 'http://www.opengis.net/def/rel/ogc/1.0/queryables'],
+          this.baseUrl
+        )
+          .then(parseCollectionParameters)
+          .catch(() => []),
+        fetchLink(
+          collectionDoc,
+          ['sortables', 'http://www.opengis.net/def/rel/ogc/1.0/sortables'],
+          this.baseUrl
+        )
+          .then(parseCollectionParameters)
+          .catch(() => []),
+        fetchLink(
+          collectionDoc,
+          ['http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector'],
+          this.baseUrl
+        )
+          .then((tilesetDoc) => tilesetDoc.tilesets)
+          .catch(() => []),
+        fetchLink(
+          collectionDoc,
+          ['http://www.opengis.net/def/rel/ogc/1.0/tilesets-map'],
+          this.baseUrl
+        )
+          .then((tilesetDoc) => tilesetDoc.tilesets)
+          .catch(() => []),
+      ]);
+
+    const tileMatrixSetsFull = await this.tileMatrixSetsFull;
+    const supportedTileMatrixSets = tilesetsVector
+      .map(
+        (tileset) =>
+          tileMatrixSetsFull.find((set) => set.uri === tileset.tileMatrixSetURI)
+            ?.id
       )
-        .then(parseCollectionParameters)
-        .catch(() => []),
-      fetchLink(
-        collectionDoc,
-        ['sortables', 'http://www.opengis.net/def/rel/ogc/1.0/sortables'],
-        this.baseUrl
-      )
-        .then(parseCollectionParameters)
-        .catch(() => []),
-    ]);
+      .filter(Boolean);
+
+    const firstTilesetVector = tilesetsVector[0];
+    let vectorTileFormats = [];
+    if (firstTilesetVector) {
+      const tilesetUrl = getLinkUrl(firstTilesetVector, 'self', this.baseUrl);
+      if (!tilesetUrl) {
+        throw new Error('No links found for the tileset');
+      }
+      const tilesetDoc = await fetchDocument(tilesetUrl);
+      vectorTileFormats = tilesetDoc.links
+        .filter((link) => link.rel === 'item')
+        .map((link) => link.type);
+    }
+
+    const firstTilesetMap = tilesetsMap[0];
+    let mapTileFormats = [];
+    if (firstTilesetMap) {
+      const tilesetUrl = getLinkUrl(firstTilesetMap, 'self', this.baseUrl);
+      if (!tilesetUrl) {
+        throw new Error('No links found for the tileset');
+      }
+      const tilesetDoc = await fetchDocument(tilesetUrl);
+      mapTileFormats = tilesetDoc.links
+        .filter((link) => link.rel === 'item')
+        .map((link) => link.type);
+    }
+
     return {
       ...baseInfo,
       queryables,
       sortables,
+      mapTileFormats,
+      vectorTileFormats,
+      supportedTileMatrixSets,
     };
   }
 
@@ -353,6 +467,96 @@ ${e.message}`);
       })
       .catch((error) => {
         console.error('Error fetching collection items URL:', error);
+        throw error;
+      });
+  }
+
+  /**
+   * Asynchronously retrieves a URL to render a specified collection as vector tiles, with a given tile matrix set.
+   * @param collectionId - The unique identifier for the collection.
+   * @param tileMatrixSet - The identifier of the tile matrix set to use. Default is 'WebMercatorQuad'.
+   */
+  getVectorTilesetUrl(
+    collectionId: string,
+    tileMatrixSet = 'WebMercatorQuad'
+  ): Promise<string> {
+    return this.getCollectionDocument(collectionId)
+      .then(async (collectionDoc) => {
+        const collectionTilesLink = getLinkUrl(
+          collectionDoc,
+          'http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector',
+          this.baseUrl
+        );
+        const collectionTiles = await fetchDocument(collectionTilesLink);
+        const matrixSet = (await this.tileMatrixSetsFull).find(
+          (set) => set.id === tileMatrixSet
+        );
+        if (!matrixSet) {
+          throw new Error(
+            `The following tile matrix set does not exist on this endpoint: '${tileMatrixSet}'.`
+          );
+        }
+        const tileset = collectionTiles.tilesets.find(
+          (tileset) => tileset.tileMatrixSetURI === matrixSet.uri
+        );
+        if (!tileset) {
+          throw new Error(
+            `The collection '${collectionId}' does not support the tile matrix set '${tileMatrixSet}'.`
+          );
+        }
+        const tilesetUrl = getLinkUrl(tileset, 'self', this.baseUrl);
+        if (!tilesetUrl) {
+          throw new Error('No links found for the tileset');
+        }
+        return tilesetUrl;
+      })
+      .catch((error) => {
+        console.error('Error fetching collection tileset URL:', error.message);
+        throw error;
+      });
+  }
+
+  /**
+   * Asynchronously retrieves a URL to render a specified collection as map tiles, with a given tile matrix set.
+   * @param collectionId - The unique identifier for the collection.
+   * @param tileMatrixSet - The identifier of the tile matrix set to use. Default is 'WebMercatorQuad'.
+   */
+  getMapTilesetUrl(
+    collectionId: string,
+    tileMatrixSet = 'WebMercatorQuad'
+  ): Promise<string> {
+    return this.getCollectionDocument(collectionId)
+      .then(async (collectionDoc) => {
+        const collectionTilesLink = getLinkUrl(
+          collectionDoc,
+          'http://www.opengis.net/def/rel/ogc/1.0/tilesets-map',
+          this.baseUrl
+        );
+        const collectionTiles = await fetchDocument(collectionTilesLink);
+        const matrixSet = (await this.tileMatrixSetsFull).find(
+          (set) => set.id === tileMatrixSet
+        );
+        if (!matrixSet) {
+          throw new Error(
+            `The following tile matrix set does not exist on this endpoint: '${tileMatrixSet}'.`
+          );
+        }
+        const tileset = collectionTiles.tilesets.find(
+          (tileset) => tileset.tileMatrixSetURI === matrixSet.uri
+        );
+        if (!tileset) {
+          throw new Error(
+            `The collection '${collectionId}' does not support the tile matrix set '${tileMatrixSet}'.`
+          );
+        }
+        const tilesetUrl = getLinkUrl(tileset, 'self', this.baseUrl);
+        if (!tilesetUrl) {
+          throw new Error('No links found for the tileset');
+        }
+        return tilesetUrl;
+      })
+      .catch((error) => {
+        console.error('Error fetching collection tileset URL:', error.message);
         throw error;
       });
   }

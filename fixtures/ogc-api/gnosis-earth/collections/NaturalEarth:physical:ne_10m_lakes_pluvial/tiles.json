@@ -1,0 +1,74 @@
+{
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "The JSON representation of the available vector tilesets for ne_10m_lakes_pluvial",
+      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/plain",
+      "title": "The ECON representation of the available vector tilesets for ne_10m_lakes_pluvial",
+      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/?f=econ"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "The HTML representation of the available vector tilesets for ne_10m_lakes_pluvial",
+      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/?f=html"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
+      "type": "application/json",
+      "title": "Map tilesets for ne_10m_lakes_pluvial (as JSON)",
+      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles?f=json"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
+      "type": "text/plain",
+      "title": "Map tilesets for ne_10m_lakes_pluvial (as ECON)",
+      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles?f=econ"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
+      "type": "text/html",
+      "title": "Map tilesets for ne_10m_lakes_pluvial (as HTML)",
+      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles?f=html"
+    }
+  ],
+  "tilesets": [
+    {
+      "title": "ne_10m_lakes_pluvial",
+      "tileMatrixSetURI": "http://www.opengis.net/def/tilematrixset/OGC/1.0/GlobalCRS84Pixel",
+      "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+      "dataType": "vector",
+      "links": [
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-scheme",
+          "type": "application/json",
+          "title": "GlobalCRS84PixelTileMatrixSet definition (as JSON)",
+          "href": "/gnosis-earth/tileMatrixSets/GlobalCRS84Pixel"
+        },
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "GlobalCRS84Pixel vector tileset for ne_10m_lakes_pluvial (as JSON)",
+          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=json"
+        },
+        {
+          "rel": "self",
+          "type": "text/html",
+          "title": "GlobalCRS84Pixel vector tileset for ne_10m_lakes_pluvial (as HTML)",
+          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=html"
+        },
+        {
+          "rel": "self",
+          "type": "application/json+tilejson",
+          "title": "GlobalCRS84Pixel vector tileset for ne_10m_lakes_pluvial (in TileJSON format)",
+          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=tilejson"
+        }
+      ]
+    }
+  ]
+}

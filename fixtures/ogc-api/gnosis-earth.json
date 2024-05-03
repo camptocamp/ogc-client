@@ -1,0 +1,94 @@
+{
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "The JSON representation of the landing page for this OGC (geospatial) API Service providing links to the API definition, the conformance declaration and information about the data collections offered at this endpoint.",
+      "href": "/gnosis-earth?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/plain",
+      "title": "The ECON representation of the landing page for this OGC (geospatial) API Service providing links to the API definition, the conformance declaration and information about the data collections offered at this endpoint.",
+      "href": "/gnosis-earth?f=econ"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "The HTML representation of the landing page for this OGC (geospatial) API Service providing links to the API definition, the conformance declaration and information about the data collections offered at this endpoint.",
+      "href": "/gnosis-earth?f=html"
+    },
+    {
+      "rel": "service-desc",
+      "type": "application/vnd.oai.openapi+json;version=3.0",
+      "title": "The JSON OpenAPI 3.0 document that describes the API offered at this endpoint",
+      "href": "/gnosis-earth/api?f=json"
+    },
+    {
+      "rel": "service-doc",
+      "type": "text/html",
+      "title": "The HTML documentation of the API offered at this endpoint",
+      "href": "/gnosis-earth/api?f=html"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/conformance",
+      "type": "application/json",
+      "title": "The JSON representation of the conformance declaration for this server listing the requirement classes implemented by this server",
+      "href": "/gnosis-earth/conformance"
+    },
+    {
+      "rel": "conformance",
+      "type": "application/json",
+      "title": "The JSON representation of the conformance declaration for this server listing the requirement classes implemented by this server",
+      "href": "/gnosis-earth/conformance"
+    },
+    {
+      "rel": "data",
+      "type": "application/json",
+      "title": "The JSON representation of the list of all data collections served from this endpoint",
+      "href": "/gnosis-earth/collections?f=json"
+    },
+    {
+      "rel": "data",
+      "type": "text/plain",
+      "title": "The ECON representation of the list of all data collections served from this endpoint",
+      "href": "/gnosis-earth/collections?f=econ"
+    },
+    {
+      "rel": "data",
+      "type": "text/html",
+      "title": "The HTML representation of the list of all data collections served from this endpoint",
+      "href": "/gnosis-earth/collections?f=html"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/processes",
+      "type": "application/json",
+      "title": "The JSON representation of the list of all processes available from this endpoint",
+      "href": "/gnosis-earth/processes"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/routes",
+      "type": "application/json",
+      "title": "Routing end-point",
+      "href": "/gnosis-earth/routes"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+      "type": "application/json",
+      "title": "The list of supported tiling schemes (as JSON)",
+      "href": "/gnosis-earth/tileMatrixSets?f=json"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+      "type": "text/plain",
+      "title": "The list of supported tiling schemes (as ECON)",
+      "href": "/gnosis-earth/tileMatrixSets?f=econ"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+      "type": "text/html",
+      "title": "The list of supported tiling schemes (as HTML)",
+      "href": "/gnosis-earth/tileMatrixSets?f=html"
+    }
+  ]
+}

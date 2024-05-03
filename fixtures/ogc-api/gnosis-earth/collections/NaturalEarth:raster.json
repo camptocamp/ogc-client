@@ -1,0 +1,339 @@
+{
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "Information about the raster data (as JSON)",
+      "href": "/ogcapi/collections/NaturalEarth:raster?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/plain",
+      "title": "Information about the raster data (as ECON)",
+      "href": "/ogcapi/collections/NaturalEarth:raster?f=econ"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/mapml",
+      "title": "Information about the raster data (as MapML)",
+      "href": "/ogcapi/collections/NaturalEarth:raster?f=mapml"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "Information about the raster data (as HTML)",
+      "href": "/ogcapi/collections/NaturalEarth:raster?f=html"
+    },
+    {
+      "rel": "styles",
+      "type": "text/html",
+      "title": "Styles for raster (as HTML)",
+      "href": "/ogcapi/collections/NaturalEarth:raster/styles?f=html"
+    },
+    {
+      "rel": "styles",
+      "type": "application/json",
+      "title": "Styles for raster (as JSON)",
+      "href": "/ogcapi/collections/NaturalEarth:raster/styles?f=json"
+    },
+    {
+      "rel": "styles",
+      "type": "text/plain",
+      "title": "Styles for raster (as ECON)",
+      "href": "/ogcapi/collections/NaturalEarth:raster/styles?f=econ"
+    },
+    {
+      "rel": "service-desc",
+      "type": "application/vnd.oai.openapi+json;version=3.0",
+      "title": "The JSON OpenAPI 3.0 document that describes the API offered at this endpoint",
+      "href": "/ogcapi/api?f=json"
+    },
+    {
+      "rel": "service-doc",
+      "type": "text/html",
+      "title": "The HTML documentation of the API offered at this endpoint",
+      "href": "/ogcapi/api?f=html"
+    },
+    {
+      "rel": "conformance",
+      "type": "application/json",
+      "title": "The JSON representation of the conformance declaration for this server listing the requirement classes implemented by this server",
+      "href": "/ogcapi/conformance"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+      "type": "application/json",
+      "title": "The list of supported tiling schemes (as JSON)",
+      "href": "/ogcapi/tileMatrixSets?f=json"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+      "type": "text/plain",
+      "title": "The list of supported tiling schemes (as ECON)",
+      "href": "/ogcapi/tileMatrixSets?f=econ"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+      "type": "text/html",
+      "title": "The list of supported tiling schemes (as HTML)",
+      "href": "/ogcapi/tileMatrixSets?f=html"
+    }
+  ],
+  "title": "raster",
+  "extent": {
+    "spatial": {
+      "bbox": [[-180, -90, 180, 90]]
+    }
+  },
+  "collections": [
+    {
+      "links": [
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "Information about the raster data (as JSON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster?f=json"
+        },
+        {
+          "rel": "alternate",
+          "type": "text/plain",
+          "title": "Information about the raster data (as ECON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster?f=econ"
+        },
+        {
+          "rel": "alternate",
+          "type": "text/mapml",
+          "title": "Information about the raster data (as MapML)",
+          "href": "/ogcapi/collections/NaturalEarth:raster?f=mapml"
+        },
+        {
+          "rel": "alternate",
+          "type": "text/html",
+          "title": "Information about the raster data (as HTML)",
+          "href": "/ogcapi/collections/NaturalEarth:raster?f=html"
+        },
+        {
+          "rel": "styles",
+          "type": "text/html",
+          "title": "Styles for raster (as HTML)",
+          "href": "/ogcapi/collections/NaturalEarth:raster/styles?f=html"
+        },
+        {
+          "rel": "styles",
+          "type": "application/json",
+          "title": "Styles for raster (as JSON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster/styles?f=json"
+        },
+        {
+          "rel": "styles",
+          "type": "text/plain",
+          "title": "Styles for raster (as ECON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster/styles?f=econ"
+        }
+      ],
+      "title": "raster",
+      "extent": {
+        "spatial": {
+          "bbox": [[-180, -90, 180, 90]]
+        }
+      },
+      "crs": [
+        "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+        "http://www.opengis.net/def/crs/EPSG/0/4326",
+        "http://www.opengis.net/def/crs/EPSG/0/3857",
+        "http://www.opengis.net/def/crs/EPSG/0/3395"
+      ],
+      "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+      "id": "NaturalEarth:raster",
+      "attribution": "<a href='https://www.naturalearthdata.com/'>Natural Earth</a>",
+      "minScaleDenominator": 4367830.1877243574709,
+      "minCellSize": 0.010986328125
+    },
+    {
+      "links": [
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "Information about the HYP_HR_SR_OB_DR data (as JSON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR?f=json"
+        },
+        {
+          "rel": "alternate",
+          "type": "text/plain",
+          "title": "Information about the HYP_HR_SR_OB_DR data (as ECON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR?f=econ"
+        },
+        {
+          "rel": "alternate",
+          "type": "text/mapml",
+          "title": "Information about the HYP_HR_SR_OB_DR data (as MapML)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR?f=mapml"
+        },
+        {
+          "rel": "alternate",
+          "type": "text/html",
+          "title": "Information about the HYP_HR_SR_OB_DR data (as HTML)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR?f=html"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/dggs-list",
+          "title": "Discrete Global Grid Systems for HYP_HR_SR_OB_DR",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/dggs"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+          "type": "application/json",
+          "title": "Schema (as JSON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/schema?f=json"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+          "type": "text/plain",
+          "title": "Schema (as ECON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/schema?f=econ"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
+          "type": "text/html",
+          "title": "Schema (as HTML)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/schema?f=html"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+          "type": "application/json",
+          "title": "Queryables (as JSON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/queryables?f=json"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+          "type": "text/plain",
+          "title": "Queryables (as ECON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/queryables?f=econ"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
+          "type": "text/html",
+          "title": "Queryables (as HTML)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/queryables?f=html"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
+          "type": "image/png",
+          "title": "HYP_HR_SR_OB_DR (as PNG; Note: requesting large extent may result in generalized data)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/coverage?f=png"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
+          "type": "image/tiff; application=geotiff",
+          "title": "HYP_HR_SR_OB_DR (as GeoTIFF; Note: requesting large extent may result in generalized data)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/coverage?f=tif"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage-domainset",
+          "type": "application/json",
+          "title": "HYP_HR_SR_OB_DR (domain set of the coverage for this collection)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/coverage/domainset?f=json"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage-rangetype",
+          "type": "application/json",
+          "title": "HYP_HR_SR_OB_DR (range type of the coverage for this collection)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/coverage/rangetype?f=json"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
+          "type": "image/png",
+          "title": "Default map (as PNG)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map.png"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
+          "type": "image/jpeg",
+          "title": "Default map (as JPG)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map.jpg"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
+          "type": "image/tif",
+          "title": "Default map (as GeoTIFF)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map.tif"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
+          "type": "application/json",
+          "title": "Map tilesets available for this dataset (as JSON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map/tiles?f=json"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
+          "type": "text/plain",
+          "title": "Map tilesets available for this dataset (as ECON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map/tiles?f=econ"
+        },
+        {
+          "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
+          "type": "text/html",
+          "title": "Map tilesets available for this dataset (as HTML)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map/tiles?f=html"
+        },
+        {
+          "rel": "styles",
+          "type": "text/html",
+          "title": "Styles for HYP_HR_SR_OB_DR (as HTML)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/styles?f=html"
+        },
+        {
+          "rel": "styles",
+          "type": "application/json",
+          "title": "Styles for HYP_HR_SR_OB_DR (as JSON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/styles?f=json"
+        },
+        {
+          "rel": "styles",
+          "type": "text/plain",
+          "title": "Styles for HYP_HR_SR_OB_DR (as ECON)",
+          "href": "/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/styles?f=econ"
+        }
+      ],
+      "title": "HYP_HR_SR_OB_DR",
+      "extent": {
+        "spatial": {
+          "bbox": [[-180, -90, 180, 90]],
+          "grid": [
+            {
+              "cellsCount": 32768,
+              "resolution": 0.010986328125
+            },
+            {
+              "cellsCount": 16384,
+              "resolution": 0.010986328125
+            }
+          ]
+        }
+      },
+      "crs": [
+        "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+        "http://www.opengis.net/def/crs/EPSG/0/4326",
+        "http://www.opengis.net/def/crs/EPSG/0/3857",
+        "http://www.opengis.net/def/crs/EPSG/0/3395"
+      ],
+      "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+      "id": "NaturalEarth:raster:HYP_HR_SR_OB_DR",
+      "dataType": "map",
+      "attribution": "<a href='https://www.naturalearthdata.com/'>Natural Earth</a>",
+      "minScaleDenominator": 4367830.1877243574709,
+      "minCellSize": 0.010986328125
+    }
+  ],
+  "crs": [
+    "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+    "http://www.opengis.net/def/crs/EPSG/0/4326",
+    "http://www.opengis.net/def/crs/EPSG/0/3857",
+    "http://www.opengis.net/def/crs/EPSG/0/3395"
+  ],
+  "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+  "id": "NaturalEarth:raster",
+  "attribution": "<a href='https://www.naturalearthdata.com/'>Natural Earth</a>",
+  "minScaleDenominator": 4367830.1877243574709,
+  "minCellSize": 0.010986328125
+}
