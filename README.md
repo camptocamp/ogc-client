@@ -54,6 +54,7 @@ A provided application containing the documentation and demo is located in the `
 To start it locally, clone the repository and run the following commands:
 
 ```bash
+$ npm install
 $ cd app
 $ npm install
 $ npm start
