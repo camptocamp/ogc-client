@@ -1,4 +1,4 @@
-# ogc-client
+# ogc-client [![Latest version on NPM](https://img.shields.io/npm/v/%40camptocamp%2Fogc-client)](https://www.npmjs.com/package/@camptocamp/ogc-client) [![Latest @dev version on NPM](https://img.shields.io/npm/v/%40camptocamp%2Fogc-client/dev)](https://www.npmjs.com/package/@camptocamp/ogc-client?activeTab=versions)
 
 > A Typescript library for interacting with [OGC-compliant services](https://www.ogc.org/docs/is)
 
@@ -47,6 +47,14 @@ enableFallbackWithoutWorker();
 ```
 
 All processing will be done on the main thread after this call, including HTTP requests.
+
+### Use the latest development version
+
+[The `@camptocamp/ogc-client` NPM package](https://www.npmjs.com/package/@camptocamp/ogc-client) is updated on every commit on the `main` branch under the `@dev` tag. To use it:
+
+```bash
+$ npm install --save @camptocamp/ogc-client@dev
+```
 
 ### Application
 
