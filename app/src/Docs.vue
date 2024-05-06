@@ -181,7 +181,7 @@ async function getFeatureUrl() {
 import { OgcApiEndpoint } from '@camptocamp/ogc-client';
 
 async function getFirstTenRecords() {
-  const endpoint = await new OgcApiEndpoint('https://my.server.org/main')
+  const endpoint = new OgcApiEndpoint('https://my.server.org/main');
   const firstCollection = (await endpoint.recordCollections)[0];
   return endpoint.getCollectionItems(firstCollection, 10, 0);
 }</pre
