@@ -1939,4 +1939,118 @@ The document at http://local/nonexisting?f=json could not be fetched.`
       });
     });
   });
+
+  describe('endpoint with styles', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint('http://local/sample-data/');
+    });
+    describe('#listAllStyles', () => { 
+      it('returns a list of style ids', async () => {
+        await expect(endpoint.listAllStyles).resolves.toEqual([
+          'Deuteranopia',
+          'Light',
+          'Night',
+          'Outdoor',
+          'OutdoorHillshade',
+          'Road',
+          'Tritanopia'
+        ]);
+      });
+    });
+    describe('#allStyles', () => { 
+      it('returns a list of styles', async () => {
+        await expect(endpoint.allStyles).resolves.toEqual([
+          {
+            "title": "Deuteranopia",
+            "id": "Deuteranopia",
+            "formats": ["application/vnd.esri.lyr"]
+          },
+          {
+            "title": "OS Open Zoomstack - Light",
+            "id": "Light",
+            "formats": ["application/vnd.esri.lyr", "text/html", "application/vnd.mapbox.style+json"]
+          },
+          {
+            "title": "OS Open Zoomstack - Night",
+            "id": "Night",
+            "formats": ["application/vnd.esri.lyr", "text/html", "application/vnd.mapbox.style+json"]
+          },
+          {
+            "title": "OS Open Zoomstack - Outdoor",
+            "id": "Outdoor",
+            "formats": ["application/vnd.esri.lyr", "text/html", "application/vnd.mapbox.style+json"]
+          },
+          {
+            "title": "OS Open Zoomstack - Outdoor with Hillshade",
+            "id": "OutdoorHillshade",
+            "formats": ["text/html", "application/vnd.mapbox.style+json"]
+          },
+          {
+            "title": "OS Open Zoomstack - Road",
+            "id": "Road",
+            "formats": ["application/vnd.esri.lyr", "text/html", "application/vnd.mapbox.style+json"]
+          },
+          {
+            "title": "Tritanopia",
+            "id": "Tritanopia",
+            "formats": ["application/vnd.esri.lyr"]
+          }
+        ]);
+      });
+    });
+    describe('#getStyleMetadata', () => { 
+      it('returns style metadata', async () => {
+        await expect(endpoint.getStyleMetadata('Deuteranopia')).resolves.toEqual({
+          "title": "Deuteranopia",
+          "links": [
+            {
+              "rel": "self",
+              "type": "application/json",
+              "title": "This document",
+              "href": "http://local/zoomstack/styles/Deuteranopia/metadata?f=json"
+            },
+            {
+              "rel": "alternate",
+              "type": "text/html",
+              "title": "This document as HTML",
+              "href": "http://local/zoomstack/styles/Deuteranopia/metadata?f=html"
+            }
+          ],
+          "id": "Deuteranopia",
+          "scope": "style",
+          "stylesheetFormats": [
+            "application/vnd.esri.lyr",
+          ],
+          "stylesheets": [
+            {
+              "title": "ArcGIS",
+              "version": "n/a",
+              "specification": "https://www.esri.com/",
+              "native": true,
+              "link": {
+                "rel": "stylesheet",
+                "type": "application/vnd.esri.lyr",
+                "title": "Style in format 'ArcGIS'",
+                "href": "http://local/zoomstack/styles/Deuteranopia?f=lyr"
+              }
+            }
+          ]
+        });
+      });
+    });
+    describe('#getStylesheetUrl', () => { 
+      it('returns the correct stylesheet URL', async () => {
+        await expect(endpoint.getStylesheetUrl('Deuteranopia', 'application/vnd.esri.lyr')).resolves.toEqual(
+          'http://local/zoomstack/styles/Deuteranopia?f=lyr'
+        );
+      });
+    });
+    describe('#getStylesheetUrl with type html', () => { 
+      it('returns the correct stylesheet URL', async () => {
+        await expect(endpoint.getStylesheetUrl('Road', 'text/html')).resolves.toEqual(
+          'https://my.server.org/sample-data/styles/Road?f=html'
+        );
+      });
+    });
+  });
 });
