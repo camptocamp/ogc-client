@@ -109,6 +109,9 @@ export function checkStyleConformance(conformance: ConformanceClass[]) {
   return (
     conformance.indexOf(
       'http://www.opengis.net/spec/ogcapi-styles-1/0.0/conf/core'
+    ) > -1 ||
+    conformance.indexOf(
+      'http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/core'
     ) > -1
   );
 }
