@@ -278,12 +278,10 @@ ${e.message}`);
     const styleDoc = (styleData?.styles)?.find(
       (style) => style.id === styleId
     );
-    try {
-      return await fetchLink(styleDoc as OgcApiDocument, 'describedby', this.baseUrl);
-    } catch (error) {
-      throw new EndpointError(
-        `Could not get metadata: there is no relation of type "describedby" for style "${styleId}".`
-      );
+    if (hasLinks(styleDoc as OgcApiDocument, ['describedby'])){
+      return fetchLink(styleDoc as OgcApiDocument, 'describedby', this.baseUrl);
+    } else {
+      return null;
     }
   }
 
@@ -619,6 +617,11 @@ ${e.message}`);
    */
   async getStyleMetadata(styleId: string): Promise<OgcApiStyleMetadata> {
     const metadataDoc = await this.getStyleMetadataDocument(styleId);
+    if (!metadataDoc) {
+      throw new EndpointError(
+        `Could not get metadata: there is no relation of type "describedby" for style "${styleId}".`
+      );
+    }
     return parseBaseStyleMetadata(metadataDoc as OgcApiStyleMetadata);
   }
 
@@ -632,7 +635,7 @@ ${e.message}`);
     mimeType: string
   ): Promise<string> {
     const metadataDoc = await this.getStyleMetadataDocument(styleId);
-    const urlFromMetadata = (metadataDoc as OgcApiStyleMetadata).stylesheets.find(
+    const urlFromMetadata = (metadataDoc as OgcApiStyleMetadata)?.stylesheets?.find(
       s => s.link.type === mimeType && s.link.rel === 'stylesheet'
     )?.link?.href;
 
