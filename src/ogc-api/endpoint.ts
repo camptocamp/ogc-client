@@ -4,10 +4,13 @@ import {
   checkStyleConformance,
   checkTileConformance,
   parseBaseCollectionInfo,
+  parseBaseStyleMetadata,
   parseCollectionParameters,
   parseCollections,
   parseConformance,
   parseEndpointInfo,
+  parseStyles,
+  parseStylesAsList,
   parseTileMatrixSets,
 } from './info.js';
 import {
@@ -16,6 +19,9 @@ import {
   OgcApiCollectionItem,
   OgcApiDocument,
   OgcApiEndpointInfo,
+  OgcApiStyleMetadata,
+  OgcApiStylesDocument,
+  StyleItem,
   TileMatrixSet,
 } from './model.js';
 import {
@@ -45,6 +51,7 @@ export default class OgcApiEndpoint {
   private conformance_: Promise<OgcApiDocument>;
   private data_: Promise<OgcApiDocument>;
   private tileMatrixSetsFull_: Promise<TileMatrixSet[]>;
+  private styles_: Promise<OgcApiStylesDocument>;
 
   private get root(): Promise<OgcApiDocument> {
     if (!this.root_) {
@@ -105,6 +112,20 @@ ${e.message}`);
       });
     }
     return this.tileMatrixSetsFull_;
+  }
+
+  private get styles(): Promise<OgcApiStylesDocument> {
+    if (!this.styles_) {
+      this.styles_ = this.root.then(async (root) => {
+        if (!(await this.hasStyles)) return undefined;
+        return fetchLink(
+          root,
+          ['styles', 'http://www.opengis.net/def/rel/ogc/1.0/styles'],
+          this.baseUrl
+        ) as unknown as OgcApiStylesDocument;
+      });
+    }
+    return this.styles_;
   }
 
   /**
@@ -247,6 +268,17 @@ ${e.message}`);
         // otherwise build a URL for the collection
         return fetchDocument(`${await this.collectionsUrl}/${collectionId}`);
       });
+  }
+
+  private async getStyleMetadataDocument(styleId: string): Promise<OgcApiDocument> {
+    const styleData = await this.styles;
+    if (!styleData.styles.some(style => style.id === styleId)) {
+      throw new EndpointError(`Style not found: "${styleId}".`);
+    }
+    const styleDoc = (styleData?.styles)?.find(
+      (style) => style.id === styleId
+    );
+    return await fetchLink(styleDoc as OgcApiDocument, 'describedby', this.baseUrl);
   }
 
   /**
@@ -559,5 +591,54 @@ ${e.message}`);
         console.error('Error fetching collection tileset URL:', error.message);
         throw error;
       });
+  }
+
+  /**
+   * A Promise which resolves to an array of all style identifiers as strings.
+   */
+  get listAllStyles(): Promise<string[]> {
+    return this.styles.then(parseStylesAsList());
+  }
+
+  /**
+   * A Promise which resolves to an array of all style items. This includes the supported style formats.
+   */
+  get allStyles(): Promise<StyleItem[]> {
+    return this.styles.then(parseStyles());
+  }
+
+  /**
+   * Returns a promise resolving to a document describing the style metadata.
+   * @param styleId The style identifier
+   */
+  async getStyleMetadata(styleId: string): Promise<OgcApiStyleMetadata> {
+    const metadataDoc = await this.getStyleMetadataDocument(styleId);
+    return parseBaseStyleMetadata(metadataDoc as OgcApiStyleMetadata);
+  }
+
+  /**
+   * Returns a promise resolving to a stylesheet URL for a given style and type.
+   * @param styleId The style identifier
+   * @param mimeType Stylesheet MIME type.
+   */
+  async getStylesheetUrl(
+    styleId: string,
+    mimeType: string
+  ): Promise<string> {
+    const metadataDoc = await this.getStyleMetadataDocument(styleId);
+    const urlFromMetadata = (metadataDoc as OgcApiStyleMetadata).stylesheets.find(
+      s => s.link.type === mimeType && s.link.rel === 'stylesheet'
+    )?.link?.href;
+
+    if (!urlFromMetadata) {
+      // fallback which retrieves the URL from the style document itself
+      const style = (await this.styles).styles?.find(style => style.id === styleId);
+      const urlFromStyle = getLinkUrl(style as unknown as OgcApiDocument, 'stylesheet', this.baseUrl, mimeType);
+      if (!urlFromStyle) {
+        throw new EndpointError("Could not find stylesheet URL for given style ID and type.");
+      }
+      return urlFromStyle;
+    }
+    return urlFromMetadata;
   }
 }

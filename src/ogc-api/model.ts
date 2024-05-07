@@ -163,3 +163,55 @@ export interface TileMatrixSet {
   id: string;
   uri: string;
 }
+
+export type StyleItem = {
+  title: string;
+  id: string;
+  links?: OgcApiDocumentLink[];
+  formats?: string[];
+};
+
+export type OgcApiStylesDocument = {
+  styles: StyleItem[];
+  links: OgcApiDocumentLink[];
+};
+
+export type OgcApiStyleRecord = {
+  title: string;
+  id: string;
+};
+
+export type OgcApiStylesheet = {
+  link: OgcApiDocumentLink;
+  title?: string;
+  version?: string;
+  specification?: string;
+  native?: boolean;
+};
+
+export type OgcApiStyleMetadata = {
+  id: string;
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  pointOfContact?: string;
+  license?: string;
+  created?: string;
+  updated?: string;
+  scope?: 'style';
+  version?: string;
+  stylesheets?: OgcApiStylesheet[];
+  layers?: {
+    id: string;
+    description?: string;
+    dataType?: 'vector' | 'map' | 'coverage' | 'model';
+    geometryType?: 'points' | 'lines' | 'polygons' | 'solids' | 'any';
+    propertiesSchema?: any; // https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v3.0/schema.json#/definitions/Schema
+    sampleData?: OgcApiDocumentLink;
+  }[];
+  links?: OgcApiDocumentLink[];
+};
+
+export type OgcApiStyleMetadataInfo = {
+  stylesheetFormats: string[];
+} & OgcApiStyleMetadata;

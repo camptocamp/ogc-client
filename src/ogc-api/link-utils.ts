@@ -79,23 +79,29 @@ export function fetchCollectionRoot(
 
 export function getLinks(
   doc: OgcApiDocument,
-  relType: string | string[]
+  relType: string | string[],
+  mimeType?: string
 ): OgcApiDocumentLink[] {
-  return (
+  const links = (
     doc.links?.filter((link) =>
       Array.isArray(relType)
         ? relType.indexOf(link.rel) > -1
         : link.rel === relType
     ) || []
   );
+  if (mimeType) {
+    return links.filter(link => link.type === mimeType);
+  }
+  return links;
 }
 
 export function getLinkUrl(
   doc: OgcApiDocument,
   relType: string | string[],
-  baseUrl?: string
+  baseUrl?: string,
+  mimeType?: string
 ): string | null {
-  const link = getLinks(doc, relType)[0];
+  const link = getLinks(doc, relType, mimeType)[0];
   if (!link) return null;
   return new URL(link.href, baseUrl || window.location.toString()).toString();
 }

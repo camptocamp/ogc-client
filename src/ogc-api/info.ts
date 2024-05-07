@@ -6,6 +6,10 @@ import {
   OgcApiCollectionInfo,
   OgcApiDocument,
   OgcApiEndpointInfo,
+  OgcApiStyleMetadata,
+  OgcApiStyleMetadataInfo,
+  OgcApiStylesDocument,
+  StyleItem,
   TileMatrixSet,
 } from './model.js';
 import { assertHasLinks } from './link-utils.js';
@@ -216,4 +220,39 @@ export function parseTileMatrixSets(doc: OgcApiDocument): TileMatrixSet[] {
     });
   }
   return [];
+}
+
+export function parseStyles(): (doc: OgcApiStylesDocument) => StyleItem[] {
+  return (doc: OgcApiStylesDocument) =>
+    (doc?.styles)
+      ?.map((style) => {
+        const formats = style.links
+          .filter((link) => link.rel === 'stylesheet')
+          .map((link) => link.type);
+        return {
+          formats,
+          id: style.id,
+          title: style.title
+        };
+      });
+}
+
+export function parseStylesAsList(): (doc: OgcApiStylesDocument) => string[] {
+  return (doc: OgcApiStylesDocument) =>
+    (doc?.styles)
+      ?.map((style) => style.id as string);
+}
+
+export function parseBaseStyleMetadata(
+  doc: OgcApiStyleMetadata
+): OgcApiStyleMetadata {
+  const { stylesheets, ...props } = doc;
+  const stylesheetFormats = stylesheets
+    .filter((stylesheet) => stylesheet.link.rel === 'stylesheet')
+    .map((stylesheet) => stylesheet.link.type);
+  return { 
+    stylesheetFormats,
+    stylesheets,
+    ...props
+  } as OgcApiStyleMetadataInfo;
 }
