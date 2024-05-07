@@ -270,15 +270,15 @@ ${e.message}`);
       });
   }
 
-  private async getStyleMetadataDocument(styleId: string): Promise<OgcApiDocument> {
+  private async getStyleMetadataDocument(
+    styleId: string
+  ): Promise<OgcApiDocument> {
     const styleData = await this.styles;
-    if (!styleData.styles.some(style => style.id === styleId)) {
+    if (!styleData.styles.some((style) => style.id === styleId)) {
       throw new EndpointError(`Style not found: "${styleId}".`);
     }
-    const styleDoc = (styleData?.styles)?.find(
-      (style) => style.id === styleId
-    );
-    if (hasLinks(styleDoc as OgcApiDocument, ['describedby'])){
+    const styleDoc = styleData?.styles?.find((style) => style.id === styleId);
+    if (hasLinks(styleDoc as OgcApiDocument, ['describedby'])) {
       return fetchLink(styleDoc as OgcApiDocument, 'describedby', this.baseUrl);
     } else {
       return null;
@@ -630,21 +630,29 @@ ${e.message}`);
    * @param styleId The style identifier
    * @param mimeType Stylesheet MIME type
    */
-  async getStylesheetUrl(
-    styleId: string,
-    mimeType: string
-  ): Promise<string> {
+  async getStylesheetUrl(styleId: string, mimeType: string): Promise<string> {
     const metadataDoc = await this.getStyleMetadataDocument(styleId);
-    const urlFromMetadata = (metadataDoc as OgcApiStyleMetadata)?.stylesheets?.find(
-      s => s.link.type === mimeType && s.link.rel === 'stylesheet'
+    const urlFromMetadata = (
+      metadataDoc as OgcApiStyleMetadata
+    )?.stylesheets?.find(
+      (s) => s.link.type === mimeType && s.link.rel === 'stylesheet'
     )?.link?.href;
 
     if (!urlFromMetadata) {
       // fallback which retrieves the URL from the style document itself
-      const style = (await this.styles).styles?.find(style => style.id === styleId);
-      const urlFromStyle = getLinkUrl(style as unknown as OgcApiDocument, 'stylesheet', this.baseUrl, mimeType);
+      const style = (await this.styles).styles?.find(
+        (style) => style.id === styleId
+      );
+      const urlFromStyle = getLinkUrl(
+        style as unknown as OgcApiDocument,
+        'stylesheet',
+        this.baseUrl,
+        mimeType
+      );
       if (!urlFromStyle) {
-        throw new EndpointError("Could not find stylesheet URL for given style ID and type.");
+        throw new EndpointError(
+          'Could not find stylesheet URL for given style ID and type.'
+        );
       }
       return urlFromStyle;
     }

@@ -227,23 +227,21 @@ export function parseTileMatrixSets(doc: OgcApiDocument): TileMatrixSet[] {
 
 export function parseStyles(): (doc: OgcApiStylesDocument) => StyleItem[] {
   return (doc: OgcApiStylesDocument) =>
-    (doc?.styles)
-      ?.map((style) => {
-        const formats = style.links
-          .filter((link) => link.rel === 'stylesheet')
-          .map((link) => link.type);
-        return {
-          formats,
-          id: style.id,
-          title: style.title
-        };
-      });
+    doc?.styles?.map((style) => {
+      const formats = style.links
+        .filter((link) => link.rel === 'stylesheet')
+        .map((link) => link.type);
+      return {
+        formats,
+        id: style.id,
+        title: style.title,
+      };
+    });
 }
 
 export function parseStylesAsList(): (doc: OgcApiStylesDocument) => string[] {
   return (doc: OgcApiStylesDocument) =>
-    (doc?.styles)
-      ?.map((style) => style.id as string);
+    doc?.styles?.map((style) => style.id as string);
 }
 
 export function parseBaseStyleMetadata(
@@ -253,9 +251,9 @@ export function parseBaseStyleMetadata(
   const stylesheetFormats = stylesheets
     .filter((stylesheet) => stylesheet.link.rel === 'stylesheet')
     .map((stylesheet) => stylesheet.link.type);
-  return { 
+  return {
     stylesheetFormats,
     stylesheets,
-    ...props
+    ...props,
   } as OgcApiStyleMetadataInfo;
 }

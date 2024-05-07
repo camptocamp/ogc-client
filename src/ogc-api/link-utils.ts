@@ -82,15 +82,14 @@ export function getLinks(
   relType: string | string[],
   mimeType?: string
 ): OgcApiDocumentLink[] {
-  const links = (
+  const links =
     doc.links?.filter((link) =>
       Array.isArray(relType)
         ? relType.indexOf(link.rel) > -1
         : link.rel === relType
-    ) || []
-  );
+    ) || [];
   if (mimeType) {
-    return links.filter(link => link.type === mimeType);
+    return links.filter((link) => link.type === mimeType);
   }
   return links;
 }
