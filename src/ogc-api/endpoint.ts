@@ -278,7 +278,13 @@ ${e.message}`);
     const styleDoc = (styleData?.styles)?.find(
       (style) => style.id === styleId
     );
-    return await fetchLink(styleDoc as OgcApiDocument, 'describedby', this.baseUrl);
+    try {
+      return await fetchLink(styleDoc as OgcApiDocument, 'describedby', this.baseUrl);
+    } catch (error) {
+      throw new EndpointError(
+        `Could not get metadata: there is no relation of type "describedby" for style "${styleId}".`
+      );
+    }
   }
 
   /**
@@ -619,7 +625,7 @@ ${e.message}`);
   /**
    * Returns a promise resolving to a stylesheet URL for a given style and type.
    * @param styleId The style identifier
-   * @param mimeType Stylesheet MIME type.
+   * @param mimeType Stylesheet MIME type
    */
   async getStylesheetUrl(
     styleId: string,
