@@ -253,6 +253,7 @@ export default class WfsEndpoint {
    * @property [options.outputCrs] if unspecified, this will be the data native projection
    * @property [options.extent] an extent to restrict returned objects
    * @property [options.extentCrs] if unspecified, `extent` should be in the data native projection
+   * @property [options.startIndex] if the service supports it, this will be the index of the first feature to return
    * @returns Returns null if endpoint is not ready
    */
   getFeatureUrl(
@@ -264,13 +265,21 @@ export default class WfsEndpoint {
       outputCrs?: CrsCode;
       extent?: BoundingBox;
       extentCrs?: CrsCode;
+      startIndex?: number;
     }
   ) {
     if (!this._featureTypes) {
       return null;
     }
-    const { maxFeatures, asJson, outputFormat, outputCrs, extent, extentCrs } =
-      options || {};
+    const {
+      maxFeatures,
+      asJson,
+      outputFormat,
+      outputCrs,
+      extent,
+      extentCrs,
+      startIndex,
+    } = options || {};
     const internalFeatureType = this._getFeatureTypeByName(featureType);
     if (!internalFeatureType) {
       throw new Error(
@@ -304,7 +313,8 @@ export default class WfsEndpoint {
       undefined,
       outputCrs,
       extent,
-      extentCrs
+      extentCrs,
+      startIndex
     );
   }
 }
