@@ -15,6 +15,7 @@ import { WfsVersion } from './model.js';
  * @param [outputCrs] if unspecified, this will be the data native projection
  * @param [extent] an extent to restrict returned objects
  * @param [extentCrs] if unspecified, `extent` should be in the data native projection
+ * @param [startIndex] if the service supports it, this will be the index of the first feature to return
  */
 export function generateGetFeatureUrl(
   serviceUrl: string,
@@ -26,7 +27,8 @@ export function generateGetFeatureUrl(
   hitsOnly?: boolean,
   outputCrs?: CrsCode,
   extent?: BoundingBox,
-  extentCrs?: CrsCode
+  extentCrs?: CrsCode,
+  startIndex?: number
 ) {
   const typeParam = version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
   const countParam = version === '2.0.0' ? 'COUNT' : 'MAXFEATURES';
@@ -50,6 +52,9 @@ export function generateGetFeatureUrl(
   if (extent) {
     const extentJoined = extent.join(',');
     newParams.BBOX = extentCrs ? `${extentJoined},${extentCrs}` : extentJoined;
+  }
+  if (startIndex) {
+    newParams.STARTINDEX = startIndex.toString(10);
   }
 
   return setQueryParams(serviceUrl, newParams);

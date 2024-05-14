@@ -504,4 +504,11 @@ describe('WfsEndpoint', () => {
       );
     });
   });
+
+  describe('#supportsStartIndex', () => {
+    it('returns true if the WFS version is 2.0.0 or higher', async () => {
+      await endpoint.isReady();
+      expect(endpoint.supportsStartIndex()).toBeTruthy();
+    });
+  });
 });
