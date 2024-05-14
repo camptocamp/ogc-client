@@ -99,6 +99,25 @@ describe('WFS url helpers', () => {
         'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&SRSNAME=EPSG%3A2154&BBOX=10%2C20%2C100%2C200%2CEPSG%3A3857'
       );
     });
+    it('generates a correct URL (v2.0.0, startIndex set)', () => {
+      expect(
+        generateGetFeatureUrl(
+          'http://example.com/wfs',
+          '2.0.0',
+          'my:type',
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          10
+        )
+      ).toBe(
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&STARTINDEX=10'
+      );
+    });
   });
 
   describe('generateDescribeFeatureTypeUrl', () => {

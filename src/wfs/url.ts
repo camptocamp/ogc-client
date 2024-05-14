@@ -53,14 +53,8 @@ export function generateGetFeatureUrl(
     const extentJoined = extent.join(',');
     newParams.BBOX = extentCrs ? `${extentJoined},${extentCrs}` : extentJoined;
   }
-  if (startIndex !== undefined) {
-    if (version >= '2.0.0') {
-      newParams.STARTINDEX = startIndex.toString(10);
-    } else {
-      console.warn(
-        'The startIndex parameter is not supported for WFS version less than 2.0.0.'
-      );
-    }
+  if (startIndex) {
+    newParams.STARTINDEX = startIndex.toString(10);
   }
 
   return setQueryParams(serviceUrl, newParams);
