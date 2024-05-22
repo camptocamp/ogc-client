@@ -609,9 +609,13 @@ ${e.message}`);
    */
   get allStyles(): Promise<StyleItem[]> {
     return this.styles.then(async (stylesDoc) => {
-      const metadataPromises = stylesDoc.styles.map(style => this.getStyleMetadataDocument(style.id));
-      return Promise.all(metadataPromises).then(results => {
-        return results.map(r => parseStyleMetadataAsList(r as OgcApiStyleMetadata));
+      const metadataPromises = stylesDoc.styles.map((style) =>
+        this.getStyleMetadataDocument(style.id)
+      );
+      return Promise.all(metadataPromises).then((results) => {
+        return results.map((r) =>
+          parseStyleMetadataAsList(r as OgcApiStyleMetadata)
+        );
       });
     });
   }

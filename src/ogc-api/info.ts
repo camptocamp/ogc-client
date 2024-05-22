@@ -234,7 +234,7 @@ export function parseStyleMetadataAsList(doc: OgcApiStyleMetadata): StyleItem {
   return {
     id,
     title,
-    formats: stylesheetFormats
+    formats: stylesheetFormats,
   } as StyleItem;
 }
 

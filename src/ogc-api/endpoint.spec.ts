@@ -1992,9 +1992,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
           {
             title: 'OS Open Zoomstack - Outdoor with Hillshade',
             id: 'OutdoorHillshade',
-            formats: [
-              'application/vnd.mapbox.style+json'
-            ],
+            formats: ['application/vnd.mapbox.style+json'],
           },
           {
             title: 'OS Open Zoomstack - Road',
@@ -2014,9 +2012,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
     });
     describe('#getStyleMetadata', () => {
       it('returns style metadata', async () => {
-        await expect(
-          endpoint.getStyle('Deuteranopia')
-        ).resolves.toEqual({
+        await expect(endpoint.getStyle('Deuteranopia')).resolves.toEqual({
           title: 'Deuteranopia',
           id: 'Deuteranopia',
           scope: 'style',
