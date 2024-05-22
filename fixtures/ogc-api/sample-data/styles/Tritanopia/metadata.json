@@ -1,0 +1,28 @@
+{
+  "title" : "Tritanopia",
+  "links" : [ {
+    "rel" : "self",
+    "type" : "application/json",
+    "title" : "This document",
+    "href" : "https://local/zoomstack/styles/Tritanopia/metadata?f=json"
+  }, {
+    "rel" : "alternate",
+    "type" : "text/html",
+    "title" : "This document as HTML",
+    "href" : "https://local/zoomstack/styles/Tritanopia/metadata?f=html"
+  } ],
+  "id" : "Tritanopia",
+  "scope" : "style",
+  "stylesheets" : [ {
+    "title" : "ArcGIS",
+    "version" : "n/a",
+    "specification" : "https://www.esri.com/",
+    "native" : true,
+    "link" : {
+      "rel" : "stylesheet",
+      "type" : "application/vnd.esri.lyr",
+      "title" : "Style in format 'ArcGIS'",
+      "href" : "https://local/zoomstack/styles/Tritanopia?f=lyr"
+    }
+  } ]
+}

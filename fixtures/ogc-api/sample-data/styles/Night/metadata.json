@@ -1,0 +1,378 @@
+{
+  "title" : "OS Open Zoomstack - Night",
+  "links" : [ {
+    "rel" : "self",
+    "type" : "application/json",
+    "title" : "This document",
+    "href" : "https://local/zoomstack/styles/Night/metadata?f=json"
+  }, {
+    "rel" : "alternate",
+    "type" : "text/html",
+    "title" : "This document as HTML",
+    "href" : "https://local/zoomstack/styles/Night/metadata?f=html"
+  } ],
+  "id" : "Night",
+  "scope" : "style",
+  "stylesheets" : [ {
+    "title" : "ArcGIS",
+    "version" : "n/a",
+    "specification" : "https://www.esri.com/",
+    "native" : true,
+    "link" : {
+      "rel" : "stylesheet",
+      "type" : "application/vnd.esri.lyr",
+      "title" : "Style in format 'ArcGIS'",
+      "href" : "https://local/zoomstack/styles/Night?f=lyr"
+    }
+  }, {
+    "title" : "Mapbox",
+    "version" : "8",
+    "specification" : "https://docs.mapbox.com/mapbox-gl-js/style-spec/",
+    "native" : true,
+    "link" : {
+      "rel" : "stylesheet",
+      "type" : "application/vnd.mapbox.style+json",
+      "title" : "Style in format 'Mapbox'",
+      "href" : "https://local/zoomstack/styles/Night?f=mbs"
+    }
+  } ],
+  "layers" : [ {
+    "id" : "background"
+  }, {
+    "id" : "sea",
+    "type" : "geometry"
+  }, {
+    "id" : "national-parks",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/national_parks/items"
+    }
+  }, {
+    "id" : "urban-areas",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/urban_areas/items"
+    }
+  }, {
+    "id" : "sites",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/sites/items"
+    }
+  }, {
+    "id" : "greenspace",
+    "type" : "geometry"
+  }, {
+    "id" : "greenspace outlines",
+    "type" : "geometry"
+  }, {
+    "id" : "woodland",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/woodland/items"
+    }
+  }, {
+    "id" : "surfacewater",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/surfacewater/items"
+    }
+  }, {
+    "id" : "foreshore",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/foreshore/items"
+    }
+  }, {
+    "id" : "waterlines",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/waterlines/items"
+    }
+  }, {
+    "id" : "buildings",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 0 Restricted Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 0 Local Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 0 Guided Busway Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 0 Guided Busway Centreline",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 0 Motorway",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 0 Minor Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 0 B Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 0 A Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 0 Primary Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 Local Road Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 Minor Road Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 B Road Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 A Road Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 Primary Road Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 Motorway Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 Restricted Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 Local Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 Guided Busway Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 Guided Busway Centreline",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 Motorway",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 Minor Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 B Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 A Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 1 Primary Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 Local Road Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 Minor Road Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 B Road Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 A Road Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 Primary Road Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 Motorway Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 Restricted Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 Local Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 Guided Busway Casing",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 Guided Busway Centreline",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 Motorway",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 Minor Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 B Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 A Road",
+    "type" : "geometry"
+  }, {
+    "id" : "roads 2 Primary Road",
+    "type" : "geometry"
+  }, {
+    "id" : "road Tunnels",
+    "type" : "geometry"
+  }, {
+    "id" : "rail",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/rail/items"
+    }
+  }, {
+    "id" : "rail tunnel",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/rail/items"
+    }
+  }, {
+    "id" : "boundaries",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/boundaries/items"
+    }
+  }, {
+    "id" : "etl",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/etl/items"
+    }
+  }, {
+    "id" : "road numbers",
+    "type" : "geometry"
+  }, {
+    "id" : "road names",
+    "type" : "geometry"
+  }, {
+    "id" : "primary road numbers",
+    "type" : "geometry"
+  }, {
+    "id" : "motorway numbers",
+    "type" : "geometry"
+  }, {
+    "id" : "motorway junction numbers",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "greenspace names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "sites names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "landform names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "landcover names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "water names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "woodland names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "small settlement names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "suburban area names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "railwaystations",
+    "type" : "geometry"
+  }, {
+    "id" : "airports",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/airports/items"
+    }
+  }, {
+    "id" : "village and hamlet names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "town names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "city names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "national park names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "capital city names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  }, {
+    "id" : "country names",
+    "type" : "geometry",
+    "sampleData" : {
+      "rel" : "start",
+      "href" : "https://local/zoomstack/collections/names/items"
+    }
+  } ]
+}

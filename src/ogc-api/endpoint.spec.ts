@@ -1970,7 +1970,6 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             id: 'Light',
             formats: [
               'application/vnd.esri.lyr',
-              'text/html',
               'application/vnd.mapbox.style+json',
             ],
           },
@@ -1979,7 +1978,6 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             id: 'Night',
             formats: [
               'application/vnd.esri.lyr',
-              'text/html',
               'application/vnd.mapbox.style+json',
             ],
           },
@@ -1988,21 +1986,21 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             id: 'Outdoor',
             formats: [
               'application/vnd.esri.lyr',
-              'text/html',
               'application/vnd.mapbox.style+json',
             ],
           },
           {
             title: 'OS Open Zoomstack - Outdoor with Hillshade',
             id: 'OutdoorHillshade',
-            formats: ['text/html', 'application/vnd.mapbox.style+json'],
+            formats: [
+              'application/vnd.mapbox.style+json'
+            ],
           },
           {
             title: 'OS Open Zoomstack - Road',
             id: 'Road',
             formats: [
               'application/vnd.esri.lyr',
-              'text/html',
               'application/vnd.mapbox.style+json',
             ],
           },
@@ -2020,20 +2018,6 @@ The document at http://local/nonexisting?f=json could not be fetched.`
           endpoint.getStyle('Deuteranopia')
         ).resolves.toEqual({
           title: 'Deuteranopia',
-          links: [
-            {
-              rel: 'self',
-              type: 'application/json',
-              title: 'This document',
-              href: 'http://local/zoomstack/styles/Deuteranopia/metadata?f=json',
-            },
-            {
-              rel: 'alternate',
-              type: 'text/html',
-              title: 'This document as HTML',
-              href: 'http://local/zoomstack/styles/Deuteranopia/metadata?f=html',
-            },
-          ],
           id: 'Deuteranopia',
           scope: 'style',
           stylesheetFormats: ['application/vnd.esri.lyr'],
