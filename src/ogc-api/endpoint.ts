@@ -612,14 +612,14 @@ ${e.message}`);
   }
 
   /**
-   * Returns a promise resolving to a document describing the style metadata.
+   * Returns a promise resolving to a document describing the style.
    * @param styleId The style identifier
    */
-  async getStyleMetadata(styleId: string): Promise<OgcApiStyleMetadata> {
+  async getStyle(styleId: string): Promise<OgcApiStyleMetadata> {
     const metadataDoc = await this.getStyleMetadataDocument(styleId);
     if (!metadataDoc) {
       throw new EndpointError(
-        `Could not get metadata: there is no relation of type "describedby" for style "${styleId}".`
+        `Could not get style metadata: there is no relation of type "describedby" for style "${styleId}".`
       );
     }
     return parseBaseStyleMetadata(metadataDoc as OgcApiStyleMetadata);

@@ -2017,7 +2017,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
     describe('#getStyleMetadata', () => {
       it('returns style metadata', async () => {
         await expect(
-          endpoint.getStyleMetadata('Deuteranopia')
+          endpoint.getStyle('Deuteranopia')
         ).resolves.toEqual({
           title: 'Deuteranopia',
           links: [
