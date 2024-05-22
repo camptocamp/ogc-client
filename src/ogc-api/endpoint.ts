@@ -4,12 +4,12 @@ import {
   checkStyleConformance,
   checkTileConformance,
   parseBaseCollectionInfo,
-  parseStyleMetadata,
+  parseFullStyleInfo,
   parseCollectionParameters,
   parseCollections,
   parseConformance,
   parseEndpointInfo,
-  parseStyleMetadataAsList,
+  parseBasicStyleInfo,
   parseStylesAsList,
   parseTileMatrixSets,
 } from './info.js';
@@ -614,7 +614,7 @@ ${e.message}`);
       );
       return Promise.all(metadataPromises).then((results) => {
         return results.map((r) =>
-          parseStyleMetadataAsList(r as OgcApiStyleMetadata)
+          parseBasicStyleInfo(r as OgcApiStyleMetadata)
         );
       });
     });
@@ -631,7 +631,7 @@ ${e.message}`);
         `Could not get style metadata: there is no relation of type "describedby" for style "${styleId}".`
       );
     }
-    return parseStyleMetadata(metadataDoc as OgcApiStyleMetadata);
+    return parseFullStyleInfo(metadataDoc as OgcApiStyleMetadata);
   }
 
   /**

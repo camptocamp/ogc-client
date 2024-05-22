@@ -225,7 +225,7 @@ export function parseTileMatrixSets(doc: OgcApiDocument): TileMatrixSet[] {
   return [];
 }
 
-export function parseStyleMetadataAsList(doc: OgcApiStyleMetadata): StyleItem {
+export function parseBasicStyleInfo(doc: OgcApiStyleMetadata): StyleItem {
   const { stylesheets, id, title } = doc;
   const stylesheetFormats = stylesheets
     .filter((stylesheet) => stylesheet.link.rel === 'stylesheet')
@@ -243,7 +243,7 @@ export function parseStylesAsList(): (doc: OgcApiStylesDocument) => string[] {
     doc?.styles?.map((style) => style.id as string);
 }
 
-export function parseStyleMetadata(
+export function parseFullStyleInfo(
   doc: OgcApiStyleMetadata
 ): OgcApiStyleMetadata {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
