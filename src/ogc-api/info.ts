@@ -225,18 +225,17 @@ export function parseTileMatrixSets(doc: OgcApiDocument): TileMatrixSet[] {
   return [];
 }
 
-export function parseStyles(): (doc: OgcApiStylesDocument) => StyleItem[] {
-  return (doc: OgcApiStylesDocument) =>
-    doc?.styles?.map((style) => {
-      const formats = style.links
-        .filter((link) => link.rel === 'stylesheet')
-        .map((link) => link.type);
-      return {
-        formats,
-        id: style.id,
-        title: style.title,
-      };
-    });
+export function parseStyleMetadataAsList(doc: OgcApiStyleMetadata): StyleItem {
+  const { stylesheets, id, title } = doc;
+  const stylesheetFormats = stylesheets
+    .filter((stylesheet) => stylesheet.link.rel === 'stylesheet')
+    .map((stylesheet) => stylesheet.link.type);
+
+  return {
+    id,
+    title,
+    formats: stylesheetFormats
+  } as StyleItem;
 }
 
 export function parseStylesAsList(): (doc: OgcApiStylesDocument) => string[] {
@@ -244,7 +243,7 @@ export function parseStylesAsList(): (doc: OgcApiStylesDocument) => string[] {
     doc?.styles?.map((style) => style.id as string);
 }
 
-export function parseBaseStyleMetadata(
+export function parseStyleMetadata(
   doc: OgcApiStyleMetadata
 ): OgcApiStyleMetadata {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

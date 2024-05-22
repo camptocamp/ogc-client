@@ -4,12 +4,12 @@ import {
   checkStyleConformance,
   checkTileConformance,
   parseBaseCollectionInfo,
-  parseBaseStyleMetadata,
+  parseStyleMetadata,
   parseCollectionParameters,
   parseCollections,
   parseConformance,
   parseEndpointInfo,
-  parseStyles,
+  parseStyleMetadataAsList,
   parseStylesAsList,
   parseTileMatrixSets,
 } from './info.js';
@@ -608,7 +608,12 @@ ${e.message}`);
    * A Promise which resolves to an array of all style items. This includes the supported style formats.
    */
   get allStyles(): Promise<StyleItem[]> {
-    return this.styles.then(parseStyles());
+    return this.styles.then(async (stylesDoc) => {
+      const metadataPromises = stylesDoc.styles.map(style => this.getStyleMetadataDocument(style.id));
+      return Promise.all(metadataPromises).then(results => {
+        return results.map(r => parseStyleMetadataAsList(r as OgcApiStyleMetadata));
+      });
+    });
   }
 
   /**
@@ -622,7 +627,7 @@ ${e.message}`);
         `Could not get style metadata: there is no relation of type "describedby" for style "${styleId}".`
       );
     }
-    return parseBaseStyleMetadata(metadataDoc as OgcApiStyleMetadata);
+    return parseStyleMetadata(metadataDoc as OgcApiStyleMetadata);
   }
 
   /**
