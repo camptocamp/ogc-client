@@ -247,7 +247,8 @@ export function parseStylesAsList(): (doc: OgcApiStylesDocument) => string[] {
 export function parseBaseStyleMetadata(
   doc: OgcApiStyleMetadata
 ): OgcApiStyleMetadata {
-  const { stylesheets, ...props } = doc;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { stylesheets, links, ...props } = doc;
   const stylesheetFormats = stylesheets
     .filter((stylesheet) => stylesheet.link.rel === 'stylesheet')
     .map((stylesheet) => stylesheet.link.type);
