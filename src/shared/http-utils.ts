@@ -43,14 +43,27 @@ export function setFetchOptionsUpdateCallback(
  * identical concurrent requests
  * Note: this should only be used for GET requests!
  */
-export function sharedFetch(url: string, method: 'GET' | 'HEAD' = 'GET') {
-  const fetchKey = `${method}#${url}`;
+export function sharedFetch(
+  url: string,
+  method: 'GET' | 'HEAD' = 'GET',
+  asJson?: boolean
+) {
+  let fetchKey = `${method}#${url}`;
+  if (asJson) {
+    fetchKey = `${method}#asJson#${url}`;
+  }
   if (fetchPromises.has(fetchKey)) {
     return fetchPromises.get(fetchKey);
   }
+  const options: RequestInit = { ...getFetchOptions() };
+  options.method = method;
+  if (asJson) {
+    options.headers = 'headers' in options ? options.headers : {};
+    options.headers['Accept'] = 'application/json';
+  }
   // to avoid unhandled promise rejections this promise will never reject,
   // but only return errors as a normal value
-  const promise = fetch(url, { ...getFetchOptions(), method })
+  const promise = fetch(url, options)
     .catch((e) => e)
     .then((resp) => {
       fetchPromises.delete(fetchKey);

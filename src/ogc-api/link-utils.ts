@@ -1,18 +1,13 @@
 import { OgcApiDocument, OgcApiDocumentLink } from './model.js';
 import { EndpointError } from '../shared/errors.js';
-import { getFetchOptions } from '../shared/http-utils.js';
+import { sharedFetch } from '../shared/http-utils.js';
 
 export function fetchDocument<T extends OgcApiDocument>(
   url: string
 ): Promise<T> {
   const urlObj = new URL(url, window.location.toString());
   urlObj.searchParams.set('f', 'json');
-  const options = getFetchOptions();
-  const optionsHeaders = 'headers' in options ? options.headers : {};
-  return fetch(urlObj.toString(), {
-    ...options,
-    headers: { ...optionsHeaders, Accept: 'application/json' },
-  }).then((resp) => {
+  return sharedFetch(urlObj.toString(), 'GET', true).then((resp) => {
     if (!resp.ok) {
       throw new Error(`The document at ${urlObj} could not be fetched.`);
     }
