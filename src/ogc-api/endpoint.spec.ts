@@ -43,6 +43,9 @@ beforeAll(() => {
     return {
       ok: true,
       headers: new Headers(),
+      clone: function () {
+        return this;
+      },
       json: () =>
         new Promise((resolve) => {
           resolve(JSON.parse(contents));
@@ -1633,7 +1636,8 @@ describe('OgcApiEndpoint', () => {
         await expect(endpoint.info).rejects.toEqual(
           new EndpointError(
             `The endpoint appears non-conforming, the following error was encountered:
-The document at http://local/sample-data/notjson?f=json does not appear to be valid JSON.`
+The document at http://local/sample-data/notjson?f=json does not appear to be valid JSON. Error was: Unexpected token 'h', "hello world
+" is not valid JSON`
           )
         );
       });

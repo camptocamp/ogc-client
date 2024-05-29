@@ -11,11 +11,14 @@ export function fetchDocument<T extends OgcApiDocument>(
     if (!resp.ok) {
       throw new Error(`The document at ${urlObj} could not be fetched.`);
     }
-    return resp.json().catch(() => {
-      throw new Error(
-        `The document at ${urlObj} does not appear to be valid JSON.`
-      );
-    }) as Promise<T>;
+    return resp
+      .clone()
+      .json()
+      .catch((e) => {
+        throw new Error(
+          `The document at ${urlObj} does not appear to be valid JSON. Error was: ${e.message}`
+        );
+      }) as Promise<T>;
   });
 }
 
