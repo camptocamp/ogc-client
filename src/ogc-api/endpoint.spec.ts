@@ -7,7 +7,7 @@ const FIXTURES_ROOT = path.join(__dirname, '../../fixtures/ogc-api');
 
 // setup fetch to read local fixtures
 beforeAll(() => {
-  window.fetch = async (urlOrInfo) => {
+  window.fetch = jest.fn().mockImplementation(async (urlOrInfo) => {
     const url = new URL(
       urlOrInfo instanceof URL || typeof urlOrInfo === 'string'
         ? urlOrInfo
@@ -48,7 +48,7 @@ beforeAll(() => {
           resolve(JSON.parse(contents));
         }),
     } as Response;
-  };
+  });
 });
 
 jest.useFakeTimers();
@@ -74,6 +74,14 @@ describe('OgcApiEndpoint', () => {
           attribution:
             'Contains OS data © Crown copyright and database right 2021.',
         });
+      });
+      it('uses shared fetch', async () => {
+        jest.clearAllMocks();
+        // create the endpoint three times separately
+        new OgcApiEndpoint('http://local/sample-data/').info;
+        new OgcApiEndpoint('http://local/sample-data/').info;
+        new OgcApiEndpoint('http://local/sample-data/').info;
+        expect(window.fetch).toHaveBeenCalledTimes(1);
       });
     });
     describe('#conformanceClasses', () => {

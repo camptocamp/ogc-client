@@ -407,6 +407,7 @@ describe('HTTP utils', () => {
           'http://localhost/hello.json?f=json',
           {
             ...sampleOptions,
+            method: 'GET',
             headers: {
               ...sampleOptions.headers,
               Accept: 'application/json',
