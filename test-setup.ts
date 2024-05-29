@@ -5,14 +5,14 @@ import * as util from 'util';
 import CacheMock from 'browser-cache-mock';
 import 'isomorphic-fetch';
 import { TextDecoder } from 'util';
-import { Buffer } from './node_modules/buffer';
+import { Buffer } from './node_modules/buffer/index.js';
 
 globalThis.Buffer = Buffer;
 
 // mock the global fetch API
 window.fetchResponseFactory = (url) => '<empty></empty>';
 window.originalFetch = window.fetch;
-window.mockFetch = jest.fn((url) =>
+window.mockFetch = jest.fn().mockImplementation((url) =>
   Promise.resolve({
     text: () => Promise.resolve(globalThis.fetchResponseFactory(url)),
     json: () =>
@@ -21,6 +21,9 @@ window.mockFetch = jest.fn((url) =>
       Promise.resolve(
         Buffer.from(globalThis.fetchResponseFactory(url), 'utf-8')
       ),
+    clone: function () {
+      return this;
+    },
     status: 200,
     ok: true,
     headers: { get: () => null },
@@ -43,9 +46,9 @@ window.caches = {
 global.Worker = function Worker(filePath) {
   let getScopeVar;
   let messageQueue = [];
-  let inside = mitt();
-  let outside = mitt();
-  let scope = {
+  const inside = mitt();
+  const outside = mitt();
+  const scope = {
     onmessage: null,
     dispatchEvent: inside.emit,
     addEventListener: inside.on,
@@ -57,7 +60,7 @@ global.Worker = function Worker(filePath) {
     importScripts() {},
   };
   inside.on('message', (e) => {
-    let f = scope.onmessage || getScopeVar('onmessage');
+    const f = scope.onmessage || getScopeVar('onmessage');
     if (f) f.call(scope, e);
   });
   this.addEventListener = outside.on;
@@ -88,14 +91,14 @@ global.Worker = function Worker(filePath) {
         result.outputFiles[0].contents
       );
       let vars = 'var self=this,global=self,globalThis=self';
-      for (let k in scope) vars += `,${k}=self.${k}`;
+      for (const k in scope) vars += `,${k}=self.${k}`;
       getScopeVar = Function(
         vars +
           ';\n' +
           code +
           '\nreturn function(n){return n=="onmessage"?onmessage:null;}'
       ).call(scope);
-      let q = messageQueue;
+      const q = messageQueue;
       messageQueue = null;
       q.forEach(this.postMessage);
     })

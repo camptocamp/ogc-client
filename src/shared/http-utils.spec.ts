@@ -34,7 +34,7 @@ describe('HTTP utils', () => {
     beforeAll(() => {
       fetchBehaviour = 'ok';
       originalFetch = global.fetch; // keep reference of native impl
-      global.fetch = jest.fn((xmlString, opts) => {
+      global.fetch = jest.fn().mockImplementation((xmlString, opts) => {
         const noCors = opts && opts.mode === 'no-cors';
         const headers = { get: () => null };
         switch (fetchBehaviour) {
@@ -45,12 +45,18 @@ describe('HTTP utils', () => {
               status: 200,
               ok: true,
               headers,
+              clone: function () {
+                return this;
+              },
             });
           case 'httpError':
             return Promise.resolve({
               text: () => Promise.resolve('<error>Random error</error>'),
               status: 401,
               ok: false,
+              clone: function () {
+                return this;
+              },
             });
           case 'corsError':
             if (noCors)
@@ -71,6 +77,9 @@ describe('HTTP utils', () => {
                     headers,
                     arrayBuffer: () =>
                       Promise.resolve(Buffer.from(sampleXml, 'utf-8')),
+                    clone: function () {
+                      return this;
+                    },
                   }),
                 10
               );
