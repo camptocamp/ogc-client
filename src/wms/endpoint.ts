@@ -8,7 +8,6 @@ import {
   MimeType,
 } from '../shared/models.js';
 import { WmsLayerFull, WmsLayerSummary, WmsVersion } from './model.js';
-import { generateGetFeatureUrl } from '../wfs/url.js';
 import { generateGetMapUrl } from './url.js';
 
 /**

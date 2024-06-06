@@ -31,6 +31,7 @@
 
 <script>
 import InfoList from '../presentation/InfoList.vue';
+
 export default {
   name: 'WmsLayerInfo',
   components: { InfoList },
