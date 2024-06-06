@@ -13,7 +13,7 @@ import {
   GenericEndpointInfo,
   LayerStyle,
 } from '../shared/models.js';
-import { WmtsLayerAttribution, WmsLayerFull, WmsVersion } from './model.js';
+import { WmsLayerAttribution, WmsLayerFull, WmsVersion } from './model.js';
 
 /**
  * Will read a WMS version from the capabilities doc
@@ -74,7 +74,7 @@ function parseLayer(
   version: WmsVersion,
   inheritedSrs: CrsCode[] = [],
   inheritedStyles: LayerStyle[] = [],
-  inheritedAttribution: WmtsLayerAttribution = null,
+  inheritedAttribution: WmsLayerAttribution = null,
   inheritedBoundingBoxes: Record<CrsCode, BoundingBox> = null
 ): WmsLayerFull {
   const srsTag = version === '1.3.0' ? 'CRS' : 'SRS';
@@ -159,9 +159,7 @@ function parseLayerStyle(styleEl: XmlElement): LayerStyle {
   };
 }
 
-function parseLayerAttribution(
-  attributionEl: XmlElement
-): WmtsLayerAttribution {
+function parseLayerAttribution(attributionEl: XmlElement): WmsLayerAttribution {
   const logoUrl = getElementAttribute(
     findChildElement(
       findChildElement(attributionEl, 'LogoURL'),
