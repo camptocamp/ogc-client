@@ -1,13 +1,20 @@
 import { parseWmsCapabilities } from '../worker/index.js';
 import { useCache } from '../shared/cache.js';
 import { setQueryParams } from '../shared/http-utils.js';
-import { GenericEndpointInfo } from '../shared/models.js';
+import {
+  BoundingBox,
+  CrsCode,
+  GenericEndpointInfo,
+  MimeType,
+} from '../shared/models.js';
 import { WmsLayerFull, WmsLayerSummary, WmsVersion } from './model.js';
+import { generateGetMapUrl } from './url.js';
 
 /**
  * Represents a WMS endpoint advertising several layers arranged in a tree structure.
  */
 export default class WmsEndpoint {
+  private _capabilitiesUrl: string;
   private _capabilitiesPromise: Promise<void>;
   private _info: GenericEndpointInfo | null;
   private _layers: WmsLayerFull[] | null;
@@ -18,7 +25,7 @@ export default class WmsEndpoint {
    *   initialize the endpoint
    */
   constructor(url: string) {
-    const capabilitiesUrl = setQueryParams(url, {
+    this._capabilitiesUrl = setQueryParams(url, {
       SERVICE: 'WMS',
       REQUEST: 'GetCapabilities',
     });
@@ -27,10 +34,10 @@ export default class WmsEndpoint {
      * This fetches the capabilities doc and parses its contents
      */
     this._capabilitiesPromise = useCache(
-      () => parseWmsCapabilities(capabilitiesUrl),
+      () => parseWmsCapabilities(this._capabilitiesUrl),
       'WMS',
       'CAPABILITIES',
-      capabilitiesUrl
+      this._capabilitiesUrl
     ).then(({ info, layers, version }) => {
       this._info = info;
       this._layers = layers;
@@ -119,5 +126,48 @@ export default class WmsEndpoint {
    */
   getVersion() {
     return this._version;
+  }
+
+  /**
+   * Returns a URL that can be used to query an image from one or several layers
+   * @param layers List of layers to render
+   * @param {Object} options
+   * @param {number} options.widthPx
+   * @param {number} options.heightPx
+   * @param {CrsCode} options.crs Coordinate reference system to use for the image
+   * @param {BoundingBox} options.extent Expressed in the requested CRS
+   * @param {MimeType} options.outputFormat
+   * @param {string} [options.styles] List of styles to use, one for each layer requested; leave out or use empty string for default style
+   * @returns Returns null if endpoint is not ready
+   */
+  getMapUrl(
+    layers: string[],
+    options: {
+      widthPx: number;
+      heightPx: number;
+      crs: CrsCode;
+      extent: BoundingBox;
+      outputFormat: MimeType;
+      styles?: string[];
+    }
+  ) {
+    if (!this._layers) {
+      return null;
+    }
+    const { widthPx, heightPx, crs, extent, outputFormat, styles } = options;
+    // TODO: check supported CRS
+    // TODO: check supported output formats
+    // TODO: check supported styles
+    return generateGetMapUrl(
+      this._capabilitiesUrl,
+      this._version,
+      layers.join(','),
+      widthPx,
+      heightPx,
+      crs,
+      extent,
+      outputFormat,
+      styles !== undefined ? styles.join(',') : ''
+    );
   }
 }

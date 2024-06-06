@@ -186,4 +186,21 @@ describe('WmsEndpoint', () => {
       });
     });
   });
+
+  describe('#generateGetMapUrl', () => {
+    it('generates a correct URL', async () => {
+      await endpoint.isReady();
+      expect(
+        endpoint.getMapUrl(['layer1', 'layer2'], {
+          widthPx: 100,
+          heightPx: 200,
+          crs: 'EPSG:4326',
+          extent: [10, 20, 100, 200],
+          outputFormat: 'image/png',
+        })
+      ).toBe(
+        'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=layer1%2Clayer2&STYLES=&WIDTH=100&HEIGHT=200&FORMAT=image%2Fpng&CRS=EPSG%3A4326&BBOX=10%2C20%2C100%2C200'
+      );
+    });
+  });
 });

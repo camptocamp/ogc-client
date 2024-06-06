@@ -31,13 +31,15 @@
 
 <script>
 import InfoList from '../presentation/InfoList.vue';
+
 export default {
   name: 'WmsLayerInfo',
   components: { InfoList },
   props: {
     /** @type {{ new(): WmsLayerFull}} */
     layer: Object,
-    endpointUrl: String,
+    /** @type {{ new(): WmsEndpoint}} */
+    endpoint: Object,
   },
   data: () => ({
     selectedStyle: '',
@@ -68,23 +70,21 @@ export default {
       if (!(this.selectedCrs in this.layer.boundingBoxes)) {
         return '';
       }
-      const bbox = this.layer.boundingBoxes[this.selectedCrs];
-      const ratio = (bbox[2] - bbox[0]) / (bbox[3] - bbox[1]);
+      const extent = this.layer.boundingBoxes[this.selectedCrs];
+      const ratio = (extent[2] - extent[0]) / (extent[3] - extent[1]);
       const maxDimension = 500;
-      const width = Math.round(ratio > 1 ? maxDimension : maxDimension * ratio);
-      const height = Math.round(width / ratio);
-
-      const urlObj = new URL(this.endpointUrl);
-      urlObj.searchParams.set('SERVICE', 'WMS');
-      urlObj.searchParams.set('REQUEST', 'GetMap');
-      urlObj.searchParams.set('LAYERS', this.layer.name);
-      urlObj.searchParams.set('STYLES', this.selectedStyle);
-      urlObj.searchParams.set('WIDTH', width.toString());
-      urlObj.searchParams.set('HEIGHT', height.toString());
-      urlObj.searchParams.set('FORMAT', 'image/png');
-      urlObj.searchParams.set('CRS', this.selectedCrs);
-      urlObj.searchParams.set('BBOX', bbox.join(','));
-      return urlObj.toString();
+      const widthPx = Math.round(
+        ratio > 1 ? maxDimension : maxDimension * ratio
+      );
+      const heightPx = Math.round(widthPx / ratio);
+      return this.endpoint.getMapUrl([this.layer.name], {
+        extent,
+        widthPx,
+        heightPx,
+        crs: this.selectedCrs,
+        styles: [this.selectedStyle],
+        outputFormat: 'image/png',
+      });
     },
   },
 };
