@@ -13,7 +13,10 @@
     <div v-if="loading">Loading...</div>
     <div v-if="loaded">
       <InfoList :info="endpoint.getServiceInfo()"></InfoList>
-      <ItemsTree :items="endpoint.getLayers()" style="min-height: 200px">
+      <ItemsTree
+        :items="endpoint.getLayers()"
+        style="min-height: 200px; max-height: 400px; overflow: auto"
+      >
         <template v-slot="{ item }">
           <div :title="item.abstract">
             <template v-if="item.name">
@@ -33,7 +36,7 @@
       <WmsLayerInfo
         v-if="selectedLayer"
         :layer="selectedLayer"
-        :endpoint-url="url"
+        :endpoint="endpoint"
       ></WmsLayerInfo>
     </div>
     <div v-if="error">Error: {{ error }}</div>
