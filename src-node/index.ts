@@ -1,6 +1,6 @@
-// @ts-nocheck
-import './polyfills';
-import { enableFallbackWithoutWorker } from '../src';
-export * from '../src/index';
+import './polyfills.js';
+import { enableFallbackWithoutWorker } from '../src/index.js';
+
+export * from '../src/index.js';
 
 enableFallbackWithoutWorker();
