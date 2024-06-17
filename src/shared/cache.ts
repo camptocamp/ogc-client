@@ -18,7 +18,7 @@ export function getCacheExpiryDuration() {
 }
 
 let cachePromise: Promise<Cache | null>;
-function getCache() {
+export function getCache() {
   if (cachePromise !== undefined) return cachePromise;
   if (!('caches' in globalThis)) {
     cachePromise = Promise.resolve(null);
@@ -43,14 +43,22 @@ export async function storeCacheEntry(object: unknown, ...keys: string[]) {
   const cache = await getCache();
   if (!cache) return;
   const entryUrl = 'https://cache/' + keys.join('/');
-  await cache.put(
-    entryUrl,
-    new Response(JSON.stringify(object), {
-      headers: {
-        'x-expiry': (Date.now() + getCacheExpiryDuration()).toString(10),
-      },
-    })
-  );
+  try {
+    await cache.put(
+      entryUrl,
+      new Response(JSON.stringify(object), {
+        headers: {
+          'x-expiry': (Date.now() + getCacheExpiryDuration()).toString(10),
+        },
+      })
+    );
+  } catch (e) {
+    console.info(
+      '[ogc-client] Caching failed once for the following reason and will not be retried:',
+      e
+    );
+    cachePromise = Promise.resolve(null); // this will disable caching
+  }
 }
 
 export async function hasValidCacheEntry(...keys: string[]) {
