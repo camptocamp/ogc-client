@@ -1,5 +1,6 @@
 import {
   _resetCache,
+  getCache,
   purgeEntries,
   readCacheEntry,
   setCacheExpiryDuration,
@@ -132,14 +133,40 @@ describe('cache utils', () => {
 
   describe('when the Cache API is available but blocked for security reasons', () => {
     let result;
+    let originalFn;
     beforeEach(async () => {
       _resetCache();
+      originalFn = globalThis.caches.open;
       globalThis.caches.open = () => Promise.reject(new Error('not allowed'));
       await storeCacheEntry({ old: true }, 'test', 'entry', '07');
       result = await useCache(factory, 'test', 'entry', '07');
     });
+    afterEach(() => {
+      globalThis.caches.open = originalFn;
+    });
     it('runs the factory function', () => {
       expect(factory).toHaveBeenCalledTimes(1);
+    });
+    it('does not use cache, does not fail', () => {
+      expect(result).toEqual({ fresh: true });
+    });
+  });
+
+  describe('when the Cache API is available but fails on put()', () => {
+    let result;
+    beforeEach(async () => {
+      _resetCache();
+      const cache = await getCache();
+      cache.put = () => Promise.reject(new Error('something went wrong'));
+      await storeCacheEntry({ old: true }, 'test', 'entry', '08');
+      await storeCacheEntry({ old: true }, 'test', 'entry', '09');
+      await storeCacheEntry({ old: true }, 'test', 'entry', '10');
+      result = await useCache(factory, 'test', 'entry', '08');
+      result = await useCache(factory, 'test', 'entry', '09');
+      result = await useCache(factory, 'test', 'entry', '10');
+    });
+    it('runs the factory function', () => {
+      expect(factory).toHaveBeenCalledTimes(3);
     });
     it('does not use cache, does not fail', () => {
       expect(result).toEqual({ fresh: true });
