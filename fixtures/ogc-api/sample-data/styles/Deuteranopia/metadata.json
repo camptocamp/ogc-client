@@ -1,0 +1,33 @@
+{
+  "title": "Deuteranopia",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document",
+      "href": "http://local/zoomstack/styles/Deuteranopia/metadata?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML",
+      "href": "http://local/zoomstack/styles/Deuteranopia/metadata?f=html"
+    }
+  ],
+  "id": "Deuteranopia",
+  "scope": "style",
+  "stylesheets": [
+    {
+      "title": "ArcGIS",
+      "version": "n/a",
+      "specification": "https://www.esri.com/",
+      "native": true,
+      "link": {
+        "rel": "stylesheet",
+        "type": "application/vnd.esri.lyr",
+        "title": "Style in format 'ArcGIS'",
+        "href": "http://local/zoomstack/styles/Deuteranopia?f=lyr"
+      }
+    }
+  ]
+}
