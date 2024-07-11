@@ -10,7 +10,6 @@ import {
   parseConformance,
   parseEndpointInfo,
   parseBasicStyleInfo,
-  parseStylesAsList,
   parseTileMatrixSets,
 } from './info.js';
 import {
@@ -21,7 +20,8 @@ import {
   OgcApiEndpointInfo,
   OgcApiStyleMetadata,
   OgcApiStylesDocument,
-  StyleItem,
+  OgcStyleBrief,
+  OgcStyleFull,
   TileMatrixSet,
 } from './model.js';
 import {
@@ -271,9 +271,23 @@ ${e.message}`);
   }
 
   private async getStyleMetadataDocument(
-    styleId: string
+    styleId: string,
+    collectionId?: string
   ): Promise<OgcApiDocument> {
-    const styleData = await this.styles;
+    const doc = collectionId ? await this.getCollectionDocument(collectionId) : await this.root;
+    const stylesLinkJson = getLinkUrl(
+      doc as OgcApiDocument,
+      ['styles', 'http://www.opengis.net/def/rel/ogc/1.0/styles'],
+      this.baseUrl,
+      'application/json'
+    );
+    const stylesLink = getLinkUrl(
+      doc as OgcApiDocument,
+      ['styles', 'http://www.opengis.net/def/rel/ogc/1.0/styles'],
+      this.baseUrl
+    );
+    const styleData = await fetchDocument(stylesLinkJson ?? stylesLink) as OgcApiStylesDocument;
+
     if (!styleData.styles.some((style) => style.id === styleId)) {
       throw new EndpointError(`Style not found: "${styleId}".`);
     }
@@ -281,7 +295,8 @@ ${e.message}`);
     if (hasLinks(styleDoc as OgcApiDocument, ['describedby'])) {
       return fetchLink(styleDoc as OgcApiDocument, 'describedby', this.baseUrl);
     } else {
-      return null;
+      // fallback: return style document
+      return styleDoc as OgcApiDocument;
     }
   }
 
@@ -598,73 +613,69 @@ ${e.message}`);
   }
 
   /**
-   * A Promise which resolves to an array of all style identifiers as strings.
-   */
-  get listAllStyles(): Promise<string[]> {
-    return this.styles.then(parseStylesAsList());
-  }
-
-  /**
    * A Promise which resolves to an array of all style items. This includes the supported style formats.
+   * @param collectionId - Optional unique identifier for the collection.
    */
-  get allStyles(): Promise<StyleItem[]> {
-    return this.styles.then(async (stylesDoc) => {
-      const metadataPromises = stylesDoc.styles.map((style) =>
-        this.getStyleMetadataDocument(style.id)
+  async allStyles(collectionId?: string): Promise<OgcStyleBrief[]> {
+    const doc = collectionId ? await this.getCollectionDocument(collectionId) : await this.root;
+    const stylesLink = getLinkUrl(
+      doc as OgcApiDocument,
+      ['styles', 'http://www.opengis.net/def/rel/ogc/1.0/styles'],
+      this.baseUrl
+    );
+    if (!stylesLink) {
+      throw new EndpointError(
+        'Could not get styles: there is no relation of type "styles"'
       );
-      return Promise.all(metadataPromises).then((results) => {
-        return results.map((r) =>
-          parseBasicStyleInfo(r as OgcApiStyleMetadata)
-        );
-      });
-    });
+    }
+    const styleData = await fetchDocument(stylesLink) as OgcApiStylesDocument;
+    return styleData.styles.map(parseBasicStyleInfo);
   }
 
   /**
-   * Returns a promise resolving to a document describing the style.
-   * @param styleId The style identifier
+   * Returns a promise resolving to a document describing the style. Looks for a relation of type
+   * "describedby" to fetch metadata. If no relation is found, only basic info will be returned.
+   * @param styleId - The style identifier
+   * @param collectionId - Optional unique identifier for the collection.
    */
-  async getStyle(styleId: string): Promise<OgcApiStyleMetadata> {
-    const metadataDoc = await this.getStyleMetadataDocument(styleId);
-    if (!metadataDoc) {
-      throw new EndpointError(
-        `Could not get style metadata: there is no relation of type "describedby" for style "${styleId}".`
-      );
+  async getStyle(styleId: string, collectionId?: string): Promise<OgcStyleFull | OgcStyleBrief> {
+    const metadataDoc = await this.getStyleMetadataDocument(styleId, collectionId);
+    if (!metadataDoc?.stylesheets) {
+      return parseBasicStyleInfo(metadataDoc as OgcApiStyleMetadata);
     }
     return parseFullStyleInfo(metadataDoc as OgcApiStyleMetadata);
   }
 
   /**
    * Returns a promise resolving to a stylesheet URL for a given style and type.
-   * @param styleId The style identifier
-   * @param mimeType Stylesheet MIME type
+   * @param styleId - The style identifier
+   * @param mimeType - Stylesheet MIME type
+   * @param collectionId - Optional unique identifier for the collection.
    */
-  async getStylesheetUrl(styleId: string, mimeType: string): Promise<string> {
-    const metadataDoc = await this.getStyleMetadataDocument(styleId);
-    const urlFromMetadata = (
-      metadataDoc as OgcApiStyleMetadata
-    )?.stylesheets?.find(
-      (s) => s.link.type === mimeType && s.link.rel === 'stylesheet'
-    )?.link?.href;
+  async getStylesheetUrl(styleId: string, mimeType: string, collectionId?: string): Promise<string> {
+    const stylesDoc = await this.getStyleMetadataDocument(styleId, collectionId);
 
-    if (!urlFromMetadata) {
-      // fallback which retrieves the URL from the style document itself
-      const style = (await this.styles).styles?.find(
-        (style) => style.id === styleId
-      );
-      const urlFromStyle = getLinkUrl(
-        style as unknown as OgcApiDocument,
-        'stylesheet',
-        this.baseUrl,
-        mimeType
-      );
-      if (!urlFromStyle) {
-        throw new EndpointError(
-          'Could not find stylesheet URL for given style ID and type.'
-        );
-      }
-      return urlFromStyle;
+    if (stylesDoc.stylesheets) {
+      const urlFromMetadata = (
+        stylesDoc as OgcApiStyleMetadata
+      )?.stylesheets?.find(
+        (s) => s.link.type === mimeType && s.link.rel === 'stylesheet'
+      )?.link?.href;
+      return urlFromMetadata;
     }
-    return urlFromMetadata;
+
+    const urlFromStyle = getLinkUrl(
+      stylesDoc,
+      'stylesheet',
+      this.baseUrl,
+      mimeType
+    );
+
+    if (!urlFromStyle) {
+      throw new EndpointError(
+        'Could not find stylesheet URL for given style ID and type.'
+      );
+    }
+    return urlFromStyle;
   }
 }

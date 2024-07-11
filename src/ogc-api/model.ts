@@ -171,6 +171,16 @@ export type StyleItem = {
   formats?: string[];
 };
 
+export type OgcStyleFull = {
+  stylesheetFormats: string[];
+} & OgcApiStyleMetadata;
+
+export type OgcStyleBrief = {
+  id: string;
+  title?: string;
+  formats?: string[];
+};
+
 export type OgcApiStylesDocument = {
   styles: StyleItem[];
   links: OgcApiDocumentLink[];
@@ -211,7 +221,3 @@ export type OgcApiStyleMetadata = {
   }[];
   links?: OgcApiDocumentLink[];
 };
-
-export type OgcApiStyleMetadataInfo = {
-  stylesheetFormats: string[];
-} & OgcApiStyleMetadata;

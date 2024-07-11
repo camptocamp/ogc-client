@@ -7,9 +7,9 @@ import {
   OgcApiDocument,
   OgcApiEndpointInfo,
   OgcApiStyleMetadata,
-  OgcApiStyleMetadataInfo,
   OgcApiStylesDocument,
-  StyleItem,
+  OgcStyleBrief,
+  OgcStyleFull,
   TileMatrixSet,
 } from './model.js';
 import { assertHasLinks } from './link-utils.js';
@@ -225,17 +225,16 @@ export function parseTileMatrixSets(doc: OgcApiDocument): TileMatrixSet[] {
   return [];
 }
 
-export function parseBasicStyleInfo(doc: OgcApiStyleMetadata): StyleItem {
-  const { stylesheets, id, title } = doc;
-  const stylesheetFormats = stylesheets
-    .filter((stylesheet) => stylesheet.link.rel === 'stylesheet')
-    .map((stylesheet) => stylesheet.link.type);
-
+export function parseBasicStyleInfo(doc: OgcApiStyleMetadata): OgcStyleBrief {
+  const formats = doc.links
+    .filter((link) => link.rel === 'stylesheet')
+    .map((link) => link.type)
+    .filter((type) => type !== 'text/html');
   return {
-    id,
-    title,
-    formats: stylesheetFormats,
-  } as StyleItem;
+    formats,
+    id: doc.id,
+    ...doc.title && {title: doc.title},
+  };
 }
 
 export function parseStylesAsList(): (doc: OgcApiStylesDocument) => string[] {
@@ -245,15 +244,15 @@ export function parseStylesAsList(): (doc: OgcApiStylesDocument) => string[] {
 
 export function parseFullStyleInfo(
   doc: OgcApiStyleMetadata
-): OgcApiStyleMetadata {
+): OgcStyleFull {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { stylesheets, links, ...props } = doc;
   const stylesheetFormats = stylesheets
-    .filter((stylesheet) => stylesheet.link.rel === 'stylesheet')
-    .map((stylesheet) => stylesheet.link.type);
+    ?.filter((stylesheet) => stylesheet.link.rel === 'stylesheet')
+    ?.map((stylesheet) => stylesheet.link.type);
   return {
-    stylesheetFormats,
-    stylesheets,
+    ...stylesheetFormats && {stylesheetFormats},
+    ...stylesheets && {stylesheets},
     ...props,
-  } as OgcApiStyleMetadataInfo;
+  } as OgcStyleFull;
 }
