@@ -274,7 +274,9 @@ ${e.message}`);
     styleId: string,
     collectionId?: string
   ): Promise<OgcApiDocument> {
-    const doc = collectionId ? await this.getCollectionDocument(collectionId) : await this.root;
+    const doc = collectionId
+      ? await this.getCollectionDocument(collectionId)
+      : await this.root;
     const stylesLinkJson = getLinkUrl(
       doc as OgcApiDocument,
       ['styles', 'http://www.opengis.net/def/rel/ogc/1.0/styles'],
@@ -286,7 +288,9 @@ ${e.message}`);
       ['styles', 'http://www.opengis.net/def/rel/ogc/1.0/styles'],
       this.baseUrl
     );
-    const styleData = await fetchDocument(stylesLinkJson ?? stylesLink) as OgcApiStylesDocument;
+    const styleData = (await fetchDocument(
+      stylesLinkJson ?? stylesLink
+    )) as OgcApiStylesDocument;
 
     if (!styleData.styles.some((style) => style.id === styleId)) {
       throw new EndpointError(`Style not found: "${styleId}".`);
@@ -617,7 +621,9 @@ ${e.message}`);
    * @param collectionId - Optional unique identifier for the collection.
    */
   async allStyles(collectionId?: string): Promise<OgcStyleBrief[]> {
-    const doc = collectionId ? await this.getCollectionDocument(collectionId) : await this.root;
+    const doc = collectionId
+      ? await this.getCollectionDocument(collectionId)
+      : await this.root;
     const stylesLink = getLinkUrl(
       doc as OgcApiDocument,
       ['styles', 'http://www.opengis.net/def/rel/ogc/1.0/styles'],
@@ -628,7 +634,7 @@ ${e.message}`);
         'Could not get styles: there is no relation of type "styles"'
       );
     }
-    const styleData = await fetchDocument(stylesLink) as OgcApiStylesDocument;
+    const styleData = (await fetchDocument(stylesLink)) as OgcApiStylesDocument;
     return styleData.styles.map(parseBasicStyleInfo);
   }
 
@@ -638,8 +644,14 @@ ${e.message}`);
    * @param styleId - The style identifier
    * @param collectionId - Optional unique identifier for the collection.
    */
-  async getStyle(styleId: string, collectionId?: string): Promise<OgcStyleFull | OgcStyleBrief> {
-    const metadataDoc = await this.getStyleMetadataDocument(styleId, collectionId);
+  async getStyle(
+    styleId: string,
+    collectionId?: string
+  ): Promise<OgcStyleFull | OgcStyleBrief> {
+    const metadataDoc = await this.getStyleMetadataDocument(
+      styleId,
+      collectionId
+    );
     if (!metadataDoc?.stylesheets) {
       return parseBasicStyleInfo(metadataDoc as OgcApiStyleMetadata);
     }
@@ -652,8 +664,15 @@ ${e.message}`);
    * @param mimeType - Stylesheet MIME type
    * @param collectionId - Optional unique identifier for the collection.
    */
-  async getStylesheetUrl(styleId: string, mimeType: string, collectionId?: string): Promise<string> {
-    const stylesDoc = await this.getStyleMetadataDocument(styleId, collectionId);
+  async getStylesheetUrl(
+    styleId: string,
+    mimeType: string,
+    collectionId?: string
+  ): Promise<string> {
+    const stylesDoc = await this.getStyleMetadataDocument(
+      styleId,
+      collectionId
+    );
 
     if (stylesDoc.stylesheets) {
       const urlFromMetadata = (

@@ -2042,7 +2042,8 @@ The document at http://local/nonexisting?f=json could not be fetched.`
               'application/vnd.qgis.qml',
               'application/vnd.ogc.sld+xml;version=1.0',
               'application/vnd.mapbox.style+json',
-            ],          },
+            ],
+          },
           {
             title: 'Tritanopia',
             id: 'Tritanopia',
@@ -2054,9 +2055,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
           {
             title: 'OS Open Zoomstack - Outdoor with Hillshade',
             id: 'OutdoorHillshade',
-            formats: [
-              'application/vnd.mapbox.style+json',
-            ],
+            formats: ['application/vnd.mapbox.style+json'],
           },
         ]);
       });
@@ -2087,19 +2086,22 @@ The document at http://local/nonexisting?f=json could not be fetched.`
     });
     describe('#getStyle for a given collection', () => {
       it('returns style metadata', async () => {
-        await expect(endpoint.getStyle('Tritanopia', 'airports')).resolves.toEqual({
+        await expect(
+          endpoint.getStyle('Tritanopia', 'airports')
+        ).resolves.toEqual({
           title: 'Tritanopia',
           id: 'Tritanopia',
           scope: 'style',
           stylesheetFormats: [
             'application/vnd.qgis.qml',
-            'application/vnd.ogc.sld+xml;version=1.0'
+            'application/vnd.ogc.sld+xml;version=1.0',
           ],
           stylesheets: [
             {
               title: 'QGIS',
               version: '3.16',
-              specification: 'https://docs.qgis.org/3.16/en/docs/user_manual/appendices/qgis_file_formats.html#qml-the-qgis-style-file-format',
+              specification:
+                'https://docs.qgis.org/3.16/en/docs/user_manual/appendices/qgis_file_formats.html#qml-the-qgis-style-file-format',
               native: true,
               link: {
                 rel: 'stylesheet',
@@ -2135,15 +2137,17 @@ The document at http://local/nonexisting?f=json could not be fetched.`
       it('returns the correct stylesheet URL', async () => {
         await expect(
           endpoint.getStylesheetUrl('Road', 'application/vnd.mapbox.style+json')
-        ).resolves.toEqual(
-          'http://local/zoomstack/styles/Road?f=mbs'
-        );
+        ).resolves.toEqual('http://local/zoomstack/styles/Road?f=mbs');
       });
     });
     describe('#getStylesheetUrl for a given collection', () => {
       it('returns the correct stylesheet URL', async () => {
         await expect(
-          endpoint.getStylesheetUrl('Tritanopia', 'application/vnd.ogc.sld+xml;version=1.0', 'airports')
+          endpoint.getStylesheetUrl(
+            'Tritanopia',
+            'application/vnd.ogc.sld+xml;version=1.0',
+            'airports'
+          )
         ).resolves.toEqual(
           'https://my.server.org/sample-data/collections/airports/styles/Tritanopia?f=sld10'
         );

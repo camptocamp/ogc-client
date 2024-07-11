@@ -233,7 +233,7 @@ export function parseBasicStyleInfo(doc: OgcApiStyleMetadata): OgcStyleBrief {
   return {
     formats,
     id: doc.id,
-    ...doc.title && {title: doc.title},
+    ...(doc.title && { title: doc.title }),
   };
 }
 
@@ -242,17 +242,15 @@ export function parseStylesAsList(): (doc: OgcApiStylesDocument) => string[] {
     doc?.styles?.map((style) => style.id as string);
 }
 
-export function parseFullStyleInfo(
-  doc: OgcApiStyleMetadata
-): OgcStyleFull {
+export function parseFullStyleInfo(doc: OgcApiStyleMetadata): OgcStyleFull {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { stylesheets, links, ...props } = doc;
   const stylesheetFormats = stylesheets
     ?.filter((stylesheet) => stylesheet.link.rel === 'stylesheet')
     ?.map((stylesheet) => stylesheet.link.type);
   return {
-    ...stylesheetFormats && {stylesheetFormats},
-    ...stylesheets && {stylesheets},
+    ...(stylesheetFormats && { stylesheetFormats }),
+    ...(stylesheets && { stylesheets }),
     ...props,
   } as OgcStyleFull;
 }
