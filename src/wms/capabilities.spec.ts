@@ -53,6 +53,15 @@ describe('WMS capabilities', () => {
           'EPSG:4171': ['-180', '-90', '180', '90'],
           'EPSG:4326': ['-180', '-90', '180', '90'],
         },
+        keywords: [
+          "Géologie",
+          "BRGM",
+          "INSPIRE:ViewService",
+          "infoMapAccessService",
+          "WMS 1.1.1",
+          "WMS 1.3.0",
+          "SLD 1.1.0",
+         ],
         name: 'GEOSERVICES_GEOLOGIE',
         styles: [
           {
@@ -76,6 +85,7 @@ describe('WMS capabilities', () => {
               'EPSG:4171': ['-180', '-90', '180', '90'],
               'EPSG:4326': ['-180', '-90', '180', '90'],
             },
+            keywords: [],
             name: 'GEOLOGIE',
             styles,
             title: 'Cartes géologiques',
@@ -117,6 +127,11 @@ describe('WMS capabilities', () => {
                   ],
                   'EPSG:4326': ['-5.86764', '41.1701', '11.0789', '51.1419'],
                 },
+                "keywords": [
+                  "Geologie",
+                  "INSPIRE:Geology",
+                  "Geology",
+                ],
                 name: 'SCAN_F_GEOL1M',
                 styles: [
                   {
@@ -167,6 +182,11 @@ describe('WMS capabilities', () => {
                   ],
                   'EPSG:4326': ['-6.20495', '41.9671', '12.2874', '51.2917'],
                 },
+                "keywords": [
+                  "Geologie",
+                  "INSPIRE:Geology",
+                  "Geology",
+                ],
                 name: 'SCAN_F_GEOL250',
                 styles,
                 title: 'Carte géologique image de la France au 1/250000',
@@ -204,6 +224,11 @@ describe('WMS capabilities', () => {
                   ],
                   'EPSG:4326': ['-12.2064', '40.681', '11.894', '52.1672'],
                 },
+                "keywords": [
+                  "Geologie",
+                  "INSPIRE:Geology",
+                  "Geology",
+                ],
                 name: 'SCAN_D_GEOL50',
                 styles,
                 title: 'Carte géologique image de la France au 1/50 000e',
@@ -229,6 +254,7 @@ describe('WMS capabilities', () => {
                   'EPSG:4171': ['-180', '-90', '180', '90'],
                   'EPSG:4326': ['-180', '-90', '180', '90'],
                 },
+                "keywords": [],
                 name: 'INHERIT_BBOX',
                 styles: [
                   {
