@@ -158,6 +158,12 @@ function parseFeatureType(
         'Format'
       ).map(getElementText);
 
+  const keywords = findChildrenElement(
+    findChildElement(featureTypeEl, 'Keywords'),
+    'Keyword'
+  )
+    .map(getElementText)
+    .filter((v, i, arr) => arr.indexOf(v) === i);    
   return {
     name: getElementText(findChildElement(featureTypeEl, 'Name')),
     title: getElementText(findChildElement(featureTypeEl, 'Title')),
@@ -171,5 +177,6 @@ function parseFeatureType(
     latLonBoundingBox: serviceVersion.startsWith('1.0')
       ? parseBBox100()
       : parseBBox(),
+    keywords: keywords
   };
 }

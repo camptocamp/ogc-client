@@ -10,6 +10,7 @@ export type WfsFeatureTypeInternal = {
   otherCrs: CrsCode[];
   outputFormats: MimeType[];
   latLonBoundingBox?: BoundingBox;
+  keywords?: string[];
 };
 
 export type FeaturePropertyType = string | number | boolean;
@@ -44,6 +45,7 @@ export type WfsFeatureTypeSummary = {
   defaultCrs: CrsCode;
   otherCrs: CrsCode[];
   outputFormats: MimeType[];
+  keywords?: string[];
 };
 
 export type WfsFeatureTypeFull = {
@@ -73,6 +75,7 @@ export type WfsFeatureTypeFull = {
    * Not defined if object count could not be determined
    */
   objectCount?: number;
+  keywords?: string[];
 };
 
 export type WfsFeatureWithProps = {
