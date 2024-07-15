@@ -35,6 +35,10 @@ describe('WFS capabilities', () => {
         abstract:
           'Registre Parcellaire Graphique 2010 en Aquitaine - Agence de Service et de Paiement',
         defaultCrs: 'EPSG:2154',
+        keywords: [
+          "features",
+          "rpg2010",
+        ],
         latLonBoundingBox: [
           -1.9540704007796161, 42.73286181824404, 1.496463327812538,
           45.717071228823876,
@@ -53,6 +57,10 @@ describe('WFS capabilities', () => {
         abstract:
           'Représentation des moyennes journalières des trafics routiers sur les routes départementales de la\n                Charente (16) au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
         defaultCrs: 'EPSG:2154',
+        keywords: [
+          "features",
+          "comptages_routiers_l",
+        ],
         latLonBoundingBox: [
           -0.4906009184568518, 45.175543885638376, 0.9778719979726385,
           46.14349349624617,
@@ -72,6 +80,10 @@ describe('WFS capabilities', () => {
         abstract:
           'Hiérarchisation du réseau routier départemental en fonction des caractéristiques de chaque section\n                de route et de son usage au 1er Janvier 2021.\n\n                Mise à jour : Mars 2021\n            ',
         defaultCrs: 'EPSG:2154',
+        keywords: [
+          "features",
+          "hierarchisation_l",
+        ],
         latLonBoundingBox: [
           -0.4832134559131876, 45.18037755571674, 0.9725372441782966,
           46.13877580094452,
@@ -131,6 +143,11 @@ describe('WFS capabilities', () => {
         expect(featureTypes[0]).toEqual({
           abstract: 'Domaine public',
           defaultCrs: 'EPSG:2154',
+          keywords: [
+            "domaine_public_hdf_com",
+            "domaine",
+            "public"
+          ],
           latLonBoundingBox: [
             1.3472171890368316, 48.82764887581316, 4.285589467078578,
             51.0896786738123,

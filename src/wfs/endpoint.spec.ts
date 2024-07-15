@@ -131,6 +131,10 @@ describe('WfsEndpoint', () => {
           46.13877580094452,
         ],
         defaultCrs: 'EPSG:2154',
+        "keywords": [
+          "features",
+          "hierarchisation_l",
+        ],
         otherCrs: ['EPSG:32615', 'EPSG:32616', 'EPSG:32617', 'EPSG:32618'],
         outputFormats: [
           'application/gml+xml; version=3.2',
@@ -170,6 +174,10 @@ describe('WfsEndpoint', () => {
           46.13877580094452,
         ],
         defaultCrs: 'EPSG:2154',
+        "keywords": [
+          "features",
+          "hierarchisation_l",
+        ],
         otherCrs: ['EPSG:32615', 'EPSG:32616', 'EPSG:32617', 'EPSG:32618'],
         outputFormats: [
           'application/gml+xml; version=3.2',
