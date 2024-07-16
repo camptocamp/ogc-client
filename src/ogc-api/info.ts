@@ -6,6 +6,10 @@ import {
   OgcApiCollectionInfo,
   OgcApiDocument,
   OgcApiEndpointInfo,
+  OgcApiStyleMetadata,
+  OgcApiStylesDocument,
+  OgcStyleBrief,
+  OgcStyleFull,
   TileMatrixSet,
 } from './model.js';
 import { assertHasLinks } from './link-utils.js';
@@ -105,6 +109,9 @@ export function checkStyleConformance(conformance: ConformanceClass[]) {
   return (
     conformance.indexOf(
       'http://www.opengis.net/spec/ogcapi-styles-1/0.0/conf/core'
+    ) > -1 ||
+    conformance.indexOf(
+      'http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/core'
     ) > -1
   );
 }
@@ -216,4 +223,34 @@ export function parseTileMatrixSets(doc: OgcApiDocument): TileMatrixSet[] {
     });
   }
   return [];
+}
+
+export function parseBasicStyleInfo(doc: OgcApiStyleMetadata): OgcStyleBrief {
+  const formats = doc.links
+    .filter((link) => link.rel === 'stylesheet')
+    .map((link) => link.type)
+    .filter((type) => type !== 'text/html');
+  return {
+    formats,
+    id: doc.id,
+    ...(doc.title && { title: doc.title }),
+  };
+}
+
+export function parseStylesAsList(): (doc: OgcApiStylesDocument) => string[] {
+  return (doc: OgcApiStylesDocument) =>
+    doc?.styles?.map((style) => style.id as string);
+}
+
+export function parseFullStyleInfo(doc: OgcApiStyleMetadata): OgcStyleFull {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { stylesheets, links, ...props } = doc;
+  const stylesheetFormats = stylesheets
+    ?.filter((stylesheet) => stylesheet.link.rel === 'stylesheet')
+    ?.map((stylesheet) => stylesheet.link.type);
+  return {
+    ...(stylesheetFormats && { stylesheetFormats }),
+    ...(stylesheets && { stylesheets }),
+    ...props,
+  } as OgcStyleFull;
 }

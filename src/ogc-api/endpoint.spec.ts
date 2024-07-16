@@ -1951,4 +1951,219 @@ The document at http://local/nonexisting?f=json could not be fetched.`
       });
     });
   });
+
+  describe('endpoint with styles', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint('http://local/sample-data/');
+    });
+    describe('#allStyles', () => {
+      it('returns a list of styles', async () => {
+        await expect(endpoint.allStyles()).resolves.toEqual([
+          {
+            title: 'Deuteranopia',
+            id: 'Deuteranopia',
+            formats: ['application/vnd.esri.lyr'],
+          },
+          {
+            title: 'OS Open Zoomstack - Light',
+            id: 'Light',
+            formats: [
+              'application/vnd.esri.lyr',
+              'application/vnd.mapbox.style+json',
+            ],
+          },
+          {
+            title: 'OS Open Zoomstack - Night',
+            id: 'Night',
+            formats: [
+              'application/vnd.esri.lyr',
+              'application/vnd.mapbox.style+json',
+            ],
+          },
+          {
+            title: 'OS Open Zoomstack - Outdoor',
+            id: 'Outdoor',
+            formats: [
+              'application/vnd.esri.lyr',
+              'application/vnd.mapbox.style+json',
+            ],
+          },
+          {
+            title: 'OS Open Zoomstack - Outdoor with Hillshade',
+            id: 'OutdoorHillshade',
+            formats: ['application/vnd.mapbox.style+json'],
+          },
+          {
+            title: 'OS Open Zoomstack - Road',
+            id: 'Road',
+            formats: [
+              'application/vnd.esri.lyr',
+              'application/vnd.mapbox.style+json',
+            ],
+          },
+          {
+            title: 'Tritanopia',
+            id: 'Tritanopia',
+            formats: ['application/vnd.esri.lyr'],
+          },
+        ]);
+      });
+    });
+    describe('#allStyles for a given collection', () => {
+      it('returns a list of styles', async () => {
+        await expect(endpoint.allStyles('airports')).resolves.toEqual([
+          {
+            title: 'Deuteranopia',
+            id: 'Deuteranopia',
+            formats: [
+              'application/vnd.qgis.qml',
+              'application/vnd.ogc.sld+xml;version=1.0',
+            ],
+          },
+          {
+            title: 'Light',
+            id: 'Light',
+            formats: [
+              'application/vnd.qgis.qml',
+              'application/vnd.ogc.sld+xml;version=1.0',
+              'application/vnd.mapbox.style+json',
+            ],
+          },
+          {
+            title: 'Night',
+            id: 'Night',
+            formats: [
+              'application/vnd.qgis.qml',
+              'application/vnd.ogc.sld+xml;version=1.0',
+              'application/vnd.mapbox.style+json',
+            ],
+          },
+          {
+            title: 'Outdoor',
+            id: 'Outdoor',
+            formats: [
+              'application/vnd.qgis.qml',
+              'application/vnd.ogc.sld+xml;version=1.0',
+              'application/vnd.mapbox.style+json',
+            ],
+          },
+          {
+            title: 'Road',
+            id: 'Road',
+            formats: [
+              'application/vnd.qgis.qml',
+              'application/vnd.ogc.sld+xml;version=1.0',
+              'application/vnd.mapbox.style+json',
+            ],
+          },
+          {
+            title: 'Tritanopia',
+            id: 'Tritanopia',
+            formats: [
+              'application/vnd.qgis.qml',
+              'application/vnd.ogc.sld+xml;version=1.0',
+            ],
+          },
+          {
+            title: 'OS Open Zoomstack - Outdoor with Hillshade',
+            id: 'OutdoorHillshade',
+            formats: ['application/vnd.mapbox.style+json'],
+          },
+        ]);
+      });
+    });
+    describe('#getStyle', () => {
+      it('returns style metadata', async () => {
+        await expect(endpoint.getStyle('Deuteranopia')).resolves.toEqual({
+          title: 'Deuteranopia',
+          id: 'Deuteranopia',
+          scope: 'style',
+          stylesheetFormats: ['application/vnd.esri.lyr'],
+          stylesheets: [
+            {
+              title: 'ArcGIS',
+              version: 'n/a',
+              specification: 'https://www.esri.com/',
+              native: true,
+              link: {
+                rel: 'stylesheet',
+                type: 'application/vnd.esri.lyr',
+                title: "Style in format 'ArcGIS'",
+                href: 'http://local/zoomstack/styles/Deuteranopia?f=lyr',
+              },
+            },
+          ],
+        });
+      });
+    });
+    describe('#getStyle for a given collection', () => {
+      it('returns style metadata', async () => {
+        await expect(
+          endpoint.getStyle('Tritanopia', 'airports')
+        ).resolves.toEqual({
+          title: 'Tritanopia',
+          id: 'Tritanopia',
+          scope: 'style',
+          stylesheetFormats: [
+            'application/vnd.qgis.qml',
+            'application/vnd.ogc.sld+xml;version=1.0',
+          ],
+          stylesheets: [
+            {
+              title: 'QGIS',
+              version: '3.16',
+              specification:
+                'https://docs.qgis.org/3.16/en/docs/user_manual/appendices/qgis_file_formats.html#qml-the-qgis-style-file-format',
+              native: true,
+              link: {
+                rel: 'stylesheet',
+                type: 'application/vnd.qgis.qml',
+                title: "Style in format 'QGIS'",
+                href: 'https://my.server.org/sample-data/collections/airports/styles/Tritanopia?f=qml',
+              },
+            },
+            {
+              title: 'SLD 1.0',
+              version: '1.0',
+              specification: 'https://www.ogc.org/standards/sld',
+              native: true,
+              link: {
+                rel: 'stylesheet',
+                type: 'application/vnd.ogc.sld+xml;version=1.0',
+                title: "Style in format 'SLD 1.0'",
+                href: 'https://my.server.org/sample-data/collections/airports/styles/Tritanopia?f=sld10',
+              },
+            },
+          ],
+        });
+      });
+    });
+    describe('#getStylesheetUrl', () => {
+      it('returns the correct stylesheet URL', async () => {
+        await expect(
+          endpoint.getStylesheetUrl('Deuteranopia', 'application/vnd.esri.lyr')
+        ).resolves.toEqual('http://local/zoomstack/styles/Deuteranopia?f=lyr');
+      });
+    });
+    describe('#getStylesheetUrl with type Mapbox', () => {
+      it('returns the correct stylesheet URL', async () => {
+        await expect(
+          endpoint.getStylesheetUrl('Road', 'application/vnd.mapbox.style+json')
+        ).resolves.toEqual('http://local/zoomstack/styles/Road?f=mbs');
+      });
+    });
+    describe('#getStylesheetUrl for a given collection', () => {
+      it('returns the correct stylesheet URL', async () => {
+        await expect(
+          endpoint.getStylesheetUrl(
+            'Tritanopia',
+            'application/vnd.ogc.sld+xml;version=1.0',
+            'airports'
+          )
+        ).resolves.toEqual(
+          'https://my.server.org/sample-data/collections/airports/styles/Tritanopia?f=sld10'
+        );
+      });
+    });
+  });
 });

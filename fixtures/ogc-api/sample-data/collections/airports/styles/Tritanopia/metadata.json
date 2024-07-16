@@ -1,0 +1,45 @@
+{
+  "title": "Tritanopia",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document",
+      "href": "https://my.server.org/sample-data/collections/airports/styles/Tritanopia/metadata?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML",
+      "href": "https://my.server.org/sample-data/collections/airports/styles/Tritanopia/metadata?f=html"
+    }
+  ],
+  "id": "Tritanopia",
+  "scope": "style",
+  "stylesheets": [
+    {
+      "title": "QGIS",
+      "version": "3.16",
+      "specification": "https://docs.qgis.org/3.16/en/docs/user_manual/appendices/qgis_file_formats.html#qml-the-qgis-style-file-format",
+      "native": true,
+      "link": {
+        "rel": "stylesheet",
+        "type": "application/vnd.qgis.qml",
+        "title": "Style in format 'QGIS'",
+        "href": "https://my.server.org/sample-data/collections/airports/styles/Tritanopia?f=qml"
+      }
+    },
+    {
+      "title": "SLD 1.0",
+      "version": "1.0",
+      "specification": "https://www.ogc.org/standards/sld",
+      "native": true,
+      "link": {
+        "rel": "stylesheet",
+        "type": "application/vnd.ogc.sld+xml;version=1.0",
+        "title": "Style in format 'SLD 1.0'",
+        "href": "https://my.server.org/sample-data/collections/airports/styles/Tritanopia?f=sld10"
+      }
+    }
+  ]
+}
