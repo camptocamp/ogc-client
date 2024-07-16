@@ -124,7 +124,7 @@ export default class WfsEndpoint {
       defaultCrs: featureType.defaultCrs,
       otherCrs: featureType.otherCrs,
       outputFormats: featureType.outputFormats,
-      keywords: featureType.keywords
+      keywords: featureType.keywords,
     } as WfsFeatureTypeSummary;
   }
 

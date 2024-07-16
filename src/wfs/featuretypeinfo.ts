@@ -30,7 +30,7 @@ export function parseFeatureTypeInfo(
     otherCrs,
     outputFormats,
     latLonBoundingBox: boundingBox,
-    keywords
+    keywords,
   } = featureType;
 
   const hitsAttr = serviceVersion.startsWith('2.0')
@@ -78,7 +78,7 @@ export function parseFeatureTypeInfo(
     ...(geometryName && { geometryName }),
     ...(geometryType && { geometryType }),
     ...(!Number.isNaN(objectCount) && { objectCount }),
-    ...(keywords && {keywords})
+    ...(keywords && { keywords }),
   };
 }
 

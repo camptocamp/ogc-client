@@ -55,7 +55,7 @@ export default {
           'geometry type': this.featureType.geometryType,
         }),
         ...('keywords' in this.featureType && {
-          'keywords': this.featureType.keywords,
+          keywords: this.featureType.keywords,
         }),
       };
     },
