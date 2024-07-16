@@ -131,6 +131,7 @@ describe('WmsEndpoint', () => {
           'EPSG:4171': ['-180', '-90', '180', '90'],
           'EPSG:4326': ['-180', '-90', '180', '90'],
         },
+        keywords: [],
         name: 'GEOLOGIE',
         styles: [
           {

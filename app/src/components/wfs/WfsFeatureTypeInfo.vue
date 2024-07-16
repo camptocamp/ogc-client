@@ -54,6 +54,9 @@ export default {
         ...('geometryType' in this.featureType && {
           'geometry type': this.featureType.geometryType,
         }),
+        ...('keywords' in this.featureType && {
+          keywords: this.featureType.keywords,
+        }),
       };
     },
     featureProperties() {

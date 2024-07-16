@@ -132,6 +132,14 @@ function parseLayer(
     Object.keys(boundingBoxes).length > 0 || inheritedBoundingBoxes === null
       ? boundingBoxes
       : inheritedBoundingBoxes;
+
+  const keywords = findChildrenElement(
+    findChildElement(layerEl, 'KeywordList'),
+    'Keyword'
+  )
+    .map(getElementText)
+    .filter((v, i, arr) => arr.indexOf(v) === i);
+
   const children = findChildrenElement(layerEl, 'Layer').map((layer) =>
     parseLayer(layer, version, availableCrs, styles, attribution, boundingBoxes)
   );
@@ -143,6 +151,7 @@ function parseLayer(
     styles,
     attribution,
     boundingBoxes,
+    keywords,
     ...(children.length && { children }),
   };
 }

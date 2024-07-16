@@ -33,6 +33,7 @@ export type WmsLayerFull = {
    */
   boundingBoxes: Record<CrsCode, BoundingBox>;
   attribution?: WmsLayerAttribution;
+  keywords?: string[];
   /**
    * Not defined if the layer is a leaf in the tree
    */

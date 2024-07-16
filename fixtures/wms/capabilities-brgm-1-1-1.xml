@@ -139,6 +139,9 @@
                 <Keyword>BRGM</Keyword>
                 <Keyword>INSPIRE:ViewService</Keyword>
                 <Keyword>infoMapAccessService</Keyword>
+                <Keyword>WMS 1.1.1</Keyword>
+                <Keyword>WMS 1.3.0</Keyword>
+                <Keyword>SLD 1.1.0</Keyword>
             </KeywordList>
             <SRS>EPSG:4326</SRS>
             <SRS>CRS:84</SRS>
@@ -187,6 +190,7 @@
                     <KeywordList>
                         <Keyword>Geologie</Keyword>
                         <Keyword>INSPIRE:Geology</Keyword>
+                        <Keyword>Geology</Keyword>
                     </KeywordList>
                     <SRS>EPSG:4326</SRS>
                     <SRS>EPSG:3857</SRS>
@@ -243,6 +247,7 @@
                     <KeywordList>
                         <Keyword>Geologie</Keyword>
                         <Keyword>INSPIRE:Geology</Keyword>
+                        <Keyword>Geology</Keyword>
                     </KeywordList>
                     <SRS>EPSG:4326</SRS>
                     <SRS>EPSG:3857</SRS>
@@ -277,6 +282,7 @@
                     <KeywordList>
                         <Keyword>Geologie</Keyword>
                         <Keyword>INSPIRE:Geology</Keyword>
+                        <Keyword>Geology</Keyword>
                     </KeywordList>
                     <SRS>EPSG:4326</SRS>
                     <SRS>EPSG:3857</SRS>

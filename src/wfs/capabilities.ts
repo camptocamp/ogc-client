@@ -158,6 +158,16 @@ function parseFeatureType(
         'Format'
       ).map(getElementText);
 
+  const keywords = serviceVersion.startsWith('1.0')
+    ? getElementText(findChildElement(featureTypeEl, 'Keywords'))
+        .split(',')
+        .map((keyword) => keyword.trim())
+    : findChildrenElement(
+        findChildElement(featureTypeEl, 'Keywords'),
+        'Keyword'
+      )
+        .map(getElementText)
+        .filter((v, i, arr) => arr.indexOf(v) === i);
   return {
     name: getElementText(findChildElement(featureTypeEl, 'Name')),
     title: getElementText(findChildElement(featureTypeEl, 'Title')),
@@ -171,5 +181,6 @@ function parseFeatureType(
     latLonBoundingBox: serviceVersion.startsWith('1.0')
       ? parseBBox100()
       : parseBBox(),
+    keywords: keywords,
   };
 }
