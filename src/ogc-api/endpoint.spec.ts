@@ -310,13 +310,13 @@ describe('OgcApiEndpoint', () => {
               type: 'geometry',
             },
             {
-              name: 'recordCreated',
-              title: 'recordCreated',
+              name: 'created',
+              title: 'created',
               type: 'string',
             },
             {
-              name: 'recordUpdated',
-              title: 'recordUpdated',
+              name: 'updated',
+              title: 'updated',
               type: 'string',
             },
             {
@@ -532,8 +532,8 @@ describe('OgcApiEndpoint', () => {
               ],
             },
             properties: {
-              recordCreated: '2021-12-08',
-              recordUpdated: '2022-06-10T01:27:47Z',
+              created: '2021-12-08',
+              updated: '2022-06-10T01:27:47Z',
               type: 'dataset',
               title: 'Kaartboeck 1635',
               description:
@@ -616,8 +616,8 @@ describe('OgcApiEndpoint', () => {
               ],
             },
             properties: {
-              recordCreated: '2022-06-01',
-              recordUpdated: '2022-06-10T01:27:47Z',
+              created: '2022-06-01',
+              updated: '2022-06-10T01:27:47Z',
               type: 'dataset',
               title: 'Diepteligging onderkant keileem (t.o.v. NAP)',
               description:
@@ -680,8 +680,8 @@ describe('OgcApiEndpoint', () => {
               ],
             },
             properties: {
-              recordCreated: '2021-06-30',
-              recordUpdated: '2022-06-10T01:27:47Z',
+              created: '2021-06-30',
+              updated: '2022-06-10T01:27:47Z',
               type: 'dataset',
               title: 'Clusters geluid - wegen gecumuleerd',
               description:
@@ -756,8 +756,8 @@ describe('OgcApiEndpoint', () => {
               ],
             },
             properties: {
-              recordCreated: '2022-02-02',
-              recordUpdated: '2022-06-10T01:27:47Z',
+              created: '2022-02-02',
+              updated: '2022-06-10T01:27:47Z',
               type: 'dataset',
               title: 'Geesten van Holland',
               description:
@@ -816,8 +816,8 @@ describe('OgcApiEndpoint', () => {
               ],
             },
             properties: {
-              recordCreated: '2021-06-18',
-              recordUpdated: '2022-06-10T01:27:47Z',
+              created: '2021-06-18',
+              updated: '2022-06-10T01:27:47Z',
               type: 'service',
               title: 'Grondwaterstandsonderzoek, downloadservice',
               description:
@@ -877,8 +877,8 @@ describe('OgcApiEndpoint', () => {
               ],
             },
             properties: {
-              recordCreated: '2022-06-01',
-              recordUpdated: '2022-06-10T01:27:47Z',
+              created: '2022-06-01',
+              updated: '2022-06-10T01:27:47Z',
               type: 'dataset',
               title: 'Hemelhelderheidskaart',
               description:
@@ -940,8 +940,8 @@ describe('OgcApiEndpoint', () => {
               ],
             },
             properties: {
-              recordCreated: '2020-12-21',
-              recordUpdated: '2022-06-10T01:27:47Z',
+              created: '2020-12-21',
+              updated: '2022-06-10T01:27:47Z',
               type: 'service',
               title: 'WarmteAtlas WMS',
               description:
@@ -1044,8 +1044,8 @@ describe('OgcApiEndpoint', () => {
               ],
             },
             properties: {
-              recordCreated: '2021-12-22',
-              recordUpdated: '2022-06-10T01:27:47Z',
+              created: '2021-12-22',
+              updated: '2022-06-10T01:27:47Z',
               type: 'dataset',
               title: 'DANK-Delfstofwinning op land: zand, grind en klei',
               description:
@@ -1108,8 +1108,8 @@ describe('OgcApiEndpoint', () => {
               ],
             },
             properties: {
-              recordCreated: '2021-11-17',
-              recordUpdated: '2022-06-10T01:27:47Z',
+              created: '2021-11-17',
+              updated: '2022-06-10T01:27:47Z',
               type: 'dataset',
               title: 'Luchtfoto 2018',
               description:
@@ -1195,8 +1195,8 @@ describe('OgcApiEndpoint', () => {
               ],
             },
             properties: {
-              recordCreated: '2019-04-16',
-              recordUpdated: '2022-06-10T01:27:47Z',
+              created: '2019-04-16',
+              updated: '2022-06-10T01:27:47Z',
               type: 'dataset',
               title: 'Zonpotentie velden',
               description:
@@ -1550,8 +1550,8 @@ describe('OgcApiEndpoint', () => {
             providers: [
               'Team Geo, geo-informatie@zaanstad.nl, Gemeente Zaanstad',
             ],
-            recordCreated: '2021-12-08',
-            recordUpdated: '2022-06-10T01:27:47Z',
+            created: '2021-12-08',
+            updated: '2022-06-10T01:27:47Z',
             themes: [
               {
                 concepts: [

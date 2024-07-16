@@ -5,12 +5,12 @@
     "geometry": {
       "$ref": "https://geojson.org/schema/Geometry.json"
     },
-    "recordCreated": {
-      "title": "recordCreated",
+    "created": {
+      "title": "created",
       "type": "string"
     },
-    "recordUpdated": {
-      "title": "recordUpdated",
+    "updated": {
+      "title": "updated",
       "type": "string"
     },
     "type": {

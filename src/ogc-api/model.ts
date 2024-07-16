@@ -131,20 +131,30 @@ export interface OgcApiRecordContact {
   contactInstructions: string;
   roles: string[];
 }
+export interface OgcApiRecordLanguage {
+  code: string;
+  name?: string;
+  alternate?: string;
+  dir: 'ltr' | 'rtl' | 'ttb' | 'btt';
+}
+
 export interface OgcApiRecordProperties {
+  created?: Date;
+  updated?: Date;
   type: string;
   title: string;
-  recordCreated?: Date;
-  recordUpdated?: Date;
-  providers?: string[];
   description?: string;
-  externalId?: OgcApiItemExternalId[];
-  themes?: OgcApiRecordTheme[];
   keywords?: string[];
-  language?: string;
-  contacts?: OgcApiRecordContact[];
+  themes?: OgcApiRecordTheme[];
+  language?: OgcApiRecordLanguage;
+  languages?: OgcApiRecordLanguage[];
+  resourceLanguages?: OgcApiRecordLanguage[];
+  externalIds?: OgcApiItemExternalId[];
   formats?: string[];
+  contacts?: OgcApiRecordContact[];
   license?: string;
+  rights?: string;
+  providers?: string[];
 }
 
 export type OgcApiRecord = {

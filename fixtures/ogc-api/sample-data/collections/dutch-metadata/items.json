@@ -17,8 +17,8 @@
         ]
       },
       "properties": {
-        "recordCreated": "2021-12-08",
-        "recordUpdated": "2022-06-10T01:27:47Z",
+        "created": "2021-12-08",
+        "updated": "2022-06-10T01:27:47Z",
         "type": "dataset",
         "title": "Kaartboeck 1635",
         "description": "Data uit kaartboeken van de periode 1635 tot 1775. De kaartboeken werden door het waterschap gebruikt om er op toe te zien dat de eigenaren geen water in beslag namen door demping.\nDe percelen op de kaart zijn naar de huidige maatstaven vrij nauwkeurig gemeten en voorzien van een administratie met de eigenaren. bijzondere locaties van molens werven en beroepen worden in de boeken vermeld. Alle 97 kaarten aan een geven een zeer gedetailleerd beeld van de Voorzaan, Nieuwe Haven en de Achterzaan. De bladen Oost en West van de zaan zijn vrij nauwkeurig. De bladen aan de Voorzaan zijn een schetsmatige weergave van de situatie. De kaart van de Nieuwe Haven si weer nauwkeurig te noemen.",
@@ -97,8 +97,8 @@
         ]
       },
       "properties": {
-        "recordCreated": "2022-06-01",
-        "recordUpdated": "2022-06-10T01:27:47Z",
+        "created": "2022-06-01",
+        "updated": "2022-06-10T01:27:47Z",
         "type": "dataset",
         "title": "Diepteligging onderkant keileem (t.o.v. NAP)",
         "description": "Diepteligging van de onderkant (basis) van keileem in Drenthe, in meters ten opzichte van NAP.",
@@ -160,8 +160,8 @@
         ]
       },
       "properties": {
-        "recordCreated": "2021-06-30",
-        "recordUpdated": "2022-06-10T01:27:47Z",
+        "created": "2021-06-30",
+        "updated": "2022-06-10T01:27:47Z",
         "type": "dataset",
         "title": "Clusters geluid - wegen gecumuleerd",
         "description": "Clusters (omtreklijn) gebaseerd op gemeentegrenzen. Per cluster zijn de aantallen woningen en gevoelige bestemmingen per GES-score geteld. Bij de gevoelige bestemmingen is onderscheid gemaakt in 3 categorien: Ziekenhuizen, Scholen en dagverblijven voor jeugd, Verpleeg en verzorgingshuizen.",
@@ -235,8 +235,8 @@
         ]
       },
       "properties": {
-        "recordCreated": "2022-02-02",
-        "recordUpdated": "2022-06-10T01:27:47Z",
+        "created": "2022-02-02",
+        "updated": "2022-06-10T01:27:47Z",
         "type": "dataset",
         "title": "Geesten van Holland",
         "description": "In de dataset 'Geesten' zijn de locaties opgenomen van middeleeuwse akkercomplexen op de strandwallen in Noord- en Zuid-Holland.",
@@ -294,8 +294,8 @@
         ]
       },
       "properties": {
-        "recordCreated": "2021-06-18",
-        "recordUpdated": "2022-06-10T01:27:47Z",
+        "created": "2021-06-18",
+        "updated": "2022-06-10T01:27:47Z",
         "type": "service",
         "title": "Grondwaterstandsonderzoek, downloadservice",
         "description": "Gegevens over grondwaterstandsonderzoek (Groundwaterlevel data in het Engels) zijn opgeslagen in de basisregistratie ondergrond (BRO). Het registratieobject grondwaterstandonderzoek bevat de metingen van de variatie in de stand van het grondwater dat in een bekende grondwatermonitoringput met een zekere buis wordt ontsloten.\nMet het monitoren van het grondwater gebeurt al lange tijd, op vele locaties in ons land. Met die informatie is het mogelijk om karakteristieke kenmerken van de beweging van het grondwater vast te stellen, ruimtelijke patronen te herkennen en trendmatige veranderingen te analyseren.\nBelangrijke kenmerken zijn bijvoorbeeld de hoogste en laatste grondwaterstand die in een bepaald gebied zijn te verwachten als gevolg van het jaarlijkse seizoenpatroon. Die kennis is niet alleen van belang voor de landbouw en natuurontwikkeling, maar ook voor het ontwerpen van nieuwe woonwijken en infrastructuur.\nDe meetgegevens geven inzicht in de reactie van het grondwater op  veranderingen zoals de verlaging van een polderpeil, of grondwaterwinning. Op basis van die informatie kunnen voorspellingen worden gedaan over het verloop van de grondwaterstand in de toekomst. Hoe langer de tijdreeksen zijn, des te nauwkeuriger de voorspellingen zijn over het lange termijn gedrag van het grondwater.\nEen van de belangrijke uitdagingen van nu is het voorspellen van de invloed van de klimaatverandering op het grondwatersysteem. Zowel in nationaal als internationaal verband worden richtlijnen ontwikkeld voor een duurzaam beleid en beheer van onze grondwatersystemen.",
@@ -354,8 +354,8 @@
         ]
       },
       "properties": {
-        "recordCreated": "2022-06-01",
-        "recordUpdated": "2022-06-10T01:27:47Z",
+        "created": "2022-06-01",
+        "updated": "2022-06-10T01:27:47Z",
         "type": "dataset",
         "title": "Hemelhelderheidskaart",
         "description": "Hemelhelderheid Drenthe met kasverlichting gedoofd (2015-2016). De grootheid luminantie (helderheid) kent verschillende eenheden en die worden in de kaart weergegeven. De eenheid candela per vierkante meter is de eenheid die verlichtingsdeskundigen gebruiken om te meten hoeveel licht ergens op straalt. De gebruikte eenheid mcd/m2 is een duizendste cd/m2. De eenheid magnitude wordt gebruikt door sterrenkundigen. Hoe helderder de hemel, hoe hoger het getal in candela per vierkante meter, hoe meer licht er van de hemel komt.",
@@ -416,8 +416,8 @@
         ]
       },
       "properties": {
-        "recordCreated": "2020-12-21",
-        "recordUpdated": "2022-06-10T01:27:47Z",
+        "created": "2020-12-21",
+        "updated": "2022-06-10T01:27:47Z",
         "type": "service",
         "title": "WarmteAtlas WMS",
         "description": "Atlas voor kaarten over het warmte gebruik (industrie, glastuinbouw en huishoudens) en potentieel kaarten voor de productie van duurzame warmte en de aanwezigheid van nog niet benutte restwarmte.",
@@ -519,8 +519,8 @@
         ]
       },
       "properties": {
-        "recordCreated": "2021-12-22",
-        "recordUpdated": "2022-06-10T01:27:47Z",
+        "created": "2021-12-22",
+        "updated": "2022-06-10T01:27:47Z",
         "type": "dataset",
         "title": "DANK-Delfstofwinning op land: zand, grind en klei",
         "description": "De kaart geeft de geologische winbare hoeveelheid zand, grind en klei weer wanneer er niet meer dan maximaal 5 meter aan deklaag moet worden afgegraven.\n\n                    Voor de productie van veel bouwmaterialen wordt gebruik gemaakt van oppervlaktedelfstoffen. In Nederland is jaarlijks circa 150 miljoen ton aan bouwgrondstoffen nodig. Een deel daarvan komt uit het buitenland, een deel wordt verkregen door hergebruik (15 tot 20 %), maar nog steeds wordt een groot deel verkregen uit primaire winning.\n\n                    Sinds 1900 is de winning van ophoogzand op verschillende locaties uitgevoerd door maaiveldverlaging in het kader van\n                    landbouwkundige verbeteringen (ruilverkaveling).\n                    Sinds de jaren zeventig is er een afname in oppervlakkig ontgronden door toenemende maatschappelijke weerstand en strengere wetgevingen. Zandwinning vindt nu voornamelijk plaats in geconcentreerde winputten. Aanvullend vindt winning plaats middels het \"werk met werk maken\" principe. Hierin wordt bijvoorbeeld in nieuwbouwprojecten zand gewonnen voor gebruik in het project en tegelijkertijd waterberging gecre\u00eberd.\n                    Voor winning van oppervlaktedelfstoffen is per jaar circa 400 hectare oppervlakte van ons land noodzakelijk. Ongeveer de helft daarvan, circa 200 hectare, blijft achter als diep water. De andere 200 hectare krijgt via herinrichting een nieuwe ruimtelijke bestemming, bijvoorbeeld als natuur- of recreatiegebied. Alternatief is de winning van zand uit het IJsselmeer, de Randmeren en de Noordzee. De winning van grind is vooral voorzien plaats te vinden uit de maaswerken in Limburg.\n                    De winning en reservering van zand en grind zijn bij de wet geregeld en land based winlocaties worden door de provincie aangewezen. De winning van zand en grind legt een ruimtebeslag die enerzijds kan conflicteren met ander gebruik, anderzijds kan ook de winning samengaan met inrichtingsvraagstukken zoals het geven van ruimte voor de rivieren en tijdelijke waterberging.",
@@ -580,8 +580,8 @@
         ]
       },
       "properties": {
-        "recordCreated": "2021-11-17",
-        "recordUpdated": "2022-06-10T01:27:47Z",
+        "created": "2021-11-17",
+        "updated": "2022-06-10T01:27:47Z",
         "type": "dataset",
         "title": "Luchtfoto 2018",
         "description": "Een luchtfoto is een afbeelding van een gedeelte van het aardoppervlak, gefotografeerd van uit een hoog standpunt los van het aardoppervlak, veelal vanuit een luchtvaartuig.",
@@ -663,8 +663,8 @@
         ]
       },
       "properties": {
-        "recordCreated": "2019-04-16",
-        "recordUpdated": "2022-06-10T01:27:47Z",
+        "created": "2019-04-16",
+        "updated": "2022-06-10T01:27:47Z",
         "type": "dataset",
         "title": "Zonpotentie velden",
         "description": "In deze kaartlaag zijn denkbare locaties voor zonnepanelen in veldopstelling aangegeven. Het gaat hier om kleine terreinen (tussen 0,5 en 1,0 hectare), middelgrote terreinen (tussen 1,0 en 3,0 hectare) en grote terreinen (3,0 hectare en groter). Te zien zijn gras- en akkerlanden buiten de bebouwing, exclusief gebieden die tot Natura2000 behoren.\n\nVoor iedere locatie is aangegeven wat het plaatsbare schaduwvrije zon-PV-vermogen is, uitgaande van schaduwvrije velden en 0,65 MWp vermogen per hectare grond.\n\nTevens is de verwachte jaarlijkse kWh-opbrengst aangeduid (900 kWh/kWp), evenals het aantal huishoudens dat van groene stroom kan worden voorzien met deze opbrengst (3.300 kWh/huishouden).\nDe selectie van locaties is expliciet niet gemaakt op basis van politieke voorkeuren of richtlijnen van gemeenten dan wel provincies, bijvoorbeeld met betrekking tot de (on)wenselijkheid van zonnevelden op landbouwgronden.\n\nToekomstige uitbreiding (1)\nGewerkt wordt aan een weergave van de kaartlaag met daarin relevante netdata verwerkt. Concreet gaat dit dan om de afstanden van denkbare locaties tot aan het middenspanningsnet of het dichtstbijzijnde onder-, regel- of schakelstation.\n\nToekomstige uitbreiding (2)\nTevens wordt gewerkt aan weergave van de kaartlaag met daarin zoninstralingsdata op de denkbare locaties voor zonnepanelen in veldopstelling. Hiermee wordt het schaduweffect van objecten op en rond het terrein inzichtelijk gemaakt.",
