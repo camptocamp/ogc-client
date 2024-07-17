@@ -164,6 +164,7 @@ function parseLayerStyle(styleEl: XmlElement): LayerStyle {
   return {
     name: getElementText(findChildElement(styleEl, 'Name')),
     title: getElementText(findChildElement(styleEl, 'Title')),
+    abstract: getElementText(findChildElement(styleEl, 'Abstract')),
     ...(legendUrl && { legendUrl }),
   };
 }

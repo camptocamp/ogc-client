@@ -171,6 +171,7 @@ export function readLayersFromCapabilities(
       const style: LayerStyle = {
         title: getElementText(findChildElement(element, 'Title')),
         name: getElementText(findChildElement(element, 'Identifier')),
+        abstract: getElementText(findChildElement(element, 'Abstract')),
         ...(legendUrl && { legendUrl }),
       };
       if (getElementAttribute(element, 'isDefault') === 'true') {
