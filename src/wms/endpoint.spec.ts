@@ -137,6 +137,7 @@ describe('WmsEndpoint', () => {
           {
             name: 'default',
             title: 'default',
+            abstract: '',
           },
         ],
         title: 'Cartes géologiques',

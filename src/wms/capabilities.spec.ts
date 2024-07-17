@@ -8,6 +8,7 @@ import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
 // @ts-expect-error ts-migrate(7016)
 import capabilities111 from '../../fixtures/wms/capabilities-brgm-1-1-1.xml';
 import { parseXmlString } from '../shared/xml-utils.js';
+import { abstract } from 'ol/util.js';
 
 describe('WMS capabilities', () => {
   describe('readVersionFromCapabilities', () => {
@@ -31,6 +32,7 @@ describe('WMS capabilities', () => {
       {
         name: 'default',
         title: 'default',
+        abstract: '',
       },
     ];
     const availableCrs = [
@@ -70,6 +72,7 @@ describe('WMS capabilities', () => {
             ),
             name: 'default',
             title: 'default',
+            abstract: '',
           },
         ],
         title: 'GéoServices : géologie, hydrogéologie et gravimétrie',
@@ -135,12 +138,14 @@ describe('WMS capabilities', () => {
                       'http://mapsref.brgm.fr/legendes/geoservices/Geologie1000_legende.jpg',
                     name: 'inspire_common:DEFAULT',
                     title: 'inspire_common:DEFAULT',
+                    abstract: '',
                   },
                   {
                     legendUrl:
                       'http://mapsref.brgm.fr/legendes/geoservices/Geologie1000_legende_other.jpg',
                     name: 'inspire_common:OTHER',
                     title: 'inspire_common:OTHER',
+                    abstract: '',
                   },
                 ],
                 title: 'Carte géologique image de la France au million',
@@ -248,6 +253,7 @@ describe('WMS capabilities', () => {
                   {
                     name: 'default',
                     title: 'default',
+                    abstract: '',
                   },
                 ],
                 title: 'Inherited bounding boxes',

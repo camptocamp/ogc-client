@@ -546,12 +546,15 @@ describe('WMTS Capabilities', () => {
               {
                 name: 'DarkBlue',
                 title: 'Dark Blue',
+                abstract: '',
                 legendUrl:
                   'http://www.miramon.uab.es/wmts/Coastlines/coastlines_darkBlue.png',
               },
               {
                 name: 'thickAndRed',
                 title: 'Thick And Red',
+                abstract:
+                  'Specify this style if you want your maps to have thick red coastlines.',
               },
             ],
             defaultStyle: 'DarkBlue',
@@ -634,6 +637,7 @@ describe('WMTS Capabilities', () => {
               {
                 name: 'default',
                 title: 'Default Style',
+                abstract: '',
               },
             ],
             title: 'Demographics_USA_Population_Density',
@@ -729,6 +733,7 @@ describe('WMTS Capabilities', () => {
                 legendUrl: 'http://www.geoportail.gouv.fr/depot/LEGEND.jpg',
                 name: 'normal',
                 title: 'Données Brutes',
+                abstract: 'Données brutes sans changement de palette',
               },
             ],
             title: 'Photographies aériennes',
