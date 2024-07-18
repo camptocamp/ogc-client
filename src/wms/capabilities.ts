@@ -2,6 +2,7 @@ import {
   findChildElement,
   findChildrenElement,
   getElementAttribute,
+  getElementName,
   getElementText,
   getRootElement,
 } from '../shared/xml-utils.js';
@@ -40,6 +41,22 @@ export function readLayersFromCapabilities(capabilitiesDoc: XmlDocument) {
   );
 }
 
+export function readOutputFormatsFromCapabilities(capabilitiesDoc: XmlDocument){
+  const capability = findChildElement(
+    getRootElement(capabilitiesDoc),
+    'Capability'
+  );
+  const getMap = findChildElement(
+    findChildElement(
+      findChildElement(getRootElement(capabilitiesDoc), 'Capability'),
+      'Request'
+    ),
+    'GetMap'
+  );
+  const outputFormats = findChildrenElement(getMap, 'Format').map(getElementText);
+  return outputFormats;
+}
+
 /**
  * Will read service-related info from the capabilities doc
  * @param capabilitiesDoc Capabilities document
@@ -49,6 +66,7 @@ export function readInfoFromCapabilities(
   capabilitiesDoc: XmlDocument
 ): GenericEndpointInfo {
   const service = findChildElement(getRootElement(capabilitiesDoc), 'Service');
+  const formats = readOutputFormatsFromCapabilities(capabilitiesDoc);
   const keywords = findChildrenElement(
     findChildElement(service, 'KeywordList'),
     'Keyword'
@@ -60,6 +78,7 @@ export function readInfoFromCapabilities(
     title: getElementText(findChildElement(service, 'Title')),
     name: getElementText(findChildElement(service, 'Name')),
     abstract: getElementText(findChildElement(service, 'Abstract')),
+    outputFormats: formats,
     fees: getElementText(findChildElement(service, 'Fees')),
     constraints: getElementText(findChildElement(service, 'AccessConstraints')),
     keywords,
