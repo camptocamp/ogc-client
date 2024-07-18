@@ -8,7 +8,6 @@ import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
 // @ts-expect-error ts-migrate(7016)
 import capabilities111 from '../../fixtures/wms/capabilities-brgm-1-1-1.xml';
 import { parseXmlString } from '../shared/xml-utils.js';
-import { abstract } from 'ol/util.js';
 
 describe('WMS capabilities', () => {
   describe('readVersionFromCapabilities', () => {
