@@ -5,7 +5,7 @@ export default defineConfig({
   build: {
     ssr: true,
     rollupOptions: {
-      external: [/^ol/, 'proj4'],
+      external: [/^ol/, 'proj4', 'node-fetch'],
       input: 'src-node/index.ts',
       output: {
         entryFileNames: 'dist-node.js',
