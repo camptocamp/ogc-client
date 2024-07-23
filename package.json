@@ -13,7 +13,8 @@
   ],
   "type": "module",
   "dependencies": {
-    "@rgrove/parse-xml": "^4.1.0"
+    "@rgrove/parse-xml": "^4.1.0",
+    "node-fetch": "^3.3.1"
   },
   "devDependencies": {
     "@types/geojson": "^7946.0.10",
@@ -31,7 +32,6 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "mitt": "^3.0.0",
-    "node-fetch": "^3.3.1",
     "ol": "^8.2.0",
     "prettier": "2.8.8",
     "proj4": "^2.10.0",
