@@ -546,7 +546,6 @@ describe('WMTS Capabilities', () => {
               {
                 name: 'DarkBlue',
                 title: 'Dark Blue',
-                abstract: '',
                 legendUrl:
                   'http://www.miramon.uab.es/wmts/Coastlines/coastlines_darkBlue.png',
               },
@@ -637,7 +636,6 @@ describe('WMTS Capabilities', () => {
               {
                 name: 'default',
                 title: 'Default Style',
-                abstract: '',
               },
             ],
             title: 'Demographics_USA_Population_Density',
