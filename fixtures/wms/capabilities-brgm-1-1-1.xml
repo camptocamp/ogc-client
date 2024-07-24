@@ -240,7 +240,7 @@
                     </Style>
                     <ScaleHint min="74.8354272644456" max="3741.77136322228" />
                 </Layer>
-                <Layer queryable="0" opaque="0" cascaded="0">
+                <Layer queryable="true" opaque="0" cascaded="0">
                     <Name>SCAN_F_GEOL250</Name>
                     <Title>Carte géologique image de la France au 1/250000</Title>
                     <Abstract>BD Scan-Géol-250 est la base de données géoréférencées des cartes géologiques image à 1/250 000. Utilisation scientifique, technique, pédagogique</Abstract>
@@ -275,7 +275,7 @@
                     </MetadataURL>
                     <ScaleHint min="29.9341709057782" max="187.088568161114" />
                 </Layer>
-                <Layer queryable="0" opaque="0" cascaded="0">
+                <Layer queryable="1" opaque="0" cascaded="0">
                     <Name>SCAN_D_GEOL50</Name>
                     <Title>Carte géologique image de la France au 1/50 000e</Title>
                     <Abstract>BD Scan-Géol-50 est la base de données géoréférencées des cartes géologiques &#39;papier&#39; à 1/50 000</Abstract>

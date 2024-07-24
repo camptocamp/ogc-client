@@ -133,7 +133,11 @@ function parseLayer(
       ? boundingBoxes
       : inheritedBoundingBoxes;
 
-  const queryable = layerEl.attributes.queryable === '1' ? true : false;
+  const queryable =
+    layerEl.attributes.queryable === '1' ||
+    layerEl.attributes.queryable === 'true'
+      ? true
+      : false;
 
   const keywords = findChildrenElement(
     findChildElement(layerEl, 'KeywordList'),
