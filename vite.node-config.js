@@ -12,6 +12,7 @@ export default defineConfig({
         globals: (name) => name,
       },
     },
+    emptyOutDir: false,
     outDir: 'dist',
     minify: false,
   },
