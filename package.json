@@ -4,7 +4,7 @@
   "description": "A pure JS library for interacting with geospatial services.",
   "main": "./dist/dist-node.js",
   "browser": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
+  "typings": "./src/index.ts",
   "repository": "https://github.com/camptocamp/ogc-client",
   "homepage": "https://github.com/camptocamp/ogc-client",
   "files": [
