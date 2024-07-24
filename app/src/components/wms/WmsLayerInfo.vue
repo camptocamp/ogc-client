@@ -65,6 +65,7 @@ export default {
             attribution: this.layer.attribution.title,
           }),
         ...(this.layer.keywords && { keywords: this.layer.keywords }),
+        ...(this.layer.queryable && { queryable: this.layer.queryable }),
       };
     },
     fullMapSrc() {

@@ -133,6 +133,16 @@ function parseLayer(
       ? boundingBoxes
       : inheritedBoundingBoxes;
 
+  const queryable =
+    layerEl.attributes.queryable === '1' ||
+    layerEl.attributes.queryable === 'true'
+      ? true
+      : false;
+
+  const opaque =
+    layerEl.attributes.opaque === '1' || layerEl.attributes.opaque === 'true'
+      ? true
+      : false;
   const keywords = findChildrenElement(
     findChildElement(layerEl, 'KeywordList'),
     'Keyword'
@@ -152,6 +162,8 @@ function parseLayer(
     attribution,
     boundingBoxes,
     keywords,
+    queryable,
+    opaque,
     ...(children.length && { children }),
   };
 }

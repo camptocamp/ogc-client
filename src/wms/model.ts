@@ -32,6 +32,8 @@ export type WmsLayerFull = {
    * Dict of bounding boxes where keys are CRS codes
    */
   boundingBoxes: Record<CrsCode, BoundingBox>;
+  queryable: boolean;
+  opaque: boolean;
   attribution?: WmsLayerAttribution;
   keywords?: string[];
   /**
