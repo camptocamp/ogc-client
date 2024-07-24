@@ -29,7 +29,7 @@ export interface FetchOptions {
 export interface LayerStyle {
   name: string;
   title: string;
-  abstract: string;
+  abstract?: string;
   /**
    * May not be defined; a GetLegendGraphic operation should work in any case
    */

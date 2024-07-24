@@ -161,10 +161,11 @@ function parseLayerStyle(styleEl: XmlElement): LayerStyle {
     findChildElement(findChildElement(styleEl, 'LegendURL'), 'OnlineResource'),
     'xlink:href'
   );
+  const abstract = getElementText(findChildElement(styleEl, 'Abstract'));
   return {
     name: getElementText(findChildElement(styleEl, 'Name')),
     title: getElementText(findChildElement(styleEl, 'Title')),
-    abstract: getElementText(findChildElement(styleEl, 'Abstract')),
+    ...(abstract && { abstract }),
     ...(legendUrl && { legendUrl }),
   };
 }
