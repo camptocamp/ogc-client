@@ -33,6 +33,7 @@ export type WmsLayerFull = {
    */
   boundingBoxes: Record<CrsCode, BoundingBox>;
   queryable: boolean;
+  opaque: boolean;
   attribution?: WmsLayerAttribution;
   keywords?: string[];
   /**

@@ -139,6 +139,11 @@ function parseLayer(
       ? true
       : false;
 
+  const opaque =
+      layerEl.attributes.opaque === '1' ||
+      layerEl.attributes.opaque === 'true'
+        ? true
+        : false;
   const keywords = findChildrenElement(
     findChildElement(layerEl, 'KeywordList'),
     'Keyword'
@@ -159,6 +164,7 @@ function parseLayer(
     boundingBoxes,
     keywords,
     queryable,
+    opaque,
     ...(children.length && { children }),
   };
 }

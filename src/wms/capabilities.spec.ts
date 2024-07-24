@@ -64,6 +64,7 @@ describe('WMS capabilities', () => {
         ],
         name: 'GEOSERVICES_GEOLOGIE',
         queryable: false,
+        opaque: false,
         styles: [
           {
             legendUrl: expect.stringContaining(
@@ -89,6 +90,7 @@ describe('WMS capabilities', () => {
             keywords: [],
             name: 'GEOLOGIE',
             queryable: false,
+            opaque: false,
             styles,
             title: 'Cartes géologiques',
             children: [
@@ -132,6 +134,7 @@ describe('WMS capabilities', () => {
                 keywords: ['Geologie', 'INSPIRE:Geology', 'Geology'],
                 name: 'SCAN_F_GEOL1M',
                 queryable: false,
+                opaque: false,
                 styles: [
                   {
                     legendUrl:
@@ -184,6 +187,7 @@ describe('WMS capabilities', () => {
                 keywords: ['Geologie', 'INSPIRE:Geology', 'Geology'],
                 name: 'SCAN_F_GEOL250',
                 queryable: true,
+                opaque: true,
                 styles,
                 title: 'Carte géologique image de la France au 1/250000',
               },
@@ -223,6 +227,7 @@ describe('WMS capabilities', () => {
                 keywords: ['Geologie', 'INSPIRE:Geology', 'Geology'],
                 name: 'SCAN_D_GEOL50',
                 queryable: true,
+                opaque: true,
                 styles,
                 title: 'Carte géologique image de la France au 1/50 000e',
               },
@@ -250,6 +255,7 @@ describe('WMS capabilities', () => {
                 keywords: [],
                 name: 'INHERIT_BBOX',
                 queryable: false,
+                opaque: false,
                 styles: [
                   {
                     name: 'default',

@@ -134,6 +134,7 @@ describe('WmsEndpoint', () => {
         keywords: [],
         name: 'GEOLOGIE',
         queryable: false,
+        opaque: false,
         styles: [
           {
             name: 'default',
