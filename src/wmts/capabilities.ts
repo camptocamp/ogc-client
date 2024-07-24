@@ -168,9 +168,11 @@ export function readLayersFromCapabilities(
         findChildElement(element, 'LegendURL'),
         'xlink:href'
       );
+      const abstract = getElementText(findChildElement(element, 'Abstract'));
       const style: LayerStyle = {
         title: getElementText(findChildElement(element, 'Title')),
         name: getElementText(findChildElement(element, 'Identifier')),
+        ...(abstract && { abstract }),
         ...(legendUrl && { legendUrl }),
       };
       if (getElementAttribute(element, 'isDefault') === 'true') {
