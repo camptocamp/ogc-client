@@ -3,8 +3,10 @@ import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   plugins: [
+    // note: this will generate d.ts files for all the library
     dts({
       include: ['./src/**/*'],
+      exclude: ['./src/**/*.spec.ts'],
     }),
   ],
   build: {
@@ -13,6 +15,7 @@ export default defineConfig({
       formats: ['es'],
       fileName: `worker/index`,
     },
+    emptyOutDir: false,
     rollupOptions: {
       external: [/^ol/, 'proj4'],
       output: {
