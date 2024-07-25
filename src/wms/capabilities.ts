@@ -41,19 +41,20 @@ export function readLayersFromCapabilities(capabilitiesDoc: XmlDocument) {
   );
 }
 
-export function readOutputFormatsFromCapabilities(capabilitiesDoc: XmlDocument){
+export function readOutputFormatsFromCapabilities(
+  capabilitiesDoc: XmlDocument
+) {
   const capability = findChildElement(
     getRootElement(capabilitiesDoc),
     'Capability'
   );
   const getMap = findChildElement(
-    findChildElement(
-      capability,
-      'Request'
-    ),
+    findChildElement(capability, 'Request'),
     'GetMap'
   );
-  const outputFormats = findChildrenElement(getMap, 'Format').map(getElementText);
+  const outputFormats = findChildrenElement(getMap, 'Format').map(
+    getElementText
+  );
   return outputFormats;
 }
 
