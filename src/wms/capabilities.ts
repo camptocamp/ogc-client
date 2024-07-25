@@ -2,7 +2,6 @@ import {
   findChildElement,
   findChildrenElement,
   getElementAttribute,
-  getElementName,
   getElementText,
   getRootElement,
 } from '../shared/xml-utils.js';
