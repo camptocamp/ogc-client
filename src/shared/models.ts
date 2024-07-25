@@ -12,6 +12,10 @@ export type GenericEndpointInfo = {
   fees: string;
   constraints: string;
   keywords: string[];
+  /**
+   * Can contain the list of outputFormats from a WFS GetCapabilities, 
+   * or the list of 'Formats' from a WMS GetCapabilities
+   */
   outputFormats?: MimeType[];
 };
 

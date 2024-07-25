@@ -175,6 +175,16 @@ describe('WmsEndpoint', () => {
         fees: 'no conditions apply',
         name: 'WMS',
         title: 'GéoServices : géologie, hydrogéologie et gravimétrie',
+        outputFormats: [
+          "image/png",
+          "image/gif",
+          "image/jpeg",
+          "image/ecw",
+          "image/tiff",
+          "image/png; mode=8bit",
+          "application/x-pdf",
+          "image/svg+xml",
+        ],
         keywords: [
           'Géologie',
           'BRGM',

@@ -48,7 +48,7 @@ export function readOutputFormatsFromCapabilities(capabilitiesDoc: XmlDocument){
   );
   const getMap = findChildElement(
     findChildElement(
-      findChildElement(getRootElement(capabilitiesDoc), 'Capability'),
+      capability,
       'Request'
     ),
     'GetMap'
