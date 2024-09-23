@@ -18,6 +18,7 @@ addTaskHandler('parseWmsCapabilities', globalThis, ({ url }: { url: string }) =>
     .then((xmlDoc) => ({
       info: wmsCapabilities.readInfoFromCapabilities(xmlDoc),
       layers: wmsCapabilities.readLayersFromCapabilities(xmlDoc),
+      url: wmsCapabilities.readOperationUrlsFromCapabilities(xmlDoc),
       version: wmsCapabilities.readVersionFromCapabilities(xmlDoc),
     }))
 );

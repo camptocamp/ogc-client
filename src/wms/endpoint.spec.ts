@@ -255,4 +255,39 @@ describe('WmsEndpoint', () => {
       );
     });
   });
+
+  describe('#getCapabilitiesUrl', () => {
+    it('returns the URL used for the request before the capabilities are retrieved', async () => {
+      expect(endpoint.getCapabilitiesUrl()).toBe(
+        'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetCapabilities'
+      );
+      await endpoint.isReady();
+    });
+
+    it('returns the self-reported URL after the capabilities are retrieved', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getCapabilitiesUrl()).toBe(
+        'http://geoservices.brgm.fr/geologie?language=fre&SERVICE=WMS&REQUEST=GetCapabilities'
+      );
+    });
+  });
+
+  describe('#getOperationUrl', () => {
+    it('returns NULL before the document is loaded', async () => {
+      expect(endpoint.getOperationUrl('GetMap')).toBeNull();
+      await endpoint.isReady();
+    });
+
+    it('returns undefined for a non-existant operation', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getOperationUrl('foo')).toBeUndefined();
+    });
+
+    it('returns the correct URL for an existant operation', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getOperationUrl('GetMap')).toBe(
+        'http://geoservices.brgm.fr/geologie?language=fre&'
+      );
+    });
+  });
 });
