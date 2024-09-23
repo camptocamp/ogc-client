@@ -251,7 +251,7 @@ describe('WmsEndpoint', () => {
           outputFormat: 'image/png',
         })
       ).toBe(
-        'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=layer1%2Clayer2&STYLES=&WIDTH=100&HEIGHT=200&FORMAT=image%2Fpng&CRS=EPSG%3A4326&BBOX=10%2C20%2C100%2C200'
+        'http://geoservices.brgm.fr/geologie?language=fre&SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=layer1%2Clayer2&STYLES=&WIDTH=100&HEIGHT=200&FORMAT=image%2Fpng&CRS=EPSG%3A4326&BBOX=10%2C20%2C100%2C200'
       );
     });
   });
