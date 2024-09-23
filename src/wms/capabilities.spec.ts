@@ -298,6 +298,9 @@ describe('WMS capabilities', () => {
         'image/svg+xml',
       ],
       infoFormats: ['text/plain', 'application/vnd.ogc.gml'],
+      exceptionFormats: [
+        /* these differ depending on the WMS version used */
+      ],
       keywords: [
         'Géologie',
         'BRGM',
@@ -311,11 +314,17 @@ describe('WMS capabilities', () => {
 
     it('reads the service info (1.3.0)', () => {
       const doc = parseXmlString(capabilities130);
+      expectedInfo.exceptionFormats = ['XML', 'INIMAGE', 'BLANK'];
       expect(readInfoFromCapabilities(doc)).toEqual(expectedInfo);
     });
 
     it('reads the service info (1.1.1)', () => {
       const doc = parseXmlString(capabilities111);
+      expectedInfo.exceptionFormats = [
+        'application/vnd.ogc.se_xml',
+        'application/vnd.ogc.se_inimage',
+        'application/vnd.ogc.se_blank',
+      ];
       expect(readInfoFromCapabilities(doc)).toEqual(expectedInfo);
     });
   });

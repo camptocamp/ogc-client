@@ -73,6 +73,25 @@ export function readInfoFormatsFromCapabilities(capabilitiesDoc: XmlDocument) {
 }
 
 /**
+ * Will return all available exception formats
+ * @param capabilitiesDoc Capabiliites document
+ * @return Available exception formats
+ */
+export function readExceptionFormatsFromCapabilities(
+  capabilitiesDoc: XmlDocument
+) {
+  const capability = findChildElement(
+    getRootElement(capabilitiesDoc),
+    'Capability'
+  );
+  const exception = findChildElement(capability, 'Exception');
+  const exceptionFormats = findChildrenElement(exception, 'Format').map(
+    getElementText
+  );
+  return exceptionFormats;
+}
+
+/**
  * Will read service-related info from the capabilities doc
  * @param capabilitiesDoc Capabilities document
  * @return Parsed service info
@@ -83,6 +102,8 @@ export function readInfoFromCapabilities(
   const service = findChildElement(getRootElement(capabilitiesDoc), 'Service');
   const outputFormats = readOutputFormatsFromCapabilities(capabilitiesDoc);
   const infoFormats = readInfoFormatsFromCapabilities(capabilitiesDoc);
+  const exceptionFormats =
+    readExceptionFormatsFromCapabilities(capabilitiesDoc);
   const keywords = findChildrenElement(
     findChildElement(service, 'KeywordList'),
     'Keyword'
@@ -96,6 +117,7 @@ export function readInfoFromCapabilities(
     abstract: getElementText(findChildElement(service, 'Abstract')),
     outputFormats: outputFormats,
     infoFormats: infoFormats,
+    exceptionFormats: exceptionFormats,
     fees: getElementText(findChildElement(service, 'Fees')),
     constraints: getElementText(findChildElement(service, 'AccessConstraints')),
     keywords,
