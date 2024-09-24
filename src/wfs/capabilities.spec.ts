@@ -177,10 +177,29 @@ describe('WFS capabilities', () => {
       keywords: ['WFS', 'WMS', 'GEOSERVER'],
       outputFormats: [],
     };
+    const provider = {
+      name: 'GIP ATGeRi',
+      site: '',
+      contact: {
+        name: 'PIGMA',
+        position: '',
+        phone: '05.57.85.40.42',
+        fax: '',
+        address: {
+          deliveryPoint: '',
+          city: 'Bordeaux',
+          administrativeArea: '',
+          postalCode: '33075',
+          country: '',
+        },
+        email: 'admin.pigma@gipatgeri.fr',
+      },
+    };
     it('reads the service info (2.0.0)', () => {
       const doc = parseXmlString(capabilities200);
       expect(readInfoFromCapabilities(doc)).toEqual({
         ...expectedInfo,
+        provider,
         outputFormats: [
           'application/gml+xml; version=3.2',
           'DXF',
@@ -208,6 +227,7 @@ describe('WFS capabilities', () => {
       const doc = parseXmlString(capabilities110);
       expect(readInfoFromCapabilities(doc)).toEqual({
         ...expectedInfo,
+        provider,
         outputFormats: [
           'text/xml; subtype=gml/3.1.1',
           'DXF',
