@@ -24,6 +24,7 @@ addTaskHandler('parseWfsCapabilities', globalThis, ({ url }: { url: string }) =>
   queryXmlDocument(url).then((xmlDoc) => ({
     info: wfsCapabilities.readInfoFromCapabilities(xmlDoc),
     featureTypes: wfsCapabilities.readFeatureTypesFromCapabilities(xmlDoc),
+    url: wfsCapabilities.readOperationUrlsFromCapabilities(xmlDoc),
     version: wfsCapabilities.readVersionFromCapabilities(xmlDoc),
   }))
 );
