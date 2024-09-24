@@ -8,6 +8,7 @@ import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
 // @ts-expect-error ts-migrate(7016)
 import capabilities111 from '../../fixtures/wms/capabilities-brgm-1-1-1.xml';
 import { parseXmlString } from '../shared/xml-utils.js';
+import type { WmsLayerFull } from './model';
 
 describe('WMS capabilities', () => {
   describe('readVersionFromCapabilities', () => {
@@ -324,7 +325,9 @@ describe('WMS capabilities', () => {
     });
     it('reads the layers (1.1.1)', () => {
       const doc = parseXmlString(capabilities111);
-      expect(readLayersFromCapabilities(doc)).toEqual(expectedLayers);
+      expect(
+        readLayersFromCapabilities(doc).map(fixupScaleDenominators)
+      ).toEqual(expectedLayers);
     });
   });
 
@@ -368,3 +371,18 @@ describe('WMS capabilities', () => {
     });
   });
 });
+
+/**
+ * Round scale denominators to avoid problems with floating point precision
+ * @param layer
+ */
+function fixupScaleDenominators(layer: WmsLayerFull): WmsLayerFull {
+  if (layer.minScaleDenominator !== undefined) {
+    layer.minScaleDenominator = Math.round(layer.minScaleDenominator);
+  }
+  if (layer.maxScaleDenominator !== undefined) {
+    layer.maxScaleDenominator = Math.round(layer.maxScaleDenominator);
+  }
+  layer.children?.forEach(fixupScaleDenominators);
+  return layer;
+}
