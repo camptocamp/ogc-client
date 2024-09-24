@@ -146,12 +146,12 @@ export default class WfsEndpoint {
     return useCache(
       () => {
         const describeUrl = generateDescribeFeatureTypeUrl(
-          this._capabilitiesUrl,
+          this.getOperationUrl('DescribeFeatureType'),
           this._version,
           name
         );
         const getFeatureUrl = generateGetFeatureUrl(
-          this._capabilitiesUrl,
+          this.getOperationUrl('GetFeature'),
           this._version,
           name,
           undefined,
@@ -310,7 +310,7 @@ export default class WfsEndpoint {
       );
     }
     return generateGetFeatureUrl(
-      this._capabilitiesUrl,
+      this.getOperationUrl('GetFeature'),
       this._version,
       internalFeatureType.name,
       format,
