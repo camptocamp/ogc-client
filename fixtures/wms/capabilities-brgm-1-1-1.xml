@@ -309,6 +309,10 @@
                         <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://www.geocatalogue.fr/api-public/servicesRest?Service=CSW&amp;Request=GetRecordById&amp;Version=2.0.2&amp;id=72cc8d40-1bb6-41a3-8376-9734f23336ff&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full"/>
                     </MetadataURL>
                     <ScaleHint min="3.36759422690005" max="93.9184612168792" />
+                    <Layer>
+                        <Name>INHERIT_SCALE</Name>
+                        <Title>Inherited scale denominators</Title>
+                    </Layer>
                 </Layer>
                 <Layer queryable="0" opaque="0" cascaded="0">
                     <Name>INHERIT_BBOX</Name>
