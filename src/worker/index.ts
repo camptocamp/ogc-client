@@ -62,6 +62,7 @@ export function parseWmsCapabilities(capabilitiesUrl: string): Promise<{
  */
 export function parseWfsCapabilities(capabilitiesUrl: string): Promise<{
   version: WfsVersion;
+  url: Record<OperationName, OperationUrl>;
   info: GenericEndpointInfo;
   featureTypes: WfsFeatureTypeInternal[];
 }> {

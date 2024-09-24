@@ -10,7 +10,12 @@ import {
   generateGetFeatureUrl,
 } from './url.js';
 import { stripNamespace } from '../shared/xml-utils.js';
-import { GenericEndpointInfo } from '../shared/models.js';
+import {
+  GenericEndpointInfo,
+  type HttpMethod,
+  type OperationName,
+  type OperationUrl,
+} from '../shared/models.js';
 import {
   WfsFeatureTypeBrief,
   WfsFeatureTypeInternal,
@@ -28,6 +33,7 @@ export default class WfsEndpoint {
   private _capabilitiesPromise: Promise<void>;
   private _info: GenericEndpointInfo | null;
   private _featureTypes: WfsFeatureTypeInternal[] | null;
+  private _url: Record<OperationName, OperationUrl>;
   private _version: WfsVersion | null;
 
   /**
@@ -49,9 +55,10 @@ export default class WfsEndpoint {
       'WFS',
       'CAPABILITIES',
       this._capabilitiesUrl
-    ).then(({ info, featureTypes, version }) => {
+    ).then(({ info, featureTypes, url, version }) => {
       this._info = info;
       this._featureTypes = featureTypes;
+      this._url = url;
       this._version = version;
     });
   }
@@ -297,5 +304,34 @@ export default class WfsEndpoint {
       extentCrs,
       startIndex
     );
+  }
+
+  /**
+   * Returns the Capabilities URL of the WMS
+   *
+   * This is the URL reported by the service if available, otherwise the URL
+   * passed to the constructor
+   */
+  getCapabilitiesUrl() {
+    const baseUrl = this.getOperationUrl('GetCapabilities');
+    if (!baseUrl) {
+      return this._capabilitiesUrl;
+    }
+    return setQueryParams(baseUrl, {
+      SERVICE: 'WMS',
+      REQUEST: 'GetCapabilities',
+    });
+  }
+
+  /**
+   * Returns the URL reported by the WFS for the given operation
+   * @param operationName e.g. GetFeature, GetCapabilities, etc.
+   * @param method HTTP method
+   */
+  getOperationUrl(operationName: OperationName, method: HttpMethod = 'Get') {
+    if (!this._url) {
+      return null;
+    }
+    return this._url[operationName]?.[method];
   }
 }
