@@ -33,6 +33,7 @@ export type {
   Provider,
   LayerStyle,
   BoundingBox,
+  MetadataURL,
   FetchOptions,
   GenericEndpointInfo,
   MimeType,
