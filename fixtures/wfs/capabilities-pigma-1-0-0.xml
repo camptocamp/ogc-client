@@ -209,6 +209,9 @@
             <SRS>EPSG:2154</SRS>
             <LatLongBoundingBox minx="-1.9540704007796161" miny="42.73286181824404" maxx="1.496463327812538"
                                 maxy="45.717071228823876"/>
+            <MetadataURL type="TC211" format="text/plain">
+                https://www.pigma.org/geonetwork/?uuid=cbcae9a4-7fc0-4fc8-bd78-089af3af4e8a
+            </MetadataURL>
         </FeatureType>
         <FeatureType>
             <Name>cd16:comptages_routiers_l</Name>
@@ -222,6 +225,15 @@
             <SRS>EPSG:2154</SRS>
             <LatLongBoundingBox minx="-0.4906009184568518" miny="45.175543885638376" maxx="0.9778719979726385"
                                 maxy="46.14349349624617"/>
+            <MetadataURL type="TC211" format="text/html">
+                https://www.pigma.org/geonetwork?uuid=4d840710-3f09-4f48-aa31-d2c4c0ee6fda
+            </MetadataURL>
+            <MetadataURL type="19115" format="text/html">
+                https://www.pigma.org/geonetwork?uuid=4d840710-3f09-4f48-aa31-d2c4c0ee6fda
+            </MetadataURL>
+            <MetadataURL type="19115" format="text/xml">
+                https://www.pigma.org/geonetwork/srv/fre/xml_iso19139?uuid=4d840710-3f09-4f48-aa31-d2c4c0ee6fda
+            </MetadataURL>
         </FeatureType>
         <FeatureType>
             <Name>cd16:hierarchisation_l</Name>
@@ -235,6 +247,15 @@
             <SRS>EPSG:2154</SRS>
             <LatLongBoundingBox minx="-0.4832134559131876" miny="45.18037755571674" maxx="0.9725372441782966"
                                 maxy="46.13877580094452"/>
+            <MetadataURL type="TC211" format="text/html">
+                https://www.pigma.org/geonetwork?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6
+            </MetadataURL>
+            <MetadataURL type="19115" format="text/html">
+                https://www.pigma.org/geonetwork?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6
+            </MetadataURL>
+            <MetadataURL type="19115" format="text/xml">
+                https://www.pigma.org/geonetwork/srv/fre/xml_iso19139?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6
+            </MetadataURL>
         </FeatureType>
     </FeatureTypeList>
     <ogc:Filter_Capabilities>
