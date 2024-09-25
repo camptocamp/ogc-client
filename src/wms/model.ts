@@ -6,6 +6,12 @@ export type WmsLayerAttribution = {
   logoUrl?: string;
 };
 
+export type WmsLayerMetadata = {
+  type: string;
+  format: string;
+  url: string;
+};
+
 export type WmsLayerSummary = {
   /**
    * The layer is renderable if defined
@@ -38,6 +44,7 @@ export type WmsLayerFull = {
   minScaleDenominator?: number;
   attribution?: WmsLayerAttribution;
   keywords?: string[];
+  metadata?: WmsLayerMetadata[];
   /**
    * Not defined if the layer is a leaf in the tree
    */

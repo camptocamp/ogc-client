@@ -135,6 +135,13 @@ describe('WMS capabilities', () => {
                 keywords: ['Geologie', 'INSPIRE:Geology', 'Geology'],
                 maxScaleDenominator: 1e7,
                 minScaleDenominator: 200000,
+                metadata: [
+                  {
+                    format: 'text/xml',
+                    type: 'TC211',
+                    url: 'http://www.geocatalogue.fr/api-public/servicesRest?Service=CSW&Request=GetRecordById&Version=2.0.2&id=BR_CAR_ADA&outputSchema=http://www.isotc211.org/2005/gmd&elementSetName=full',
+                  },
+                ],
                 name: 'SCAN_F_GEOL1M',
                 queryable: false,
                 opaque: false,
@@ -191,6 +198,13 @@ describe('WMS capabilities', () => {
                 maxScaleDenominator: 500000,
                 minScaleDenominator: 80000,
                 name: 'SCAN_F_GEOL250',
+                metadata: [
+                  {
+                    format: 'text/xml',
+                    type: 'TC211',
+                    url: 'http://www.geocatalogue.fr/api-public/servicesRest?Service=CSW&Request=GetRecordById&Version=2.0.2&id=BR_CAR_ACA&outputSchema=http://www.isotc211.org/2005/gmd&elementSetName=full',
+                  },
+                ],
                 queryable: true,
                 opaque: true,
                 styles,
@@ -233,6 +247,13 @@ describe('WMS capabilities', () => {
                 maxScaleDenominator: 251000,
                 minScaleDenominator: 9000,
                 name: 'SCAN_D_GEOL50',
+                metadata: [
+                  {
+                    format: 'text/xml',
+                    type: 'TC211',
+                    url: 'http://www.geocatalogue.fr/api-public/servicesRest?Service=CSW&Request=GetRecordById&Version=2.0.2&id=72cc8d40-1bb6-41a3-8376-9734f23336ff&outputSchema=http://www.isotc211.org/2005/gmd&elementSetName=full',
+                  },
+                ],
                 queryable: true,
                 opaque: true,
                 styles,
