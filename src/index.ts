@@ -29,6 +29,7 @@ export type {
 export type {
   LayerStyle,
   BoundingBox,
+  MetadataURL,
   FetchOptions,
   GenericEndpointInfo,
 } from './shared/models.js';
