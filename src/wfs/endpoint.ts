@@ -125,6 +125,7 @@ export default class WfsEndpoint {
       otherCrs: featureType.otherCrs,
       outputFormats: featureType.outputFormats,
       keywords: featureType.keywords,
+      ...('metadata' in featureType && { metadata: featureType.metadata }),
     } as WfsFeatureTypeSummary;
   }
 

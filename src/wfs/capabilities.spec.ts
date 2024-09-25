@@ -40,6 +40,13 @@ describe('WFS capabilities', () => {
           -1.9540704007796161, 42.73286181824404, 1.496463327812538,
           45.717071228823876,
         ],
+        metadata: [
+          {
+            format: 'text/plain',
+            type: 'TC211',
+            url: 'https://www.pigma.org/geonetwork/?uuid=cbcae9a4-7fc0-4fc8-bd78-089af3af4e8a',
+          },
+        ],
         name: 'asp:asp_rpg2010',
         otherCrs: ['EPSG:32615', 'EPSG:32616', 'EPSG:32617', 'EPSG:32618'],
         outputFormats: [
@@ -58,6 +65,23 @@ describe('WFS capabilities', () => {
         latLonBoundingBox: [
           -0.4906009184568518, 45.175543885638376, 0.9778719979726385,
           46.14349349624617,
+        ],
+        metadata: [
+          {
+            format: 'text/html',
+            type: 'TC211',
+            url: 'https://www.pigma.org/geonetwork?uuid=4d840710-3f09-4f48-aa31-d2c4c0ee6fda',
+          },
+          {
+            format: 'text/html',
+            type: '19115',
+            url: 'https://www.pigma.org/geonetwork?uuid=4d840710-3f09-4f48-aa31-d2c4c0ee6fda',
+          },
+          {
+            format: 'text/xml',
+            type: '19115',
+            url: 'https://www.pigma.org/geonetwork/srv/fre/xml_iso19139?uuid=4d840710-3f09-4f48-aa31-d2c4c0ee6fda',
+          },
         ],
         name: 'cd16:comptages_routiers_l',
         otherCrs: ['EPSG:32615', 'EPSG:32616', 'EPSG:32617', 'EPSG:32618'],
@@ -80,6 +104,23 @@ describe('WFS capabilities', () => {
           46.13877580094452,
         ],
         name: 'cd16:hierarchisation_l',
+        metadata: [
+          {
+            format: 'text/html',
+            type: 'TC211',
+            url: 'https://www.pigma.org/geonetwork?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6',
+          },
+          {
+            format: 'text/html',
+            type: '19115',
+            url: 'https://www.pigma.org/geonetwork?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6',
+          },
+          {
+            format: 'text/xml',
+            type: '19115',
+            url: 'https://www.pigma.org/geonetwork/srv/fre/xml_iso19139?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6',
+          },
+        ],
         otherCrs: ['EPSG:32615', 'EPSG:32616', 'EPSG:32617', 'EPSG:32618'],
         outputFormats: [
           'application/gml+xml; version=3.2',
@@ -92,7 +133,13 @@ describe('WFS capabilities', () => {
     ];
     it('reads the feature types (2.0.0)', () => {
       const doc = parseXmlString(capabilities200);
-      expect(readFeatureTypesFromCapabilities(doc)).toEqual(expectedTypes);
+      const typesWithoutMetadataUrlAttributes = expectedTypes.map((type) => ({
+        ...type,
+        metadata: type.metadata.map((metadata) => ({ url: metadata.url })),
+      }));
+      expect(readFeatureTypesFromCapabilities(doc)).toEqual(
+        typesWithoutMetadataUrlAttributes
+      );
     });
     it('reads the feature types (1.1.0)', () => {
       const doc = parseXmlString(capabilities110);
@@ -138,6 +185,20 @@ describe('WFS capabilities', () => {
           latLonBoundingBox: [
             1.3472171890368316, 48.82764887581316, 4.285589467078578,
             51.0896786738123,
+          ],
+          metadata: [
+            {
+              url: 'https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/facf3747-bc19-44c7-9fd8-1f765d99c059',
+            },
+            {
+              url: 'https://www.geo2france.fr/geonetwork/srv/fre/catalog.search#/metadata/facf3747-bc19-44c7-9fd8-1f765d99c059',
+            },
+            {
+              url: 'https://www.geo2france.fr/geonetwork/srv/api/records/facf3747-bc19-44c7-9fd8-1f765d99c059/formatters/xml',
+            },
+            {
+              url: 'https://www.geo2france.fr/geonetwork/srv/api/records/facf3747-bc19-44c7-9fd8-1f765d99c059/formatters/xml',
+            },
           ],
           name: 'cr_hdf:domaine_public_hdf_com',
           otherCrs: [],

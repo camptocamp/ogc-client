@@ -168,6 +168,22 @@ function parseFeatureType(
       )
         .map(getElementText)
         .filter((v, i, arr) => arr.indexOf(v) === i);
+
+  const metadata =
+    serviceVersion === '2.0.0'
+      ? findChildrenElement(featureTypeEl, 'MetadataURL').map(
+          (metadataUrlEl) => ({
+            url: getElementAttribute(metadataUrlEl, 'xlink:href'),
+          })
+        )
+      : findChildrenElement(featureTypeEl, 'MetadataURL').map(
+          (metadataUrlEl) => ({
+            format: getElementAttribute(metadataUrlEl, 'format'),
+            type: getElementAttribute(metadataUrlEl, 'type'),
+            url: getElementText(metadataUrlEl).trim(),
+          })
+        );
+
   return {
     name: getElementText(findChildElement(featureTypeEl, 'Name')),
     title: getElementText(findChildElement(featureTypeEl, 'Title')),
@@ -182,5 +198,6 @@ function parseFeatureType(
       ? parseBBox100()
       : parseBBox(),
     keywords: keywords,
+    ...(metadata.length && { metadata }),
   };
 }
