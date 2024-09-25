@@ -450,9 +450,6 @@
                 <ows:UpperCorner>1.496463327812538 45.717071228823876</ows:UpperCorner>
             </ows:WGS84BoundingBox>
             <MetadataURL xlink:href="https://www.pigma.org/geonetwork/?uuid=cbcae9a4-7fc0-4fc8-bd78-089af3af4e8a"/>
-            <MetadataURL xlink:href="https://www.pigma.org/geonetwork/?uuid=cbcae9a4-7fc0-4fc8-bd78-089af3af4e8a"/>
-            <MetadataURL
-                    xlink:href="https://www.pigma.org/geonetwork/srv/fre/xml_iso19139?uuid=cbcae9a4-7fc0-4fc8-bd78-089af3af4e8a"/>
             <OutputFormats>
                 <Format>application/gml+xml; version=3.2</Format>
                 <Format>text/xml; subtype=gml/3.2.1</Format>
