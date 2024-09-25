@@ -1,15 +1,14 @@
-import { BoundingBox, CrsCode, LayerStyle } from '../shared/models.js';
+import {
+  BoundingBox,
+  CrsCode,
+  LayerStyle,
+  type MetadataURL,
+} from '../shared/models.js';
 
 export type WmsLayerAttribution = {
   title?: string;
   url?: string;
   logoUrl?: string;
-};
-
-export type WmsLayerMetadata = {
-  type: string;
-  format: string;
-  url: string;
 };
 
 export type WmsLayerSummary = {
@@ -42,7 +41,7 @@ export type WmsLayerFull = {
   opaque: boolean;
   attribution?: WmsLayerAttribution;
   keywords?: string[];
-  metadata?: WmsLayerMetadata[];
+  metadata?: MetadataURL[];
   /**
    * Not defined if the layer is a leaf in the tree
    */
