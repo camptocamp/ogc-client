@@ -166,7 +166,7 @@ async function getFeatureUrl() {
   const endpoint = await new WfsEndpoint('https://my.server.org/ows').isReady();
   const url = endpoint.getFeatureUrl('my:featureType', {
     asJson: true,
-    maxFeature: 1000
+    maxFeatures: 1000
   });
 }</pre
         >
