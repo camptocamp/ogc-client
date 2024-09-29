@@ -1,3 +1,4 @@
+import { readProviderFromCapabilities } from '../shared/ows.js';
 import {
   findChildElement,
   findChildrenElement,
@@ -91,6 +92,11 @@ export function readInfoFromCapabilities(
       'Keyword'
     ).map(getElementText);
   }
+  let provider;
+  // no provider information defined in capabilities for WFS 1.0.0
+  if (version !== '1.0.0') {
+    provider = readProviderFromCapabilities(capabilitiesDoc);
+  }
 
   return {
     title: getElementText(findChildElement(service, 'Title')),
@@ -99,6 +105,7 @@ export function readInfoFromCapabilities(
     fees: getElementText(findChildElement(service, 'Fees')),
     constraints: getElementText(findChildElement(service, 'AccessConstraints')),
     keywords,
+    provider,
     outputFormats: readOutputFormatsFromCapabilities(capabilitiesDoc),
   };
 }

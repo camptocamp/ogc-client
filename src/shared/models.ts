@@ -5,6 +5,30 @@ export type BoundingBox = [number, number, number, number];
 
 export type CrsCode = string;
 
+export interface Address {
+  deliveryPoint?: string;
+  city?: string;
+  administrativeArea?: string;
+  postalCode?: string;
+  country?: string;
+}
+
+export interface Contact {
+  name?: string;
+  organization?: string;
+  position?: string;
+  phone?: string;
+  fax?: string;
+  address?: Address;
+  email?: string;
+}
+
+export interface Provider {
+  name?: string;
+  site?: string;
+  contact?: Contact;
+}
+
 export type GenericEndpointInfo = {
   name: string;
   title: string;
@@ -12,6 +36,7 @@ export type GenericEndpointInfo = {
   fees: string;
   constraints: string;
   keywords: string[];
+  provider?: Provider;
   /**
    * Can contain the list of outputFormats from a WFS GetCapabilities,
    * or the list of 'Formats' from a WMS GetCapabilities

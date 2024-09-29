@@ -226,6 +226,24 @@ describe('WfsEndpoint', () => {
         name: 'WFS',
         title: "Service WFS de l'IDS régionale PIGMA",
         keywords: ['WFS', 'WMS', 'GEOSERVER'],
+        provider: {
+          name: 'GIP ATGeRi',
+          site: '',
+          contact: {
+            name: 'PIGMA',
+            position: '',
+            phone: '05.57.85.40.42',
+            fax: '',
+            address: {
+              deliveryPoint: '',
+              city: 'Bordeaux',
+              administrativeArea: '',
+              postalCode: '33075',
+              country: '',
+            },
+            email: 'admin.pigma@gipatgeri.fr',
+          },
+        },
         outputFormats: [
           'application/gml+xml; version=3.2',
           'DXF',

@@ -1,4 +1,5 @@
 import type { BoundingBox, LayerStyle } from '../shared/models.js';
+import { readProviderFromCapabilities } from '../shared/ows.js';
 import {
   findChildElement,
   findChildrenElement,
@@ -59,6 +60,7 @@ export function readInfoFromCapabilities(
     fees: getElementText(findChildElement(service, 'Fees')),
     constraints: getElementText(findChildElement(service, 'AccessConstraints')),
     keywords,
+    provider: readProviderFromCapabilities(capabilitiesDoc),
     getTileUrls,
   };
 }
