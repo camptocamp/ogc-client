@@ -5,7 +5,10 @@ import {
   BoundingBox,
   CrsCode,
   GenericEndpointInfo,
+  type HttpMethod,
   MimeType,
+  type OperationName,
+  type OperationUrl,
 } from '../shared/models.js';
 import { WmsLayerFull, WmsLayerSummary, WmsVersion } from './model.js';
 import { generateGetMapUrl } from './url.js';
@@ -18,6 +21,7 @@ export default class WmsEndpoint {
   private _capabilitiesPromise: Promise<void>;
   private _info: GenericEndpointInfo | null;
   private _layers: WmsLayerFull[] | null;
+  private _url: Record<OperationName, OperationUrl>;
   private _version: WmsVersion | null;
 
   /**
@@ -38,9 +42,10 @@ export default class WmsEndpoint {
       'WMS',
       'CAPABILITIES',
       this._capabilitiesUrl
-    ).then(({ info, layers, version }) => {
+    ).then(({ info, layers, url, version }) => {
       this._info = info;
       this._layers = layers;
+      this._url = url;
       this._version = version;
     });
   }
@@ -159,7 +164,7 @@ export default class WmsEndpoint {
     // TODO: check supported output formats
     // TODO: check supported styles
     return generateGetMapUrl(
-      this._capabilitiesUrl,
+      this.getOperationUrl('GetMap') || this._capabilitiesUrl,
       this._version,
       layers.join(','),
       widthPx,
@@ -169,5 +174,34 @@ export default class WmsEndpoint {
       outputFormat,
       styles !== undefined ? styles.join(',') : ''
     );
+  }
+
+  /**
+   * Returns the Capabilities URL of the WMS
+   *
+   * This is the URL reported by the service if available, otherwise the URL
+   * passed to the constructor
+   */
+  getCapabilitiesUrl() {
+    const baseUrl = this.getOperationUrl('GetCapabilities');
+    if (!baseUrl) {
+      return this._capabilitiesUrl;
+    }
+    return setQueryParams(baseUrl, {
+      SERVICE: 'WMS',
+      REQUEST: 'GetCapabilities',
+    });
+  }
+
+  /**
+   * Returns the URL reported by the WMS for the given operation
+   * @param operationName e.g. GetMap, GetCapabilities, etc.
+   * @param method HTTP method
+   */
+  getOperationUrl(operationName: OperationName, method: HttpMethod = 'Get') {
+    if (!this._url) {
+      return null;
+    }
+    return this._url[operationName]?.[method];
   }
 }

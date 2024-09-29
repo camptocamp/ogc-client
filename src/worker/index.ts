@@ -1,5 +1,9 @@
 import { sendTaskRequest } from './utils.js';
-import { GenericEndpointInfo } from '../shared/models.js';
+import {
+  GenericEndpointInfo,
+  OperationName,
+  OperationUrl,
+} from '../shared/models.js';
 import { setFetchOptionsUpdateCallback } from '../shared/http-utils.js';
 import { WmtsEndpointInfo, WmtsLayer, WmtsMatrixSet } from '../wmts/model.js';
 import {
@@ -43,6 +47,7 @@ function getWorkerInstance() {
  */
 export function parseWmsCapabilities(capabilitiesUrl: string): Promise<{
   version: WmsVersion;
+  url: Record<OperationName, OperationUrl>;
   info: GenericEndpointInfo;
   layers: WmsLayerFull[];
 }> {
@@ -57,6 +62,7 @@ export function parseWmsCapabilities(capabilitiesUrl: string): Promise<{
  */
 export function parseWfsCapabilities(capabilitiesUrl: string): Promise<{
   version: WfsVersion;
+  url: Record<OperationName, OperationUrl>;
   info: GenericEndpointInfo;
   featureTypes: WfsFeatureTypeInternal[];
 }> {

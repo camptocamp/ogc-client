@@ -445,7 +445,7 @@ describe('WfsEndpoint', () => {
           outputFormat: 'application/gml+xml; version=3.2',
         })
       ).toEqual(
-        'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&OUTPUTFORMAT=application%2Fgml%2Bxml%3B+version%3D3.2&COUNT=200'
+        'https://www.pigma.org/geoserver/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&OUTPUTFORMAT=application%2Fgml%2Bxml%3B+version%3D3.2&COUNT=200'
       );
     });
     it('returns a GetFeature requesting geojson url for a given feature type', () => {
@@ -454,7 +454,7 @@ describe('WfsEndpoint', () => {
           asJson: true,
         })
       ).toEqual(
-        'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Acomptages_routiers_l&OUTPUTFORMAT=application%2Fjson'
+        'https://www.pigma.org/geoserver/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Acomptages_routiers_l&OUTPUTFORMAT=application%2Fjson'
       );
     });
     it('returns a GetFeature with a bbox and output crs for a given feature type', () => {
@@ -464,7 +464,7 @@ describe('WfsEndpoint', () => {
           outputCrs: 'EPSG:2154',
         })
       ).toEqual(
-        'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&SRSNAME=EPSG%3A2154&BBOX=1%2C2%2C3%2C4'
+        'https://www.pigma.org/geoserver/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&SRSNAME=EPSG%3A2154&BBOX=1%2C2%2C3%2C4'
       );
     });
     it('throws an error if the feature type was not found', () => {
@@ -511,6 +511,41 @@ describe('WfsEndpoint', () => {
     it('returns true if the WFS version is 2.0.0 or higher', async () => {
       await endpoint.isReady();
       expect(endpoint.supportsStartIndex()).toBeTruthy();
+    });
+  });
+
+  describe('#getCapabilitiesUrl', () => {
+    it.skip('returns the URL used for the request before the capabilities are retrieved', async () => {
+      expect(endpoint.getCapabilitiesUrl()).toBe(
+        'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetCapabilities'
+      );
+      await endpoint.isReady();
+    });
+
+    it('returns the self-reported URL after the capabilities are retrieved', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getCapabilitiesUrl()).toBe(
+        'https://www.pigma.org/geoserver/wfs?SERVICE=WMS&REQUEST=GetCapabilities'
+      );
+    });
+  });
+
+  describe('#getOperationUrl', () => {
+    it.skip('returns NULL before the document is loaded', async () => {
+      expect(endpoint.getOperationUrl('GetMap')).toBeNull();
+      await endpoint.isReady();
+    });
+
+    it('returns undefined for a non-existant operation', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getOperationUrl('foo')).toBeUndefined();
+    });
+
+    it('returns the correct URL for an existant operation', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getOperationUrl('GetFeature')).toBe(
+        'https://www.pigma.org/geoserver/wfs'
+      );
     });
   });
 });
