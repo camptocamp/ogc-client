@@ -89,6 +89,13 @@ describe('WmsEndpoint', () => {
                     "BD Scan-Géol-50 est la base de données géoréférencées des cartes géologiques 'papier' à 1/50 000",
                   name: 'SCAN_D_GEOL50',
                   title: 'Carte géologique image de la France au 1/50 000e',
+                  children: [
+                    {
+                      abstract: '',
+                      name: 'INHERIT_SCALE',
+                      title: 'Inherited scale denominators',
+                    },
+                  ],
                 },
                 {
                   abstract: '',

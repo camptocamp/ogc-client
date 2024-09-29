@@ -329,6 +329,10 @@
                     </MetadataURL>
                     <MinScaleDenominator>9000</MinScaleDenominator>
                     <MaxScaleDenominator>251000</MaxScaleDenominator>
+                    <Layer>
+                        <Name>INHERIT_SCALE</Name>
+                        <Title>Inherited scale denominators</Title>
+                    </Layer>
                 </Layer>
                 <Layer queryable="0" opaque="0" cascaded="0">
                     <Name>INHERIT_BBOX</Name>

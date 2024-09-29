@@ -94,7 +94,9 @@ function parseLayer(
   inheritedSrs: CrsCode[] = [],
   inheritedStyles: LayerStyle[] = [],
   inheritedAttribution: WmsLayerAttribution = null,
-  inheritedBoundingBoxes: Record<CrsCode, BoundingBox> = null
+  inheritedBoundingBoxes: Record<CrsCode, BoundingBox> = null,
+  inheritedMaxScaleDenom: number = null,
+  inheritedMinScaleDenom: number = null
 ): WmsLayerFull {
   const srsTag = version === '1.3.0' ? 'CRS' : 'SRS';
   const srsList = findChildrenElement(layerEl, srsTag).map(getElementText);
@@ -123,6 +125,30 @@ function parseLayer(
     return ['minx', 'miny', 'maxx', 'maxy'].map((name) =>
       getElementAttribute(bboxEl, name)
     );
+  }
+  function parseScaleHintValue(textValue, defaultValue) {
+    if (textValue === '') {
+      return defaultValue;
+    }
+    // convert resolution to scale denominator using the common pixel size of
+    // 0.28×0.28 mm as defined in WMS 1.3.0 specification section 7.2.4.6.9
+    return Math.sqrt(0.5 * parseFloat(textValue) ** 2) / 0.00028;
+  }
+  function parseScaleHint() {
+    const scaleHint = findChildElement(layerEl, 'ScaleHint');
+    if (!scaleHint) {
+      return [inheritedMinScaleDenom, inheritedMaxScaleDenom];
+    }
+    const min = getElementAttribute(scaleHint, 'min');
+    const max = getElementAttribute(scaleHint, 'max');
+    return [
+      parseScaleHintValue(min, inheritedMinScaleDenom),
+      parseScaleHintValue(max, inheritedMaxScaleDenom),
+    ];
+  }
+  function parseScaleDenominator(name, inheritedValue) {
+    const textValue = getElementText(findChildElement(layerEl, name));
+    return textValue === '' ? inheritedValue : parseFloat(textValue);
   }
   const attributionEl = findChildElement(layerEl, 'Attribution');
   const attribution =
@@ -169,8 +195,31 @@ function parseLayer(
     .map(getElementText)
     .filter((v, i, arr) => arr.indexOf(v) === i);
 
+  let minScaleDenominator, maxScaleDenominator;
+  if (version === '1.3.0') {
+    minScaleDenominator = parseScaleDenominator(
+      'MinScaleDenominator',
+      inheritedMinScaleDenom
+    );
+    maxScaleDenominator = parseScaleDenominator(
+      'MaxScaleDenominator',
+      inheritedMaxScaleDenom
+    );
+  } else {
+    [minScaleDenominator, maxScaleDenominator] = parseScaleHint();
+  }
+
   const children = findChildrenElement(layerEl, 'Layer').map((layer) =>
-    parseLayer(layer, version, availableCrs, styles, attribution, boundingBoxes)
+    parseLayer(
+      layer,
+      version,
+      availableCrs,
+      styles,
+      attribution,
+      boundingBoxes,
+      maxScaleDenominator,
+      minScaleDenominator
+    )
   );
   return {
     name: getElementText(findChildElement(layerEl, 'Name')),
@@ -183,6 +232,8 @@ function parseLayer(
     keywords,
     queryable,
     opaque,
+    ...(minScaleDenominator !== null ? { minScaleDenominator } : {}),
+    ...(maxScaleDenominator !== null ? { maxScaleDenominator } : {}),
     ...(children.length && { children }),
   };
 }
