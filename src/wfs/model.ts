@@ -1,4 +1,9 @@
-import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
+import {
+  BoundingBox,
+  CrsCode,
+  MetadataURL,
+  MimeType,
+} from '../shared/models.js';
 
 export type WfsVersion = '1.0.0' | '1.1.0' | '2.0.0';
 
@@ -11,6 +16,7 @@ export type WfsFeatureTypeInternal = {
   outputFormats: MimeType[];
   latLonBoundingBox?: BoundingBox;
   keywords?: string[];
+  metadata?: MetadataURL[];
 };
 
 export type FeaturePropertyType = string | number | boolean;
@@ -46,6 +52,7 @@ export type WfsFeatureTypeSummary = {
   otherCrs: CrsCode[];
   outputFormats: MimeType[];
   keywords?: string[];
+  metadata?: MetadataURL[];
 };
 
 export type WfsFeatureTypeFull = {

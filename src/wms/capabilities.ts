@@ -169,6 +169,17 @@ function parseLayer(
     .map(getElementText)
     .filter((v, i, arr) => arr.indexOf(v) === i);
 
+  const metadata = findChildrenElement(layerEl, 'MetadataURL').map(
+    (metadataUrlEl) => ({
+      type: getElementAttribute(metadataUrlEl, 'type'),
+      format: getElementText(findChildElement(metadataUrlEl, 'Format')),
+      url: getElementAttribute(
+        findChildElement(metadataUrlEl, 'OnlineResource'),
+        'xlink:href'
+      ),
+    })
+  );
+
   const children = findChildrenElement(layerEl, 'Layer').map((layer) =>
     parseLayer(layer, version, availableCrs, styles, attribution, boundingBoxes)
   );
@@ -183,6 +194,7 @@ function parseLayer(
     keywords,
     queryable,
     opaque,
+    ...(metadata.length && { metadata }),
     ...(children.length && { children }),
   };
 }
