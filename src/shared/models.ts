@@ -17,6 +17,11 @@ export type GenericEndpointInfo = {
    * or the list of 'Formats' from a WMS GetCapabilities
    */
   outputFormats?: MimeType[];
+  /**
+   * Contains a list of formats that can be used for WMS GetFeatureInfo,
+   * or null for other services such as WFS
+   */
+  infoFormats?: MimeType[];
 };
 
 export type MimeType = string;

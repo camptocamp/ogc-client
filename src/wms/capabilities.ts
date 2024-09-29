@@ -57,6 +57,21 @@ export function readOutputFormatsFromCapabilities(
   return outputFormats;
 }
 
+export function readInfoFormatsFromCapabilities(capabilitiesDoc: XmlDocument) {
+  const capability = findChildElement(
+    getRootElement(capabilitiesDoc),
+    'Capability'
+  );
+  const getFeatureInfo = findChildElement(
+    findChildElement(capability, 'Request'),
+    'GetFeatureInfo'
+  );
+  const outputFormats = findChildrenElement(getFeatureInfo, 'Format').map(
+    getElementText
+  );
+  return outputFormats;
+}
+
 /**
  * Will read service-related info from the capabilities doc
  * @param capabilitiesDoc Capabilities document
@@ -66,7 +81,8 @@ export function readInfoFromCapabilities(
   capabilitiesDoc: XmlDocument
 ): GenericEndpointInfo {
   const service = findChildElement(getRootElement(capabilitiesDoc), 'Service');
-  const formats = readOutputFormatsFromCapabilities(capabilitiesDoc);
+  const outputFormats = readOutputFormatsFromCapabilities(capabilitiesDoc);
+  const infoFormats = readInfoFormatsFromCapabilities(capabilitiesDoc);
   const keywords = findChildrenElement(
     findChildElement(service, 'KeywordList'),
     'Keyword'
@@ -78,7 +94,8 @@ export function readInfoFromCapabilities(
     title: getElementText(findChildElement(service, 'Title')),
     name: getElementText(findChildElement(service, 'Name')),
     abstract: getElementText(findChildElement(service, 'Abstract')),
-    outputFormats: formats,
+    outputFormats: outputFormats,
+    infoFormats: infoFormats,
     fees: getElementText(findChildElement(service, 'Fees')),
     constraints: getElementText(findChildElement(service, 'AccessConstraints')),
     keywords,

@@ -187,6 +187,7 @@ describe('WmsEndpoint', () => {
           'application/x-pdf',
           'image/svg+xml',
         ],
+        infoFormats: ['text/plain', 'application/vnd.ogc.gml'],
         keywords: [
           'Géologie',
           'BRGM',
