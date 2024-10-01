@@ -40,6 +40,10 @@ export {
   setFetchOptions,
   resetFetchOptions,
 } from './shared/http-utils.js';
+export {
+  check,
+  default as ServiceExceptionError,
+} from './shared/service-exception-error.js';
 
 export { enableFallbackWithoutWorker } from './worker/index.js';
 import './worker-fallback/index.js';
