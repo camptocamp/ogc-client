@@ -1,5 +1,6 @@
 import { addTaskHandler } from './utils.js';
 import { queryXmlDocument, setFetchOptions } from '../shared/http-utils.js';
+import { check } from '../shared/service-exception-error.js';
 import * as wmsCapabilities from '../wms/capabilities.js';
 import * as wfsCapabilities from '../wfs/capabilities.js';
 import * as wmtsCapabilities from '../wmts/capabilities.js';
@@ -12,19 +13,23 @@ import { FetchOptions } from '../shared/models.js';
 import { WfsFeatureTypeFull, WfsVersion } from '../wfs/model.js';
 
 addTaskHandler('parseWmsCapabilities', globalThis, ({ url }: { url: string }) =>
-  queryXmlDocument(url).then((xmlDoc) => ({
-    info: wmsCapabilities.readInfoFromCapabilities(xmlDoc),
-    layers: wmsCapabilities.readLayersFromCapabilities(xmlDoc),
-    version: wmsCapabilities.readVersionFromCapabilities(xmlDoc),
-  }))
+  queryXmlDocument(url)
+    .then((xmlDoc) => check(xmlDoc, url))
+    .then((xmlDoc) => ({
+      info: wmsCapabilities.readInfoFromCapabilities(xmlDoc),
+      layers: wmsCapabilities.readLayersFromCapabilities(xmlDoc),
+      version: wmsCapabilities.readVersionFromCapabilities(xmlDoc),
+    }))
 );
 
 addTaskHandler('parseWfsCapabilities', globalThis, ({ url }: { url: string }) =>
-  queryXmlDocument(url).then((xmlDoc) => ({
-    info: wfsCapabilities.readInfoFromCapabilities(xmlDoc),
-    featureTypes: wfsCapabilities.readFeatureTypesFromCapabilities(xmlDoc),
-    version: wfsCapabilities.readVersionFromCapabilities(xmlDoc),
-  }))
+  queryXmlDocument(url)
+    .then((xmlDoc) => check(xmlDoc, url))
+    .then((xmlDoc) => ({
+      info: wfsCapabilities.readInfoFromCapabilities(xmlDoc),
+      featureTypes: wfsCapabilities.readFeatureTypesFromCapabilities(xmlDoc),
+      version: wfsCapabilities.readVersionFromCapabilities(xmlDoc),
+    }))
 );
 
 addTaskHandler(
@@ -68,9 +73,11 @@ addTaskHandler(
   'parseWmtsCapabilities',
   globalThis,
   ({ url }: { url: string }) =>
-    queryXmlDocument(url).then((xmlDoc) => ({
-      info: wmtsCapabilities.readInfoFromCapabilities(xmlDoc),
-      layers: wmtsCapabilities.readLayersFromCapabilities(xmlDoc),
-      matrixSets: wmtsCapabilities.readMatrixSetsFromCapabilities(xmlDoc),
-    }))
+    queryXmlDocument(url)
+      .then((xmlDoc) => check(xmlDoc, url))
+      .then((xmlDoc) => ({
+        info: wmtsCapabilities.readInfoFromCapabilities(xmlDoc),
+        layers: wmtsCapabilities.readLayersFromCapabilities(xmlDoc),
+        matrixSets: wmtsCapabilities.readMatrixSetsFromCapabilities(xmlDoc),
+      }))
 );

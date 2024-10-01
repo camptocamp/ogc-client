@@ -8,6 +8,8 @@ import getfeature200full from '../../fixtures/wfs/getfeature-props-pigma-2-0-0.x
 import describefeaturetype200 from '../../fixtures/wfs/describefeaturetype-pigma-2-0-0-xsd.xml';
 // @ts-expect-error ts-migrate(7016)
 import capabilitiesStates from '../../fixtures/wfs/capabilities-states-2-0-0.xml';
+// @ts-expect-error ts-migrate(7016)
+import exceptionReportWms from '../../fixtures/wfs/exception-report-wms.xml';
 import WfsEndpoint from './endpoint.js';
 import { useCache } from '../shared/cache.js';
 
@@ -70,6 +72,18 @@ describe('WfsEndpoint', () => {
   describe('#isReady', () => {
     it('resolves with the endpoint object', async () => {
       await expect(endpoint.isReady()).resolves.toEqual(endpoint);
+    });
+
+    describe('service exception handling', () => {
+      beforeEach(() => {
+        global.fetchResponseFactory = () => exceptionReportWms;
+        endpoint = new WfsEndpoint('https://my.test.service/ogc/wms');
+      });
+      it('rejects when the endpoint returns an exception report', async () => {
+        await expect(endpoint.isReady()).rejects.toThrow(
+          'msWFSDispatch(): WFS server error. WFS request not enabled. Check wfs/ows_enable_request settings.'
+        );
+      });
     });
   });
 

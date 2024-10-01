@@ -2,6 +2,8 @@
 import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
 // @ts-expect-error ts-migrate(7016)
 import capabilitiesStates from '../../fixtures/wms/capabilities-states-1-3-0.xml';
+// @ts-expect-error ts-migrate(7016)
+import exceptionReportWfs from '../../fixtures/wms/service-exception-report-wfs.xml';
 import WmsEndpoint from './endpoint.js';
 import { useCache } from '../shared/cache.js';
 
@@ -51,6 +53,17 @@ describe('WmsEndpoint', () => {
   describe('#isReady', () => {
     it('resolves with the endpoint object', async () => {
       await expect(endpoint.isReady()).resolves.toEqual(endpoint);
+    });
+    describe('service exception handling', () => {
+      beforeEach(() => {
+        global.fetchResponseFactory = () => exceptionReportWfs;
+        endpoint = new WmsEndpoint('https://my.test.service/ogc/wfs');
+      });
+      it('rejects when the endpoint returns an exception report', async () => {
+        await expect(endpoint.isReady()).rejects.toThrow(
+          'msWMSGetCapabilities(): WMS server error. WMS request not enabled. Check wms/ows_enable_request settings.'
+        );
+      });
     });
   });
 
