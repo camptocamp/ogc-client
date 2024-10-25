@@ -97,7 +97,7 @@ export async function useCache<T>(
   factory: () => T | Promise<T>,
   ...keys: string[]
 ): Promise<T> {
-  await purgeEntries();
+  await purgeOutdatedEntries();
   if (await hasValidCacheEntry(...keys)) {
     return readCacheEntry(...keys);
   }
@@ -118,7 +118,7 @@ export async function useCache<T>(
 /**
  * Removes all expired entries from the cache
  */
-export async function purgeEntries() {
+export async function purgeOutdatedEntries() {
   const cache = await getCache();
   if (!cache) return;
   const keys = await cache.keys();
@@ -126,5 +126,17 @@ export async function purgeEntries() {
     const resp = await cache.match(key);
     if (parseInt(resp.headers.get('x-expiry')) <= Date.now())
       await cache.delete(key);
+  }
+}
+
+/**
+ * Remove all cache entries; will not prevent the creation of new ones
+ */
+export async function clearCache() {
+  const cache = await getCache();
+  if (!cache) return;
+  const keys = await cache.keys();
+  for (const key of keys) {
+    await cache.delete(key);
   }
 }

@@ -1,7 +1,8 @@
 import {
   _resetCache,
+  clearCache,
   getCache,
-  purgeEntries,
+  purgeOutdatedEntries,
   readCacheEntry,
   setCacheExpiryDuration,
   storeCacheEntry,
@@ -22,7 +23,7 @@ describe('cache utils', () => {
     beforeEach(async () => {
       // clear all cache entries
       NOW = 50000;
-      await purgeEntries();
+      await purgeOutdatedEntries();
       // set start time
       NOW = 10000;
     });
@@ -106,6 +107,19 @@ describe('cache utils', () => {
             unrelated: true,
           });
         });
+      });
+    });
+    describe('clearCache', () => {
+      let result;
+      beforeEach(async () => {
+        await storeCacheEntry({ old: true }, 'test', 'entry', '03');
+        NOW = 10800;
+        await clearCache();
+        result = await useCache(factory, 'test', 'entry', '03');
+      });
+      it('do not use the cached function object', () => {
+        expect(factory).toHaveBeenCalled();
+        expect(result).toEqual({ fresh: true });
       });
     });
   });
