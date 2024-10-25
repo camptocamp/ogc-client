@@ -8,6 +8,7 @@ import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
 // @ts-expect-error ts-migrate(7016)
 import capabilities111 from '../../fixtures/wms/capabilities-brgm-1-1-1.xml';
 import { parseXmlString } from '../shared/xml-utils.js';
+import type { WmsLayerFull } from './model.js';
 
 describe('WMS capabilities', () => {
   describe('readVersionFromCapabilities', () => {
@@ -132,6 +133,8 @@ describe('WMS capabilities', () => {
                   'EPSG:4326': ['-5.86764', '41.1701', '11.0789', '51.1419'],
                 },
                 keywords: ['Geologie', 'INSPIRE:Geology', 'Geology'],
+                maxScaleDenominator: 1e7,
+                minScaleDenominator: 200000,
                 name: 'SCAN_F_GEOL1M',
                 queryable: false,
                 opaque: false,
@@ -185,6 +188,8 @@ describe('WMS capabilities', () => {
                   'EPSG:4326': ['-6.20495', '41.9671', '12.2874', '51.2917'],
                 },
                 keywords: ['Geologie', 'INSPIRE:Geology', 'Geology'],
+                maxScaleDenominator: 500000,
+                minScaleDenominator: 80000,
                 name: 'SCAN_F_GEOL250',
                 queryable: true,
                 opaque: true,
@@ -225,11 +230,56 @@ describe('WMS capabilities', () => {
                   'EPSG:4326': ['-12.2064', '40.681', '11.894', '52.1672'],
                 },
                 keywords: ['Geologie', 'INSPIRE:Geology', 'Geology'],
+                maxScaleDenominator: 251000,
+                minScaleDenominator: 9000,
                 name: 'SCAN_D_GEOL50',
                 queryable: true,
                 opaque: true,
                 styles,
                 title: 'Carte géologique image de la France au 1/50 000e',
+                children: [
+                  {
+                    abstract: '',
+                    attribution,
+                    availableCrs: [
+                      'EPSG:4326',
+                      'EPSG:3857',
+                      'CRS:84',
+                      'EPSG:32620',
+                      'EPSG:32621',
+                    ],
+                    boundingBoxes: {
+                      'CRS:84': ['-12.2064', '40.681', '11.894', '52.1672'],
+                      'EPSG:32620': [
+                        '3.88148e+06',
+                        '6.13796e+06',
+                        '6.31307e+06',
+                        '8.70752e+06',
+                      ],
+                      'EPSG:32621': [
+                        '3.52434e+06',
+                        '5.74736e+06',
+                        '5.97375e+06',
+                        '8.23867e+06',
+                      ],
+                      'EPSG:3857': [
+                        '-1.35881e+06',
+                        '4.96541e+06',
+                        '1.32403e+06',
+                        '6.83041e+06',
+                      ],
+                      'EPSG:4326': ['-12.2064', '40.681', '11.894', '52.1672'],
+                    },
+                    keywords: [],
+                    maxScaleDenominator: 251000,
+                    minScaleDenominator: 9000,
+                    name: 'INHERIT_SCALE',
+                    queryable: false,
+                    opaque: false,
+                    styles,
+                    title: 'Inherited scale denominators',
+                  },
+                ],
               },
               {
                 abstract: '',
@@ -275,7 +325,9 @@ describe('WMS capabilities', () => {
     });
     it('reads the layers (1.1.1)', () => {
       const doc = parseXmlString(capabilities111);
-      expect(readLayersFromCapabilities(doc)).toEqual(expectedLayers);
+      expect(
+        readLayersFromCapabilities(doc).map(fixupScaleDenominators)
+      ).toEqual(expectedLayers);
     });
   });
 
@@ -346,3 +398,18 @@ describe('WMS capabilities', () => {
     });
   });
 });
+
+/**
+ * Round scale denominators to avoid problems with floating point precision
+ * @param layer
+ */
+function fixupScaleDenominators(layer: WmsLayerFull): WmsLayerFull {
+  if (layer.minScaleDenominator !== undefined) {
+    layer.minScaleDenominator = Math.round(layer.minScaleDenominator);
+  }
+  if (layer.maxScaleDenominator !== undefined) {
+    layer.maxScaleDenominator = Math.round(layer.maxScaleDenominator);
+  }
+  layer.children?.forEach(fixupScaleDenominators);
+  return layer;
+}

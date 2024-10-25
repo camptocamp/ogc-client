@@ -238,7 +238,7 @@
                             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://mapsref.brgm.fr/legendes/geoservices/Geologie1000_legende_other.jpg"/>
                         </LegendURL>
                     </Style>
-                    <ScaleHint min="74.8354272644456" max="3741.77136322228" />
+                    <ScaleHint min="79.19595949289331" max="3959.7979746446654" />
                 </Layer>
                 <Layer queryable="true" opaque="true" cascaded="0">
                     <Name>SCAN_F_GEOL250</Name>
@@ -273,7 +273,7 @@
                         <Format>text/xml</Format>
                         <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://www.geocatalogue.fr/api-public/servicesRest?Service=CSW&amp;Request=GetRecordById&amp;Version=2.0.2&amp;id=BR_CAR_ACA&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full"/>
                     </MetadataURL>
-                    <ScaleHint min="29.9341709057782" max="187.088568161114" />
+                    <ScaleHint min="31.678383797157327" max="197.9898987322333" />
                 </Layer>
                 <Layer queryable="1" opaque="1" cascaded="0">
                     <Name>SCAN_D_GEOL50</Name>
@@ -308,7 +308,11 @@
                         <Format>text/xml</Format>
                         <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://www.geocatalogue.fr/api-public/servicesRest?Service=CSW&amp;Request=GetRecordById&amp;Version=2.0.2&amp;id=72cc8d40-1bb6-41a3-8376-9734f23336ff&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full"/>
                     </MetadataURL>
-                    <ScaleHint min="3.36759422690005" max="93.9184612168792" />
+                    <ScaleHint min="3.563818177180199" max="99.3909291635811" />
+                    <Layer>
+                        <Name>INHERIT_SCALE</Name>
+                        <Title>Inherited scale denominators</Title>
+                    </Layer>
                 </Layer>
                 <Layer queryable="0" opaque="0" cascaded="0">
                     <Name>INHERIT_BBOX</Name>
