@@ -27,6 +27,9 @@ export type {
   WmtsMatrixSet,
 } from './wmts/model.js';
 export type {
+  Address,
+  Contact,
+  Provider,
   LayerStyle,
   BoundingBox,
   FetchOptions,

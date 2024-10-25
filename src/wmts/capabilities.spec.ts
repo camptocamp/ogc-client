@@ -23,6 +23,24 @@ describe('WMTS Capabilities', () => {
           fees: 'none',
           keywords: ['tile', 'tile matrix set', 'map'],
           name: 'OGC WMTS',
+          provider: {
+            name: 'MiraMon',
+            site: 'http://www.creaf.uab.cat/miramon',
+            contact: {
+              name: 'Joan Maso Pau',
+              position: 'Senior Software Engineer',
+              phone: '+34 93 581 1312',
+              fax: '+34 93 581 4151',
+              address: {
+                deliveryPoint: 'Fac Ciencies UAB',
+                city: 'Bellaterra',
+                administrativeArea: 'Barcelona',
+                postalCode: '08193',
+                country: 'Spain',
+              },
+              email: 'joan.maso@uab.cat',
+            },
+          },
           title: 'Web Map Tile Service',
           getTileUrls: {
             kvp: 'http://www.maps.bob/cgi-bin/MiraMon5_0.cgi?',
@@ -39,6 +57,24 @@ describe('WMTS Capabilities', () => {
           fees: '',
           keywords: [],
           name: 'OGC WMTS',
+          provider: {
+            name: '',
+            site: '',
+            contact: {
+              name: '',
+              position: '',
+              phone: '',
+              fax: '',
+              address: {
+                deliveryPoint: '',
+                city: '',
+                administrativeArea: '',
+                postalCode: '',
+                country: '',
+              },
+              email: '',
+            },
+          },
           title: 'Demographics_USA_Population_Density',
           getTileUrls: {
             rest: 'https://services.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/WMTS/tile/1.0.0/',
@@ -76,6 +112,24 @@ describe('WMTS Capabilities', () => {
             'Altitude',
           ],
           name: 'OGC WMTS',
+          provider: {
+            name: 'IGN',
+            site: '',
+            contact: {
+              name: 'Géoportail SAV',
+              position: 'custodian',
+              phone: '',
+              fax: '',
+              address: {
+                deliveryPoint: '73 avenue de Paris',
+                city: 'Saint Mandé',
+                administrativeArea: '',
+                postalCode: '94160',
+                country: 'France',
+              },
+              email: 'geop_services@geoportail.fr',
+            },
+          },
           title: 'Service de visualisation WMTS',
           getTileUrls: {
             kvp: 'http://wxs.ign.fr/geoportail/wmts?',

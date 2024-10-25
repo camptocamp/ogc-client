@@ -310,6 +310,23 @@ describe('WMS capabilities', () => {
         'WMS 1.3.0',
         'SLD 1.1.0',
       ],
+      provider: {
+        contact: {
+          name: 'Support BRGM',
+          organization: 'BRGM',
+          position: 'pointOfContact',
+          phone: '+33(0)2 38 64 34 34',
+          fax: '+33(0)2 38 64 35 18',
+          address: {
+            deliveryPoint: '3, Avenue Claude Guillemin, BP36009',
+            city: 'Orléans',
+            administrativeArea: 'Centre',
+            postalCode: '45060',
+            country: 'France',
+          },
+          email: 'contact-brgm@brgm.fr',
+        },
+      },
     };
 
     it('reads the service info (1.3.0)', () => {

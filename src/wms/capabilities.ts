@@ -12,6 +12,7 @@ import {
   CrsCode,
   GenericEndpointInfo,
   LayerStyle,
+  type Provider,
 } from '../shared/models.js';
 import { WmsLayerAttribution, WmsLayerFull, WmsVersion } from './model.js';
 
@@ -110,6 +111,7 @@ export function readInfoFromCapabilities(
   )
     .map(getElementText)
     .filter((v, i, arr) => arr.indexOf(v) === i);
+  const provider = readProviderFromCapabilities(capabilitiesDoc);
 
   return {
     title: getElementText(findChildElement(service, 'Title')),
@@ -120,6 +122,7 @@ export function readInfoFromCapabilities(
     exceptionFormats: exceptionFormats,
     fees: getElementText(findChildElement(service, 'Fees')),
     constraints: getElementText(findChildElement(service, 'AccessConstraints')),
+    provider,
     keywords,
   };
 }
@@ -257,5 +260,50 @@ function parseLayerAttribution(attributionEl: XmlElement): WmsLayerAttribution {
     ...(title && { title }),
     ...(url && { url }),
     ...(logoUrl && { logoUrl }),
+  };
+}
+
+/**
+ * Read provider information from capabilities
+ * @param capabilitiesDoc
+ */
+function readProviderFromCapabilities(capabilitiesDoc: XmlDocument): Provider {
+  const service = findChildElement(getRootElement(capabilitiesDoc), 'Service');
+  const contactInformation = findChildElement(service, 'ContactInformation');
+  const contactPersonPrimary = findChildElement(
+    contactInformation,
+    'ContactPersonPrimary'
+  );
+  const address = findChildElement(contactInformation, 'ContactAddress');
+  return {
+    contact: {
+      name: getElementText(
+        findChildElement(contactPersonPrimary, 'ContactPerson')
+      ),
+      organization: getElementText(
+        findChildElement(contactPersonPrimary, 'ContactOrganization')
+      ),
+      position: getElementText(
+        findChildElement(contactInformation, 'ContactPosition')
+      ),
+      phone: getElementText(
+        findChildElement(contactInformation, 'ContactVoiceTelephone')
+      ),
+      fax: getElementText(
+        findChildElement(contactInformation, 'ContactFacsimileTelephone')
+      ),
+      address: {
+        deliveryPoint: getElementText(findChildElement(address, 'Address')),
+        city: getElementText(findChildElement(address, 'City')),
+        administrativeArea: getElementText(
+          findChildElement(address, 'StateOrProvince')
+        ),
+        postalCode: getElementText(findChildElement(address, 'PostCode')),
+        country: getElementText(findChildElement(address, 'Country')),
+      },
+      email: getElementText(
+        findChildElement(contactInformation, 'ContactElectronicMailAddress')
+      ),
+    },
   };
 }
