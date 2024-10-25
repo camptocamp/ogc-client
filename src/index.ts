@@ -10,6 +10,7 @@ export type {
   WfsFeatureTypePropDetails,
   WfsFeatureTypePropsDetails,
   WfsFeatureTypeUniqueValue,
+  WfsGetFeatureOptions,
 } from './wfs/model.js';
 export { default as WmsEndpoint } from './wms/endpoint.js';
 export type {
@@ -34,6 +35,8 @@ export type {
   BoundingBox,
   FetchOptions,
   GenericEndpointInfo,
+  MimeType,
+  CrsCode,
 } from './shared/models.js';
 export { default as OgcApiEndpoint } from './ogc-api/endpoint.js';
 export * from './ogc-api/model.js';

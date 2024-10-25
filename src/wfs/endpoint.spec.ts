@@ -520,6 +520,24 @@ describe('WfsEndpoint', () => {
         })
       ).toThrow('GeoJSON');
     });
+    it('returns a GetFeature url with the desired attributes', () => {
+      expect(
+        endpoint.getFeatureUrl('hierarchisation_l', {
+          attributes: ['field1', 'field2'],
+        })
+      ).toEqual(
+        'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&PROPERTYNAME=field1%2Cfield2'
+      );
+    });
+    it('returns a GetFeature url with only the hit count', () => {
+      expect(
+        endpoint.getFeatureUrl('hierarchisation_l', {
+          hitsOnly: true,
+        })
+      ).toEqual(
+        'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&RESULTTYPE=hits&COUNT=1'
+      );
+    });
   });
 
   describe('#supportsJson', () => {

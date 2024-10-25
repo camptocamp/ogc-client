@@ -10,16 +10,12 @@ import {
   generateGetFeatureUrl,
 } from './url.js';
 import { stripNamespace } from '../shared/xml-utils.js';
-import {
-  BoundingBox,
-  CrsCode,
-  GenericEndpointInfo,
-  MimeType,
-} from '../shared/models.js';
+import { GenericEndpointInfo } from '../shared/models.js';
 import {
   WfsFeatureTypeBrief,
   WfsFeatureTypeInternal,
   WfsFeatureTypeSummary,
+  WfsGetFeatureOptions,
   WfsVersion,
 } from './model.js';
 import { isMimeTypeJson } from '../shared/mime-type.js';
@@ -247,28 +243,10 @@ export default class WfsEndpoint {
   /**
    * Returns a URL that can be used to query features from this feature type.
    * @param featureType
-   * @param {Object} [options]
-   * @property [options.maxFeatures] no limit if undefined
-   * @property [options.asJson] if true, will ask for GeoJSON; will throw if the service does not support it
-   * @property [options.outputFormat] a supported output format (overridden by `asJson`)
-   * @property [options.outputCrs] if unspecified, this will be the data native projection
-   * @property [options.extent] an extent to restrict returned objects
-   * @property [options.extentCrs] if unspecified, `extent` should be in the data native projection
-   * @property [options.startIndex] if the service supports it, this will be the index of the first feature to return
+   * @param options
    * @returns Returns null if endpoint is not ready
    */
-  getFeatureUrl(
-    featureType: string,
-    options: {
-      maxFeatures?: number;
-      asJson?: boolean;
-      outputFormat?: MimeType;
-      outputCrs?: CrsCode;
-      extent?: BoundingBox;
-      extentCrs?: CrsCode;
-      startIndex?: number;
-    }
-  ) {
+  getFeatureUrl(featureType: string, options?: WfsGetFeatureOptions) {
     if (!this._featureTypes) {
       return null;
     }
@@ -280,6 +258,8 @@ export default class WfsEndpoint {
       extent,
       extentCrs,
       startIndex,
+      attributes,
+      hitsOnly,
     } = options || {};
     const internalFeatureType = this._getFeatureTypeByName(featureType);
     if (!internalFeatureType) {
@@ -310,8 +290,8 @@ export default class WfsEndpoint {
       internalFeatureType.name,
       format,
       maxFeatures,
-      undefined,
-      undefined,
+      attributes,
+      hitsOnly,
       outputCrs,
       extent,
       extentCrs,
