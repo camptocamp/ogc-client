@@ -4,14 +4,14 @@
         <xsd:complexContent>
             <xsd:extension base="gml:AbstractFeatureType">
                 <xsd:sequence>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="axe" nillable="true" type="xsd:string"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="cumuld" nillable="true" type="xsd:long"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="cumulf" nillable="true" type="xsd:long"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="plod" nillable="true" type="xsd:string"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="absd" nillable="true" type="xsd:long"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="plof" nillable="true" type="xsd:string"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="absf" nillable="true" type="xsd:long"/>
-                    <xsd:element maxOccurs="1" minOccurs="0" name="categorie" nillable="true" type="xsd:short"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="axe" nillable="true" type="xs:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="cumuld" nillable="true" type="xs:long"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="cumulf" nillable="true" type="xs:long"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="plod" nillable="true" type="xs:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="absd" nillable="true" type="xs:long"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="plof" nillable="true" type="xs:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="absf" nillable="true" type="xs:long"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="categorie" nillable="true" type="xs:short"/>
                     <xsd:element maxOccurs="1" minOccurs="0" name="geom" nillable="true" type="gml:LineStringPropertyType"/>
                 </xsd:sequence>
             </xsd:extension>
