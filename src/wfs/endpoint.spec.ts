@@ -146,6 +146,17 @@ describe('WfsEndpoint', () => {
         ],
         defaultCrs: 'EPSG:2154',
         keywords: ['features', 'hierarchisation_l'],
+        metadata: [
+          {
+            url: 'https://www.pigma.org/geonetwork?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6',
+          },
+          {
+            url: 'https://www.pigma.org/geonetwork?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6',
+          },
+          {
+            url: 'https://www.pigma.org/geonetwork/srv/fre/xml_iso19139?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6',
+          },
+        ],
         otherCrs: ['EPSG:32615', 'EPSG:32616', 'EPSG:32617', 'EPSG:32618'],
         outputFormats: [
           'application/gml+xml; version=3.2',
@@ -186,6 +197,17 @@ describe('WfsEndpoint', () => {
         ],
         defaultCrs: 'EPSG:2154',
         keywords: ['features', 'hierarchisation_l'],
+        metadata: [
+          {
+            url: 'https://www.pigma.org/geonetwork?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6',
+          },
+          {
+            url: 'https://www.pigma.org/geonetwork?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6',
+          },
+          {
+            url: 'https://www.pigma.org/geonetwork/srv/fre/xml_iso19139?uuid=cd27adaa-0ec5-4934-9374-143df09fb9f6',
+          },
+        ],
         otherCrs: ['EPSG:32615', 'EPSG:32616', 'EPSG:32617', 'EPSG:32618'],
         outputFormats: [
           'application/gml+xml; version=3.2',

@@ -294,6 +294,17 @@ function parseLayer(
     [minScaleDenominator, maxScaleDenominator] = parseScaleHint();
   }
 
+  const metadata = findChildrenElement(layerEl, 'MetadataURL').map(
+    (metadataUrlEl) => ({
+      type: getElementAttribute(metadataUrlEl, 'type'),
+      format: getElementText(findChildElement(metadataUrlEl, 'Format')),
+      url: getElementAttribute(
+        findChildElement(metadataUrlEl, 'OnlineResource'),
+        'xlink:href'
+      ),
+    })
+  );
+
   const children = findChildrenElement(layerEl, 'Layer').map((layer) =>
     parseLayer(
       layer,
@@ -319,6 +330,7 @@ function parseLayer(
     opaque,
     ...(minScaleDenominator !== null ? { minScaleDenominator } : {}),
     ...(maxScaleDenominator !== null ? { maxScaleDenominator } : {}),
+    ...(metadata.length && { metadata }),
     ...(children.length && { children }),
   };
 }

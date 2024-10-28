@@ -78,3 +78,9 @@ export interface LayerStyle {
    */
   legendUrl?: string;
 }
+
+export type MetadataURL = {
+  format?: string;
+  type?: string;
+  url: string;
+};
