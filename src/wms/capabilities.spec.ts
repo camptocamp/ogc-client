@@ -1,6 +1,7 @@
 import {
   readInfoFromCapabilities,
   readLayersFromCapabilities,
+  readOperationUrlsFromCapabilities,
   readVersionFromCapabilities,
 } from './capabilities.js';
 // @ts-expect-error ts-migrate(7016)
@@ -395,6 +396,45 @@ describe('WMS capabilities', () => {
         'application/vnd.ogc.se_blank',
       ];
       expect(readInfoFromCapabilities(doc)).toEqual(expectedInfo);
+    });
+  });
+
+  describe('readOperationUrlsFromCapabilities', () => {
+    const expectedUrls = {
+      GetCapabilities: {
+        Get: 'http://geoservices.brgm.fr/geologie?language=fre&',
+        Post: 'http://geoservices.brgm.fr/geologie?language=fre&',
+      },
+      GetMap: {
+        Get: 'http://geoservices.brgm.fr/geologie?language=fre&',
+        Post: 'http://geoservices.brgm.fr/geologie?language=fre&',
+      },
+      GetFeatureInfo: {
+        Get: 'http://geoservices.brgm.fr/geologie?language=fre&',
+        Post: 'http://geoservices.brgm.fr/geologie?language=fre&',
+      },
+      DescribeLayer: {
+        Get: 'http://geoservices.brgm.fr/geologie?language=fre&',
+        Post: 'http://geoservices.brgm.fr/geologie?language=fre&',
+      },
+      GetLegendGraphic: {
+        Get: 'http://geoservices.brgm.fr/geologie?language=fre&',
+        Post: 'http://geoservices.brgm.fr/geologie?language=fre&',
+      },
+      GetStyles: {
+        Get: 'http://geoservices.brgm.fr/geologie?language=fre&',
+        Post: 'http://geoservices.brgm.fr/geologie?language=fre&',
+      },
+    };
+
+    it('reads the operations URLs (1.3.0)', () => {
+      const doc = parseXmlString(capabilities130);
+      expect(readOperationUrlsFromCapabilities(doc)).toEqual(expectedUrls);
+    });
+
+    it('reads the operations URLs (1.1.1)', () => {
+      const doc = parseXmlString(capabilities111);
+      expect(readOperationUrlsFromCapabilities(doc)).toEqual(expectedUrls);
     });
   });
 });

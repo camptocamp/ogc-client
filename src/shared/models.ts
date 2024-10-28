@@ -65,6 +65,10 @@ export interface FetchOptions {
   integrity?: string;
 }
 
+export type OperationName = string;
+export type HttpMethod = 'Get' | 'Post';
+export type OperationUrl = Partial<Record<HttpMethod, string>>;
+
 export interface LayerStyle {
   name: string;
   title: string;

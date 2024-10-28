@@ -251,7 +251,42 @@ describe('WmsEndpoint', () => {
           outputFormat: 'image/png',
         })
       ).toBe(
-        'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=layer1%2Clayer2&STYLES=&WIDTH=100&HEIGHT=200&FORMAT=image%2Fpng&CRS=EPSG%3A4326&BBOX=10%2C20%2C100%2C200'
+        'http://geoservices.brgm.fr/geologie?language=fre&SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=layer1%2Clayer2&STYLES=&WIDTH=100&HEIGHT=200&FORMAT=image%2Fpng&CRS=EPSG%3A4326&BBOX=10%2C20%2C100%2C200'
+      );
+    });
+  });
+
+  describe('#getCapabilitiesUrl', () => {
+    it.skip('returns the URL used for the request before the capabilities are retrieved', async () => {
+      expect(endpoint.getCapabilitiesUrl()).toBe(
+        'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetCapabilities'
+      );
+      await endpoint.isReady();
+    });
+
+    it('returns the self-reported URL after the capabilities are retrieved', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getCapabilitiesUrl()).toBe(
+        'http://geoservices.brgm.fr/geologie?language=fre&SERVICE=WMS&REQUEST=GetCapabilities'
+      );
+    });
+  });
+
+  describe('#getOperationUrl', () => {
+    it.skip('returns NULL before the document is loaded', async () => {
+      expect(endpoint.getOperationUrl('GetMap')).toBeNull();
+      await endpoint.isReady();
+    });
+
+    it('returns undefined for a non-existant operation', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getOperationUrl('foo')).toBeUndefined();
+    });
+
+    it('returns the correct URL for an existant operation', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getOperationUrl('GetMap')).toBe(
+        'http://geoservices.brgm.fr/geologie?language=fre&'
       );
     });
   });

@@ -1,20 +1,46 @@
-import {
-  findChildElement,
-  findChildrenElement,
-  getElementAttribute,
-  getElementText,
-  getRootElement,
-} from '../shared/xml-utils.js';
-import { hasInvertedCoordinates } from '../shared/crs-utils.js';
 import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
+import { hasInvertedCoordinates } from '../shared/crs-utils.js';
 import {
   BoundingBox,
   CrsCode,
   GenericEndpointInfo,
   LayerStyle,
   type Provider,
+  type OperationName,
+  type OperationUrl,
 } from '../shared/models.js';
+import {
+  findChildElement,
+  findChildrenElement,
+  getChildrenElement,
+  getElementAttribute,
+  getElementName,
+  getElementText,
+  getRootElement,
+  stripNamespace,
+} from '../shared/xml-utils.js';
 import { WmsLayerAttribution, WmsLayerFull, WmsVersion } from './model.js';
+
+/**
+ * Will read all operation URLs from the capabilities doc
+ * @param capabilitiesDoc Capabilities document
+ * @return The parsed operations URLs
+ */
+export function readOperationUrlsFromCapabilities(
+  capabilitiesDoc: XmlDocument
+) {
+  const urls: Record<OperationName, OperationUrl> = {};
+  const capability = findChildElement(
+    getRootElement(capabilitiesDoc),
+    'Capability'
+  );
+  const request = findChildElement(capability, 'Request');
+  getChildrenElement(request).forEach((operation) => {
+    const operationName = stripNamespace(getElementName(operation));
+    urls[operationName] = parseOperation(operation);
+  });
+  return urls;
+}
 
 /**
  * Will read a WMS version from the capabilities doc
@@ -125,6 +151,23 @@ export function readInfoFromCapabilities(
     provider,
     keywords,
   };
+}
+
+/**
+ * Parse an operation definition from a WMS capabilities (e.g. GetMap)
+ * @param operation Operation element
+ */
+function parseOperation(operation: XmlElement): OperationUrl {
+  const urls: OperationUrl = {};
+  const dcpType = findChildrenElement(operation, 'DCPType');
+  const http = dcpType.flatMap((d) => findChildElement(d, 'HTTP'));
+  const methods = http.flatMap((h) => getChildrenElement(h));
+  methods.forEach((method) => {
+    const onlineResource = findChildElement(method, 'OnlineResource');
+    const methodName = stripNamespace(getElementName(method));
+    urls[methodName] = getElementAttribute(onlineResource, 'xlink:href');
+  });
+  return urls;
 }
 
 /**
