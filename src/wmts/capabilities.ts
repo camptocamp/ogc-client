@@ -119,13 +119,13 @@ export function readLayersFromCapabilities(
 ): WmtsLayer[] {
   const rootEl = getRootElement(capabilitiesDoc);
   const contentsEl = findChildElement(rootEl, 'Contents');
-  
-/**
- * Get the TileMatrixSet CRS
- * @param contentsEl - Contents
- * @param identifier - TileMatrixSet identifier
- * @returns The SupportedCRS of the TileMatrixSet
- */
+
+  /**
+   * Get the TileMatrixSet CRS
+   * @param contentsEl - Contents
+   * @param identifier - TileMatrixSet identifier
+   * @returns The SupportedCRS of the TileMatrixSet
+   */
   function getMatrixSetCrs(contentsEl: XmlElement, identifier: string): string {
     const matrixSet = findChildrenElement(contentsEl, 'TileMatrixSet').find(
       (matrixSetEl) => {
@@ -135,16 +135,18 @@ export function readLayersFromCapabilities(
     );
     return getElementText(findChildElement(matrixSet, 'SupportedCRS'));
   }
-  
+
   /**
    * Get the parameters of the TileMatrixSetLink
-   * @param element - TileMatrixSetLink 
+   * @param element - TileMatrixSetLink
    * @returns
    */
   function parseMatrixSetLink(element: XmlElement): MatrixSetLink {
-    const identifier = getElementText(findChildElement(element, 'TileMatrixSet'));
+    const identifier = getElementText(
+      findChildElement(element, 'TileMatrixSet')
+    );
     const crs = getMatrixSetCrs(contentsEl, identifier);
-    
+
     return {
       identifier,
       crs,
