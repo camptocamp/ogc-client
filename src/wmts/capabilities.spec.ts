@@ -614,7 +614,7 @@ describe('WMTS Capabilities', () => {
             matrixSets: [
               {
                 identifier: 'BigWorldPixel',
-                crs: 'urn:ogc:def:crs:EPSG:6.18:3:3857',
+                crs: 'urn:ogc:def:crs:OGC:1.3:CRS84',
                 limits: [],
               },
               {
@@ -681,7 +681,7 @@ describe('WMTS Capabilities', () => {
               },
               {
                 identifier: 'GoogleMapsCompatible',
-                crs: 'urn:ogc:def:crs:EPSG::3857',
+                crs: 'urn:ogc:def:crs:EPSG:6.18.3:3857',
                 limits: [],
               },
             ],
