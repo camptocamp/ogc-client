@@ -60,9 +60,9 @@ describe('WmsEndpoint', () => {
         endpoint = new WmsEndpoint('https://my.test.service/ogc/wfs');
       });
       it('rejects when the endpoint returns an exception report', async () => {
-        await expect(endpoint.isReady()).rejects.toThrow(
-          'msWMSGetCapabilities(): WMS server error. WMS request not enabled. Check wms/ows_enable_request settings.'
-        );
+        await expect(endpoint.isReady()).rejects.toMatchObject({
+          message: 'msWMSGetCapabilities(): WMS server error. WMS request not enabled. Check wms/ows_enable_request settings.',
+        });
       });
     });
   });

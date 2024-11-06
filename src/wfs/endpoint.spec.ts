@@ -80,9 +80,9 @@ describe('WfsEndpoint', () => {
         endpoint = new WfsEndpoint('https://my.test.service/ogc/wms');
       });
       it('rejects when the endpoint returns an exception report', async () => {
-        await expect(endpoint.isReady()).rejects.toThrow(
-          'msWFSDispatch(): WFS server error. WFS request not enabled. Check wfs/ows_enable_request settings.'
-        );
+        await expect(endpoint.isReady()).rejects.toMatchObject({
+          message: 'msWFSDispatch(): WFS server error. WFS request not enabled. Check wfs/ows_enable_request settings.'
+        });
       });
     });
   });

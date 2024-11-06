@@ -1,4 +1,5 @@
 import { getUniqueId } from '../shared/id.js';
+import { EndpointError } from '../shared/errors.js'
 
 type TaskParams = Record<string, unknown>;
 type TaskResponse = Record<string, unknown>;
@@ -76,11 +77,16 @@ export function addTaskHandler(
 
   const eventHandler = async (request: WorkerRequest) => {
     if (request.taskName === taskName) {
-      let response, error;
+      let response;
+      let error: EndpointError;
       try {
         response = await handler(request.params);
       } catch (e) {
-        error = e;
+        error = {
+          httpStatus: e.httpStatus,
+          message: e.message,
+          name: e.name
+        };
       }
       const message = /** @type {WorkerResponse} */ {
         taskName,
