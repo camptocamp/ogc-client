@@ -61,7 +61,8 @@ describe('WmsEndpoint', () => {
       });
       it('rejects when the endpoint returns an exception report', async () => {
         await expect(endpoint.isReady()).rejects.toMatchObject({
-          message: 'msWMSGetCapabilities(): WMS server error. WMS request not enabled. Check wms/ows_enable_request settings.',
+          message:
+            'msWMSGetCapabilities(): WMS server error. WMS request not enabled. Check wms/ows_enable_request settings.',
         });
       });
     });

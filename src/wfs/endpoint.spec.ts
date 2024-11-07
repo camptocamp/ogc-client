@@ -81,7 +81,8 @@ describe('WfsEndpoint', () => {
       });
       it('rejects when the endpoint returns an exception report', async () => {
         await expect(endpoint.isReady()).rejects.toMatchObject({
-          message: 'msWFSDispatch(): WFS server error. WFS request not enabled. Check wfs/ows_enable_request settings.'
+          message:
+            'msWFSDispatch(): WFS server error. WFS request not enabled. Check wfs/ows_enable_request settings.',
         });
       });
     });
