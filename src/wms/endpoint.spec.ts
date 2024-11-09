@@ -6,6 +6,7 @@ import capabilitiesStates from '../../fixtures/wms/capabilities-states-1-3-0.xml
 import exceptionReportWfs from '../../fixtures/wms/service-exception-report-wfs.xml';
 import WmsEndpoint from './endpoint.js';
 import { useCache } from '../shared/cache.js';
+import { EndpointError, ServiceExceptionError } from '../shared/errors.js';
 
 jest.mock('../shared/cache', () => ({
   useCache: jest.fn((factory) => factory()),
@@ -18,6 +19,7 @@ describe('WmsEndpoint', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    global.fetchPreHandler = () => {};
     global.fetchResponseFactory = () => capabilities130;
     endpoint = new WmsEndpoint(
       'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb'
@@ -54,15 +56,89 @@ describe('WmsEndpoint', () => {
     it('resolves with the endpoint object', async () => {
       await expect(endpoint.isReady()).resolves.toEqual(endpoint);
     });
+
+    describe('CORS error handling', () => {
+      beforeEach(() => {
+        global.fetchPreHandler = (url, options) => {
+          if (options?.method === 'HEAD') return 'ok!';
+          throw new Error('CORS problem');
+        };
+        endpoint = new WmsEndpoint('https://my.test.service/ogc/wms');
+      });
+      it('rejects with a relevant error', async () => {
+        const error = (await endpoint
+          .isReady()
+          .catch((e) => e)) as EndpointError;
+        expect(error.constructor.name).toBe('EndpointError');
+        expect(error.message).toBe(
+          'The document could not be fetched due to CORS limitations'
+        );
+        expect(error.httpStatus).toBe(0);
+        expect(error.isCrossOriginRelated).toBe(true);
+      });
+    });
+
+    describe('endpoint error handling', () => {
+      beforeEach(() => {
+        global.fetchPreHandler = () => {
+          throw new TypeError('other kind of problem');
+        };
+        endpoint = new WmsEndpoint('https://my.test.service/ogc/wms');
+      });
+      it('rejects with a relevant error', async () => {
+        const error = (await endpoint
+          .isReady()
+          .catch((e) => e)) as EndpointError;
+        expect(error.constructor.name).toBe('EndpointError');
+        expect(error.message).toBe(
+          'Fetching the document failed either due to network errors or unreachable host, error is: other kind of problem'
+        );
+        expect(error.httpStatus).toBe(0);
+        expect(error.isCrossOriginRelated).toBe(false);
+      });
+    });
+
+    describe('http error handling', () => {
+      beforeEach(() => {
+        global.fetchPreHandler = () => ({
+          ok: false,
+          text: () => Promise.resolve('something broke in the server'),
+          status: 500,
+          statusText: 'Internal Server Error',
+        });
+        endpoint = new WmsEndpoint('https://my.test.service/ogc/wms');
+      });
+      it('rejects with a relevant error', async () => {
+        const error = (await endpoint
+          .isReady()
+          .catch((e) => e)) as EndpointError;
+        expect(error.constructor.name).toBe('EndpointError');
+        expect(error.message).toBe(
+          'Received an error with code 500: something broke in the server'
+        );
+        expect(error.httpStatus).toBe(500);
+        expect(error.isCrossOriginRelated).toBe(false);
+      });
+    });
+
     describe('service exception handling', () => {
       beforeEach(() => {
         global.fetchResponseFactory = () => exceptionReportWfs;
-        endpoint = new WmsEndpoint('https://my.test.service/ogc/wfs');
+        endpoint = new WmsEndpoint('https://my.test.service/ogc/wms');
       });
       it('rejects when the endpoint returns an exception report', async () => {
-        await expect(endpoint.isReady()).rejects.toThrow(
+        const error = (await endpoint
+          .isReady()
+          .catch((e) => e)) as ServiceExceptionError;
+        expect(error.constructor.name).toBe('ServiceExceptionError');
+        expect(error.message).toBe(
           'msWMSGetCapabilities(): WMS server error. WMS request not enabled. Check wms/ows_enable_request settings.'
         );
+        expect(error.requestUrl).toBe(
+          'https://my.test.service/ogc/wms?SERVICE=WMS&REQUEST=GetCapabilities'
+        );
+        expect(error.code).toBe('');
+        expect(error.locator).toBe('');
       });
     });
   });

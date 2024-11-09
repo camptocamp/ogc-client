@@ -2,24 +2,29 @@
 import 'regenerator-runtime/runtime';
 import mitt from 'mitt';
 import * as util from 'util';
+import { TextDecoder } from 'util';
 import CacheMock from 'browser-cache-mock';
 import 'isomorphic-fetch';
-import { TextDecoder } from 'util';
 import { Buffer } from './node_modules/buffer/index.js';
 
 globalThis.Buffer = Buffer;
 
 // mock the global fetch API
-window.fetchResponseFactory = (url) => '<empty></empty>';
+window.fetchPreHandler = (url, options) => {};
+window.fetchResponseFactory = (url, options) => '<empty></empty>';
 window.originalFetch = window.fetch;
-window.mockFetch = jest.fn().mockImplementation((url) =>
-  Promise.resolve({
-    text: () => Promise.resolve(globalThis.fetchResponseFactory(url)),
+window.mockFetch = jest.fn().mockImplementation(async (url, options) => {
+  const preResult = await window.fetchPreHandler(url, options);
+  if (preResult) return preResult;
+  return {
+    text: () => Promise.resolve(globalThis.fetchResponseFactory(url, options)),
     json: () =>
-      Promise.resolve(JSON.parse(globalThis.fetchResponseFactory(url))),
+      Promise.resolve(
+        JSON.parse(globalThis.fetchResponseFactory(url, options))
+      ),
     arrayBuffer: () =>
       Promise.resolve(
-        Buffer.from(globalThis.fetchResponseFactory(url), 'utf-8')
+        Buffer.from(globalThis.fetchResponseFactory(url, options), 'utf-8')
       ),
     clone: function () {
       return this;
@@ -27,8 +32,8 @@ window.mockFetch = jest.fn().mockImplementation((url) =>
     status: 200,
     ok: true,
     headers: { get: () => null },
-  })
-);
+  };
+});
 window.fetch = window.mockFetch;
 
 // reset fetch response to XML by default

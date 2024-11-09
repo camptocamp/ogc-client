@@ -1,6 +1,6 @@
 import { addTaskHandler } from './utils.js';
 import { queryXmlDocument, setFetchOptions } from '../shared/http-utils.js';
-import { check } from '../shared/service-exception-error.js';
+import { check } from '../shared/errors.js';
 import * as wmsCapabilities from '../wms/capabilities.js';
 import * as wfsCapabilities from '../wfs/capabilities.js';
 import * as wmtsCapabilities from '../wmts/capabilities.js';

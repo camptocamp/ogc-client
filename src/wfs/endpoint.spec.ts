@@ -12,6 +12,7 @@ import capabilitiesStates from '../../fixtures/wfs/capabilities-states-2-0-0.xml
 import exceptionReportWms from '../../fixtures/wfs/exception-report-wms.xml';
 import WfsEndpoint from './endpoint.js';
 import { useCache } from '../shared/cache.js';
+import { EndpointError, ServiceExceptionError } from '../shared/errors.js';
 
 jest.mock('../shared/cache', () => ({
   useCache: jest.fn((factory) => factory()),
@@ -28,6 +29,7 @@ describe('WfsEndpoint', () => {
   });
 
   beforeEach(() => {
+    global.fetchPreHandler = () => {};
     global.fetchResponseFactory = (url) => {
       if (url.indexOf('GetCapabilities') > -1) return capabilities200;
       if (url.indexOf('GetFeature') > -1) {
@@ -74,15 +76,88 @@ describe('WfsEndpoint', () => {
       await expect(endpoint.isReady()).resolves.toEqual(endpoint);
     });
 
+    describe('CORS error handling', () => {
+      beforeEach(() => {
+        global.fetchPreHandler = (url, options) => {
+          if (options?.method === 'HEAD') return 'ok!';
+          throw new Error('CORS problem');
+        };
+        endpoint = new WfsEndpoint('https://my.test.service/ogc/wfs');
+      });
+      it('rejects with a relevant error', async () => {
+        const error = (await endpoint
+          .isReady()
+          .catch((e) => e)) as EndpointError;
+        expect(error.constructor.name).toBe('EndpointError');
+        expect(error.message).toBe(
+          'The document could not be fetched due to CORS limitations'
+        );
+        expect(error.httpStatus).toBe(0);
+        expect(error.isCrossOriginRelated).toBe(true);
+      });
+    });
+
+    describe('endpoint error handling', () => {
+      beforeEach(() => {
+        global.fetchPreHandler = () => {
+          throw new TypeError('other kind of problem');
+        };
+        endpoint = new WfsEndpoint('https://my.test.service/ogc/wfs');
+      });
+      it('rejects with a relevant error', async () => {
+        const error = (await endpoint
+          .isReady()
+          .catch((e) => e)) as EndpointError;
+        expect(error.constructor.name).toBe('EndpointError');
+        expect(error.message).toBe(
+          'Fetching the document failed either due to network errors or unreachable host, error is: other kind of problem'
+        );
+        expect(error.httpStatus).toBe(0);
+        expect(error.isCrossOriginRelated).toBe(false);
+      });
+    });
+
+    describe('http error handling', () => {
+      beforeEach(() => {
+        global.fetchPreHandler = () => ({
+          ok: false,
+          text: () => Promise.resolve('something broke in the server'),
+          status: 500,
+          statusText: 'Internal Server Error',
+        });
+        endpoint = new WfsEndpoint('https://my.test.service/ogc/wfs');
+      });
+      it('rejects with a relevant error', async () => {
+        const error = (await endpoint
+          .isReady()
+          .catch((e) => e)) as EndpointError;
+        expect(error.constructor.name).toBe('EndpointError');
+        expect(error.message).toBe(
+          'Received an error with code 500: something broke in the server'
+        );
+        expect(error.httpStatus).toBe(500);
+        expect(error.isCrossOriginRelated).toBe(false);
+      });
+    });
+
     describe('service exception handling', () => {
       beforeEach(() => {
         global.fetchResponseFactory = () => exceptionReportWms;
-        endpoint = new WfsEndpoint('https://my.test.service/ogc/wms');
+        endpoint = new WfsEndpoint('https://my.test.service/ogc/wfs');
       });
       it('rejects when the endpoint returns an exception report', async () => {
-        await expect(endpoint.isReady()).rejects.toThrow(
+        const error = (await endpoint
+          .isReady()
+          .catch((e) => e)) as ServiceExceptionError;
+        expect(error.constructor.name).toBe('ServiceExceptionError');
+        expect(error.message).toBe(
           'msWFSDispatch(): WFS server error. WFS request not enabled. Check wfs/ows_enable_request settings.'
         );
+        expect(error.requestUrl).toBe(
+          'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetCapabilities'
+        );
+        expect(error.code).toBe('InvalidParameterValue');
+        expect(error.locator).toBe('request');
       });
     });
   });

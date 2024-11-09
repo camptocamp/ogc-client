@@ -12,10 +12,7 @@ import wmsException110 from '../../fixtures/wms/service-exception-report-1-1-0.x
 import wmsException111 from '../../fixtures/wms/service-exception-report-1-1-1.xml';
 // @ts-expect-error ts-migrate(7016)
 import wmsException130 from '../../fixtures/wms/service-exception-report-1-3-0.xml';
-import ServiceExceptionError, {
-  check,
-  parse,
-} from './service-exception-error.js';
+import { check, parse, ServiceExceptionError } from './errors.js';
 import {
   findChildElement,
   getRootElement,
