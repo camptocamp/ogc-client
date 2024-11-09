@@ -15,6 +15,7 @@ export class EndpointError extends Error {
     public readonly isCrossOriginRelated?: boolean
   ) {
     super(message);
+    this.name = 'EndpointError';
   }
 }
 
@@ -41,6 +42,7 @@ export class ServiceExceptionError extends Error {
     public readonly response?: XmlDocument
   ) {
     super(message);
+    this.name = 'ServiceExceptionError';
   }
 }
 
@@ -93,4 +95,62 @@ export function check(response: XmlDocument, url?: string): XmlDocument {
   }
   // there was nothing to convert to an Error so just pass the document on
   return response;
+}
+
+/**
+ * This transforms an error object into a JSON-serializable object to be
+ * transferred from a worker
+ */
+export function encodeError(error: Error): Record<string, unknown> {
+  const base = {
+    message: error.message,
+    stack: error.stack,
+    name: error.name,
+  };
+  if (error instanceof ServiceExceptionError) {
+    return {
+      ...base,
+      code: error.code,
+      locator: error.locator,
+      response: error.response,
+      requestUrl: error.requestUrl,
+    };
+  }
+  if (error instanceof EndpointError) {
+    return {
+      ...base,
+      httpStatus: error.httpStatus,
+      isCrossOriginRelated: error.isCrossOriginRelated,
+    };
+  }
+  return base;
+}
+
+/**
+ * Recreates an error object
+ */
+export function decodeError(error: Record<string, unknown>): Error {
+  if (error.name === 'ServiceExceptionError') {
+    const e = new ServiceExceptionError(
+      error.message as string,
+      error.requestUrl as string,
+      error.code as string,
+      error.locator as string,
+      error.response as XmlDocument
+    );
+    e.stack = error.stack as string;
+    return e;
+  }
+  if (error.name === 'EndpointError') {
+    const e = new EndpointError(
+      error.message as string,
+      error.httpStatus as number,
+      error.isCrossOriginRelated as boolean
+    );
+    e.stack = error.stack as string;
+    return e;
+  }
+  const e = new Error(error.message as string);
+  e.stack = error.stack as string;
+  return e;
 }

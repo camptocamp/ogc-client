@@ -69,7 +69,7 @@ describe('WmsEndpoint', () => {
         const error = (await endpoint
           .isReady()
           .catch((e) => e)) as EndpointError;
-        expect(error.constructor.name).toBe('EndpointError');
+        expect(error).toBeInstanceOf(EndpointError);
         expect(error.message).toBe(
           'The document could not be fetched due to CORS limitations'
         );
@@ -89,7 +89,7 @@ describe('WmsEndpoint', () => {
         const error = (await endpoint
           .isReady()
           .catch((e) => e)) as EndpointError;
-        expect(error.constructor.name).toBe('EndpointError');
+        expect(error).toBeInstanceOf(EndpointError);
         expect(error.message).toBe(
           'Fetching the document failed either due to network errors or unreachable host, error is: other kind of problem'
         );
@@ -112,7 +112,7 @@ describe('WmsEndpoint', () => {
         const error = (await endpoint
           .isReady()
           .catch((e) => e)) as EndpointError;
-        expect(error.constructor.name).toBe('EndpointError');
+        expect(error).toBeInstanceOf(EndpointError);
         expect(error.message).toBe(
           'Received an error with code 500: something broke in the server'
         );
@@ -130,7 +130,7 @@ describe('WmsEndpoint', () => {
         const error = (await endpoint
           .isReady()
           .catch((e) => e)) as ServiceExceptionError;
-        expect(error.constructor.name).toBe('ServiceExceptionError');
+        expect(error).toBeInstanceOf(ServiceExceptionError);
         expect(error.message).toBe(
           'msWMSGetCapabilities(): WMS server error. WMS request not enabled. Check wms/ows_enable_request settings.'
         );

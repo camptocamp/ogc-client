@@ -88,7 +88,7 @@ describe('WfsEndpoint', () => {
         const error = (await endpoint
           .isReady()
           .catch((e) => e)) as EndpointError;
-        expect(error.constructor.name).toBe('EndpointError');
+        expect(error).toBeInstanceOf(EndpointError);
         expect(error.message).toBe(
           'The document could not be fetched due to CORS limitations'
         );
@@ -108,7 +108,7 @@ describe('WfsEndpoint', () => {
         const error = (await endpoint
           .isReady()
           .catch((e) => e)) as EndpointError;
-        expect(error.constructor.name).toBe('EndpointError');
+        expect(error).toBeInstanceOf(EndpointError);
         expect(error.message).toBe(
           'Fetching the document failed either due to network errors or unreachable host, error is: other kind of problem'
         );
@@ -131,7 +131,7 @@ describe('WfsEndpoint', () => {
         const error = (await endpoint
           .isReady()
           .catch((e) => e)) as EndpointError;
-        expect(error.constructor.name).toBe('EndpointError');
+        expect(error).toBeInstanceOf(EndpointError);
         expect(error.message).toBe(
           'Received an error with code 500: something broke in the server'
         );
@@ -149,7 +149,7 @@ describe('WfsEndpoint', () => {
         const error = (await endpoint
           .isReady()
           .catch((e) => e)) as ServiceExceptionError;
-        expect(error.constructor.name).toBe('ServiceExceptionError');
+        expect(error).toBeInstanceOf(ServiceExceptionError);
         expect(error.message).toBe(
           'msWFSDispatch(): WFS server error. WFS request not enabled. Check wfs/ows_enable_request settings.'
         );
