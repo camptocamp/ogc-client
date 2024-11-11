@@ -3,10 +3,10 @@ import { setQueryParams } from '../shared/http-utils.js';
 import { useCache } from '../shared/cache.js';
 import { parseWmtsCapabilities } from '../worker/index.js';
 import {
-  WmtsLayerDimensionValue,
-  WmtsLayerResourceLink,
   WmtsEndpointInfo,
   WmtsLayer,
+  WmtsLayerDimensionValue,
+  WmtsLayerResourceLink,
   WmtsMatrixSet,
 } from './model.js';
 import { generateGetTileUrl } from './url.js';
@@ -209,8 +209,12 @@ export default class WmtsEndpoint {
         (matrixSet) => matrixSet.identifier === matrixSetIdentifier
       ) ?? layer.matrixSets[0];
     const matrixSet = this.getMatrixSetByIdentifier(matrixSetLink.identifier);
-    return this.tileGridModule.then(({ buildOpenLayersTileGrid }) =>
-      buildOpenLayersTileGrid(matrixSet, matrixSetLink.limits)
-    );
+    return this.tileGridModule.then((olTileGridModule) => {
+      if (!olTileGridModule) return null;
+      return olTileGridModule.buildOpenLayersTileGrid(
+        matrixSet,
+        matrixSetLink.limits
+      );
+    });
   }
 }

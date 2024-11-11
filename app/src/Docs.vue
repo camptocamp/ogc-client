@@ -199,6 +199,7 @@ async function getFirstTenRecords() {
         <pre>
 import TileLayer from 'ol/layer/Tile';
 import WMTS from 'ol/source/WMTS';
+import { transformExtent } from 'ol/proj';
 import { WmtsEndpoint } from '@camptocamp/ogc-client';
 
 // create the OpenLayers map
@@ -226,6 +227,13 @@ async function addWmtsLayer() {
       projection: matrixSet.crs,
       dimensions,
     }),
+    // this will limit the rendering to the actual range where data is available
+    maxResolution: tileGrid.getResolutions()[0],
+    extent: transformExtent(
+      layer.latLonBoundingBox,
+      'EPSG:4326',
+      openLayersMap.getView().getProjection()
+    );
   });
   openLayersMap.addLayer(layer);
 }</pre
