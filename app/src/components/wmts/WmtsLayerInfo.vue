@@ -44,36 +44,10 @@ import TileLayer from 'ol/layer/Tile';
 import WMTS from 'ol/source/WMTS';
 import proj4 from 'proj4';
 import { register } from 'ol/proj/proj4';
+import { transformExtent } from 'ol/proj';
 
 // this is necessary for tile reprojection to work
 register(proj4);
-
-async function addWmtsLayer(olMap) {
-  const endpoint = await new WmtsEndpoint(
-    'https://my.server.org/wmts'
-  ).isReady();
-  const layer = endpoint.getLayers()[0];
-  const matrixSetLink = layer.matrixSets[0];
-  const tileGrid = await endpoint.getOpenLayersTileGrid(
-    layer.name,
-    matrixSetLink.identifier
-  );
-  const resourceLink = layer.resourceLinks[0];
-  const dimensions = endpoint.getDefaultDimensions(layer.name);
-  const olLayer = new TileLayer({
-    source: new WMTS({
-      layer: this.layer.name,
-      matrixSet: matrixSetLink.identifier,
-      format: resourceLink.format,
-      url: resourceLink.url,
-      requestEncoding: resourceLink.encoding,
-      tileGrid,
-      projection: matrixSetLink.crs,
-      dimensions,
-    }),
-  });
-  olMap.addLayer(olLayer);
-}
 
 export default {
   name: 'WmtsLayerInfo',
@@ -136,7 +110,16 @@ export default {
             projection: matrixSetLink.crs,
             dimensions,
           }),
+          maxResolution: tileGrid.getResolutions()[0],
         });
+        if (this.layer.latLonBoundingBox) {
+          const extent = transformExtent(
+            this.layer.latLonBoundingBox,
+            'EPSG:4326',
+            'EPSG:3857'
+          );
+          layer.setExtent(extent);
+        }
         this.olMap.addLayer(layer);
       },
     },
