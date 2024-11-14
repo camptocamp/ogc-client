@@ -1,4 +1,5 @@
 import { getUniqueId } from '../shared/id.js';
+import { decodeError, encodeError } from '../shared/errors.js';
 
 type TaskParams = Record<string, unknown>;
 type TaskResponse = Record<string, unknown>;
@@ -11,7 +12,7 @@ export type WorkerRequest = {
 
 export type WorkerResponse = {
   requestId: number;
-  error?: unknown;
+  error?: Record<string, unknown>;
   response?: TaskResponse;
 };
 
@@ -45,7 +46,7 @@ export function sendTaskRequest<T>(
           workerInstance.removeEventListener('message', workerHandler);
         }
         if ('error' in response) {
-          reject(response.error);
+          reject(decodeError(response.error));
         } else {
           resolve(response.response as T);
         }
@@ -80,7 +81,7 @@ export function addTaskHandler(
       try {
         response = await handler(request.params);
       } catch (e) {
-        error = e;
+        error = encodeError(e);
       }
       const message = /** @type {WorkerResponse} */ {
         taskName,

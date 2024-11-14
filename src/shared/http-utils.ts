@@ -101,7 +101,7 @@ export function queryXmlDocument(url: string) {
           );
         })
     )
-    .then(async (resp) => {
+    .then(async (resp: Response) => {
       if (!resp.ok) {
         const text = await resp.text();
         throw new EndpointError(

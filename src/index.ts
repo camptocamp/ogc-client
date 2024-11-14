@@ -49,8 +49,9 @@ export {
 } from './shared/http-utils.js';
 export {
   check,
-  default as ServiceExceptionError,
-} from './shared/service-exception-error.js';
+  ServiceExceptionError,
+  EndpointError,
+} from './shared/errors.js';
 
 export { enableFallbackWithoutWorker } from './worker/index.js';
 import './worker-fallback/index.js';

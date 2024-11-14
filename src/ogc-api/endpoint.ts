@@ -4,12 +4,12 @@ import {
   checkStyleConformance,
   checkTileConformance,
   parseBaseCollectionInfo,
-  parseFullStyleInfo,
+  parseBasicStyleInfo,
   parseCollectionParameters,
   parseCollections,
   parseConformance,
   parseEndpointInfo,
-  parseBasicStyleInfo,
+  parseFullStyleInfo,
   parseTileMatrixSets,
 } from './info.js';
 import {
