@@ -73,7 +73,7 @@ export function fetchCollectionRoot(
       if (!urlObj.pathname.endsWith('/')) {
         urlObj.pathname = `${urlObj.pathname}/`;
       }
-      parentUrl= urlObj.toString();
+      parentUrl = urlObj.toString();
     }
     return fetchCollectionRoot(parentUrl);
   });

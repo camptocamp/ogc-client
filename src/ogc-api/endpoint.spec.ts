@@ -2169,7 +2169,9 @@ The document at http://local/nonexisting?f=json could not be fetched.`
   describe('endpoint with query params', () => {
     describe('on collections path', () => {
       beforeEach(() => {
-        endpoint = new OgcApiEndpoint('http://local/sample-data/collections?foo=bar');
+        endpoint = new OgcApiEndpoint(
+          'http://local/sample-data/collections?foo=bar'
+        );
       });
       it('correctly parses endpoint info and collections', async () => {
         await expect(endpoint.info).resolves.toEqual({
@@ -2201,8 +2203,8 @@ The document at http://local/nonexisting?f=json could not be fetched.`
           'urban_areas',
           'waterlines',
           'woodland',
-        ]);   
+        ]);
       });
     });
-  })
+  });
 });
