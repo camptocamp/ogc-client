@@ -69,7 +69,11 @@ export function fetchCollectionRoot(
     }
     // if there is a collections array, we expect the parent path to end with slash
     if ('collections' in doc) {
-      parentUrl = `${parentUrl}/`;
+      const urlObj = new URL(parentUrl);
+      if (!urlObj.pathname.endsWith('/')) {
+        urlObj.pathname = `${urlObj.pathname}/`;
+      }
+      parentUrl = urlObj.toString();
     }
     return fetchCollectionRoot(parentUrl);
   });
