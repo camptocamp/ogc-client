@@ -1,6 +1,7 @@
 import { TileMapLayer } from './models';
 import { useCache } from '../shared/cache.js';
 import { parseTmsService } from '../worker/index.js';
+import { GenericEndpointInfo } from '../shared/models';
 
 /**
  * Represents a TMS endpoint advertising several layers.
@@ -8,6 +9,7 @@ import { parseTmsService } from '../worker/index.js';
 export default class TmsEndpoint {
   private _capabilitiesPromise: Promise<void>;
   private _layers: TileMapLayer[];
+  private _info: GenericEndpointInfo | null;
 
   /**
    * Creates a new TMS endpoint.
@@ -37,5 +39,12 @@ export default class TmsEndpoint {
 
   getLayers() {
     return this._layers;
+  }
+
+  /**
+   * A Promise which resolves to the endpoint information.
+   */
+  getServiceInfo() {
+    return this._info;
   }
 }
