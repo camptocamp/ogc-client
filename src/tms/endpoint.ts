@@ -26,6 +26,13 @@ export default class TmsEndpoint {
       url
     ).then(({ layers }) => {
       this._layers = layers;
+      // TODO: update info
+      this._info = {
+        name: 'TODO test',
+        title: 'TODO test title',
+        abstract: 'TODO test abstract',
+        keywords: []
+      };
     });
   }
 
@@ -46,5 +53,15 @@ export default class TmsEndpoint {
    */
   getServiceInfo() {
     return this._info;
+  }
+
+  /**
+   * Returns the full layer information.
+   * Layer name is case-sensitive.
+   * @param href Layer href property (unique in the TMS service)
+   * @return return null if layer was not found
+   */
+  getLayerByHref(href: string): TileMapLayer {
+    return this._layers.find(l => l.href === href);
   }
 }

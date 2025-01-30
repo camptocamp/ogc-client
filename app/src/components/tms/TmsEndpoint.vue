@@ -3,10 +3,9 @@
     <div class="d-flex flex-row my-4">
       <input
         class="form-control me-3"
-        placeholder="Enter a WFS service URL here"
+        placeholder="Enter a WMS service URL here"
         v-model="url"
       />
-      <div class="spacer-s"></div>
       <button type="button" class="btn btn-primary" @click="createEndpoint()">
         Analyze
       </button>
@@ -14,28 +13,27 @@
     <div v-if="loading">Loading...</div>
     <div v-if="loaded">
       <InfoList :info="endpoint.getServiceInfo()"></InfoList>
-      <ItemsTree :items="endpoint.getFeatureTypes()" style="min-height: 200px">
+      <ItemsTree
+        :items="endpoint.getLayers()"
+        style="min-height: 200px; max-height: 400px; overflow: auto"
+      >
         <template v-slot="{ item }">
           <div :title="item.abstract">
-            <template v-if="item.name">
-              <a
+            <a
                 href
-                @click="handleItemClick(item, $event)"
+                @click="handleLayerClick(item, $event)"
                 class="link-light"
-                >{{ item.title }}</a
+                >{{ item.title }} 
+                <template v-if="item.srs">({{ item.srs }})</template> <template v-if="item.extension">({{ item.extension }})</template></a
               >
-            </template>
-            <template v-else>
-              <span>{{ item.title }}</span>
-            </template>
           </div>
         </template>
       </ItemsTree>
-      <WfsFeatureTypeInfo
-        v-if="selectedFeatureType"
-        :feature-type="selectedFeatureType"
+      <TmsLayerInfo
+        v-if="selectedLayer"
+        :tileMapLayer="selectedLayer"
         :endpoint="endpoint"
-      ></WfsFeatureTypeInfo>
+      ></TmsLayerInfo>
     </div>
     <div v-if="error">Error: {{ error }}</div>
   </div>
@@ -54,8 +52,8 @@ export default {
     loading: false,
     error: null,
     endpoint: null,
-    url: 'https://ahocevar.com/geoserver/wfs',
-    selectedFeatureType: null,
+    url: 'https://ahocevar.com/geoserver/gwc/service/tms/1.0.0/',
+    selectedLayer: null,
   }),
   computed: {
     loaded() {
@@ -66,7 +64,7 @@ export default {
     async createEndpoint() {
       this.error = null;
       this.loading = true;
-      this.endpoint = new WfsEndpoint(this.url);
+      this.endpoint = new TmsEndpoint(this.url);
       try {
         await this.endpoint.isReady();
       } catch (e) {
@@ -74,11 +72,9 @@ export default {
       }
       this.loading = false;
     },
-    async handleItemClick(layer, event) {
+    handleLayerClick(layer, event) {
+      this.selectedLayer = this.endpoint.getLayerByHref(layer.href);
       event.preventDefault();
-      this.selectedFeatureType = await this.endpoint.getFeatureTypeFull(
-        layer.name
-      );
     },
   },
 };
