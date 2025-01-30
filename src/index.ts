@@ -55,3 +55,6 @@ export {
 
 export { enableFallbackWithoutWorker } from './worker/index.js';
 import './worker-fallback/index.js';
+
+export { default as TmsEndpoint } from './tms/endpoint.js';
+

@@ -1,6 +1,26 @@
-import { findChildElement, findChildrenElement, getElementAttribute, getRootElement } from "../shared/xml-utils";
-import { TileMapLayer} from "./models";
+import {
+  findChildElement,
+  findChildrenElement,
+  getElementAttribute,
+  getElementText,
+  getRootElement
+} from '../shared/xml-utils.js';
+import { TileMapLayer} from './models.js';
 import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
+
+
+export function readInfoFromCapabilities(
+  capabilitiesDoc: XmlDocument
+): {
+  title: string;
+  abstract: string;
+} {
+  const service = getRootElement(capabilitiesDoc)
+  return {
+    title: getElementText(findChildElement(service, 'Title')),
+    abstract: getElementText(findChildElement(service, 'Abstract')),
+  };
+}
 
 export function readLayersFromCapabilities(doc: XmlDocument): TileMapLayer[] {
   const services = findChildElement(

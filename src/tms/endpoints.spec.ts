@@ -1,7 +1,11 @@
-import TmsEndpoint from "./endpoint";
+import TmsEndpoint from './endpoint.js';
 // @ts-expect-error ts-migrate(7016)
 import capabilities from '../../fixtures/tms/capabilities-geopf.xml';
-import { useCache } from "../shared/cache";
+import { useCache } from '../shared/cache.js';
+
+jest.mock('../shared/cache', () => ({
+  useCache: jest.fn((factory) => factory()),
+}));
 
 describe('TmsEndpoint', () => {
   let endpoint: TmsEndpoint;
@@ -36,7 +40,8 @@ describe('TmsEndpoint', () => {
             (useCache as any).mock.results[0].value
           ).resolves.toMatchObject({
             info: {
-              title: 'GéoServices : géologie, hydrogéologie et gravimétrie',
+              title: 'WMS/WMTS/TMS server',
+              abstract: 'This server provide WMS, WMTS and TMS raster and vector data broadcast',
             },
           });
         });

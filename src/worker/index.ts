@@ -108,10 +108,11 @@ export function parseWmtsCapabilities(capabilitiesUrl: string): Promise<{
  * Parses the tms service metadata document and return all relevant information
  * @param rootUrl This url should point to the TMS metadata document
  */
-export function parseTmsService(url: string): Promise<{
+export function parseTmsCapabilities(url: string): Promise<{
+  info: GenericEndpointInfo;
   layers: TileMapLayer[];
 }> {
-  return sendTaskRequest('parseTmsService', getWorkerInstance(), { url });
+  return sendTaskRequest('parseTmsCapabilities', getWorkerInstance(), { url });
 }
 
 setFetchOptionsUpdateCallback((options) => {

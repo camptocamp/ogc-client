@@ -1,7 +1,7 @@
-import { TileMapLayer } from './models';
+import { TileMapLayer } from './models.js';
 import { useCache } from '../shared/cache.js';
-import { parseTmsService } from '../worker/index.js';
-import { GenericEndpointInfo } from '../shared/models';
+import { parseTmsCapabilities } from '../worker/index.js';
+import { GenericEndpointInfo } from '../shared/models.js';
 
 /**
  * Represents a TMS endpoint advertising several layers.
@@ -20,19 +20,13 @@ export default class TmsEndpoint {
      * This fetches the root doc and parses its contents
      */
     this._capabilitiesPromise = useCache(
-      () => parseTmsService(url),
+      () => parseTmsCapabilities(url),
       'TMS',
       'METADATA',
       url
-    ).then(({ layers }) => {
+    ).then(({ info, layers }) => {
       this._layers = layers;
-      // TODO: update info
-      this._info = {
-        name: 'TODO test',
-        title: 'TODO test title',
-        abstract: 'TODO test abstract',
-        keywords: []
-      };
+      this._info = info;
     });
   }
 

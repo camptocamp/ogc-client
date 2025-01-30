@@ -86,12 +86,13 @@ addTaskHandler(
 );
 
 addTaskHandler(
-  'parseTmsService',
+  'parseTmsCapabilities',
   globalThis,
   ({ url }: { url: string }) =>
     queryXmlDocument(url)
       .then((xmlDoc) => check(xmlDoc, url))
       .then((xmlDoc) => ({
+        info: tmsCapabilities.readInfoFromCapabilities(xmlDoc),
         layers: tmsCapabilities.readLayersFromCapabilities(xmlDoc),
       }))
 );
