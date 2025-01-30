@@ -16,6 +16,7 @@ import { WmsLayerFull, WmsVersion } from '../wms/model.js';
 // @ts-expect-error TS2307
 // eslint-disable-next-line require-extensions/require-extensions
 import OgcClientWorker from './worker?worker&inline';
+import { TileMapLayer } from '../tms/models.js';
 
 let fallbackWithoutWorker = false;
 
@@ -101,6 +102,16 @@ export function parseWmtsCapabilities(capabilitiesUrl: string): Promise<{
   return sendTaskRequest('parseWmtsCapabilities', getWorkerInstance(), {
     url: capabilitiesUrl,
   });
+}
+
+/**
+ * Parses the tms service metadata document and return all relevant information
+ * @param rootUrl This url should point to the TMS metadata document
+ */
+export function parseTmsService(url: string): Promise<{
+  layers: TileMapLayer[];
+}> {
+  return sendTaskRequest('parseTmsService', getWorkerInstance(), { url });
 }
 
 setFetchOptionsUpdateCallback((options) => {

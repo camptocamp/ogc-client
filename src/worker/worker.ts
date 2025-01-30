@@ -4,6 +4,7 @@ import { check } from '../shared/errors.js';
 import * as wmsCapabilities from '../wms/capabilities.js';
 import * as wfsCapabilities from '../wfs/capabilities.js';
 import * as wmtsCapabilities from '../wmts/capabilities.js';
+import * as tmsCapabilities from '../tms/capabilities.js';
 import {
   computeFeaturePropsDetails,
   parseFeatureProps,
@@ -81,5 +82,16 @@ addTaskHandler(
         info: wmtsCapabilities.readInfoFromCapabilities(xmlDoc),
         layers: wmtsCapabilities.readLayersFromCapabilities(xmlDoc),
         matrixSets: wmtsCapabilities.readMatrixSetsFromCapabilities(xmlDoc),
+      }))
+);
+
+addTaskHandler(
+  'parseTmsService',
+  globalThis,
+  ({ url }: { url: string }) =>
+    queryXmlDocument(url)
+      .then((xmlDoc) => check(xmlDoc, url))
+      .then((xmlDoc) => ({
+        layers: tmsCapabilities.readLayersFromCapabilities(xmlDoc),
       }))
 );
