@@ -84,6 +84,13 @@ export default class WmsEndpoint {
   }
 
   /**
+   * Returns a array of layers, same as WmsEndpoint.getLayers(), but flattened
+   */
+  getFlattenedLayers() {
+    return this.getLayers().flatMap(wmsLayerFlatten);
+  }
+
+  /**
    * Returns the full layer information, including supported coordinate systems, available layers, bounding boxes etc.
    * Layer name is case-sensitive.
    * @param name Layer name property (unique in the WMS service)
@@ -204,4 +211,16 @@ export default class WmsEndpoint {
     }
     return this._url[operationName]?.[method];
   }
+}
+
+function wmsLayerFlatten(layerFull) {
+  const layer = {
+    title: layerFull.title,
+    name: layerFull.name,
+    abstract: layerFull.abstract,
+  };
+
+  return 'children' in layerFull && Array.isArray(layerFull.children)
+    ? [layer, ...layerFull.children.flatMap(wmsLayerFlatten)]
+    : [layer];
 }
