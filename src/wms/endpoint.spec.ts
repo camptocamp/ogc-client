@@ -203,6 +203,53 @@ describe('WmsEndpoint', () => {
     });
   });
 
+  describe('#getFlattenedLayers', () => {
+    it('returns a list of layers', async () => {
+      await endpoint.isReady();
+      expect(endpoint.getFlattenedLayers()).toEqual([
+        {
+          abstract:
+            "Ensemble des services d'accès aux données sur la géologie, l'hydrogéologie et la gravimétrie, diffusées par le BRGM",
+          name: 'GEOSERVICES_GEOLOGIE',
+          title: 'GéoServices : géologie, hydrogéologie et gravimétrie',
+        },
+        {
+          abstract: 'Cartes géologiques',
+          name: 'GEOLOGIE',
+          title: 'Cartes géologiques',
+        },
+        {
+          abstract:
+            'BD Scan-Million-Géol est la base de données géoréférencées de la carte géologique image à 1/1 000 000',
+          name: 'SCAN_F_GEOL1M',
+          title: 'Carte géologique image de la France au million',
+        },
+        {
+          abstract:
+            'BD Scan-Géol-250 est la base de données géoréférencées des cartes géologiques image à 1/250 000. Utilisation scientifique, technique, pédagogique',
+          name: 'SCAN_F_GEOL250',
+          title: 'Carte géologique image de la France au 1/250000',
+        },
+        {
+          abstract:
+            "BD Scan-Géol-50 est la base de données géoréférencées des cartes géologiques 'papier' à 1/50 000",
+          name: 'SCAN_D_GEOL50',
+          title: 'Carte géologique image de la France au 1/50 000e',
+        },
+        {
+          abstract: '',
+          name: 'INHERIT_SCALE',
+          title: 'Inherited scale denominators',
+        },
+        {
+          abstract: '',
+          name: 'INHERIT_BBOX',
+          title: 'Inherited bounding boxes',
+        },
+      ]);
+    });
+  });
+
   describe('#getLayerByName', () => {
     it('returns detailed info on a layer', async () => {
       await endpoint.isReady();

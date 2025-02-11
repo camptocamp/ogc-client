@@ -240,8 +240,6 @@ async function addWmtsLayer() {
         >
       </CodeBlock>
     </p>
-
-    <h2 class="mt-5 mb-4">API</h2>
   </div>
 </template>
 
