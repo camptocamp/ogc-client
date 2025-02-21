@@ -132,10 +132,13 @@ describe('WFS url helpers', () => {
           undefined,
           undefined,
           undefined,
-          [['A', 'col1'], ['D', 'col2']]
+          [
+            ['A', 'col1'],
+            ['D', 'col2'],
+          ]
         )
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&SORTBY=col1%2BA%2Ccol2%2BD'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&SORTBY=col1+A,col2+D'
       );
     });
   });

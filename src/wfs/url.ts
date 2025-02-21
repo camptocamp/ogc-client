@@ -57,15 +57,19 @@ export function generateGetFeatureUrl(
   if (startIndex) {
     newParams.STARTINDEX = startIndex.toString(10);
   }
+
+  let url = setQueryParams(serviceUrl, newParams);
+
+  // Don't encode +A or +D Wfs sorting param
   if (Array.isArray(sortBy) && sortBy.length > 0) {
-    newParams.SORTBY = sortBy
-      .map(
-        (fieldSort) => `${fieldSort[1]}+${fieldSort[0]}`
-      )
+    const sorts = sortBy
+      .map((fieldSort) => `${fieldSort[1]}+${fieldSort[0]}`)
       .join(',');
+    // Direct update on string url to prevent encoding of +A and +D
+    url = `${url}${new URL(url).search ? '&' : ''}SORTBY=${sorts}`;
   }
 
-  return setQueryParams(serviceUrl, newParams);
+  return url;
 }
 
 /**
