@@ -118,6 +118,26 @@ describe('WFS url helpers', () => {
         'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&STARTINDEX=10'
       );
     });
+    it('generates a correct URL (v2.0.0, with sorting)', () => {
+      expect(
+        generateGetFeatureUrl(
+          'http://example.com/wfs',
+          '2.0.0',
+          'my:type',
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          [['A', 'col1'], ['D', 'col2']]
+        )
+      ).toBe(
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&SORTBY=col1%2BA%2Ccol2%2BD'
+      );
+    });
   });
 
   describe('generateDescribeFeatureTypeUrl', () => {

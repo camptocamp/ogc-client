@@ -1,5 +1,5 @@
 import { setQueryParams } from '../shared/http-utils.js';
-import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
+import { BoundingBox, CrsCode, FieldSort, MimeType } from '../shared/models.js';
 import { WfsVersion } from './model.js';
 
 /**
@@ -28,7 +28,8 @@ export function generateGetFeatureUrl(
   outputCrs?: CrsCode,
   extent?: BoundingBox,
   extentCrs?: CrsCode,
-  startIndex?: number
+  startIndex?: number,
+  sortBy?: FieldSort[]
 ) {
   const typeParam = version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
   const countParam = version === '2.0.0' ? 'COUNT' : 'MAXFEATURES';
@@ -55,6 +56,13 @@ export function generateGetFeatureUrl(
   }
   if (startIndex) {
     newParams.STARTINDEX = startIndex.toString(10);
+  }
+  if (Array.isArray(sortBy) && sortBy.length > 0) {
+    newParams.SORTBY = sortBy
+      .map(
+        (fieldSort) => `${fieldSort[1]}+${fieldSort[0]}`
+      )
+      .join(',');
   }
 
   return setQueryParams(serviceUrl, newParams);
