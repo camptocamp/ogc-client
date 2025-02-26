@@ -1,0 +1,81 @@
+{
+  "id": "missing-feature-type-metadata",
+  "title": "Sample metadata records that is missing featureType",
+  "description": "Sample metadata records that is missing featureType",
+  "keywords": ["netherlands", "open data", "georegister"],
+  "links": [
+    {
+      "type": "text/html",
+      "rel": "canonical",
+      "title": "information",
+      "href": "https://www.nationaalgeoregister.nl",
+      "hreflang": "nl-NL"
+    },
+    {
+      "type": "application/json",
+      "rel": "root",
+      "title": "The landing page of this server as JSON",
+      "href": "https://my.server.org/sample-data?f=json"
+    },
+    {
+      "type": "text/html",
+      "rel": "root",
+      "title": "The landing page of this server as HTML",
+      "href": "https://my.server.org/sample-data?f=html"
+    },
+    {
+      "type": "application/json",
+      "rel": "self",
+      "title": "This document as JSON",
+      "href": "https://my.server.org/sample-data/collections/missing-feature-type-metadata?f=json"
+    },
+    {
+      "type": "application/ld+json",
+      "rel": "alternate",
+      "title": "This document as RDF (JSON-LD)",
+      "href": "https://my.server.org/sample-data/collections/missing-feature-type-metadata?f=jsonld"
+    },
+    {
+      "type": "text/html",
+      "rel": "alternate",
+      "title": "This document as HTML",
+      "href": "https://my.server.org/sample-data/collections/missing-feature-type-metadata?f=html"
+    },
+    {
+      "type": "application/json",
+      "rel": "queryables",
+      "title": "Queryables for this collection as JSON",
+      "href": "https://my.server.org/sample-data/collections/missing-feature-type-metadata/queryables?f=json"
+    },
+    {
+      "type": "text/html",
+      "rel": "queryables",
+      "title": "Queryables for this collection as HTML",
+      "href": "https://my.server.org/sample-data/collections/missing-feature-type-metadata/queryables?f=html"
+    },
+    {
+      "type": "application/geo+json",
+      "rel": "items",
+      "title": "items as GeoJSON",
+      "href": "https://my.server.org/sample-data/collections/missing-feature-type-metadata/items?f=json"
+    },
+    {
+      "type": "application/ld+json",
+      "rel": "items",
+      "title": "items as RDF (GeoJSON-LD)",
+      "href": "https://my.server.org/sample-data/collections/missing-feature-type-metadata/items?f=jsonld"
+    },
+    {
+      "type": "text/html",
+      "rel": "items",
+      "title": "Items as HTML",
+      "href": "https://my.server.org/sample-data/collections/missing-feature-type-metadata/items?f=html"
+    }
+  ],
+  "extent": {
+    "spatial": {
+      "bbox": [[3.37, 50.75, 7.21, 53.47]],
+      "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+    }
+  }
+}

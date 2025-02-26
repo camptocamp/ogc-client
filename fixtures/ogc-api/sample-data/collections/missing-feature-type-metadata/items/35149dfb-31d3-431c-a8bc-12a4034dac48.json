@@ -1,0 +1,114 @@
+{
+  "id": "35149dfb-31d3-431c-a8bc-12a4034dac48",
+  "type": "Feature",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [4.690751953125, 52.358740234375],
+        [4.690751953125, 52.6333984375],
+        [5.020341796875, 52.6333984375],
+        [5.020341796875, 52.358740234375],
+        [4.690751953125, 52.358740234375]
+      ]
+    ]
+  },
+  "properties": {
+    "created": "2021-12-08",
+    "updated": "2022-06-10T01:27:47Z",
+    "type": "dataset",
+    "title": "Kaartboeck 1635",
+    "description": "Data uit kaartboeken van de periode 1635 tot 1775. De kaartboeken werden door het waterschap gebruikt om er op toe te zien dat de eigenaren geen water in beslag namen door demping.\nDe percelen op de kaart zijn naar de huidige maatstaven vrij nauwkeurig gemeten en voorzien van een administratie met de eigenaren. bijzondere locaties van molens werven en beroepen worden in de boeken vermeld. Alle 97 kaarten aan een geven een zeer gedetailleerd beeld van de Voorzaan, Nieuwe Haven en de Achterzaan. De bladen Oost en West van de zaan zijn vrij nauwkeurig. De bladen aan de Voorzaan zijn een schetsmatige weergave van de situatie. De kaart van de Nieuwe Haven si weer nauwkeurig te noemen.",
+    "providers": ["Team Geo, geo-informatie@zaanstad.nl, Gemeente Zaanstad"],
+    "externalIds": [
+      {
+        "scheme": "default",
+        "value": "35149dfb-31d3-431c-a8bc-12a4034dac48"
+      }
+    ],
+    "themes": [
+      {
+        "concepts": [
+          "ARGEOLOGIE",
+          "MONUMENTEN",
+          "KADASTER",
+          "KAARTBOEK",
+          "KAARTBOECK",
+          "HISTORIE"
+        ]
+      }
+    ],
+    "extent": {
+      "spatial": {
+        "bbox": [
+          [4.690751953125, 52.358740234375, 5.020341796875, 52.6333984375]
+        ],
+        "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+      },
+      "temporal": {
+        "interval": [null, null],
+        "trs": "http://www.opengis.net/def/uom/ISO-8601/0/Gregorian"
+      }
+    }
+  },
+  "links": [
+    {
+      "href": "https://maps-intern.zaanstad.gem.local/geoserver/wms?SERVICE=WMS",
+      "rel": "item",
+      "title": "geo:kaartboeck",
+      "type": "OGC:WMS"
+    },
+    {
+      "href": "https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS",
+      "rel": "item",
+      "title": "geo:kaartboeck",
+      "type": "OGC:WFS"
+    },
+    {
+      "href": "https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=csv",
+      "rel": "item",
+      "type": "download"
+    },
+    {
+      "href": "https://maps-intern.zaanstad.gem.local/geoserver/wfs?SERVICE=WFS&version=1.0.0&request=GetFeature&typeName=geo:kaartboeck&outputFormat=shape-zip",
+      "rel": "item",
+      "type": "download"
+    },
+    {
+      "type": "application/json",
+      "rel": "root",
+      "title": "The landing page of this server as JSON",
+      "href": "https://demo.pygeoapi.io/master?f=json"
+    },
+    {
+      "type": "text/html",
+      "rel": "root",
+      "title": "The landing page of this server as HTML",
+      "href": "https://demo.pygeoapi.io/master?f=html"
+    },
+    {
+      "rel": "self",
+      "type": "application/geo+json",
+      "title": "This document as GeoJSON",
+      "href": "https://demo.pygeoapi.io/master/collections/dutch-metadata/items/35149dfb-31d3-431c-a8bc-12a4034dac48?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "application/ld+json",
+      "title": "This document as RDF (JSON-LD)",
+      "href": "https://demo.pygeoapi.io/master/collections/dutch-metadata/items/35149dfb-31d3-431c-a8bc-12a4034dac48?f=jsonld"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML",
+      "href": "https://demo.pygeoapi.io/master/collections/dutch-metadata/items/35149dfb-31d3-431c-a8bc-12a4034dac48?f=html"
+    },
+    {
+      "rel": "collection",
+      "type": "application/json",
+      "title": "Sample metadata records from Dutch Nationaal georegister",
+      "href": "https://demo.pygeoapi.io/master/collections/dutch-metadata"
+    }
+  ]
+}

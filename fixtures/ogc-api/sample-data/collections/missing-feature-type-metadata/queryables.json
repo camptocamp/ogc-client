@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "title": "Sample metadata records from Dutch Nationaal georegister",
+  "properties": {
+    "geometry": {
+      "$ref": "https://geojson.org/schema/Geometry.json"
+    },
+    "created": {
+      "title": "created",
+      "type": "string"
+    },
+    "updated": {
+      "title": "updated",
+      "type": "string"
+    },
+    "type": {
+      "title": "type",
+      "type": "string"
+    },
+    "title": {
+      "title": "title",
+      "type": "string"
+    },
+    "description": {
+      "title": "description",
+      "type": "string"
+    },
+    "providers": {
+      "title": "providers",
+      "type": "string"
+    },
+    "externalIds": {
+      "title": "externalIds",
+      "type": "string"
+    },
+    "themes": {
+      "title": "themes",
+      "type": "string"
+    },
+    "q": {
+      "title": "q",
+      "type": "string"
+    }
+  },
+  "$schema": "http://json-schema.org/draft/2019-09/schema",
+  "$id": "https://my.server.org/sample-data/collections/dutch-metadata/queryables"
+}

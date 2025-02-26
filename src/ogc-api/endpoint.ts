@@ -87,6 +87,7 @@ ${e.message}`);
     if (!this.data_) {
       this.data_ = this.collectionsUrl
         .then(fetchDocument)
+        .then(this.defaultCollections)
         .then(async (data) => {
           // check if there's a collection in the path; if yes, keep only this one
           const singleCollection = await fetchCollectionRoot(this.baseUrl);
@@ -126,6 +127,20 @@ ${e.message}`);
       });
     }
     return this.styles_;
+  }
+
+  private defaultCollections(
+    data: OgcApiDocument & { collections?: OgcApiCollectionInfo[] }
+  ) {
+    if (!data.collections?.length) return data;
+
+    return {
+      ...data,
+      collections: data.collections?.map((c) => ({
+        ...c,
+        itemType: c.itemType || 'feature',
+      })),
+    };
   }
 
   /**
