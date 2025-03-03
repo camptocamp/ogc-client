@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TileMap version="1.0.0" tilemapservice="https://data.geopf.fr/tms/1.0.0">
+<Title>Plan IGN</Title>
+<Abstract>Carte topographique IGN</Abstract>
+<Metadata type="Other" mime-type="application/json" href="https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/attenue.json"/>
+<Metadata type="Other" mime-type="application/json" href="https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/gris.json"/>
+<Metadata type="Other" mime-type="application/json" href="https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/classique.json"/>
+<Metadata type="Other" mime-type="application/json" href="https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/transparent.json"/>
+<Metadata type="Other" mime-type="application/json" href="https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/toponymes.json"/>
+<Metadata type="Other" mime-type="application/json" href="https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/accentue.json"/>
+<Metadata type="Other" mime-type="application/json" href="https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json"/>
+<Metadata type="Other" mime-type="application/json" href="https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/sans_toponymes.json"/>
+<Metadata type="Other" mime-type="application/json" href="https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/epure.json"/>
+<SRS>EPSG:3857</SRS>
+<BoundingBox CRS="EPSG:3857" minx="-20026376.393709917" maxx="20026376.393709917" miny="-15538711.096309224" maxy="15538711.096309226"/>
+<Origin x="-20037508.342789199" y="20037508.342789199"/>
+<TileFormat width="256" height="256" mime-type="application/x-protobuf" extension="pbf"/>
+<TileMap profile="none">
+<TileSet href="https://data.geopf.fr/tms/1.0.0/PLAN.IGN/0" minrow="0" maxrow="0" mincol="0" maxcol="0" units-per-pixel="156543.033928041" order="0"/>
+<TileSet href="https://data.geopf.fr/tms/1.0.0/PLAN.IGN/1" minrow="0" maxrow="1" mincol="0" maxcol="1" units-per-pixel="78271.516964020499" order="1"/>
+<TileSet href="https://data.geopf.fr/tms/1.0.0/PLAN.IGN/2" minrow="0" maxrow="3" mincol="0" maxcol="3" units-per-pixel="39135.758482010198" order="2"/>
+<TileSet href="https://data.geopf.fr/tms/1.0.0/PLAN.IGN/3" minrow="0" maxrow="7" mincol="0" maxcol="7" units-per-pixel="19567.879241005099" order="3"/>
+<TileSet href="https://data.geopf.fr/tms/1.0.0/PLAN.IGN/4" minrow="1" maxrow="14" mincol="0" maxcol="15" units-per-pixel="9783.9396205025605" order="4"/>
+<TileSet href="https://data.geopf.fr/tms/1.0.0/PLAN.IGN/5" minrow="3" maxrow="28" mincol="0" maxcol="31" units-per-pixel="4891.9698102512803" order="5"/>
+</TileMap>
+</TileMap>

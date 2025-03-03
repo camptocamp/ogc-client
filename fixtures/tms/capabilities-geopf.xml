@@ -33,5 +33,11 @@
       profile="none" 
       extension="png" 
       href="https://data.geopf.fr/tms/1.0.0/ADMINEXPRESS_COG_2020" />
+    <TileMap
+      title="Plan IGN" 
+      srs="EPSG:3857" 
+      profile="none" 
+      extension="pbf" 
+      href="https://data.geopf.fr/tms/1.0.0/PLAN.IGN" />
   </TileMaps>
 </TileMapService>

@@ -29,9 +29,10 @@
           </div>
         </template>
       </ItemsTree>
+      <div v-if="loadingLayerDetails" class="mt-3">Loading layer details...</div>
       <TmsLayerInfo
-        v-if="selectedLayer"
-        :tileMapLayer="selectedLayer"
+        v-if="selectedLayerDetails && !loadingLayerDetails"
+        :tileMapLayer="selectedLayerDetails"
         :endpoint="endpoint"
       ></TmsLayerInfo>
     </div>
@@ -50,10 +51,13 @@ export default {
   components: { TmsLayerInfo, ItemsTree, InfoList },
   data: () => ({
     loading: false,
+    loadingLayerDetails: false,
     error: null,
+    layerError: null,
     endpoint: null,
     url: 'https://ahocevar.com/geoserver/gwc/service/tms/1.0.0/',
     selectedLayer: null,
+    selectedLayerDetails: null,
   }),
   computed: {
     loaded() {
@@ -72,9 +76,24 @@ export default {
       }
       this.loading = false;
     },
-    handleLayerClick(layer, event) {
-      this.selectedLayer = this.endpoint.getLayerByHref(layer.href);
+    async handleLayerClick(layer, event) {
       event.preventDefault();
+      this.selectedLayer = this.endpoint.getLayerByHref(layer.href);
+      
+      // Show loading indicator while fetching details
+      this.loadingLayerDetails = true;
+      this.layerError = null;
+      
+      try {
+        // Fetch detailed layer information including metadata
+        this.selectedLayerDetails = await this.endpoint.getLayerDetails(layer.href);
+      } catch (e) {
+        this.layerError = e.message;
+        // Fall back to basic layer information if detailed fetch fails
+        this.selectedLayerDetails = this.selectedLayer;
+      } finally {
+        this.loadingLayerDetails = false;
+      }
     },
   },
 };

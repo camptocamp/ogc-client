@@ -1,7 +1,7 @@
 // @ts-expect-error ts-migrate(7016)
 import capabilities from '../../fixtures/tms/capabilities-geopf.xml';
 import { parseXmlString } from '../shared/xml-utils.js';
-import { readLayersFromCapabilities } from './capabilities';
+import { readLayersFromCapabilities } from './capabilities.js';
 
 describe('TMS capabilities', () => {
     describe('readLayersFromCapabilities', () => {
