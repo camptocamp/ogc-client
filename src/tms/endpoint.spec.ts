@@ -45,9 +45,9 @@ describe('TmsEndpoint', () => {
     await jest.runAllTimersAsync();
   });
 
-  it('getEndpointInfo returns correct service info', async () => {
+  it('getTileMapServiceInfo returns correct service info', async () => {
     const endpoint = new TmsEndpoint('http://tms.osgeo.org/1.0.0/');
-    const info = await endpoint.getEndpointInfo();
+    const info = await endpoint.getTileMapServiceInfo();
     expect(info.title).toBe('WMS/WMTS/TMS server');
     expect(info.abstract).toContain('WMS, WMTS and TMS');
   });

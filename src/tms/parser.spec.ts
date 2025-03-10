@@ -2,7 +2,7 @@ import {
   parseTileMapServiceXML,
   parseTileMapXML,
   extractEndpointInfo,
-  extractTileMapReferences
+  extractTileMapReferences,
 } from './parser.js';
 import { TileMapService } from './model.js';
 
@@ -55,14 +55,16 @@ describe('TMS parser utilities', () => {
 
       expect(result.version).toBe('1.0.0');
       expect(result.title).toBe('Example Tile Map Service');
-      expect(result.abstract).toBe('This is a longer description of the example tiling map service.');
+      expect(result.abstract).toBe(
+        'This is a longer description of the example tiling map service.'
+      );
       expect(result.keywords).toEqual(['example tile service']);
       expect(result.tileMaps?.length).toBe(2);
       expect(result.tileMaps?.[0]).toEqual({
         title: 'VMAP0 World Map',
         srs: 'EPSG:4326',
         profile: 'global-geodetic',
-        href: 'http://tms.osgeo.org/1.0.0/vmap0'
+        href: 'http://tms.osgeo.org/1.0.0/vmap0',
       });
     });
 
@@ -113,7 +115,9 @@ describe('TMS parser utilities', () => {
       expect(result.version).toBe('1.0.0');
       expect(result.tileMapService).toBe('http://tms.osgeo.org/1.0.0');
       expect(result.title).toBe('VMAP0 World Map');
-      expect(result.abstract).toBe('A map of the world built from the NGA VMAP0 vector data set.');
+      expect(result.abstract).toBe(
+        'A map of the world built from the NGA VMAP0 vector data set.'
+      );
       expect(result.srs).toBe('EPSG:4326');
       expect(result.boundingBox).toEqual([-180, -90, 180, 90]);
       expect(result.origin).toEqual({ x: -180, y: -90 });
@@ -121,22 +125,24 @@ describe('TMS parser utilities', () => {
         width: 256,
         height: 256,
         mimeType: 'image/jpeg',
-        extension: 'jpg'
+        extension: 'jpg',
       });
       expect(result.tileSets.profile).toBe('global-geodetic');
       expect(result.tileSets.tileSets.length).toBe(4);
       expect(result.tileSets.tileSets[0]).toEqual({
         href: 'http://tms.osgeo.org/1.0.0/vmap0/0',
         unitsPerPixel: 0.703125,
-        order: 0
+        order: 0,
       });
       expect(result.metadata?.length).toBe(1);
-      expect(result.attribution?.title).toBe('National Geospatial Intelligence Agency');
+      expect(result.attribution?.title).toBe(
+        'National Geospatial Intelligence Agency'
+      );
       expect(result.attribution?.logo).toEqual({
         width: 10,
         height: 10,
         href: 'http://nga.mil/logo.gif',
-        mimeType: 'image/gif'
+        mimeType: 'image/gif',
       });
       expect(result.keywords).toEqual(['VMAP0,world map']);
       expect(result.webMapContext).toBe('http://wms.org');
@@ -182,9 +188,9 @@ describe('TMS parser utilities', () => {
             title: 'Test Map',
             srs: 'EPSG:4326',
             profile: 'global-geodetic',
-            href: 'http://example.com/map1'
-          }
-        ]
+            href: 'http://example.com/map1',
+          },
+        ],
       };
     });
 
@@ -194,14 +200,14 @@ describe('TMS parser utilities', () => {
       expect(result).toEqual({
         title: 'Test TMS Service',
         abstract: 'A test TMS service',
-        keywords: ['test', 'tms', 'service']
+        keywords: ['test', 'tms', 'service'],
       });
     });
 
     it('handles minimal service data', () => {
       const minimalData = {
         version: '1.0.0',
-        title: 'Minimal Service'
+        title: 'Minimal Service',
       };
 
       const result = extractEndpointInfo(minimalData);
@@ -209,7 +215,7 @@ describe('TMS parser utilities', () => {
       expect(result).toEqual({
         title: 'Minimal Service',
         abstract: undefined,
-        keywords: undefined
+        keywords: undefined,
       });
     });
   });
@@ -226,15 +232,15 @@ describe('TMS parser utilities', () => {
             title: 'Map 1',
             srs: 'EPSG:4326',
             profile: 'global-geodetic',
-            href: 'http://example.com/map1'
+            href: 'http://example.com/map1',
           },
           {
             title: 'Map 2',
             srs: 'EPSG:3857',
             profile: 'global-mercator',
-            href: 'http://example.com/map2'
-          }
-        ]
+            href: 'http://example.com/map2',
+          },
+        ],
       };
     });
 
@@ -246,21 +252,21 @@ describe('TMS parser utilities', () => {
           title: 'Map 1',
           srs: 'EPSG:4326',
           profile: 'global-geodetic',
-          href: 'http://example.com/map1'
+          href: 'http://example.com/map1',
         },
         {
           title: 'Map 2',
           srs: 'EPSG:3857',
           profile: 'global-mercator',
-          href: 'http://example.com/map2'
-        }
+          href: 'http://example.com/map2',
+        },
       ]);
     });
 
     it('returns empty array when no tile maps exist', () => {
       const noTileMaps = {
         version: '1.0.0',
-        title: 'No Maps Service'
+        title: 'No Maps Service',
       };
 
       const result = extractTileMapReferences(noTileMaps);

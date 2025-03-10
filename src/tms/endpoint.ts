@@ -53,7 +53,7 @@ export default class TmsEndpoint {
    *
    * @returns Promise resolving to the TMS endpoint information
    */
-  async getEndpointInfo(): Promise<TmsEndpointInfo> {
+  async getTileMapServiceInfo(): Promise<TmsEndpointInfo> {
     const serviceData = await this.getServiceData();
     return extractEndpointInfo(serviceData);
   }

@@ -69,8 +69,14 @@ describe('Link Utilities', () => {
       });
 
       const result = await fetchXml('https://example.com/data.xml');
-      expect(result).toBe('<?xml version="1.0" encoding="UTF-8"?><root><child>Test</child></root>');
-      expect(sharedFetch).toHaveBeenCalledWith('https://example.com/data.xml', 'GET', true);
+      expect(result).toBe(
+        '<?xml version="1.0" encoding="UTF-8"?><root><child>Test</child></root>'
+      );
+      expect(sharedFetch).toHaveBeenCalledWith(
+        'https://example.com/data.xml',
+        'GET',
+        true
+      );
     });
 
     it('throws an error when the response is not OK', async () => {
