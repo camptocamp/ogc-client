@@ -13,6 +13,10 @@
 import { {{ apiElement.name }} } from '@camptocamp/ogc-client';</pre
         >
       </CodeBlock>
+      <MarkdownBlock
+        class="mb-3 mt-2 small"
+        :text="getDescription(apiElement)"
+      />
       <div class="row">
         <div
           class="col-3 text-uppercase text-secondary fw-bold pt-1"
@@ -72,10 +76,6 @@ import { {{ apiElement.name }} } from '@camptocamp/ogc-client';</pre
           />
         </div>
       </div>
-      <MarkdownBlock
-        class="mb-3 mt-2 small"
-        :text="getDescription(apiElement)"
-      />
     </div>
   </div>
 </template>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<TileMapService version="1.0.0" services="https://data.geopf.fr/tms">
+  <Title>WMS/WMTS/TMS server</Title>
+  <Abstract>This server provide WMS, WMTS and TMS raster and vector data broadcast</Abstract>
+  <TileMaps>
+    <TileMap
+      title="500k"
+      srs="EPSG:3857"
+      profile="none"
+      extension="jpeg"
+      href="https://data.geopf.fr/tms/1.0.0/500k" />
+    <TileMap
+      title="Cartographie biométhane d’accès aux réseaux"
+      srs="EPSG:3857"
+      profile="none"
+      extension="png"
+      href="https://data.geopf.fr/tms/1.0.0/ACCES.BIOMETHANE" />
+    <TileMap
+      title="ADMINEXPRESS COG CARTO"
+      srs="EPSG:3857"
+      profile="none"
+      extension="png"
+      href="https://data.geopf.fr/tms/1.0.0/ADMINEXPRESS-COG-CARTO.LATEST" />
+    <TileMap
+      title="ADMINEXPRESS COG"
+      srs="EPSG:3857"
+      profile="none"
+      extension="png"
+      href="https://data.geopf.fr/tms/1.0.0/ADMINEXPRESS-COG.LATEST" />
+    <TileMap
+      title="ADMINEXPRESS_COG (2022)"
+      srs="EPSG:3857"
+      profile="none"
+      extension="png"
+      href="https://data.geopf.fr/tms/1.0.0/ADMINEXPRESS_COG_2020" />
+    <TileMap
+            title="Plan IGN"
+            srs="EPSG:3857"
+            profile="none"
+            extension="pbf"
+            href="https://data.geopf.fr/tms/1.0.0/PLAN.IGN"/>
+  </TileMaps>
+</TileMapService>
