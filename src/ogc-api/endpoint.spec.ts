@@ -190,7 +190,7 @@ describe('OgcApiEndpoint', () => {
           'urban_areas',
           'waterlines',
           'woodland',
-          "missing-feature-type-metadata",
+          'missing-feature-type-metadata',
         ]);
       });
     });
@@ -1681,7 +1681,7 @@ The document at http://local/sample-data/notjson?f=json does not appear to be va
           'urban_areas',
           'waterlines',
           'woodland',
-          "missing-feature-type-metadata",
+          'missing-feature-type-metadata',
         ]);
       });
     });
@@ -2213,7 +2213,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
           'urban_areas',
           'waterlines',
           'woodland',
-          "missing-feature-type-metadata",
+          'missing-feature-type-metadata',
         ]);
       });
     });

@@ -16,6 +16,7 @@ import {
   ConformanceClass,
   OgcApiCollectionInfo,
   OgcApiCollectionItem,
+  OgcApiDatetimeBounds,
   OgcApiDocument,
   OgcApiEndpointInfo,
   OgcApiStyleMetadata,
@@ -420,7 +421,8 @@ ${e.message}`);
     skipGeometry: boolean = null,
     sortby: string[] = null,
     bbox: [number, number, number, number] = null,
-    properties: string[] = null
+    properties: string[] = null,
+    datetime: OgcApiDatetimeBounds = null
   ): Promise<OgcApiCollectionItem[]> {
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
@@ -438,6 +440,15 @@ ${e.message}`);
           url.searchParams.set('bbox', bbox.join(',').toString());
         if (properties !== null)
           url.searchParams.set('properties', properties.join(',').toString());
+        if (datetime !== null)
+          url.searchParams.set(
+            'datetime',
+            'targetDatetime' in datetime
+              ? `${datetime.targetDatetime.toISOString()}`
+              : `${'start' in datetime ? datetime.start.toISOString() : '..'}/${
+                  'end' in datetime ? datetime.end.toISOString() : '..'
+                }`
+          );
         return url.toString();
       })
       .then(fetchDocument)

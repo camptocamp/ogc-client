@@ -231,3 +231,9 @@ export type OgcApiStyleMetadata = {
   }[];
   links?: OgcApiDocumentLink[];
 };
+
+export type OgcApiDatetimeBounds =
+  | { targetDatetime: Date }
+  | { start: Date }
+  | { end: Date }
+  | { start: Date; end: Date };
