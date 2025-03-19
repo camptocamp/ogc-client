@@ -168,6 +168,7 @@ describe('OgcApiEndpoint', () => {
           { name: 'waterlines', hasFeatures: true },
           { name: 'woodland', hasFeatures: true },
           { name: 'dutch-metadata', hasRecords: true },
+          { name: 'missing-feature-type-metadata', hasFeatures: true },
         ]);
       });
     });
@@ -195,6 +196,7 @@ describe('OgcApiEndpoint', () => {
           'urban_areas',
           'waterlines',
           'woodland',
+          'missing-feature-type-metadata',
         ]);
       });
     });
@@ -1685,6 +1687,7 @@ The document at http://local/sample-data/notjson?f=json does not appear to be va
           'urban_areas',
           'waterlines',
           'woodland',
+          'missing-feature-type-metadata',
         ]);
       });
     });
@@ -1894,22 +1897,29 @@ The document at http://local/nonexisting?f=json could not be fetched.`
       describe('#allCollections', () => {
         it('returns collection ids', async () => {
           await expect(endpoint.allCollections).resolves.toEqual([
-            { name: 'NaturalEarth' },
-            { name: 'NaturalEarth:raster' },
-            { name: 'NaturalEarth:raster:HYP_HR_SR_OB_DR', hasMapTiles: true },
+            { name: 'NaturalEarth', hasFeatures: true },
+            { name: 'NaturalEarth:raster', hasFeatures: true },
+            {
+              name: 'NaturalEarth:raster:HYP_HR_SR_OB_DR',
+              hasMapTiles: true,
+              hasFeatures: true,
+            },
             {
               name: 'NaturalEarth:raster:NE1_HR_LC_SR_W_DR',
               hasMapTiles: true,
+              hasFeatures: true,
             },
             {
               name: 'NaturalEarth:raster:NE2_HR_LC_SR_W_DR',
               hasMapTiles: true,
+              hasFeatures: true,
             },
-            { name: 'NaturalEarth:physical' },
+            { name: 'NaturalEarth:physical', hasFeatures: true },
             {
               name: 'NaturalEarth:physical:ne_10m_lakes_pluvial',
               hasMapTiles: true,
               hasVectorTiles: true,
+              hasFeatures: true,
             },
           ]);
         });
@@ -2209,6 +2219,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
           'urban_areas',
           'waterlines',
           'woodland',
+          'missing-feature-type-metadata',
         ]);
       });
     });
