@@ -1,5 +1,5 @@
 import { setQueryParams } from '../shared/http-utils.js';
-import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
+import { BoundingBox, CrsCode, FieldSort, MimeType } from '../shared/models.js';
 import { WfsVersion } from './model.js';
 
 /**
@@ -28,7 +28,8 @@ export function generateGetFeatureUrl(
   outputCrs?: CrsCode,
   extent?: BoundingBox,
   extentCrs?: CrsCode,
-  startIndex?: number
+  startIndex?: number,
+  sortBy?: FieldSort[]
 ) {
   const typeParam = version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
   const countParam = version === '2.0.0' ? 'COUNT' : 'MAXFEATURES';
@@ -57,7 +58,18 @@ export function generateGetFeatureUrl(
     newParams.STARTINDEX = startIndex.toString(10);
   }
 
-  return setQueryParams(serviceUrl, newParams);
+  let url = setQueryParams(serviceUrl, newParams);
+
+  // Don't encode +A or +D Wfs sorting param
+  if (Array.isArray(sortBy) && sortBy.length > 0) {
+    const sorts = sortBy
+      .map((fieldSort) => `${fieldSort[1]}+${fieldSort[0]}`)
+      .join(',');
+    // Direct update on string url to prevent encoding of +A and +D
+    url = `${url}${new URL(url).search ? '&' : ''}SORTBY=${sorts}`;
+  }
+
+  return url;
 }
 
 /**
