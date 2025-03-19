@@ -124,6 +124,9 @@ describe('WfsEndpoint', () => {
           text: () => Promise.resolve('something broke in the server'),
           status: 500,
           statusText: 'Internal Server Error',
+          clone: function () {
+            return this;
+          },
         });
         endpoint = new WfsEndpoint('https://my.test.service/ogc/wfs');
       });

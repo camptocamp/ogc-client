@@ -22,6 +22,9 @@ beforeAll(() => {
         ok: false,
         status: 404,
         headers: new Headers(),
+        clone: function () {
+          return this;
+        },
       } as Response;
     }
 
@@ -35,6 +38,9 @@ beforeAll(() => {
         ok: false,
         status: 404,
         headers: new Headers(),
+        clone: function () {
+          return this;
+        },
       } as Response;
     }
     const contents = await readFile(filePath, {

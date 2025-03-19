@@ -63,6 +63,9 @@ describe('HTTP utils', () => {
               return Promise.resolve({
                 status: 200,
                 ok: true,
+                clone: function () {
+                  return this;
+                },
               });
             return Promise.reject(new Error('Cross origin headers missing'));
           case 'networkError':
@@ -230,7 +233,17 @@ describe('HTTP utils', () => {
           new Promise((resolve) => {
             setTimeout(() => {
               // return a different result every time
-              resolve(`request result: ${Math.floor(Math.random() * 100000)}`);
+              const text = `request result: ${Math.floor(
+                Math.random() * 100000
+              )}`;
+              resolve({
+                text,
+                status: 200,
+                ok: true,
+                clone: jest.fn().mockImplementation(function () {
+                  return this;
+                }),
+              });
             }, 10);
           })
       );
@@ -300,9 +313,14 @@ describe('HTTP utils', () => {
           ],
         ]);
       });
+      it('calls clone() on each response', () => {
+        expect(getResults[0].clone).toHaveBeenCalled();
+        expect(headResults[0].clone).toHaveBeenCalled();
+      });
       it('shares result for simultaneous GET requests and not subsequent ones', () => {
-        const sharedResult = getResults[0];
-        expect(getResults).toEqual([
+        const sharedResult = getResults[0].text;
+        const getResultsText = getResults.map((r) => r.text);
+        expect(getResultsText).toEqual([
           sharedResult,
           sharedResult,
           sharedResult,
@@ -310,8 +328,9 @@ describe('HTTP utils', () => {
         ]);
       });
       it('shares result for simultaneous HEAD requests and not subsequent ones', () => {
-        const sharedResult = headResults[0];
-        expect(headResults).toEqual([
+        const sharedResult = headResults[0].text;
+        const headResultsText = headResults.map((r) => r.text);
+        expect(headResultsText).toEqual([
           sharedResult,
           sharedResult,
           sharedResult,
@@ -325,7 +344,7 @@ describe('HTTP utils', () => {
         getResults = [];
         headResults = [];
 
-        // these requests will be shared
+        // these requests will be not shared
         sharedFetch('http://test.org/resource1').then(
           (r) => (getResults[0] = r)
         );
@@ -363,10 +382,10 @@ describe('HTTP utils', () => {
         ]);
       });
       it('does not share GET results', () => {
-        expect(getResults[0]).not.toBe(getResults[1]);
+        expect(getResults[0].text).not.toBe(getResults[1].text);
       });
       it('does not share HEAD results', () => {
-        expect(headResults[0]).not.toBe(headResults[1]);
+        expect(headResults[0].text).not.toBe(headResults[1].text);
       });
     });
   });

@@ -32,6 +32,9 @@ window.mockFetch = jest.fn().mockImplementation(async (url, options) => {
     status: 200,
     ok: true,
     headers: { get: () => null },
+    clone: function () {
+      return this;
+    },
   };
 });
 window.fetch = window.mockFetch;

@@ -73,7 +73,7 @@ export function sharedFetch(
   // if an error is received then the promise will reject with it
   return promise.then((resp) => {
     if (resp instanceof Error) throw resp;
-    return resp;
+    return resp.clone(); // clone response so that it can be used many times
   });
 }
 

@@ -25,6 +25,9 @@ describe('parse XML documents with alternate encodings', () => {
         status: 200,
         ok: true,
         headers: new Headers(headers),
+        clone: function () {
+          return this;
+        },
       });
     });
   });
