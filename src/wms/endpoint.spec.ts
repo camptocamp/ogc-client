@@ -105,6 +105,9 @@ describe('WmsEndpoint', () => {
           text: () => Promise.resolve('something broke in the server'),
           status: 500,
           statusText: 'Internal Server Error',
+          clone: function () {
+            return this;
+          },
         });
         endpoint = new WmsEndpoint('https://my.test.service/ogc/wms');
       });
