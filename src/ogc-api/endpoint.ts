@@ -161,7 +161,7 @@ ${e.message}`);
       hasMapTiles?: boolean;
     }[]
   > {
-    return this.data.then(parseCollections());
+    return this.data.then(parseCollections);
   }
 
   /**
@@ -170,7 +170,8 @@ ${e.message}`);
   get recordCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasRecords])
       .then(([data, hasRecords]) => (hasRecords ? data : { collections: [] }))
-      .then(parseCollections('record'))
+      .then(parseCollections)
+      .then((collections) => collections.filter((c) => c.hasRecords))
       .then((collections) => collections.map((collection) => collection.name));
   }
 
@@ -180,7 +181,8 @@ ${e.message}`);
   get featureCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasFeatures])
       .then(([data, hasFeatures]) => (hasFeatures ? data : { collections: [] }))
-      .then(parseCollections('feature'))
+      .then(parseCollections)
+      .then((collections) => collections.filter((c) => c.hasFeatures))
       .then((collections) => collections.map((collection) => collection.name));
   }
 
@@ -190,7 +192,7 @@ ${e.message}`);
   get vectorTileCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasTiles])
       .then(([data, hasTiles]) => (hasTiles ? data : { collections: [] }))
-      .then(parseCollections())
+      .then(parseCollections)
       .then((collections) =>
         collections.filter((collection) => collection.hasVectorTiles)
       )
@@ -203,7 +205,7 @@ ${e.message}`);
   get mapTileCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasTiles])
       .then(([data, hasTiles]) => (hasTiles ? data : { collections: [] }))
-      .then(parseCollections())
+      .then(parseCollections)
       .then((collections) =>
         collections.filter((collection) => collection.hasMapTiles)
       )
