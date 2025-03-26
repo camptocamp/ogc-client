@@ -5,6 +5,7 @@ import {
   extractTileMapReferences,
 } from './parser.js';
 import { TileMapService } from './model.js';
+import { parseXmlString } from '../shared/xml-utils.js';
 
 describe('TMS parser utilities', () => {
   describe('parseTileMapServiceXML', () => {
@@ -50,8 +51,10 @@ describe('TMS parser utilities', () => {
     `;
     });
 
+
     it('parses the TileMapService XML correctly', () => {
-      const result = parseTileMapServiceXML(xmlString);
+      const xmlDoc = parseXmlString(xmlString);
+      const result = parseTileMapServiceXML(xmlDoc);
 
       expect(result.version).toBe('1.0.0');
       expect(result.title).toBe('Example Tile Map Service');
@@ -70,7 +73,8 @@ describe('TMS parser utilities', () => {
 
     it('handles empty TileMapService XML', () => {
       const emptyXml = '<TileMapService version="1.0.0"></TileMapService>';
-      const result = parseTileMapServiceXML(emptyXml);
+      const emptyXmlDoc = parseXmlString(emptyXml);
+      const result = parseTileMapServiceXML(emptyXmlDoc);
 
       expect(result.version).toBe('1.0.0');
       expect(result.title).toBe('');
@@ -109,8 +113,10 @@ describe('TMS parser utilities', () => {
   </TileMap>`;
     });
 
+
     it('parses the TileMap XML correctly', () => {
-      const result = parseTileMapXML(xmlString);
+      const xmlDoc = parseXmlString(xmlString);
+      const result = parseTileMapXML(xmlDoc);
 
       expect(result.version).toBe('1.0.0');
       expect(result.tileMapService).toBe('http://tms.osgeo.org/1.0.0');
@@ -161,8 +167,9 @@ describe('TMS parser utilities', () => {
           </TileSets>
         </TileMap>
       `;
+      const xmlDoc = parseXmlString(minimalXml);
 
-      const result = parseTileMapXML(minimalXml);
+      const result = parseTileMapXML(xmlDoc);
 
       expect(result.title).toBe('Minimal Map');
       expect(result.abstract).toBe('');

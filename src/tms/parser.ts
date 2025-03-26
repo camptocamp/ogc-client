@@ -6,19 +6,18 @@ import {
   TileMapReference,
 } from './model.js';
 import {
-  parseXmlString,
   getRootElement,
   findChildElement,
   findChildrenElement,
   getElementText,
   getElementAttribute,
 } from '../shared/xml-utils.js';
+import { XmlDocument } from '@rgrove/parse-xml';
 
 /**
  * Parses a TMS Service XML string into a TileMapService object.
  */
-export function parseTileMapServiceXML(xmlString: string): TileMapService {
-  const xmlDoc = parseXmlString(xmlString);
+export function parseTileMapServiceXML(xmlDoc: XmlDocument): TileMapService {
   const root = getRootElement(xmlDoc);
 
   const title = getElementText(findChildElement(root, 'Title'))?.trim() || '';
@@ -51,8 +50,7 @@ export function parseTileMapServiceXML(xmlString: string): TileMapService {
 /**
  * Parses an individual TileMap resource XML string into a TileMapInfo object.
  */
-export function parseTileMapXML(xmlString: string): TileMapInfo {
-  const xmlDoc = parseXmlString(xmlString);
+export function parseTileMapXML(xmlDoc: XmlDocument): TileMapInfo {
   const root = getRootElement(xmlDoc);
 
   const title = getElementText(findChildElement(root, 'Title'))?.trim() || '';

@@ -1,40 +1,23 @@
 import { sharedFetch } from '../shared/http-utils.js';
 import { parseTileMapServiceXML, parseTileMapXML } from './parser.js';
 import { TileMapInfo, TileMapService } from './model.js';
+import { XmlDocument } from '@rgrove/parse-xml';
+import { getRootElement, parseXmlString } from '../shared/xml-utils.js';
+import { getParentPath } from '../shared/url-utils.js';
 
 const MAX_DEPTH = 3;
 
 /**
  * Fetches the XML string from a URL.
  */
-export async function fetchXml(url: string): Promise<string> {
+export async function fetchXml(url: string): Promise<XmlDocument> {
   const urlObj = new URL(url, window.location.toString());
   const resp = await sharedFetch(urlObj.toString(), 'GET', true);
   if (!resp.ok) {
     throw new Error(`The document at ${urlObj} could not be fetched.`);
   }
   const text = await resp.clone().text();
-  if (!text.trim().startsWith('<?xml') && !text.trim().startsWith('<')) {
-    throw new Error(
-      `The document at ${urlObj} does not appear to be valid XML.`
-    );
-  }
-  return text;
-}
-
-/**
- * Returns the parent path from a URL based on a version pattern (x.y.z).
- */
-export function getParentPath(url: string): string | null {
-  const urlObj = new URL(url, window.location.toString());
-  const pathParts = urlObj.pathname.replace(/\/$/, '').split('/');
-  const versionIndex = pathParts.findIndex((part) =>
-    /^\d+\.\d+\.\d+$/.test(part)
-  );
-  if (versionIndex === -1) return null;
-  if (versionIndex === pathParts.length - 1) return urlObj.toString();
-  urlObj.pathname = pathParts.slice(0, versionIndex + 1).join('/') + '/';
-  return urlObj.toString();
+  return parseXmlString(text);
 }
 
 /**
@@ -49,10 +32,12 @@ export async function fetchRoot(
       'Maximum recursion depth reached while searching for TMS root document.'
     );
   }
-  const xmlString = await fetchXml(url);
-  if (xmlString.includes('<TileMapService')) {
-    return parseTileMapServiceXML(xmlString);
+  const xmlDoc = await fetchXml(url);
+  const root = getRootElement(xmlDoc);
+  if (root.name === 'TileMapService') {
+    return parseTileMapServiceXML(xmlDoc);
   }
+
   const parentUrl = getParentPath(url);
   if (!parentUrl || parentUrl === url) {
     throw new Error(
@@ -74,12 +59,13 @@ export async function fetchTileMapResourceXML(
       'Maximum recursion depth reached while searching for TMS TileMap document.'
     );
   }
-  const xmlString = await fetchXml(url);
-  if (xmlString.includes('<TileMapService')) {
+  const xmlDoc = await fetchXml(url);
+  const root = getRootElement(xmlDoc);
+  if (root.name === 'TileMapService') {
     return null;
   }
-  if (xmlString.includes('<TileMap')) {
-    return parseTileMapXML(xmlString);
+  if (root.name === 'TileMap') {
+    return parseTileMapXML(xmlDoc);
   }
   const parentUrl = getParentPath(url);
   if (!parentUrl) {

@@ -1,6 +1,8 @@
 // tests/tms/link-utils.test.ts
-import { normalizeUrl, getParentPath, fetchXml } from './link-utils.js';
+import { normalizeUrl, fetchXml } from './link-utils.js';
+import { getParentPath } from '../shared/url-utils.js';
 import { sharedFetch } from '../shared/http-utils.js';
+import { parseXmlString } from '../shared/xml-utils.js';
 
 // Mock the sharedFetch function to simulate HTTP responses.
 jest.mock('../../src/shared/http-utils', () => ({
@@ -27,32 +29,6 @@ describe('Link Utilities', () => {
     });
   });
 
-  describe('getParentPath', () => {
-    it('should return parent path for a versioned URL', () => {
-      const url = 'https://example.com/1.0.0/some/path';
-      const parent = getParentPath(url);
-      expect(parent).toBe('https://example.com/1.0.0/');
-    });
-
-    it('should return null if no version pattern is found', () => {
-      const url = 'https://example.com/path/without/version';
-      const parent = getParentPath(url);
-      expect(parent).toBeNull();
-    });
-
-    it('should return the original URL when version is at the end', () => {
-      const url = 'https://example.com/1.0.0';
-      const parent = getParentPath(url);
-      expect(parent).toBe('https://example.com/1.0.0');
-    });
-
-    it('should handle URLs with trailing slashes', () => {
-      const url = 'https://example.com/1.0.0/some/path/';
-      const parent = getParentPath(url);
-      expect(parent).toBe('https://example.com/1.0.0/');
-    });
-  });
-
   describe('fetchXml', () => {
     beforeEach(() => {
       jest.clearAllMocks();
@@ -69,8 +45,10 @@ describe('Link Utilities', () => {
       });
 
       const result = await fetchXml('https://example.com/data.xml');
-      expect(result).toBe(
-        '<?xml version="1.0" encoding="UTF-8"?><root><child>Test</child></root>'
+      expect(result).toEqual(
+        parseXmlString(
+          '<?xml version="1.0" encoding="UTF-8"?><root><child>Test</child></root>'
+        )
       );
       expect(sharedFetch).toHaveBeenCalledWith(
         'https://example.com/data.xml',
@@ -96,7 +74,7 @@ describe('Link Utilities', () => {
         }),
       });
       await expect(fetchXml('https://example.com/not-xml')).rejects.toThrow(
-        'The document at https://example.com/not-xml does not appear to be valid XML.'
+        'Root element is missing or invalid (line 1, column 1)'
       );
     });
 
@@ -108,7 +86,9 @@ describe('Link Utilities', () => {
         }),
       });
       const result = await fetchXml('https://example.com/xml-tag');
-      expect(result).toBe('<root>Valid XML without declaration</root>');
+      expect(result).toEqual(
+        parseXmlString('<root>Valid XML without declaration</root>')
+      );
     });
   });
 });
