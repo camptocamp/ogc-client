@@ -131,11 +131,15 @@ describe('TMS parser utilities', () => {
         mimeType: 'image/jpeg',
         extension: 'jpg',
       });
-      expect(result.tileSets.profile).toBe('global-geodetic');
-      expect(result.tileSets.tileSets.length).toBe(4);
-      expect(result.tileSets.tileSets[0]).toEqual({
+      expect(result.profile).toBe('global-geodetic');
+      expect(result.tileSets.length).toEqual(4);
+      expect(result.tileSets[0]).toEqual({
         href: 'http://tms.osgeo.org/1.0.0/vmap0/0',
         unitsPerPixel: 0.703125,
+        maxcol: 0,
+        maxrow: 0,
+        mincol: 0,
+        minrow: 0,
         order: 0,
       });
       expect(result.metadata?.length).toBe(1);

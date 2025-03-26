@@ -84,13 +84,22 @@ export function parseTileMapXML(xmlDoc: XmlDocument): TileMapInfo {
     extension: getElementAttribute(tfEl, 'extension') || '',
   };
 
-  const tsEl = findChildElement(root, 'TileSets');
-  let profile: TmsProfile = 'none';
+  const tmEl = findChildElement(root, 'TileMap'); // Nested TileMap element (first format)
+  const tileSetsEl = findChildElement(root, 'TileSets'); // Direct TileSets element (second format)
   const tileSets: TileSet[] = [];
+  let profile: TmsProfile = 'none';
 
-  if (tsEl) {
-    profile = (getElementAttribute(tsEl, 'profile') as TmsProfile) || 'none';
-    const tileSetEls = findChildrenElement(tsEl, 'TileSet');
+  if (tileSetsEl) {
+    profile =
+      (getElementAttribute(tileSetsEl, 'profile') as TmsProfile) || 'none';
+  }
+
+  // Handle format 1: TileSet elements are inside nested TileMap
+  if (tmEl) {
+    profile =
+      profile || (getElementAttribute(tmEl, 'profile') as TmsProfile) || 'none';
+    const tileSetEls = findChildrenElement(tmEl, 'TileSet');
+
     tileSets.push(
       ...tileSetEls.map((el) => ({
         href: getElementAttribute(el, 'href') || '',
@@ -98,6 +107,29 @@ export function parseTileMapXML(xmlDoc: XmlDocument): TileMapInfo {
           getElementAttribute(el, 'units-per-pixel') || '0'
         ),
         order: parseInt(getElementAttribute(el, 'order') || '0'),
+        minrow: parseInt(getElementAttribute(el, 'minrow') || '0'),
+        maxrow: parseInt(getElementAttribute(el, 'maxrow') || '0'),
+        mincol: parseInt(getElementAttribute(el, 'mincol') || '0'),
+        maxcol: parseInt(getElementAttribute(el, 'maxcol') || '0'),
+      }))
+    );
+  }
+
+  // Handle format 2: TileSet elements are inside TileSets
+  if (tileSetsEl) {
+    const tileSetEls = findChildrenElement(tileSetsEl, 'TileSet');
+
+    tileSets.push(
+      ...tileSetEls.map((el) => ({
+        href: getElementAttribute(el, 'href') || '',
+        unitsPerPixel: parseFloat(
+          getElementAttribute(el, 'units-per-pixel') || '0'
+        ),
+        order: parseInt(getElementAttribute(el, 'order') || '0'),
+        minrow: parseInt(getElementAttribute(el, 'minrow') || '0'),
+        maxrow: parseInt(getElementAttribute(el, 'maxrow') || '0'),
+        mincol: parseInt(getElementAttribute(el, 'mincol') || '0'),
+        maxcol: parseInt(getElementAttribute(el, 'maxcol') || '0'),
       }))
     );
   }

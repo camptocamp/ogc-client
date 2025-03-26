@@ -1,6 +1,5 @@
 // tests/tms/link-utils.test.ts
 import { normalizeUrl, fetchXml } from './link-utils.js';
-import { getParentPath } from '../shared/url-utils.js';
 import { sharedFetch } from '../shared/http-utils.js';
 import { parseXmlString } from '../shared/xml-utils.js';
 
