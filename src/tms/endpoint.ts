@@ -18,31 +18,34 @@ import { extractEndpointInfo, extractTileMapReferences } from './parser.js';
 export default class TmsEndpoint {
   private _serviceData?: Promise<TileMapService>;
   private _filteredData?: Promise<TileMapService>;
+  private _tileMapServiceInfo?: Promise<TmsEndpointInfo>;
+  private _tileMaps?: Promise<TileMapReference[]>;
 
   constructor(private baseUrl: string) {}
 
-  private async getServiceData(): Promise<TileMapService> {
+  private get serviceData(): Promise<TileMapService> {
     if (!this._serviceData) {
       this._serviceData = fetchRoot(this.baseUrl);
     }
     return this._serviceData;
   }
 
-  private async getFilteredData(): Promise<TileMapService> {
+  private get filteredData(): Promise<TileMapService> {
     if (!this._filteredData) {
-      const serviceData = await this.getServiceData();
-      const tileMapResource = await fetchTileMapResourceXML(this.baseUrl);
-      if (tileMapResource) {
-        this._filteredData = Promise.resolve({
-          ...serviceData,
-          tileMaps: serviceData.tileMaps?.filter(
-            (tileMap) =>
-              normalizeUrl(tileMap.href) === normalizeUrl(this.baseUrl)
-          ),
-        });
-      } else {
-        this._filteredData = Promise.resolve(serviceData);
-      }
+      this._filteredData = this.serviceData.then(async (serviceData) => {
+        const tileMapResource = await fetchTileMapResourceXML(this.baseUrl);
+        if (tileMapResource) {
+          return {
+            ...serviceData,
+            tileMaps: serviceData.tileMaps?.filter(
+              (tileMap) =>
+                normalizeUrl(tileMap.href) === normalizeUrl(this.baseUrl)
+            ),
+          };
+        } else {
+          return serviceData;
+        }
+      });
     }
     return this._filteredData;
   }
@@ -53,9 +56,11 @@ export default class TmsEndpoint {
    *
    * @returns Promise resolving to the TMS endpoint information
    */
-  async getTileMapServiceInfo(): Promise<TmsEndpointInfo> {
-    const serviceData = await this.getServiceData();
-    return extractEndpointInfo(serviceData);
+  get tileMapServiceInfo(): Promise<TmsEndpointInfo> {
+    if (!this._tileMapServiceInfo) {
+      this._tileMapServiceInfo = this.serviceData.then(extractEndpointInfo);
+    }
+    return this._tileMapServiceInfo;
   }
 
   /**
@@ -65,9 +70,11 @@ export default class TmsEndpoint {
    *
    * @returns Promise resolving to an array of tile map references
    */
-  async getAllTileMaps(): Promise<TileMapReference[]> {
-    const data = await this.getFilteredData();
-    return extractTileMapReferences(data);
+  get tileMaps(): Promise<TileMapReference[]> {
+    if (!this._tileMaps) {
+      this._tileMaps = this.filteredData.then(extractTileMapReferences);
+    }
+    return this._tileMaps;
   }
 
   /**

@@ -70,10 +70,10 @@ export default {
       try {
         this.endpoint = new TmsEndpoint(this.url);
 
-        // Use endpoint methods to retrieve service info and tile map list
+        // Using getters instead of methods
         const [tmsDocument, tileMaps] = await Promise.all([
-          this.endpoint.getTileMapServiceInfo(),
-          this.endpoint.getAllTileMaps(),
+          this.endpoint.tileMapServiceInfo,
+          this.endpoint.tileMaps,
         ]);
 
         this.info = {
@@ -97,6 +97,7 @@ export default {
       // Optionally, store a copy of the clicked tileMap reference
       this.selectedTileMap = tileMap;
       try {
+        // getTileMapInfo remains a method since it takes a parameter
         const tmInfo = await this.endpoint.getTileMapInfo(tileMap.href);
         console.log('TileMap Info:', tmInfo);
         // Update selectedTileMap with full resource info

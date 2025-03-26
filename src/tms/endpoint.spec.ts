@@ -1,4 +1,3 @@
-// tests/tms/endpoint.test.ts
 import TmsEndpoint from '../../src/tms/endpoint.js';
 import { readFile } from 'fs/promises';
 import * as path from 'path';
@@ -45,9 +44,9 @@ describe('TmsEndpoint', () => {
     await jest.runAllTimersAsync();
   });
 
-  it('getTileMapServiceInfo returns correct service info', async () => {
+  it('tileMapServiceInfo returns correct service info', async () => {
     const endpoint = new TmsEndpoint('http://tms.osgeo.org/1.0.0/');
-    const info = await endpoint.getTileMapServiceInfo();
+    const info = await endpoint.tileMapServiceInfo;
     expect(info.title).toBe('WMS/WMTS/TMS server');
     expect(info.abstract).toContain('WMS, WMTS and TMS');
   });
@@ -107,5 +106,12 @@ describe('TmsEndpoint', () => {
       },
     ]);
     expect(tileInfo.srs).toBe('EPSG:3857');
+  });
+
+  it('tileMaps returns available tile maps', async () => {
+    const endpoint = new TmsEndpoint('http://tms.osgeo.org/1.0.0/');
+    const tileMaps = await endpoint.tileMaps;
+    expect(Array.isArray(tileMaps)).toBe(true);
+    expect(tileMaps.length).toBeGreaterThan(0);
   });
 });
