@@ -73,7 +73,7 @@ export default {
         // Using getters instead of methods
         const [tmsDocument, tileMaps] = await Promise.all([
           this.endpoint.tileMapServiceInfo,
-          this.endpoint.tileMaps,
+          this.endpoint.allTileMaps,
         ]);
 
         this.info = {
@@ -82,8 +82,6 @@ export default {
         };
 
         this.tilemaps = tileMaps || [];
-        console.log('TMS Document loaded:', this.info);
-        console.log('Available TileMaps:', this.tilemaps);
       } catch (e) {
         this.error = e.message;
         console.error('Error loading TMS endpoint:', e);
@@ -99,7 +97,6 @@ export default {
       try {
         // getTileMapInfo remains a method since it takes a parameter
         const tmInfo = await this.endpoint.getTileMapInfo(tileMap.href);
-        console.log('TileMap Info:', tmInfo);
         // Update selectedTileMap with full resource info
         this.selectedTileMap = tmInfo;
       } catch (e) {

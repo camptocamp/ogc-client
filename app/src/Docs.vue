@@ -251,11 +251,11 @@ import { TmsEndpoint } from '@camptocamp/ogc-client';
 const endpoint = new TmsEndpoint('https://ahocevar.com/geoserver/gwc/service/tms/1.0.0');
 
 // Get endpoint information
-const info = await endpoint.getTileMapServiceInfo();
+const info = await endpoint.tileMapServiceInfo;
 console.log(info.title, info.abstract);
 
 // Get all available tile maps
-const tileMaps = await endpoint.getAllTileMaps();
+const tileMaps = await endpoint.allTileMaps;
 
 // Get detailed information for a specific tile map
 const tileMapDetails = await endpoint.getTileMapInfo(tileMaps[0].href);</pre

@@ -110,7 +110,7 @@ describe('TmsEndpoint', () => {
 
   it('tileMaps returns available tile maps', async () => {
     const endpoint = new TmsEndpoint('http://tms.osgeo.org/1.0.0/');
-    const tileMaps = await endpoint.tileMaps;
+    const tileMaps = await endpoint.allTileMaps;
     expect(Array.isArray(tileMaps)).toBe(true);
     expect(tileMaps.length).toBeGreaterThan(0);
   });

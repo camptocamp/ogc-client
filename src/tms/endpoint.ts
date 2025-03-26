@@ -70,7 +70,7 @@ export default class TmsEndpoint {
    *
    * @returns Promise resolving to an array of tile map references
    */
-  get tileMaps(): Promise<TileMapReference[]> {
+  get allTileMaps(): Promise<TileMapReference[]> {
     if (!this._tileMaps) {
       this._tileMaps = this.filteredData.then(extractTileMapReferences);
     }
