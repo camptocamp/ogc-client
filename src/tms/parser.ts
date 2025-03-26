@@ -4,6 +4,8 @@ import {
   TileMapService,
   TmsEndpointInfo,
   TileMapReference,
+  TileSet,
+  TmsProfile,
 } from './model.js';
 import {
   getRootElement,
@@ -83,17 +85,21 @@ export function parseTileMapXML(xmlDoc: XmlDocument): TileMapInfo {
   };
 
   const tsEl = findChildElement(root, 'TileSets');
-  const tileSets = { profile: '', tileSets: [] as any[] };
+  let profile: TmsProfile = 'none';
+  const tileSets: TileSet[] = [];
+
   if (tsEl) {
-    tileSets.profile = getElementAttribute(tsEl, 'profile') || '';
+    profile = (getElementAttribute(tsEl, 'profile') as TmsProfile) || 'none';
     const tileSetEls = findChildrenElement(tsEl, 'TileSet');
-    tileSets.tileSets = tileSetEls.map((el) => ({
-      href: getElementAttribute(el, 'href') || '',
-      unitsPerPixel: parseFloat(
-        getElementAttribute(el, 'units-per-pixel') || '0'
-      ),
-      order: parseInt(getElementAttribute(el, 'order') || '0'),
-    }));
+    tileSets.push(
+      ...tileSetEls.map((el) => ({
+        href: getElementAttribute(el, 'href') || '',
+        unitsPerPixel: parseFloat(
+          getElementAttribute(el, 'units-per-pixel') || '0'
+        ),
+        order: parseInt(getElementAttribute(el, 'order') || '0'),
+      }))
+    );
   }
 
   const metadataEls = findChildrenElement(root, 'Metadata');
@@ -136,6 +142,7 @@ export function parseTileMapXML(xmlDoc: XmlDocument): TileMapInfo {
     boundingBox,
     origin,
     tileFormat,
+    profile,
     tileSets,
     metadata: metadata.length ? metadata : undefined,
     attribution: attribution || undefined,

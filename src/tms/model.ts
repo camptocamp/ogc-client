@@ -31,10 +31,8 @@ export interface TileMapInfo {
   boundingBox: BoundingBox;
   origin: Origin;
   tileFormat: TileFormat;
-  tileSets: {
-    profile: string;
-    tileSets: TileSet[];
-  };
+  profile: TmsProfile;
+  tileSets: TileSet[];
 }
 
 export interface ContactInformation {
@@ -75,7 +73,7 @@ export interface Attribution {
 export interface TileMapReference {
   title: string;
   srs: CrsCode;
-  profile: string;
+  profile: TmsProfile;
   href: string;
 }
 
@@ -100,3 +98,9 @@ export interface Origin {
   x: number;
   y: number;
 }
+
+export type TmsProfile =
+  | 'none'
+  | 'global-geodetic'
+  | 'global-mercator'
+  | 'local';

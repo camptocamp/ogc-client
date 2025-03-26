@@ -51,7 +51,6 @@ describe('TMS parser utilities', () => {
     `;
     });
 
-
     it('parses the TileMapService XML correctly', () => {
       const xmlDoc = parseXmlString(xmlString);
       const result = parseTileMapServiceXML(xmlDoc);
@@ -112,7 +111,6 @@ describe('TMS parser utilities', () => {
    </TileSets>
   </TileMap>`;
     });
-
 
     it('parses the TileMap XML correctly', () => {
       const xmlDoc = parseXmlString(xmlString);
