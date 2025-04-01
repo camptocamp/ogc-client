@@ -13,6 +13,7 @@ The following standards are partially implemented:
 - WFS - _Web Feature Service_
 - WMTS - _Web Map Tile Service_
 - OGC API (Records and Features)
+- TMS - _Tile Map Service_
 
 ## Why use it?
 

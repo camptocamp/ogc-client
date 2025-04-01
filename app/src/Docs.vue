@@ -240,6 +240,28 @@ async function addWmtsLayer() {
         >
       </CodeBlock>
     </p>
+    <h5>Reading a Tile Map Service (TMS) endpoint</h5>
+
+    <p>
+      <CodeBlock lang="js">
+        <pre>
+import { TmsEndpoint } from '@camptocamp/ogc-client';
+
+// Create a TMS endpoint
+const endpoint = new TmsEndpoint('https://ahocevar.com/geoserver/gwc/service/tms/1.0.0');
+
+// Get endpoint information
+const info = await endpoint.tileMapServiceInfo;
+console.log(info.title, info.abstract);
+
+// Get all available tile maps
+const tileMaps = await endpoint.allTileMaps;
+
+// Get detailed information for a specific tile map
+const tileMapDetails = await endpoint.getTileMapInfo(tileMaps[0].href);</pre
+        >
+      </CodeBlock>
+    </p>
   </div>
 </template>
 

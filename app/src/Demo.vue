@@ -27,6 +27,13 @@
       layers from it.
     </p>
     <WmtsEndpoint></WmtsEndpoint>
+
+    <h2 class="my-4">TMS</h2>
+    <p>
+      Enter a TMS endpoint URL below to get some information and a list of
+      layers from it.
+    </p>
+    <TmsEndpoint></TmsEndpoint>
   </div>
 </template>
 
@@ -37,9 +44,16 @@ import WmsEndpoint from './components/wms/WmsEndpoint.vue';
 import WfsEndpoint from './components/wfs/WfsEndpoint.vue';
 import OgcApiEndpoint from './components/ogc-api/OgcApiEndpoint.vue';
 import WmtsEndpoint from '@/components/wmts/WmtsEndpoint.vue';
+import TmsEndpoint from '@/components/tms/TmsEndpoint.vue';
 
 export default {
   name: 'App',
-  components: { WmtsEndpoint, OgcApiEndpoint, WfsEndpoint, WmsEndpoint },
+  components: {
+    WmtsEndpoint,
+    OgcApiEndpoint,
+    WfsEndpoint,
+    WmsEndpoint,
+    TmsEndpoint,
+  },
 };
 </script>
