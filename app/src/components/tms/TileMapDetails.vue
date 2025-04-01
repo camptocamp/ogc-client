@@ -93,14 +93,7 @@ export default {
   },
   computed: {
     boundingBoxValues() {
-      return Array.isArray(this.tileMap.boundingBox)
-        ? this.tileMap.boundingBox
-        : [
-            this.tileMap.boundingBox?.minx,
-            this.tileMap.boundingBox?.miny,
-            this.tileMap.boundingBox?.maxx,
-            this.tileMap.boundingBox?.maxy,
-          ];
+      return this.tileMap.boundingBox || [null, null, null, null];
     },
     tileMapInfo() {
       return {
