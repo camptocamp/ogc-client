@@ -391,6 +391,21 @@ ${e.message}`);
   }
 
   /**
+   * Determines if the given datetime parameter is valid according to the
+   * [OGC requirement](https://docs.ogc.org/is/17-069r3/17-069r3.html#_parameter_datetime).
+   *
+   * The datetime is valid if it:
+   * - has a `start` OR `end`
+   *
+   * Requirement 25.D
+   * @param datetime
+   * @private
+   */
+  private validateDatetimeParameter(datetime: {start?: Date, end?: Date}): boolean {
+    return datetime.start != undefined || datetime.end != undefined;
+  }
+
+  /**
    * Returns a promise resolving to an array of items from a collection with the given query parameters.
    * @param collectionId
    * @param limit
@@ -399,6 +414,7 @@ ${e.message}`);
    * @param sortby
    * @param bbox
    * @param properties
+   * @param datetime
    */
   getCollectionItems(
     collectionId: string,
@@ -407,7 +423,8 @@ ${e.message}`);
     skipGeometry: boolean = null,
     sortby: string[] = null,
     bbox: [number, number, number, number] = null,
-    properties: string[] = null
+    properties: string[] = null,
+    datetime: {start?: Date, end?: Date} = null
   ): Promise<OgcApiCollectionItem[]> {
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
@@ -425,6 +442,8 @@ ${e.message}`);
           url.searchParams.set('bbox', bbox.join(',').toString());
         if (properties !== null)
           url.searchParams.set('properties', properties.join(',').toString());
+        if (datetime !== null && this.validateDatetimeParameter(datetime))
+          url.searchParams.set('datetime', `${datetime.start ?? '..'}/${datetime.end ?? '..'}`);
         return url.toString();
       })
       .then(fetchDocument)
