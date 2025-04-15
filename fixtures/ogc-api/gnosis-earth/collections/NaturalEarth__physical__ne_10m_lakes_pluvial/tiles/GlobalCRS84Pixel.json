@@ -72,26 +72,26 @@
     {
       "rel": "self",
       "type": "application/json",
-      "title": "The JSON representation of the GlobalCRS84Pixel vector tileset for NaturalEarth:physical:ne_10m_lakes_pluvial",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=json"
+      "title": "The JSON representation of the GlobalCRS84Pixel vector tileset for NaturalEarth__physical__ne_10m_lakes_pluvial",
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=json"
     },
     {
       "rel": "alternate",
       "type": "text/plain",
-      "title": "The ECON representation of the GlobalCRS84Pixel vector tileset for NaturalEarth:physical:ne_10m_lakes_pluvial",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=econ"
+      "title": "The ECON representation of the GlobalCRS84Pixel vector tileset for NaturalEarth__physical__ne_10m_lakes_pluvial",
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=econ"
     },
     {
       "rel": "alternate",
       "type": "text/html",
-      "title": "The HTML representation of the GlobalCRS84Pixel vector tileset for NaturalEarth:physical:ne_10m_lakes_pluvial",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?=html"
+      "title": "The HTML representation of the GlobalCRS84Pixel vector tileset for NaturalEarth__physical__ne_10m_lakes_pluvial",
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?=html"
     },
     {
       "rel": "alternate",
       "type": "application/json+tile",
-      "title": "The TileJSON representation of the GlobalCRS84Pixel vector tileset for NaturalEarth:physical:ne_10m_lakes_pluvial",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=tilejson"
+      "title": "The TileJSON representation of the GlobalCRS84Pixel vector tileset for NaturalEarth__physical__ne_10m_lakes_pluvial",
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=tilejson"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-scheme",
@@ -101,41 +101,41 @@
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/geodata",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial"
     },
     {
       "rel": "item",
       "type": "application/vnd.gnosis-map-tile",
-      "title": "GlobalCRS84Pixel vector tiles for NaturalEarth:physical:ne_10m_lakes_pluvial (as GNOSIS Map Tiles)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel/{tileMatrix}/{tileRow}/{tileCol}.gmt",
+      "title": "GlobalCRS84Pixel vector tiles for NaturalEarth__physical__ne_10m_lakes_pluvial (as GNOSIS Map Tiles)",
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel/{tileMatrix}/{tileRow}/{tileCol}.gmt",
       "templated": true
     },
     {
       "rel": "item",
       "type": "application/vnd.mapbox-vector-tile",
-      "title": "GlobalCRS84Pixel vector tiles for NaturalEarth:physical:ne_10m_lakes_pluvial (as Mapbox Vector Tiles)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel/{tileMatrix}/{tileRow}/{tileCol}.mvt",
+      "title": "GlobalCRS84Pixel vector tiles for NaturalEarth__physical__ne_10m_lakes_pluvial (as Mapbox Vector Tiles)",
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel/{tileMatrix}/{tileRow}/{tileCol}.mvt",
       "templated": true
     },
     {
       "rel": "item",
       "type": "application/geo+json",
-      "title": "GlobalCRS84Pixel vector tiles for NaturalEarth:physical:ne_10m_lakes_pluvial (as GeoJSON)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel/{tileMatrix}/{tileRow}/{tileCol}.json",
+      "title": "GlobalCRS84Pixel vector tiles for NaturalEarth__physical__ne_10m_lakes_pluvial (as GeoJSON)",
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel/{tileMatrix}/{tileRow}/{tileCol}.json",
       "templated": true
     },
     {
       "rel": "item",
       "type": "application/vnd.ogc.fg+json",
-      "title": "GlobalCRS84Pixel vector tiles for NaturalEarth:physical:ne_10m_lakes_pluvial (as F&G GeoJSON)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel/{tileMatrix}/{tileRow}/{tileCol}.fgjson",
+      "title": "GlobalCRS84Pixel vector tiles for NaturalEarth__physical__ne_10m_lakes_pluvial (as F&G GeoJSON)",
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel/{tileMatrix}/{tileRow}/{tileCol}.fgjson",
       "templated": true
     },
     {
       "rel": "item",
       "type": "text/mapml",
-      "title": "GlobalCRS84Pixel vector tiles for NaturalEarth:physical:ne_10m_lakes_pluvial (as MapML)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel/{tileMatrix}/{tileRow}/{tileCol}.mapml",
+      "title": "GlobalCRS84Pixel vector tiles for NaturalEarth__physical__ne_10m_lakes_pluvial (as MapML)",
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel/{tileMatrix}/{tileRow}/{tileCol}.mapml",
       "templated": true
     }
   ],
@@ -150,7 +150,7 @@
       "links": [
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/geodata",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial"
         }
       ],
       "propertiesSchema": {

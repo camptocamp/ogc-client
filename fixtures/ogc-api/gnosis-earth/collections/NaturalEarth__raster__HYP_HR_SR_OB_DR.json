@@ -3,148 +3,148 @@
     {
       "rel": "self",
       "type": "application/json",
-      "title": "Information about the NE2_HR_LC_SR_W_DR data (as JSON)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR?f=json"
+      "title": "Information about the HYP_HR_SR_OB_DR data (as JSON)",
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR?f=json"
     },
     {
       "rel": "alternate",
       "type": "text/plain",
-      "title": "Information about the NE2_HR_LC_SR_W_DR data (as ECON)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR?f=econ"
+      "title": "Information about the HYP_HR_SR_OB_DR data (as ECON)",
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR?f=econ"
     },
     {
       "rel": "alternate",
       "type": "text/mapml",
-      "title": "Information about the NE2_HR_LC_SR_W_DR data (as MapML)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR?f=mapml"
+      "title": "Information about the HYP_HR_SR_OB_DR data (as MapML)",
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR?f=mapml"
     },
     {
       "rel": "alternate",
       "type": "text/html",
-      "title": "Information about the NE2_HR_LC_SR_W_DR data (as HTML)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR?f=html"
+      "title": "Information about the HYP_HR_SR_OB_DR data (as HTML)",
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR?f=html"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/dggs-list",
-      "title": "Discrete Global Grid Systems for NE2_HR_LC_SR_W_DR",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/dggs"
+      "title": "Discrete Global Grid Systems for HYP_HR_SR_OB_DR",
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/dggs"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
       "type": "application/json",
       "title": "Schema (as JSON)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/schema?f=json"
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/schema?f=json"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
       "type": "text/plain",
       "title": "Schema (as ECON)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/schema?f=econ"
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/schema?f=econ"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
       "type": "text/html",
       "title": "Schema (as HTML)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/schema?f=html"
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/schema?f=html"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
       "type": "application/json",
       "title": "Queryables (as JSON)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/queryables?f=json"
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/queryables?f=json"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
       "type": "text/plain",
       "title": "Queryables (as ECON)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/queryables?f=econ"
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/queryables?f=econ"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
       "type": "text/html",
       "title": "Queryables (as HTML)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/queryables?f=html"
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/queryables?f=html"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
       "type": "image/png",
-      "title": "NE2_HR_LC_SR_W_DR (as PNG; Note: requesting large extent may result in generalized data)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/coverage?f=png"
+      "title": "HYP_HR_SR_OB_DR (as PNG; Note: requesting large extent may result in generalized data)",
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/coverage?f=png"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
       "type": "image/tiff; application=geotiff",
-      "title": "NE2_HR_LC_SR_W_DR (as GeoTIFF; Note: requesting large extent may result in generalized data)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/coverage?f=tif"
+      "title": "HYP_HR_SR_OB_DR (as GeoTIFF; Note: requesting large extent may result in generalized data)",
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/coverage?f=tif"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage-domainset",
       "type": "application/json",
-      "title": "NE2_HR_LC_SR_W_DR (domain set of the coverage for this collection)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/coverage/domainset?f=json"
+      "title": "HYP_HR_SR_OB_DR (domain set of the coverage for this collection)",
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/coverage/domainset?f=json"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage-rangetype",
       "type": "application/json",
-      "title": "NE2_HR_LC_SR_W_DR (range type of the coverage for this collection)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/coverage/rangetype?f=json"
+      "title": "HYP_HR_SR_OB_DR (range type of the coverage for this collection)",
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/coverage/rangetype?f=json"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
       "type": "image/png",
       "title": "Default map (as PNG)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/map.png"
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/map.png"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
       "type": "image/jpeg",
       "title": "Default map (as JPG)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/map.jpg"
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/map.jpg"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
       "type": "image/tif",
       "title": "Default map (as GeoTIFF)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/map.tif"
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/map.tif"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
       "type": "application/json",
       "title": "Map tilesets available for this dataset (as JSON)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/map/tiles?f=json"
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/map/tiles?f=json"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
       "type": "text/plain",
       "title": "Map tilesets available for this dataset (as ECON)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/map/tiles?f=econ"
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/map/tiles?f=econ"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
       "type": "text/html",
       "title": "Map tilesets available for this dataset (as HTML)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/map/tiles?f=html"
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/map/tiles?f=html"
     },
     {
       "rel": "styles",
       "type": "text/html",
-      "title": "Styles for NE2_HR_LC_SR_W_DR (as HTML)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/styles?f=html"
+      "title": "Styles for HYP_HR_SR_OB_DR (as HTML)",
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/styles?f=html"
     },
     {
       "rel": "styles",
       "type": "application/json",
-      "title": "Styles for NE2_HR_LC_SR_W_DR (as JSON)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/styles?f=json"
+      "title": "Styles for HYP_HR_SR_OB_DR (as JSON)",
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/styles?f=json"
     },
     {
       "rel": "styles",
       "type": "text/plain",
-      "title": "Styles for NE2_HR_LC_SR_W_DR (as ECON)",
-      "href": "/ogcapi/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/styles?f=econ"
+      "title": "Styles for HYP_HR_SR_OB_DR (as ECON)",
+      "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/styles?f=econ"
     }
   ],
-  "title": "NE2_HR_LC_SR_W_DR",
+  "title": "HYP_HR_SR_OB_DR",
   "extent": {
     "spatial": {
       "bbox": [[-180, -90, 180, 90]],
@@ -167,9 +167,9 @@
     "http://www.opengis.net/def/crs/EPSG/0/3395"
   ],
   "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
-  "id": "NaturalEarth:raster:NE2_HR_LC_SR_W_DR",
+  "id": "NaturalEarth__raster__HYP_HR_SR_OB_DR",
   "dataType": "map",
   "attribution": "<a href='https://www.naturalearthdata.com/'>Natural Earth</a>",
-  "minScaleDenominator": 4367830.1877243574709,
+  "minScaleDenominator": 4367830.1877243575,
   "minCellSize": 0.010986328125
 }

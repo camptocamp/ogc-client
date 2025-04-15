@@ -1898,25 +1898,25 @@ The document at http://local/nonexisting?f=json could not be fetched.`
         it('returns collection ids', async () => {
           await expect(endpoint.allCollections).resolves.toEqual([
             { name: 'NaturalEarth', hasFeatures: true },
-            { name: 'NaturalEarth:raster', hasFeatures: true },
+            { name: 'NaturalEarth__raster', hasFeatures: true },
             {
-              name: 'NaturalEarth:raster:HYP_HR_SR_OB_DR',
+              name: 'NaturalEarth__raster__HYP_HR_SR_OB_DR',
               hasMapTiles: true,
               hasFeatures: true,
             },
             {
-              name: 'NaturalEarth:raster:NE1_HR_LC_SR_W_DR',
+              name: 'NaturalEarth__raster__NE1_HR_LC_SR_W_DR',
               hasMapTiles: true,
               hasFeatures: true,
             },
             {
-              name: 'NaturalEarth:raster:NE2_HR_LC_SR_W_DR',
+              name: 'NaturalEarth__raster__NE2_HR_LC_SR_W_DR',
               hasMapTiles: true,
               hasFeatures: true,
             },
-            { name: 'NaturalEarth:physical', hasFeatures: true },
+            { name: 'NaturalEarth__physical', hasFeatures: true },
             {
-              name: 'NaturalEarth:physical:ne_10m_lakes_pluvial',
+              name: 'NaturalEarth__physical__ne_10m_lakes_pluvial',
               hasMapTiles: true,
               hasVectorTiles: true,
               hasFeatures: true,
@@ -1927,17 +1927,17 @@ The document at http://local/nonexisting?f=json could not be fetched.`
       describe('#vectorTileCollections', () => {
         it('returns vector tile collection ids', async () => {
           await expect(endpoint.vectorTileCollections).resolves.toEqual([
-            'NaturalEarth:physical:ne_10m_lakes_pluvial',
+            'NaturalEarth__physical__ne_10m_lakes_pluvial',
           ]);
         });
       });
       describe('#mapTileCollections', () => {
         it('returns map tile collection ids', async () => {
           await expect(endpoint.mapTileCollections).resolves.toEqual([
-            'NaturalEarth:raster:HYP_HR_SR_OB_DR',
-            'NaturalEarth:raster:NE1_HR_LC_SR_W_DR',
-            'NaturalEarth:raster:NE2_HR_LC_SR_W_DR',
-            'NaturalEarth:physical:ne_10m_lakes_pluvial',
+            'NaturalEarth__raster__HYP_HR_SR_OB_DR',
+            'NaturalEarth__raster__NE1_HR_LC_SR_W_DR',
+            'NaturalEarth__raster__NE2_HR_LC_SR_W_DR',
+            'NaturalEarth__physical__ne_10m_lakes_pluvial',
           ]);
         });
       });
@@ -1945,11 +1945,11 @@ The document at http://local/nonexisting?f=json could not be fetched.`
         it('returns the correct url', async () => {
           await expect(
             endpoint.getVectorTilesetUrl(
-              'NaturalEarth:physical:ne_10m_lakes_pluvial',
+              'NaturalEarth__physical__ne_10m_lakes_pluvial',
               'GlobalCRS84Pixel'
             )
           ).resolves.toEqual(
-            'http://local/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=json'
+            'http://local/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=json'
           );
         });
       });
@@ -1957,11 +1957,11 @@ The document at http://local/nonexisting?f=json could not be fetched.`
         it('returns the correct url', async () => {
           await expect(
             endpoint.getMapTilesetUrl(
-              'NaturalEarth:physical:ne_10m_lakes_pluvial',
+              'NaturalEarth__physical__ne_10m_lakes_pluvial',
               'GlobalCRS84Pixel'
             )
           ).resolves.toEqual(
-            'http://local/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Pixel?f=json'
+            'http://local/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Pixel?f=json'
           );
         });
       });
