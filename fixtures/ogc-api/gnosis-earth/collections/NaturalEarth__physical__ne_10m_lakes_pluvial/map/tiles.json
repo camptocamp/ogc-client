@@ -4,91 +4,91 @@
       "rel": "self",
       "type": "application/json",
       "title": "The JSON representation of the available map tilesets for ne_10m_lakes_pluvial",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/?f=json"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/?f=json"
     },
     {
       "rel": "alternate",
       "type": "text/plain",
       "title": "The ECON representation of the available map tilesets for ne_10m_lakes_pluvial",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/?f=econ"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/?f=econ"
     },
     {
       "rel": "alternate",
       "type": "text/html",
       "title": "The HTML representation of the available map tilesets for ne_10m_lakes_pluvial",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/?f=html"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/?f=html"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
       "type": "application/json",
       "title": "Vector tilesets for ne_10m_lakes_pluvial (as JSON)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles?f=json"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles?f=json"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
       "type": "text/plain",
       "title": "Vector tilesets for ne_10m_lakes_pluvial (as ECON)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles?f=econ"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles?f=econ"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
       "type": "text/html",
       "title": "Vector tilesets for ne_10m_lakes_pluvial (as HTML)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles?f=html"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles?f=html"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
       "type": "application/json",
       "title": "Map tilesets for ne_10m_lakes_pluvial (default style) (as JSON)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/styles/default/map/tiles?f=json"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/styles/default/map/tiles?f=json"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
       "type": "text/plain",
       "title": "Map tilesets for ne_10m_lakes_pluvial (default style) (as ECON)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/styles/default/map/tiles?f=econ"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/styles/default/map/tiles?f=econ"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
       "type": "text/html",
       "title": "Map tilesets for ne_10m_lakes_pluvial (default style) (as HTML)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/styles/default/map/tiles?f=html"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/styles/default/map/tiles?f=html"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
       "type": "application/json",
       "title": "Map tilesets for ne_10m_lakes_pluvial (sldImportTest style) (as JSON)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/styles/sldImportTest/map/tiles?f=json"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/styles/sldImportTest/map/tiles?f=json"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
       "type": "text/plain",
       "title": "Map tilesets for ne_10m_lakes_pluvial (sldImportTest style) (as ECON)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/styles/sldImportTest/map/tiles?f=econ"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/styles/sldImportTest/map/tiles?f=econ"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
       "type": "text/html",
       "title": "Map tilesets for ne_10m_lakes_pluvial (sldImportTest style) (as HTML)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/styles/sldImportTest/map/tiles?f=html"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/styles/sldImportTest/map/tiles?f=html"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
       "type": "application/json",
       "title": "Map tilesets for ne_10m_lakes_pluvial (mbglImportTest style) (as JSON)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/styles/mbglImportTest/map/tiles?f=json"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/styles/mbglImportTest/map/tiles?f=json"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
       "type": "text/plain",
       "title": "Map tilesets for ne_10m_lakes_pluvial (mbglImportTest style) (as ECON)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/styles/mbglImportTest/map/tiles?f=econ"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/styles/mbglImportTest/map/tiles?f=econ"
     },
     {
       "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
       "type": "text/html",
       "title": "Map tilesets for ne_10m_lakes_pluvial (mbglImportTest style) (as HTML)",
-      "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/styles/mbglImportTest/map/tiles?f=html"
+      "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/styles/mbglImportTest/map/tiles?f=html"
     }
   ],
   "tilesets": [
@@ -108,19 +108,19 @@
           "rel": "self",
           "type": "application/json",
           "title": "CDB1GlobalGrid map tileset for ne_10m_lakes_pluvial (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/CDB1GlobalGrid?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/CDB1GlobalGrid?f=json"
         },
         {
           "rel": "self",
           "type": "text/html",
           "title": "CDB1GlobalGrid map tileset for ne_10m_lakes_pluvial (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/CDB1GlobalGrid?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/CDB1GlobalGrid?f=html"
         },
         {
           "rel": "self",
           "type": "application/json+tilejson",
           "title": "CDB1GlobalGrid map tileset for ne_10m_lakes_pluvial (in TileJSON format)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/CDB1GlobalGrid?f=tilejson"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/CDB1GlobalGrid?f=tilejson"
         }
       ]
     },
@@ -140,19 +140,19 @@
           "rel": "self",
           "type": "application/json",
           "title": "GlobalCRS84Pixel map tileset for ne_10m_lakes_pluvial (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Pixel?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Pixel?f=json"
         },
         {
           "rel": "self",
           "type": "text/html",
           "title": "GlobalCRS84Pixel map tileset for ne_10m_lakes_pluvial (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Pixel?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Pixel?f=html"
         },
         {
           "rel": "self",
           "type": "application/json+tilejson",
           "title": "GlobalCRS84Pixel map tileset for ne_10m_lakes_pluvial (in TileJSON format)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Pixel?f=tilejson"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Pixel?f=tilejson"
         }
       ]
     },
@@ -172,19 +172,19 @@
           "rel": "self",
           "type": "application/json",
           "title": "GlobalCRS84Scale map tileset for ne_10m_lakes_pluvial (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Scale?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Scale?f=json"
         },
         {
           "rel": "self",
           "type": "text/html",
           "title": "GlobalCRS84Scale map tileset for ne_10m_lakes_pluvial (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Scale?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Scale?f=html"
         },
         {
           "rel": "self",
           "type": "application/json+tilejson",
           "title": "GlobalCRS84Scale map tileset for ne_10m_lakes_pluvial (in TileJSON format)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Scale?f=tilejson"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Scale?f=tilejson"
         }
       ]
     },
@@ -204,19 +204,19 @@
           "rel": "self",
           "type": "application/json",
           "title": "GNOSISGlobalGrid map tileset for ne_10m_lakes_pluvial (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GNOSISGlobalGrid?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GNOSISGlobalGrid?f=json"
         },
         {
           "rel": "self",
           "type": "text/html",
           "title": "GNOSISGlobalGrid map tileset for ne_10m_lakes_pluvial (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GNOSISGlobalGrid?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GNOSISGlobalGrid?f=html"
         },
         {
           "rel": "self",
           "type": "application/json+tilejson",
           "title": "GNOSISGlobalGrid map tileset for ne_10m_lakes_pluvial (in TileJSON format)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GNOSISGlobalGrid?f=tilejson"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GNOSISGlobalGrid?f=tilejson"
         }
       ]
     },
@@ -236,19 +236,19 @@
           "rel": "self",
           "type": "application/json",
           "title": "GoogleCRS84Quad map tileset for ne_10m_lakes_pluvial (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GoogleCRS84Quad?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GoogleCRS84Quad?f=json"
         },
         {
           "rel": "self",
           "type": "text/html",
           "title": "GoogleCRS84Quad map tileset for ne_10m_lakes_pluvial (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GoogleCRS84Quad?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GoogleCRS84Quad?f=html"
         },
         {
           "rel": "self",
           "type": "application/json+tilejson",
           "title": "GoogleCRS84Quad map tileset for ne_10m_lakes_pluvial (in TileJSON format)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/GoogleCRS84Quad?f=tilejson"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GoogleCRS84Quad?f=tilejson"
         }
       ]
     },
@@ -268,19 +268,19 @@
           "rel": "self",
           "type": "application/json",
           "title": "ISEA9R map tileset for ne_10m_lakes_pluvial (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/ISEA9R?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/ISEA9R?f=json"
         },
         {
           "rel": "self",
           "type": "text/html",
           "title": "ISEA9R map tileset for ne_10m_lakes_pluvial (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/ISEA9R?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/ISEA9R?f=html"
         },
         {
           "rel": "self",
           "type": "application/json+tilejson",
           "title": "ISEA9R map tileset for ne_10m_lakes_pluvial (in TileJSON format)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/ISEA9R?f=tilejson"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/ISEA9R?f=tilejson"
         }
       ]
     },
@@ -300,19 +300,19 @@
           "rel": "self",
           "type": "application/json",
           "title": "WebMercatorQuad map tileset for ne_10m_lakes_pluvial (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/WebMercatorQuad?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/WebMercatorQuad?f=json"
         },
         {
           "rel": "self",
           "type": "text/html",
           "title": "WebMercatorQuad map tileset for ne_10m_lakes_pluvial (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/WebMercatorQuad?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/WebMercatorQuad?f=html"
         },
         {
           "rel": "self",
           "type": "application/json+tilejson",
           "title": "WebMercatorQuad map tileset for ne_10m_lakes_pluvial (in TileJSON format)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/WebMercatorQuad?f=tilejson"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/WebMercatorQuad?f=tilejson"
         }
       ]
     },
@@ -332,19 +332,19 @@
           "rel": "self",
           "type": "application/json",
           "title": "WorldCRS84Quad map tileset for ne_10m_lakes_pluvial (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/WorldCRS84Quad?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/WorldCRS84Quad?f=json"
         },
         {
           "rel": "self",
           "type": "text/html",
           "title": "WorldCRS84Quad map tileset for ne_10m_lakes_pluvial (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/WorldCRS84Quad?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/WorldCRS84Quad?f=html"
         },
         {
           "rel": "self",
           "type": "application/json+tilejson",
           "title": "WorldCRS84Quad map tileset for ne_10m_lakes_pluvial (in TileJSON format)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/WorldCRS84Quad?f=tilejson"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/WorldCRS84Quad?f=tilejson"
         }
       ]
     },
@@ -364,19 +364,19 @@
           "rel": "self",
           "type": "application/json",
           "title": "WorldMercatorWGS84Quad map tileset for ne_10m_lakes_pluvial (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/WorldMercatorWGS84Quad?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/WorldMercatorWGS84Quad?f=json"
         },
         {
           "rel": "self",
           "type": "text/html",
           "title": "WorldMercatorWGS84Quad map tileset for ne_10m_lakes_pluvial (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/WorldMercatorWGS84Quad?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/WorldMercatorWGS84Quad?f=html"
         },
         {
           "rel": "self",
           "type": "application/json+tilejson",
           "title": "WorldMercatorWGS84Quad map tileset for ne_10m_lakes_pluvial (in TileJSON format)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles/WorldMercatorWGS84Quad?f=tilejson"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/WorldMercatorWGS84Quad?f=tilejson"
         }
       ]
     }

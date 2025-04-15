@@ -125,43 +125,43 @@
           "rel": "self",
           "type": "application/json",
           "title": "Information about the raster data (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster?f=json"
         },
         {
           "rel": "alternate",
           "type": "text/plain",
           "title": "Information about the raster data (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster?f=econ"
         },
         {
           "rel": "alternate",
           "type": "text/mapml",
           "title": "Information about the raster data (as MapML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster?f=mapml"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster?f=mapml"
         },
         {
           "rel": "alternate",
           "type": "text/html",
           "title": "Information about the raster data (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster?f=html"
         },
         {
           "rel": "styles",
           "type": "text/html",
           "title": "Styles for raster (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster/styles?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster/styles?f=html"
         },
         {
           "rel": "styles",
           "type": "application/json",
           "title": "Styles for raster (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster/styles?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster/styles?f=json"
         },
         {
           "rel": "styles",
           "type": "text/plain",
           "title": "Styles for raster (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster/styles?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster/styles?f=econ"
         }
       ],
       "title": "raster",
@@ -177,7 +177,7 @@
         "http://www.opengis.net/def/crs/EPSG/0/3395"
       ],
       "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
-      "id": "NaturalEarth:raster",
+      "id": "NaturalEarth__raster",
       "attribution": "<a href='https://www.naturalearthdata.com/'>Natural Earth</a>",
       "minScaleDenominator": 4367830.1877243574709,
       "minCellSize": 0.010986328125
@@ -188,144 +188,144 @@
           "rel": "self",
           "type": "application/json",
           "title": "Information about the HYP_HR_SR_OB_DR data (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR?f=json"
         },
         {
           "rel": "alternate",
           "type": "text/plain",
           "title": "Information about the HYP_HR_SR_OB_DR data (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR?f=econ"
         },
         {
           "rel": "alternate",
           "type": "text/mapml",
           "title": "Information about the HYP_HR_SR_OB_DR data (as MapML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR?f=mapml"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR?f=mapml"
         },
         {
           "rel": "alternate",
           "type": "text/html",
           "title": "Information about the HYP_HR_SR_OB_DR data (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR?f=html"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/dggs-list",
           "title": "Discrete Global Grid Systems for HYP_HR_SR_OB_DR",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/dggs"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/dggs"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "type": "application/json",
           "title": "Schema (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/schema?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/schema?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "type": "text/plain",
           "title": "Schema (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/schema?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/schema?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "type": "text/html",
           "title": "Schema (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/schema?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/schema?f=html"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "type": "application/json",
           "title": "Queryables (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/queryables?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/queryables?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "type": "text/plain",
           "title": "Queryables (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/queryables?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/queryables?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "type": "text/html",
           "title": "Queryables (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/queryables?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/queryables?f=html"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
           "type": "image/png",
           "title": "HYP_HR_SR_OB_DR (as PNG; Note: requesting large extent may result in generalized data)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/coverage?f=png"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/coverage?f=png"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
           "type": "image/tiff; application=geotiff",
           "title": "HYP_HR_SR_OB_DR (as GeoTIFF; Note: requesting large extent may result in generalized data)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/coverage?f=tif"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/coverage?f=tif"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage-domainset",
           "type": "application/json",
           "title": "HYP_HR_SR_OB_DR (domain set of the coverage for this collection)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/coverage/domainset?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/coverage/domainset?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage-rangetype",
           "type": "application/json",
           "title": "HYP_HR_SR_OB_DR (range type of the coverage for this collection)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/coverage/rangetype?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/coverage/rangetype?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
           "type": "image/png",
           "title": "Default map (as PNG)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map.png"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/map.png"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
           "type": "image/jpeg",
           "title": "Default map (as JPG)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map.jpg"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/map.jpg"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
           "type": "image/tif",
           "title": "Default map (as GeoTIFF)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map.tif"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/map.tif"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
           "type": "application/json",
           "title": "Map tilesets available for this dataset (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map/tiles?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/map/tiles?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
           "type": "text/plain",
           "title": "Map tilesets available for this dataset (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map/tiles?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/map/tiles?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
           "type": "text/html",
           "title": "Map tilesets available for this dataset (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map/tiles?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/map/tiles?f=html"
         },
         {
           "rel": "styles",
           "type": "text/html",
           "title": "Styles for HYP_HR_SR_OB_DR (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/styles?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/styles?f=html"
         },
         {
           "rel": "styles",
           "type": "application/json",
           "title": "Styles for HYP_HR_SR_OB_DR (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/styles?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/styles?f=json"
         },
         {
           "rel": "styles",
           "type": "text/plain",
           "title": "Styles for HYP_HR_SR_OB_DR (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/styles?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__HYP_HR_SR_OB_DR/styles?f=econ"
         }
       ],
       "title": "HYP_HR_SR_OB_DR",
@@ -351,7 +351,7 @@
         "http://www.opengis.net/def/crs/EPSG/0/3395"
       ],
       "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
-      "id": "NaturalEarth:raster:HYP_HR_SR_OB_DR",
+      "id": "NaturalEarth__raster__HYP_HR_SR_OB_DR",
       "dataType": "map",
       "attribution": "<a href='https://www.naturalearthdata.com/'>Natural Earth</a>",
       "minScaleDenominator": 4367830.1877243574709,
@@ -363,144 +363,144 @@
           "rel": "self",
           "type": "application/json",
           "title": "Information about the NE1_HR_LC_SR_W_DR data (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR?f=json"
         },
         {
           "rel": "alternate",
           "type": "text/plain",
           "title": "Information about the NE1_HR_LC_SR_W_DR data (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR?f=econ"
         },
         {
           "rel": "alternate",
           "type": "text/mapml",
           "title": "Information about the NE1_HR_LC_SR_W_DR data (as MapML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR?f=mapml"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR?f=mapml"
         },
         {
           "rel": "alternate",
           "type": "text/html",
           "title": "Information about the NE1_HR_LC_SR_W_DR data (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR?f=html"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/dggs-list",
           "title": "Discrete Global Grid Systems for NE1_HR_LC_SR_W_DR",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/dggs"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/dggs"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "type": "application/json",
           "title": "Schema (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/schema?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/schema?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "type": "text/plain",
           "title": "Schema (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/schema?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/schema?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "type": "text/html",
           "title": "Schema (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/schema?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/schema?f=html"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "type": "application/json",
           "title": "Queryables (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/queryables?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/queryables?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "type": "text/plain",
           "title": "Queryables (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/queryables?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/queryables?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "type": "text/html",
           "title": "Queryables (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/queryables?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/queryables?f=html"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
           "type": "image/png",
           "title": "NE1_HR_LC_SR_W_DR (as PNG; Note: requesting large extent may result in generalized data)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/coverage?f=png"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/coverage?f=png"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
           "type": "image/tiff; application=geotiff",
           "title": "NE1_HR_LC_SR_W_DR (as GeoTIFF; Note: requesting large extent may result in generalized data)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/coverage?f=tif"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/coverage?f=tif"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage-domainset",
           "type": "application/json",
           "title": "NE1_HR_LC_SR_W_DR (domain set of the coverage for this collection)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/coverage/domainset?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/coverage/domainset?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage-rangetype",
           "type": "application/json",
           "title": "NE1_HR_LC_SR_W_DR (range type of the coverage for this collection)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/coverage/rangetype?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/coverage/rangetype?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
           "type": "image/png",
           "title": "Default map (as PNG)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/map.png"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/map.png"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
           "type": "image/jpeg",
           "title": "Default map (as JPG)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/map.jpg"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/map.jpg"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
           "type": "image/tif",
           "title": "Default map (as GeoTIFF)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/map.tif"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/map.tif"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
           "type": "application/json",
           "title": "Map tilesets available for this dataset (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/map/tiles?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/map/tiles?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
           "type": "text/plain",
           "title": "Map tilesets available for this dataset (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/map/tiles?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/map/tiles?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
           "type": "text/html",
           "title": "Map tilesets available for this dataset (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/map/tiles?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/map/tiles?f=html"
         },
         {
           "rel": "styles",
           "type": "text/html",
           "title": "Styles for NE1_HR_LC_SR_W_DR (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/styles?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/styles?f=html"
         },
         {
           "rel": "styles",
           "type": "application/json",
           "title": "Styles for NE1_HR_LC_SR_W_DR (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/styles?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/styles?f=json"
         },
         {
           "rel": "styles",
           "type": "text/plain",
           "title": "Styles for NE1_HR_LC_SR_W_DR (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE1_HR_LC_SR_W_DR/styles?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE1_HR_LC_SR_W_DR/styles?f=econ"
         }
       ],
       "title": "NE1_HR_LC_SR_W_DR",
@@ -526,7 +526,7 @@
         "http://www.opengis.net/def/crs/EPSG/0/3395"
       ],
       "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
-      "id": "NaturalEarth:raster:NE1_HR_LC_SR_W_DR",
+      "id": "NaturalEarth__raster__NE1_HR_LC_SR_W_DR",
       "dataType": "map",
       "attribution": "<a href='https://www.naturalearthdata.com/'>Natural Earth</a>",
       "minScaleDenominator": 4367830.1877243574709,
@@ -538,144 +538,144 @@
           "rel": "self",
           "type": "application/json",
           "title": "Information about the NE2_HR_LC_SR_W_DR data (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR?f=json"
         },
         {
           "rel": "alternate",
           "type": "text/plain",
           "title": "Information about the NE2_HR_LC_SR_W_DR data (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR?f=econ"
         },
         {
           "rel": "alternate",
           "type": "text/mapml",
           "title": "Information about the NE2_HR_LC_SR_W_DR data (as MapML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR?f=mapml"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR?f=mapml"
         },
         {
           "rel": "alternate",
           "type": "text/html",
           "title": "Information about the NE2_HR_LC_SR_W_DR data (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR?f=html"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/dggs-list",
           "title": "Discrete Global Grid Systems for NE2_HR_LC_SR_W_DR",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/dggs"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/dggs"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "type": "application/json",
           "title": "Schema (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/schema?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/schema?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "type": "text/plain",
           "title": "Schema (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/schema?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/schema?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "type": "text/html",
           "title": "Schema (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/schema?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/schema?f=html"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "type": "application/json",
           "title": "Queryables (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/queryables?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/queryables?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "type": "text/plain",
           "title": "Queryables (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/queryables?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/queryables?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "type": "text/html",
           "title": "Queryables (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/queryables?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/queryables?f=html"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
           "type": "image/png",
           "title": "NE2_HR_LC_SR_W_DR (as PNG; Note: requesting large extent may result in generalized data)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/coverage?f=png"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/coverage?f=png"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage",
           "type": "image/tiff; application=geotiff",
           "title": "NE2_HR_LC_SR_W_DR (as GeoTIFF; Note: requesting large extent may result in generalized data)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/coverage?f=tif"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/coverage?f=tif"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage-domainset",
           "type": "application/json",
           "title": "NE2_HR_LC_SR_W_DR (domain set of the coverage for this collection)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/coverage/domainset?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/coverage/domainset?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/coverage-rangetype",
           "type": "application/json",
           "title": "NE2_HR_LC_SR_W_DR (range type of the coverage for this collection)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/coverage/rangetype?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/coverage/rangetype?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
           "type": "image/png",
           "title": "Default map (as PNG)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/map.png"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/map.png"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
           "type": "image/jpeg",
           "title": "Default map (as JPG)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/map.jpg"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/map.jpg"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
           "type": "image/tif",
           "title": "Default map (as GeoTIFF)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/map.tif"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/map.tif"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
           "type": "application/json",
           "title": "Map tilesets available for this dataset (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/map/tiles?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/map/tiles?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
           "type": "text/plain",
           "title": "Map tilesets available for this dataset (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/map/tiles?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/map/tiles?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
           "type": "text/html",
           "title": "Map tilesets available for this dataset (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/map/tiles?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/map/tiles?f=html"
         },
         {
           "rel": "styles",
           "type": "text/html",
           "title": "Styles for NE2_HR_LC_SR_W_DR (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/styles?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/styles?f=html"
         },
         {
           "rel": "styles",
           "type": "application/json",
           "title": "Styles for NE2_HR_LC_SR_W_DR (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/styles?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/styles?f=json"
         },
         {
           "rel": "styles",
           "type": "text/plain",
           "title": "Styles for NE2_HR_LC_SR_W_DR (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:raster:NE2_HR_LC_SR_W_DR/styles?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__raster__NE2_HR_LC_SR_W_DR/styles?f=econ"
         }
       ],
       "title": "NE2_HR_LC_SR_W_DR",
@@ -701,7 +701,7 @@
         "http://www.opengis.net/def/crs/EPSG/0/3395"
       ],
       "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
-      "id": "NaturalEarth:raster:NE2_HR_LC_SR_W_DR",
+      "id": "NaturalEarth__raster__NE2_HR_LC_SR_W_DR",
       "dataType": "map",
       "attribution": "<a href='https://www.naturalearthdata.com/'>Natural Earth</a>",
       "minScaleDenominator": 4367830.1877243574709,
@@ -713,43 +713,43 @@
           "rel": "self",
           "type": "application/json",
           "title": "Information about the physical data (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical?f=json"
         },
         {
           "rel": "alternate",
           "type": "text/plain",
           "title": "Information about the physical data (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical?f=econ"
         },
         {
           "rel": "alternate",
           "type": "text/mapml",
           "title": "Information about the physical data (as MapML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical?f=mapml"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical?f=mapml"
         },
         {
           "rel": "alternate",
           "type": "text/html",
           "title": "Information about the physical data (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical?f=html"
         },
         {
           "rel": "styles",
           "type": "text/html",
           "title": "Styles for physical (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical/styles?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical/styles?f=html"
         },
         {
           "rel": "styles",
           "type": "application/json",
           "title": "Styles for physical (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical/styles?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical/styles?f=json"
         },
         {
           "rel": "styles",
           "type": "text/plain",
           "title": "Styles for physical (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical/styles?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical/styles?f=econ"
         }
       ],
       "title": "physical",
@@ -765,7 +765,7 @@
         "http://www.opengis.net/def/crs/EPSG/0/3395"
       ],
       "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
-      "id": "NaturalEarth:physical",
+      "id": "NaturalEarth__physical",
       "attribution": "<a href='https://www.naturalearthdata.com/'>Natural Earth</a>",
       "minScaleDenominator": 4367830.1877243574709,
       "minCellSize": 0.010986328125
@@ -776,216 +776,216 @@
           "rel": "self",
           "type": "application/json",
           "title": "Information about the ne_10m_lakes_pluvial data (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial?f=json"
         },
         {
           "rel": "alternate",
           "type": "text/plain",
           "title": "Information about the ne_10m_lakes_pluvial data (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial?f=econ"
         },
         {
           "rel": "alternate",
           "type": "text/mapml",
           "title": "Information about the ne_10m_lakes_pluvial data (as MapML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial?f=mapml"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial?f=mapml"
         },
         {
           "rel": "alternate",
           "type": "text/html",
           "title": "Information about the ne_10m_lakes_pluvial data (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial?f=html"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/dggs-list",
           "title": "Discrete Global Grid Systems for ne_10m_lakes_pluvial",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/dggs"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/dggs"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "type": "application/json",
           "title": "Schema (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/schema?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/schema?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "type": "text/plain",
           "title": "Schema (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/schema?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/schema?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "type": "text/html",
           "title": "Schema (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/schema?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/schema?f=html"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "type": "application/json",
           "title": "Queryables (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/queryables?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/queryables?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "type": "text/plain",
           "title": "Queryables (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/queryables?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/queryables?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "type": "text/html",
           "title": "Queryables (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/queryables?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/queryables?f=html"
         },
         {
           "rel": "items",
           "type": "application/geo+json",
           "title": "ne_10m_lakes_pluvial (as F&G GeoJSON; Note: requesting large extent may result in generalized data)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/items.json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/items.json"
         },
         {
           "rel": "items",
           "type": "application/vnd.ogc.fg+json",
           "title": "ne_10m_lakes_pluvial (as GeoJSON; Note: requesting large extent may result in generalized data)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/items.fgjson"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/items.fgjson"
         },
         {
           "rel": "items",
           "type": "application/vnd.geo+econ",
           "title": "ne_10m_lakes_pluvial (as GeoECON; Note: requesting large extent may result in generalized data)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/items.econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/items.econ"
         },
         {
           "rel": "items",
           "type": "text/xml; subtype=gml/3.1.1",
           "title": "ne_10m_lakes_pluvial (as GML; Note: requesting large extent may result in generalized data)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/items.gml"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/items.gml"
         },
         {
           "rel": "items",
           "type": "application/vnd.mapbox-vector-tile",
           "title": "ne_10m_lakes_pluvial (as Mapbox Vector Tile; Note: requesting large extent may result in generalized data)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/items.mvt"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/items.mvt"
         },
         {
           "rel": "items",
           "type": "text/mapml",
           "title": "ne_10m_lakes_pluvial (as MapML; Note: requesting large extent may result in generalized data)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/items.mapml"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/items.mapml"
         },
         {
           "rel": "item",
           "type": "application/geo+json",
           "title": "ne_10m_lakes_pluvial (individual feature as GeoJSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/items/{featureId}.json",
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/items/{featureId}.json",
           "templated": true
         },
         {
           "rel": "item",
           "type": "application/vnd.ogc.fg+json",
           "title": "ne_10m_lakes_pluvial (individual feature as F&G GeoJSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/items/{featureId}.fgjson",
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/items/{featureId}.fgjson",
           "templated": true
         },
         {
           "rel": "item",
           "type": "application/vnd.geo+econ",
           "title": "ne_10m_lakes_pluvial (individual feature as GeoECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/items/{featureId}.econ",
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/items/{featureId}.econ",
           "templated": true
         },
         {
           "rel": "item",
           "type": "text/xml; subtype=gml/3.1.1",
           "title": "ne_10m_lakes_pluvial (individual feature as GML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/items/{featureId}.gml",
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/items/{featureId}.gml",
           "templated": true
         },
         {
           "rel": "item",
           "type": "application/vnd.mapbox-vector-tile",
           "title": "ne_10m_lakes_pluvial (individual feature as Mapbox Vector Tile)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/items/{featureId}.mvt",
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/items/{featureId}.mvt",
           "templated": true
         },
         {
           "rel": "item",
           "type": "text/mapml",
           "title": "ne_10m_lakes_pluvial (individual feature as MapML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/items/{featureId}.mapml",
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/items/{featureId}.mapml",
           "templated": true
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
           "type": "application/json",
           "title": "Vector tilesets available for this dataset (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
           "type": "text/plain",
           "title": "Vector tilesets available for this dataset (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
           "type": "text/html",
           "title": "Vector tilesets available for this dataset (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/tiles?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles?f=html"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
           "type": "image/png",
           "title": "Default map (as PNG)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map.png"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map.png"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
           "type": "image/jpeg",
           "title": "Default map (as JPG)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map.jpg"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map.jpg"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/map",
           "type": "image/tif",
           "title": "Default map (as GeoTIFF)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map.tif"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map.tif"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
           "type": "application/json",
           "title": "Map tilesets available for this dataset (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles?f=json"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
           "type": "text/plain",
           "title": "Map tilesets available for this dataset (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles?f=econ"
         },
         {
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-map",
           "type": "text/html",
           "title": "Map tilesets available for this dataset (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/map/tiles?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles?f=html"
         },
         {
           "rel": "styles",
           "type": "text/html",
           "title": "Styles for ne_10m_lakes_pluvial (as HTML)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/styles?f=html"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/styles?f=html"
         },
         {
           "rel": "styles",
           "type": "application/json",
           "title": "Styles for ne_10m_lakes_pluvial (as JSON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/styles?f=json"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/styles?f=json"
         },
         {
           "rel": "styles",
           "type": "text/plain",
           "title": "Styles for ne_10m_lakes_pluvial (as ECON)",
-          "href": "/gnosis-earth/collections/NaturalEarth:physical:ne_10m_lakes_pluvial/styles?f=econ"
+          "href": "/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/styles?f=econ"
         }
       ],
       "title": "ne_10m_lakes_pluvial",
@@ -1001,7 +1001,7 @@
         "http://www.opengis.net/def/crs/EPSG/0/3395"
       ],
       "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
-      "id": "NaturalEarth:physical:ne_10m_lakes_pluvial",
+      "id": "NaturalEarth__physical__ne_10m_lakes_pluvial",
       "dataType": "vector",
       "attribution": "<a href='https://www.naturalearthdata.com/'>Natural Earth</a>",
       "minScaleDenominator": 4367830.1877243574709,
