@@ -84,3 +84,6 @@ export type MetadataURL = {
   type?: string;
   url: string;
 };
+
+export type FieldName = string;
+export type FieldSort = ['D' | 'A', FieldName];
