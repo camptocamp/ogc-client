@@ -28,7 +28,10 @@ beforeAll(() => {
       } as Response;
     }
 
-    const queryPath = url.pathname.replace(/\/$/, ''); // remove trailing slash
+    let queryPath = url.pathname.replace(/\/$/, ''); // remove trailing slash
+    if (queryPath === '') {
+      queryPath = 'root-path'; // make sure we're serving something at the root
+    }
     const format = url.searchParams.get('f') || 'html';
     const filePath = `${path.join(FIXTURES_ROOT, queryPath)}.${format}`;
     try {
