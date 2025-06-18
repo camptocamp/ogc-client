@@ -2228,4 +2228,126 @@ The document at http://local/nonexisting?f=json could not be fetched.`
       });
     });
   });
+  describe('endpoint providing an OGC API endpoint at its root', () => {
+    let originalFetch;
+    beforeAll(() => {
+      originalFetch = window.fetch;
+      window.fetch = jest.fn().mockImplementation(async (urlOrInfo) => {
+        const url = new URL(
+          urlOrInfo instanceof URL || typeof urlOrInfo === 'string'
+            ? urlOrInfo
+            : urlOrInfo.url
+        );
+
+        const rootFixture = 'sample-data-root';
+        const queryPath = url.pathname.replace(/\/$/, ''); // remove trailing slash
+        const format = url.searchParams.get('f') || 'html';
+        const filePath = `${path.join(
+          FIXTURES_ROOT,
+          rootFixture,
+          queryPath
+        )}.${format}`;
+        try {
+          await stat(filePath);
+        } catch (e) {
+          return {
+            ok: false,
+            status: 404,
+            headers: new Headers(),
+            clone: function () {
+              return this;
+            },
+          } as Response;
+        }
+        const contents = await readFile(filePath, {
+          encoding: 'utf8',
+        });
+        return {
+          ok: true,
+          headers: new Headers(),
+          clone: function () {
+            return this;
+          },
+          json: () =>
+            new Promise((resolve) => {
+              resolve(JSON.parse(contents));
+            }),
+        } as Response;
+      });
+    });
+    afterAll(() => {
+      window.fetch = originalFetch;
+    });
+
+    describe('on root path', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/');
+      });
+      it('returns endpoint info', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          title: 'OS Open Zoomstack',
+          description:
+            'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+          attribution:
+            'Contains OS data © Crown copyright and database right 2021.',
+        });
+      });
+    });
+
+    describe('on collections path', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/collections/');
+      });
+      it('correctly parses endpoint info and collections', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          title: 'OS Open Zoomstack',
+          description:
+            'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+          attribution:
+            'Contains OS data © Crown copyright and database right 2021.',
+        });
+        await expect(endpoint.featureCollections).resolves.toEqual([
+          'airports',
+          'boundaries',
+          'contours',
+          'district_buildings',
+          'etl',
+          'foreshore',
+          'greenspace',
+          'land',
+          'local_buildings',
+          'names',
+          'national_parks',
+          'rail',
+          'railway_stations',
+          'roads_local',
+          'roads_national',
+          'roads_regional',
+          'sites',
+          'surfacewater',
+          'urban_areas',
+          'waterlines',
+          'woodland',
+          'missing-feature-type-metadata',
+        ]);
+      });
+    });
+    describe('on a single collection path', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/collections/airports');
+      });
+      it('correctly parses endpoint info, keep a single collection', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          title: 'OS Open Zoomstack',
+          description:
+            'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+          attribution:
+            'Contains OS data © Crown copyright and database right 2021.',
+        });
+        await expect(endpoint.featureCollections).resolves.toEqual([
+          'airports',
+        ]);
+      });
+    });
+  });
 });
