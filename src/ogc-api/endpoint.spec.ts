@@ -1691,65 +1691,69 @@ The document at http://local/sample-data/notjson?f=json does not appear to be va
         ]);
       });
     });
-  });
-  describe('on a single collection path', () => {
-    beforeEach(() => {
-      endpoint = new OgcApiEndpoint(
-        'http://local/sample-data/collections/airports'
-      );
-    });
-    it('correctly parses endpoint info, keep a single collection', async () => {
-      await expect(endpoint.info).resolves.toEqual({
-        title: 'OS Open Zoomstack',
-        description:
-          'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
-        attribution:
-          'Contains OS data © Crown copyright and database right 2021.',
+    describe('on a single collection path', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint(
+          'http://local/sample-data/collections/airports'
+        );
       });
-      await expect(endpoint.featureCollections).resolves.toEqual(['airports']);
-    });
-  });
-  describe('on a single collection items path', () => {
-    beforeEach(() => {
-      endpoint = new OgcApiEndpoint(
-        'http://local/sample-data/collections/airports/items'
-      );
-    });
-    it('correctly parses endpoint info, keep a single collection', async () => {
-      await expect(endpoint.info).resolves.toEqual({
-        title: 'OS Open Zoomstack',
-        description:
-          'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
-        attribution:
-          'Contains OS data © Crown copyright and database right 2021.',
+      it('correctly parses endpoint info, keep a single collection', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          title: 'OS Open Zoomstack',
+          description:
+            'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+          attribution:
+            'Contains OS data © Crown copyright and database right 2021.',
+        });
+        await expect(endpoint.featureCollections).resolves.toEqual([
+          'airports',
+        ]);
       });
-      await expect(endpoint.featureCollections).resolves.toEqual(['airports']);
     });
-  });
-  describe('on a JSON document which is not part of a valid endpoint', () => {
-    beforeEach(() => {
-      endpoint = new OgcApiEndpoint('http://local/invalid/');
+    describe('on a single collection items path', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint(
+          'http://local/sample-data/collections/airports/items'
+        );
+      });
+      it('correctly parses endpoint info, keep a single collection', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          title: 'OS Open Zoomstack',
+          description:
+            'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+          attribution:
+            'Contains OS data © Crown copyright and database right 2021.',
+        });
+        await expect(endpoint.featureCollections).resolves.toEqual([
+          'airports',
+        ]);
+      });
     });
-    it('throws an explicit error', async () => {
-      await expect(endpoint.info).rejects.toEqual(
-        new EndpointError(
-          `The endpoint appears non-conforming, the following error was encountered:
+    describe('on a JSON document which is not part of a valid endpoint', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/invalid/');
+      });
+      it('throws an explicit error', async () => {
+        await expect(endpoint.info).rejects.toEqual(
+          new EndpointError(
+            `The endpoint appears non-conforming, the following error was encountered:
 Could not find a root JSON document containing both a link with rel='data' and a link with rel='conformance'.`
-        )
-      );
+          )
+        );
+      });
     });
-  });
-  describe('on a non-existing link', () => {
-    beforeEach(() => {
-      endpoint = new OgcApiEndpoint('http://local/nonexisting');
-    });
-    it('throws an explicit error', async () => {
-      await expect(endpoint.info).rejects.toEqual(
-        new EndpointError(
-          `The endpoint appears non-conforming, the following error was encountered:
+    describe('on a non-existing link', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/nonexisting');
+      });
+      it('throws an explicit error', async () => {
+        await expect(endpoint.info).rejects.toEqual(
+          new EndpointError(
+            `The endpoint appears non-conforming, the following error was encountered:
 The document at http://local/nonexisting?f=json could not be fetched.`
-        )
-      );
+          )
+        );
+      });
     });
   });
 
