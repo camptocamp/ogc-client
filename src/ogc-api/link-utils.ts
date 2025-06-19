@@ -33,17 +33,11 @@ export function fetchRoot(url: string): Promise<OgcApiDocument> {
         'http://www.opengis.net/def/rel/ogc/1.0/conformance',
       ])
     ) {
-      let parentUrl = getParentPath(url);
+      const parentUrl = getParentPath(url);
       if (!parentUrl) {
         throw new Error(
           `Could not find a root JSON document containing both a link with rel='data' and a link with rel='conformance'.`
         );
-      }
-      // if there is a collections array, we expect the parent path to end with slash
-      if ('collections' in doc) {
-        const urlObj = new URL(parentUrl);
-        urlObj.pathname = `${urlObj.pathname}/`;
-        parentUrl = urlObj.toString();
       }
       return fetchRoot(parentUrl);
     }

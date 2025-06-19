@@ -28,7 +28,10 @@ beforeAll(() => {
       } as Response;
     }
 
-    const queryPath = url.pathname.replace(/\/$/, ''); // remove trailing slash
+    let queryPath = url.pathname.replace(/\/$/, ''); // remove trailing slash
+    if (queryPath === '') {
+      queryPath = 'root-path'; // make sure we're serving something at the root
+    }
     const format = url.searchParams.get('f') || 'html';
     const filePath = `${path.join(FIXTURES_ROOT, queryPath)}.${format}`;
     try {
@@ -1691,65 +1694,69 @@ The document at http://local/sample-data/notjson?f=json does not appear to be va
         ]);
       });
     });
-  });
-  describe('on a single collection path', () => {
-    beforeEach(() => {
-      endpoint = new OgcApiEndpoint(
-        'http://local/sample-data/collections/airports'
-      );
-    });
-    it('correctly parses endpoint info, keep a single collection', async () => {
-      await expect(endpoint.info).resolves.toEqual({
-        title: 'OS Open Zoomstack',
-        description:
-          'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
-        attribution:
-          'Contains OS data © Crown copyright and database right 2021.',
+    describe('on a single collection path', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint(
+          'http://local/sample-data/collections/airports'
+        );
       });
-      await expect(endpoint.featureCollections).resolves.toEqual(['airports']);
-    });
-  });
-  describe('on a single collection items path', () => {
-    beforeEach(() => {
-      endpoint = new OgcApiEndpoint(
-        'http://local/sample-data/collections/airports/items'
-      );
-    });
-    it('correctly parses endpoint info, keep a single collection', async () => {
-      await expect(endpoint.info).resolves.toEqual({
-        title: 'OS Open Zoomstack',
-        description:
-          'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
-        attribution:
-          'Contains OS data © Crown copyright and database right 2021.',
+      it('correctly parses endpoint info, keep a single collection', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          title: 'OS Open Zoomstack',
+          description:
+            'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+          attribution:
+            'Contains OS data © Crown copyright and database right 2021.',
+        });
+        await expect(endpoint.featureCollections).resolves.toEqual([
+          'airports',
+        ]);
       });
-      await expect(endpoint.featureCollections).resolves.toEqual(['airports']);
     });
-  });
-  describe('on a JSON document which is not part of a valid endpoint', () => {
-    beforeEach(() => {
-      endpoint = new OgcApiEndpoint('http://local/invalid/');
+    describe('on a single collection items path', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint(
+          'http://local/sample-data/collections/airports/items'
+        );
+      });
+      it('correctly parses endpoint info, keep a single collection', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          title: 'OS Open Zoomstack',
+          description:
+            'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+          attribution:
+            'Contains OS data © Crown copyright and database right 2021.',
+        });
+        await expect(endpoint.featureCollections).resolves.toEqual([
+          'airports',
+        ]);
+      });
     });
-    it('throws an explicit error', async () => {
-      await expect(endpoint.info).rejects.toEqual(
-        new EndpointError(
-          `The endpoint appears non-conforming, the following error was encountered:
+    describe('on a JSON document which is not part of a valid endpoint', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/invalid/');
+      });
+      it('throws an explicit error', async () => {
+        await expect(endpoint.info).rejects.toEqual(
+          new EndpointError(
+            `The endpoint appears non-conforming, the following error was encountered:
 Could not find a root JSON document containing both a link with rel='data' and a link with rel='conformance'.`
-        )
-      );
+          )
+        );
+      });
     });
-  });
-  describe('on a non-existing link', () => {
-    beforeEach(() => {
-      endpoint = new OgcApiEndpoint('http://local/nonexisting');
-    });
-    it('throws an explicit error', async () => {
-      await expect(endpoint.info).rejects.toEqual(
-        new EndpointError(
-          `The endpoint appears non-conforming, the following error was encountered:
+    describe('on a non-existing link', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/nonexisting');
+      });
+      it('throws an explicit error', async () => {
+        await expect(endpoint.info).rejects.toEqual(
+          new EndpointError(
+            `The endpoint appears non-conforming, the following error was encountered:
 The document at http://local/nonexisting?f=json could not be fetched.`
-        )
-      );
+          )
+        );
+      });
     });
   });
 
@@ -2220,6 +2227,128 @@ The document at http://local/nonexisting?f=json could not be fetched.`
           'waterlines',
           'woodland',
           'missing-feature-type-metadata',
+        ]);
+      });
+    });
+  });
+  describe('endpoint providing an OGC API endpoint at its root', () => {
+    let originalFetch;
+    beforeAll(() => {
+      originalFetch = window.fetch;
+      window.fetch = jest.fn().mockImplementation(async (urlOrInfo) => {
+        const url = new URL(
+          urlOrInfo instanceof URL || typeof urlOrInfo === 'string'
+            ? urlOrInfo
+            : urlOrInfo.url
+        );
+
+        const rootFixture = 'sample-data-root';
+        const queryPath = url.pathname.replace(/\/$/, ''); // remove trailing slash
+        const format = url.searchParams.get('f') || 'html';
+        const filePath = `${path.join(
+          FIXTURES_ROOT,
+          rootFixture,
+          queryPath
+        )}.${format}`;
+        try {
+          await stat(filePath);
+        } catch (e) {
+          return {
+            ok: false,
+            status: 404,
+            headers: new Headers(),
+            clone: function () {
+              return this;
+            },
+          } as Response;
+        }
+        const contents = await readFile(filePath, {
+          encoding: 'utf8',
+        });
+        return {
+          ok: true,
+          headers: new Headers(),
+          clone: function () {
+            return this;
+          },
+          json: () =>
+            new Promise((resolve) => {
+              resolve(JSON.parse(contents));
+            }),
+        } as Response;
+      });
+    });
+    afterAll(() => {
+      window.fetch = originalFetch;
+    });
+
+    describe('on root path', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/');
+      });
+      it('returns endpoint info', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          title: 'OS Open Zoomstack',
+          description:
+            'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+          attribution:
+            'Contains OS data © Crown copyright and database right 2021.',
+        });
+      });
+    });
+
+    describe('on collections path', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/collections/');
+      });
+      it('correctly parses endpoint info and collections', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          title: 'OS Open Zoomstack',
+          description:
+            'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+          attribution:
+            'Contains OS data © Crown copyright and database right 2021.',
+        });
+        await expect(endpoint.featureCollections).resolves.toEqual([
+          'airports',
+          'boundaries',
+          'contours',
+          'district_buildings',
+          'etl',
+          'foreshore',
+          'greenspace',
+          'land',
+          'local_buildings',
+          'names',
+          'national_parks',
+          'rail',
+          'railway_stations',
+          'roads_local',
+          'roads_national',
+          'roads_regional',
+          'sites',
+          'surfacewater',
+          'urban_areas',
+          'waterlines',
+          'woodland',
+          'missing-feature-type-metadata',
+        ]);
+      });
+    });
+    describe('on a single collection path', () => {
+      beforeEach(() => {
+        endpoint = new OgcApiEndpoint('http://local/collections/airports');
+      });
+      it('correctly parses endpoint info, keep a single collection', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          title: 'OS Open Zoomstack',
+          description:
+            'OS Open Zoomstack is a comprehensive vector basemap showing coverage of Great Britain at a national level, right down to street-level detail.',
+          attribution:
+            'Contains OS data © Crown copyright and database right 2021.',
+        });
+        await expect(endpoint.featureCollections).resolves.toEqual([
+          'airports',
         ]);
       });
     });
