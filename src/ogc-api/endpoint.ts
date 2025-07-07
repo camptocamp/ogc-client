@@ -409,7 +409,6 @@ ${e.message}`);
     bbox: [number, number, number, number] = null,
     properties: string[] = null,
     query: string = null,
-    
   ): Promise<OgcApiCollectionItem[]> {
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
