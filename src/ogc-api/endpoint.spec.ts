@@ -1467,6 +1467,23 @@ describe('OgcApiEndpoint', () => {
             { method: 'GET', headers: expect.any(Object) }
           );
         });
+        it('adds freeform query param at the end of the url', async () => {
+          await endpoint.getCollectionItems(
+            'roads_national',
+            10,
+            0,
+            null,
+            ['attr1', 'attr2'],
+            null,
+            null,
+            null,
+            'name=Inverness Airport&specialchar=✓'
+          );
+          expect(window.fetch).toHaveBeenCalledWith(
+            'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&sortby=attr1%2Cattr2&name=Inverness+Airport&specialchar=%E2%9C%93',
+            { method: 'GET', headers: expect.any(Object) }
+          );
+        });
       });
     });
     describe('#getCollectionItem', () => {

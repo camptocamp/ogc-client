@@ -405,6 +405,7 @@ ${e.message}`);
    * @param [boundingBox]
    * @param [properties]
    * @param [dateTime] See OGC requirement: https://docs.ogc.org/is/17-069r3/17-069r3.html#_parameter_datetime
+   * @param [query] Freeform query string appended to the URL when fetching items (will be URL-encoded if necessary)
    */
   getCollectionItems(
     collectionId: string,
@@ -414,7 +415,8 @@ ${e.message}`);
     sortBy: string[] = null,
     boundingBox: BoundingBox = null,
     properties: string[] = null,
-    dateTime: DateTimeParameter = null
+    dateTime: DateTimeParameter = null,
+    query: string = null
   ): Promise<OgcApiCollectionItem[]> {
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
@@ -441,12 +443,12 @@ ${e.message}`);
                   'end' in dateTime ? dateTime.end.toISOString() : '..'
                 }`
           );
+        if (query !== null) url.search += (url.search ? '&' : '') + query;
         return url.toString();
       })
       .then(fetchDocument)
       .then((doc) => doc.features as OgcApiCollectionItem[]);
   }
-
   /**
    * Returns a promise resolving to a specific item from a collection.
    * @param collectionId
