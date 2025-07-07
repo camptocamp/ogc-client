@@ -408,7 +408,7 @@ ${e.message}`);
     sortby: string[] = null,
     bbox: [number, number, number, number] = null,
     properties: string[] = null,
-    query: string = null,
+    query: string = null
   ): Promise<OgcApiCollectionItem[]> {
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
@@ -426,14 +426,12 @@ ${e.message}`);
           url.searchParams.set('bbox', bbox.join(',').toString());
         if (properties !== null)
           url.searchParams.set('properties', properties.join(',').toString());
-        if (query !== null)
-          url.search += (url.search ? '&' : '') + query;
+        if (query !== null) url.search += (url.search ? '&' : '') + query;
         return url.toString();
       })
       .then(fetchDocument)
       .then((doc) => doc.features as OgcApiCollectionItem[]);
   }
-
   /**
    * Returns a promise resolving to a specific item from a collection.
    * @param collectionId
