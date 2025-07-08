@@ -6,24 +6,28 @@ import { Feature, Point } from 'geojson';
 
 const FIXTURES_ROOT = path.join(__dirname, '../../fixtures/ogc-api');
 
-const sort = (features: Feature<Point, {name: string}>[], property: string) => {
+const sort = (
+  features: Feature<Point, { name: string }>[],
+  property: string
+) => {
   if (property[0] === '-') {
     const _property = property.slice(1);
     return features.sort((featA, featB) => {
       const valA = featA.properties[_property].toLowerCase();
       const valB = featB.properties[_property].toLowerCase();
 
-      return valB.localeCompare(valA)
-   });}
+      return valB.localeCompare(valA);
+    });
+  }
 
   if (property[0] === '+') {
-   const _property = property.slice(1);
-   return features.sort((featA, featB) => {
+    const _property = property.slice(1);
+    return features.sort((featA, featB) => {
       const valA = featA.properties[_property].toLowerCase();
       const valB = featB.properties[_property].toLowerCase();
 
-      return valA.localeCompare(valB)
-   });
+      return valA.localeCompare(valB);
+    });
   }
 
   // Default ascending order
@@ -31,9 +35,9 @@ const sort = (features: Feature<Point, {name: string}>[], property: string) => {
     const valA = featA.properties[property].toLowerCase();
     const valB = featB.properties[property].toLowerCase();
 
-    return valA.localeCompare(valB)
- });
-}
+    return valA.localeCompare(valB);
+  });
+};
 
 // setup fetch to read local fixtures
 beforeAll(() => {
@@ -58,7 +62,6 @@ beforeAll(() => {
       } as Response;
     }
 
-    
     const queryPath = url.pathname.replace(/\/$/, ''); // remove trailing slash
     const format = url.searchParams.get('f') || 'html';
     const filePath = `${path.join(FIXTURES_ROOT, queryPath)}.${format}`;
@@ -74,13 +77,15 @@ beforeAll(() => {
         },
       } as Response;
     }
-    const contents = JSON.parse(await readFile(filePath, {
-      encoding: 'utf8',
-    }));
+    const contents = JSON.parse(
+      await readFile(filePath, {
+        encoding: 'utf8',
+      })
+    );
 
     try {
       // Mock the implementation to allow testing parameters of /items
-      const limit = Number(url.searchParams.get('limit')); 
+      const limit = Number(url.searchParams.get('limit'));
       const offset = Number(url.searchParams.get('offset'));
       const skipGeometry = url.searchParams.get('skipGeometry');
       const sortBy = url.searchParams.get('sortby');
@@ -88,39 +93,50 @@ beforeAll(() => {
       // For testing freeform query param on airports collection
       const name = url.searchParams.get('name');
       if (name) {
-        contents.features = contents.features.filter(feature => feature.properties['name'] === name);
+        contents.features = contents.features.filter(
+          (feature) => feature.properties['name'] === name
+        );
       }
-  
+
       if (sortBy) {
         const _sortBy = sortBy.split(',');
         if (Array.isArray(_sortBy) && _sortBy.length) {
-          _sortBy.forEach(property => contents.features = sort(contents.features, property));
+          _sortBy.forEach(
+            (property) =>
+              (contents.features = sort(contents.features, property))
+          );
         }
       }
-  
+
       if (limit && offset) {
-          contents.features = JSON.parse(JSON.stringify(contents.features.slice(offset, offset + limit)));
+        contents.features = JSON.parse(
+          JSON.stringify(contents.features.slice(offset, offset + limit))
+        );
       } else if (limit) {
-        contents.features = JSON.parse(JSON.stringify(contents.features.slice(0, limit)));
+        contents.features = JSON.parse(
+          JSON.stringify(contents.features.slice(0, limit))
+        );
       } else if (offset) {
-        contents.features = JSON.parse(JSON.stringify(contents.features.slice(offset)));
+        contents.features = JSON.parse(
+          JSON.stringify(contents.features.slice(offset))
+        );
       }
 
       if (skipGeometry && Boolean(skipGeometry)) {
-        contents.features = contents.features.map(feature => ({
+        contents.features = contents.features.map((feature) => ({
           ...feature,
-          geometry: null
+          geometry: null,
         }));
       }
 
       if (properties) {
         const _properties = properties.split(',');
         if (Array.isArray(_properties) && _properties.length) {
-          contents.features = contents.features.map(feature => {
-            const newProperties = {...feature.properties};
+          contents.features = contents.features.map((feature) => {
+            const newProperties = { ...feature.properties };
             const keys = Object.keys(newProperties);
             // If property does not exist in array, delete from object
-            keys.forEach(key => {
+            keys.forEach((key) => {
               if (!_properties.includes(key)) {
                 delete newProperties[key];
               }
@@ -128,16 +144,14 @@ beforeAll(() => {
 
             return {
               ...feature,
-              properties: newProperties
+              properties: newProperties,
             };
           });
         }
       }
-
     } catch (e) {
       console.error('Issue applying filters: ', e);
     }
-  
 
     return {
       ok: true,
@@ -615,24 +629,19 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns airports collection items by limit', async () => {
         await expect(
-          endpoint.getCollectionItems('airports',
-            1
-          )
+          endpoint.getCollectionItems('airports', 1)
         ).resolves.toStrictEqual([
           {
             type: 'Feature',
             id: 1,
             geometry: { type: 'Point', coordinates: [-1.2918826, 59.8783475] },
             properties: { name: 'Sumburgh Airport' },
-          }
+          },
         ]);
       });
       it('returns airports collection items with offset', async () => {
         await expect(
-          endpoint.getCollectionItems('airports',
-            2,
-            1
-          )
+          endpoint.getCollectionItems('airports', 2, 1)
         ).resolves.toStrictEqual([
           {
             type: 'Feature',
@@ -650,11 +659,7 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns airports collection items without geometry', async () => {
         await expect(
-          endpoint.getCollectionItems('airports',
-            10,
-            0,
-            true
-          )
+          endpoint.getCollectionItems('airports', 10, 0, true)
         ).resolves.toStrictEqual([
           {
             type: 'Feature',
@@ -722,12 +727,7 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns airports collection items sorted by name asc', async () => {
         await expect(
-          endpoint.getCollectionItems('airports',
-            10,
-            0,
-            null,
-            ['+name']
-          )
+          endpoint.getCollectionItems('airports', 10, 0, null, ['+name'])
         ).resolves.toStrictEqual([
           {
             type: 'Feature',
@@ -795,12 +795,7 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns airports collection items sorted by name asc (default)', async () => {
         await expect(
-          endpoint.getCollectionItems('airports',
-            10,
-            0,
-            null,
-            ['name']
-          )
+          endpoint.getCollectionItems('airports', 10, 0, null, ['name'])
         ).resolves.toStrictEqual([
           {
             type: 'Feature',
@@ -868,12 +863,7 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns airports collection items sorted by name desc', async () => {
         await expect(
-          endpoint.getCollectionItems('airports',
-            10,
-            0,
-            null,
-            ['-name']
-          )
+          endpoint.getCollectionItems('airports', 10, 0, null, ['-name'])
         ).resolves.toStrictEqual([
           {
             type: 'Feature',
@@ -941,14 +931,9 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns airports collection items with name property', async () => {
         await expect(
-          endpoint.getCollectionItems('airports',
-            10,
-            0,
-            null,
-            null,
-            null,
-            ['name']
-          )
+          endpoint.getCollectionItems('airports', 10, 0, null, null, null, [
+            'name',
+          ])
         ).resolves.toStrictEqual([
           {
             type: 'Feature',
@@ -1016,14 +1001,9 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns airports collection items with doesntexist property', async () => {
         await expect(
-          endpoint.getCollectionItems('airports',
-            10,
-            0,
-            null,
-            null,
-            null,
-            ['doesntexist']
-          )
+          endpoint.getCollectionItems('airports', 10, 0, null, null, null, [
+            'doesntexist',
+          ])
         ).resolves.toStrictEqual([
           {
             type: 'Feature',
@@ -1089,7 +1069,8 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns airports collection items by query parameter value', async () => {
         await expect(
-          endpoint.getCollectionItems('airports',
+          endpoint.getCollectionItems(
+            'airports',
             10,
             0,
             null,
