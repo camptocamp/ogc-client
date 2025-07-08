@@ -399,6 +399,7 @@ ${e.message}`);
    * @param sortby
    * @param bbox
    * @param properties
+   * @param query
    */
   getCollectionItems(
     collectionId: string,

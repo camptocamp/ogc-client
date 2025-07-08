@@ -2,8 +2,38 @@ import OgcApiEndpoint from './endpoint.js';
 import { readFile, stat } from 'fs/promises';
 import * as path from 'path';
 import { EndpointError } from '../shared/errors.js';
+import { Feature, Point } from 'geojson';
 
 const FIXTURES_ROOT = path.join(__dirname, '../../fixtures/ogc-api');
+
+const sort = (features: Feature<Point, {name: string}>[], property: string) => {
+  if (property[0] === '-') {
+    const _property = property.slice(1);
+    return features.sort((featA, featB) => {
+      const valA = featA.properties[_property].toLowerCase();
+      const valB = featB.properties[_property].toLowerCase();
+
+      return valB.localeCompare(valA)
+   });}
+
+  if (property[0] === '+') {
+   const _property = property.slice(1);
+   return features.sort((featA, featB) => {
+      const valA = featA.properties[_property].toLowerCase();
+      const valB = featB.properties[_property].toLowerCase();
+
+      return valA.localeCompare(valB)
+   });
+  }
+
+  // Default ascending order
+  return features.sort((featA, featB) => {
+    const valA = featA.properties[property].toLowerCase();
+    const valB = featB.properties[property].toLowerCase();
+
+    return valA.localeCompare(valB)
+ });
+}
 
 // setup fetch to read local fixtures
 beforeAll(() => {
@@ -28,6 +58,7 @@ beforeAll(() => {
       } as Response;
     }
 
+    
     const queryPath = url.pathname.replace(/\/$/, ''); // remove trailing slash
     const format = url.searchParams.get('f') || 'html';
     const filePath = `${path.join(FIXTURES_ROOT, queryPath)}.${format}`;
@@ -43,9 +74,71 @@ beforeAll(() => {
         },
       } as Response;
     }
-    const contents = await readFile(filePath, {
+    const contents = JSON.parse(await readFile(filePath, {
       encoding: 'utf8',
-    });
+    }));
+
+    try {
+      // Mock the implementation to allow testing parameters of /items
+      const limit = Number(url.searchParams.get('limit')); 
+      const offset = Number(url.searchParams.get('offset'));
+      const skipGeometry = url.searchParams.get('skipGeometry');
+      const sortBy = url.searchParams.get('sortby');
+      const properties = url.searchParams.get('properties');
+      // For testing freeform query param on airports collection
+      const name = url.searchParams.get('name');
+      if (name) {
+        contents.features = contents.features.filter(feature => feature.properties['name'] === name);
+      }
+  
+      if (sortBy) {
+        const _sortBy = sortBy.split(',');
+        if (Array.isArray(_sortBy) && _sortBy.length) {
+          _sortBy.forEach(property => contents.features = sort(contents.features, property));
+        }
+      }
+  
+      if (limit && offset) {
+          contents.features = JSON.parse(JSON.stringify(contents.features.slice(offset, offset + limit)));
+      } else if (limit) {
+        contents.features = JSON.parse(JSON.stringify(contents.features.slice(0, limit)));
+      } else if (offset) {
+        contents.features = JSON.parse(JSON.stringify(contents.features.slice(offset)));
+      }
+
+      if (skipGeometry && Boolean(skipGeometry)) {
+        contents.features = contents.features.map(feature => ({
+          ...feature,
+          geometry: null
+        }));
+      }
+
+      if (properties) {
+        const _properties = properties.split(',');
+        if (Array.isArray(_properties) && _properties.length) {
+          contents.features = contents.features.map(feature => {
+            const newProperties = {...feature.properties};
+            const keys = Object.keys(newProperties);
+            // If property does not exist in array, delete from object
+            keys.forEach(key => {
+              if (!_properties.includes(key)) {
+                delete newProperties[key];
+              }
+            });
+
+            return {
+              ...feature,
+              properties: newProperties
+            };
+          });
+        }
+      }
+
+    } catch (e) {
+      console.error('Issue applying filters: ', e);
+    }
+  
+
     return {
       ok: true,
       headers: new Headers(),
@@ -54,7 +147,7 @@ beforeAll(() => {
       },
       json: () =>
         new Promise((resolve) => {
-          resolve(JSON.parse(contents));
+          resolve(contents);
         }),
     } as Response;
   });
@@ -517,6 +610,500 @@ describe('OgcApiEndpoint', () => {
             id: 10,
             geometry: { type: 'Point', coordinates: [-6.869044, 56.5011563] },
             properties: { name: 'Tiree Airport' },
+          },
+        ]);
+      });
+      it('returns airports collection items by limit', async () => {
+        await expect(
+          endpoint.getCollectionItems('airports',
+            1
+          )
+        ).resolves.toStrictEqual([
+          {
+            type: 'Feature',
+            id: 1,
+            geometry: { type: 'Point', coordinates: [-1.2918826, 59.8783475] },
+            properties: { name: 'Sumburgh Airport' },
+          }
+        ]);
+      });
+      it('returns airports collection items with offset', async () => {
+        await expect(
+          endpoint.getCollectionItems('airports',
+            2,
+            1
+          )
+        ).resolves.toStrictEqual([
+          {
+            type: 'Feature',
+            id: 2,
+            geometry: { type: 'Point', coordinates: [-1.2438161, 60.1918282] },
+            properties: { name: 'Tingwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 3,
+            geometry: { type: 'Point', coordinates: [-2.8998525, 58.9579506] },
+            properties: { name: 'Kirkwall Airport' },
+          },
+        ]);
+      });
+      it('returns airports collection items without geometry', async () => {
+        await expect(
+          endpoint.getCollectionItems('airports',
+            10,
+            0,
+            true
+          )
+        ).resolves.toStrictEqual([
+          {
+            type: 'Feature',
+            id: 1,
+            geometry: null,
+            properties: { name: 'Sumburgh Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 2,
+            geometry: null,
+            properties: { name: 'Tingwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 3,
+            geometry: null,
+            properties: { name: 'Kirkwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 4,
+            geometry: null,
+            properties: { name: 'Port-Adhair Steòrnabhaigh/Stornoway Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 5,
+            geometry: null,
+            properties: { name: "Wick John O'Groats Airport" },
+          },
+          {
+            type: 'Feature',
+            id: 6,
+            geometry: null,
+            properties: {
+              name: 'Port-adhair Bheinn na Faoghla/Benbecula Airport',
+            },
+          },
+          {
+            type: 'Feature',
+            id: 7,
+            geometry: null,
+            properties: { name: 'Port-adhair Bharraigh/Barra Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 8,
+            geometry: null,
+            properties: { name: 'Inverness Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 9,
+            geometry: null,
+            properties: { name: 'Aberdeen International Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 10,
+            geometry: null,
+            properties: { name: 'Tiree Airport' },
+          },
+        ]);
+      });
+      it('returns airports collection items sorted by name asc', async () => {
+        await expect(
+          endpoint.getCollectionItems('airports',
+            10,
+            0,
+            null,
+            ['+name']
+          )
+        ).resolves.toStrictEqual([
+          {
+            type: 'Feature',
+            id: 9,
+            geometry: { type: 'Point', coordinates: [-2.200068, 57.202807] },
+            properties: { name: 'Aberdeen International Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 8,
+            geometry: { type: 'Point', coordinates: [-4.0493507, 57.5431458] },
+            properties: { name: 'Inverness Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 3,
+            geometry: { type: 'Point', coordinates: [-2.8998525, 58.9579506] },
+            properties: { name: 'Kirkwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 7,
+            geometry: { type: 'Point', coordinates: [-7.4487268, 57.0254269] },
+            properties: { name: 'Port-adhair Bharraigh/Barra Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 6,
+            geometry: { type: 'Point', coordinates: [-7.3610346, 57.4843261] },
+            properties: {
+              name: 'Port-adhair Bheinn na Faoghla/Benbecula Airport',
+            },
+          },
+          {
+            type: 'Feature',
+            id: 4,
+            geometry: { type: 'Point', coordinates: [-6.3295078, 58.2138995] },
+            properties: { name: 'Port-Adhair Steòrnabhaigh/Stornoway Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 1,
+            geometry: { type: 'Point', coordinates: [-1.2918826, 59.8783475] },
+            properties: { name: 'Sumburgh Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 2,
+            geometry: { type: 'Point', coordinates: [-1.2438161, 60.1918282] },
+            properties: { name: 'Tingwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 10,
+            geometry: { type: 'Point', coordinates: [-6.869044, 56.5011563] },
+            properties: { name: 'Tiree Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 5,
+            geometry: { type: 'Point', coordinates: [-3.094033, 58.458363] },
+            properties: { name: "Wick John O'Groats Airport" },
+          },
+        ]);
+      });
+      it('returns airports collection items sorted by name asc (default)', async () => {
+        await expect(
+          endpoint.getCollectionItems('airports',
+            10,
+            0,
+            null,
+            ['name']
+          )
+        ).resolves.toStrictEqual([
+          {
+            type: 'Feature',
+            id: 9,
+            geometry: { type: 'Point', coordinates: [-2.200068, 57.202807] },
+            properties: { name: 'Aberdeen International Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 8,
+            geometry: { type: 'Point', coordinates: [-4.0493507, 57.5431458] },
+            properties: { name: 'Inverness Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 3,
+            geometry: { type: 'Point', coordinates: [-2.8998525, 58.9579506] },
+            properties: { name: 'Kirkwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 7,
+            geometry: { type: 'Point', coordinates: [-7.4487268, 57.0254269] },
+            properties: { name: 'Port-adhair Bharraigh/Barra Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 6,
+            geometry: { type: 'Point', coordinates: [-7.3610346, 57.4843261] },
+            properties: {
+              name: 'Port-adhair Bheinn na Faoghla/Benbecula Airport',
+            },
+          },
+          {
+            type: 'Feature',
+            id: 4,
+            geometry: { type: 'Point', coordinates: [-6.3295078, 58.2138995] },
+            properties: { name: 'Port-Adhair Steòrnabhaigh/Stornoway Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 1,
+            geometry: { type: 'Point', coordinates: [-1.2918826, 59.8783475] },
+            properties: { name: 'Sumburgh Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 2,
+            geometry: { type: 'Point', coordinates: [-1.2438161, 60.1918282] },
+            properties: { name: 'Tingwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 10,
+            geometry: { type: 'Point', coordinates: [-6.869044, 56.5011563] },
+            properties: { name: 'Tiree Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 5,
+            geometry: { type: 'Point', coordinates: [-3.094033, 58.458363] },
+            properties: { name: "Wick John O'Groats Airport" },
+          },
+        ]);
+      });
+      it('returns airports collection items sorted by name desc', async () => {
+        await expect(
+          endpoint.getCollectionItems('airports',
+            10,
+            0,
+            null,
+            ['-name']
+          )
+        ).resolves.toStrictEqual([
+          {
+            type: 'Feature',
+            id: 5,
+            geometry: { type: 'Point', coordinates: [-3.094033, 58.458363] },
+            properties: { name: "Wick John O'Groats Airport" },
+          },
+          {
+            type: 'Feature',
+            id: 10,
+            geometry: { type: 'Point', coordinates: [-6.869044, 56.5011563] },
+            properties: { name: 'Tiree Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 2,
+            geometry: { type: 'Point', coordinates: [-1.2438161, 60.1918282] },
+            properties: { name: 'Tingwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 1,
+            geometry: { type: 'Point', coordinates: [-1.2918826, 59.8783475] },
+            properties: { name: 'Sumburgh Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 4,
+            geometry: { type: 'Point', coordinates: [-6.3295078, 58.2138995] },
+            properties: { name: 'Port-Adhair Steòrnabhaigh/Stornoway Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 6,
+            geometry: { type: 'Point', coordinates: [-7.3610346, 57.4843261] },
+            properties: {
+              name: 'Port-adhair Bheinn na Faoghla/Benbecula Airport',
+            },
+          },
+          {
+            type: 'Feature',
+            id: 7,
+            geometry: { type: 'Point', coordinates: [-7.4487268, 57.0254269] },
+            properties: { name: 'Port-adhair Bharraigh/Barra Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 3,
+            geometry: { type: 'Point', coordinates: [-2.8998525, 58.9579506] },
+            properties: { name: 'Kirkwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 8,
+            geometry: { type: 'Point', coordinates: [-4.0493507, 57.5431458] },
+            properties: { name: 'Inverness Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 9,
+            geometry: { type: 'Point', coordinates: [-2.200068, 57.202807] },
+            properties: { name: 'Aberdeen International Airport' },
+          },
+        ]);
+      });
+      it('returns airports collection items with name property', async () => {
+        await expect(
+          endpoint.getCollectionItems('airports',
+            10,
+            0,
+            null,
+            null,
+            null,
+            ['name']
+          )
+        ).resolves.toStrictEqual([
+          {
+            type: 'Feature',
+            id: 1,
+            geometry: { type: 'Point', coordinates: [-1.2918826, 59.8783475] },
+            properties: { name: 'Sumburgh Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 2,
+            geometry: { type: 'Point', coordinates: [-1.2438161, 60.1918282] },
+            properties: { name: 'Tingwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 3,
+            geometry: { type: 'Point', coordinates: [-2.8998525, 58.9579506] },
+            properties: { name: 'Kirkwall Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 4,
+            geometry: { type: 'Point', coordinates: [-6.3295078, 58.2138995] },
+            properties: { name: 'Port-Adhair Steòrnabhaigh/Stornoway Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 5,
+            geometry: { type: 'Point', coordinates: [-3.094033, 58.458363] },
+            properties: { name: "Wick John O'Groats Airport" },
+          },
+          {
+            type: 'Feature',
+            id: 6,
+            geometry: { type: 'Point', coordinates: [-7.3610346, 57.4843261] },
+            properties: {
+              name: 'Port-adhair Bheinn na Faoghla/Benbecula Airport',
+            },
+          },
+          {
+            type: 'Feature',
+            id: 7,
+            geometry: { type: 'Point', coordinates: [-7.4487268, 57.0254269] },
+            properties: { name: 'Port-adhair Bharraigh/Barra Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 8,
+            geometry: { type: 'Point', coordinates: [-4.0493507, 57.5431458] },
+            properties: { name: 'Inverness Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 9,
+            geometry: { type: 'Point', coordinates: [-2.200068, 57.202807] },
+            properties: { name: 'Aberdeen International Airport' },
+          },
+          {
+            type: 'Feature',
+            id: 10,
+            geometry: { type: 'Point', coordinates: [-6.869044, 56.5011563] },
+            properties: { name: 'Tiree Airport' },
+          },
+        ]);
+      });
+      it('returns airports collection items with doesntexist property', async () => {
+        await expect(
+          endpoint.getCollectionItems('airports',
+            10,
+            0,
+            null,
+            null,
+            null,
+            ['doesntexist']
+          )
+        ).resolves.toStrictEqual([
+          {
+            type: 'Feature',
+            id: 1,
+            geometry: { type: 'Point', coordinates: [-1.2918826, 59.8783475] },
+            properties: {},
+          },
+          {
+            type: 'Feature',
+            id: 2,
+            geometry: { type: 'Point', coordinates: [-1.2438161, 60.1918282] },
+            properties: {},
+          },
+          {
+            type: 'Feature',
+            id: 3,
+            geometry: { type: 'Point', coordinates: [-2.8998525, 58.9579506] },
+            properties: {},
+          },
+          {
+            type: 'Feature',
+            id: 4,
+            geometry: { type: 'Point', coordinates: [-6.3295078, 58.2138995] },
+            properties: {},
+          },
+          {
+            type: 'Feature',
+            id: 5,
+            geometry: { type: 'Point', coordinates: [-3.094033, 58.458363] },
+            properties: {},
+          },
+          {
+            type: 'Feature',
+            id: 6,
+            geometry: { type: 'Point', coordinates: [-7.3610346, 57.4843261] },
+            properties: {},
+          },
+          {
+            type: 'Feature',
+            id: 7,
+            geometry: { type: 'Point', coordinates: [-7.4487268, 57.0254269] },
+            properties: {},
+          },
+          {
+            type: 'Feature',
+            id: 8,
+            geometry: { type: 'Point', coordinates: [-4.0493507, 57.5431458] },
+            properties: {},
+          },
+          {
+            type: 'Feature',
+            id: 9,
+            geometry: { type: 'Point', coordinates: [-2.200068, 57.202807] },
+            properties: {},
+          },
+          {
+            type: 'Feature',
+            id: 10,
+            geometry: { type: 'Point', coordinates: [-6.869044, 56.5011563] },
+            properties: {},
+          },
+        ]);
+      });
+      it('returns airports collection items by query parameter value', async () => {
+        await expect(
+          endpoint.getCollectionItems('airports',
+            10,
+            0,
+            null,
+            null,
+            null,
+            null,
+            'name=Inverness Airport'
+          )
+        ).resolves.toStrictEqual([
+          {
+            type: 'Feature',
+            id: 8,
+            geometry: { type: 'Point', coordinates: [-4.0493507, 57.5431458] },
+            properties: { name: 'Inverness Airport' },
           },
         ]);
       });
