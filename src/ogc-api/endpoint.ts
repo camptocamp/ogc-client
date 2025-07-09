@@ -53,7 +53,7 @@ export default class OgcApiEndpoint {
   private tileMatrixSetsFull_: Promise<TileMatrixSet[]>;
   private styles_: Promise<OgcApiStylesDocument>;
 
-  private get root(): Promise<OgcApiDocument> {
+  protected get root(): Promise<OgcApiDocument> {
     if (!this.root_) {
       this.root_ = fetchRoot(this.baseUrl).catch((e) => {
         throw new Error(`The endpoint appears non-conforming, the following error was encountered:
@@ -133,7 +133,7 @@ ${e.message}`);
    * @param baseUrl Base URL used to query the endpoint. Note that this can point to nested
    * documents inside the endpoint, such as `/collections`, `/collections/items` etc.
    */
-  constructor(private baseUrl: string) {}
+  constructor(protected baseUrl: string) {}
 
   /**
    * A Promise which resolves to the endpoint information.
