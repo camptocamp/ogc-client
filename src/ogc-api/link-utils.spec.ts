@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import * as linkUtils from './link-utils.js';
-import { OgcApiDocument } from './model.js';
+import { OgcApiDocument } from '../ogc-common/model.js';
 import * as httpUtils from '../shared/http-utils.js';
 
 describe('link-utils', () => {

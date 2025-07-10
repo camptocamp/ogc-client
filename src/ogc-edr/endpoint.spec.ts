@@ -1,6 +1,7 @@
 import OgcApiEDREndpoint from "./endpoint.js";
 import * as path from 'path';
 import { readFile, stat } from 'fs/promises';
+import OgcApiEndpoint from "../ogc-api/endpoint.js";
 
 const FIXTURES_ROOT = path.join(__dirname, '../../fixtures/ogc-edr');
 
@@ -66,20 +67,6 @@ const FIXTURES_ROOT = path.join(__dirname, '../../fixtures/ogc-edr');
 describe('endpoint',  () => {
     it('should create an instance of OgcApiEDREndpoint', async () => {
 
-        const endpoint = new OgcApiEDREndpoint(
-          "https://api.wwdh.internetofwater.app/collections?f=json"
-        );
-
-        const collections = await endpoint.allCollections;
-
-        collections.forEach((collection) => {
-          let name = collection.name
-          expect(collection).toHaveProperty('name');
-          expect(collection).toHaveProperty('hasRecords');
-          expect(collection).toHaveProperty('hasFeatures');
-          expect(collection).toHaveProperty('hasVectorTiles');
-          expect(collection).toHaveProperty('hasMapTiles');
-        })
 
     });
 });

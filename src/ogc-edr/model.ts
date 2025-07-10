@@ -1,28 +1,6 @@
-import { OgcApiCollectionInfo, OgcApiDocument } from "../ogc-api/model.js";
+import { DataQueryTypes } from "../ogc-common/common.js";
+import { OgcApiCollectionInfo, OgcApiDocument } from "../ogc-common/model.js";
 
-export type DataQueryTypes =
-  | 'items'
-  | 'locations'
-  | 'cube'
-  | 'area'
-  | 'trajectory'
-  | 'radius'
-  | 'corridor'
-  | 'position'
-  | 'instances';
-
-// Reflect it as an array:
-export const DataQueryTypesArray = [
-  'items',
-  'locations',
-  'cube',
-  'area',
-  'trajectory',
-  'radius',
-  'corridor',
-  'position',
-  'instances',
-] as DataQueryTypes[];
 
 export interface OgcEDRCollectionInfo extends OgcApiCollectionInfo {
   data_queries?: {

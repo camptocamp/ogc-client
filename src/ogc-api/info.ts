@@ -11,7 +11,7 @@ import {
   OgcStyleBrief,
   OgcStyleFull,
   TileMatrixSet,
-} from './model.js';
+} from '../ogc-common/model.js';
 import { assertHasLinks } from './link-utils.js';
 import { EndpointError } from '../shared/errors.js';
 import {
@@ -45,49 +45,7 @@ export function parseConformance(doc: OgcApiDocument): ConformanceClass[] {
   return doc.conformsTo as string[];
 }
 
-export function parseCollections(doc: OgcApiDocument): Array<{
-  name: string;
-  hasRecords?: boolean;
-  hasFeatures?: boolean;
-  hasVectorTiles?: boolean;
-  hasMapTiles?: boolean;
-}> {
-  return (doc.collections as OgcApiCollectionInfo[]).map((collection) => {
-    const result: {
-      name: string;
-      hasRecords?: boolean;
-      hasFeatures?: boolean;
-      hasVectorTiles?: boolean;
-      hasMapTiles?: boolean;
-    } = {
-      name: collection.id as string,
-    };
-    if (collection.itemType === 'record') {
-      result.hasRecords = true;
-    }
-    if (collection.itemType === 'feature' || !collection.itemType) {
-      result.hasFeatures = true;
-    }
-    if (
-      collection.links.some(
-        (link) =>
-          link.rel === 'http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector'
-      )
-    ) {
-      result.hasVectorTiles = true;
-    }
-    if (
-      collection.links.some(
-        (link) =>
-          link.rel === 'http://www.opengis.net/def/rel/ogc/1.0/tilesets-map'
-      )
-    ) {
-      result.hasMapTiles = true;
-    }
 
-    return result;
-  });
-}
 
 export function checkTileConformance(conformance: ConformanceClass[]) {
   return (

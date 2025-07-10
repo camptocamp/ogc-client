@@ -6,7 +6,6 @@ import {
   parseBaseCollectionInfo,
   parseBasicStyleInfo,
   parseCollectionParameters,
-  parseCollections,
   parseConformance,
   parseEndpointInfo,
   parseFullStyleInfo,
@@ -23,7 +22,7 @@ import {
   OgcStyleBrief,
   OgcStyleFull,
   TileMatrixSet,
-} from './model.js';
+} from '../ogc-common/model.js';
 import {
   fetchCollectionRoot,
   fetchDocument,
@@ -40,6 +39,7 @@ import {
   isMimeTypeJson,
   isMimeTypeJsonFg,
 } from '../shared/mime-type.js';
+import { DataQueryTypes, parseCollections } from '../ogc-common/common.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -83,7 +83,7 @@ ${e.message}`);
       )
     );
   }
-  private get data(): Promise<OgcApiDocument> {
+  protected get data(): Promise<OgcApiDocument> {
     if (!this.data_) {
       this.data_ = this.collectionsUrl
         .then(fetchDocument)
@@ -159,6 +159,7 @@ ${e.message}`);
       hasFeatures?: boolean;
       hasVectorTiles?: boolean;
       hasMapTiles?: boolean;
+      dataQueries?: DataQueryTypes[];
     }[]
   > {
     return this.data.then(parseCollections);

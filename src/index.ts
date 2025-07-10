@@ -40,7 +40,7 @@ export type {
   CrsCode,
 } from './shared/models.js';
 export { default as OgcApiEndpoint } from './ogc-api/endpoint.js';
-export * from './ogc-api/model.js';
+export * from './ogc-common/model.js';
 export { default as TmsEndpoint } from './tms/endpoint.js';
 export * from './tms/model.js';
 

@@ -1,5 +1,6 @@
 import OgcApiEndpoint from "../ogc-api/endpoint.js";
-import { fetchDocument, fetchRoot, getLinkUrl } from "../ogc-api/link-utils.js";
+import { fetchDocument, getLinkUrl } from "../ogc-api/link-utils.js";
+import { DataQueryTypes, parseCollections } from "../ogc-common/common.js";
 import { OgcEDRDocument } from "./model.js";
 
 type wkt = string;
@@ -8,19 +9,19 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
   private edr_root_: Promise<OgcEDRDocument>;
 
   constructor(base_url: string) {
-    super(base_url); 
+    super(base_url);
   }
-
-  protected get edr_root(): Promise<OgcEDRDocument> {
-    if (!this.edr_root_) {
-      this.edr_root_ = fetchRoot(this.baseUrl)
-        .then((doc) => doc as unknown as OgcEDRDocument)
-        .catch((e) => {
-          throw new Error(`The endpoint appears non-conforming, the following error was encountered:
-    ${e.message}`);
-        });
-    }
-    return this.edr_root_;
+  override get allCollections(): Promise<
+    {
+      name: string;
+      hasRecords?: boolean;
+      hasFeatures?: boolean;
+      hasVectorTiles?: boolean;
+      hasMapTiles?: boolean;
+      dataQueries?: DataQueryTypes[];
+    }[]
+  > {
+    return this.data.then((doc) => parseCollections(doc, true));
   }
 
   async getArea(
@@ -77,11 +78,11 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
   getCube(
     collectionId: string,
     bbox: Number[],
-    z: string?,
-    datetime: string?,
-    parameter_name: string[]?,
-    crs: string?,
-    f: string?
+    z?: string,
+    datetime?: string,
+    parameter_name?: string[],
+    crs?: string,
+    f?: string
   ) {}
 
   getTrajectory(collectionId: string) {}
