@@ -253,7 +253,7 @@ ${e.message}`);
     return this.tileMatrixSetsFull.then((sets) => sets.map((set) => set.id));
   }
 
-  private getCollectionDocument(collectionId: string): Promise<OgcApiDocument> {
+  protected getCollectionDocument(collectionId: string): Promise<OgcApiDocument> {
     return Promise.all([this.allCollections, this.data])
       .then(([collections, data]) => {
         if (!collections.find((collection) => collection.name === collectionId))
