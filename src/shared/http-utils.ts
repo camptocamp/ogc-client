@@ -59,7 +59,7 @@ export function sharedFetch(
   options.method = method;
   if (asJson) {
     options.headers = 'headers' in options ? options.headers : {};
-    options.headers['Accept'] = 'application/json';
+    options.headers['Accept'] = 'application/json,application/schema+json';
   }
   // to avoid unhandled promise rejections this promise will never reject,
   // but only return errors as a normal value
