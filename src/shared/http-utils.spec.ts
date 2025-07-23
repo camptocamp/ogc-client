@@ -438,7 +438,7 @@ describe('HTTP utils', () => {
             method: 'GET',
             headers: {
               ...sampleOptions.headers,
-              Accept: 'application/json',
+              Accept: 'application/json,application/schema+json',
             },
           }
         );
