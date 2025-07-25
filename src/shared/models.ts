@@ -87,3 +87,9 @@ export type MetadataURL = {
 
 export type FieldName = string;
 export type FieldSort = ['D' | 'A', FieldName];
+
+export type DateTimeParameter =
+  | Date
+  | { start: Date }
+  | { end: Date }
+  | { start: Date; end: Date };

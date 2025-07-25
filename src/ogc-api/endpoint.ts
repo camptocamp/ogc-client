@@ -34,7 +34,12 @@ import {
   hasLinks,
 } from './link-utils.js';
 import { EndpointError } from '../shared/errors.js';
-import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
+import {
+  BoundingBox,
+  CrsCode,
+  DateTimeParameter,
+  MimeType,
+} from '../shared/models.js';
 import {
   isMimeTypeGeoJson,
   isMimeTypeJson,
@@ -393,21 +398,23 @@ ${e.message}`);
   /**
    * Returns a promise resolving to an array of items from a collection with the given query parameters.
    * @param collectionId
-   * @param limit
-   * @param offset
-   * @param skipGeometry
-   * @param sortby
-   * @param bbox
-   * @param properties
+   * @param [limit]
+   * @param [offset]
+   * @param [skipGeometry]
+   * @param [sortBy]
+   * @param [boundingBox]
+   * @param [properties]
+   * @param [dateTime] See OGC requirement: https://docs.ogc.org/is/17-069r3/17-069r3.html#_parameter_datetime
    */
   getCollectionItems(
     collectionId: string,
     limit: number = 10,
     offset: number = 0,
     skipGeometry: boolean = null,
-    sortby: string[] = null,
-    bbox: [number, number, number, number] = null,
-    properties: string[] = null
+    sortBy: string[] = null,
+    boundingBox: BoundingBox = null,
+    properties: string[] = null,
+    dateTime: DateTimeParameter = null
   ): Promise<OgcApiCollectionItem[]> {
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
@@ -419,12 +426,21 @@ ${e.message}`);
         url.searchParams.set('offset', offset.toString());
         if (skipGeometry !== null)
           url.searchParams.set('skipGeometry', skipGeometry.toString());
-        if (sortby !== null)
-          url.searchParams.set('sortby', sortby.join(',').toString());
-        if (bbox !== null)
-          url.searchParams.set('bbox', bbox.join(',').toString());
+        if (sortBy !== null)
+          url.searchParams.set('sortby', sortBy.join(',').toString());
+        if (boundingBox !== null)
+          url.searchParams.set('bbox', boundingBox.join(',').toString());
         if (properties !== null)
           url.searchParams.set('properties', properties.join(',').toString());
+        if (dateTime !== null)
+          url.searchParams.set(
+            'datetime',
+            dateTime instanceof Date
+              ? dateTime.toISOString()
+              : `${'start' in dateTime ? dateTime.start.toISOString() : '..'}/${
+                  'end' in dateTime ? dateTime.end.toISOString() : '..'
+                }`
+          );
         return url.toString();
       })
       .then(fetchDocument)
