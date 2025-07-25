@@ -1399,6 +1399,75 @@ describe('OgcApiEndpoint', () => {
           },
         ]);
       });
+      describe('parameters encoding', () => {
+        beforeEach(() => {
+          jest.clearAllMocks();
+        });
+        it('encodes parameters in the URL', async () => {
+          await endpoint.getCollectionItems(
+            'roads_national',
+            20,
+            12,
+            false,
+            ['attr1'],
+            [1, 2, 3, 4],
+            ['attr2', 'attr3'],
+            new Date('2023-02-01')
+          );
+          expect(window.fetch).toHaveBeenCalledWith(
+            'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=20&offset=12&skipGeometry=false&sortby=attr1&bbox=1%2C2%2C3%2C4&properties=attr2%2Cattr3&datetime=2023-02-01T00%3A00%3A00.000Z',
+            { method: 'GET', headers: expect.any(Object) }
+          );
+        });
+        it('encodes date time param as an interval', async () => {
+          await endpoint.getCollectionItems(
+            'roads_national',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            { start: new Date('2023-02-01'), end: new Date('2023-02-15') }
+          );
+          expect(window.fetch).toHaveBeenCalledWith(
+            'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&datetime=2023-02-01T00%3A00%3A00.000Z%2F2023-02-15T00%3A00%3A00.000Z',
+            { method: 'GET', headers: expect.any(Object) }
+          );
+        });
+        it('encodes date time param as an interval (start only)', async () => {
+          await endpoint.getCollectionItems(
+            'roads_national',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            { start: new Date('2023-02-01') }
+          );
+          expect(window.fetch).toHaveBeenCalledWith(
+            'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&datetime=2023-02-01T00%3A00%3A00.000Z%2F..',
+            { method: 'GET', headers: expect.any(Object) }
+          );
+        });
+        it('encodes date time param as an interval (end only)', async () => {
+          await endpoint.getCollectionItems(
+            'roads_national',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            { end: new Date('2023-02-01') }
+          );
+          expect(window.fetch).toHaveBeenCalledWith(
+            'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&datetime=..%2F2023-02-01T00%3A00%3A00.000Z',
+            { method: 'GET', headers: expect.any(Object) }
+          );
+        });
+      });
     });
     describe('#getCollectionItem', () => {
       it('returns one airports collection item', async () => {
