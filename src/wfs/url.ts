@@ -16,6 +16,7 @@ import { WfsVersion } from './model.js';
  * @param [extent] an extent to restrict returned objects
  * @param [extentCrs] if unspecified, `extent` should be in the data native projection
  * @param [startIndex] if the service supports it, this will be the index of the first feature to return
+ * @param [sortBy] sorting parameter
  */
 export function generateGetFeatureUrl(
   serviceUrl: string,
@@ -58,18 +59,18 @@ export function generateGetFeatureUrl(
     newParams.STARTINDEX = startIndex.toString(10);
   }
 
-  let url = setQueryParams(serviceUrl, newParams);
+  const url = new URL(setQueryParams(serviceUrl, newParams));
 
   // Don't encode +A or +D Wfs sorting param
   if (Array.isArray(sortBy) && sortBy.length > 0) {
     const sorts = sortBy
-      .map((fieldSort) => `${fieldSort[1]}+${fieldSort[0]}`)
+      .map((fieldSort) => `${fieldSort[1]} ${fieldSort[0]}`)
       .join(',');
     // Direct update on string url to prevent encoding of +A and +D
-    url = `${url}${new URL(url).search ? '&' : ''}SORTBY=${sorts}`;
+    url.searchParams.set('SORTBY', sorts);
   }
 
-  return url;
+  return url.toString();
 }
 
 /**

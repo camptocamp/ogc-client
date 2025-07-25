@@ -138,7 +138,7 @@ describe('WFS url helpers', () => {
           ]
         )
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&SORTBY=col1+A,col2+D'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&SORTBY=col1+A%2Ccol2+D'
       );
     });
   });
