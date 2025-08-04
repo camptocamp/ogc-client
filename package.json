@@ -58,8 +58,8 @@
     }
   },
   "scripts": {
-    "test": "jest",
-    "test:browser": "npm run test",
+    "test": "npm run test:browser && npm run test:node",
+    "test:browser": "jest",
     "test:node": "jest --config jest.node.config.cjs",
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
