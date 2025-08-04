@@ -19,3 +19,16 @@ export function getParentPath(url: string): string | null {
   urlObj.pathname = pathParts.join('/');
   return urlObj.toString();
 }
+
+/**
+ * Appends a new fragment to the URL's path
+ */
+export function getChildPath(url: string, childFragment: string): string {
+  const urlObj = new URL(url, globalThis.location.toString());
+  if (urlObj.pathname.endsWith('/')) {
+    urlObj.pathname += childFragment;
+  } else {
+    urlObj.pathname += `/${childFragment}`;
+  }
+  return urlObj.toString();
+}

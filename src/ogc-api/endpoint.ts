@@ -45,6 +45,7 @@ import {
   isMimeTypeJson,
   isMimeTypeJsonFg,
 } from '../shared/mime-type.js';
+import { getChildPath } from '../shared/url-utils.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -273,7 +274,9 @@ ${e.message}`);
           return fetchLink(collection, 'self', this.baseUrl);
         }
         // otherwise build a URL for the collection
-        return fetchDocument(`${await this.collectionsUrl}/${collectionId}`);
+        return fetchDocument(
+          getChildPath(await this.collectionsUrl, collectionId)
+        );
       });
   }
 
@@ -362,27 +365,29 @@ ${e.message}`);
     const firstTilesetVector = tilesetsVector[0];
     let vectorTileFormats = [];
     if (firstTilesetVector) {
-      const tilesetUrl = getLinkUrl(firstTilesetVector, 'self', this.baseUrl);
-      if (!tilesetUrl) {
-        throw new Error('No links found for the tileset');
-      }
+      const tilesetUrl = getLinkUrl(
+        firstTilesetVector,
+        'self',
+        this.baseUrl,
+        undefined,
+        true
+      );
       const tilesetDoc = await fetchDocument(tilesetUrl);
-      vectorTileFormats = tilesetDoc.links
-        .filter((link) => link.rel === 'item')
-        .map((link) => link.type);
+      vectorTileFormats = getLinks(tilesetDoc, 'item').map((link) => link.type);
     }
 
     const firstTilesetMap = tilesetsMap[0];
     let mapTileFormats = [];
     if (firstTilesetMap) {
-      const tilesetUrl = getLinkUrl(firstTilesetMap, 'self', this.baseUrl);
-      if (!tilesetUrl) {
-        throw new Error('No links found for the tileset');
-      }
+      const tilesetUrl = getLinkUrl(
+        firstTilesetMap,
+        'self',
+        this.baseUrl,
+        undefined,
+        true
+      );
       const tilesetDoc = await fetchDocument(tilesetUrl);
-      mapTileFormats = tilesetDoc.links
-        .filter((link) => link.rel === 'item')
-        .map((link) => link.type);
+      mapTileFormats = getLinks(tilesetDoc, 'item').map((link) => link.type);
     }
 
     return {
@@ -492,7 +497,7 @@ ${e.message}`);
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
         const baseUrl = this.baseUrl || '';
-        const itemLinks = getLinks(collectionDoc, 'items');
+        const itemLinks = getLinks(collectionDoc, 'items', undefined, true);
         let linkWithFormat = itemLinks.find(
           (link) => link.type === options?.outputFormat
         );
@@ -659,13 +664,10 @@ ${e.message}`);
     const stylesLink = getLinkUrl(
       doc as OgcApiDocument,
       ['styles', 'http://www.opengis.net/def/rel/ogc/1.0/styles'],
-      this.baseUrl
+      this.baseUrl,
+      undefined,
+      true
     );
-    if (!stylesLink) {
-      throw new EndpointError(
-        'Could not get styles: there is no relation of type "styles"'
-      );
-    }
     const styleData = (await fetchDocument(stylesLink)) as OgcApiStylesDocument;
     return styleData.styles.map(parseBasicStyleInfo);
   }
@@ -707,26 +709,11 @@ ${e.message}`);
     );
 
     if (stylesDoc.stylesheets) {
-      const urlFromMetadata = (
-        stylesDoc as OgcApiStyleMetadata
-      )?.stylesheets?.find(
+      return (stylesDoc as OgcApiStyleMetadata)?.stylesheets?.find(
         (s) => s.link.type === mimeType && s.link.rel === 'stylesheet'
       )?.link?.href;
-      return urlFromMetadata;
     }
 
-    const urlFromStyle = getLinkUrl(
-      stylesDoc,
-      'stylesheet',
-      this.baseUrl,
-      mimeType
-    );
-
-    if (!urlFromStyle) {
-      throw new EndpointError(
-        'Could not find stylesheet URL for given style ID and type.'
-      );
-    }
-    return urlFromStyle;
+    return getLinkUrl(stylesDoc, 'stylesheet', this.baseUrl, mimeType, true);
   }
 }

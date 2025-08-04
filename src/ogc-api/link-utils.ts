@@ -77,16 +77,27 @@ export function fetchCollectionRoot(
 export function getLinks(
   doc: OgcApiDocument,
   relType: string | string[],
-  mimeType?: string
+  mimeType?: string,
+  assertPresence?: boolean
 ): OgcApiDocumentLink[] {
-  const links =
+  let links =
     doc.links?.filter((link) =>
       Array.isArray(relType)
         ? relType.indexOf(link.rel) > -1
         : link.rel === relType
     ) || [];
   if (mimeType) {
-    return links.filter((link) => link.type === mimeType);
+    links = links.filter((link) => link.type === mimeType);
+  }
+  if (assertPresence && links.length === 0) {
+    if (!mimeType) {
+      throw new EndpointError(
+        `Was expecting at least one link of type '${relType}' but could not find any`
+      );
+    }
+    throw new EndpointError(
+      `Was expecting at least one link of type '${relType}' with mime type '${mimeType}' but could not find any`
+    );
   }
   return links;
 }
@@ -95,23 +106,21 @@ export function getLinkUrl(
   doc: OgcApiDocument,
   relType: string | string[],
   baseUrl?: string,
-  mimeType?: string
+  mimeType?: string,
+  assertPresence?: boolean
 ): string | null {
-  const link = getLinks(doc, relType, mimeType)[0];
+  const link = getLinks(doc, relType, mimeType, assertPresence)[0];
   if (!link) return null;
   return new URL(link.href, baseUrl || window.location.toString()).toString();
 }
 
-export function fetchLink(
+export async function fetchLink(
   doc: OgcApiDocument,
   relType: string | string[],
   baseUrl?: string
 ): Promise<OgcApiDocument> {
-  const url = getLinkUrl(doc, relType, baseUrl);
-  if (!url)
-    return Promise.reject(
-      new EndpointError(`Could not find link with type: ${relType}`)
-    );
+  // this will reject with an error if no valid URL found
+  const url = getLinkUrl(doc, relType, baseUrl, undefined, true);
   return fetchDocument(url);
 }
 
