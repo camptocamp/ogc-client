@@ -1,4 +1,4 @@
-import { getParentPath } from './url-utils.js';
+import { getChildPath, getParentPath } from './url-utils.js';
 
 describe('link utils', () => {
   describe('getParentPath', () => {
@@ -40,6 +40,18 @@ describe('link utils', () => {
       );
       expect(getParentPath('http://example.com/foo/bar/baz?')).toBe(
         'http://example.com/foo/bar?'
+      );
+    });
+  });
+  describe('getChildPath', () => {
+    it('should append a child fragment to the path', () => {
+      expect(getChildPath('http://example.com/foo/', 'bar/')).toBe(
+        'http://example.com/foo/bar/'
+      );
+    });
+    it('should append a child fragment to the path with a slash in-between', () => {
+      expect(getChildPath('http://example.com/foo', 'bar')).toBe(
+        'http://example.com/foo/bar'
       );
     });
   });

@@ -45,6 +45,7 @@ import {
   isMimeTypeJson,
   isMimeTypeJsonFg,
 } from '../shared/mime-type.js';
+import { getChildPath } from '../shared/url-utils.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -273,7 +274,9 @@ ${e.message}`);
           return fetchLink(collection, 'self', this.baseUrl);
         }
         // otherwise build a URL for the collection
-        return fetchDocument(`${await this.collectionsUrl}/${collectionId}`);
+        return fetchDocument(
+          getChildPath(await this.collectionsUrl, collectionId)
+        );
       });
   }
 
