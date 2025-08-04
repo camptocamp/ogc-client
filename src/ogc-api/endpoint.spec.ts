@@ -1415,7 +1415,7 @@ describe('OgcApiEndpoint', () => {
             new Date('2023-02-01')
           );
           expect(window.fetch).toHaveBeenCalledWith(
-            'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=20&offset=12&skipGeometry=false&sortby=attr1&bbox=1%2C2%2C3%2C4&properties=attr2%2Cattr3&datetime=2023-02-01T00%3A00%3A00.000Z',
+            'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=20&offset=12&skipGeometry=false&sortby=attr1&properties=attr2%2Cattr3&datetime=2023-02-01T00%3A00%3A00.000Z&bbox=1%2C2%2C3%2C4',
             { method: 'GET', headers: expect.any(Object) }
           );
         });
@@ -1697,7 +1697,7 @@ describe('OgcApiEndpoint', () => {
             outputFormat: 'application/geo+json',
           })
         ).resolves.toEqual(
-          'https://my.server.org/sample-data/collections/airports/items?f=json&name=Sumburgh+Airport&limit=101'
+          'https://my.server.org/sample-data/collections/airports/items?f=json&limit=101&name=Sumburgh%20Airport'
         );
       });
       it('outputs a warning if the required format is not a known mime-type for the collection', async () => {
@@ -1708,12 +1708,34 @@ describe('OgcApiEndpoint', () => {
             outputFormat: 'shapefile',
           })
         ).resolves.toEqual(
-          'https://my.server.org/sample-data/collections/airports/items?f=shapefile&name=Sumburgh+Airport&limit=101'
+          'https://my.server.org/sample-data/collections/airports/items?f=shapefile&limit=101&name=Sumburgh%20Airport'
         );
         expect(console.warn).toHaveBeenCalledWith(
           expect.stringContaining(
             'The following output format type was not found in the collection'
           )
+        );
+      });
+      it('encodes the various options properly', async () => {
+        await expect(
+          endpoint.getCollectionItemsUrl('airports', {
+            limit: 12,
+            offset: 34,
+            query: 'name=Sumburgh Airport',
+            asJson: true,
+            sortBy: ['attr1', 'attr2'],
+            properties: ['attr3', 'attr4'],
+            extent: [1, 2, 3, 4],
+            extentCrs: 'EPSG:4326',
+            dateTime: {
+              start: new Date('2023-02-01'),
+              end: new Date('2023-02-15'),
+            },
+            outputCrs: 'EPSG:4326',
+            skipGeometry: true,
+          })
+        ).resolves.toEqual(
+          'https://my.server.org/sample-data/collections/airports/items?f=jsonfg&limit=12&offset=34&skipGeometry=true&sortby=attr1%2Cattr2&properties=attr3%2Cattr4&datetime=2023-02-01T00%3A00%3A00.000Z%2F2023-02-15T00%3A00%3A00.000Z&crs=EPSG%3A4326&bbox=1%2C2%2C3%2C4&bbox-crs=EPSG%3A4326&name=Sumburgh%20Airport'
         );
       });
     });

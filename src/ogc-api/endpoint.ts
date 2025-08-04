@@ -418,37 +418,21 @@ ${e.message}`);
     dateTime: DateTimeParameter = null,
     query: string = null
   ): Promise<OgcApiCollectionItem[]> {
-    return this.getCollectionDocument(collectionId)
-      .then((collectionDoc) => {
-        const url = new URL(
-          getLinkUrl(collectionDoc, 'items', this.baseUrl),
-          window.location.toString()
-        );
-        url.searchParams.set('limit', limit.toString());
-        url.searchParams.set('offset', offset.toString());
-        if (skipGeometry !== null)
-          url.searchParams.set('skipGeometry', skipGeometry.toString());
-        if (sortBy !== null)
-          url.searchParams.set('sortby', sortBy.join(',').toString());
-        if (boundingBox !== null)
-          url.searchParams.set('bbox', boundingBox.join(',').toString());
-        if (properties !== null)
-          url.searchParams.set('properties', properties.join(',').toString());
-        if (dateTime !== null)
-          url.searchParams.set(
-            'datetime',
-            dateTime instanceof Date
-              ? dateTime.toISOString()
-              : `${'start' in dateTime ? dateTime.start.toISOString() : '..'}/${
-                  'end' in dateTime ? dateTime.end.toISOString() : '..'
-                }`
-          );
-        if (query !== null) url.search += (url.search ? '&' : '') + query;
-        return url.toString();
-      })
+    return this.getCollectionItemsUrl(collectionId, {
+      extent: boundingBox,
+      limit: limit !== null ? limit : undefined,
+      offset: offset !== null ? offset : undefined,
+      skipGeometry: skipGeometry !== null ? skipGeometry : undefined,
+      sortBy: sortBy !== null ? sortBy : undefined,
+      properties: properties !== null ? properties : undefined,
+      dateTime: dateTime !== null ? dateTime : undefined,
+      query: query !== null ? query : undefined,
+      asJson: true,
+    })
       .then(fetchDocument)
       .then((doc) => doc.features as OgcApiCollectionItem[]);
   }
+
   /**
    * Returns a promise resolving to a specific item from a collection.
    * @param collectionId
@@ -482,6 +466,10 @@ ${e.message}`);
    *  - offset: Pagination offset for the returned results.
    *  - outputCrs: Coordinate Reference System code for the output.
    *  - extentCrs: Coordinate Reference System code for the bounding box.
+   *  - skipGeometry: whether to include geometry in the response or not
+   *  - sortBy: attributes by which to sort
+   *  - properties: which properties to include in the response.
+   *  - dateTime: Date parameter, either as a Date object or a range object with start and end properties.
    * @returns A promise that resolves to the URL as a string or rejects if an error occurs.
    */
   getCollectionItemsUrl(
@@ -495,6 +483,10 @@ ${e.message}`);
       outputCrs?: CrsCode;
       extent?: BoundingBox;
       extentCrs?: CrsCode;
+      skipGeometry?: boolean;
+      sortBy?: string[];
+      properties?: string[];
+      dateTime?: DateTimeParameter;
     } = {}
   ): Promise<string> {
     return this.getCollectionDocument(collectionId)
@@ -525,18 +517,38 @@ ${e.message}`);
           url = new URL(itemLinks[0].href, baseUrl);
         }
 
-        if (options.query !== undefined)
-          url.search += (url.search ? '&' : '') + options.query;
         if (options.limit !== undefined)
           url.searchParams.set('limit', options.limit.toString());
         if (options.offset !== undefined)
           url.searchParams.set('offset', options.offset.toString());
+        if (options.skipGeometry !== undefined)
+          url.searchParams.set('skipGeometry', options.skipGeometry.toString());
+        if (options.sortBy !== undefined)
+          url.searchParams.set('sortby', options.sortBy.join(',').toString());
+        if (options.properties !== undefined)
+          url.searchParams.set(
+            'properties',
+            options.properties.join(',').toString()
+          );
+        if (options.dateTime !== undefined) {
+          const dateTime = options.dateTime;
+          url.searchParams.set(
+            'datetime',
+            dateTime instanceof Date
+              ? dateTime.toISOString()
+              : `${'start' in dateTime ? dateTime.start.toISOString() : '..'}/${
+                  'end' in dateTime ? dateTime.end.toISOString() : '..'
+                }`
+          );
+        }
         if (options.outputCrs !== undefined)
           url.searchParams.set('crs', options.outputCrs);
-        if (options.extent !== undefined && options.extent.length === 4)
-          url.searchParams.set('bbox', options.extent.join(','));
+        if (options.extent?.length > 0)
+          url.searchParams.set('bbox', options.extent.join(',').toString());
         if (options.extentCrs !== undefined)
           url.searchParams.set('bbox-crs', options.extentCrs);
+        if (options.query !== undefined)
+          url.search += (url.search ? '&' : '') + encodeURI(options.query);
 
         return url.toString();
       })
