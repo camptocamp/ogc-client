@@ -31,3 +31,8 @@ if (!('CustomEvent' in global)) {
     }
   };
 }
+
+// mock the window.location object
+if (!('location' in global)) {
+  global.location = new URL('http://localhost');
+}

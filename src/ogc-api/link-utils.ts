@@ -6,7 +6,7 @@ import { getParentPath } from '../shared/url-utils.js';
 export function fetchDocument<T extends OgcApiDocument>(
   url: string
 ): Promise<T> {
-  const urlObj = new URL(url, window.location.toString());
+  const urlObj = new URL(url, globalThis.location.toString());
   urlObj.searchParams.set('f', 'json');
   return sharedFetch(urlObj.toString(), 'GET', true).then((resp) => {
     if (!resp.ok) {
@@ -111,7 +111,10 @@ export function getLinkUrl(
 ): string | null {
   const link = getLinks(doc, relType, mimeType, assertPresence)[0];
   if (!link) return null;
-  return new URL(link.href, baseUrl || window.location.toString()).toString();
+  return new URL(
+    link.href,
+    baseUrl || globalThis.location.toString()
+  ).toString();
 }
 
 export async function fetchLink(

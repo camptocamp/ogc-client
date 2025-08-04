@@ -2,7 +2,7 @@
  * Returns the parent path from a URL based on a version pattern (x.y.z).
  */
 export function getParentPath(url: string): string | null {
-  const urlObj = new URL(url, window.location.toString());
+  const urlObj = new URL(url, globalThis.location.toString());
   let pathParts = urlObj.pathname.split('/');
   if (pathParts.length <= 2) {
     // cannot go further up

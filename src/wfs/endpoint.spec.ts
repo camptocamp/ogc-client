@@ -18,8 +18,6 @@ jest.mock('../shared/cache', () => ({
   useCache: jest.fn((factory) => factory()),
 }));
 
-const global = window as any;
-
 describe('WfsEndpoint', () => {
   let endpoint: WfsEndpoint;
 
@@ -29,8 +27,8 @@ describe('WfsEndpoint', () => {
   });
 
   beforeEach(() => {
-    global.fetchPreHandler = () => {};
-    global.fetchResponseFactory = (url) => {
+    globalThis.fetchPreHandler = () => {};
+    globalThis.fetchResponseFactory = (url) => {
       if (url.indexOf('GetCapabilities') > -1) return capabilities200;
       if (url.indexOf('GetFeature') > -1) {
         if (url.indexOf('RESULTTYPE=hits') > -1) return getfeature200hits;
@@ -47,7 +45,7 @@ describe('WfsEndpoint', () => {
 
   it('makes a getcapabilities request', async () => {
     await endpoint.isReady();
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetCapabilities',
       { method: 'GET' }
     );
@@ -78,7 +76,7 @@ describe('WfsEndpoint', () => {
 
     describe('CORS error handling', () => {
       beforeEach(() => {
-        global.fetchPreHandler = (url, options) => {
+        globalThis.fetchPreHandler = (url, options) => {
           if (options?.method === 'HEAD') return 'ok!';
           throw new Error('CORS problem');
         };
@@ -99,7 +97,7 @@ describe('WfsEndpoint', () => {
 
     describe('endpoint error handling', () => {
       beforeEach(() => {
-        global.fetchPreHandler = () => {
+        globalThis.fetchPreHandler = () => {
           throw new TypeError('other kind of problem');
         };
         endpoint = new WfsEndpoint('https://my.test.service/ogc/wfs');
@@ -119,7 +117,7 @@ describe('WfsEndpoint', () => {
 
     describe('http error handling', () => {
       beforeEach(() => {
-        global.fetchPreHandler = () => ({
+        globalThis.fetchPreHandler = () => ({
           ok: false,
           text: () => Promise.resolve('something broke in the server'),
           status: 500,
@@ -145,7 +143,7 @@ describe('WfsEndpoint', () => {
 
     describe('service exception handling', () => {
       beforeEach(() => {
-        global.fetchResponseFactory = () => exceptionReportWms;
+        globalThis.fetchResponseFactory = () => exceptionReportWms;
         endpoint = new WfsEndpoint('https://my.test.service/ogc/wfs');
       });
       it('rejects when the endpoint returns an exception report', async () => {
@@ -318,7 +316,7 @@ describe('WfsEndpoint', () => {
 
     describe('with a single feature type', () => {
       beforeEach(() => {
-        global.fetchResponseFactory = () => capabilitiesStates;
+        globalThis.fetchResponseFactory = () => capabilitiesStates;
         endpoint = new WfsEndpoint(
           'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType'
         );

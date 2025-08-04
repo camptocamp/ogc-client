@@ -18,8 +18,6 @@ jest.mock('./ol-tilegrid', () => ({
   buildOpenLayersTileGrid: jest.fn(() => ({ tileGrid: true })),
 }));
 
-const global = window as any;
-
 describe('WmtsEndpoint', () => {
   let endpoint: WmtsEndpoint;
 
@@ -29,13 +27,13 @@ describe('WmtsEndpoint', () => {
 
   describe('OGC WMTS', () => {
     beforeEach(() => {
-      global.fetchResponseFactory = () => ogcsample;
+      globalThis.fetchResponseFactory = () => ogcsample;
       endpoint = new WmtsEndpoint('https://my.test.service/ogc/wmts?bb=c');
     });
 
     it('makes a getcapabilities request', async () => {
       await endpoint.isReady();
-      expect(global.fetch).toHaveBeenCalledWith(
+      expect(globalThis.fetch).toHaveBeenCalledWith(
         'https://my.test.service/ogc/wmts?bb=c&SERVICE=WMTS&REQUEST=GetCapabilities',
         { method: 'GET' }
       );
@@ -301,7 +299,7 @@ describe('WmtsEndpoint', () => {
 
   describe('ArcGIS WMTS', () => {
     beforeEach(() => {
-      global.fetchResponseFactory = () => arcgis;
+      globalThis.fetchResponseFactory = () => arcgis;
       endpoint = new WmtsEndpoint('https://my.test.service/ogc/wmts?bb=c');
     });
 
@@ -422,7 +420,7 @@ describe('WmtsEndpoint', () => {
 
   describe('IGN WMTS', () => {
     beforeEach(() => {
-      global.fetchResponseFactory = () => ign;
+      globalThis.fetchResponseFactory = () => ign;
       endpoint = new WmtsEndpoint('https://my.test.service/ogc/wmts?bb=c');
     });
 
@@ -490,7 +488,7 @@ describe('WmtsEndpoint', () => {
 
   describe('WMTS with 2 layers', () => {
     beforeEach(() => {
-      global.fetchResponseFactory = () => capabilitiesWgs84;
+      globalThis.fetchResponseFactory = () => capabilitiesWgs84;
       endpoint = new WmtsEndpoint('https://my.test.service/ogc/wmts?bb=c');
     });
     describe('getSingleLayerName', () => {

@@ -10,8 +10,6 @@ import WfsEndpoint from '../wfs/endpoint.js';
 // @ts-expect-error ts-migrate(7016)
 import capabilities200 from '../../fixtures/wfs/capabilities-pigma-2-0-0.xml';
 
-const global = window as any;
-
 jest.useFakeTimers();
 
 afterEach(() => {
@@ -33,8 +31,8 @@ describe('HTTP utils', () => {
 
     beforeAll(() => {
       fetchBehaviour = 'ok';
-      originalFetch = global.fetch; // keep reference of native impl
-      global.fetch = jest.fn().mockImplementation((xmlString, opts) => {
+      originalFetch = globalThis.fetch; // keep reference of native impl
+      globalThis.fetch = jest.fn().mockImplementation((xmlString, opts) => {
         const noCors = opts && opts.mode === 'no-cors';
         const headers = { get: () => null };
         switch (fetchBehaviour) {
@@ -92,7 +90,7 @@ describe('HTTP utils', () => {
     });
 
     afterAll(() => {
-      global.fetch = originalFetch; // restore original impl
+      globalThis.fetch = originalFetch; // restore original impl
     });
 
     describe('HTTP request returns success', () => {
@@ -169,7 +167,7 @@ describe('HTTP utils', () => {
         queryXmlDocument('https://abcd.com');
       });
       it('only fetches the document once', async () => {
-        expect(global.fetch).toHaveBeenCalledTimes(1);
+        expect(globalThis.fetch).toHaveBeenCalledTimes(1);
       });
     });
   });
@@ -227,8 +225,8 @@ describe('HTTP utils', () => {
     let originalFetch;
 
     beforeAll(() => {
-      originalFetch = global.fetch; // keep reference of native impl
-      global.fetch = jest.fn(
+      originalFetch = globalThis.fetch; // keep reference of native impl
+      globalThis.fetch = jest.fn(
         () =>
           new Promise((resolve) => {
             setTimeout(() => {
@@ -237,19 +235,20 @@ describe('HTTP utils', () => {
                 Math.random() * 100000
               )}`;
               resolve({
-                text,
+                text: async () => text,
                 status: 200,
                 ok: true,
+                headers: new Headers(),
                 clone: jest.fn().mockImplementation(function () {
                   return this;
-                }),
-              });
+                }) as () => Response,
+              } as Response);
             }, 10);
           })
       );
     });
     afterAll(() => {
-      global.fetch = originalFetch; // restore original impl
+      globalThis.fetch = originalFetch; // restore original impl
     });
 
     describe('multiple GET and HEAD requests on same resource', () => {
@@ -293,8 +292,8 @@ describe('HTTP utils', () => {
         await jest.runOnlyPendingTimers();
       });
       it('only triggers two GET requests and two HEAD requests', () => {
-        expect(global.fetch).toHaveBeenCalledTimes(4);
-        expect((global.fetch as jest.Mock).mock.calls).toEqual([
+        expect(globalThis.fetch).toHaveBeenCalledTimes(4);
+        expect((globalThis.fetch as jest.Mock).mock.calls).toEqual([
           [
             'http://test.org/resource1',
             expect.objectContaining({ method: 'GET' }),
@@ -317,9 +316,11 @@ describe('HTTP utils', () => {
         expect(getResults[0].clone).toHaveBeenCalled();
         expect(headResults[0].clone).toHaveBeenCalled();
       });
-      it('shares result for simultaneous GET requests and not subsequent ones', () => {
-        const sharedResult = getResults[0].text;
-        const getResultsText = getResults.map((r) => r.text);
+      it('shares result for simultaneous GET requests and not subsequent ones', async () => {
+        const sharedResult = await getResults[0].text();
+        const getResultsText = await Promise.all(
+          getResults.map((r) => r.text())
+        );
         expect(getResultsText).toEqual([
           sharedResult,
           sharedResult,
@@ -327,9 +328,11 @@ describe('HTTP utils', () => {
           expect.not.stringContaining(sharedResult),
         ]);
       });
-      it('shares result for simultaneous HEAD requests and not subsequent ones', () => {
-        const sharedResult = headResults[0].text;
-        const headResultsText = headResults.map((r) => r.text);
+      it('shares result for simultaneous HEAD requests and not subsequent ones', async () => {
+        const sharedResult = await headResults[0].text();
+        const headResultsText = await Promise.all(
+          headResults.map((r) => r.text())
+        );
         expect(headResultsText).toEqual([
           sharedResult,
           sharedResult,
@@ -361,8 +364,8 @@ describe('HTTP utils', () => {
         await jest.runOnlyPendingTimers();
       });
       it('triggers two GET requests and two HEAD requests', () => {
-        expect(global.fetch).toHaveBeenCalledTimes(4);
-        expect((global.fetch as jest.Mock).mock.calls).toEqual([
+        expect(globalThis.fetch).toHaveBeenCalledTimes(4);
+        expect((globalThis.fetch as jest.Mock).mock.calls).toEqual([
           [
             'http://test.org/resource1',
             expect.objectContaining({ method: 'GET' }),
@@ -406,7 +409,7 @@ describe('HTTP utils', () => {
         queryXmlDocument('./hello.xml');
       });
       it('is used in the fetch() call', () => {
-        expect(global.fetch).toHaveBeenCalledWith('./hello.xml', {
+        expect(globalThis.fetch).toHaveBeenCalledWith('./hello.xml', {
           ...sampleOptions,
           method: 'GET',
         });
@@ -418,7 +421,7 @@ describe('HTTP utils', () => {
         sharedFetch('./hello.xml', 'HEAD');
       });
       it('is used in the fetch() call', () => {
-        expect(global.fetch).toHaveBeenCalledWith('./hello.xml', {
+        expect(globalThis.fetch).toHaveBeenCalledWith('./hello.xml', {
           ...sampleOptions,
           method: 'HEAD',
         });
@@ -427,11 +430,11 @@ describe('HTTP utils', () => {
     describe('used in ogc-api fetchDocument', () => {
       beforeEach(() => {
         setFetchOptions(sampleOptions);
-        global.fetchResponseFactory = () => '{ "hello": "world" }';
+        globalThis.fetchResponseFactory = () => '{ "hello": "world" }';
         fetchDocument('./hello.json');
       });
       it('is used in the fetch() call', () => {
-        expect(global.fetch).toHaveBeenCalledWith(
+        expect(globalThis.fetch).toHaveBeenCalledWith(
           'http://localhost/hello.json?f=json',
           {
             ...sampleOptions,
@@ -447,7 +450,7 @@ describe('HTTP utils', () => {
     describe('used in worker', () => {
       let endpoint;
       beforeEach(() => {
-        global.fetchResponseFactory = () => capabilities200;
+        globalThis.fetchResponseFactory = () => capabilities200;
         setFetchOptions(sampleOptions);
         endpoint = new WfsEndpoint(
           'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType'
@@ -455,7 +458,7 @@ describe('HTTP utils', () => {
       });
       it('is used in the fetch() call', async () => {
         await endpoint.isReady();
-        expect(global.fetch).toHaveBeenCalledWith(
+        expect(globalThis.fetch).toHaveBeenCalledWith(
           'https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetCapabilities',
           {
             ...sampleOptions,
