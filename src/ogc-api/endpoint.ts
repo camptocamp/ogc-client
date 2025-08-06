@@ -165,7 +165,6 @@ ${e.message}`);
       hasFeatures?: boolean;
       hasVectorTiles?: boolean;
       hasMapTiles?: boolean;
-      dataQueries?: DataQueryTypes[];
     }[]
   > {
     return this.data.then(parseCollections);

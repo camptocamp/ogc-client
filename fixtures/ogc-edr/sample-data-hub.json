@@ -1,0 +1,80 @@
+{
+    "links": [
+        {
+            "rel": "about",
+            "type": "text/html",
+            "title": "pygeoapi Demo instance - running latest GitHub version",
+            "href": "https://github.com/geopython/demo.pygeoapi.io/tree/master/services/pygeoapi_master"
+        },
+        {
+            "rel": "self",
+            "type": "application/json",
+            "title": "This document as JSON",
+            "href": "https://demo.pygeoapi.io/master?f=json"
+        },
+        {
+            "rel": "alternate",
+            "type": "application/ld+json",
+            "title": "This document as RDF (JSON-LD)",
+            "href": "https://demo.pygeoapi.io/master?f=jsonld"
+        },
+        {
+            "rel": "alternate",
+            "type": "text/html",
+            "title": "This document as HTML",
+            "href": "https://demo.pygeoapi.io/master?f=html",
+            "hreflang": "en-US"
+        },
+        {
+            "rel": "service-desc",
+            "type": "application/vnd.oai.openapi+json;version=3.0",
+            "title": "The OpenAPI definition as JSON",
+            "href": "https://demo.pygeoapi.io/master/openapi"
+        },
+        {
+            "rel": "service-doc",
+            "type": "text/html",
+            "title": "The OpenAPI definition as HTML",
+            "href": "https://demo.pygeoapi.io/master/openapi?f=html",
+            "hreflang": "en-US"
+        },
+        {
+            "rel": "conformance",
+            "type": "application/json",
+            "title": "Conformance",
+            "href": "https://demo.pygeoapi.io/master/conformance"
+        },
+        {
+            "rel": "data",
+            "type": "application/json",
+            "title": "Collections",
+            "href": "https://demo.pygeoapi.io/master/collections"
+        },
+        {
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/processes",
+            "type": "application/json",
+            "title": "Processes",
+            "href": "https://demo.pygeoapi.io/master/processes"
+        },
+        {
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/job-list",
+            "type": "application/json",
+            "title": "Jobs",
+            "href": "https://demo.pygeoapi.io/master/jobs"
+        },
+        {
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+            "type": "application/json",
+            "title": "The list of supported tiling schemes as JSON",
+            "href": "https://demo.pygeoapi.io/master/TileMatrixSets?f=json"
+        },
+        {
+            "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+            "type": "text/html",
+            "title": "The list of supported tiling schemes as HTML",
+            "href": "https://demo.pygeoapi.io/master/TileMatrixSets?f=html"
+        }
+    ],
+    "title": "pygeoapi Demo instance - running latest GitHub version",
+    "description": "pygeoapi provides an API to geospatial data"
+}

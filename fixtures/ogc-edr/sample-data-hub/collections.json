@@ -1,0 +1,3938 @@
+{
+    "collections":[
+        {
+            "id":"ADWR_GWSI_Sites",
+            "title":"Arizona Department of Water Resources Groundwater Storage Index",
+            "description":"Sites of the Arizona Department of Water Resources Groundwater Storage Index",
+            "keywords":[
+                "sites"
+            ],
+            "links":[
+                {
+                    "type":"application/html",
+                    "rel":"canonical",
+                    "title":"data source",
+                    "href":"https://services.arcgis.com/C34zQ7veRS0V1t04/ArcGIS/rest/services/GWSI_Layers/FeatureServer/7",
+                    "hreflang":"en-U"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/ADWR_GWSI_Sites?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/ADWR_GWSI_Sites?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/ADWR_GWSI_Sites?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title":"Schema of collection in JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/ADWR_GWSI_Sites/schema?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title":"Schema of collection in HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/ADWR_GWSI_Sites/schema?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/ADWR_GWSI_Sites/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/ADWR_GWSI_Sites/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"Items as GeoJSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/ADWR_GWSI_Sites/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"Items as RDF (GeoJSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/ADWR_GWSI_Sites/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/ADWR_GWSI_Sites/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"usace-edr",
+            "title":"US Army Corps of Engineers",
+            "description":"USACE Access2Water API",
+            "keywords":[
+                "open data"
+            ],
+            "links":[
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"position query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/position?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"position query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/position?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"items query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/items?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"items query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/items?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"cube query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/cube?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"cube query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/cube?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"area query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/area?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"area query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/area?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"locations query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/locations?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"locations query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/locations?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+            "data_queries":{
+                "position":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/position",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"position"
+                        }
+                    }
+                },
+                "items":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/items",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"items"
+                        }
+                    }
+                },
+                "cube":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/cube",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"cube"
+                        }
+                    }
+                },
+                "area":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/area",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"area"
+                        }
+                    }
+                },
+                "locations":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usace-edr/locations",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"locations"
+                        }
+                    }
+                }
+            },
+            "parameter_names":{
+                "Elevation":{
+                    "id":"Elevation",
+                    "type":"Parameter",
+                    "name":"Elevation",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Elevation",
+                            "en":"Elevation"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Elevation"
+                        },
+                        "symbol":{
+                            "value":"ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Inflow":{
+                    "id":"Inflow",
+                    "type":"Parameter",
+                    "name":"Inflow",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Inflow",
+                            "en":"Inflow"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Inflow"
+                        },
+                        "symbol":{
+                            "value":"cfs",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Outflow":{
+                    "id":"Outflow",
+                    "type":"Parameter",
+                    "name":"Outflow",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Outflow",
+                            "en":"Outflow"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Outflow"
+                        },
+                        "symbol":{
+                            "value":"cfs",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Elevation Tailwater":{
+                    "id":"Elevation Tailwater",
+                    "type":"Parameter",
+                    "name":"Elevation Tailwater",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Elevation Tailwater",
+                            "en":"Elevation Tailwater"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Elevation Tailwater"
+                        },
+                        "symbol":{
+                            "value":"ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Flood Storage":{
+                    "id":"Flood Storage",
+                    "type":"Parameter",
+                    "name":"Flood Storage",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Flood Storage",
+                            "en":"Flood Storage"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Flood Storage"
+                        },
+                        "symbol":{
+                            "value":"ac-ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Elevation Rule Curve":{
+                    "id":"Elevation Rule Curve",
+                    "type":"Parameter",
+                    "name":"Elevation Rule Curve",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Elevation Rule Curve",
+                            "en":"Elevation Rule Curve"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Elevation Rule Curve"
+                        },
+                        "symbol":{
+                            "value":"ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Stage Tailwater":{
+                    "id":"Stage Tailwater",
+                    "type":"Parameter",
+                    "name":"Stage Tailwater",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Stage Tailwater",
+                            "en":"Stage Tailwater"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Stage Tailwater"
+                        },
+                        "symbol":{
+                            "value":"ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Stage":{
+                    "id":"Stage",
+                    "type":"Parameter",
+                    "name":"Stage",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Stage",
+                            "en":"Stage"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Stage"
+                        },
+                        "symbol":{
+                            "value":"ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Water Temperature":{
+                    "id":"Water Temperature",
+                    "type":"Parameter",
+                    "name":"Water Temperature",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Water Temperature",
+                            "en":"Water Temperature"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Water Temperature"
+                        },
+                        "symbol":{
+                            "value":"F",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Surcharge Release":{
+                    "id":"Surcharge Release",
+                    "type":"Parameter",
+                    "name":"Surcharge Release",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Surcharge Release",
+                            "en":"Surcharge Release"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Surcharge Release"
+                        },
+                        "symbol":{
+                            "value":"cfs",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Precipitation":{
+                    "id":"Precipitation",
+                    "type":"Parameter",
+                    "name":"Precipitation",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Precipitation",
+                            "en":"Precipitation"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Precipitation"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Air Temperature":{
+                    "id":"Air Temperature",
+                    "type":"Parameter",
+                    "name":"Air Temperature",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Air Temperature",
+                            "en":"Air Temperature"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Air Temperature"
+                        },
+                        "symbol":{
+                            "value":"F",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Conservation Storage":{
+                    "id":"Conservation Storage",
+                    "type":"Parameter",
+                    "name":"Conservation Storage",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Conservation Storage",
+                            "en":"Conservation Storage"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Conservation Storage"
+                        },
+                        "symbol":{
+                            "value":"ac-ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Percent Flood Pool":{
+                    "id":"Percent Flood Pool",
+                    "type":"Parameter",
+                    "name":"Percent Flood Pool",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Percent Flood Pool",
+                            "en":"Percent Flood Pool"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Percent Flood Pool"
+                        },
+                        "symbol":{
+                            "value":"%",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Percent Conservation Pool":{
+                    "id":"Percent Conservation Pool",
+                    "type":"Parameter",
+                    "name":"Percent Conservation Pool",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Percent Conservation Pool",
+                            "en":"Percent Conservation Pool"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Percent Conservation Pool"
+                        },
+                        "symbol":{
+                            "value":"%",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Power Generation":{
+                    "id":"Power Generation",
+                    "type":"Parameter",
+                    "name":"Power Generation",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Power Generation",
+                            "en":"Power Generation"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Power Generation"
+                        },
+                        "symbol":{
+                            "value":"MWh",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Wind Direction":{
+                    "id":"Wind Direction",
+                    "type":"Parameter",
+                    "name":"Wind Direction",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Wind Direction",
+                            "en":"Wind Direction"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Wind Direction"
+                        },
+                        "symbol":{
+                            "value":"deg",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Dissolved Oxygen":{
+                    "id":"Dissolved Oxygen",
+                    "type":"Parameter",
+                    "name":"Dissolved Oxygen",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Dissolved Oxygen",
+                            "en":"Dissolved Oxygen"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Dissolved Oxygen"
+                        },
+                        "symbol":{
+                            "value":"ppm",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Wind Speed":{
+                    "id":"Wind Speed",
+                    "type":"Parameter",
+                    "name":"Wind Speed",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Wind Speed",
+                            "en":"Wind Speed"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Wind Speed"
+                        },
+                        "symbol":{
+                            "value":"mph",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Evaporation":{
+                    "id":"Evaporation",
+                    "type":"Parameter",
+                    "name":"Evaporation",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Evaporation",
+                            "en":"Evaporation"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Evaporation"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Irradiance":{
+                    "id":"Irradiance",
+                    "type":"Parameter",
+                    "name":"Irradiance",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Irradiance",
+                            "en":"Irradiance"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Irradiance"
+                        },
+                        "symbol":{
+                            "value":"langley/min",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "Voltage":{
+                    "id":"Voltage",
+                    "type":"Parameter",
+                    "name":"Voltage",
+                    "observedProperty":{
+                        "label":{
+                            "id":"Voltage",
+                            "en":"Voltage"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Voltage"
+                        },
+                        "symbol":{
+                            "value":"volt",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "id":"snotel-edr",
+            "title":"Snow Telemetry Network",
+            "description":"USDA Snow Telemetry Network (SNOTEL) EDR",
+            "keywords":[
+                "EDR",
+                "SNOTEL",
+                "NRCS",
+                "USDA"
+            ],
+            "links":[
+                {
+                    "type":"application/html",
+                    "rel":"canonical",
+                    "title":"data source",
+                    "href":"https://www.nrcs.usda.gov/wps/portal/wcc/home/aboutUs/monitoringPrograms/automatedSnowMonitoring/",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"position query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/position?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"position query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/position?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"items query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/items?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"items query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/items?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"cube query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/cube?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"cube query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/cube?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"area query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/area?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"area query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/area?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"locations query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/locations?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"locations query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/locations?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            -164.92472,
+                            32.92342,
+                            -103.78758,
+                            70.28062
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+            "data_queries":{
+                "position":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/position",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"position"
+                        }
+                    }
+                },
+                "items":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/items",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"items"
+                        }
+                    }
+                },
+                "cube":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/cube",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"cube"
+                        }
+                    }
+                },
+                "area":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/area",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"area"
+                        }
+                    }
+                },
+                "locations":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/snotel-edr/locations",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"locations"
+                        }
+                    }
+                }
+            },
+            "parameter_names":{
+                "TAVG":{
+                    "id":"TAVG",
+                    "type":"Parameter",
+                    "name":"AIR TEMPERATURE AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"TAVG",
+                            "en":"AIR TEMPERATURE AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"AIR TEMPERATURE AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "TMAX":{
+                    "id":"TMAX",
+                    "type":"Parameter",
+                    "name":"AIR TEMPERATURE MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"TMAX",
+                            "en":"AIR TEMPERATURE MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"AIR TEMPERATURE MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "TMIN":{
+                    "id":"TMIN",
+                    "type":"Parameter",
+                    "name":"AIR TEMPERATURE MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"TMIN",
+                            "en":"AIR TEMPERATURE MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"AIR TEMPERATURE MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "TOBS":{
+                    "id":"TOBS",
+                    "type":"Parameter",
+                    "name":"AIR TEMPERATURE OBSERVED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"TOBS",
+                            "en":"AIR TEMPERATURE OBSERVED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"AIR TEMPERATURE OBSERVED"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "PRES":{
+                    "id":"PRES",
+                    "type":"Parameter",
+                    "name":"BAROMETRIC PRESSURE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"PRES",
+                            "en":"BAROMETRIC PRESSURE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"BAROMETRIC PRESSURE"
+                        },
+                        "symbol":{
+                            "value":"inch_Hg",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "BATT":{
+                    "id":"BATT",
+                    "type":"Parameter",
+                    "name":"BATTERY",
+                    "observedProperty":{
+                        "label":{
+                            "id":"BATT",
+                            "en":"BATTERY"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"BATTERY"
+                        },
+                        "symbol":{
+                            "value":"volt",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "BATV":{
+                    "id":"BATV",
+                    "type":"Parameter",
+                    "name":"BATTERY AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"BATV",
+                            "en":"BATTERY AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"BATTERY AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"volt",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "BATX":{
+                    "id":"BATX",
+                    "type":"Parameter",
+                    "name":"BATTERY MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"BATX",
+                            "en":"BATTERY MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"BATTERY MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"volt",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "BATN":{
+                    "id":"BATN",
+                    "type":"Parameter",
+                    "name":"BATTERY MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"BATN",
+                            "en":"BATTERY MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"BATTERY MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"volt",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "ETIB":{
+                    "id":"ETIB",
+                    "type":"Parameter",
+                    "name":"BATTERY-ETI PRECIP GUAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"ETIB",
+                            "en":"BATTERY-ETI PRECIP GUAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"BATTERY-ETI PRECIP GUAGE"
+                        },
+                        "symbol":{
+                            "value":"volt",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "COND":{
+                    "id":"COND",
+                    "type":"Parameter",
+                    "name":"CONDUCTIVITY",
+                    "observedProperty":{
+                        "label":{
+                            "id":"COND",
+                            "en":"CONDUCTIVITY"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"CONDUCTIVITY"
+                        },
+                        "symbol":{
+                            "value":"umho",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "DPTP":{
+                    "id":"DPTP",
+                    "type":"Parameter",
+                    "name":"DEW POINT TEMPERATURE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"DPTP",
+                            "en":"DEW POINT TEMPERATURE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"DEW POINT TEMPERATURE"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRDOX":{
+                    "id":"SRDOX",
+                    "type":"Parameter",
+                    "name":"DISCHARGE MANUAL/EXTERNAL ADJUSTED MEAN",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRDOX",
+                            "en":"DISCHARGE MANUAL/EXTERNAL ADJUSTED MEAN"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"DISCHARGE MANUAL/EXTERNAL ADJUSTED MEAN"
+                        },
+                        "symbol":{
+                            "value":"cfs",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "DISO":{
+                    "id":"DISO",
+                    "type":"Parameter",
+                    "name":"DISSOLVED OXYGEN",
+                    "observedProperty":{
+                        "label":{
+                            "id":"DISO",
+                            "en":"DISSOLVED OXYGEN"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"DISSOLVED OXYGEN"
+                        },
+                        "symbol":{
+                            "value":"mgram/l",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "DISP":{
+                    "id":"DISP",
+                    "type":"Parameter",
+                    "name":"DISSOLVED OXYGEN - PERCENT SATURATION",
+                    "observedProperty":{
+                        "label":{
+                            "id":"DISP",
+                            "en":"DISSOLVED OXYGEN - PERCENT SATURATION"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"DISSOLVED OXYGEN - PERCENT SATURATION"
+                        },
+                        "symbol":{
+                            "value":"pct",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "DIVD":{
+                    "id":"DIVD",
+                    "type":"Parameter",
+                    "name":"DIVERSION DISCHARGE OBSERVED MEAN",
+                    "observedProperty":{
+                        "label":{
+                            "id":"DIVD",
+                            "en":"DIVERSION DISCHARGE OBSERVED MEAN"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"DIVERSION DISCHARGE OBSERVED MEAN"
+                        },
+                        "symbol":{
+                            "value":"cfs",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "DIV":{
+                    "id":"DIV",
+                    "type":"Parameter",
+                    "name":"DIVERSION FLOW VOLUME OBSERVED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"DIV",
+                            "en":"DIVERSION FLOW VOLUME OBSERVED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"DIVERSION FLOW VOLUME OBSERVED"
+                        },
+                        "symbol":{
+                            "value":"ac_ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "HFTV":{
+                    "id":"HFTV",
+                    "type":"Parameter",
+                    "name":"ENERGY GAIN OR LOSS FROM GROUND",
+                    "observedProperty":{
+                        "label":{
+                            "id":"HFTV",
+                            "en":"ENERGY GAIN OR LOSS FROM GROUND"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"ENERGY GAIN OR LOSS FROM GROUND"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "EVAP":{
+                    "id":"EVAP",
+                    "type":"Parameter",
+                    "name":"EVAPORATION",
+                    "observedProperty":{
+                        "label":{
+                            "id":"EVAP",
+                            "en":"EVAPORATION"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"EVAPORATION"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "FUEL":{
+                    "id":"FUEL",
+                    "type":"Parameter",
+                    "name":"FUEL MOISTURE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"FUEL",
+                            "en":"FUEL MOISTURE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"FUEL MOISTURE"
+                        },
+                        "symbol":{
+                            "value":"pct",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "FMTMP":{
+                    "id":"FMTMP",
+                    "type":"Parameter",
+                    "name":"FUEL TEMPERATURE INTERNAL",
+                    "observedProperty":{
+                        "label":{
+                            "id":"FMTMP",
+                            "en":"FUEL TEMPERATURE INTERNAL"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"FUEL TEMPERATURE INTERNAL"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "VOLT":{
+                    "id":"VOLT",
+                    "type":"Parameter",
+                    "name":"GENERIC VOLTAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"VOLT",
+                            "en":"GENERIC VOLTAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"GENERIC VOLTAGE"
+                        },
+                        "symbol":{
+                            "value":"volt",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "TGSV":{
+                    "id":"TGSV",
+                    "type":"Parameter",
+                    "name":"GROUND SURFACE INTERFACE TEMPERATURE AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"TGSV",
+                            "en":"GROUND SURFACE INTERFACE TEMPERATURE AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"GROUND SURFACE INTERFACE TEMPERATURE AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "TGSX":{
+                    "id":"TGSX",
+                    "type":"Parameter",
+                    "name":"GROUND SURFACE INTERFACE TEMPERATURE MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"TGSX",
+                            "en":"GROUND SURFACE INTERFACE TEMPERATURE MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"GROUND SURFACE INTERFACE TEMPERATURE MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "TGSN":{
+                    "id":"TGSN",
+                    "type":"Parameter",
+                    "name":"GROUND SURFACE INTERFACE TEMPERATURE MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"TGSN",
+                            "en":"GROUND SURFACE INTERFACE TEMPERATURE MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"GROUND SURFACE INTERFACE TEMPERATURE MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "TGSI":{
+                    "id":"TGSI",
+                    "type":"Parameter",
+                    "name":"GROUND SURFACE INTERFACE TEMPERATURE OBSERVED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"TGSI",
+                            "en":"GROUND SURFACE INTERFACE TEMPERATURE OBSERVED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"GROUND SURFACE INTERFACE TEMPERATURE OBSERVED"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "AWDC":{
+                    "id":"AWDC",
+                    "type":"Parameter",
+                    "name":"leaf wetness duration current",
+                    "observedProperty":{
+                        "label":{
+                            "id":"AWDC",
+                            "en":"leaf wetness duration current"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"leaf wetness duration current"
+                        },
+                        "symbol":{
+                            "value":"min",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "NTRDV":{
+                    "id":"NTRDV",
+                    "type":"Parameter",
+                    "name":"NET SOLAR RADIATION AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"NTRDV",
+                            "en":"NET SOLAR RADIATION AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"NET SOLAR RADIATION AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "NTRDX":{
+                    "id":"NTRDX",
+                    "type":"Parameter",
+                    "name":"NET SOLAR RADIATION MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"NTRDX",
+                            "en":"NET SOLAR RADIATION MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"NET SOLAR RADIATION MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "NTRDN":{
+                    "id":"NTRDN",
+                    "type":"Parameter",
+                    "name":"NET SOLAR RADIATION MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"NTRDN",
+                            "en":"NET SOLAR RADIATION MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"NET SOLAR RADIATION MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "NTRDC":{
+                    "id":"NTRDC",
+                    "type":"Parameter",
+                    "name":"NET SOLAR RADIATION OBSERVED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"NTRDC",
+                            "en":"NET SOLAR RADIATION OBSERVED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"NET SOLAR RADIATION OBSERVED"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "H2OPH":{
+                    "id":"H2OPH",
+                    "type":"Parameter",
+                    "name":"PH",
+                    "observedProperty":{
+                        "label":{
+                            "id":"H2OPH",
+                            "en":"PH"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"PH"
+                        },
+                        "symbol":{
+                            "value":"unitless",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "PARV":{
+                    "id":"PARV",
+                    "type":"Parameter",
+                    "name":"PHOTOSYNTHETICALLY ACTIVE RADIATION (PAR) AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"PARV",
+                            "en":"PHOTOSYNTHETICALLY ACTIVE RADIATION (PAR) AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"PHOTOSYNTHETICALLY ACTIVE RADIATION (PAR) AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"micromole/m2/s",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "PREC":{
+                    "id":"PREC",
+                    "type":"Parameter",
+                    "name":"PRECIPITATION ACCUMULATION",
+                    "observedProperty":{
+                        "label":{
+                            "id":"PREC",
+                            "en":"PRECIPITATION ACCUMULATION"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"PRECIPITATION ACCUMULATION"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "PRCP":{
+                    "id":"PRCP",
+                    "type":"Parameter",
+                    "name":"PRECIPITATION INCREMENT",
+                    "observedProperty":{
+                        "label":{
+                            "id":"PRCP",
+                            "en":"PRECIPITATION INCREMENT"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"PRECIPITATION INCREMENT"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "PRCPSA":{
+                    "id":"PRCPSA",
+                    "type":"Parameter",
+                    "name":"PRECIPITATION INCREMENT - SNOW-ADJ",
+                    "observedProperty":{
+                        "label":{
+                            "id":"PRCPSA",
+                            "en":"PRECIPITATION INCREMENT - SNOW-ADJ"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"PRECIPITATION INCREMENT - SNOW-ADJ"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "PRCPMTD":{
+                    "id":"PRCPMTD",
+                    "type":"Parameter",
+                    "name":"PRECIPITATION MONTH-TO-DATE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"PRCPMTD",
+                            "en":"PRECIPITATION MONTH-TO-DATE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"PRECIPITATION MONTH-TO-DATE"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "PTEMP":{
+                    "id":"PTEMP",
+                    "type":"Parameter",
+                    "name":"PROFILE TEMPERATURE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"PTEMP",
+                            "en":"PROFILE TEMPERATURE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"PROFILE TEMPERATURE"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "ETIL":{
+                    "id":"ETIL",
+                    "type":"Parameter",
+                    "name":"PULSE LINE MONITOR-ETI GUAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"ETIL",
+                            "en":"PULSE LINE MONITOR-ETI GUAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"PULSE LINE MONITOR-ETI GUAGE"
+                        },
+                        "symbol":{
+                            "value":"volt",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "LWINV":{
+                    "id":"LWINV",
+                    "type":"Parameter",
+                    "name":"RADIATION INCOMING LONGWAVE AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"LWINV",
+                            "en":"RADIATION INCOMING LONGWAVE AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RADIATION INCOMING LONGWAVE AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SWINV":{
+                    "id":"SWINV",
+                    "type":"Parameter",
+                    "name":"RADIATION INCOMING SHORTWAVE AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SWINV",
+                            "en":"RADIATION INCOMING SHORTWAVE AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RADIATION INCOMING SHORTWAVE AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "LWOTV":{
+                    "id":"LWOTV",
+                    "type":"Parameter",
+                    "name":"RADIATION OUTGOING LONGWAVE AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"LWOTV",
+                            "en":"RADIATION OUTGOING LONGWAVE AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RADIATION OUTGOING LONGWAVE AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SWOTV":{
+                    "id":"SWOTV",
+                    "type":"Parameter",
+                    "name":"RADIATION OUTGOING SHORTWAVE AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SWOTV",
+                            "en":"RADIATION OUTGOING SHORTWAVE AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RADIATION OUTGOING SHORTWAVE AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "RDC":{
+                    "id":"RDC",
+                    "type":"Parameter",
+                    "name":"REAL DIELECTRIC CONSTANT",
+                    "observedProperty":{
+                        "label":{
+                            "id":"RDC",
+                            "en":"REAL DIELECTRIC CONSTANT"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"REAL DIELECTRIC CONSTANT"
+                        },
+                        "symbol":{
+                            "value":"unitless",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "RHUM":{
+                    "id":"RHUM",
+                    "type":"Parameter",
+                    "name":"RELATIVE HUMIDITY",
+                    "observedProperty":{
+                        "label":{
+                            "id":"RHUM",
+                            "en":"RELATIVE HUMIDITY"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RELATIVE HUMIDITY"
+                        },
+                        "symbol":{
+                            "value":"pct",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "RHUMV":{
+                    "id":"RHUMV",
+                    "type":"Parameter",
+                    "name":"RELATIVE HUMIDITY AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"RHUMV",
+                            "en":"RELATIVE HUMIDITY AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RELATIVE HUMIDITY AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"pct",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "RHENC":{
+                    "id":"RHENC",
+                    "type":"Parameter",
+                    "name":"RELATIVE HUMIDITY ENCLOSURE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"RHENC",
+                            "en":"RELATIVE HUMIDITY ENCLOSURE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RELATIVE HUMIDITY ENCLOSURE"
+                        },
+                        "symbol":{
+                            "value":"pct",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "RHUMX":{
+                    "id":"RHUMX",
+                    "type":"Parameter",
+                    "name":"RELATIVE HUMIDITY MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"RHUMX",
+                            "en":"RELATIVE HUMIDITY MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RELATIVE HUMIDITY MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"pct",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "RHUMN":{
+                    "id":"RHUMN",
+                    "type":"Parameter",
+                    "name":"RELATIVE HUMIDITY MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"RHUMN",
+                            "en":"RELATIVE HUMIDITY MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RELATIVE HUMIDITY MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"pct",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "REST":{
+                    "id":"REST",
+                    "type":"Parameter",
+                    "name":"RESERVOIR STAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"REST",
+                            "en":"RESERVOIR STAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RESERVOIR STAGE"
+                        },
+                        "symbol":{
+                            "value":"ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "RESTD":{
+                    "id":"RESTD",
+                    "type":"Parameter",
+                    "name":"RESERVOIR STAGE DELTA",
+                    "observedProperty":{
+                        "label":{
+                            "id":"RESTD",
+                            "en":"RESERVOIR STAGE DELTA"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RESERVOIR STAGE DELTA"
+                        },
+                        "symbol":{
+                            "value":"ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "RESC":{
+                    "id":"RESC",
+                    "type":"Parameter",
+                    "name":"RESERVOIR STORAGE VOLUME",
+                    "observedProperty":{
+                        "label":{
+                            "id":"RESC",
+                            "en":"RESERVOIR STORAGE VOLUME"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RESERVOIR STORAGE VOLUME"
+                        },
+                        "symbol":{
+                            "value":"ac_ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRDOO":{
+                    "id":"SRDOO",
+                    "type":"Parameter",
+                    "name":"RIVER DISCHARGE OBSERVED MEAN",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRDOO",
+                            "en":"RIVER DISCHARGE OBSERVED MEAN"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"RIVER DISCHARGE OBSERVED MEAN"
+                        },
+                        "symbol":{
+                            "value":"cfs",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SAL":{
+                    "id":"SAL",
+                    "type":"Parameter",
+                    "name":"SALINITY",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SAL",
+                            "en":"SALINITY"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SALINITY"
+                        },
+                        "symbol":{
+                            "value":"gram/l",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SNDN":{
+                    "id":"SNDN",
+                    "type":"Parameter",
+                    "name":"Snow Density",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SNDN",
+                            "en":"Snow Density"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Snow Density"
+                        },
+                        "symbol":{
+                            "value":"pct",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SNWD":{
+                    "id":"SNWD",
+                    "type":"Parameter",
+                    "name":"SNOW DEPTH",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SNWD",
+                            "en":"SNOW DEPTH"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SNOW DEPTH"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SNWDV":{
+                    "id":"SNWDV",
+                    "type":"Parameter",
+                    "name":"SNOW DEPTH AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SNWDV",
+                            "en":"SNOW DEPTH AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SNOW DEPTH AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SNWDX":{
+                    "id":"SNWDX",
+                    "type":"Parameter",
+                    "name":"SNOW DEPTH MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SNWDX",
+                            "en":"SNOW DEPTH MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SNOW DEPTH MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SNWDN":{
+                    "id":"SNWDN",
+                    "type":"Parameter",
+                    "name":"SNOW DEPTH MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SNWDN",
+                            "en":"SNOW DEPTH MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SNOW DEPTH MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SNRR":{
+                    "id":"SNRR",
+                    "type":"Parameter",
+                    "name":"Snow Rain Ratio",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SNRR",
+                            "en":"Snow Rain Ratio"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Snow Rain Ratio"
+                        },
+                        "symbol":{
+                            "value":"unitless",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "STEMP":{
+                    "id":"STEMP",
+                    "type":"Parameter",
+                    "name":"SNOW TEMPERATURE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"STEMP",
+                            "en":"SNOW TEMPERATURE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SNOW TEMPERATURE"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "STAVG":{
+                    "id":"STAVG",
+                    "type":"Parameter",
+                    "name":"SNOW TEMPERATURE AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"STAVG",
+                            "en":"SNOW TEMPERATURE AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SNOW TEMPERATURE AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "STMAX":{
+                    "id":"STMAX",
+                    "type":"Parameter",
+                    "name":"SNOW TEMPERATURE MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"STMAX",
+                            "en":"SNOW TEMPERATURE MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SNOW TEMPERATURE MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "STMIN":{
+                    "id":"STMIN",
+                    "type":"Parameter",
+                    "name":"SNOW TEMPERATURE MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"STMIN",
+                            "en":"SNOW TEMPERATURE MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SNOW TEMPERATURE MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WTEQ":{
+                    "id":"WTEQ",
+                    "type":"Parameter",
+                    "name":"SNOW WATER EQUIVALENT",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WTEQ",
+                            "en":"SNOW WATER EQUIVALENT"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SNOW WATER EQUIVALENT"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WTEQV":{
+                    "id":"WTEQV",
+                    "type":"Parameter",
+                    "name":"SNOW WATER EQUIVALENT AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WTEQV",
+                            "en":"SNOW WATER EQUIVALENT AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SNOW WATER EQUIVALENT AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WTEQX":{
+                    "id":"WTEQX",
+                    "type":"Parameter",
+                    "name":"SNOW WATER EQUIVALENT MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WTEQX",
+                            "en":"SNOW WATER EQUIVALENT MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SNOW WATER EQUIVALENT MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WTEQN":{
+                    "id":"WTEQN",
+                    "type":"Parameter",
+                    "name":"SNOW WATER EQUIVALENT MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WTEQN",
+                            "en":"SNOW WATER EQUIVALENT MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SNOW WATER EQUIVALENT MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SMS":{
+                    "id":"SMS",
+                    "type":"Parameter",
+                    "name":"SOIL MOISTURE PERCENT",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SMS",
+                            "en":"SOIL MOISTURE PERCENT"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOIL MOISTURE PERCENT"
+                        },
+                        "symbol":{
+                            "value":"pct",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SMV":{
+                    "id":"SMV",
+                    "type":"Parameter",
+                    "name":"SOIL MOISTURE PERCENT AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SMV",
+                            "en":"SOIL MOISTURE PERCENT AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOIL MOISTURE PERCENT AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"pct",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SMX":{
+                    "id":"SMX",
+                    "type":"Parameter",
+                    "name":"SOIL MOISTURE PERCENT MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SMX",
+                            "en":"SOIL MOISTURE PERCENT MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOIL MOISTURE PERCENT MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"pct",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SMN":{
+                    "id":"SMN",
+                    "type":"Parameter",
+                    "name":"SOIL MOISTURE PERCENT MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SMN",
+                            "en":"SOIL MOISTURE PERCENT MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOIL MOISTURE PERCENT MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"pct",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "STV":{
+                    "id":"STV",
+                    "type":"Parameter",
+                    "name":"SOIL TEMPERATURE AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"STV",
+                            "en":"SOIL TEMPERATURE AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOIL TEMPERATURE AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "STX":{
+                    "id":"STX",
+                    "type":"Parameter",
+                    "name":"SOIL TEMPERATURE MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"STX",
+                            "en":"SOIL TEMPERATURE MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOIL TEMPERATURE MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "STN":{
+                    "id":"STN",
+                    "type":"Parameter",
+                    "name":"SOIL TEMPERATURE MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"STN",
+                            "en":"SOIL TEMPERATURE MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOIL TEMPERATURE MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "STO":{
+                    "id":"STO",
+                    "type":"Parameter",
+                    "name":"SOIL TEMPERATURE OBSERVED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"STO",
+                            "en":"SOIL TEMPERATURE OBSERVED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOIL TEMPERATURE OBSERVED"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRAD":{
+                    "id":"SRAD",
+                    "type":"Parameter",
+                    "name":"SOLAR RADIATION",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRAD",
+                            "en":"SOLAR RADIATION"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOLAR RADIATION"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRADV":{
+                    "id":"SRADV",
+                    "type":"Parameter",
+                    "name":"SOLAR RADIATION AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRADV",
+                            "en":"SOLAR RADIATION AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOLAR RADIATION AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRADX":{
+                    "id":"SRADX",
+                    "type":"Parameter",
+                    "name":"SOLAR RADIATION MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRADX",
+                            "en":"SOLAR RADIATION MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOLAR RADIATION MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRADN":{
+                    "id":"SRADN",
+                    "type":"Parameter",
+                    "name":"SOLAR RADIATION MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRADN",
+                            "en":"SOLAR RADIATION MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOLAR RADIATION MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRADT":{
+                    "id":"SRADT",
+                    "type":"Parameter",
+                    "name":"SOLAR RADIATION TOTAL",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRADT",
+                            "en":"SOLAR RADIATION TOTAL"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOLAR RADIATION TOTAL"
+                        },
+                        "symbol":{
+                            "value":"watt/m2",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "LRAD":{
+                    "id":"LRAD",
+                    "type":"Parameter",
+                    "name":"SOLAR RADIATION/LANGLEY",
+                    "observedProperty":{
+                        "label":{
+                            "id":"LRAD",
+                            "en":"SOLAR RADIATION/LANGLEY"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOLAR RADIATION/LANGLEY"
+                        },
+                        "symbol":{
+                            "value":"langley",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "LRADX":{
+                    "id":"LRADX",
+                    "type":"Parameter",
+                    "name":"SOLAR RADIATION/LANGLEY MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"LRADX",
+                            "en":"SOLAR RADIATION/LANGLEY MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOLAR RADIATION/LANGLEY MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"langley",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "LRADT":{
+                    "id":"LRADT",
+                    "type":"Parameter",
+                    "name":"SOLAR RADIATION/LANGLEY TOTAL",
+                    "observedProperty":{
+                        "label":{
+                            "id":"LRADT",
+                            "en":"SOLAR RADIATION/LANGLEY TOTAL"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"SOLAR RADIATION/LANGLEY TOTAL"
+                        },
+                        "symbol":{
+                            "value":"langley",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRMV":{
+                    "id":"SRMV",
+                    "type":"Parameter",
+                    "name":"STREAM STAGE (GAUGE HEIGHT) AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRMV",
+                            "en":"STREAM STAGE (GAUGE HEIGHT) AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"STREAM STAGE (GAUGE HEIGHT) AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRMX":{
+                    "id":"SRMX",
+                    "type":"Parameter",
+                    "name":"STREAM STAGE (GAUGE HEIGHT) MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRMX",
+                            "en":"STREAM STAGE (GAUGE HEIGHT) MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"STREAM STAGE (GAUGE HEIGHT) MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRMN":{
+                    "id":"SRMN",
+                    "type":"Parameter",
+                    "name":"STREAM STAGE (GAUGE HEIGHT) MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRMN",
+                            "en":"STREAM STAGE (GAUGE HEIGHT) MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"STREAM STAGE (GAUGE HEIGHT) MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRMO":{
+                    "id":"SRMO",
+                    "type":"Parameter",
+                    "name":"STREAM STAGE (GAUGE HEIGHT) OBSERVED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRMO",
+                            "en":"STREAM STAGE (GAUGE HEIGHT) OBSERVED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"STREAM STAGE (GAUGE HEIGHT) OBSERVED"
+                        },
+                        "symbol":{
+                            "value":"ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRVO":{
+                    "id":"SRVO",
+                    "type":"Parameter",
+                    "name":"STREAM VOLUME, ADJUSTED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRVO",
+                            "en":"STREAM VOLUME, ADJUSTED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"STREAM VOLUME, ADJUSTED"
+                        },
+                        "symbol":{
+                            "value":"ac_ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRVOX":{
+                    "id":"SRVOX",
+                    "type":"Parameter",
+                    "name":"STREAM VOLUME, ADJUSTED EXTERNAL",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRVOX",
+                            "en":"STREAM VOLUME, ADJUSTED EXTERNAL"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"STREAM VOLUME, ADJUSTED EXTERNAL"
+                        },
+                        "symbol":{
+                            "value":"ac_ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SRVOO":{
+                    "id":"SRVOO",
+                    "type":"Parameter",
+                    "name":"STREAM VOLUME, OBSERVED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SRVOO",
+                            "en":"STREAM VOLUME, OBSERVED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"STREAM VOLUME, OBSERVED"
+                        },
+                        "symbol":{
+                            "value":"ac_ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "OI":{
+                    "id":"OI",
+                    "type":"Parameter",
+                    "name":"TELECONNECTION INDEX",
+                    "observedProperty":{
+                        "label":{
+                            "id":"OI",
+                            "en":"TELECONNECTION INDEX"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"TELECONNECTION INDEX"
+                        },
+                        "symbol":{
+                            "value":"unitless",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "TURB":{
+                    "id":"TURB",
+                    "type":"Parameter",
+                    "name":"TURBIDITY",
+                    "observedProperty":{
+                        "label":{
+                            "id":"TURB",
+                            "en":"TURBIDITY"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"TURBIDITY"
+                        },
+                        "symbol":{
+                            "value":"ntu",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "RESA":{
+                    "id":"RESA",
+                    "type":"Parameter",
+                    "name":"USABLE LAKE STORAGE VOLUME",
+                    "observedProperty":{
+                        "label":{
+                            "id":"RESA",
+                            "en":"USABLE LAKE STORAGE VOLUME"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"USABLE LAKE STORAGE VOLUME"
+                        },
+                        "symbol":{
+                            "value":"ac_ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "PVPV":{
+                    "id":"PVPV",
+                    "type":"Parameter",
+                    "name":"VAPOR PRESSURE - PARTIAL",
+                    "observedProperty":{
+                        "label":{
+                            "id":"PVPV",
+                            "en":"VAPOR PRESSURE - PARTIAL"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"VAPOR PRESSURE - PARTIAL"
+                        },
+                        "symbol":{
+                            "value":"kPa",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "SVPV":{
+                    "id":"SVPV",
+                    "type":"Parameter",
+                    "name":"VAPOR PRESSURE - SATURATED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"SVPV",
+                            "en":"VAPOR PRESSURE - SATURATED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"VAPOR PRESSURE - SATURATED"
+                        },
+                        "symbol":{
+                            "value":"kPa",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WLEVV":{
+                    "id":"WLEVV",
+                    "type":"Parameter",
+                    "name":"WATER LEVEL AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WLEVV",
+                            "en":"WATER LEVEL AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WATER LEVEL AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WLEVX":{
+                    "id":"WLEVX",
+                    "type":"Parameter",
+                    "name":"WATER LEVEL MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WLEVX",
+                            "en":"WATER LEVEL MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WATER LEVEL MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WLEVN":{
+                    "id":"WLEVN",
+                    "type":"Parameter",
+                    "name":"WATER LEVEL MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WLEVN",
+                            "en":"WATER LEVEL MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WATER LEVEL MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WLEV":{
+                    "id":"WLEV",
+                    "type":"Parameter",
+                    "name":"WATER LEVEL OBSERVED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WLEV",
+                            "en":"WATER LEVEL OBSERVED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WATER LEVEL OBSERVED"
+                        },
+                        "symbol":{
+                            "value":"in",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WTEMP":{
+                    "id":"WTEMP",
+                    "type":"Parameter",
+                    "name":"WATER TEMPERATURE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WTEMP",
+                            "en":"WATER TEMPERATURE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WATER TEMPERATURE"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WTAVG":{
+                    "id":"WTAVG",
+                    "type":"Parameter",
+                    "name":"WATER TEMPERATURE AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WTAVG",
+                            "en":"WATER TEMPERATURE AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WATER TEMPERATURE AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WTMAX":{
+                    "id":"WTMAX",
+                    "type":"Parameter",
+                    "name":"WATER TEMPERATURE MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WTMAX",
+                            "en":"WATER TEMPERATURE MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WATER TEMPERATURE MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WTMIN":{
+                    "id":"WTMIN",
+                    "type":"Parameter",
+                    "name":"WATER TEMPERATURE MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WTMIN",
+                            "en":"WATER TEMPERATURE MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WATER TEMPERATURE MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"degF",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WELL":{
+                    "id":"WELL",
+                    "type":"Parameter",
+                    "name":"WELL DEPTH",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WELL",
+                            "en":"WELL DEPTH"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WELL DEPTH"
+                        },
+                        "symbol":{
+                            "value":"ft",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WDIRV":{
+                    "id":"WDIRV",
+                    "type":"Parameter",
+                    "name":"WIND DIRECTION AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WDIRV",
+                            "en":"WIND DIRECTION AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WIND DIRECTION AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"degree",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WDIR":{
+                    "id":"WDIR",
+                    "type":"Parameter",
+                    "name":"WIND DIRECTION OBSERVED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WDIR",
+                            "en":"WIND DIRECTION OBSERVED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WIND DIRECTION OBSERVED"
+                        },
+                        "symbol":{
+                            "value":"degree",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WDIRZ":{
+                    "id":"WDIRZ",
+                    "type":"Parameter",
+                    "name":"WIND DIRECTION STANDARD DEVIATION",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WDIRZ",
+                            "en":"WIND DIRECTION STANDARD DEVIATION"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WIND DIRECTION STANDARD DEVIATION"
+                        },
+                        "symbol":{
+                            "value":"degree",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WDMVV":{
+                    "id":"WDMVV",
+                    "type":"Parameter",
+                    "name":"WIND MOVEMENT AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WDMVV",
+                            "en":"WIND MOVEMENT AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WIND MOVEMENT AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"mile",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WDMVX":{
+                    "id":"WDMVX",
+                    "type":"Parameter",
+                    "name":"WIND MOVEMENT MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WDMVX",
+                            "en":"WIND MOVEMENT MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WIND MOVEMENT MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"mile",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WDMV":{
+                    "id":"WDMV",
+                    "type":"Parameter",
+                    "name":"WIND MOVEMENT OBSERVED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WDMV",
+                            "en":"WIND MOVEMENT OBSERVED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WIND MOVEMENT OBSERVED"
+                        },
+                        "symbol":{
+                            "value":"mile",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WDMVT":{
+                    "id":"WDMVT",
+                    "type":"Parameter",
+                    "name":"WIND MOVEMENT TOTAL",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WDMVT",
+                            "en":"WIND MOVEMENT TOTAL"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WIND MOVEMENT TOTAL"
+                        },
+                        "symbol":{
+                            "value":"mile",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WSPDV":{
+                    "id":"WSPDV",
+                    "type":"Parameter",
+                    "name":"WIND SPEED AVERAGE",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WSPDV",
+                            "en":"WIND SPEED AVERAGE"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WIND SPEED AVERAGE"
+                        },
+                        "symbol":{
+                            "value":"mph",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WSPDX":{
+                    "id":"WSPDX",
+                    "type":"Parameter",
+                    "name":"WIND SPEED MAXIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WSPDX",
+                            "en":"WIND SPEED MAXIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WIND SPEED MAXIMUM"
+                        },
+                        "symbol":{
+                            "value":"mph",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WSPDN":{
+                    "id":"WSPDN",
+                    "type":"Parameter",
+                    "name":"WIND SPEED MINIMUM",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WSPDN",
+                            "en":"WIND SPEED MINIMUM"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WIND SPEED MINIMUM"
+                        },
+                        "symbol":{
+                            "value":"mph",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "WSPD":{
+                    "id":"WSPD",
+                    "type":"Parameter",
+                    "name":"WIND SPEED OBSERVED",
+                    "observedProperty":{
+                        "label":{
+                            "id":"WSPD",
+                            "en":"WIND SPEED OBSERVED"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"WIND SPEED OBSERVED"
+                        },
+                        "symbol":{
+                            "value":"mph",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "id":"noaa-rfc",
+            "title":"River Forecast Center Seasonal Forecasts",
+            "description":"NOAA River Forecast Center Forecasts",
+            "keywords":[
+                "NOAA"
+            ],
+            "links":[
+                {
+                    "type":"application/html",
+                    "rel":"canonical",
+                    "title":"data source",
+                    "href":"https://www.cbrfc.noaa.gov/wsup/graph/west/map/esp_map.html",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-rfc?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-rfc?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-rfc?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title":"Schema of collection in JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-rfc/schema?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title":"Schema of collection in HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-rfc/schema?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-rfc/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-rfc/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"Items as GeoJSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-rfc/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"Items as RDF (GeoJSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-rfc/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-rfc/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"usgs-prism",
+            "title":"Parameter-elevation Regressions on Independent Slopes Model (PRISM)",
+            "description":"PRISM Monthly Climate Data for the Continental United States",
+            "keywords":[
+                "temperature",
+                "precipitation"
+            ],
+            "links":[
+                {
+                    "type":"application/html",
+                    "rel":"canonical",
+                    "title":"information",
+                    "href":"https://cida.usgs.gov/thredds/catalog.html?dataset=cida.usgs.gov/prism_v2",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"position query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/position?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"position query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/position?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"items query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/items?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"items query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/items?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"cube query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/cube?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"cube query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/cube?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"area query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/area?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"area query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/area?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"data",
+                    "title":"locations query for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/locations?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"data",
+                    "title":"locations query for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/locations?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+            "data_queries":{
+                "position":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/position",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"position"
+                        }
+                    }
+                },
+                "items":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/items",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"items"
+                        }
+                    }
+                },
+                "cube":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/cube",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"cube"
+                        }
+                    }
+                },
+                "area":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/area",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"area"
+                        }
+                    }
+                },
+                "locations":{
+                    "link":{
+                        "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/usgs-prism/locations",
+                        "rel":"data",
+                        "variables":{
+                            "query_type":"locations"
+                        }
+                    }
+                }
+            },
+            "parameter_names":{
+                "crs":{
+                    "id":"crs",
+                    "type":"Parameter",
+                    "name":null,
+                    "observedProperty":{
+                        "label":{
+                            "id":"crs",
+                            "en":null
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":null
+                        },
+                        "symbol":{
+                            "value":null,
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "ppt":{
+                    "id":"ppt",
+                    "type":"Parameter",
+                    "name":"Mean monthly precipitation",
+                    "observedProperty":{
+                        "label":{
+                            "id":"ppt",
+                            "en":"Mean monthly precipitation"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Mean monthly precipitation"
+                        },
+                        "symbol":{
+                            "value":"mm/month",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "time_bnds":{
+                    "id":"time_bnds",
+                    "type":"Parameter",
+                    "name":"Time interval endpoints",
+                    "observedProperty":{
+                        "label":{
+                            "id":"time_bnds",
+                            "en":"Time interval endpoints"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Time interval endpoints"
+                        },
+                        "symbol":{
+                            "value":null,
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "tmn":{
+                    "id":"tmn",
+                    "type":"Parameter",
+                    "name":"Minimum monthly temperature",
+                    "observedProperty":{
+                        "label":{
+                            "id":"tmn",
+                            "en":"Minimum monthly temperature"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Minimum monthly temperature"
+                        },
+                        "symbol":{
+                            "value":"degC",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                },
+                "tmx":{
+                    "id":"tmx",
+                    "type":"Parameter",
+                    "name":"Maximum monthly temperature",
+                    "observedProperty":{
+                        "label":{
+                            "id":"tmx",
+                            "en":"Maximum monthly temperature"
+                        }
+                    },
+                    "unit":{
+                        "label":{
+                            "en":"Maximum monthly temperature"
+                        },
+                        "symbol":{
+                            "value":"degC",
+                            "type":"http://www.opengis.net/def/uom/UCUM/"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "id":"noaa-river-stage-forecast-day-1",
+            "title":"River Stage Forecast Day 1",
+            "description":"NOAA River Stage Forecast 24 Hours / 1 day from now",
+            "keywords":[
+                "NOAA",
+                "riv_gauges"
+            ],
+            "links":[
+                {
+                    "type":"application/html",
+                    "rel":"canonical",
+                    "title":"data source",
+                    "href":"https://mapservices.weather.noaa.gov/eventdriven/rest/services/water/riv_gauges/MapServer",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-1?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-1?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-1?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title":"Schema of collection in JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-1/schema?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title":"Schema of collection in HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-1/schema?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-1/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-1/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"Items as GeoJSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-1/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"Items as RDF (GeoJSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-1/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-1/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"noaa-river-stage-forecast-day-2",
+            "title":"River Stage Forecast Day 2",
+            "description":"NOAA River Stage Forecast 48 hours / 2 days from now",
+            "keywords":[
+                "NOAA",
+                "riv_gauges"
+            ],
+            "links":[
+                {
+                    "type":"application/html",
+                    "rel":"canonical",
+                    "title":"data source",
+                    "href":"https://mapservices.weather.noaa.gov/eventdriven/rest/services/water/riv_gauges/MapServer",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-2?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-2?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-2?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title":"Schema of collection in JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-2/schema?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title":"Schema of collection in HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-2/schema?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-2/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-2/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"Items as GeoJSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-2/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"Items as RDF (GeoJSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-2/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-2/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        },
+        {
+            "id":"noaa-river-stage-forecast-day-3",
+            "title":"River Stage Forecast Day 3",
+            "description":"NOAA River Stage Forecast 72 hours / 3 days from now",
+            "keywords":[
+                "NOAA",
+                "riv_gauges"
+            ],
+            "links":[
+                {
+                    "type":"application/html",
+                    "rel":"canonical",
+                    "title":"data source",
+                    "href":"https://mapservices.weather.noaa.gov/eventdriven/rest/services/water/riv_gauges/MapServer",
+                    "hreflang":"en-US"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"root",
+                    "title":"The landing page of this server as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"root",
+                    "title":"The landing page of this server as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=html"
+                },
+                {
+                    "type":"application/json",
+                    "rel":"self",
+                    "title":"This document as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-3?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"alternate",
+                    "title":"This document as RDF (JSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-3?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"alternate",
+                    "title":"This document as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-3?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title":"Schema of collection in JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-3/schema?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/schema",
+                    "title":"Schema of collection in HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-3/schema?f=html"
+                },
+                {
+                    "type":"application/schema+json",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as JSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-3/queryables?f=json"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"http://www.opengis.net/def/rel/ogc/1.0/queryables",
+                    "title":"Queryables for this collection as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-3/queryables?f=html"
+                },
+                {
+                    "type":"application/geo+json",
+                    "rel":"items",
+                    "title":"Items as GeoJSON",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-3/items?f=json"
+                },
+                {
+                    "type":"application/ld+json",
+                    "rel":"items",
+                    "title":"Items as RDF (GeoJSON-LD)",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-3/items?f=jsonld"
+                },
+                {
+                    "type":"text/html",
+                    "rel":"items",
+                    "title":"Items as HTML",
+                    "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections/noaa-river-stage-forecast-day-3/items?f=html"
+                }
+            ],
+            "extent":{
+                "spatial":{
+                    "bbox":[
+                        [
+                            -170,
+                            15,
+                            -51,
+                            72
+                        ]
+                    ],
+                    "crs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+                }
+            },
+            "itemType":"feature",
+            "crs":[
+                "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+            ],
+            "storageCrs":"http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+        }
+    ],
+    "links":[
+        {
+            "type":"application/json",
+            "rel":"self",
+            "title":"This document as JSON",
+            "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections?f=json"
+        },
+        {
+            "type":"application/ld+json",
+            "rel":"alternate",
+            "title":"This document as RDF (JSON-LD)",
+            "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections?f=jsonld"
+        },
+        {
+            "type":"text/html",
+            "rel":"alternate",
+            "title":"This document as HTML",
+            "href":"https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections?f=html"
+        }
+    ]
+}
