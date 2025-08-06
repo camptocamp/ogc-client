@@ -21,7 +21,10 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
       dataQueries?: DataQueryTypes[];
     }[]
   > {
-    return this.data.then((doc) => parseCollections(doc, true));
+    return this.data.then((doc) => parseCollections(doc, true)).catch((err) => {
+      console.error(err);
+      throw err;
+    });
   }
 
   async getArea(

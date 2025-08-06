@@ -62,18 +62,34 @@ beforeAll(() => {
   });
 });
 
+jest.useFakeTimers();
+
+
 describe('endpoint',  () => {
 
-    it('should create an instance of OgcApiEDREndpoint', async () => {
-        const endpoint = new OgcApiEDREndpoint(
-          'http://local/sample-data-hub'
-        );
-        expect(endpoint).toBeInstanceOf(OgcApiEDREndpoint);
-    });
-    it('should have the correct number of collection items', async () => {
-        const endpoint = new OgcApiEDREndpoint('http://local/sample-data-hub');
-        expect(endpoint).toBeInstanceOf(OgcApiEDREndpoint);
-        const collections = await endpoint.allCollections;
-        expect(collections.length).toBe(2);
-    })
+    let endpoint: OgcApiEDREndpoint;
+
+      describe('OgcApiEDREndpoint', () => {
+
+         beforeEach(async () => {
+           endpoint = new OgcApiEDREndpoint('http://local/sample-data-hub/');
+         });
+
+         afterEach(async () => {
+           // this will exhaust all microtasks, effectively preventing rejected promises from leaking between tests
+           await jest.runAllTimersAsync();
+         });
+
+         it('should create an instance of OgcApiEDREndpoint', async () => {
+           expect(endpoint).toBeInstanceOf(OgcApiEDREndpoint);
+           const info = await endpoint.info;
+           expect(info.title).toBeTruthy();
+         });
+         it('should have the correct number of collection items', async () => {
+           expect(endpoint).toBeInstanceOf(OgcApiEDREndpoint);
+           const collections = await endpoint.allCollections;
+           expect(collections.length).toBe(8);
+         });
+      })
+   
 });
