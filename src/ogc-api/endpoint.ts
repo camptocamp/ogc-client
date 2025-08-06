@@ -45,6 +45,7 @@ import {
   isMimeTypeJsonFg,
 } from '../shared/mime-type.js';
 import { getChildPath } from '../shared/url-utils.js';
+import { parseCollections } from '../ogc-common/common.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
