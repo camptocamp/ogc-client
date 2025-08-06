@@ -7,7 +7,9 @@ module.exports = {
   setupFilesAfterEnv: ['./test-setup.node.ts'],
   transform: {
     ...defaultConfig.transform,
-    "\\.c?js$": ["babel-jest"],
+    '\\.c?js$': ['babel-jest'],
   },
-  transformIgnorePatterns: ['/node_modules/(?!(node-fetch|data-uri-to-buffer|fetch-blob|formdata-polyfill)/)'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!(node-fetch|data-uri-to-buffer|fetch-blob|formdata-polyfill)/)',
+  ],
 };
