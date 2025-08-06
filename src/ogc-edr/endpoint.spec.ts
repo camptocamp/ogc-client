@@ -1,6 +1,7 @@
 import OgcApiEDREndpoint from "./endpoint.js";
 import * as path from 'path';
 import { readFile, stat } from 'fs/promises';
+import { DataQueryTypes } from "../ogc-common/common.js";
 
 const FIXTURES_ROOT = path.join(__dirname, '../../fixtures/ogc-edr');
 
@@ -84,12 +85,23 @@ describe('endpoint',  () => {
            expect(endpoint).toBeInstanceOf(OgcApiEDREndpoint);
            const info = await endpoint.info;
            expect(info.title).toBeTruthy();
+           expect(info.description).toBeTruthy();
          });
          it('should have the correct number of collection items', async () => {
-           expect(endpoint).toBeInstanceOf(OgcApiEDREndpoint);
            const collections = await endpoint.allCollections;
-           expect(collections.length).toBe(8);
+           expect(collections.length).toBe(2);
+         });
+         it('should have the correct collection info', async () => {
+           const collections = await endpoint.allCollections;
+           const firstCollection = collections[0];
+           expect(firstCollection.name).toBe('ADWR_GWSI_Sites');
+           expect(firstCollection.dataQueries.length).toBe(0);
+
+           const secondCollection = collections[1];
+           expect(secondCollection.name).toBe('usace-edr');
+           expect(secondCollection.dataQueries.length).toBe(5);
+           const expectedQueries: DataQueryTypes[] = ["position", "items", "cube", "area", "locations"];
+           expect(secondCollection.dataQueries).toEqual(expectedQueries);
          });
       })
-   
 });
