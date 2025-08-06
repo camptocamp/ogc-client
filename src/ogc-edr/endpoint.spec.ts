@@ -66,7 +66,7 @@ beforeAll(() => {
 jest.useFakeTimers();
 
 
-describe('endpoint',  () => {
+describe('collections endpoint',  () => {
 
     let endpoint: OgcApiEDREndpoint;
 
@@ -91,6 +91,14 @@ describe('endpoint',  () => {
            const collections = await endpoint.allCollections;
            expect(collections.length).toBe(2);
          });
+        it('uses shared fetch', async () => {
+          jest.clearAllMocks();
+          // create the endpoint three times separately
+          new OgcApiEDREndpoint('http://local/sample-data-hub/').info;
+          new OgcApiEDREndpoint('http://local/sample-data-hub/').info;
+          new OgcApiEDREndpoint('http://local/sample-data-hub/').info;
+          expect(globalThis.fetch).toHaveBeenCalledTimes(1);
+        });
          it('should have the correct collection info', async () => {
            const collections = await endpoint.allCollections;
            const firstCollection = collections[0];

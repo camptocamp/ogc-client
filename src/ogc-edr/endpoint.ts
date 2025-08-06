@@ -1,7 +1,7 @@
 import OgcApiEndpoint from "../ogc-api/endpoint.js";
-import { fetchDocument, getLinkUrl } from "../ogc-api/link-utils.js";
+import { fetchDocument } from "../ogc-api/link-utils.js";
 import { DataQueryTypes, parseCollections } from "../ogc-common/common.js";
-import { OgcEDRDocument } from "./model.js";
+import { OgcEDRCollectionInfo, OgcEDRDocument } from "./model.js";
 
 type wkt = string;
 
@@ -36,11 +36,13 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
     crs?: string,
     f?: string
   ) {
-    const collectionDoc = await this.getCollectionDocument(collectionId);
+    const collectionDoc = (await this.getCollectionDocument(
+      collectionId
+    )) as unknown as OgcEDRCollectionInfo;
+
     const url = new URL(
-      getLinkUrl(collectionDoc, 'area', this.baseUrl),
-      window.location.toString()
-    );
+       collectionDoc.data_queries?.area?.link.href,
+    )
 
     url.searchParams.set('coords', coords);
     if (z !== undefined) url.searchParams.set('z', z);
@@ -63,11 +65,10 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
     crs?: string,
     f?: string
   ) {
-    const collectionDoc = await this.getCollectionDocument(collectionId);
+    const collectionDoc = await this.getCollectionDocument(collectionId) as unknown as OgcEDRCollectionInfo;
     const url = new URL(
-      getLinkUrl(collectionDoc, 'locations', this.baseUrl),
-      window.location.toString()
-    );
+      collectionDoc.data_queries?.locations?.link.href
+    )
     if (locationId !== undefined)
       url.searchParams.set('locationId', locationId);
     if (parameter_name !== undefined)
@@ -80,17 +81,31 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
 
   getCube(
     collectionId: string,
-    bbox: Number[],
+    bbox: number[],
     z?: string,
     datetime?: string,
     parameter_name?: string[],
     crs?: string,
     f?: string
-  ) {}
+  ) {
+    const collectionDoc = (this.getCollectionDocument(collectionId)) as unknown as OgcEDRCollectionInfo;
+    const url = new URL(
+      collectionDoc.data_queries?.cube?.link.href
+    );
+    url.searchParams.set('bbox', bbox.join(','));
+    if (z !== undefined) url.searchParams.set('z', z);
+    if (datetime !== undefined) url.searchParams.set('datetime', datetime);
+    if (parameter_name != null) {
+      url.searchParams.set('parameter-name', parameter_name.join(','));
+    }
+    if (crs !== undefined) url.searchParams.set('crs', crs);
+    if (f !== undefined) url.searchParams.set('f', f);
+    return fetchDocument(url.toString());
+  }
 
-  getTrajectory(collectionId: string) {}
-  getRadius(collectionId: string) {}
-  getCorridor(collectionId: string) {}
-  getPosition(collectionId: string) {}
-  getInstances(collectionId: string) {}
+  // getTrajectory(collectionId: string) {}
+  // getRadius(collectionId: string) {}
+  // getCorridor(collectionId: string) {}
+  // getPosition(collectionId: string) {}
+  // getInstances(collectionId: string) {}
 }
