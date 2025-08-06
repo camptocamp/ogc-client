@@ -17,11 +17,14 @@
     "node-fetch": "^3.3.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
     "@types/geojson": "^7946.0.10",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.2.5",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "@typescript-eslint/parser": "^7.1.0",
+    "babel-jest": "^29.7.0",
     "browser-cache-mock": "^0.1.7",
     "buffer": "^6.0.3",
     "esbuild": "^0.17.19",
@@ -55,7 +58,9 @@
     }
   },
   "scripts": {
-    "test": "jest",
+    "test": "npm run test:browser && npm run test:node",
+    "test:browser": "jest",
+    "test:node": "jest --config jest.node.config.cjs",
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint src/**/*.ts",

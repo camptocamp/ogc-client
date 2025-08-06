@@ -451,7 +451,7 @@ ${e.message}`);
       .then((collectionDoc) => {
         const url = new URL(
           getLinkUrl(collectionDoc, 'items', this.baseUrl),
-          window.location.toString()
+          globalThis.location.toString()
         );
         url.pathname += `/${itemId}`;
         return url.toString();

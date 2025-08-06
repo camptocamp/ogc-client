@@ -1,7 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import 'regenerator-runtime/runtime';
 import mitt from 'mitt';
-import * as util from 'util';
 import { TextDecoder } from 'util';
 import CacheMock from 'browser-cache-mock';
 import 'isomorphic-fetch';
@@ -10,11 +10,11 @@ import { Buffer } from './node_modules/buffer/index.js';
 globalThis.Buffer = Buffer;
 
 // mock the global fetch API
-window.fetchPreHandler = (url, options) => {};
-window.fetchResponseFactory = (url, options) => '<empty></empty>';
-window.originalFetch = window.fetch;
-window.mockFetch = jest.fn().mockImplementation(async (url, options) => {
-  const preResult = await window.fetchPreHandler(url, options);
+globalThis.fetchPreHandler = (url, options) => {};
+globalThis.fetchResponseFactory = (url, options) => '<empty></empty>';
+globalThis.originalFetch = globalThis.fetch;
+globalThis.mockFetch = jest.fn().mockImplementation(async (url, options) => {
+  const preResult = await globalThis.fetchPreHandler(url, options);
   if (preResult) return preResult;
   return {
     text: () => Promise.resolve(globalThis.fetchResponseFactory(url, options)),
@@ -37,14 +37,14 @@ window.mockFetch = jest.fn().mockImplementation(async (url, options) => {
     },
   };
 });
-window.fetch = window.mockFetch;
+globalThis.fetch = globalThis.mockFetch;
 
 // reset fetch response to XML by default
 beforeEach(() => {
-  window.fetchResponseFactory = (url) => '<empty></empty>';
+  globalThis.fetchResponseFactory = (url) => '<empty></empty>';
 });
 
-window.caches = {
+globalThis.caches = {
   open: async () => new CacheMock(),
 };
 
@@ -95,7 +95,7 @@ global.Worker = function Worker(filePath) {
       })
     )
     .then((result) => {
-      const code = new util.TextDecoder('utf-8').decode(
+      const code = new TextDecoder('utf-8').decode(
         result.outputFiles[0].contents
       );
       let vars = 'var self=this,global=self,globalThis=self';

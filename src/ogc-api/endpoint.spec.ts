@@ -7,7 +7,7 @@ const FIXTURES_ROOT = path.join(__dirname, '../../fixtures/ogc-api');
 
 // setup fetch to read local fixtures
 beforeAll(() => {
-  window.fetch = jest.fn().mockImplementation(async (urlOrInfo) => {
+  globalThis.fetch = jest.fn().mockImplementation(async (urlOrInfo) => {
     const url = new URL(
       urlOrInfo instanceof URL || typeof urlOrInfo === 'string'
         ? urlOrInfo
@@ -93,7 +93,7 @@ describe('OgcApiEndpoint', () => {
         new OgcApiEndpoint('http://local/sample-data/').info;
         new OgcApiEndpoint('http://local/sample-data/').info;
         new OgcApiEndpoint('http://local/sample-data/').info;
-        expect(window.fetch).toHaveBeenCalledTimes(1);
+        expect(globalThis.fetch).toHaveBeenCalledTimes(1);
       });
     });
     describe('#conformanceClasses', () => {
@@ -1414,7 +1414,7 @@ describe('OgcApiEndpoint', () => {
             ['attr2', 'attr3'],
             new Date('2023-02-01')
           );
-          expect(window.fetch).toHaveBeenCalledWith(
+          expect(globalThis.fetch).toHaveBeenCalledWith(
             'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=20&offset=12&skipGeometry=false&sortby=attr1&properties=attr2%2Cattr3&datetime=2023-02-01T00%3A00%3A00.000Z&bbox=1%2C2%2C3%2C4',
             { method: 'GET', headers: expect.any(Object) }
           );
@@ -1430,7 +1430,7 @@ describe('OgcApiEndpoint', () => {
             undefined,
             { start: new Date('2023-02-01'), end: new Date('2023-02-15') }
           );
-          expect(window.fetch).toHaveBeenCalledWith(
+          expect(globalThis.fetch).toHaveBeenCalledWith(
             'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&datetime=2023-02-01T00%3A00%3A00.000Z%2F2023-02-15T00%3A00%3A00.000Z',
             { method: 'GET', headers: expect.any(Object) }
           );
@@ -1446,7 +1446,7 @@ describe('OgcApiEndpoint', () => {
             undefined,
             { start: new Date('2023-02-01') }
           );
-          expect(window.fetch).toHaveBeenCalledWith(
+          expect(globalThis.fetch).toHaveBeenCalledWith(
             'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&datetime=2023-02-01T00%3A00%3A00.000Z%2F..',
             { method: 'GET', headers: expect.any(Object) }
           );
@@ -1462,7 +1462,7 @@ describe('OgcApiEndpoint', () => {
             undefined,
             { end: new Date('2023-02-01') }
           );
-          expect(window.fetch).toHaveBeenCalledWith(
+          expect(globalThis.fetch).toHaveBeenCalledWith(
             'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&datetime=..%2F2023-02-01T00%3A00%3A00.000Z',
             { method: 'GET', headers: expect.any(Object) }
           );
@@ -1479,7 +1479,7 @@ describe('OgcApiEndpoint', () => {
             null,
             'name=Inverness Airport&specialchar=✓'
           );
-          expect(window.fetch).toHaveBeenCalledWith(
+          expect(globalThis.fetch).toHaveBeenCalledWith(
             'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&sortby=attr1%2Cattr2&name=Inverness+Airport&specialchar=%E2%9C%93',
             { method: 'GET', headers: expect.any(Object) }
           );
@@ -2342,8 +2342,8 @@ The document at http://local/nonexisting?f=json could not be fetched.`
   describe('endpoint providing an OGC API endpoint at its root', () => {
     let originalFetch;
     beforeAll(() => {
-      originalFetch = window.fetch;
-      window.fetch = jest.fn().mockImplementation(async (urlOrInfo) => {
+      originalFetch = globalThis.fetch;
+      globalThis.fetch = jest.fn().mockImplementation(async (urlOrInfo) => {
         const url = new URL(
           urlOrInfo instanceof URL || typeof urlOrInfo === 'string'
             ? urlOrInfo
@@ -2387,7 +2387,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
       });
     });
     afterAll(() => {
-      window.fetch = originalFetch;
+      globalThis.fetch = originalFetch;
     });
 
     describe('on root path', () => {

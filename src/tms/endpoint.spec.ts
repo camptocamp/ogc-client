@@ -13,7 +13,7 @@ const TILE_FIXTURE = path.join(
 
 // Setup global fetch to read fixture files
 beforeAll(() => {
-  window.fetch = jest
+  globalThis.fetch = jest
     .fn()
     .mockImplementation(async (urlOrInfo: string | Request) => {
       const url = new URL(

@@ -16,6 +16,8 @@ export type WorkerResponse = {
   response?: TaskResponse;
 };
 
+const fallbackEventTarget = new EventTarget(); // this will be used if no worker is available
+
 export function sendTaskRequest<T>(
   taskName: string,
   workerInstance: Worker,
@@ -29,7 +31,7 @@ export function sendTaskRequest<T>(
       params,
     };
     if (workerInstance === null) {
-      globalThis.dispatchEvent(
+      fallbackEventTarget.dispatchEvent(
         new CustomEvent('ogc-client.request', {
           detail: request,
         })
@@ -41,7 +43,10 @@ export function sendTaskRequest<T>(
     const handler = (response: WorkerResponse) => {
       if (response.requestId === requestId) {
         if (workerInstance === null) {
-          globalThis.removeEventListener('message', windowHandler);
+          fallbackEventTarget.removeEventListener(
+            'ogc-client.response',
+            windowHandler
+          );
         } else {
           workerInstance.removeEventListener('message', workerHandler);
         }
@@ -56,7 +61,10 @@ export function sendTaskRequest<T>(
     const workerHandler = (event) => handler(event.data);
 
     if (workerInstance === null) {
-      globalThis.addEventListener('ogc-client.response', windowHandler);
+      fallbackEventTarget.addEventListener(
+        'ogc-client.response',
+        windowHandler
+      );
     } else {
       workerInstance.addEventListener('message', workerHandler);
     }
@@ -92,7 +100,7 @@ export function addTaskHandler(
       if (useWorker) {
         scope.postMessage(message);
       } else {
-        scope.dispatchEvent(
+        fallbackEventTarget.dispatchEvent(
           new CustomEvent('ogc-client.response', {
             detail: message,
           })
@@ -103,7 +111,7 @@ export function addTaskHandler(
   if (useWorker) {
     scope.addEventListener('message', (event) => eventHandler(event.data));
   } else {
-    scope.addEventListener('ogc-client.request', (event) =>
+    fallbackEventTarget.addEventListener('ogc-client.request', (event) =>
       eventHandler(event.detail)
     );
   }

@@ -1,19 +1,32 @@
-// tests/tms/link-utils.test.ts
-import { normalizeUrl, fetchXml } from './link-utils.js';
-import { sharedFetch } from '../shared/http-utils.js';
+import { fetchXml, normalizeUrl } from './link-utils.js';
 import { parseXmlString } from '../shared/xml-utils.js';
 
-// Mock the sharedFetch function to simulate HTTP responses.
-jest.mock('../../src/shared/http-utils', () => ({
-  sharedFetch: jest.fn().mockImplementation(async () => ({
-    ok: true,
-    clone: () => ({
-      text: async () => '<?xml version="1.0" encoding="UTF-8"?><root></root>',
-    }),
-  })),
-}));
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
-describe('Link Utilities', () => {
+describe('TMS link utilities', () => {
+  let originalFetch;
+
+  beforeAll(() => {
+    originalFetch = globalThis.fetch; // keep reference of native impl
+    globalThis.fetch = jest.fn().mockImplementation(() => {
+      return Promise.resolve({
+        text: async () => '<?xml version="1.0" encoding="UTF-8"?><root></root>',
+        status: 200,
+        ok: true,
+        headers: new Headers(),
+        clone: function () {
+          return this;
+        },
+      });
+    });
+  });
+
+  afterAll(() => {
+    globalThis.fetch = originalFetch; // restore original impl
+  });
+
   describe('normalizeUrl', () => {
     it('should lowercase hostname and add a trailing slash', () => {
       const input = 'HTTP://Example.com/path';
@@ -29,18 +42,15 @@ describe('Link Utilities', () => {
   });
 
   describe('fetchXml', () => {
-    beforeEach(() => {
-      jest.clearAllMocks();
-    });
-
     it('successfully fetches XML content', async () => {
       // Simulate a valid XML response.
-      (sharedFetch as jest.Mock).mockResolvedValueOnce({
+      (globalThis.fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
-        clone: () => ({
-          text: async () =>
-            '<?xml version="1.0" encoding="UTF-8"?><root><child>Test</child></root>',
-        }),
+        text: async () =>
+          '<?xml version="1.0" encoding="UTF-8"?><root><child>Test</child></root>',
+        clone: function () {
+          return this;
+        },
       });
 
       const result = await fetchXml('https://example.com/data.xml');
@@ -49,16 +59,21 @@ describe('Link Utilities', () => {
           '<?xml version="1.0" encoding="UTF-8"?><root><child>Test</child></root>'
         )
       );
-      expect(sharedFetch).toHaveBeenCalledWith(
+      expect(globalThis.fetch).toHaveBeenCalledWith(
         'https://example.com/data.xml',
-        'GET',
-        true
+        {
+          headers: { Accept: 'application/json,application/schema+json' },
+          method: 'GET',
+        }
       );
     });
 
     it('throws an error when the response is not OK', async () => {
-      (sharedFetch as jest.Mock).mockResolvedValueOnce({
+      (globalThis.fetch as jest.Mock).mockResolvedValueOnce({
         ok: false,
+        clone: function () {
+          return this;
+        },
       });
       await expect(fetchXml('https://example.com/bad-url')).rejects.toThrow(
         'The document at https://example.com/bad-url could not be fetched.'
@@ -66,11 +81,12 @@ describe('Link Utilities', () => {
     });
 
     it('throws an error when content is not XML', async () => {
-      (sharedFetch as jest.Mock).mockResolvedValueOnce({
+      (globalThis.fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
-        clone: () => ({
-          text: async () => 'This is not XML content',
-        }),
+        text: async () => 'This is not XML content',
+        clone: function () {
+          return this;
+        },
       });
       await expect(fetchXml('https://example.com/not-xml')).rejects.toThrow(
         'Root element is missing or invalid (line 1, column 1)'
@@ -78,11 +94,12 @@ describe('Link Utilities', () => {
     });
 
     it('accepts XML without declaration', async () => {
-      (sharedFetch as jest.Mock).mockResolvedValueOnce({
+      (globalThis.fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
-        clone: () => ({
-          text: async () => '<root>Valid XML without declaration</root>',
-        }),
+        text: async () => '<root>Valid XML without declaration</root>',
+        clone: function () {
+          return this;
+        },
       });
       const result = await fetchXml('https://example.com/xml-tag');
       expect(result).toEqual(

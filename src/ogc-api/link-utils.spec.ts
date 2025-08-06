@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import * as linkUtils from './link-utils.js';
 import { OgcApiDocument } from './model.js';
 import * as httpUtils from '../shared/http-utils.js';
@@ -7,7 +6,7 @@ describe('link-utils', () => {
   beforeEach(() => {
     jest.spyOn(httpUtils, 'sharedFetch');
 
-    Object.defineProperty(window, 'location', {
+    Object.defineProperty(globalThis, 'location', {
       value: {
         toString: () => 'https://example.com/base/',
       },
