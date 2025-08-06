@@ -12,15 +12,13 @@ jest.mock('../shared/cache', () => ({
   useCache: jest.fn((factory) => factory()),
 }));
 
-const global = window as any;
-
 describe('WmsEndpoint', () => {
   let endpoint: WmsEndpoint;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    global.fetchPreHandler = () => {};
-    global.fetchResponseFactory = () => capabilities130;
+    globalThis.fetchPreHandler = () => {};
+    globalThis.fetchResponseFactory = () => capabilities130;
     endpoint = new WmsEndpoint(
       'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb'
     );
@@ -28,7 +26,7 @@ describe('WmsEndpoint', () => {
 
   it('makes a getcapabilities request', async () => {
     await endpoint.isReady();
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetCapabilities',
       { method: 'GET' }
     );
@@ -59,7 +57,7 @@ describe('WmsEndpoint', () => {
 
     describe('CORS error handling', () => {
       beforeEach(() => {
-        global.fetchPreHandler = (url, options) => {
+        globalThis.fetchPreHandler = (url, options) => {
           if (options?.method === 'HEAD') return 'ok!';
           throw new Error('CORS problem');
         };
@@ -80,7 +78,7 @@ describe('WmsEndpoint', () => {
 
     describe('endpoint error handling', () => {
       beforeEach(() => {
-        global.fetchPreHandler = () => {
+        globalThis.fetchPreHandler = () => {
           throw new TypeError('other kind of problem');
         };
         endpoint = new WmsEndpoint('https://my.test.service/ogc/wms');
@@ -100,7 +98,7 @@ describe('WmsEndpoint', () => {
 
     describe('http error handling', () => {
       beforeEach(() => {
-        global.fetchPreHandler = () => ({
+        globalThis.fetchPreHandler = () => ({
           ok: false,
           text: () => Promise.resolve('something broke in the server'),
           status: 500,
@@ -126,7 +124,7 @@ describe('WmsEndpoint', () => {
 
     describe('service exception handling', () => {
       beforeEach(() => {
-        global.fetchResponseFactory = () => exceptionReportWfs;
+        globalThis.fetchResponseFactory = () => exceptionReportWfs;
         endpoint = new WmsEndpoint('https://my.test.service/ogc/wms');
       });
       it('rejects when the endpoint returns an exception report', async () => {
@@ -301,7 +299,7 @@ describe('WmsEndpoint', () => {
 
     describe('with a single feature type', () => {
       beforeEach(() => {
-        global.fetchResponseFactory = () => capabilitiesStates;
+        globalThis.fetchResponseFactory = () => capabilitiesStates;
         endpoint = new WmsEndpoint(
           'https://my.test.service/ogc/wms?service=wfs&request=DescribeFeatureType'
         );

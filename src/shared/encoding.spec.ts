@@ -3,16 +3,19 @@ import { readInfoFromCapabilities } from '../wms/capabilities.js';
 import { join } from 'path';
 import { readFileSync } from 'fs';
 
-const global = window as any;
-
 describe('parse XML documents with alternate encodings', () => {
   let responseCharset;
 
   beforeAll(() => {
-    global.fetch = jest.fn((fileUrl) => {
+    globalThis.fetch = jest.fn((requestInfo) => {
+      let fileUrl;
+      if (typeof requestInfo === 'string') fileUrl = requestInfo;
+      else if (requestInfo instanceof URL) fileUrl = requestInfo.href;
+      else fileUrl = requestInfo.url;
+
       const pathFromRoot = new URL(fileUrl).pathname;
       const filePath = join(__dirname, '../..', pathFromRoot);
-      const buffer = readFileSync(filePath);
+      const buffer: ArrayBuffer = readFileSync(filePath);
       const headers = responseCharset
         ? {
             'Content-Type': `application/xml; charset=${responseCharset}`,
@@ -21,18 +24,18 @@ describe('parse XML documents with alternate encodings', () => {
             'Content-Type': 'application/xml',
           };
       return Promise.resolve({
-        arrayBuffer: () => Promise.resolve(buffer),
+        arrayBuffer: async () => buffer,
         status: 200,
         ok: true,
         headers: new Headers(headers),
-        clone: function () {
+        clone() {
           return this;
         },
-      });
+      } as Response);
     });
   });
   afterAll(() => {
-    global.fetch = global.mockFetch;
+    globalThis.fetch = globalThis.mockFetch;
   });
   beforeEach(() => {
     responseCharset = null;

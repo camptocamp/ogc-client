@@ -7,7 +7,7 @@ const FIXTURES_ROOT = path.join(__dirname, '../../fixtures/ogc-api');
 
 // setup fetch to read local fixtures
 beforeAll(() => {
-  window.fetch = jest.fn().mockImplementation(async (urlOrInfo) => {
+  globalThis.fetch = jest.fn().mockImplementation(async (urlOrInfo) => {
     const url = new URL(
       urlOrInfo instanceof URL || typeof urlOrInfo === 'string'
         ? urlOrInfo
@@ -93,7 +93,7 @@ describe('OgcApiEndpoint', () => {
         new OgcApiEndpoint('http://local/sample-data/').info;
         new OgcApiEndpoint('http://local/sample-data/').info;
         new OgcApiEndpoint('http://local/sample-data/').info;
-        expect(window.fetch).toHaveBeenCalledTimes(1);
+        expect(globalThis.fetch).toHaveBeenCalledTimes(1);
       });
     });
     describe('#conformanceClasses', () => {
@@ -1399,6 +1399,92 @@ describe('OgcApiEndpoint', () => {
           },
         ]);
       });
+      describe('parameters encoding', () => {
+        beforeEach(() => {
+          jest.clearAllMocks();
+        });
+        it('encodes parameters in the URL', async () => {
+          await endpoint.getCollectionItems(
+            'roads_national',
+            20,
+            12,
+            false,
+            ['attr1'],
+            [1, 2, 3, 4],
+            ['attr2', 'attr3'],
+            new Date('2023-02-01')
+          );
+          expect(globalThis.fetch).toHaveBeenCalledWith(
+            'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=20&offset=12&skipGeometry=false&sortby=attr1&properties=attr2%2Cattr3&datetime=2023-02-01T00%3A00%3A00.000Z&bbox=1%2C2%2C3%2C4',
+            { method: 'GET', headers: expect.any(Object) }
+          );
+        });
+        it('encodes date time param as an interval', async () => {
+          await endpoint.getCollectionItems(
+            'roads_national',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            { start: new Date('2023-02-01'), end: new Date('2023-02-15') }
+          );
+          expect(globalThis.fetch).toHaveBeenCalledWith(
+            'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&datetime=2023-02-01T00%3A00%3A00.000Z%2F2023-02-15T00%3A00%3A00.000Z',
+            { method: 'GET', headers: expect.any(Object) }
+          );
+        });
+        it('encodes date time param as an interval (start only)', async () => {
+          await endpoint.getCollectionItems(
+            'roads_national',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            { start: new Date('2023-02-01') }
+          );
+          expect(globalThis.fetch).toHaveBeenCalledWith(
+            'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&datetime=2023-02-01T00%3A00%3A00.000Z%2F..',
+            { method: 'GET', headers: expect.any(Object) }
+          );
+        });
+        it('encodes date time param as an interval (end only)', async () => {
+          await endpoint.getCollectionItems(
+            'roads_national',
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            { end: new Date('2023-02-01') }
+          );
+          expect(globalThis.fetch).toHaveBeenCalledWith(
+            'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&datetime=..%2F2023-02-01T00%3A00%3A00.000Z',
+            { method: 'GET', headers: expect.any(Object) }
+          );
+        });
+        it('adds freeform query param at the end of the url', async () => {
+          await endpoint.getCollectionItems(
+            'roads_national',
+            10,
+            0,
+            null,
+            ['attr1', 'attr2'],
+            null,
+            null,
+            null,
+            'name=Inverness Airport&specialchar=✓'
+          );
+          expect(globalThis.fetch).toHaveBeenCalledWith(
+            'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&sortby=attr1%2Cattr2&name=Inverness+Airport&specialchar=%E2%9C%93',
+            { method: 'GET', headers: expect.any(Object) }
+          );
+        });
+      });
     });
     describe('#getCollectionItem', () => {
       it('returns one airports collection item', async () => {
@@ -1611,7 +1697,7 @@ describe('OgcApiEndpoint', () => {
             outputFormat: 'application/geo+json',
           })
         ).resolves.toEqual(
-          'https://my.server.org/sample-data/collections/airports/items?f=json&name=Sumburgh+Airport&limit=101'
+          'https://my.server.org/sample-data/collections/airports/items?f=json&limit=101&name=Sumburgh%20Airport'
         );
       });
       it('outputs a warning if the required format is not a known mime-type for the collection', async () => {
@@ -1622,12 +1708,34 @@ describe('OgcApiEndpoint', () => {
             outputFormat: 'shapefile',
           })
         ).resolves.toEqual(
-          'https://my.server.org/sample-data/collections/airports/items?f=shapefile&name=Sumburgh+Airport&limit=101'
+          'https://my.server.org/sample-data/collections/airports/items?f=shapefile&limit=101&name=Sumburgh%20Airport'
         );
         expect(console.warn).toHaveBeenCalledWith(
           expect.stringContaining(
             'The following output format type was not found in the collection'
           )
+        );
+      });
+      it('encodes the various options properly', async () => {
+        await expect(
+          endpoint.getCollectionItemsUrl('airports', {
+            limit: 12,
+            offset: 34,
+            query: 'name=Sumburgh Airport',
+            asJson: true,
+            sortBy: ['attr1', 'attr2'],
+            properties: ['attr3', 'attr4'],
+            extent: [1, 2, 3, 4],
+            extentCrs: 'EPSG:4326',
+            dateTime: {
+              start: new Date('2023-02-01'),
+              end: new Date('2023-02-15'),
+            },
+            outputCrs: 'EPSG:4326',
+            skipGeometry: true,
+          })
+        ).resolves.toEqual(
+          'https://my.server.org/sample-data/collections/airports/items?f=jsonfg&limit=12&offset=34&skipGeometry=true&sortby=attr1%2Cattr2&properties=attr3%2Cattr4&datetime=2023-02-01T00%3A00%3A00.000Z%2F2023-02-15T00%3A00%3A00.000Z&crs=EPSG%3A4326&bbox=1%2C2%2C3%2C4&bbox-crs=EPSG%3A4326&name=Sumburgh%20Airport'
         );
       });
     });
@@ -2234,8 +2342,8 @@ The document at http://local/nonexisting?f=json could not be fetched.`
   describe('endpoint providing an OGC API endpoint at its root', () => {
     let originalFetch;
     beforeAll(() => {
-      originalFetch = window.fetch;
-      window.fetch = jest.fn().mockImplementation(async (urlOrInfo) => {
+      originalFetch = globalThis.fetch;
+      globalThis.fetch = jest.fn().mockImplementation(async (urlOrInfo) => {
         const url = new URL(
           urlOrInfo instanceof URL || typeof urlOrInfo === 'string'
             ? urlOrInfo
@@ -2279,7 +2387,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
       });
     });
     afterAll(() => {
-      window.fetch = originalFetch;
+      globalThis.fetch = originalFetch;
     });
 
     describe('on root path', () => {

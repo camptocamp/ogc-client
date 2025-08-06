@@ -13,8 +13,6 @@ jest.mock('../shared/cache', () => ({
 
 enableFallbackWithoutWorker();
 
-const global = window as any;
-
 describe('Worker fallback', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -24,7 +22,7 @@ describe('Worker fallback', () => {
     let endpoint: WmsEndpoint;
 
     beforeEach(() => {
-      global.fetchResponseFactory = () => wmsCapabilities;
+      globalThis.fetchResponseFactory = () => wmsCapabilities;
       endpoint = new WmsEndpoint(
         'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb'
       );
@@ -42,7 +40,7 @@ describe('Worker fallback', () => {
     let endpoint: WfsEndpoint;
 
     beforeEach(() => {
-      global.fetchResponseFactory = () => wfsCapabilities;
+      globalThis.fetchResponseFactory = () => wfsCapabilities;
       endpoint = new WfsEndpoint(
         'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType'
       );

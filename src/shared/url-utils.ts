@@ -2,7 +2,7 @@
  * Returns the parent path from a URL based on a version pattern (x.y.z).
  */
 export function getParentPath(url: string): string | null {
-  const urlObj = new URL(url, window.location.toString());
+  const urlObj = new URL(url, globalThis.location.toString());
   let pathParts = urlObj.pathname.split('/');
   if (pathParts.length <= 2) {
     // cannot go further up
@@ -17,5 +17,18 @@ export function getParentPath(url: string): string | null {
     pathParts.push('');
   }
   urlObj.pathname = pathParts.join('/');
+  return urlObj.toString();
+}
+
+/**
+ * Appends a new fragment to the URL's path
+ */
+export function getChildPath(url: string, childFragment: string): string {
+  const urlObj = new URL(url, globalThis.location.toString());
+  if (urlObj.pathname.endsWith('/')) {
+    urlObj.pathname += childFragment;
+  } else {
+    urlObj.pathname += `/${childFragment}`;
+  }
   return urlObj.toString();
 }

@@ -13,6 +13,6 @@ module.exports = {
   coveragePathIgnorePatterns: ['.(xml)$'],
   // this is required because imports end in ".js"
   moduleNameMapper: {
-    '^(..?/.+).jsx?$': '$1',
+    '^(..?/.+)\\.c?jsx?$': '$1',
   },
 };
