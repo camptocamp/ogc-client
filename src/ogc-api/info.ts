@@ -11,7 +11,7 @@ import {
   OgcStyleBrief,
   OgcStyleFull,
   TileMatrixSet,
-} from '../ogc-common/model.js';
+} from '../shared/ogc-api/model.js';
 import { assertHasLinks } from './link-utils.js';
 import { EndpointError } from '../shared/errors.js';
 import {
@@ -44,8 +44,6 @@ ${e.message}`);
 export function parseConformance(doc: OgcApiDocument): ConformanceClass[] {
   return doc.conformsTo as string[];
 }
-
-
 
 export function checkTileConformance(conformance: ConformanceClass[]) {
   return (

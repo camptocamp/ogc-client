@@ -1,7 +1,5 @@
-import { parseDataQueries } from "../ogc-edr/info.js";
-import { OgcApiCollectionInfo, OgcApiDocument } from "./model.js";
-
-
+import { parseDataQueries } from '../../ogc-edr/info.js';
+import { OgcApiCollectionInfo, OgcApiDocument } from './model.js';
 
 export type DataQueryTypes =
   | 'items'
@@ -27,7 +25,10 @@ export const DataQueryTypesArray = [
   'instances',
 ] as DataQueryTypes[];
 
-export function parseCollections(doc: OgcApiDocument, checkDataQueries = false): Array<{
+export function parseCollections(
+  doc: OgcApiDocument,
+  checkDataQueries = false
+): Array<{
   name: string;
   hasRecords?: boolean;
   hasFeatures?: boolean;

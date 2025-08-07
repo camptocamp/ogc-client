@@ -1,6 +1,5 @@
 import { Geometry } from 'geojson';
-import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
-
+import { BoundingBox, CrsCode, MimeType } from '../models.js';
 export type ConformanceClass = string;
 
 export interface OgcApiEndpointInfo {

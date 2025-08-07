@@ -13,12 +13,10 @@ const baseUrl = 'https://api.wwdh.internetofwater.app?f=json';
 
   const firstCollectionInfo = await edr.getCollectionInfo(firstCollection.name);
 
-  console.log("Supported EDR data queries:", firstCollection.dataQueries); 
+  console.log('Supported EDR data queries:', firstCollection.dataQueries);
 
   console.log('Collection crs:', firstCollectionInfo.crs);
 
-  const result = edr.getLocations(
-    firstCollection.name,
-  );
+  const result = edr.getLocations(firstCollection.name);
   console.log('Retrieved locations:', await result);
 })();

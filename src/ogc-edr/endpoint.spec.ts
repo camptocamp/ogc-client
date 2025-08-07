@@ -1,7 +1,7 @@
-import OgcApiEDREndpoint from "./endpoint.js";
+import OgcApiEDREndpoint from './endpoint.js';
 import * as path from 'path';
 import { readFile, stat } from 'fs/promises';
-import { DataQueryTypes } from "../ogc-common/common.js";
+import { DataQueryTypes } from '../ogc-common/common.js';
 
 const FIXTURES_ROOT = path.join(__dirname, '../../fixtures/ogc-edr');
 
@@ -65,51 +65,54 @@ beforeAll(() => {
 
 jest.useFakeTimers();
 
+describe('collections endpoint', () => {
+  let endpoint: OgcApiEDREndpoint;
 
-describe('collections endpoint',  () => {
+  describe('OgcApiEDREndpoint', () => {
+    beforeEach(async () => {
+      endpoint = new OgcApiEDREndpoint('http://local/sample-data-hub/');
+    });
 
-    let endpoint: OgcApiEDREndpoint;
+    afterEach(async () => {
+      // this will exhaust all microtasks, effectively preventing rejected promises from leaking between tests
+      await jest.runAllTimersAsync();
+    });
 
-      describe('OgcApiEDREndpoint', () => {
+    it('should create an instance of OgcApiEDREndpoint', async () => {
+      expect(endpoint).toBeInstanceOf(OgcApiEDREndpoint);
+      const info = await endpoint.info;
+      expect(info.title).toBeTruthy();
+      expect(info.description).toBeTruthy();
+    });
+    it('should have the correct number of collection items', async () => {
+      const collections = await endpoint.allCollections;
+      expect(collections.length).toBe(2);
+    });
+    it('uses shared fetch', async () => {
+      jest.clearAllMocks();
+      // create the endpoint three times separately
+      new OgcApiEDREndpoint('http://local/sample-data-hub/').info;
+      new OgcApiEDREndpoint('http://local/sample-data-hub/').info;
+      new OgcApiEDREndpoint('http://local/sample-data-hub/').info;
+      expect(globalThis.fetch).toHaveBeenCalledTimes(1);
+    });
+    it('should have the correct collection info', async () => {
+      const collections = await endpoint.allCollections;
+      const firstCollection = collections[0];
+      expect(firstCollection.name).toBe('ADWR_GWSI_Sites');
+      expect(firstCollection.dataQueries.length).toBe(0);
 
-         beforeEach(async () => {
-           endpoint = new OgcApiEDREndpoint('http://local/sample-data-hub/');
-         });
-
-         afterEach(async () => {
-           // this will exhaust all microtasks, effectively preventing rejected promises from leaking between tests
-           await jest.runAllTimersAsync();
-         });
-
-         it('should create an instance of OgcApiEDREndpoint', async () => {
-           expect(endpoint).toBeInstanceOf(OgcApiEDREndpoint);
-           const info = await endpoint.info;
-           expect(info.title).toBeTruthy();
-           expect(info.description).toBeTruthy();
-         });
-         it('should have the correct number of collection items', async () => {
-           const collections = await endpoint.allCollections;
-           expect(collections.length).toBe(2);
-         });
-        it('uses shared fetch', async () => {
-          jest.clearAllMocks();
-          // create the endpoint three times separately
-          new OgcApiEDREndpoint('http://local/sample-data-hub/').info;
-          new OgcApiEDREndpoint('http://local/sample-data-hub/').info;
-          new OgcApiEDREndpoint('http://local/sample-data-hub/').info;
-          expect(globalThis.fetch).toHaveBeenCalledTimes(1);
-        });
-         it('should have the correct collection info', async () => {
-           const collections = await endpoint.allCollections;
-           const firstCollection = collections[0];
-           expect(firstCollection.name).toBe('ADWR_GWSI_Sites');
-           expect(firstCollection.dataQueries.length).toBe(0);
-
-           const secondCollection = collections[1];
-           expect(secondCollection.name).toBe('usace-edr');
-           expect(secondCollection.dataQueries.length).toBe(5);
-           const expectedQueries: DataQueryTypes[] = ["position", "items", "cube", "area", "locations"];
-           expect(secondCollection.dataQueries).toEqual(expectedQueries);
-         });
-      })
+      const secondCollection = collections[1];
+      expect(secondCollection.name).toBe('usace-edr');
+      expect(secondCollection.dataQueries.length).toBe(5);
+      const expectedQueries: DataQueryTypes[] = [
+        'position',
+        'items',
+        'cube',
+        'area',
+        'locations',
+      ];
+      expect(secondCollection.dataQueries).toEqual(expectedQueries);
+    });
+  });
 });

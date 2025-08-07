@@ -1,6 +1,5 @@
-import { DataQueryTypes } from "../ogc-common/common.js";
-import { OgcApiCollectionInfo, OgcApiDocument } from "../ogc-common/model.js";
-
+import { DataQueryTypes } from '../ogc-common/common.js';
+import { OgcApiCollectionInfo, OgcApiDocument } from '../ogc-common/model.js';
 
 export interface OgcEDRCollectionInfo extends OgcApiCollectionInfo {
   data_queries?: {

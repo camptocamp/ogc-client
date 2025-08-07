@@ -1,7 +1,7 @@
-import OgcApiEndpoint from "../ogc-api/endpoint.js";
-import { fetchDocument } from "../ogc-api/link-utils.js";
-import { DataQueryTypes, parseCollections } from "../ogc-common/common.js";
-import { OgcEDRCollectionInfo, OgcEDRDocument } from "./model.js";
+import OgcApiEndpoint from '../ogc-api/endpoint.js';
+import { fetchDocument } from '../ogc-api/link-utils.js';
+import { DataQueryTypes, parseCollections } from '../shared/ogc-api/common.js';
+import { OgcEDRCollectionInfo, OgcEDRDocument } from './model.js';
 
 type wkt = string;
 
@@ -21,10 +21,12 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
       dataQueries?: DataQueryTypes[];
     }[]
   > {
-    return this.data.then((doc) => parseCollections(doc, true)).catch((err) => {
-      console.error(err);
-      throw err;
-    });
+    return this.data
+      .then((doc) => parseCollections(doc, true))
+      .catch((err) => {
+        console.error(err);
+        throw err;
+      });
   }
 
   async getArea(
@@ -40,9 +42,7 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
       collectionId
     )) as unknown as OgcEDRCollectionInfo;
 
-    const url = new URL(
-       collectionDoc.data_queries?.area?.link.href,
-    )
+    const url = new URL(collectionDoc.data_queries?.area?.link.href);
 
     url.searchParams.set('coords', coords);
     if (z !== undefined) url.searchParams.set('z', z);
@@ -65,10 +65,10 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
     crs?: string,
     f?: string
   ) {
-    const collectionDoc = await this.getCollectionDocument(collectionId) as unknown as OgcEDRCollectionInfo;
-    const url = new URL(
-      collectionDoc.data_queries?.locations?.link.href
-    )
+    const collectionDoc = (await this.getCollectionDocument(
+      collectionId
+    )) as unknown as OgcEDRCollectionInfo;
+    const url = new URL(collectionDoc.data_queries?.locations?.link.href);
     if (locationId !== undefined)
       url.searchParams.set('locationId', locationId);
     if (parameter_name !== undefined)
@@ -88,10 +88,10 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
     crs?: string,
     f?: string
   ) {
-    const collectionDoc = (this.getCollectionDocument(collectionId)) as unknown as OgcEDRCollectionInfo;
-    const url = new URL(
-      collectionDoc.data_queries?.cube?.link.href
-    );
+    const collectionDoc = this.getCollectionDocument(
+      collectionId
+    ) as unknown as OgcEDRCollectionInfo;
+    const url = new URL(collectionDoc.data_queries?.cube?.link.href);
     url.searchParams.set('bbox', bbox.join(','));
     if (z !== undefined) url.searchParams.set('z', z);
     if (datetime !== undefined) url.searchParams.set('datetime', datetime);

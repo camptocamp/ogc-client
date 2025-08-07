@@ -22,7 +22,7 @@ import {
   OgcStyleBrief,
   OgcStyleFull,
   TileMatrixSet,
-} from '../ogc-common/model.js';
+} from '../shared/ogc-api/model.js';
 import {
   fetchCollectionRoot,
   fetchDocument,
@@ -45,7 +45,7 @@ import {
   isMimeTypeJsonFg,
 } from '../shared/mime-type.js';
 import { getChildPath } from '../shared/url-utils.js';
-import { parseCollections } from '../ogc-common/common.js';
+import { parseCollections } from '../shared/ogc-api/common.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -259,7 +259,9 @@ ${e.message}`);
     return this.tileMatrixSetsFull.then((sets) => sets.map((set) => set.id));
   }
 
-  protected getCollectionDocument(collectionId: string): Promise<OgcApiDocument> {
+  protected getCollectionDocument(
+    collectionId: string
+  ): Promise<OgcApiDocument> {
     return Promise.all([this.allCollections, this.data])
       .then(([collections, data]) => {
         if (!collections.find((collection) => collection.name === collectionId))
