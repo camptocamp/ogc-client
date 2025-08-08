@@ -1,0 +1,31 @@
+{
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "Basisregistratie Adressen en Gebouwen - Conformance",
+      "href": "https://api.pdok.nl/lv/bag/ogc/v1/conformance?f=json",
+      "hreflang": "nl"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "Basisregistratie Adressen en Gebouwen - Conformance",
+      "href": "https://api.pdok.nl/lv/bag/ogc/v1/conformance?f=html",
+      "hreflang": "nl"
+    }
+  ],
+  "conformsTo": [
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json",
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/html",
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/oas30",
+    "http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/mapbox-styles",
+    "http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/tileset",
+    "http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/tilesets-list",
+    "http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/dataset-tilesets",
+    "http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/mvt"
+  ]
+}

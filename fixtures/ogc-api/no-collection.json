@@ -1,0 +1,111 @@
+{
+  "title": "Basisregistratie Adressen en Gebouwen",
+  "description": "De gegevens bestaan uit BAG-panden inclusief panden met de status 'gesloopt' en een deelselectie van BAG-gegevens van deze panden en de zich daarin bevindende verblijfsobjecten. Ook de ligplaatsen en standplaatsen zijn hierin opgenomen met een deelselectie van BAG-gegevens. Lees meer over de BAG en bekijk de BAG vector tiles in de Vectortile Viewer.",
+  "keywords": [
+    {
+      "keyword": "bag"
+    },
+    {
+      "keyword": "basisregistratie"
+    },
+    {
+      "keyword": "adressen"
+    },
+    {
+      "keyword": "gebouwen"
+    },
+    {
+      "keyword": "pand"
+    },
+    {
+      "keyword": "verblijfsobject"
+    },
+    {
+      "keyword": "nummeraanduiding"
+    },
+    {
+      "keyword": "ligplaats"
+    },
+    {
+      "keyword": "standplaats"
+    },
+    {
+      "keyword": "woonplaats"
+    },
+    {
+      "keyword": "vector tiles"
+    }
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "Landing page as JSON",
+      "href": "http://local/no-collection?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "Landing page as HTML",
+      "href": "http://local/no-collection?f=html"
+    },
+    {
+      "rel": "service-desc",
+      "type": "application/vnd.oai.openapi+json;version=3.0",
+      "title": "The JSON OpenAPI 3.0 document that describes the API offered at this endpoint",
+      "href": "http://local/no-collection/api?f=json"
+    },
+    {
+      "rel": "conformance",
+      "type": "application/json",
+      "title": "OGC API conformance classes implemented by the API offered at this endpoint",
+      "href": "http://local/no-collection/conformance?f=json"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/conformance",
+      "type": "application/json",
+      "title": "OGC API conformance classes implemented by the API offered at this endpoint",
+      "href": "http://local/no-collection/conformance?f=json"
+    },
+    {
+      "rel": "license",
+      "type": "text/html",
+      "title": "CC0 1.0",
+      "href": "http://creativecommons.org/publicdomain/zero/1.0/deed.nl"
+    },
+    {
+      "rel": "preview",
+      "type": "image/png",
+      "title": "Thumbnail for the dataset shared via this API",
+      "href": "http://local/no-collection/resources/bag_standaardvisualisatie.png"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/styles",
+      "type": "application/json",
+      "title": "The set of styles shared via this API",
+      "href": "http://local/no-collection/styles"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector",
+      "type": "application/json",
+      "title": "The JSON representation of the list of all tiles served from this endpoint",
+      "href": "http://local/no-collection/tiles"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes",
+      "type": "application/json",
+      "title": "Retrieve the list of shared TileMatrixSets available from this API implementation.",
+      "href": "http://local/no-collection/tileMatrixSets"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/data-meta",
+      "title": "Metadata for OGC API Tiles at Nationaal Georegister",
+      "href": "https://nationaalgeoregister.nl/geonetwork/srv/dut/catalog.search#/metadata/b0f20313-2892-415e-82c1-bf77a984e8d8"
+    },
+    {
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/data-meta",
+      "title": "Metadata for dataset at Nationaal Georegister",
+      "href": "https://nationaalgeoregister.nl/geonetwork/srv/dut/catalog.search#/metadata/aa3b5e6e-7baa-40c0-8972-3353e927ec2f"
+    }
+  ]
+}
