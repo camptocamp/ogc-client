@@ -1848,7 +1848,7 @@ The document at http://local/sample-data/notjson?f=json does not appear to be va
         await expect(endpoint.info).rejects.toEqual(
           new EndpointError(
             `The endpoint appears non-conforming, the following error was encountered:
-Could not find a root JSON document containing both a link with rel='data' and a link with rel='conformance'.`
+Could not find a root JSON document containing both a link with rel='data' and a link with rel='service-desc' (or 'service-doc').`
           )
         );
       });
@@ -2458,6 +2458,45 @@ The document at http://local/nonexisting?f=json could not be fetched.`
         await expect(endpoint.featureCollections).resolves.toEqual([
           'airports',
         ]);
+      });
+    });
+  });
+  describe('endpoint with no collection', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint('http://local/no-collection/');
+    });
+    describe('#info', () => {
+      it('returns endpoint info', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          description:
+            "De gegevens bestaan uit BAG-panden inclusief panden met de status 'gesloopt' en een deelselectie van BAG-gegevens van deze panden en de zich daarin bevindende verblijfsobjecten. Ook de ligplaatsen en standplaatsen zijn hierin opgenomen met een deelselectie van BAG-gegevens. Lees meer over de BAG en bekijk de BAG vector tiles in de Vectortile Viewer.",
+          title: 'Basisregistratie Adressen en Gebouwen',
+        });
+      });
+    });
+    describe('#allCollections', () => {
+      it('returns an empty array', async () => {
+        await expect(endpoint.allCollections).resolves.toEqual([]);
+      });
+    });
+    describe('#hasTiles', () => {
+      it('returns true', async () => {
+        await expect(endpoint.hasTiles).resolves.toBe(true);
+      });
+    });
+    describe('#hasStyles', () => {
+      it('returns true', async () => {
+        await expect(endpoint.hasStyles).resolves.toBe(true);
+      });
+    });
+    describe('#hasFeatures', () => {
+      it('returns true', async () => {
+        await expect(endpoint.hasFeatures).resolves.toBe(false);
+      });
+    });
+    describe('#hasRecords', () => {
+      it('returns true', async () => {
+        await expect(endpoint.hasRecords).resolves.toBe(false);
       });
     });
   });

@@ -55,7 +55,7 @@ export default class OgcApiEndpoint {
   // unhandled promise rejections the getters are evaluated lazily
   private root_: Promise<OgcApiDocument>;
   private conformance_: Promise<OgcApiDocument>;
-  private data_: Promise<OgcApiDocument>;
+  private data_: Promise<OgcApiDocument | null>;
   private tileMatrixSetsFull_: Promise<TileMatrixSet[]>;
   private styles_: Promise<OgcApiStylesDocument>;
 
@@ -80,7 +80,7 @@ ${e.message}`);
     }
     return this.conformance_;
   }
-  private get collectionsUrl(): Promise<string> {
+  private get collectionsUrl(): Promise<string | null> {
     return this.root.then((root) =>
       getLinkUrl(
         root,
@@ -91,9 +91,9 @@ ${e.message}`);
   }
   private get data(): Promise<OgcApiDocument> {
     if (!this.data_) {
-      this.data_ = this.collectionsUrl
-        .then(fetchDocument)
-        .then(async (data) => {
+      this.data_ = this.collectionsUrl.then((url) => {
+        if (!url) return null;
+        return fetchDocument(url).then(async (data) => {
           // check if there's a collection in the path; if yes, keep only this one
           const singleCollection = await fetchCollectionRoot(this.baseUrl);
           if (singleCollection !== null && Array.isArray(data.collections)) {
@@ -103,6 +103,7 @@ ${e.message}`);
           }
           return data;
         });
+      });
     }
     return this.data_;
   }
@@ -167,7 +168,9 @@ ${e.message}`);
       hasMapTiles?: boolean;
     }[]
   > {
-    return this.data.then(parseCollections);
+    return this.data.then((dataDocument) =>
+      dataDocument ? parseCollections(dataDocument) : []
+    );
   }
 
   /**
@@ -237,7 +240,7 @@ ${e.message}`);
    */
   get hasFeatures(): Promise<boolean> {
     return Promise.all([
-      this.data.then((data) => data.collections),
+      this.data.then((data) => (data ? data.collections : [])),
       this.conformanceClasses,
     ]).then(checkHasFeatures);
   }
@@ -247,7 +250,7 @@ ${e.message}`);
    */
   get hasRecords(): Promise<boolean> {
     return Promise.all([
-      this.data.then((data) => data.collections),
+      this.data.then((data) => (data ? data.collections : [])),
       this.conformanceClasses,
     ]).then(checkHasRecords);
   }
