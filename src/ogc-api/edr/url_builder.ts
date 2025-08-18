@@ -1,31 +1,12 @@
-import OgcApiEndpoint from '../ogc-api/endpoint.js';
-import { DateTimeParameter } from '../shared/models.js';
-import { DataQueryTypes, parseCollections } from '../shared/ogc-api/common.js';
+import { DateTimeParameter } from '../../shared/models.js';
 import { DateTimeParameterToEDRString } from './helpers.js';
-import { OgcEDRCollectionInfo } from './model.js';
 
 type wkt = string;
 
-export default class OgcApiEDREndpoint extends OgcApiEndpoint {
-  constructor(base_url: string) {
-    super(base_url);
-  }
-  override get allCollections(): Promise<
-    {
-      name: string;
-      hasRecords?: boolean;
-      hasFeatures?: boolean;
-      hasVectorTiles?: boolean;
-      hasMapTiles?: boolean;
-      dataQueries?: DataQueryTypes[];
-    }[]
-  > {
-    return this.data
-      .then((doc) => parseCollections(doc, true))
-      .catch((err) => {
-        console.error(err);
-        throw err;
-      });
+export default class OgcApiEDRQueryBuilder{
+
+  constructor(private queries: DataQueries) {
+    this.endpoint = endpoint;
   }
 
   async getAreaDownloadUrl(
@@ -37,9 +18,6 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
     crs?: string,
     f?: string
   ): Promise<string> {
-    const collectionDoc = (await this.getCollectionDocument(
-      collectionId
-    )) as unknown as OgcEDRCollectionInfo;
 
     const url = new URL(collectionDoc.data_queries?.area?.link.href);
 
@@ -63,9 +41,7 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
     crs?: string,
     f?: string
   ): Promise<string> {
-    const collectionDoc = (await this.getCollectionDocument(
-      collectionId
-    )) as unknown as OgcEDRCollectionInfo;
+    
     const url = new URL(collectionDoc.data_queries?.locations?.link.href);
     if (locationId !== undefined)
       url.searchParams.set('locationId', locationId);

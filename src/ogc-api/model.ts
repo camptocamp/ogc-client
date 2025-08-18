@@ -1,5 +1,5 @@
 import { Geometry } from 'geojson';
-import { BoundingBox, CrsCode, MimeType } from '../models.js';
+import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
 export type ConformanceClass = string;
 
 export interface OgcApiEndpointInfo {
@@ -7,6 +7,20 @@ export interface OgcApiEndpointInfo {
   description?: string;
   attribution?: string;
 }
+
+export const DataQueryTypes = [
+  'items',
+  'locations',
+  'cube',
+  'area',
+  'trajectory',
+  'radius',
+  'corridor',
+  'position',
+  'instances',
+] as const;
+
+export type DataQueryType = (typeof DataQueryTypes)[number];
 
 export const CollectionParameterTypes = [
   'string',
@@ -81,6 +95,15 @@ export interface OgcApiCollectionInfo {
   mapTileFormats: MimeType[];
   vectorTileFormats: MimeType[];
   supportedTileMatrixSets: string[]; // identifiers
+
+  data_queries?: {
+    [K in DataQueryType]?: {
+      link: {
+        href: string;
+        rel: string;
+      };
+    };
+  };
 }
 
 export interface OgcApiDocumentLink {

@@ -22,7 +22,7 @@ import {
   OgcStyleBrief,
   OgcStyleFull,
   TileMatrixSet,
-} from '../shared/ogc-api/model.js';
+} from './model.js';
 import {
   fetchCollectionRoot,
   fetchDocument,
@@ -45,7 +45,7 @@ import {
   isMimeTypeJsonFg,
 } from '../shared/mime-type.js';
 import { getChildPath } from '../shared/url-utils.js';
-import { parseCollections } from '../shared/ogc-api/common.js';
+import { parseCollections } from './info.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
