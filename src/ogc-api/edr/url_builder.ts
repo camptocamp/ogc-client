@@ -31,7 +31,7 @@ export default class EDRQueryBuilder {
     return this.supported_params;
   }
 
-  async getAreaDownloadUrl(
+  async buildAreaDownloadUrl(
     coords: wkt,
     parameter_names: string[],
     z?: string,
@@ -65,7 +65,7 @@ export default class EDRQueryBuilder {
     return url.toString();
   }
 
-  async getLocationsDownloadUrl(
+  async buildLocationsDownloadUrl(
     locationId?: string,
     parameter_name?: string[],
     datetime?: DateTimeParameter,
@@ -98,7 +98,7 @@ export default class EDRQueryBuilder {
     return url.toString();
   }
 
-  async getCubeDownloadUrl(
+  async buildCubeDownloadUrl(
     bbox: number[],
     parameter_name: string[],
     z?: string,

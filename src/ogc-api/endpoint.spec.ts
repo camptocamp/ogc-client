@@ -2497,7 +2497,7 @@ describe('OgcApiEndpoint with EDR', () => {
         const builder = await endpoint.edr('usace-edr');
         await expect(builder).toBeTruthy();
 
-        const areaUrl = await builder.getAreaDownloadUrl(
+        const areaUrl = await builder.buildAreaDownloadUrl(
           'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
           ['Water Temperature']
         );
@@ -2505,7 +2505,7 @@ describe('OgcApiEndpoint with EDR', () => {
           'https://api.wwdh.internetofwater.app/collections/usace-edr/area?coords=POLYGON%28%28-1.0+50.0%2C+-1.0+51.0%2C+0.0+51.0%2C+0.0+50.0%2C+-1.0+50.0%29%29&parameter-name=Water+Temperature'
         );
 
-        const locationsUrl = await builder.getLocationsDownloadUrl();
+        const locationsUrl = await builder.buildLocationsDownloadUrl();
         expect(locationsUrl).toEqual(
           'https://api.wwdh.internetofwater.app/collections/usace-edr/locations'
         );
@@ -2518,7 +2518,7 @@ describe('OgcApiEndpoint with EDR', () => {
       it("throws an error when called with a parameter that doesn't exist", async () => {
         const builder = await endpoint.edr('usace-edr');
         await expect(
-          builder.getAreaDownloadUrl(
+          builder.buildAreaDownloadUrl(
             'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
             ['BadParameterName']
           )
