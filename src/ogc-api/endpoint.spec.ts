@@ -2508,6 +2508,8 @@ describe('OgcApiEndpoint with EDR', () => {
         expect(locationsUrl).toEqual(
           'https://api.wwdh.internetofwater.app/collections/usace-edr/locations'
         );
+
+        expect(builder.parameters).toEqual(new Set(['Elevation', 'Water Temperature', "Air Temperature"]));
       });
     });
   });

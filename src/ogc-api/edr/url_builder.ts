@@ -9,7 +9,7 @@ export default class EDRQueryBuilder {
   supports_locations: boolean = false;
   supports_cube: boolean = false;
 
-  parameters: string[] = [];
+  private params: Set<string> = new Set();
 
   constructor(private collection: OgcApiCollectionInfo) {
     if (!collection.data_queries) {
@@ -21,10 +21,14 @@ export default class EDRQueryBuilder {
     }
 
     for (const parameter of Object.values(collection.parameter_names)) {
-      this.parameters.push(parameter.id);
+      this.params.add(parameter.id);
     }
 
     this.collection = collection;
+  }
+
+  get parameters(): Set<string> {
+    return this.params;
   }
 
   async getAreaDownloadUrl(

@@ -108,7 +108,7 @@ export function checkHasEnvironmentalDataRetrieval([conformance]: [
  * This does not include queryables and sortables!
  */
 export function parseBaseCollectionInfo(
-  doc: OgcApiDocument
+  doc: OgcApiDocument | OgcApiCollectionInfo
 ): OgcApiCollectionInfo {
   const { links, ...props } = doc;
   const itemFormats = links
