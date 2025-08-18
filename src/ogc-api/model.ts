@@ -39,6 +39,27 @@ export interface CollectionParameter {
   type: CollectionParameterType;
 }
 
+export type EdrParameterInfo = {
+  id: string;
+  type: string;
+  name: string;
+  observedProperty: {
+    label: {
+      en?: string;
+    };
+  };
+  unit: {
+    symbol: {
+      value: string;
+      type: string;
+    };
+    label: {
+      id: string;
+      en?: string;
+    };
+  };
+};
+
 /**
  * Contains all necessary information about a collection of items
  * @property title
@@ -104,6 +125,7 @@ export interface OgcApiCollectionInfo {
       };
     };
   };
+  parameter_names?: Record<string, EdrParameterInfo>;
 }
 
 export interface OgcApiDocumentLink {

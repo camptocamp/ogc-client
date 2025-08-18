@@ -1,5 +1,5 @@
 import { DateTimeParameter } from '../../shared/models.js';
-import { OgcApiDocument } from '../model.js';
+import { OgcApiCollectionInfo } from '../model.js';
 import { DateTimeParameterToEDRString } from './helpers.js';
 
 type wkt = string;
@@ -9,7 +9,9 @@ export default class EDRQueryBuilder {
   supports_locations: boolean = false;
   supports_cube: boolean = false;
 
-  constructor(private collection: OgcApiDocument) {
+  parameters: string[] = [];
+
+  constructor(private collection: OgcApiCollectionInfo) {
     if (!collection.data_queries) {
       throw new Error('No data queries found, so cannot issue EDR queries');
     } else {
@@ -17,6 +19,11 @@ export default class EDRQueryBuilder {
       this.supports_locations = collection.data_queries.locations !== undefined;
       this.supports_cube = collection.data_queries.cube !== undefined;
     }
+
+    for (const parameter of Object.values(collection.parameter_names)) {
+      this.parameters.push(parameter.id);
+    }
+
     this.collection = collection;
   }
 

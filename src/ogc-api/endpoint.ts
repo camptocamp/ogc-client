@@ -289,7 +289,7 @@ ${e.message}`);
 
   protected getCollectionDocument(
     collectionId: string
-  ): Promise<OgcApiDocument> {
+  ): Promise<OgcApiCollectionInfo> {
     return Promise.all([this.allCollections, this.data])
       .then(([collections, data]) => {
         if (!collections.find((collection) => collection.name === collectionId))
