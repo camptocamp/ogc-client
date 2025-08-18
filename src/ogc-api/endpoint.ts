@@ -276,9 +276,7 @@ ${e.message}`);
    * A Promise which resolves to a class for constructing EDR queries
    */
   public async edr(collection_id: string): Promise<EDRQueryBuilder> {
-    const collection = (
-      await this.getCollectionDocument(collection_id)
-    ).collections.find((c) => c.id === collection_id);
+    const collection = await this.getCollectionDocument(collection_id);
     return new EDRQueryBuilder(collection);
   }
 

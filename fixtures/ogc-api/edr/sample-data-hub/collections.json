@@ -29,61 +29,61 @@
           "type": "application/json",
           "rel": "self",
           "title": "This document as JSON",
-          "href": "http://local/sample-data-hub/ADWR_GWSI_Sites?f=json"
+          "href": "http://local/edr/sample-data-hub/ADWR_GWSI_Sites?f=json"
         },
         {
           "type": "application/ld+json",
           "rel": "alternate",
           "title": "This document as RDF (JSON-LD)",
-          "href": "http://local/sample-data-hub/ADWR_GWSI_Sites?f=jsonld"
+          "href": "http://local/edr/sample-data-hub/ADWR_GWSI_Sites?f=jsonld"
         },
         {
           "type": "text/html",
           "rel": "alternate",
           "title": "This document as HTML",
-          "href": "http://local/sample-data-hub/ADWR_GWSI_Sites?f=html"
+          "href": "http://local/edr/sample-data-hub/ADWR_GWSI_Sites?f=html"
         },
         {
           "type": "application/schema+json",
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "title": "Schema of collection in JSON",
-          "href": "http://local/sample-data-hub/ADWR_GWSI_Sites/schema?f=json"
+          "href": "http://local/edr/sample-data-hub/ADWR_GWSI_Sites/schema?f=json"
         },
         {
           "type": "text/html",
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/schema",
           "title": "Schema of collection in HTML",
-          "href": "http://local/sample-data-hub/ADWR_GWSI_Sites/schema?f=html"
+          "href": "http://local/edr/sample-data-hub/ADWR_GWSI_Sites/schema?f=html"
         },
         {
           "type": "application/schema+json",
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "title": "Queryables for this collection as JSON",
-          "href": "http://local/sample-data-hub/ADWR_GWSI_Sites/queryables?f=json"
+          "href": "http://local/edr/sample-data-hub/ADWR_GWSI_Sites/queryables?f=json"
         },
         {
           "type": "text/html",
           "rel": "http://www.opengis.net/def/rel/ogc/1.0/queryables",
           "title": "Queryables for this collection as HTML",
-          "href": "http://local/sample-data-hub/ADWR_GWSI_Sites/queryables?f=html"
+          "href": "http://local/edr/sample-data-hub/ADWR_GWSI_Sites/queryables?f=html"
         },
         {
           "type": "application/geo+json",
           "rel": "items",
           "title": "Items as GeoJSON",
-          "href": "http://local/sample-data-hub/ADWR_GWSI_Sites/items?f=json"
+          "href": "http://local/edr/sample-data-hub/ADWR_GWSI_Sites/items?f=json"
         },
         {
           "type": "application/ld+json",
           "rel": "items",
           "title": "Items as RDF (GeoJSON-LD)",
-          "href": "http://local/sample-data-hub/ADWR_GWSI_Sites/items?f=jsonld"
+          "href": "http://local/edr/sample-data-hub/ADWR_GWSI_Sites/items?f=jsonld"
         },
         {
           "type": "text/html",
           "rel": "items",
           "title": "Items as HTML",
-          "href": "http://local/sample-data-hub/ADWR_GWSI_Sites/items?f=html"
+          "href": "http://local/edr/sample-data-hub/ADWR_GWSI_Sites/items?f=html"
         }
       ],
       "extent": {
@@ -118,79 +118,79 @@
           "type": "application/json",
           "rel": "self",
           "title": "This document as JSON",
-          "href": "http://local/sample-data-hub/usace-edr?f=json"
+          "href": "http://local/edr/sample-data-hub/usace-edr?f=json"
         },
         {
           "type": "application/ld+json",
           "rel": "alternate",
           "title": "This document as RDF (JSON-LD)",
-          "href": "http://local/sample-data-hub/usace-edr?f=jsonld"
+          "href": "http://local/edr/sample-data-hub/usace-edr?f=jsonld"
         },
         {
           "type": "text/html",
           "rel": "alternate",
           "title": "This document as HTML",
-          "href": "http://local/sample-data-hub/usace-edr?f=html"
+          "href": "http://local/edr/sample-data-hub/usace-edr?f=html"
         },
         {
           "type": "application/json",
           "rel": "data",
           "title": "position query for this collection as JSON",
-          "href": "http://local/sample-data-hub/usace-edr/position?f=json"
+          "href": "http://local/edr/sample-data-hub/usace-edr/position?f=json"
         },
         {
           "type": "text/html",
           "rel": "data",
           "title": "position query for this collection as HTML",
-          "href": "http://local/sample-data-hub/usace-edr/position?f=html"
+          "href": "http://local/edr/sample-data-hub/usace-edr/position?f=html"
         },
         {
           "type": "application/json",
           "rel": "data",
           "title": "items query for this collection as JSON",
-          "href": "http://local/sample-data-hub/usace-edr/items?f=json"
+          "href": "http://local/edr/sample-data-hub/usace-edr/items?f=json"
         },
         {
           "type": "text/html",
           "rel": "data",
           "title": "items query for this collection as HTML",
-          "href": "http://local/sample-data-hub/usace-edr/items?f=html"
+          "href": "http://local/edr/sample-data-hub/usace-edr/items?f=html"
         },
         {
           "type": "application/json",
           "rel": "data",
           "title": "cube query for this collection as JSON",
-          "href": "http://local/sample-data-hub/usace-edr/cube?f=json"
+          "href": "http://local/edr/sample-data-hub/usace-edr/cube?f=json"
         },
         {
           "type": "text/html",
           "rel": "data",
           "title": "cube query for this collection as HTML",
-          "href": "http://local/sample-data-hub/usace-edr/cube?f=html"
+          "href": "http://local/edr/sample-data-hub/usace-edr/cube?f=html"
         },
         {
           "type": "application/json",
           "rel": "data",
           "title": "area query for this collection as JSON",
-          "href": "http://local/sample-data-hub/usace-edr/area?f=json"
+          "href": "http://local/edr/sample-data-hub/usace-edr/area?f=json"
         },
         {
           "type": "text/html",
           "rel": "data",
           "title": "area query for this collection as HTML",
-          "href": "http://local/sample-data-hub/usace-edr/area?f=html"
+          "href": "http://local/edr/sample-data-hub/usace-edr/area?f=html"
         },
         {
           "type": "application/json",
           "rel": "data",
           "title": "locations query for this collection as JSON",
-          "href": "http://local/sample-data-hub/usace-edr/locations?f=json"
+          "href": "http://local/edr/sample-data-hub/usace-edr/locations?f=json"
         },
         {
           "type": "text/html",
           "rel": "data",
           "title": "locations query for this collection as HTML",
-          "href": "http://local/sample-data-hub/usace-edr/locations?f=html"
+          "href": "http://local/edr/sample-data-hub/usace-edr/locations?f=html"
         }
       ],
       "extent": {
@@ -204,7 +204,7 @@
       "data_queries": {
         "position": {
           "link": {
-            "href": "http://local/sample-data-hub/usace-edr/position",
+            "href": "http://local/edr/sample-data-hub/usace-edr/position",
             "rel": "data",
             "variables": {
               "query_type": "position"
@@ -213,7 +213,7 @@
         },
         "items": {
           "link": {
-            "href": "http://local/sample-data-hub/usace-edr/items",
+            "href": "http://local/edr/sample-data-hub/usace-edr/items",
             "rel": "data",
             "variables": {
               "query_type": "items"
@@ -222,7 +222,7 @@
         },
         "cube": {
           "link": {
-            "href": "http://local/sample-data-hub/usace-edr/cube",
+            "href": "http://local/edr/sample-data-hub/usace-edr/cube",
             "rel": "data",
             "variables": {
               "query_type": "cube"
@@ -231,7 +231,7 @@
         },
         "area": {
           "link": {
-            "href": "http://local/sample-data-hub/usace-edr/area",
+            "href": "http://local/edr/sample-data-hub/usace-edr/area",
             "rel": "data",
             "variables": {
               "query_type": "area"
@@ -240,7 +240,7 @@
         },
         "locations": {
           "link": {
-            "href": "http://local/sample-data-hub/usace-edr/locations",
+            "href": "http://local/edr/sample-data-hub/usace-edr/locations",
             "rel": "data",
             "variables": {
               "query_type": "locations"

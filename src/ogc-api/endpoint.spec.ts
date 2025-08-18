@@ -2488,6 +2488,27 @@ describe('OgcApiEndpoint with EDR', () => {
           true
         );
       });
+
+      it('can list all the EDR collections', async () => {
+        await expect(endpoint.edrCollections).resolves.toEqual(['usace-edr']);
+      });
+
+      it('can produce a EDR query builder', async () => {
+        const builder = await endpoint.edr('usace-edr');
+        await expect(builder).toBeTruthy();
+
+        const areaUrl = await builder.getAreaDownloadUrl(
+          'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))'
+        );
+        expect(areaUrl).toEqual(
+          'https://api.wwdh.internetofwater.app/collections/usace-edr/area?coords=POLYGON%28%28-1.0+50.0%2C+-1.0+51.0%2C+0.0+51.0%2C+0.0+50.0%2C+-1.0+50.0%29%29'
+        );
+
+        const locationsUrl = await builder.getLocationsDownloadUrl();
+        expect(locationsUrl).toEqual(
+          'https://api.wwdh.internetofwater.app/collections/usace-edr/locations'
+        );
+      });
     });
   });
 });

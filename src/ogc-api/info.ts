@@ -257,7 +257,7 @@ export function parseCollections(doc: OgcApiDocument): Array<{
 
     if (collection.data_queries) {
       result.hasDataQueries = true;
-    } 
+    }
 
     return result;
   });
