@@ -7,7 +7,6 @@ import { OgcEDRCollectionInfo } from './model.js';
 type wkt = string;
 
 export default class OgcApiEDREndpoint extends OgcApiEndpoint {
-
   constructor(base_url: string) {
     super(base_url);
   }
@@ -46,7 +45,8 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
 
     url.searchParams.set('coords', coords);
     if (z !== undefined) url.searchParams.set('z', z);
-    if (datetime !== undefined) url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
+    if (datetime !== undefined)
+      url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
     if (parameter_name != null) {
       url.searchParams.set('parameter-name', parameter_name.join(','));
     }
@@ -71,7 +71,8 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
       url.searchParams.set('locationId', locationId);
     if (parameter_name !== undefined)
       url.searchParams.set('parameter-name', parameter_name.join(','));
-    if (datetime !== undefined) url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
+    if (datetime !== undefined)
+      url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
     if (crs !== undefined) url.searchParams.set('crs', crs);
     if (f !== undefined) url.searchParams.set('f', f);
     return url.toString();
@@ -92,7 +93,8 @@ export default class OgcApiEDREndpoint extends OgcApiEndpoint {
     const url = new URL(collectionDoc.data_queries?.cube?.link.href);
     url.searchParams.set('bbox', bbox.join(','));
     if (z !== undefined) url.searchParams.set('z', z);
-    if (datetime !== undefined) url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
+    if (datetime !== undefined)
+      url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
     if (parameter_name != null) {
       url.searchParams.set('parameter-name', parameter_name.join(','));
     }

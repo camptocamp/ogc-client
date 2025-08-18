@@ -1,7 +1,5 @@
 import { DateTimeParameter } from '../shared/models.js';
-import {
-    DateTimeParameterToEDRString,
-} from './helpers.js';
+import { DateTimeParameterToEDRString } from './helpers.js';
 
 describe('DateTimeParameterToEDRString', () => {
   const toDate = (str: string) => new Date(str);
@@ -34,6 +32,8 @@ describe('DateTimeParameterToEDRString', () => {
   });
 
   it('throws if passed an invalid object', () => {
-    expect(() => DateTimeParameterToEDRString({} as DateTimeParameter)).toThrow();
+    expect(() =>
+      DateTimeParameterToEDRString({} as DateTimeParameter)
+    ).toThrow();
   });
 });
