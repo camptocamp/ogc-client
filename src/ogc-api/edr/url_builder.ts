@@ -9,7 +9,7 @@ export default class EDRQueryBuilder {
   supports_locations: boolean = false;
   supports_cube: boolean = false;
 
-  private params: Set<string> = new Set();
+  private supported_params: Set<string> = new Set();
 
   constructor(private collection: OgcApiCollectionInfo) {
     if (!collection.data_queries) {
@@ -21,21 +21,21 @@ export default class EDRQueryBuilder {
     }
 
     for (const parameter of Object.values(collection.parameter_names)) {
-      this.params.add(parameter.id);
+      this.supported_params.add(parameter.id);
     }
 
     this.collection = collection;
   }
 
   get parameters(): Set<string> {
-    return this.params;
+    return this.supported_params;
   }
 
   async getAreaDownloadUrl(
     coords: wkt,
+    parameter_names: string[],
     z?: string,
     datetime?: DateTimeParameter,
-    parameter_name?: string[],
     crs?: string,
     f?: string
   ): Promise<string> {
@@ -49,8 +49,16 @@ export default class EDRQueryBuilder {
     if (z !== undefined) url.searchParams.set('z', z);
     if (datetime !== undefined)
       url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
-    if (parameter_name != null) {
-      url.searchParams.set('parameter-name', parameter_name.join(','));
+    if (parameter_names != null) {
+      for (const parameter_name of parameter_names) {
+        if (!this.supported_params.has(parameter_name)) {
+          throw new Error(
+            `The following parameter name does not exist on this collection: '${parameter_name}'.`
+          );
+        }
+      }
+
+      url.searchParams.set('parameter-name', parameter_names.join(','));
     }
     if (crs !== undefined) url.searchParams.set('crs', crs);
     if (f !== undefined) url.searchParams.set('f', f);
@@ -71,8 +79,18 @@ export default class EDRQueryBuilder {
     const url = new URL(this.collection.data_queries?.locations?.link.href);
     if (locationId !== undefined)
       url.searchParams.set('locationId', locationId);
-    if (parameter_name !== undefined)
+
+    if (parameter_name !== undefined) {
+      for (const parameter of parameter_name) {
+        if (!this.supported_params.has(parameter)) {
+          throw new Error(
+            `The following parameter name does not exist on this collection: '${parameter}'.`
+          );
+        }
+      }
       url.searchParams.set('parameter-name', parameter_name.join(','));
+    }
+
     if (datetime !== undefined)
       url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
     if (crs !== undefined) url.searchParams.set('crs', crs);
@@ -82,9 +100,9 @@ export default class EDRQueryBuilder {
 
   async getCubeDownloadUrl(
     bbox: number[],
+    parameter_name: string[],
     z?: string,
     datetime?: DateTimeParameter,
-    parameter_name?: string[],
     crs?: string,
     f?: string
   ): Promise<string> {
@@ -98,6 +116,13 @@ export default class EDRQueryBuilder {
     if (datetime !== undefined)
       url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
     if (parameter_name != null) {
+      for (const parameter of parameter_name) {
+        if (!this.supported_params.has(parameter)) {
+          throw new Error(
+            `The following parameter name does not exist on this collection: '${parameter}'.`
+          );
+        }
+      }
       url.searchParams.set('parameter-name', parameter_name.join(','));
     }
     if (crs !== undefined) url.searchParams.set('crs', crs);

@@ -2498,10 +2498,11 @@ describe('OgcApiEndpoint with EDR', () => {
         await expect(builder).toBeTruthy();
 
         const areaUrl = await builder.getAreaDownloadUrl(
-          'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))'
+          'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+          ['Water Temperature']
         );
         expect(areaUrl).toEqual(
-          'https://api.wwdh.internetofwater.app/collections/usace-edr/area?coords=POLYGON%28%28-1.0+50.0%2C+-1.0+51.0%2C+0.0+51.0%2C+0.0+50.0%2C+-1.0+50.0%29%29'
+          'https://api.wwdh.internetofwater.app/collections/usace-edr/area?coords=POLYGON%28%28-1.0+50.0%2C+-1.0+51.0%2C+0.0+51.0%2C+0.0+50.0%2C+-1.0+50.0%29%29&parameter-name=Water+Temperature'
         );
 
         const locationsUrl = await builder.getLocationsDownloadUrl();
@@ -2509,7 +2510,19 @@ describe('OgcApiEndpoint with EDR', () => {
           'https://api.wwdh.internetofwater.app/collections/usace-edr/locations'
         );
 
-        expect(builder.parameters).toEqual(new Set(['Elevation', 'Water Temperature', "Air Temperature"]));
+        expect(builder.parameters).toEqual(
+          new Set(['Elevation', 'Water Temperature', 'Air Temperature'])
+        );
+      });
+
+      it("throws an error when called with a parameter that doesn't exist", async () => {
+        const builder = await endpoint.edr('usace-edr');
+        await expect(
+          builder.getAreaDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            ['BadParameterName']
+          )
+        ).rejects.toThrowError();
       });
     });
   });
