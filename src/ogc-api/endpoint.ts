@@ -47,7 +47,7 @@ import {
 } from '../shared/mime-type.js';
 import { getChildPath } from '../shared/url-utils.js';
 import { parseCollections } from './info.js';
-import OgcApiEDRQueryBuilder from './edr/url_builder.js';
+import EDRQueryBuilder from './edr/url_builder.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -167,6 +167,7 @@ ${e.message}`);
       hasFeatures?: boolean;
       hasVectorTiles?: boolean;
       hasMapTiles?: boolean;
+      hasDataQueries?: boolean;
     }[]
   > {
     return this.data.then(parseCollections);
@@ -193,7 +194,6 @@ ${e.message}`);
       .then((collections) => collections.filter((c) => c.hasFeatures))
       .then((collections) => collections.map((collection) => collection.name));
   }
-
 
   get edrCollections(): Promise<string[]> {
     return Promise.all([this.data, this.hasEnvironmentalDataRetrieval])
@@ -267,18 +267,20 @@ ${e.message}`);
    * A Promise which resolves to a boolean indicating whether the endpoint offers environmental data retrieval (EDR) queries.
    */
   get hasEnvironmentalDataRetrieval(): Promise<boolean> {
-    return Promise.all([
-      this.conformanceClasses,
-    ]).then(checkHasEnvironmentalDataRetrieval);
+    return Promise.all([this.conformanceClasses]).then(
+      checkHasEnvironmentalDataRetrieval
+    );
   }
 
   /*
    * A Promise which resolves to a class for constructing EDR queries
    */
-  get edr(): Promise<OgcApiEDRQueryBuilder | null> {
-    return null
+  public async edr(collection_id: string): Promise<EDRQueryBuilder> {
+    const collection = (
+      await this.getCollectionDocument(collection_id)
+    ).collections.find((c) => c.id === collection_id);
+    return new EDRQueryBuilder(collection);
   }
-
 
   /**
    * Retrieve the tile matrix sets identifiers advertised by the endpoint. Empty if tiles are not supported
@@ -294,7 +296,7 @@ ${e.message}`);
       .then(([collections, data]) => {
         if (!collections.find((collection) => collection.name === collectionId))
           throw new EndpointError(`Collection not found: ${collectionId}`);
-        return (data.collections as OgcApiDocument[]).find(
+        return data.collections.find(
           (collection) => collection.id === collectionId
         );
       })

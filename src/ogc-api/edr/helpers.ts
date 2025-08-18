@@ -1,4 +1,4 @@
-import { DateTimeParameter } from "../../shared/models.js";
+import { DateTimeParameter } from '../../shared/models.js';
 
 export function DateTimeParameterToEDRString(param: DateTimeParameter): string {
   const format = (d: Date) => d.toISOString();

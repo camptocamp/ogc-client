@@ -88,7 +88,9 @@ describe('OgcApiEndpoint', () => {
         });
       });
       it('does not support EDR ', async () => {
-        await expect(endpoint.hasEnvironmentalDataRetrieval).resolves.toBe(false);
+        await expect(endpoint.hasEnvironmentalDataRetrieval).resolves.toBe(
+          false
+        );
       });
       it('uses shared fetch', async () => {
         jest.clearAllMocks();
@@ -2466,7 +2468,6 @@ The document at http://local/nonexisting?f=json could not be fetched.`
   });
 });
 
-
 describe('OgcApiEndpoint with EDR', () => {
   let endpoint: OgcApiEndpoint;
   describe('nominal case', () => {
@@ -2477,13 +2478,15 @@ describe('OgcApiEndpoint with EDR', () => {
       it('returns endpoint info', async () => {
         await expect(endpoint.info).resolves.toEqual({
           attribution: undefined,
-          description: "this dummy server is used for testing edr compliance",
+          description: 'this dummy server is used for testing edr compliance',
           title: 'dummy server',
         });
       });
 
-      it ('supports EDR ', async () => {
-        await expect(endpoint.hasEnvironmentalDataRetrieval).resolves.toBe(true);
+      it('supports EDR ', async () => {
+        await expect(endpoint.hasEnvironmentalDataRetrieval).resolves.toBe(
+          true
+        );
       });
     });
   });

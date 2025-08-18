@@ -127,6 +127,7 @@ export type OgcApiDocument = {
     dataType: string;
     links: OgcApiDocumentLink[];
   }[];
+  collections: OgcApiCollectionInfo[];
 } & Record<string, unknown>;
 
 interface OgcApiItemExternalId {

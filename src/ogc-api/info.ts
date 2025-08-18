@@ -213,7 +213,6 @@ export function parseFullStyleInfo(doc: OgcApiStyleMetadata): OgcStyleFull {
   } as OgcStyleFull;
 }
 
-
 export function parseCollections(doc: OgcApiDocument): Array<{
   name: string;
   hasRecords?: boolean;
@@ -222,7 +221,7 @@ export function parseCollections(doc: OgcApiDocument): Array<{
   hasMapTiles?: boolean;
   hasDataQueries?: boolean;
 }> {
-  return (doc.collections as OgcApiCollectionInfo[]).map((collection) => {
+  return doc.collections.map((collection) => {
     const result: {
       name: string;
       hasRecords?: boolean;
@@ -258,7 +257,7 @@ export function parseCollections(doc: OgcApiDocument): Array<{
 
     if (collection.data_queries) {
       result.hasDataQueries = true;
-    }
+    } 
 
     return result;
   });
