@@ -87,6 +87,9 @@ describe('OgcApiEndpoint', () => {
             'Contains OS data © Crown copyright and database right 2021.',
         });
       });
+      it('does not support EDR ', async () => {
+        await expect(endpoint.hasEnvironmentalDataRetrieval).resolves.toBe(false);
+      });
       it('uses shared fetch', async () => {
         jest.clearAllMocks();
         // create the endpoint three times separately
@@ -2458,6 +2461,29 @@ The document at http://local/nonexisting?f=json could not be fetched.`
         await expect(endpoint.featureCollections).resolves.toEqual([
           'airports',
         ]);
+      });
+    });
+  });
+});
+
+
+describe('OgcApiEndpoint with EDR', () => {
+  let endpoint: OgcApiEndpoint;
+  describe('nominal case', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint('http://local/edr/sample-data-hub');
+    });
+    describe('#info', () => {
+      it('returns endpoint info', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          attribution: undefined,
+          description: "this dummy server is used for testing edr compliance",
+          title: 'dummy server',
+        });
+      });
+
+      it ('supports EDR ', async () => {
+        await expect(endpoint.hasEnvironmentalDataRetrieval).resolves.toBe(true);
       });
     });
   });
