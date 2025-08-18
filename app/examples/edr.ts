@@ -1,22 +1,16 @@
 // npx tsx examples/edr.ts
 
-import { OgcApiEDREndpoint } from '../../src-node/index.js';
+import { OgcApiEndpoint } from '../../src-node/index.js';
 
 const baseUrl = 'https://api.wwdh.internetofwater.app?f=json';
 
 (async () => {
-  const edr = new OgcApiEDREndpoint(baseUrl);
-  const collections = await edr.allCollections;
-  console.log('Collections:', collections);
+  const api = new OgcApiEndpoint(baseUrl);
+  const collections = await api.allCollections;
+  const edr_collections = await api.edrCollections;
 
-  const firstCollection = collections[0];
-
-  const firstCollectionInfo = await edr.getCollectionInfo(firstCollection.name);
-
-  console.log('Supported EDR data queries:', firstCollection.dataQueries);
-
-  console.log('Collection crs:', firstCollectionInfo.crs);
-
-  const result = edr.getLocations(firstCollection.name);
-  console.log('Retrieved locations:', await result);
+  const first_edr_collection = edr_collections[0];
+  const first_edr_collection_document = collections.find((c) => c.name === first_edr_collection);
+  console.log("First EDR collection:", first_edr_collection_document);
+  console.log("Supported queries", (await api.edr(first_edr_collection_document!.name)).supported_queries);
 })();

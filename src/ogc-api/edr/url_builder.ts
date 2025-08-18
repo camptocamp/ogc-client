@@ -1,5 +1,5 @@
 import { DateTimeParameter } from '../../shared/models.js';
-import { OgcApiCollectionInfo } from '../model.js';
+import { DataQueryType, OgcApiCollectionInfo } from '../model.js';
 import { DateTimeParameterToEDRString } from './helpers.js';
 
 type wkt = string;
@@ -27,8 +27,16 @@ export default class EDRQueryBuilder {
     this.collection = collection;
   }
 
-  get parameters(): Set<string> {
+  get supported_parameters(): Set<string> {
     return this.supported_params;
+  }
+
+  get supported_queries(): Set<DataQueryType> {
+    const queries: Set<DataQueryType> = new Set();
+    if (this.supports_area) queries.add('area');
+    if (this.supports_locations) queries.add('locations');
+    if (this.supports_cube) queries.add('cube');
+    return queries;
   }
 
   async buildAreaDownloadUrl(

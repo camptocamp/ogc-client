@@ -2493,7 +2493,7 @@ describe('OgcApiEndpoint with EDR', () => {
         await expect(endpoint.edrCollections).resolves.toEqual(['usace-edr']);
       });
 
-      it('can produce a EDR query builder', async () => {
+      it('can produce a EDR query builder that provides info and download urls', async () => {
         const builder = await endpoint.edr('usace-edr');
         await expect(builder).toBeTruthy();
 
@@ -2501,6 +2501,9 @@ describe('OgcApiEndpoint with EDR', () => {
           'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
           ['Water Temperature']
         );
+
+        expect(builder.supported_queries).toEqual(new Set(['area', 'locations', 'cube']));
+
         expect(areaUrl).toEqual(
           'https://api.wwdh.internetofwater.app/collections/usace-edr/area?coords=POLYGON%28%28-1.0+50.0%2C+-1.0+51.0%2C+0.0+51.0%2C+0.0+50.0%2C+-1.0+50.0%29%29&parameter-name=Water+Temperature'
         );
@@ -2510,7 +2513,7 @@ describe('OgcApiEndpoint with EDR', () => {
           'https://api.wwdh.internetofwater.app/collections/usace-edr/locations'
         );
 
-        expect(builder.parameters).toEqual(
+        expect(builder.supported_parameters).toEqual(
           new Set(['Elevation', 'Water Temperature', 'Air Temperature'])
         );
       });
