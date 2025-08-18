@@ -1,4 +1,5 @@
 import {
+  checkHasEnvironmentalDataRetrieval,
   checkHasFeatures,
   checkHasRecords,
   checkStyleConformance,
@@ -46,6 +47,7 @@ import {
 } from '../shared/mime-type.js';
 import { getChildPath } from '../shared/url-utils.js';
 import { parseCollections } from './info.js';
+import OgcApiEDRQueryBuilder from './edr/url_builder.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -192,6 +194,15 @@ ${e.message}`);
       .then((collections) => collections.map((collection) => collection.name));
   }
 
+
+  get edrCollections(): Promise<string[]> {
+    return Promise.all([this.data, this.hasEnvironmentalDataRetrieval])
+      .then(([data, hasEDR]) => (hasEDR ? data : { collections: [] }))
+      .then(parseCollections)
+      .then((collections) => collections.filter((c) => c.hasDataQueries))
+      .then((collections) => collections.map((collection) => collection.name));
+  }
+
   /**
    * A Promise which resolves to an array of vector tile collection identifiers as strings.
    */
@@ -251,6 +262,23 @@ ${e.message}`);
       this.conformanceClasses,
     ]).then(checkHasRecords);
   }
+
+  /**
+   * A Promise which resolves to a boolean indicating whether the endpoint offers environmental data retrieval (EDR) queries.
+   */
+  get hasEnvironmentalDataRetrieval(): Promise<boolean> {
+    return Promise.all([
+      this.conformanceClasses,
+    ]).then(checkHasEnvironmentalDataRetrieval);
+  }
+
+  /*
+   * A Promise which resolves to a class for constructing EDR queries
+   */
+  get edr(): Promise<OgcApiEDRQueryBuilder | null> {
+    return null
+  }
+
 
   /**
    * Retrieve the tile matrix sets identifiers advertised by the endpoint. Empty if tiles are not supported

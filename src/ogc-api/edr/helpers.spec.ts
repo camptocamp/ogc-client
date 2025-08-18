@@ -1,4 +1,4 @@
-import { DateTimeParameter } from '../shared/models.js';
+import { DateTimeParameter } from '../../shared/models.js';
 import { DateTimeParameterToEDRString } from './helpers.js';
 
 describe('DateTimeParameterToEDRString', () => {

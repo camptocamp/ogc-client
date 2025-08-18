@@ -94,6 +94,16 @@ export function checkHasFeatures([collections, conformance]: [
   );
 }
 
+export function checkHasEnvironmentalDataRetrieval([conformance]: [
+  ConformanceClass[]
+]) {
+  return (
+    conformance.indexOf(
+      'http://www.opengis.net/spec/ogcapi-edr-1/1.0/conf/core'
+    ) > -1
+  );
+}
+
 /**
  * This does not include queryables and sortables!
  */
@@ -210,6 +220,7 @@ export function parseCollections(doc: OgcApiDocument): Array<{
   hasFeatures?: boolean;
   hasVectorTiles?: boolean;
   hasMapTiles?: boolean;
+  hasDataQueries?: boolean;
 }> {
   return (doc.collections as OgcApiCollectionInfo[]).map((collection) => {
     const result: {
@@ -218,6 +229,7 @@ export function parseCollections(doc: OgcApiDocument): Array<{
       hasFeatures?: boolean;
       hasVectorTiles?: boolean;
       hasMapTiles?: boolean;
+      hasDataQueries?: boolean;
     } = {
       name: collection.id as string,
     };
@@ -242,6 +254,10 @@ export function parseCollections(doc: OgcApiDocument): Array<{
       )
     ) {
       result.hasMapTiles = true;
+    }
+
+    if (collection.data_queries) {
+      result.hasDataQueries = true;
     }
 
     return result;
