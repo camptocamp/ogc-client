@@ -10,7 +10,12 @@ const baseUrl = 'https://api.wwdh.internetofwater.app?f=json';
   const edr_collections = await api.edrCollections;
 
   const first_edr_collection = edr_collections[0];
-  const first_edr_collection_document = collections.find((c) => c.name === first_edr_collection);
-  console.log("First EDR collection:", first_edr_collection_document);
-  console.log("Supported queries", (await api.edr(first_edr_collection_document!.name)).supported_queries);
+  const first_edr_collection_document = collections.find(
+    (c) => c.name === first_edr_collection
+  );
+  console.log('First EDR collection:', first_edr_collection_document);
+  console.log(
+    'Supported queries',
+    (await api.edr(first_edr_collection_document!.name)).supported_queries
+  );
 })();

@@ -2495,20 +2495,22 @@ describe('OgcApiEndpoint with EDR', () => {
 
       it('can produce a EDR query builder that provides info and download urls', async () => {
         const builder = await endpoint.edr('usace-edr');
-        await expect(builder).toBeTruthy();
+        expect(builder).toBeTruthy();
 
-        const areaUrl = await builder.buildAreaDownloadUrl(
+        const areaUrl = builder.buildAreaDownloadUrl(
           'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
           ['Water Temperature']
         );
 
-        expect(builder.supported_queries).toEqual(new Set(['area', 'locations', 'cube']));
+        expect(builder.supported_queries).toEqual(
+          new Set(['area', 'locations', 'cube'])
+        );
 
         expect(areaUrl).toEqual(
           'https://api.wwdh.internetofwater.app/collections/usace-edr/area?coords=POLYGON%28%28-1.0+50.0%2C+-1.0+51.0%2C+0.0+51.0%2C+0.0+50.0%2C+-1.0+50.0%29%29&parameter-name=Water+Temperature'
         );
 
-        const locationsUrl = await builder.buildLocationsDownloadUrl();
+        const locationsUrl = builder.buildLocationsDownloadUrl();
         expect(locationsUrl).toEqual(
           'https://api.wwdh.internetofwater.app/collections/usace-edr/locations'
         );
@@ -2520,12 +2522,32 @@ describe('OgcApiEndpoint with EDR', () => {
 
       it("throws an error when called with a parameter that doesn't exist", async () => {
         const builder = await endpoint.edr('usace-edr');
-        await expect(
+        expect(() =>
           builder.buildAreaDownloadUrl(
             'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
             ['BadParameterName']
           )
-        ).rejects.toThrowError();
+        ).toThrow();
+
+        expect(() =>
+          builder.buildLocationsDownloadUrl(null, ['BadParameterName'])
+        ).toThrow();
+
+        expect(() =>
+          builder.buildCubeDownloadUrl(
+            [-1.0, 50.0, -1.0, 51.0, 0.0, 51.0, 0.0, 50.0, -1.0, 50.0],
+            ['BadParameterName']
+          )
+        ).toThrow();
+      });
+
+      it('throws an error with an invalid bbox for the cube query', async () => {
+        const builder = await endpoint.edr('usace-edr');
+        expect(() =>
+          builder.buildCubeDownloadUrl([-1.0, 50.0, -1.0, 51.0, 0.0, 51.0, 0.0])
+        ).toThrow();
+
+        expect(() => builder.buildCubeDownloadUrl([0, 10, -10, 12])).toThrow();
       });
     });
   });
