@@ -316,4 +316,8 @@ export default class EDRQueryBuilder {
     if (f !== undefined) url.searchParams.set('f', f);
     return url.toString();
   }
+
+  buildInstancesDownloadUrl(): string {
+    return this.collection.data_queries?.instances?.link.href;
+  }
 }
