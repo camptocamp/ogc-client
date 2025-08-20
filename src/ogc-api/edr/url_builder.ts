@@ -1,4 +1,8 @@
-import { DataQueryType, OgcApiCollectionInfo } from '../model.js';
+import {
+  DataQueryType,
+  EdrParameterInfo,
+  OgcApiCollectionInfo,
+} from '../model.js';
 import { DateTimeParameterToEDRString } from './helpers.js';
 import {
   bboxWithVerticalAxis,
@@ -29,7 +33,7 @@ export default class EDRQueryBuilder {
     instances: boolean;
   };
 
-  private supported_params: Set<string> = new Set();
+  public supported_parameters: Record<string, EdrParameterInfo> = {};
 
   constructor(private collection: OgcApiCollectionInfo) {
     if (!collection.data_queries) {
@@ -47,15 +51,8 @@ export default class EDRQueryBuilder {
       };
     }
 
-    for (const parameter of Object.values(collection.parameter_names)) {
-      this.supported_params.add(parameter.id);
-    }
-
+    this.supported_parameters = collection.parameter_names;
     this.collection = collection;
-  }
-
-  get supported_parameters(): Set<string> {
-    return this.supported_params;
   }
 
   /**
@@ -103,7 +100,7 @@ export default class EDRQueryBuilder {
       );
     if (optional_params.parameter_name) {
       for (const parameter of optional_params.parameter_name) {
-        if (!this.supported_params.has(parameter)) {
+        if (!this.supported_parameters[parameter]) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${parameter}'.`
           );
@@ -159,7 +156,7 @@ export default class EDRQueryBuilder {
       );
     if (optional_params.parameter_name != null) {
       for (const parameter of optional_params.parameter_name) {
-        if (!this.supported_params.has(parameter)) {
+        if (!this.supported_parameters[parameter]) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${parameter}'.`
           );
@@ -212,7 +209,7 @@ export default class EDRQueryBuilder {
       );
     if (optional_params.parameter_name) {
       for (const param of optional_params.parameter_name) {
-        if (!this.supported_params.has(param)) {
+        if (!this.supported_parameters[param]) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${param}'.`
           );
@@ -297,7 +294,7 @@ export default class EDRQueryBuilder {
       );
     if (optional_params.parameter_name) {
       for (const parameter of optional_params.parameter_name) {
-        if (!this.supported_params.has(parameter)) {
+        if (!this.supported_parameters[parameter]) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${parameter}'.`
           );
@@ -354,7 +351,7 @@ export default class EDRQueryBuilder {
       );
     if (optional_params.parameter_name) {
       for (const parameter of optional_params.parameter_name) {
-        if (!this.supported_params.has(parameter)) {
+        if (!this.supported_parameters[parameter]) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${parameter}'.`
           );
@@ -426,7 +423,7 @@ export default class EDRQueryBuilder {
       );
     if (optional_params.parameter_name) {
       for (const parameter of optional_params.parameter_name) {
-        if (!this.supported_params.has(parameter)) {
+        if (!this.supported_parameters[parameter]) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${parameter}'.`
           );
@@ -477,7 +474,7 @@ export default class EDRQueryBuilder {
 
     if (optional_params.parameter_name !== undefined) {
       for (const parameter of optional_params.parameter_name) {
-        if (!this.supported_params.has(parameter)) {
+        if (!this.supported_parameters[parameter]) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${parameter}'.`
           );

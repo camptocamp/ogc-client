@@ -2503,9 +2503,11 @@ describe('OgcApiEndpoint with EDR', () => {
           new Set(['area', 'locations', 'cube'])
         );
 
-        expect(builder.supported_parameters).toEqual(
-          new Set(['Elevation', 'Water Temperature', 'Air Temperature'])
-        );
+        expect(Object.keys(builder.supported_parameters)).toEqual([
+          'Elevation',
+          'Water Temperature',
+          'Air Temperature',
+        ]);
       });
 
       it('can produce EDR area queries with or without optional parameters', async () => {
