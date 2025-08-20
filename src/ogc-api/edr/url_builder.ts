@@ -4,6 +4,80 @@ import { DateTimeParameterToEDRString } from './helpers.js';
 
 type WellKnownTextString = string;
 
+type bbox = {
+  minX: number;
+  minY: number;
+  maxX: number;
+  maxY: number;
+};
+
+type bboxWithVerticalAxis = bbox & {
+  minZ: number;
+  maxZ: number;
+};
+
+type optionalAreaParams = {
+  parameter_name?: string[];
+  z?: string;
+  datetime?: DateTimeParameter;
+  crs?: string;
+  f?: string;
+};
+
+type optionalLocationParams = {
+  locationId?: string;
+  parameter_name?: string[];
+  datetime?: DateTimeParameter;
+  crs?: string;
+  f?: string;
+};
+
+type optionalCubeParams = {
+  parameter_name?: string[];
+  z?: string;
+  datetime?: DateTimeParameter;
+  crs?: string;
+  f?: string;
+};
+
+type optionalTrajectoryParams = {
+  z?: string;
+  datetime?: DateTimeParameter;
+  parameter_name?: string[];
+  crs?: string;
+  f?: string;
+};
+
+type optionalCorridorParams = {
+  z?: string;
+  datetime?: DateTimeParameter;
+  parameter_name?: string[];
+  resolution_x?: string;
+  resolution_y?: string;
+  resolution_z?: string;
+  crs?: string;
+  f?: string;
+};
+
+type optionalPositionParams = {
+  parameter_name?: string[];
+  z?: string;
+  datetime?: DateTimeParameter;
+  crs?: string;
+  f?: string;
+};
+
+type optionalRadiusParams = {
+  parameter_name?: string[];
+  z?: string;
+  datetime?: DateTimeParameter;
+  crs?: string;
+  f?: string;
+};
+
+/** Builds EDR query URLs according to the OGC API EDR specification
+ * https://docs.ogc.org/is/19-086r6/19-086r6.html
+ */
 export default class EDRQueryBuilder {
   protected supported_query_types: {
     area: boolean;
@@ -45,6 +119,9 @@ export default class EDRQueryBuilder {
     return this.supported_params;
   }
 
+  /**
+   * Return the set of EDR queries supported by this collection
+   */
   get supported_queries(): Set<DataQueryType> {
     const queries: Set<DataQueryType> = new Set();
     for (const [key, value] of Object.entries(this.supported_query_types)) {
@@ -57,11 +134,7 @@ export default class EDRQueryBuilder {
 
   buildAreaDownloadUrl(
     coords: WellKnownTextString,
-    parameter_names: string[],
-    z?: string,
-    datetime?: DateTimeParameter,
-    crs?: string,
-    f?: string
+    optional_params: optionalAreaParams = {}
   ): string {
     if (!this.supported_query_types.area) {
       throw new Error('Collection does not support area queries');
@@ -70,112 +143,138 @@ export default class EDRQueryBuilder {
     const url = new URL(this.collection.data_queries?.area?.link.href);
 
     url.searchParams.set('coords', coords);
-    if (z !== undefined) url.searchParams.set('z', z);
-    if (datetime !== undefined)
-      url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
-    if (parameter_names != null) {
-      for (const parameter_name of parameter_names) {
-        if (!this.supported_params.has(parameter_name)) {
+    if (optional_params.z !== undefined)
+      url.searchParams.set('z', optional_params.z);
+    if (optional_params.datetime !== undefined)
+      url.searchParams.set(
+        'datetime',
+        DateTimeParameterToEDRString(optional_params.datetime)
+      );
+    if (optional_params.parameter_name) {
+      for (const param of optional_params.parameter_name) {
+        if (!this.supported_params.has(param)) {
           throw new Error(
-            `The following parameter name does not exist on this collection: '${parameter_name}'.`
+            `The following parameter name does not exist on this collection: '${param}'.`
           );
         }
       }
 
-      url.searchParams.set('parameter-name', parameter_names.join(','));
+      url.searchParams.set(
+        'parameter-name',
+        optional_params.parameter_name.join(',')
+      );
     }
-    if (crs !== undefined) url.searchParams.set('crs', crs);
-    if (f !== undefined) url.searchParams.set('f', f);
+    if (optional_params.crs !== undefined)
+      url.searchParams.set('crs', optional_params.crs);
+    if (optional_params.f !== undefined)
+      url.searchParams.set('f', optional_params.f);
     return url.toString();
   }
 
   buildLocationsDownloadUrl(
-    locationId?: string,
-    parameter_name?: string[],
-    datetime?: DateTimeParameter,
-    crs?: string,
-    f?: string
+    optional_params: optionalLocationParams = {}
   ): string {
     if (!this.supported_query_types.locations) {
       throw new Error('Collection does not support location queries');
     }
 
     const url = new URL(this.collection.data_queries?.locations?.link.href);
-    if (locationId !== undefined)
-      url.searchParams.set('locationId', locationId);
+    if (optional_params.locationId !== undefined)
+      url.searchParams.set('locationId', optional_params.locationId);
 
-    if (parameter_name !== undefined) {
-      for (const parameter of parameter_name) {
+    if (optional_params.parameter_name !== undefined) {
+      for (const parameter of optional_params.parameter_name) {
         if (!this.supported_params.has(parameter)) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${parameter}'.`
           );
         }
       }
-      url.searchParams.set('parameter-name', parameter_name.join(','));
+      url.searchParams.set(
+        'parameter-name',
+        optional_params.parameter_name.join(',')
+      );
     }
 
-    if (datetime !== undefined)
-      url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
-    if (crs !== undefined) url.searchParams.set('crs', crs);
-    if (f !== undefined) url.searchParams.set('f', f);
+    if (optional_params.datetime !== undefined)
+      url.searchParams.set(
+        'datetime',
+        DateTimeParameterToEDRString(optional_params.datetime)
+      );
+    if (optional_params.crs !== undefined)
+      url.searchParams.set('crs', optional_params.crs);
+    if (optional_params.f !== undefined)
+      url.searchParams.set('f', optional_params.f);
     return url.toString();
   }
 
   buildCubeDownloadUrl(
-    bbox: number[],
-    parameter_name?: string[],
-    z?: string,
-    datetime?: DateTimeParameter,
-    crs?: string,
-    f?: string
+    bbox: bbox | bboxWithVerticalAxis,
+    optional_params: optionalCubeParams = {}
   ): string {
     if (!this.supported_query_types.cube) {
       throw new Error('Collection does not support cube queries');
     }
 
-    // Check that the bbox is valid
-    if (bbox.length !== 4) {
-      throw new Error('bbox argument must be of length 4');
+    // make sure all bbox keys are defined
+    for (const key in bbox) {
+      if (bbox[key] === undefined || bbox[key] === null) {
+        throw new Error('All bbox keys must be defined');
+      }
     }
-    const minX = bbox[0];
-    const minY = bbox[1];
-    const maxX = bbox[2];
-    const maxY = bbox[3];
-    if (minX > maxX) {
+
+    if (bbox.minX > bbox.maxX) {
       throw new Error('minX must be less than or equal to maxX');
     }
-    if (minY > maxY) {
+    if (bbox.minY > bbox.maxY) {
       throw new Error('minY must be less than or equal to maxY');
+    }
+    if ('minZ' in bbox && 'maxZ' in bbox) {
+      if (bbox.minZ > bbox.maxZ) {
+        throw new Error('minZ must be less than or equal to maxZ');
+      }
     }
 
     const url = new URL(this.collection.data_queries?.cube?.link.href);
-    url.searchParams.set('bbox', bbox.join(','));
-    if (z !== undefined) url.searchParams.set('z', z);
-    if (datetime !== undefined)
-      url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
-    if (parameter_name != null) {
-      for (const parameter of parameter_name) {
+
+    let bboxAsString: string;
+    if ('minZ' in bbox && 'maxZ' in bbox) {
+      bboxAsString = `${bbox.minX},${bbox.minY},${bbox.minZ},${bbox.maxX},${bbox.maxY},${bbox.maxZ}`;
+    } else {
+      bboxAsString = `${bbox.minX},${bbox.minY},${bbox.maxX},${bbox.maxY}`;
+    }
+
+    url.searchParams.set('bbox', bboxAsString);
+    if (optional_params.z !== undefined)
+      url.searchParams.set('z', optional_params.z);
+    if (optional_params.datetime !== undefined)
+      url.searchParams.set(
+        'datetime',
+        DateTimeParameterToEDRString(optional_params.datetime)
+      );
+    if (optional_params.parameter_name) {
+      for (const parameter of optional_params.parameter_name) {
         if (!this.supported_params.has(parameter)) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${parameter}'.`
           );
         }
       }
-      url.searchParams.set('parameter-name', parameter_name.join(','));
+      url.searchParams.set(
+        'parameter-name',
+        optional_params.parameter_name.join(',')
+      );
     }
-    if (crs !== undefined) url.searchParams.set('crs', crs);
-    if (f !== undefined) url.searchParams.set('f', f);
+    if (optional_params.crs !== undefined)
+      url.searchParams.set('crs', optional_params.crs);
+    if (optional_params.f !== undefined)
+      url.searchParams.set('f', optional_params.f);
     return url.toString();
   }
 
   buildTrajectoryDownloadUrl(
     coords: WellKnownTextString,
-    z?: string,
-    datetime?: DateTimeParameter,
-    parameter_name?: string[],
-    crs?: string,
-    f?: string
+    optional_params: optionalTrajectoryParams = {}
   ): string {
     if (!this.supported_query_types.trajectory) {
       throw new Error('Collection does not support trajectory queries');
@@ -183,21 +282,30 @@ export default class EDRQueryBuilder {
 
     const url = new URL(this.collection.data_queries?.trajectory?.link.href);
     url.searchParams.set('coords', coords);
-    if (z !== undefined) url.searchParams.set('z', z);
-    if (datetime !== undefined)
-      url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
-    if (parameter_name != null) {
-      for (const parameter of parameter_name) {
+    if (optional_params.z !== undefined)
+      url.searchParams.set('z', optional_params.z);
+    if (optional_params.datetime !== undefined)
+      url.searchParams.set(
+        'datetime',
+        DateTimeParameterToEDRString(optional_params.datetime)
+      );
+    if (optional_params.parameter_name) {
+      for (const parameter of optional_params.parameter_name) {
         if (!this.supported_params.has(parameter)) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${parameter}'.`
           );
         }
       }
-      url.searchParams.set('parameter-name', parameter_name.join(','));
+      url.searchParams.set(
+        'parameter-name',
+        optional_params.parameter_name.join(',')
+      );
     }
-    if (crs !== undefined) url.searchParams.set('crs', crs);
-    if (f !== undefined) url.searchParams.set('f', f);
+    if (optional_params.crs !== undefined)
+      url.searchParams.set('crs', optional_params.crs);
+    if (optional_params.f !== undefined)
+      url.searchParams.set('f', optional_params.f);
     return url.toString();
   }
 
@@ -207,14 +315,7 @@ export default class EDRQueryBuilder {
     width_units: string,
     corridor_height: number,
     height_units: number,
-    z?: string,
-    datetime?: DateTimeParameter,
-    parameter_name?: string[],
-    resolution_x?: string,
-    resolution_y?: string,
-    resolution_z?: string,
-    crs?: string,
-    f?: string
+    optional_params: optionalCorridorParams = {}
   ): string {
     if (!this.supported_query_types.corridor) {
       throw new Error('Collection does not support corridor queries');
@@ -226,58 +327,72 @@ export default class EDRQueryBuilder {
     url.searchParams.set('width-units', width_units);
     url.searchParams.set('corridor-height', corridor_height.toString());
     url.searchParams.set('height-units', height_units.toString());
-    if (z !== undefined) url.searchParams.set('z', z);
-    if (datetime !== undefined)
-      url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
-    if (parameter_name != null) {
-      for (const parameter of parameter_name) {
+    if (optional_params.z !== undefined)
+      url.searchParams.set('z', optional_params.z);
+    if (optional_params.datetime !== undefined)
+      url.searchParams.set(
+        'datetime',
+        DateTimeParameterToEDRString(optional_params.datetime)
+      );
+    if (optional_params.parameter_name) {
+      for (const parameter of optional_params.parameter_name) {
         if (!this.supported_params.has(parameter)) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${parameter}'.`
           );
         }
       }
-      url.searchParams.set('parameter-name', parameter_name.join(','));
+      url.searchParams.set(
+        'parameter-name',
+        optional_params.parameter_name.join(',')
+      );
     }
-    if (resolution_x !== undefined)
-      url.searchParams.set('resolution-x', resolution_x);
-    if (resolution_y !== undefined)
-      url.searchParams.set('resolution-y', resolution_y);
-    if (resolution_z !== undefined)
-      url.searchParams.set('resolution-z', resolution_z);
-    if (crs !== undefined) url.searchParams.set('crs', crs);
-    if (f !== undefined) url.searchParams.set('f', f);
+    if (optional_params.resolution_x !== undefined)
+      url.searchParams.set('resolution-x', optional_params.resolution_x);
+    if (optional_params.resolution_y !== undefined)
+      url.searchParams.set('resolution-y', optional_params.resolution_y);
+    if (optional_params.resolution_z !== undefined)
+      url.searchParams.set('resolution-z', optional_params.resolution_z);
+    if (optional_params.crs !== undefined)
+      url.searchParams.set('crs', optional_params.crs);
+    if (optional_params.f !== undefined)
+      url.searchParams.set('f', optional_params.f);
     return url.toString();
   }
 
   buildPositionDownloadUrl(
     coords: WellKnownTextString,
-    z?: string,
-    datetime?: DateTimeParameter,
-    parameter_name?: string[],
-    crs?: string,
-    f?: string
+    optional_params: optionalPositionParams = {}
   ): string {
     if (!this.supported_query_types.position) {
       throw new Error('Collection does not support position queries');
     }
     const url = new URL(this.collection.data_queries?.position?.link.href);
     url.searchParams.set('coords', coords);
-    if (z !== undefined) url.searchParams.set('z', z);
-    if (datetime !== undefined)
-      url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
-    if (parameter_name != null) {
-      for (const parameter of parameter_name) {
+    if (optional_params.z !== undefined)
+      url.searchParams.set('z', optional_params.z);
+    if (optional_params.datetime !== undefined)
+      url.searchParams.set(
+        'datetime',
+        DateTimeParameterToEDRString(optional_params.datetime)
+      );
+    if (optional_params.parameter_name) {
+      for (const parameter of optional_params.parameter_name) {
         if (!this.supported_params.has(parameter)) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${parameter}'.`
           );
         }
       }
-      url.searchParams.set('parameter-name', parameter_name.join(','));
+      url.searchParams.set(
+        'parameter-name',
+        optional_params.parameter_name.join(',')
+      );
     }
-    if (crs !== undefined) url.searchParams.set('crs', crs);
-    if (f !== undefined) url.searchParams.set('f', f);
+    if (optional_params.crs !== undefined)
+      url.searchParams.set('crs', optional_params.crs);
+    if (optional_params.f !== undefined)
+      url.searchParams.set('f', optional_params.f);
     return url.toString();
   }
 
@@ -285,11 +400,7 @@ export default class EDRQueryBuilder {
     coords: WellKnownTextString,
     within: number,
     within_units: string,
-    z?: string,
-    datetime?: DateTimeParameter,
-    parameter_name?: string[],
-    crs?: string,
-    f?: string
+    optional_params: optionalRadiusParams = {}
   ): string {
     if (!this.supported_query_types.radius) {
       throw new Error('Collection does not support radius queries');
@@ -298,22 +409,31 @@ export default class EDRQueryBuilder {
     url.searchParams.set('coords', coords);
     url.searchParams.set('within', within.toString());
     url.searchParams.set('within-units', within_units);
-    if (z !== undefined) url.searchParams.set('z', z);
-    if (datetime !== undefined)
-      url.searchParams.set('datetime', DateTimeParameterToEDRString(datetime));
-    if (parameter_name != null) {
-      for (const parameter of parameter_name) {
+    if (optional_params.z !== undefined)
+      url.searchParams.set('z', optional_params.z);
+    if (optional_params.datetime !== undefined)
+      url.searchParams.set(
+        'datetime',
+        DateTimeParameterToEDRString(optional_params.datetime)
+      );
+    if (optional_params.parameter_name != null) {
+      for (const parameter of optional_params.parameter_name) {
         if (!this.supported_params.has(parameter)) {
           throw new Error(
             `The following parameter name does not exist on this collection: '${parameter}'.`
           );
         }
       }
-      url.searchParams.set('parameter-name', parameter_name.join(','));
+      url.searchParams.set(
+        'parameter-name',
+        optional_params.parameter_name.join(',')
+      );
     }
 
-    if (crs !== undefined) url.searchParams.set('crs', crs);
-    if (f !== undefined) url.searchParams.set('f', f);
+    if (optional_params.crs !== undefined)
+      url.searchParams.set('crs', optional_params.crs);
+    if (optional_params.f !== undefined)
+      url.searchParams.set('f', optional_params.f);
     return url.toString();
   }
 

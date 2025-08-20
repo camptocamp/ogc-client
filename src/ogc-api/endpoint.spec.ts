@@ -2497,26 +2497,33 @@ describe('OgcApiEndpoint with EDR', () => {
         const builder = await endpoint.edr('usace-edr');
         expect(builder).toBeTruthy();
 
-        const areaUrl = builder.buildAreaDownloadUrl(
-          'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
-          ['Water Temperature']
-        );
-
         expect(builder.supported_queries).toEqual(
           new Set(['area', 'locations', 'cube'])
         );
 
+        expect(builder.supported_parameters).toEqual(
+          new Set(['Elevation', 'Water Temperature', 'Air Temperature'])
+        );
+      });
+
+      it('can produce EDR area queries', async () => {
+        const builder = await endpoint.edr('usace-edr');
+        const areaUrl = builder.buildAreaDownloadUrl(
+          'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+          {
+            parameter_name: ['Water Temperature'],
+          }
+        );
         expect(areaUrl).toEqual(
           'https://api.wwdh.internetofwater.app/collections/usace-edr/area?coords=POLYGON%28%28-1.0+50.0%2C+-1.0+51.0%2C+0.0+51.0%2C+0.0+50.0%2C+-1.0+50.0%29%29&parameter-name=Water+Temperature'
         );
+      });
 
+      it('can produce EDR location queries', async () => {
+        const builder = await endpoint.edr('usace-edr');
         const locationsUrl = builder.buildLocationsDownloadUrl();
         expect(locationsUrl).toEqual(
           'https://api.wwdh.internetofwater.app/collections/usace-edr/locations'
-        );
-
-        expect(builder.supported_parameters).toEqual(
-          new Set(['Elevation', 'Water Temperature', 'Air Temperature'])
         );
       });
 
@@ -2525,18 +2532,29 @@ describe('OgcApiEndpoint with EDR', () => {
         expect(() =>
           builder.buildAreaDownloadUrl(
             'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
-            ['BadParameterName']
+            {
+              parameter_name: ['BadParameterName'],
+            }
           )
         ).toThrow();
 
         expect(() =>
-          builder.buildLocationsDownloadUrl(null, ['BadParameterName'])
+          builder.buildLocationsDownloadUrl({
+            parameter_name: ['BadParameterName'],
+          })
         ).toThrow();
 
         expect(() =>
           builder.buildCubeDownloadUrl(
-            [-1.0, 50.0, -1.0, 51.0, 0.0, 51.0, 0.0, 50.0, -1.0, 50.0],
-            ['BadParameterName']
+            {
+              minX: 0,
+              minY: 10,
+              maxX: -10,
+              maxY: 12,
+            },
+            {
+              parameter_name: ['BadParameterName'],
+            }
           )
         ).toThrow();
       });
@@ -2544,10 +2562,24 @@ describe('OgcApiEndpoint with EDR', () => {
       it('throws an error with an invalid bbox for the cube query', async () => {
         const builder = await endpoint.edr('usace-edr');
         expect(() =>
-          builder.buildCubeDownloadUrl([-1.0, 50.0, -1.0, 51.0, 0.0, 51.0, 0.0])
+          builder.buildCubeDownloadUrl({
+            minX: 0,
+            minY: 10,
+            maxX: -10,
+            maxY: 12,
+          })
         ).toThrow();
 
-        expect(() => builder.buildCubeDownloadUrl([0, 10, -10, 12])).toThrow();
+        expect(() =>
+          builder.buildCubeDownloadUrl({
+            minX: 0,
+            minY: 10,
+            maxX: 10,
+            maxY: 12,
+            maxZ: 0,
+            minZ: 1,
+          })
+        ).toThrow();
       });
     });
   });
