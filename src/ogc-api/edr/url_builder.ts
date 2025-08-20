@@ -36,6 +36,12 @@ export default class EDRQueryBuilder {
 
   public supported_parameters: Record<string, EdrParameterInfo> = {};
   public supported_crs: CrsCode[] = [];
+  public links: {
+    type: string;
+    href: string;
+    title: string;
+    rel: string;
+  }[] = [];
 
   constructor(private collection: OgcApiCollectionInfo) {
     if (!collection.data_queries) {
@@ -55,6 +61,7 @@ export default class EDRQueryBuilder {
 
     this.supported_parameters = collection.parameter_names;
     this.supported_crs = collection.crs;
+    this.links = collection.links;
     this.collection = collection;
   }
 
