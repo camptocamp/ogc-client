@@ -17,13 +17,13 @@
           "type": "application/json",
           "rel": "root",
           "title": "The landing page of this server as JSON",
-          "href": "https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=json"
+          "href": "https://arizona-edr.app?f=json"
         },
         {
           "type": "text/html",
           "rel": "root",
           "title": "The landing page of this server as HTML",
-          "href": "https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=html"
+          "href": "https://arizona-edr.app?f=html"
         },
         {
           "type": "application/json",
@@ -106,13 +106,13 @@
           "type": "application/json",
           "rel": "root",
           "title": "The landing page of this server as JSON",
-          "href": "https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=json"
+          "href": "https://arizona-edr.app?f=json"
         },
         {
           "type": "text/html",
           "rel": "root",
           "title": "The landing page of this server as HTML",
-          "href": "https://asu-awo-pygeoapi-864861257574.us-south1.run.app?f=html"
+          "href": "https://arizona-edr.app?f=html"
         },
         {
           "type": "application/json",
@@ -697,19 +697,19 @@
       "type": "application/json",
       "rel": "self",
       "title": "This document as JSON",
-      "href": "https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections?f=json"
+      "href": "https://arizona-edr.app/collections?f=json"
     },
     {
       "type": "application/ld+json",
       "rel": "alternate",
       "title": "This document as RDF (JSON-LD)",
-      "href": "https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections?f=jsonld"
+      "href": "https://arizona-edr.app/collections?f=jsonld"
     },
     {
       "type": "text/html",
       "rel": "alternate",
       "title": "This document as HTML",
-      "href": "https://asu-awo-pygeoapi-864861257574.us-south1.run.app/collections?f=html"
+      "href": "https://arizona-edr.app/collections?f=html"
     }
   ]
 }
