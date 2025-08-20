@@ -1,85 +1,17 @@
-import { DateTimeParameter } from '../../shared/models.js';
 import { DataQueryType, OgcApiCollectionInfo } from '../model.js';
 import { DateTimeParameterToEDRString } from './helpers.js';
-
-/**
- * @see https://docs.ogc.org/is/19-086r6/19-086r6.html#req_edr_coords-definition
- */
-type WellKnownTextString = string;
-
-/**
- * @see https://docs.ogc.org/is/19-086r6/19-086r6.html#_e523d01c-5768-4591-8634-976215cbfce3
- */
-type bbox = {
-  minX: number;
-  minY: number;
-  maxX: number;
-  maxY: number;
-};
-
-type bboxWithVerticalAxis = bbox & {
-  minZ: number;
-  maxZ: number;
-};
-
-type optionalAreaParams = {
-  parameter_name?: string[];
-  z?: string;
-  datetime?: DateTimeParameter;
-  crs?: string;
-  f?: string;
-};
-
-type optionalLocationParams = {
-  locationId?: string;
-  parameter_name?: string[];
-  datetime?: DateTimeParameter;
-  crs?: string;
-  f?: string;
-};
-
-type optionalCubeParams = {
-  parameter_name?: string[];
-  z?: string;
-  datetime?: DateTimeParameter;
-  crs?: string;
-  f?: string;
-};
-
-type optionalTrajectoryParams = {
-  z?: string;
-  datetime?: DateTimeParameter;
-  parameter_name?: string[];
-  crs?: string;
-  f?: string;
-};
-
-type optionalCorridorParams = {
-  z?: string;
-  datetime?: DateTimeParameter;
-  parameter_name?: string[];
-  resolution_x?: string;
-  resolution_y?: string;
-  resolution_z?: string;
-  crs?: string;
-  f?: string;
-};
-
-type optionalPositionParams = {
-  parameter_name?: string[];
-  z?: string;
-  datetime?: DateTimeParameter;
-  crs?: string;
-  f?: string;
-};
-
-type optionalRadiusParams = {
-  parameter_name?: string[];
-  z?: string;
-  datetime?: DateTimeParameter;
-  crs?: string;
-  f?: string;
-};
+import {
+  bboxWithVerticalAxis,
+  bboxWithoutVerticalAxis,
+  optionalAreaParams,
+  optionalCorridorParams,
+  optionalCubeParams,
+  optionalLocationParams,
+  optionalPositionParams,
+  optionalRadiusParams,
+  optionalTrajectoryParams,
+  WellKnownTextString,
+} from './model.js';
 
 /** Builds query URLs according to the OGC EDR specification
  * @see https://docs.ogc.org/is/19-086r6/19-086r6.html
@@ -319,7 +251,7 @@ export default class EDRQueryBuilder {
    * @returns a built cube query URL
    */
   buildCubeDownloadUrl(
-    bbox: bbox | bboxWithVerticalAxis,
+    bbox: bboxWithoutVerticalAxis | bboxWithVerticalAxis,
     optional_params: optionalCubeParams = {}
   ): string {
     if (!this.supported_query_types.cube) {
