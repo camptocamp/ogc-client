@@ -95,7 +95,7 @@ export default class EDRQueryBuilder {
     const url = new URL(this.collection.data_queries?.position?.link.href);
     url.searchParams.set('coords', coords);
     if (optional_params.z !== undefined)
-      url.searchParams.set('z', optional_params.z);
+      url.searchParams.set('z', zParameterToString(optional_params.z));
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
@@ -151,7 +151,7 @@ export default class EDRQueryBuilder {
     url.searchParams.set('within', within.toString());
     url.searchParams.set('within-units', within_units);
     if (optional_params.z !== undefined)
-      url.searchParams.set('z', optional_params.z);
+      url.searchParams.set('z', zParameterToString(optional_params.z));
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
