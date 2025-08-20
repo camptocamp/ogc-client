@@ -2,7 +2,7 @@
 
 import { OgcApiEndpoint } from '../../src-node/index.js';
 
-const baseUrl = 'https://api.wwdh.internetofwater.app?f=json';
+const baseUrl = 'https://dummy.edr.app?f=json';
 
 (async () => {
   const api = new OgcApiEndpoint(baseUrl);

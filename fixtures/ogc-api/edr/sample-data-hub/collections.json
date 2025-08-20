@@ -97,7 +97,7 @@
       "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
     },
     {
-      "id": "usace-edr",
+      "id": "reservoir-api",
       "title": "US Army Corps of Engineers",
       "description": "USACE Access2Water API",
       "keywords": ["open data"],
@@ -118,79 +118,79 @@
           "type": "application/json",
           "rel": "self",
           "title": "This document as JSON",
-          "href": "http://local/edr/sample-data-hub/usace-edr?f=json"
+          "href": "http://local/edr/sample-data-hub/reservoir-api?f=json"
         },
         {
           "type": "application/ld+json",
           "rel": "alternate",
           "title": "This document as RDF (JSON-LD)",
-          "href": "http://local/edr/sample-data-hub/usace-edr?f=jsonld"
+          "href": "http://local/edr/sample-data-hub/reservoir-api?f=jsonld"
         },
         {
           "type": "text/html",
           "rel": "alternate",
           "title": "This document as HTML",
-          "href": "http://local/edr/sample-data-hub/usace-edr?f=html"
+          "href": "http://local/edr/sample-data-hub/reservoir-api?f=html"
         },
         {
           "type": "application/json",
           "rel": "data",
           "title": "position query for this collection as JSON",
-          "href": "http://local/edr/sample-data-hub/usace-edr/position?f=json"
+          "href": "http://local/edr/sample-data-hub/reservoir-api/position?f=json"
         },
         {
           "type": "text/html",
           "rel": "data",
           "title": "position query for this collection as HTML",
-          "href": "http://local/edr/sample-data-hub/usace-edr/position?f=html"
+          "href": "http://local/edr/sample-data-hub/reservoir-api/position?f=html"
         },
         {
           "type": "application/json",
           "rel": "data",
           "title": "items query for this collection as JSON",
-          "href": "http://local/edr/sample-data-hub/usace-edr/items?f=json"
+          "href": "http://local/edr/sample-data-hub/reservoir-api/items?f=json"
         },
         {
           "type": "text/html",
           "rel": "data",
           "title": "items query for this collection as HTML",
-          "href": "http://local/edr/sample-data-hub/usace-edr/items?f=html"
+          "href": "http://local/edr/sample-data-hub/reservoir-api/items?f=html"
         },
         {
           "type": "application/json",
           "rel": "data",
           "title": "cube query for this collection as JSON",
-          "href": "http://local/edr/sample-data-hub/usace-edr/cube?f=json"
+          "href": "http://local/edr/sample-data-hub/reservoir-api/cube?f=json"
         },
         {
           "type": "text/html",
           "rel": "data",
           "title": "cube query for this collection as HTML",
-          "href": "http://local/edr/sample-data-hub/usace-edr/cube?f=html"
+          "href": "http://local/edr/sample-data-hub/reservoir-api/cube?f=html"
         },
         {
           "type": "application/json",
           "rel": "data",
           "title": "area query for this collection as JSON",
-          "href": "http://local/edr/sample-data-hub/usace-edr/area?f=json"
+          "href": "http://local/edr/sample-data-hub/reservoir-api/area?f=json"
         },
         {
           "type": "text/html",
           "rel": "data",
           "title": "area query for this collection as HTML",
-          "href": "http://local/edr/sample-data-hub/usace-edr/area?f=html"
+          "href": "http://local/edr/sample-data-hub/reservoir-api/area?f=html"
         },
         {
           "type": "application/json",
           "rel": "data",
           "title": "locations query for this collection as JSON",
-          "href": "http://local/edr/sample-data-hub/usace-edr/locations?f=json"
+          "href": "http://local/edr/sample-data-hub/reservoir-api/locations?f=json"
         },
         {
           "type": "text/html",
           "rel": "data",
           "title": "locations query for this collection as HTML",
-          "href": "http://local/edr/sample-data-hub/usace-edr/locations?f=html"
+          "href": "http://local/edr/sample-data-hub/reservoir-api/locations?f=html"
         }
       ],
       "extent": {
@@ -204,7 +204,7 @@
       "data_queries": {
         "position": {
           "link": {
-            "href": "http://local/edr/sample-data-hub/usace-edr/position",
+            "href": "http://local/edr/sample-data-hub/reservoir-api/position",
             "rel": "data",
             "variables": {
               "query_type": "position"
@@ -213,7 +213,7 @@
         },
         "items": {
           "link": {
-            "href": "http://local/edr/sample-data-hub/usace-edr/items",
+            "href": "http://local/edr/sample-data-hub/reservoir-api/items",
             "rel": "data",
             "variables": {
               "query_type": "items"
@@ -222,7 +222,7 @@
         },
         "cube": {
           "link": {
-            "href": "http://local/edr/sample-data-hub/usace-edr/cube",
+            "href": "http://local/edr/sample-data-hub/reservoir-api/cube",
             "rel": "data",
             "variables": {
               "query_type": "cube"
@@ -231,7 +231,7 @@
         },
         "area": {
           "link": {
-            "href": "http://local/edr/sample-data-hub/usace-edr/area",
+            "href": "http://local/edr/sample-data-hub/reservoir-api/area",
             "rel": "data",
             "variables": {
               "query_type": "area"
@@ -240,7 +240,7 @@
         },
         "locations": {
           "link": {
-            "href": "http://local/edr/sample-data-hub/usace-edr/locations",
+            "href": "http://local/edr/sample-data-hub/reservoir-api/locations",
             "rel": "data",
             "variables": {
               "query_type": "locations"

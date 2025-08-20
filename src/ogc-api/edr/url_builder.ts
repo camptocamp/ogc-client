@@ -11,6 +11,7 @@ import {
   optionalRadiusParams,
   optionalTrajectoryParams,
   WellKnownTextString,
+  zParameterToString,
 } from './model.js';
 
 /** Builds query URLs according to the OGC EDR specification
@@ -203,7 +204,7 @@ export default class EDRQueryBuilder {
 
     url.searchParams.set('coords', coords);
     if (optional_params.z !== undefined)
-      url.searchParams.set('z', optional_params.z);
+      url.searchParams.set('z', zParameterToString(optional_params.z));
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
@@ -288,7 +289,7 @@ export default class EDRQueryBuilder {
 
     url.searchParams.set('bbox', bboxAsString);
     if (optional_params.z !== undefined)
-      url.searchParams.set('z', optional_params.z);
+      url.searchParams.set('z', zParameterToString(optional_params.z));
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
@@ -345,7 +346,7 @@ export default class EDRQueryBuilder {
     const url = new URL(this.collection.data_queries?.trajectory?.link.href);
     url.searchParams.set('coords', coords);
     if (optional_params.z !== undefined)
-      url.searchParams.set('z', optional_params.z);
+      url.searchParams.set('z', zParameterToString(optional_params.z));
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
@@ -403,7 +404,7 @@ export default class EDRQueryBuilder {
     corridor_width: number,
     width_units: string,
     corridor_height: number,
-    height_units: number,
+    height_units: string,
     optional_params: optionalCorridorParams = {}
   ): string {
     if (!this.supported_query_types.corridor) {
@@ -417,7 +418,7 @@ export default class EDRQueryBuilder {
     url.searchParams.set('corridor-height', corridor_height.toString());
     url.searchParams.set('height-units', height_units.toString());
     if (optional_params.z !== undefined)
-      url.searchParams.set('z', optional_params.z);
+      url.searchParams.set('z', zParameterToString(optional_params.z));
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
