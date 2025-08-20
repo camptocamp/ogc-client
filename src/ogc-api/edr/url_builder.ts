@@ -2,8 +2,14 @@ import { DateTimeParameter } from '../../shared/models.js';
 import { DataQueryType, OgcApiCollectionInfo } from '../model.js';
 import { DateTimeParameterToEDRString } from './helpers.js';
 
+/**
+ * @see https://docs.ogc.org/is/19-086r6/19-086r6.html#req_edr_coords-definition
+ */
 type WellKnownTextString = string;
 
+/**
+ * @see https://docs.ogc.org/is/19-086r6/19-086r6.html#_e523d01c-5768-4591-8634-976215cbfce3
+ */
 type bbox = {
   minX: number;
   minY: number;
@@ -76,7 +82,7 @@ type optionalRadiusParams = {
 };
 
 /** Builds query URLs according to the OGC EDR specification
- * https://docs.ogc.org/is/19-086r6/19-086r6.html
+ * @see https://docs.ogc.org/is/19-086r6/19-086r6.html
  */
 export default class EDRQueryBuilder {
   private supported_query_types: {
@@ -140,7 +146,7 @@ export default class EDRQueryBuilder {
    *
    * @param optional_params.z The vertical level to return data for (available options are defined in the vertical attribute of the extent section in the collections metadata response)
    * @param optional_params.datetime Datetime range to return data for (the available range is defined in the temporal attribute of the extent section in the collections metadata response)
-   * @param optional_params.parameter_name Comma delimited list of parameter names (available options are listed in the parameter_names section of the collections metadata response)
+   * @param optional_params.parameter_name List of parameter names (available options are listed in the parameter_names section of the collections metadata response)
    * @param optional_params.crs Coordinate reference system identifier for the coords values and output data (available options are listed in the collections metadata response)
    * @param optional_params.f Data format for the output data (available options are listed in the collections response), schemas describing JSON and XML outputs can be defined in the OpenAPI documentation (see https://swagger.io/docs/specification/data-models/)
    *
@@ -245,7 +251,7 @@ export default class EDRQueryBuilder {
    *
    * @param coords The coordinates are defined by a Polygon Well Known Text (WKT) string
    *
-   * @param optional_params.parameter_name Comma delimited list of parameter names (available options are listed in the parameter_names section of the collections metadata response)
+   * @param optional_params.parameter_name List of parameter names (available options are listed in the parameter_names section of the collections metadata response)
    * @param optional_params.datetime Datetime range to return data for (the available range is defined in the temporal attribute of the extent section in the collections metadata response)
    * @param optional_params.z The vertical level to return data for (available options are defined in the vertical attribute of the extent section in the collections metadata response)
    * @param optional_params.crs Coordinate reference system identifier for the coords values and output data (available options are listed in the collections metadata response)
@@ -294,6 +300,8 @@ export default class EDRQueryBuilder {
 
   /**
    * Build a cube query URL; cube queries are used to retrieve data from within a bounding box
+   * @see https://docs.ogc.org/is/19-086r6/19-086r6.html#_fe30ac95-7038-4dd1-902d-f4fcd2f31c8d
+   * 
    * @param bbox The coordinates are defined by a BBOX string Only data that has a geometry that intersects the area defined by the bbox are selected.
     Lower left corner, coordinate axis 1
     Lower left corner, coordinate axis 2
@@ -301,8 +309,13 @@ export default class EDRQueryBuilder {
     Upper right corner, coordinate axis 2
     bbox=minx,miny,maxx,maxy
     The X and Y coordinates are values in the coordinate system defined by the crs query parameter. If crs is not defined, the values will be assumed to be WGS84 longitude/latitude coordinates and heights will be assumed to be in meters above mean sea level, or below for negative values.
-   * @param optional_params 
-   * @see https://docs.ogc.org/is/19-086r6/19-086r6.html#_fe30ac95-7038-4dd1-902d-f4fcd2f31c8d
+   *
+   * @param optional_params.z The vertical level to return data for (available options are defined in the vertical attribute of the extent section in the collections metadata response)
+   * @param optional_params.datetime Datetime range to return data for (the available range is defined in the temporal attribute of the extent section in the collections metadata response)
+   * @param optional_params.parameter_name List of parameter names (available options are listed in the parameter_names section of the collections metadata response)
+   * @param optional_params.crs Coordinate reference system identifier for the coords values and output data (available options are listed in the collections metadata response)
+   * @param optional_params.f Data format for the output data (available options are listed in the collections response), schemas describing JSON and XML outputs can be defined in the OpenAPI documentation (see https://swagger.io/docs/specification/data-models/)
+   * 
    * @returns a built cube query URL
    */
   buildCubeDownloadUrl(
@@ -371,6 +384,8 @@ export default class EDRQueryBuilder {
 
   /**
    * Build a trajectory query URL that can be used to get data along the path defined by the coords parameter.
+   * @see https://docs.ogc.org/is/19-086r6/19-086r6.html#_5181b3c7-ada4-40d9-bcf0-4c890a6087f1
+   * 
    * @param coords The coordinates are defined by one of the following Well Known Text (WKT) strings:
     LINESTRING
     LINESTRINGZ
@@ -378,8 +393,13 @@ export default class EDRQueryBuilder {
     LINESTRINGZM
     The Z in LINESTRINGZ and LINESTRINGZM refers to the height value. If the specified CRS does not define the height units, the heights units will default to meters above mean sea level
     The M in LINESTRINGM and LINESTRINGZM refers to the number of seconds that have elapsed since the Unix epoch, that is the time 00:00:00 UTC on 1 January 1970. See https://en.wikipedia.org/wiki/Unix_time
-   * @param optional_params
-   * @see https://docs.ogc.org/is/19-086r6/19-086r6.html#_5181b3c7-ada4-40d9-bcf0-4c890a6087f1
+   *
+   * @param optional_params.z The vertical level to return data for (available options are defined in the vertical attribute of the extent section in the collections metadata response)
+   * @param optional_params.datetime Datetime range to return data for (the available range is defined in the temporal attribute of the extent section in the collections metadata response)
+   * @param optional_params.parameter_name List of parameter names (available options are listed in the parameter_names section of the collections metadata response)
+   * @param optional_params.crs Coordinate reference system identifier for the coords values and output data (available options are listed in the collections metadata response)
+   * @param optional_params.f Data format for the output data (available options are listed in the collections response), schemas describing JSON and XML outputs can be defined in the OpenAPI documentation (see https://swagger.io/docs/specification/data-models/)
+   * 
    * @returns a built trajectory query URL
    */
   buildTrajectoryDownloadUrl(
@@ -509,7 +529,7 @@ export default class EDRQueryBuilder {
    * @param optional_params.crs Coordinate reference system identifier for the coords values and output data (available options are listed in the collections metadata response)
    * @param optional_params.f Data format for the output data (available options are listed in the collections response), schemas describing JSON and XML outputs can be defined in the OpenAPI documentation (see https://swagger.io/docs/specification/data-models/)
    *
-   * @returns A built location query URL
+   * @returns A built locations query URL
    */
   buildLocationsDownloadUrl(
     optional_params: optionalLocationParams = {}
@@ -551,7 +571,7 @@ export default class EDRQueryBuilder {
   /**
    * Having multiple versions or instances of the same collection, where the same information is reprocessed or regenerated is not unusal.
    * Although these versions could be described as new collections,
-   * the instance query type allows this data to be described as different views of the same collection.
+   * @see https://docs.ogc.org/is/19-086r6/19-086r6.html#_5bd2378d-8c59-4516-949e-22db29b30170
    * @returns The instances query URL
    */
   buildInstancesDownloadUrl(): string {
