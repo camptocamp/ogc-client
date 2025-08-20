@@ -1,4 +1,4 @@
-import { OgcApiDocument, OgcApiDocumentLink } from './model.js';
+import { OgcApiDocument, OgcApiDocumentLink } from '../ogc-common/model.js';
 import { EndpointError } from '../shared/errors.js';
 import { sharedFetch } from '../shared/http-utils.js';
 import { getParentPath } from '../shared/url-utils.js';

@@ -21,6 +21,13 @@
     </p>
     <OgcApiEndpoint></OgcApiEndpoint>
 
+    <h2 class="my-4">OGC EDR</h2>
+    <p>
+      Enter an OGC EDR endpoint URL below to get some information and a list of
+      collections from it.
+    </p>
+    <OgcEdrEndpoint></OgcEdrEndpoint>
+
     <h2 class="my-4">WMTS</h2>
     <p>
       Enter a WMTS endpoint URL below to get some information and a list of
@@ -43,6 +50,7 @@
 import WmsEndpoint from './components/wms/WmsEndpoint.vue';
 import WfsEndpoint from './components/wfs/WfsEndpoint.vue';
 import OgcApiEndpoint from './components/ogc-api/OgcApiEndpoint.vue';
+import OgcEdrEndpoint from './components/ogc-edr/OgcEdrEndpoint.vue';
 import WmtsEndpoint from '@/components/wmts/WmtsEndpoint.vue';
 import TmsEndpoint from '@/components/tms/TmsEndpoint.vue';
 
@@ -51,6 +59,7 @@ export default {
   components: {
     WmtsEndpoint,
     OgcApiEndpoint,
+    OgcEdrEndpoint,
     WfsEndpoint,
     WmsEndpoint,
     TmsEndpoint,
