@@ -2650,6 +2650,103 @@ describe('OgcApiEndpoint with EDR', () => {
           })
         ).toThrow();
       });
+
+      it("throws an error when called with a crs that doesn't exist", async () => {
+        const builder = await endpoint.edr('reservoir-api');
+        expect(() =>
+          builder.buildAreaDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            {
+              crs: 'BadCRS',
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildLocationsDownloadUrl({
+            crs: 'BadCRS',
+          })
+        ).toThrow();
+
+        expect(() =>
+          builder.buildCubeDownloadUrl(
+            {
+              minX: 0,
+              minY: 10,
+              maxX: -10,
+              maxY: 12,
+            },
+            {
+              crs: 'BadCRS',
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildCorridorDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            10,
+            'cm',
+            20,
+            'cm',
+            {
+              crs: 'BadCRS',
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildRadiusDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            10,
+            'cm',
+            {
+              crs: 'BadCRS',
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildPositionDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            {
+              crs: 'BadCRS',
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildTrajectoryDownloadUrl(
+            'LINESTRING(-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0)',
+            {
+              crs: 'BadCRS',
+            }
+          )
+        ).toThrow();
+      });
+
+      it('throws an error with an invalid bbox for the cube query', async () => {
+        const builder = await endpoint.edr('reservoir-api');
+        expect(() =>
+          builder.buildCubeDownloadUrl({
+            minX: 0,
+            minY: 10,
+            maxX: -10,
+            maxY: 12,
+          })
+        ).toThrow();
+
+        expect(() =>
+          builder.buildCubeDownloadUrl({
+            minX: 0,
+            minY: 10,
+            maxX: 10,
+            maxY: 12,
+            maxZ: 0,
+            minZ: 1,
+          })
+        ).toThrow();
+      });
     });
   });
 });

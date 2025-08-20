@@ -1,3 +1,4 @@
+import { CrsCode } from '../../shared/models.js';
 import {
   DataQueryType,
   EdrParameterInfo,
@@ -34,6 +35,7 @@ export default class EDRQueryBuilder {
   };
 
   public supported_parameters: Record<string, EdrParameterInfo> = {};
+  public supported_crs: CrsCode[] = [];
 
   constructor(private collection: OgcApiCollectionInfo) {
     if (!collection.data_queries) {
@@ -52,6 +54,7 @@ export default class EDRQueryBuilder {
     }
 
     this.supported_parameters = collection.parameter_names;
+    this.supported_crs = collection.crs;
     this.collection = collection;
   }
 
@@ -89,6 +92,7 @@ export default class EDRQueryBuilder {
     if (!this.supported_query_types.position) {
       throw new Error('Collection does not support position queries');
     }
+
     const url = new URL(this.collection.data_queries?.position?.link.href);
     url.searchParams.set('coords', coords);
     if (optional_params.z !== undefined)
@@ -111,8 +115,14 @@ export default class EDRQueryBuilder {
         optional_params.parameter_name.join(',')
       );
     }
-    if (optional_params.crs !== undefined)
+    if (optional_params.crs !== undefined) {
+      if (!this.supported_crs.includes(optional_params.crs)) {
+        throw new Error(
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+        );
+      }
       url.searchParams.set('crs', optional_params.crs);
+    }
     if (optional_params.f !== undefined)
       url.searchParams.set('f', optional_params.f);
     return url.toString();
@@ -168,8 +178,14 @@ export default class EDRQueryBuilder {
       );
     }
 
-    if (optional_params.crs !== undefined)
+    if (optional_params.crs !== undefined) {
+      if (!this.supported_crs.includes(optional_params.crs)) {
+        throw new Error(
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+        );
+      }
       url.searchParams.set('crs', optional_params.crs);
+    }
     if (optional_params.f !== undefined)
       url.searchParams.set('f', optional_params.f);
     return url.toString();
@@ -221,8 +237,14 @@ export default class EDRQueryBuilder {
         optional_params.parameter_name.join(',')
       );
     }
-    if (optional_params.crs !== undefined)
+    if (optional_params.crs !== undefined) {
+      if (!this.supported_crs.includes(optional_params.crs)) {
+        throw new Error(
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+        );
+      }
       url.searchParams.set('crs', optional_params.crs);
+    }
     if (optional_params.f !== undefined)
       url.searchParams.set('f', optional_params.f);
     return url.toString();
@@ -305,8 +327,14 @@ export default class EDRQueryBuilder {
         optional_params.parameter_name.join(',')
       );
     }
-    if (optional_params.crs !== undefined)
+    if (optional_params.crs !== undefined) {
+      if (!this.supported_crs.includes(optional_params.crs)) {
+        throw new Error(
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+        );
+      }
       url.searchParams.set('crs', optional_params.crs);
+    }
     if (optional_params.f !== undefined)
       url.searchParams.set('f', optional_params.f);
     return url.toString();
@@ -362,8 +390,15 @@ export default class EDRQueryBuilder {
         optional_params.parameter_name.join(',')
       );
     }
-    if (optional_params.crs !== undefined)
+    if (optional_params.crs !== undefined) {
+      if (!this.supported_crs.includes(optional_params.crs)) {
+        throw new Error(
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+        );
+      }
       url.searchParams.set('crs', optional_params.crs);
+    }
+
     if (optional_params.f !== undefined)
       url.searchParams.set('f', optional_params.f);
     return url.toString();
@@ -440,8 +475,16 @@ export default class EDRQueryBuilder {
       url.searchParams.set('resolution-y', optional_params.resolution_y);
     if (optional_params.resolution_z !== undefined)
       url.searchParams.set('resolution-z', optional_params.resolution_z);
-    if (optional_params.crs !== undefined)
+
+    if (optional_params.crs !== undefined) {
+      if (!this.supported_crs.includes(optional_params.crs)) {
+        throw new Error(
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+        );
+      }
       url.searchParams.set('crs', optional_params.crs);
+    }
+
     if (optional_params.f !== undefined)
       url.searchParams.set('f', optional_params.f);
     return url.toString();
@@ -491,8 +534,16 @@ export default class EDRQueryBuilder {
         'datetime',
         DateTimeParameterToEDRString(optional_params.datetime)
       );
-    if (optional_params.crs !== undefined)
+
+    if (optional_params.crs !== undefined) {
+      if (!this.supported_crs.includes(optional_params.crs)) {
+        throw new Error(
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+        );
+      }
       url.searchParams.set('crs', optional_params.crs);
+    }
+
     if (optional_params.f !== undefined)
       url.searchParams.set('f', optional_params.f);
     return url.toString();
