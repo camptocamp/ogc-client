@@ -37,7 +37,7 @@ export default {
     endpoint: null,
     endpointSummary: null,
     endpointCollections: null,
-    url: 'https://api.wwdh.internetofwater.app/',
+    url: 'https://dummy.edr.app/',
   }),
   computed: {
     loaded() {

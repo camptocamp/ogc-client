@@ -87,6 +87,11 @@ describe('OgcApiEndpoint', () => {
             'Contains OS data © Crown copyright and database right 2021.',
         });
       });
+      it('does not support EDR ', async () => {
+        await expect(endpoint.hasEnvironmentalDataRetrieval).resolves.toBe(
+          false
+        );
+      });
       it('uses shared fetch', async () => {
         jest.clearAllMocks();
         // create the endpoint three times separately
@@ -2458,6 +2463,289 @@ The document at http://local/nonexisting?f=json could not be fetched.`
         await expect(endpoint.featureCollections).resolves.toEqual([
           'airports',
         ]);
+      });
+    });
+  });
+});
+
+describe('OgcApiEndpoint with EDR', () => {
+  let endpoint: OgcApiEndpoint;
+  describe('nominal case', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint('http://local/edr/sample-data-hub');
+    });
+    describe('#info', () => {
+      it('returns endpoint info', async () => {
+        await expect(endpoint.info).resolves.toEqual({
+          attribution: undefined,
+          description: 'this dummy server is used for testing edr compliance',
+          title: 'dummy server',
+        });
+      });
+
+      it('supports EDR ', async () => {
+        await expect(endpoint.hasEnvironmentalDataRetrieval).resolves.toBe(
+          true
+        );
+      });
+
+      it('can list all the EDR collections', async () => {
+        await expect(endpoint.edrCollections).resolves.toEqual([
+          'reservoir-api',
+        ]);
+      });
+
+      it('can produce a EDR query builder that provides info and download urls', async () => {
+        const builder = await endpoint.edr('reservoir-api');
+        expect(builder).toBeTruthy();
+
+        expect(builder.supported_queries).toEqual(
+          new Set(['area', 'locations', 'cube'])
+        );
+
+        expect(Object.keys(builder.supported_parameters)).toEqual([
+          'Elevation',
+          'Water Temperature',
+          'Air Temperature',
+        ]);
+      });
+
+      it('can produce EDR area queries with or without optional parameters', async () => {
+        const builder = await endpoint.edr('reservoir-api');
+
+        const areaUrlWithoutParam = builder.buildAreaDownloadUrl(
+          'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))'
+        );
+
+        const areaUrlWithouParam =
+          'https://dummy.edr.app/collections/reservoir-api/area?coords=POLYGON%28%28-1.0+50.0%2C+-1.0+51.0%2C+0.0+51.0%2C+0.0+50.0%2C+-1.0+50.0%29%29';
+        expect(areaUrlWithoutParam).toEqual(areaUrlWithouParam);
+
+        const areaUrlWithParam = builder.buildAreaDownloadUrl(
+          'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+          {
+            parameter_name: ['Water Temperature'],
+          }
+        );
+        const WithParam =
+          areaUrlWithouParam + '&parameter-name=Water+Temperature';
+        expect(areaUrlWithParam).toEqual(WithParam);
+
+        const areaUrlWithParamAndZ = builder.buildAreaDownloadUrl(
+          'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+          {
+            parameter_name: ['Water Temperature'],
+            z: {
+              type: 'single',
+              level: 1,
+            },
+          }
+        );
+        const WithParamAndZ =
+          areaUrlWithouParam + '&z=1' + '&parameter-name=Water+Temperature';
+        expect(areaUrlWithParamAndZ).toEqual(WithParamAndZ);
+      });
+
+      it('can produce EDR location queries', async () => {
+        const builder = await endpoint.edr('reservoir-api');
+        const locationsUrl = builder.buildLocationsDownloadUrl();
+        expect(locationsUrl).toEqual(
+          'https://dummy.edr.app/collections/reservoir-api/locations'
+        );
+      });
+
+      it("throws an error when called with a parameter that doesn't exist", async () => {
+        const builder = await endpoint.edr('reservoir-api');
+        expect(() =>
+          builder.buildAreaDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            {
+              parameter_name: ['BadParameterName'],
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildLocationsDownloadUrl({
+            parameter_name: ['BadParameterName'],
+          })
+        ).toThrow();
+
+        expect(() =>
+          builder.buildCubeDownloadUrl(
+            {
+              minX: 0,
+              minY: 10,
+              maxX: -10,
+              maxY: 12,
+            },
+            {
+              parameter_name: ['BadParameterName'],
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildCorridorDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            10,
+            'cm',
+            20,
+            'cm',
+            {
+              parameter_name: ['BadParameterName'],
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildRadiusDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            10,
+            'cm',
+            {
+              parameter_name: ['BadParameterName'],
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildPositionDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            {
+              parameter_name: ['BadParameterName'],
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildTrajectoryDownloadUrl(
+            'LINESTRING(-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0)',
+            {
+              parameter_name: ['BadParameterName'],
+            }
+          )
+        ).toThrow();
+      });
+
+      it('throws an error with an invalid bbox for the cube query', async () => {
+        const builder = await endpoint.edr('reservoir-api');
+        expect(() =>
+          builder.buildCubeDownloadUrl({
+            minX: 0,
+            minY: 10,
+            maxX: -10,
+            maxY: 12,
+          })
+        ).toThrow();
+
+        expect(() =>
+          builder.buildCubeDownloadUrl({
+            minX: 0,
+            minY: 10,
+            maxX: 10,
+            maxY: 12,
+            maxZ: 0,
+            minZ: 1,
+          })
+        ).toThrow();
+      });
+
+      it("throws an error when called with a crs that doesn't exist", async () => {
+        const builder = await endpoint.edr('reservoir-api');
+        expect(() =>
+          builder.buildAreaDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            {
+              crs: 'BadCRS',
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildLocationsDownloadUrl({
+            crs: 'BadCRS',
+          })
+        ).toThrow();
+
+        expect(() =>
+          builder.buildCubeDownloadUrl(
+            {
+              minX: 0,
+              minY: 10,
+              maxX: -10,
+              maxY: 12,
+            },
+            {
+              crs: 'BadCRS',
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildCorridorDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            10,
+            'cm',
+            20,
+            'cm',
+            {
+              crs: 'BadCRS',
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildRadiusDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            10,
+            'cm',
+            {
+              crs: 'BadCRS',
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildPositionDownloadUrl(
+            'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
+            {
+              crs: 'BadCRS',
+            }
+          )
+        ).toThrow();
+
+        expect(() =>
+          builder.buildTrajectoryDownloadUrl(
+            'LINESTRING(-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0)',
+            {
+              crs: 'BadCRS',
+            }
+          )
+        ).toThrow();
+      });
+
+      it('throws an error with an invalid bbox for the cube query', async () => {
+        const builder = await endpoint.edr('reservoir-api');
+        expect(() =>
+          builder.buildCubeDownloadUrl({
+            minX: 0,
+            minY: 10,
+            maxX: -10,
+            maxY: 12,
+          })
+        ).toThrow();
+
+        expect(() =>
+          builder.buildCubeDownloadUrl({
+            minX: 0,
+            minY: 10,
+            maxX: 10,
+            maxY: 12,
+            maxZ: 0,
+            minZ: 1,
+          })
+        ).toThrow();
       });
     });
   });

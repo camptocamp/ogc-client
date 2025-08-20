@@ -11,7 +11,7 @@ import {
   OgcStyleBrief,
   OgcStyleFull,
   TileMatrixSet,
-} from '../shared/ogc-api/model.js';
+} from './model.js';
 import { assertHasLinks } from './link-utils.js';
 import { EndpointError } from '../shared/errors.js';
 import {
@@ -94,11 +94,21 @@ export function checkHasFeatures([collections, conformance]: [
   );
 }
 
+export function checkHasEnvironmentalDataRetrieval([conformance]: [
+  ConformanceClass[]
+]) {
+  return (
+    conformance.indexOf(
+      'http://www.opengis.net/spec/ogcapi-edr-1/1.0/conf/core'
+    ) > -1
+  );
+}
+
 /**
  * This does not include queryables and sortables!
  */
 export function parseBaseCollectionInfo(
-  doc: OgcApiDocument
+  doc: OgcApiDocument | OgcApiCollectionInfo
 ): OgcApiCollectionInfo {
   const { links, ...props } = doc;
   const itemFormats = links
@@ -201,4 +211,54 @@ export function parseFullStyleInfo(doc: OgcApiStyleMetadata): OgcStyleFull {
     ...(stylesheets && { stylesheets }),
     ...props,
   } as OgcStyleFull;
+}
+
+export function parseCollections(doc: OgcApiDocument): Array<{
+  name: string;
+  hasRecords?: boolean;
+  hasFeatures?: boolean;
+  hasVectorTiles?: boolean;
+  hasMapTiles?: boolean;
+  hasDataQueries?: boolean;
+}> {
+  return doc.collections.map((collection) => {
+    const result: {
+      name: string;
+      hasRecords?: boolean;
+      hasFeatures?: boolean;
+      hasVectorTiles?: boolean;
+      hasMapTiles?: boolean;
+      hasDataQueries?: boolean;
+    } = {
+      name: collection.id as string,
+    };
+    if (collection.itemType === 'record') {
+      result.hasRecords = true;
+    }
+    if (collection.itemType === 'feature' || !collection.itemType) {
+      result.hasFeatures = true;
+    }
+    if (
+      collection.links.some(
+        (link) =>
+          link.rel === 'http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector'
+      )
+    ) {
+      result.hasVectorTiles = true;
+    }
+    if (
+      collection.links.some(
+        (link) =>
+          link.rel === 'http://www.opengis.net/def/rel/ogc/1.0/tilesets-map'
+      )
+    ) {
+      result.hasMapTiles = true;
+    }
+
+    if (collection.data_queries) {
+      result.hasDataQueries = true;
+    }
+
+    return result;
+  });
 }

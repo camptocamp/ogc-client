@@ -1,5 +1,5 @@
 import { Geometry } from 'geojson';
-import { BoundingBox, CrsCode, MimeType } from '../models.js';
+import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
 export type ConformanceClass = string;
 
 export interface OgcApiEndpointInfo {
@@ -7,6 +7,20 @@ export interface OgcApiEndpointInfo {
   description?: string;
   attribution?: string;
 }
+
+export const DataQueryTypes = [
+  'items',
+  'locations',
+  'cube',
+  'area',
+  'trajectory',
+  'radius',
+  'corridor',
+  'position',
+  'instances',
+] as const;
+
+export type DataQueryType = (typeof DataQueryTypes)[number];
 
 export const CollectionParameterTypes = [
   'string',
@@ -24,6 +38,27 @@ export interface CollectionParameter {
   title?: string;
   type: CollectionParameterType;
 }
+
+export type EdrParameterInfo = {
+  id: string;
+  type: string;
+  name: string;
+  observedProperty: {
+    label: {
+      en?: string;
+    };
+  };
+  unit: {
+    symbol: {
+      value: string;
+      type: string;
+    };
+    label: {
+      id: string;
+      en?: string;
+    };
+  };
+};
 
 /**
  * Contains all necessary information about a collection of items
@@ -81,6 +116,16 @@ export interface OgcApiCollectionInfo {
   mapTileFormats: MimeType[];
   vectorTileFormats: MimeType[];
   supportedTileMatrixSets: string[]; // identifiers
+
+  data_queries?: {
+    [K in DataQueryType]?: {
+      link: {
+        href: string;
+        rel: string;
+      };
+    };
+  };
+  parameter_names?: Record<string, EdrParameterInfo>;
 }
 
 export interface OgcApiDocumentLink {
@@ -104,6 +149,15 @@ export type OgcApiDocument = {
     dataType: string;
     links: OgcApiDocumentLink[];
   }[];
+  collections?: OgcApiCollectionInfo[];
+  data_queries?: {
+    [K in DataQueryType]?: {
+      link: {
+        href: string;
+        rel: string;
+      };
+    };
+  };
 } & Record<string, unknown>;
 
 interface OgcApiItemExternalId {

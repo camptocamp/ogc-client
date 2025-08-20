@@ -1,5 +1,5 @@
 {
-  "id": "usace-edr",
+  "id": "reservoir-api",
   "title": "US Army Corps of Engineers",
   "description": "USACE Access2Water API",
   "keywords": ["open data"],
@@ -8,79 +8,79 @@
       "type": "application/json",
       "rel": "root",
       "title": "The landing page of this server as JSON",
-      "href": "https://api.wwdh.internetofwater.app?f=json"
+      "href": "https://dummy.edr.app?f=json"
     },
     {
       "type": "text/html",
       "rel": "root",
       "title": "The landing page of this server as HTML",
-      "href": "https://api.wwdh.internetofwater.app?f=html"
+      "href": "https://dummy.edr.app?f=html"
     },
     {
       "type": "application/json",
       "rel": "self",
       "title": "This document as JSON",
-      "href": "https://api.wwdh.internetofwater.app/collections/usace-edr?f=json"
+      "href": "https://dummy.edr.app/collections/reservoir-api?f=json"
     },
     {
       "type": "application/ld+json",
       "rel": "alternate",
       "title": "This document as RDF (JSON-LD)",
-      "href": "https://api.wwdh.internetofwater.app/collections/usace-edr?f=jsonld"
+      "href": "https://dummy.edr.app/collections/reservoir-api?f=jsonld"
     },
     {
       "type": "text/html",
       "rel": "alternate",
       "title": "This document as HTML",
-      "href": "https://api.wwdh.internetofwater.app/collections/usace-edr?f=html"
+      "href": "https://dummy.edr.app/collections/reservoir-api?f=html"
     },
     {
       "type": "application/json",
       "rel": "data",
       "title": "locations query for this collection as JSON",
-      "href": "https://api.wwdh.internetofwater.app/collections/usace-edr/locations?f=json"
+      "href": "https://dummy.edr.app/collections/reservoir-api/locations?f=json"
     },
     {
       "type": "text/html",
       "rel": "data",
       "title": "locations query for this collection as HTML",
-      "href": "https://api.wwdh.internetofwater.app/collections/usace-edr/locations?f=html"
+      "href": "https://dummy.edr.app/collections/reservoir-api/locations?f=html"
     },
     {
       "type": "application/json",
       "rel": "data",
       "title": "cube query for this collection as JSON",
-      "href": "https://api.wwdh.internetofwater.app/collections/usace-edr/cube?f=json"
+      "href": "https://dummy.edr.app/collections/reservoir-api/cube?f=json"
     },
     {
       "type": "text/html",
       "rel": "data",
       "title": "cube query for this collection as HTML",
-      "href": "https://api.wwdh.internetofwater.app/collections/usace-edr/cube?f=html"
+      "href": "https://dummy.edr.app/collections/reservoir-api/cube?f=html"
     },
     {
       "type": "application/json",
       "rel": "data",
       "title": "area query for this collection as JSON",
-      "href": "https://api.wwdh.internetofwater.app/collections/usace-edr/area?f=json"
+      "href": "https://dummy.edr.app/collections/reservoir-api/area?f=json"
     },
     {
       "type": "text/html",
       "rel": "data",
       "title": "area query for this collection as HTML",
-      "href": "https://api.wwdh.internetofwater.app/collections/usace-edr/area?f=html"
+      "href": "https://dummy.edr.app/collections/reservoir-api/area?f=html"
     },
     {
       "type": "application/json",
       "rel": "data",
       "title": "items query for this collection as JSON",
-      "href": "https://api.wwdh.internetofwater.app/collections/usace-edr/items?f=json"
+      "href": "https://dummy.edr.app/collections/reservoir-api/items?f=json"
     },
     {
       "type": "text/html",
       "rel": "data",
       "title": "items query for this collection as HTML",
-      "href": "https://api.wwdh.internetofwater.app/collections/usace-edr/items?f=html"
+      "href": "https://dummy.edr.app/collections/reservoir-api/items?f=html"
     }
   ],
   "extent": {
@@ -94,7 +94,7 @@
   "data_queries": {
     "locations": {
       "link": {
-        "href": "https://api.wwdh.internetofwater.app/collections/usace-edr/locations",
+        "href": "https://dummy.edr.app/collections/reservoir-api/locations",
         "rel": "data",
         "variables": {
           "query_type": "locations"
@@ -103,7 +103,7 @@
     },
     "cube": {
       "link": {
-        "href": "https://api.wwdh.internetofwater.app/collections/usace-edr/cube",
+        "href": "https://dummy.edr.app/collections/reservoir-api/cube",
         "rel": "data",
         "variables": {
           "query_type": "cube"
@@ -112,7 +112,7 @@
     },
     "area": {
       "link": {
-        "href": "https://api.wwdh.internetofwater.app/collections/usace-edr/area",
+        "href": "https://dummy.edr.app/collections/reservoir-api/area",
         "rel": "data",
         "variables": {
           "query_type": "area"
@@ -121,7 +121,7 @@
     },
     "items": {
       "link": {
-        "href": "https://api.wwdh.internetofwater.app/collections/usace-edr/items",
+        "href": "https://dummy.edr.app/collections/reservoir-api/items",
         "rel": "data",
         "variables": {
           "query_type": "items"

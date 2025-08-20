@@ -1,22 +1,28 @@
-// npx tsx examples/edr.ts
+// npx tsx app/examples/edr.ts
 
-import { OgcApiEDREndpoint } from '../../src-node/index.js';
+import { OgcApiEndpoint } from '../../src-node/index.js';
 
-const baseUrl = 'https://api.wwdh.internetofwater.app?f=json';
+const baseUrl = 'https://api.wwdh.internetofwater.app/?f=json';
 
 (async () => {
-  const edr = new OgcApiEDREndpoint(baseUrl);
-  const collections = await edr.allCollections;
-  console.log('Collections:', collections);
+  const api = new OgcApiEndpoint(baseUrl);
+  const edr_collection_names = await api.edrCollections;
 
-  const firstCollection = collections[0];
+  const output = {};
 
-  const firstCollectionInfo = await edr.getCollectionInfo(firstCollection.name);
+  for (const collection of edr_collection_names) {
+    const edr_builder = await api.edr(collection);
+    const sourceLink = edr_builder.links.find(
+      (link) => link.title === 'data source'
+    );
 
-  console.log('Supported EDR data queries:', firstCollection.dataQueries);
+    const sourceUrl = sourceLink ? sourceLink.href : null;
 
-  console.log('Collection crs:', firstCollectionInfo.crs);
-
-  const result = edr.getLocations(firstCollection.name);
-  console.log('Retrieved locations:', await result);
+    output[collection] = {
+      source_url: sourceUrl,
+      name: collection,
+      params: edr_builder.supported_parameters,
+    };
+  }
+  console.log(JSON.stringify(output, null, 2));
 })();

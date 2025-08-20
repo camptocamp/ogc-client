@@ -1,4 +1,5 @@
 import {
+  checkHasEnvironmentalDataRetrieval,
   checkHasFeatures,
   checkHasRecords,
   checkStyleConformance,
@@ -22,7 +23,7 @@ import {
   OgcStyleBrief,
   OgcStyleFull,
   TileMatrixSet,
-} from '../shared/ogc-api/model.js';
+} from './model.js';
 import {
   fetchCollectionRoot,
   fetchDocument,
@@ -45,7 +46,8 @@ import {
   isMimeTypeJsonFg,
 } from '../shared/mime-type.js';
 import { getChildPath } from '../shared/url-utils.js';
-import { parseCollections } from '../shared/ogc-api/common.js';
+import { parseCollections } from './info.js';
+import EDRQueryBuilder from './edr/url_builder.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -165,6 +167,7 @@ ${e.message}`);
       hasFeatures?: boolean;
       hasVectorTiles?: boolean;
       hasMapTiles?: boolean;
+      hasDataQueries?: boolean;
     }[]
   > {
     return this.data.then(parseCollections);
@@ -189,6 +192,14 @@ ${e.message}`);
       .then(([data, hasFeatures]) => (hasFeatures ? data : { collections: [] }))
       .then(parseCollections)
       .then((collections) => collections.filter((c) => c.hasFeatures))
+      .then((collections) => collections.map((collection) => collection.name));
+  }
+
+  get edrCollections(): Promise<string[]> {
+    return Promise.all([this.data, this.hasEnvironmentalDataRetrieval])
+      .then(([data, hasEDR]) => (hasEDR ? data : { collections: [] }))
+      .then(parseCollections)
+      .then((collections) => collections.filter((c) => c.hasDataQueries))
       .then((collections) => collections.map((collection) => collection.name));
   }
 
@@ -253,6 +264,23 @@ ${e.message}`);
   }
 
   /**
+   * A Promise which resolves to a boolean indicating whether the endpoint offers environmental data retrieval (EDR) queries.
+   */
+  get hasEnvironmentalDataRetrieval(): Promise<boolean> {
+    return Promise.all([this.conformanceClasses]).then(
+      checkHasEnvironmentalDataRetrieval
+    );
+  }
+
+  /*
+   * A Promise which resolves to a class for constructing EDR queries
+   */
+  public async edr(collection_id: string): Promise<EDRQueryBuilder> {
+    const collection = await this.getCollectionDocument(collection_id);
+    return new EDRQueryBuilder(collection);
+  }
+
+  /**
    * Retrieve the tile matrix sets identifiers advertised by the endpoint. Empty if tiles are not supported
    */
   get tileMatrixSets(): Promise<string[]> {
@@ -261,12 +289,12 @@ ${e.message}`);
 
   protected getCollectionDocument(
     collectionId: string
-  ): Promise<OgcApiDocument> {
+  ): Promise<OgcApiCollectionInfo> {
     return Promise.all([this.allCollections, this.data])
       .then(([collections, data]) => {
         if (!collections.find((collection) => collection.name === collectionId))
           throw new EndpointError(`Collection not found: ${collectionId}`);
-        return (data.collections as OgcApiDocument[]).find(
+        return data.collections.find(
           (collection) => collection.id === collectionId
         );
       })
