@@ -285,13 +285,6 @@ export default class EDRQueryBuilder {
       throw new Error('Collection does not support cube queries');
     }
 
-    // make sure all bbox keys are defined
-    for (const key in bbox) {
-      if (bbox[key] === undefined || bbox[key] === null) {
-        throw new Error('All bbox keys must be defined');
-      }
-    }
-
     if (bbox.minX > bbox.maxX) {
       throw new Error('minX must be less than or equal to maxX');
     }
