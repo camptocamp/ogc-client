@@ -61,7 +61,7 @@ export default class OgcApiEndpoint {
   private tileMatrixSetsFull_: Promise<TileMatrixSet[]>;
   private styles_: Promise<OgcApiStylesDocument>;
 
-  protected get root(): Promise<OgcApiDocument> {
+  private get root(): Promise<OgcApiDocument> {
     if (!this.root_) {
       this.root_ = fetchRoot(this.baseUrl).catch((e) => {
         throw new Error(`The endpoint appears non-conforming, the following error was encountered:
@@ -91,7 +91,7 @@ ${e.message}`);
       )
     );
   }
-  protected get data(): Promise<OgcApiDocument> {
+  private get data(): Promise<OgcApiDocument> {
     if (!this.data_) {
       this.data_ = this.collectionsUrl
         .then(fetchDocument)
@@ -141,7 +141,7 @@ ${e.message}`);
    * @param baseUrl Base URL used to query the endpoint. Note that this can point to nested
    * documents inside the endpoint, such as `/collections`, `/collections/items` etc.
    */
-  constructor(protected baseUrl: string) {}
+  constructor(private baseUrl: string) {}
 
   /**
    * A Promise which resolves to the endpoint information.
@@ -287,7 +287,7 @@ ${e.message}`);
     return this.tileMatrixSetsFull.then((sets) => sets.map((set) => set.id));
   }
 
-  protected getCollectionDocument(
+  private getCollectionDocument(
     collectionId: string
   ): Promise<OgcApiCollectionInfo> {
     return Promise.all([this.allCollections, this.data])
