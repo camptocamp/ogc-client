@@ -23,20 +23,26 @@ export function fetchDocument<T extends OgcApiDocument>(
   });
 }
 
+function checkIsLandingPage(doc: OgcApiDocument): boolean {
+  // A landing page is a document that has both a "conformance" link and a "service-desc" one
+  // according to https://docs.ogc.org/is/19-072/19-072.html#_response
+  return (
+    hasLinks(doc, ['service-doc', 'service-desc']) &&
+    hasLinks(doc, [
+      'conformance',
+      'http://www.opengis.net/def/rel/ogc/1.0/conformance',
+    ])
+  );
+}
+
 export function fetchRoot(url: string): Promise<OgcApiDocument> {
   return fetchDocument(url).then((doc) => {
     // if no data link, attempt to look at the parent
-    if (
-      !hasLinks(doc, ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data']) ||
-      !hasLinks(doc, [
-        'conformance',
-        'http://www.opengis.net/def/rel/ogc/1.0/conformance',
-      ])
-    ) {
+    if (!checkIsLandingPage(doc)) {
       const parentUrl = getParentPath(url);
       if (!parentUrl) {
         throw new Error(
-          `Could not find a root JSON document containing both a link with rel='data' and a link with rel='conformance'.`
+          `Could not find a root JSON document containing both a link with rel='data' and a link with rel='service-desc' (or 'service-doc').`
         );
       }
       return fetchRoot(parentUrl);
@@ -52,9 +58,7 @@ export function fetchCollectionRoot(
 ): Promise<OgcApiDocument | null> {
   return fetchDocument(url).then((doc) => {
     // this looks like the root; return null
-    if (
-      hasLinks(doc, ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data'])
-    ) {
+    if (checkIsLandingPage(doc)) {
       return null;
     }
     let parentUrl = getParentPath(url);

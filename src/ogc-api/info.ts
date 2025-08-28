@@ -22,10 +22,7 @@ import {
 
 export function parseEndpointInfo(rootDoc: OgcApiDocument): OgcApiEndpointInfo {
   try {
-    assertHasLinks(rootDoc, [
-      'data',
-      'http://www.opengis.net/def/rel/ogc/1.0/data',
-    ]);
+    assertHasLinks(rootDoc, ['service-doc', 'service-desc']);
     assertHasLinks(rootDoc, [
       'conformance',
       'http://www.opengis.net/def/rel/ogc/1.0/conformance',
