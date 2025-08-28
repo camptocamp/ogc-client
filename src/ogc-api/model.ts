@@ -150,14 +150,6 @@ export type OgcApiDocument = {
     links: OgcApiDocumentLink[];
   }[];
   collections?: OgcApiCollectionInfo[];
-  data_queries?: {
-    [K in DataQueryType]?: {
-      link: {
-        href: string;
-        rel: string;
-      };
-    };
-  };
 } & Record<string, unknown>;
 
 interface OgcApiItemExternalId {

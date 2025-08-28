@@ -60,6 +60,8 @@ export default class OgcApiEndpoint {
   private data_: Promise<OgcApiDocument | null>;
   private tileMatrixSetsFull_: Promise<TileMatrixSet[]>;
   private styles_: Promise<OgcApiStylesDocument>;
+  private collection_id_to_edr_builder_: Map<string, EDRQueryBuilder> =
+    new Map();
 
   private get root(): Promise<OgcApiDocument> {
     if (!this.root_) {
@@ -279,8 +281,17 @@ ${e.message}`);
    * A Promise which resolves to a class for constructing EDR queries
    */
   public async edr(collection_id: string): Promise<EDRQueryBuilder> {
-    const collection = await this.getCollectionDocument(collection_id);
-    return new EDRQueryBuilder(collection);
+    if (!this.hasEnvironmentalDataRetrieval) {
+      throw new EndpointError('Endpoint does not support EDR');
+    }
+    const cache = this.collection_id_to_edr_builder_;
+    if (cache.has(collection_id)) {
+      return cache.get(collection_id);
+    }
+    const collection = await this.getCollectionInfo(collection_id);
+    const result = new EDRQueryBuilder(collection);
+    cache.set(collection_id, result);
+    return result;
   }
 
   /**
@@ -290,9 +301,7 @@ ${e.message}`);
     return this.tileMatrixSetsFull.then((sets) => sets.map((set) => set.id));
   }
 
-  private getCollectionDocument(
-    collectionId: string
-  ): Promise<OgcApiCollectionInfo> {
+  private getCollectionDocument(collectionId: string): Promise<OgcApiDocument> {
     return Promise.all([this.allCollections, this.data])
       .then(([collections, data]) => {
         if (!collections.find((collection) => collection.name === collectionId))

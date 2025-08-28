@@ -54,6 +54,7 @@ export default {
         this.endpoint.hasRecords,
         this.endpoint.hasFeatures,
         this.endpoint.allCollections,
+        this.endpoint.hasEnvironmentalDataRetrieval,
       ]).then(
         ([
           info,
@@ -62,6 +63,7 @@ export default {
           hasRecords,
           hasFeatures,
           collections,
+          hasEnvironmentalDataRetrieval,
         ]) => ({
           info: {
             ...info,
@@ -69,6 +71,7 @@ export default {
             hasStyles,
             hasRecords,
             hasFeatures,
+            hasEnvironmentalDataRetrieval,
           },
           collections,
         })

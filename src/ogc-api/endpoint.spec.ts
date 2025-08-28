@@ -2549,6 +2549,16 @@ describe('OgcApiEndpoint with EDR', () => {
         ]);
       });
 
+      it('caches properly', async () => {
+        const spy = jest.spyOn(endpoint, 'getCollectionInfo');
+
+        const builder1 = await endpoint.edr('reservoir-api');
+        const builder2 = await endpoint.edr('reservoir-api');
+
+        expect(builder1).toBe(builder2); // same object is returned
+        expect(spy).toHaveBeenCalledTimes(1); // only called once
+      });
+
       it('can produce EDR area queries with or without optional parameters', async () => {
         const builder = await endpoint.edr('reservoir-api');
 
