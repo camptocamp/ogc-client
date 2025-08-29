@@ -1,5 +1,5 @@
 import * as linkUtils from './link-utils.js';
-import { OgcApiDocument } from './model.js';
+import { OgcApiDocument } from '../ogc-api/model.js';
 import * as httpUtils from '../shared/http-utils.js';
 
 describe('link-utils', () => {

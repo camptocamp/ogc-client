@@ -1,4 +1,8 @@
-import { OgcApiDocument, OgcApiDocumentLink } from './model.js';
+import {
+  OgcApiCollectionInfo,
+  OgcApiDocument,
+  OgcApiDocumentLink,
+} from '../ogc-api/model.js';
 import { EndpointError } from '../shared/errors.js';
 import { sharedFetch } from '../shared/http-utils.js';
 import { getParentPath } from '../shared/url-utils.js';
@@ -79,7 +83,7 @@ export function fetchCollectionRoot(
 }
 
 export function getLinks(
-  doc: OgcApiDocument,
+  doc: OgcApiDocument | OgcApiCollectionInfo,
   relType: string | string[],
   mimeType?: string,
   assertPresence?: boolean
@@ -107,7 +111,7 @@ export function getLinks(
 }
 
 export function getLinkUrl(
-  doc: OgcApiDocument,
+  doc: OgcApiDocument | OgcApiCollectionInfo,
   relType: string | string[],
   baseUrl?: string,
   mimeType?: string,
@@ -122,7 +126,7 @@ export function getLinkUrl(
 }
 
 export async function fetchLink(
-  doc: OgcApiDocument,
+  doc: OgcApiDocument | OgcApiCollectionInfo,
   relType: string | string[],
   baseUrl?: string
 ): Promise<OgcApiDocument> {
@@ -132,7 +136,7 @@ export async function fetchLink(
 }
 
 export function hasLinks(
-  doc: OgcApiDocument,
+  doc: OgcApiDocument | OgcApiCollectionInfo,
   relType: string | string[]
 ): boolean {
   const url = getLinkUrl(doc, relType);

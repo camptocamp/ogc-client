@@ -1,4 +1,5 @@
 import {
+  checkHasEnvironmentalDataRetrieval,
   checkHasFeatures,
   checkHasRecords,
   checkStyleConformance,
@@ -6,7 +7,6 @@ import {
   parseBaseCollectionInfo,
   parseBasicStyleInfo,
   parseCollectionParameters,
-  parseCollections,
   parseConformance,
   parseEndpointInfo,
   parseFullStyleInfo,
@@ -46,6 +46,8 @@ import {
   isMimeTypeJsonFg,
 } from '../shared/mime-type.js';
 import { getChildPath } from '../shared/url-utils.js';
+import { parseCollections } from './info.js';
+import EDRQueryBuilder from './edr/url_builder.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -58,6 +60,8 @@ export default class OgcApiEndpoint {
   private data_: Promise<OgcApiDocument | null>;
   private tileMatrixSetsFull_: Promise<TileMatrixSet[]>;
   private styles_: Promise<OgcApiStylesDocument>;
+  private collection_id_to_edr_builder_: Map<string, EDRQueryBuilder> =
+    new Map();
 
   private get root(): Promise<OgcApiDocument> {
     if (!this.root_) {
@@ -166,6 +170,7 @@ ${e.message}`);
       hasFeatures?: boolean;
       hasVectorTiles?: boolean;
       hasMapTiles?: boolean;
+      hasDataQueries?: boolean;
     }[]
   > {
     return this.data.then((dataDocument) =>
@@ -192,6 +197,14 @@ ${e.message}`);
       .then(([data, hasFeatures]) => (hasFeatures ? data : { collections: [] }))
       .then(parseCollections)
       .then((collections) => collections.filter((c) => c.hasFeatures))
+      .then((collections) => collections.map((collection) => collection.name));
+  }
+
+  get edrCollections(): Promise<string[]> {
+    return Promise.all([this.data, this.hasEnvironmentalDataRetrieval])
+      .then(([data, hasEDR]) => (hasEDR ? data : { collections: [] }))
+      .then(parseCollections)
+      .then((collections) => collections.filter((c) => c.hasDataQueries))
       .then((collections) => collections.map((collection) => collection.name));
   }
 
@@ -256,6 +269,32 @@ ${e.message}`);
   }
 
   /**
+   * A Promise which resolves to a boolean indicating whether the endpoint offers environmental data retrieval (EDR) queries.
+   */
+  get hasEnvironmentalDataRetrieval(): Promise<boolean> {
+    return Promise.all([this.conformanceClasses]).then(
+      checkHasEnvironmentalDataRetrieval
+    );
+  }
+
+  /*
+   * A Promise which resolves to a class for constructing EDR queries
+   */
+  public async edr(collection_id: string): Promise<EDRQueryBuilder> {
+    if (!this.hasEnvironmentalDataRetrieval) {
+      throw new EndpointError('Endpoint does not support EDR');
+    }
+    const cache = this.collection_id_to_edr_builder_;
+    if (cache.has(collection_id)) {
+      return cache.get(collection_id);
+    }
+    const collection = await this.getCollectionInfo(collection_id);
+    const result = new EDRQueryBuilder(collection);
+    cache.set(collection_id, result);
+    return result;
+  }
+
+  /**
    * Retrieve the tile matrix sets identifiers advertised by the endpoint. Empty if tiles are not supported
    */
   get tileMatrixSets(): Promise<string[]> {
@@ -267,7 +306,7 @@ ${e.message}`);
       .then(([collections, data]) => {
         if (!collections.find((collection) => collection.name === collectionId))
           throw new EndpointError(`Collection not found: ${collectionId}`);
-        return (data.collections as OgcApiDocument[]).find(
+        return data.collections.find(
           (collection) => collection.id === collectionId
         );
       })

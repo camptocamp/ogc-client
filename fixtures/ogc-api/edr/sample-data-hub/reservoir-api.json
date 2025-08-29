@@ -1,0 +1,194 @@
+{
+  "id": "reservoir-api",
+  "title": "US Army Corps of Engineers",
+  "description": "USACE Access2Water API",
+  "keywords": ["open data"],
+  "links": [
+    {
+      "type": "application/json",
+      "rel": "root",
+      "title": "The landing page of this server as JSON",
+      "href": "https://dummy.edr.app?f=json"
+    },
+    {
+      "type": "text/html",
+      "rel": "root",
+      "title": "The landing page of this server as HTML",
+      "href": "https://dummy.edr.app?f=html"
+    },
+    {
+      "type": "application/json",
+      "rel": "self",
+      "title": "This document as JSON",
+      "href": "https://dummy.edr.app/collections/reservoir-api?f=json"
+    },
+    {
+      "type": "application/ld+json",
+      "rel": "alternate",
+      "title": "This document as RDF (JSON-LD)",
+      "href": "https://dummy.edr.app/collections/reservoir-api?f=jsonld"
+    },
+    {
+      "type": "text/html",
+      "rel": "alternate",
+      "title": "This document as HTML",
+      "href": "https://dummy.edr.app/collections/reservoir-api?f=html"
+    },
+    {
+      "type": "application/json",
+      "rel": "data",
+      "title": "locations query for this collection as JSON",
+      "href": "https://dummy.edr.app/collections/reservoir-api/locations?f=json"
+    },
+    {
+      "type": "text/html",
+      "rel": "data",
+      "title": "locations query for this collection as HTML",
+      "href": "https://dummy.edr.app/collections/reservoir-api/locations?f=html"
+    },
+    {
+      "type": "application/json",
+      "rel": "data",
+      "title": "cube query for this collection as JSON",
+      "href": "https://dummy.edr.app/collections/reservoir-api/cube?f=json"
+    },
+    {
+      "type": "text/html",
+      "rel": "data",
+      "title": "cube query for this collection as HTML",
+      "href": "https://dummy.edr.app/collections/reservoir-api/cube?f=html"
+    },
+    {
+      "type": "application/json",
+      "rel": "data",
+      "title": "area query for this collection as JSON",
+      "href": "https://dummy.edr.app/collections/reservoir-api/area?f=json"
+    },
+    {
+      "type": "text/html",
+      "rel": "data",
+      "title": "area query for this collection as HTML",
+      "href": "https://dummy.edr.app/collections/reservoir-api/area?f=html"
+    },
+    {
+      "type": "application/json",
+      "rel": "data",
+      "title": "items query for this collection as JSON",
+      "href": "https://dummy.edr.app/collections/reservoir-api/items?f=json"
+    },
+    {
+      "type": "text/html",
+      "rel": "data",
+      "title": "items query for this collection as HTML",
+      "href": "https://dummy.edr.app/collections/reservoir-api/items?f=html"
+    }
+  ],
+  "extent": {
+    "spatial": {
+      "bbox": [[-170, 15, -51, 72]],
+      "crs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
+    }
+  },
+  "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84"],
+  "storageCrs": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+  "data_queries": {
+    "locations": {
+      "link": {
+        "href": "https://dummy.edr.app/collections/reservoir-api/locations",
+        "rel": "data",
+        "variables": {
+          "query_type": "locations"
+        }
+      }
+    },
+    "cube": {
+      "link": {
+        "href": "https://dummy.edr.app/collections/reservoir-api/cube",
+        "rel": "data",
+        "variables": {
+          "query_type": "cube"
+        }
+      }
+    },
+    "area": {
+      "link": {
+        "href": "https://dummy.edr.app/collections/reservoir-api/area",
+        "rel": "data",
+        "variables": {
+          "query_type": "area"
+        }
+      }
+    },
+    "items": {
+      "link": {
+        "href": "https://dummy.edr.app/collections/reservoir-api/items",
+        "rel": "data",
+        "variables": {
+          "query_type": "items"
+        }
+      }
+    }
+  },
+  "parameter_names": {
+    "Elevation": {
+      "id": "Elevation",
+      "type": "Parameter",
+      "name": "Elevation",
+      "observedProperty": {
+        "label": {
+          "id": "Elevation",
+          "en": "Elevation"
+        }
+      },
+      "unit": {
+        "label": {
+          "en": "Elevation"
+        },
+        "symbol": {
+          "value": "ft",
+          "type": "http://www.opengis.net/def/uom/UCUM/"
+        }
+      }
+    },
+    "Water Temperature": {
+      "id": "Water Temperature",
+      "type": "Parameter",
+      "name": "Water Temperature",
+      "observedProperty": {
+        "label": {
+          "id": "Water Temperature",
+          "en": "Water Temperature"
+        }
+      },
+      "unit": {
+        "label": {
+          "en": "Water Temperature"
+        },
+        "symbol": {
+          "value": "F",
+          "type": "http://www.opengis.net/def/uom/UCUM/"
+        }
+      }
+    },
+    "Air Temperature": {
+      "id": "Air Temperature",
+      "type": "Parameter",
+      "name": "Air Temperature",
+      "observedProperty": {
+        "label": {
+          "id": "Air Temperature",
+          "en": "Air Temperature"
+        }
+      },
+      "unit": {
+        "label": {
+          "en": "Air Temperature"
+        },
+        "symbol": {
+          "value": "F",
+          "type": "http://www.opengis.net/def/uom/UCUM/"
+        }
+      }
+    }
+  }
+}
