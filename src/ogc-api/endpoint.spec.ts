@@ -2495,12 +2495,12 @@ The document at http://local/nonexisting?f=json could not be fetched.`
       });
     });
     describe('#hasFeatures', () => {
-      it('returns true', async () => {
+      it('returns false', async () => {
         await expect(endpoint.hasFeatures).resolves.toBe(false);
       });
     });
     describe('#hasRecords', () => {
-      it('returns true', async () => {
+      it('returns false', async () => {
         await expect(endpoint.hasRecords).resolves.toBe(false);
       });
     });
