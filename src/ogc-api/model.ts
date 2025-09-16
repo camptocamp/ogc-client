@@ -87,7 +87,7 @@ export interface OgcApiCollectionInfo {
   title: string;
   description: string;
   id: string;
-  itemType: 'feature' | 'record';
+  itemType?: 'feature' | 'record';
   itemFormats: MimeType[];
   bulkDownloadLinks: Record<string, MimeType>;
   jsonDownloadLink: string;
