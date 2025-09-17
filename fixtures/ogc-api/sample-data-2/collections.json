@@ -5,6 +5,12 @@
       "title": "aires-covoiturage",
       "links": [
         {
+          "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=html",
+          "rel": "items",
+          "type": "text/html",
+          "title": "aires-covoiturage"
+        },
+        {
           "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson",
           "rel": "items",
           "type": "application/geo+json",
