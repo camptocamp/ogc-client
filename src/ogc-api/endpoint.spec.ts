@@ -251,8 +251,18 @@ describe('OgcApiEndpoint', () => {
             'application/flatgeobuf',
             'application/vnd.ogc.fg+json;compatibility=geojson',
           ],
-          bulkDownloadLinks: {},
-          jsonDownloadLink: null,
+          bulkDownloadLinks: {
+            'application/vnd.ogc.fg+json':
+              'https://my.server.org/sample-data/collections/airports/items?f=jsonfg&limit=10000',
+            'application/geo+json':
+              'https://my.server.org/sample-data/collections/airports/items?f=json&limit=10000',
+            'application/flatgeobuf':
+              'https://my.server.org/sample-data/collections/airports/items?f=fgb&limit=10000',
+            'application/vnd.ogc.fg+json;compatibility=geojson':
+              'https://my.server.org/sample-data/collections/airports/items?f=jsonfgc&limit=10000',
+          },
+          jsonDownloadLink:
+            'https://my.server.org/sample-data/collections/airports/items?f=jsonfg&limit=10000',
           extent: {
             spatial: {
               bbox: [
@@ -310,8 +320,14 @@ describe('OgcApiEndpoint', () => {
             'application/ld+json',
             'text/html',
           ],
-          bulkDownloadLinks: {},
-          jsonDownloadLink: null,
+          bulkDownloadLinks: {
+            'application/geo+json':
+              'https://my.server.org/sample-data/collections/dutch-metadata/items?f=json&limit=10000',
+            'application/ld+json':
+              'https://my.server.org/sample-data/collections/dutch-metadata/items?f=jsonld&limit=10000',
+          },
+          jsonDownloadLink:
+            'https://my.server.org/sample-data/collections/dutch-metadata/items?f=json&limit=10000',
           keywords: ['netherlands', 'open data', 'georegister'],
           extent: {
             spatial: {
@@ -392,8 +408,18 @@ describe('OgcApiEndpoint', () => {
             'application/vnd.ogc.fg+json;compatibility=geojson',
             'text/html',
           ],
-          bulkDownloadLinks: {},
-          jsonDownloadLink: null,
+          bulkDownloadLinks: {
+            'application/vnd.ogc.fg+json':
+              'https://my.server.org/sample-data/collections/roads_national/items?f=jsonfg&limit=10000',
+            'application/geo+json':
+              'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10000',
+            'application/flatgeobuf':
+              'https://my.server.org/sample-data/collections/roads_national/items?f=fgb&limit=10000',
+            'application/vnd.ogc.fg+json;compatibility=geojson':
+              'https://my.server.org/sample-data/collections/roads_national/items?f=jsonfgc&limit=10000',
+          },
+          jsonDownloadLink:
+            'https://my.server.org/sample-data/collections/roads_national/items?f=jsonfg&limit=10000',
           extent: {
             spatial: {
               bbox: [
@@ -1929,12 +1955,16 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             endpoint.getCollectionInfo('aires-covoiturage')
           ).resolves.toStrictEqual({
             crs: ['http://www.opengis.net/def/crs/OGC/1.3/CRS84', 'EPSG:4326'],
-            itemFormats: ['text/html', 'application/geo+json'],
+            itemFormats: [
+              'text/html',
+              'application/geo+json',
+              'application/json',
+            ],
             bulkDownloadLinks: {
               'application/geo+json':
                 'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson&limit=-1',
               'application/json':
-                'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=json&limit=-1',
+                'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=json&limit=10000',
               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
                 'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=ooxml&limit=-1',
               'application/x-shapefile':

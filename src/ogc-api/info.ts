@@ -113,12 +113,27 @@ export function parseBaseCollectionInfo(
   const itemFormats = links
     .filter((link) => link.rel === 'items')
     .map((link) => link.type);
-  const bulkDownloadLinks = links
+  const enclosureLinks = links
     .filter((link) => link.rel === 'enclosure')
     .reduce((acc, link) => {
       acc[link.type] = link.href;
       return acc;
     }, {});
+  const itemsLinks = links
+    .filter((link) => link.rel === 'items' && link.type !== 'text/html')
+    .map((link) => {
+      const url = new URL(link.href);
+      url.searchParams.set('limit', '10000');
+      return {
+        ...link,
+        href: url.toString(),
+      };
+    })
+    .reduce((acc, link) => {
+      acc[link.type] = link.href;
+      return acc;
+    }, {});
+  const bulkDownloadLinks = { ...itemsLinks, ...enclosureLinks };
   const mimeTypes = Object.keys(bulkDownloadLinks);
   const jsonMimeType =
     mimeTypes.find(isMimeTypeJsonFg) ||
