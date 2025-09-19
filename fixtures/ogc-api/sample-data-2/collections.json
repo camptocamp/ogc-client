@@ -17,10 +17,10 @@
           "title": "aires-covoiturage"
         },
         {
-          "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=json&limit=-1",
-          "rel": "enclosure",
+          "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=json",
+          "rel": "items",
           "type": "application/json",
-          "title": "Bulk download (JSON)"
+          "title": "aires-covoiturage"
         },
         {
           "href": "https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson&limit=-1",

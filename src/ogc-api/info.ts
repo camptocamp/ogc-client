@@ -118,7 +118,15 @@ export function parseBaseCollectionInfo(
       return acc;
     }, {});
   const itemsLinks = links
-    .filter((link) => link.rel === 'items')
+    .filter((link) => link.rel === 'items' && link.type !== 'text/html')
+    .map((link) => {
+      const url = new URL(link.href);
+      url.searchParams.set('limit', '10000');
+      return {
+        ...link,
+        href: url.toString(),
+      };
+    })
     .reduce((acc, link) => {
       acc[link.type] = link.href;
       return acc;
