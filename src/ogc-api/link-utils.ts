@@ -5,12 +5,12 @@ import {
 } from '../ogc-api/model.js';
 import { EndpointError } from '../shared/errors.js';
 import { sharedFetch } from '../shared/http-utils.js';
-import { getParentPath } from '../shared/url-utils.js';
+import { getParentPath, getBaseUrl } from '../shared/url-utils.js';
 
 export function fetchDocument<T extends OgcApiDocument>(
   url: string
 ): Promise<T> {
-  const urlObj = new URL(url, globalThis.location.toString());
+  const urlObj = new URL(url, getBaseUrl());
   urlObj.searchParams.set('f', 'json');
   return sharedFetch(urlObj.toString(), 'GET', true).then((resp) => {
     if (!resp.ok) {
@@ -119,10 +119,7 @@ export function getLinkUrl(
 ): string | null {
   const link = getLinks(doc, relType, mimeType, assertPresence)[0];
   if (!link) return null;
-  return new URL(
-    link.href,
-    baseUrl || globalThis.location.toString()
-  ).toString();
+  return new URL(link.href, getBaseUrl(baseUrl)).toString();
 }
 
 export async function fetchLink(

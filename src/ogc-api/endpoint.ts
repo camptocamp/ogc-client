@@ -45,7 +45,7 @@ import {
   isMimeTypeJson,
   isMimeTypeJsonFg,
 } from '../shared/mime-type.js';
-import { getChildPath } from '../shared/url-utils.js';
+import { getChildPath, getBaseUrl } from '../shared/url-utils.js';
 import { parseCollections } from './info.js';
 import EDRQueryBuilder from './edr/url_builder.js';
 
@@ -493,7 +493,7 @@ ${e.message}`);
       .then((collectionDoc) => {
         const url = new URL(
           getLinkUrl(collectionDoc, 'items', this.baseUrl),
-          globalThis.location.toString()
+          getBaseUrl()
         );
         url.pathname += `/${itemId}`;
         return url.toString();
