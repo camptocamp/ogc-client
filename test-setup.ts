@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import 'regenerator-runtime/runtime';
 import mitt from 'mitt';
 import { TextDecoder } from 'util';
 import CacheMock from 'browser-cache-mock';
@@ -32,9 +31,6 @@ globalThis.mockFetch = jest.fn().mockImplementation(async (url, options) => {
     status: 200,
     ok: true,
     headers: { get: () => null },
-    clone: function () {
-      return this;
-    },
   };
 });
 globalThis.fetch = globalThis.mockFetch;

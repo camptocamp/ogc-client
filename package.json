@@ -16,8 +16,7 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "@rgrove/parse-xml": "^4.1.0",
-    "node-fetch": "^3.3.1"
+    "@rgrove/parse-xml": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",
@@ -41,7 +40,6 @@
     "ol": "^8.2.0",
     "prettier": "2.8.8",
     "proj4": "^2.10.0",
-    "regenerator-runtime": "^0.13.11",
     "ts-jest": "^29.1.1",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3",
