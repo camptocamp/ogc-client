@@ -47,7 +47,7 @@ globalThis.caches = {
 // mock Worker class to work synchronously
 // requires an absolute file path
 // this is mainly ripped off of https://github.com/developit/jsdom-worker
-global.Worker = function Worker(filePath) {
+globalThis.Worker = function Worker(filePath) {
   let getScopeVar;
   let messageQueue = [];
   const inside = mitt();
@@ -112,9 +112,9 @@ global.Worker = function Worker(filePath) {
     });
 
   // mock global scope
-  global.WorkerGlobalScope = scope;
+  globalThis.WorkerGlobalScope = scope;
 };
 
-// global.TextDecoder = StringDecoder
-// global.TextDecoder.prototype.decode = StringDecoder.prototype.write
-global.TextDecoder = TextDecoder;
+// globalThis.TextDecoder = StringDecoder
+// globalThis.TextDecoder.prototype.decode = StringDecoder.prototype.write
+globalThis.TextDecoder = TextDecoder;
