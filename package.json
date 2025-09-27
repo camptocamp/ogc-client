@@ -12,6 +12,9 @@
     "src/"
   ],
   "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "dependencies": {
     "@rgrove/parse-xml": "^4.1.0",
     "node-fetch": "^3.3.1"
