@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import 'regenerator-runtime/runtime';
 import mitt from 'mitt';
 import { TextDecoder } from 'util';
 import CacheMock from 'browser-cache-mock';
@@ -32,9 +31,6 @@ globalThis.mockFetch = jest.fn().mockImplementation(async (url, options) => {
     status: 200,
     ok: true,
     headers: { get: () => null },
-    clone: function () {
-      return this;
-    },
   };
 });
 globalThis.fetch = globalThis.mockFetch;
@@ -51,7 +47,7 @@ globalThis.caches = {
 // mock Worker class to work synchronously
 // requires an absolute file path
 // this is mainly ripped off of https://github.com/developit/jsdom-worker
-global.Worker = function Worker(filePath) {
+globalThis.Worker = function Worker(filePath) {
   let getScopeVar;
   let messageQueue = [];
   const inside = mitt();
@@ -116,9 +112,9 @@ global.Worker = function Worker(filePath) {
     });
 
   // mock global scope
-  global.WorkerGlobalScope = scope;
+  globalThis.WorkerGlobalScope = scope;
 };
 
-// global.TextDecoder = StringDecoder
-// global.TextDecoder.prototype.decode = StringDecoder.prototype.write
-global.TextDecoder = TextDecoder;
+// globalThis.TextDecoder = StringDecoder
+// globalThis.TextDecoder.prototype.decode = StringDecoder.prototype.write
+globalThis.TextDecoder = TextDecoder;

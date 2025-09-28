@@ -1,6 +1,14 @@
-import { getChildPath, getParentPath } from './url-utils.js';
+import { getChildPath, getParentPath, getBaseUrl } from './url-utils.js';
 
 describe('link utils', () => {
+  describe('getBaseUrl', () => {
+    it('should return the base url', () => {
+      expect(getBaseUrl().toString()).toBe('http://localhost/');
+      expect(getBaseUrl('http://example.com').toString()).toBe(
+        'http://example.com/'
+      );
+    });
+  });
   describe('getParentPath', () => {
     it('should return null if no parent path', () => {
       expect(getParentPath('http://example.com')).toBeNull();

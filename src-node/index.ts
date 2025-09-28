@@ -1,4 +1,3 @@
-import './polyfills.js';
 import { enableFallbackWithoutWorker } from '../src/index.js';
 
 export * from '../src/index.js';

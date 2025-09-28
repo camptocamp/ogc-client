@@ -34,6 +34,17 @@
       </li>
     </ul>
 
+    <h2 class="mt-5 mb-4">Prerequisites</h2>
+
+    <p>
+      <LibName></LibName> requires Node.js version 20.x or newer (but we
+      recommend using
+      <a href="https://github.com/nodejs/release#release-schedule">
+        active LTS release
+      </a>
+      ).
+    </p>
+
     <h2 class="mt-5 mb-4">Usage</h2>
 
     <p>First, install <LibName></LibName> in your project:</p>
