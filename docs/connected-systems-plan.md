@@ -1,12 +1,13 @@
 # 🧭 Implementation Plan: OGC API Connected Systems Client
 
-This document outlines the step-by-step plan for integrating support for the OGC API - Connected Systems standard into the `camptocamp/ogc-client` repository. Development is tracked in [Sam-Bolling/ogc-client](https://github.com/Sam-Bolling/ogc-client) with the intent to contribute upstream via [Issue #118](https://github.com/camptocamp/ogc-client/issues/118).
+This document outlines the step-by-step plan for integrating support for the OGC API - Connected Systems standard into the [`camptocamp/ogc-client`](https://github.com/camptocamp/ogc-client) TypeScript library. Development is tracked in [Sam-Bolling/ogc-client](https://github.com/Sam-Bolling/ogc-client) with the intent to contribute upstream via [Issue #118](https://github.com/camptocamp/ogc-client/issues/118).
 
 ---
 
 ## ✅ Goals
+
 - Modular client using composition
-- Dictionary-based query interface
+- Flexible query interface using `Record<string, string>`
 - Support for Systems, Observations, System History, Commands
 - Full test coverage and documentation
 - Capability detection for conditional exposure
@@ -15,11 +16,21 @@ This document outlines the step-by-step plan for integrating support for the OGC
 
 ---
 
-## 🧠 Architectural Notes
+## 🧠 Architectural Rationale (TypeScript)
 
-> CSAPI logic will be implemented in a dedicated module (`connected_systems.py`) using composition rather than inheritance. This mirrors the design used in the EDR implementation, promoting modularity, capability-based exposure, and separation of concerns.
+This implementation follows the modular design patterns used in the upstream `camptocamp/ogc-client` TypeScript library. Rather than extending the main client via inheritance, CSAPI functionality will be encapsulated in a dedicated `ConnectedSystemsClient` class and composed into the main client instance.
 
-> Initial implementation will focus on core CSAPI entities. Additional entities will be added modularly to maintain compliance while enabling incremental development.
+This approach mirrors how EDR support is integrated — using capability detection and conditional exposure — and ensures that CSAPI logic remains isolated, testable, and maintainable.
+
+### Key Design Principles
+
+- **Composition over inheritance**: CSAPI logic is injected as a property (`connectedSystems`) only if the server advertises support.
+- **Modular client structure**: Each API (Features, EDR, CSAPI) lives in its own file and namespace, promoting separation of concerns.
+- **Capability detection**: The main client will expose `.connectedSystems` only if CSAPI-specific links or metadata are present.
+- **Type safety**: All query parameters and responses will use TypeScript interfaces and `Record<string, string>` for flexible filtering.
+- **Testability**: Each method will be covered by unit tests using `vitest` or `jest`, with mock responses for isolated validation.
+
+This design ensures that CSAPI support can be added without disrupting existing functionality, and can be cleanly merged back into the upstream repo via a pull request referencing [Issue #118](https://github.com/camptocamp/ogc-client/issues/118).
 
 ---
 
@@ -34,60 +45,58 @@ This document outlines the step-by-step plan for integrating support for the OGC
 - [x] Create GitHub Project board
 - [x] Document implementation plan (`docs/connected-systems-plan.md`)
 - [x] Add issues to repo and update project board
+
 </details>
 
 <details>
 <summary>🟦 Phase 2: Core Client Development</summary>
 
-- [ ] Scaffold CSAPI module structure (`ogc_client/connected_systems.py`)
-- [ ] Implement `get_systems()` method
-- [ ] Implement `get_observations(options: dict)` method
-- [ ] Implement `get_system_history(options: dict)` method
-- [ ] Implement `get_commands(options: dict)` method
-- [ ] Add capability detection (`has_connected_systems_support()`)
+- [ ] Scaffold CSAPI module structure (`src/client/connectedSystemsClient.ts`)
+- [ ] Implement `getSystems(params: Record<string, string>)` method
+- [ ] Implement `getObservations(params: Record<string, string>)` method
+- [ ] Implement `getSystemHistory(params: Record<string, string>)` method
+- [ ] Implement `getCommands(params: Record<string, string>)` method
+- [ ] Add capability detection (`hasConnectedSystemsSupport()`)
 - [ ] Integrate CSAPI into main client using composition
+
 </details>
 
 <details>
 <summary>🟩 Phase 3: Testing</summary>
 
-- [ ] Set up `pytest` and `requests-mock`
+- [ ] Set up `vitest` or `jest`
 - [ ] Write test cases for each CSAPI method
 - [ ] Add fixtures and reusable test data
+
 </details>
 
 <details>
 <summary>🟧 Phase 4: Documentation</summary>
 
-- [ ] Add docstrings to CSAPI methods
+- [ ] Add JSDoc comments to CSAPI methods
 - [ ] Add usage examples to README
+
 </details>
 
 <details>
-<summary>🟫 Phase 5: Packaging</summary>
-
-- [ ] Create `setup.py` with metadata
-- [ ] Add `requirements.txt`
-- [ ] Add `.gitignore` and `LICENSE`
-</details>
-
-<details>
-<summary>🟥 Phase 6: Finalization</summary>
+<summary>🟥 Phase 5: Finalization</summary>
 
 - [ ] Open pull request to upstream repo
 - [ ] Respond to maintainer feedback
+
 </details>
 
 <details>
-<summary>🆕 Phase 7: Extended CSAPI Support</summary>
+<summary>🆕 Phase 6: Extended CSAPI Support</summary>
 
-- [ ] Implement `get_procedures()` method
-- [ ] Implement `get_deployments()` method
-- [ ] Implement `get_properties()` method
-- [ ] Implement `get_sampling_features()` method
-- [ ] Implement `get_datastreams()` method
-- [ ] Implement `get_control_channels()` method
-- [ ] Implement `get_system_events()` method
+- [ ] Implement `getProcedures()` method
+- [ ] Implement `getDeployments()` method
+- [ ] Implement `getProperties()` method
+- [ ] Implement `getSamplingFeatures()` method
+- [ ] Implement `getDatastreams()` method
+- [ ] Implement `getControlChannels()` method
+- [ ] Implement `getSystemEvents()` method
+
 </details>
 
 ---
@@ -95,4 +104,3 @@ This document outlines the step-by-step plan for integrating support for the OGC
 ## 📜 Compliance Note
 
 This implementation is compliant with the OGC API - Connected Systems specification based on modular support for core entities. Additional entities will be added incrementally. Capability detection ensures that unsupported endpoints are not exposed, preserving interoperability and graceful degradation.
-
