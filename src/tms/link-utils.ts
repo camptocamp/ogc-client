@@ -3,7 +3,7 @@ import { parseTileMapServiceXML, parseTileMapXML } from './parser.js';
 import { TileMapInfo, TileMapService } from './model.js';
 import { XmlDocument } from '@rgrove/parse-xml';
 import { getRootElement, parseXmlString } from '../shared/xml-utils.js';
-import { getParentPath } from '../shared/url-utils.js';
+import { getParentPath, getBaseUrl } from '../shared/url-utils.js';
 
 const MAX_DEPTH = 3;
 
@@ -11,7 +11,7 @@ const MAX_DEPTH = 3;
  * Fetches the XML string from a URL.
  */
 export async function fetchXml(url: string): Promise<XmlDocument> {
-  const urlObj = new URL(url, globalThis.location.toString());
+  const urlObj = new URL(url, getBaseUrl());
   const resp = await sharedFetch(urlObj.toString(), 'GET', true);
   if (!resp.ok) {
     throw new Error(`The document at ${urlObj} could not be fetched.`);
@@ -79,7 +79,7 @@ export async function fetchTileMapResourceXML(
  */
 export function normalizeUrl(url: string): string {
   try {
-    const urlObj = new URL(url, globalThis.location.toString());
+    const urlObj = new URL(url, getBaseUrl());
     if (!urlObj.pathname.endsWith('/')) {
       urlObj.pathname += '/';
     }
