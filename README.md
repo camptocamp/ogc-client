@@ -1,3 +1,7 @@
+![Upstream Contribution](https://img.shields.io/badge/contributing%20to-camptocamp%2Fogc--client-blue)
+
+> ⚙️ This fork is actively developing support for the **OGC API - Connected Systems** standard, with the goal of contributing back to [camptocamp/ogc-client](https://github.com/camptocamp/ogc-client).
+
 # ogc-client [![Latest version on NPM](https://img.shields.io/npm/v/%40camptocamp%2Fogc-client)](https://www.npmjs.com/package/@camptocamp/ogc-client) [![Latest @dev version on NPM](https://img.shields.io/npm/v/%40camptocamp%2Fogc-client/dev)](https://www.npmjs.com/package/@camptocamp/ogc-client?activeTab=versions)
 
 > A Typescript library for interacting with [OGC-compliant services](https://www.ogc.org/docs/is)
