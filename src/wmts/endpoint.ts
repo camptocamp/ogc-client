@@ -10,7 +10,7 @@ import {
   WmtsMatrixSet,
 } from './model.js';
 import { generateGetTileUrl } from './url.js';
-import type WMTSTileGrid from 'ol/tilegrid/WMTS';
+import type WMTSTileGrid from 'ol/tilegrid/WMTS.js';
 
 /**
  * Represents a WMTS endpoint advertising several layers.
