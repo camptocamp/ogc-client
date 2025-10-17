@@ -1,0 +1,26 @@
+export { default as OgcApiEndpoint } from '../ogc-api/endpoint.js';
+export { DataQueryTypes, CollectionParameterTypes } from '../ogc-api/model.js';
+export type {
+  ConformanceClass,
+  OgcApiEndpointInfo,
+  DataQueryType,
+  CollectionParameterType,
+  CollectionParameter,
+  EdrParameterInfo,
+  OgcApiCollectionInfo,
+  OgcApiDocumentLink,
+  OgcApiDocument,
+  OgcApiRecordContact,
+  OgcApiRecordLanguage,
+  OgcApiRecordProperties,
+  OgcApiRecord,
+  OgcApiCollectionItem,
+  TileMatrixSet,
+  StyleItem,
+  OgcStyleFull,
+  OgcStyleBrief,
+  OgcApiStylesDocument,
+  OgcApiStyleRecord,
+  OgcApiStylesheet,
+  OgcApiStyleMetadata,
+} from '../ogc-api/model.js';
