@@ -10,7 +10,7 @@ import {
   WmtsMatrixSet,
 } from './model.js';
 import { generateGetTileUrl } from './url.js';
-import type WMTSTileGrid from 'ol/tilegrid/WMTS';
+import type WMTSTileGrid from 'ol/tilegrid/WMTS.js';
 
 /**
  * Represents a WMTS endpoint advertising several layers.
@@ -181,7 +181,7 @@ export default class WmtsEndpoint {
     );
   }
 
-  private tileGridModule: Promise<typeof import('./ol-tilegrid')>;
+  private tileGridModule: Promise<typeof import('./ol-tilegrid.js')>;
 
   /**
    * Creates a WMTSTileGrid instance from the 'ol' package, for a given layer. Optionally, a matrix set
@@ -195,7 +195,7 @@ export default class WmtsEndpoint {
   ): Promise<WMTSTileGrid | null> {
     if (!this._layers) return null;
     if (!this.tileGridModule) {
-      this.tileGridModule = import('./ol-tilegrid').catch((e) => {
+      this.tileGridModule = import('./ol-tilegrid.js').catch((e) => {
         console.warn(
           `[ogc-client] Cannot use getOpenLayersTileGrid, the 'ol' package is probably not available.\n`,
           e

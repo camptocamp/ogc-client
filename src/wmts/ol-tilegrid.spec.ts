@@ -1,4 +1,4 @@
-import { createFromCapabilitiesMatrixSet } from 'ol/tilegrid/WMTS';
+import { createFromCapabilitiesMatrixSet } from 'ol/tilegrid/WMTS.js';
 import { buildOpenLayersTileGrid } from './ol-tilegrid.js';
 
 describe('buildOpenLayersTileGrid', () => {

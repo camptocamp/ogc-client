@@ -1,9 +1,9 @@
 import { MatrixSetLimit, WmtsMatrixSet } from './model.js';
 import WMTSTileGrid, {
   createFromCapabilitiesMatrixSet,
-} from 'ol/tilegrid/WMTS';
-import { get as getProjection } from 'ol/proj';
-import { fromEPSGCode, register } from 'ol/proj/proj4';
+} from 'ol/tilegrid/WMTS.js';
+import { get as getProjection } from 'ol/proj.js';
+import { fromEPSGCode, register } from 'ol/proj/proj4.js';
 import proj4 from 'proj4';
 
 register(proj4);
