@@ -21,6 +21,56 @@
       "import": "./dist/dist-node.js",
       "browser": "./dist/index.js",
       "default": "./dist/dist-node.js"
+    },
+    "./shared/cache": {
+      "types": "./dist/api/shared/cache.d.ts",
+      "import": "./dist/api/shared/cache.js",
+      "default": "./dist/api/shared/cache.js"
+    },
+    "./shared/errors": {
+      "types": "./dist/api/shared/errors.d.ts",
+      "import": "./dist/api/shared/errors.js",
+      "default": "./dist/api/shared/errors.js"
+    },
+    "./shared/http-utils": {
+      "types": "./dist/api/shared/http-utils.d.ts",
+      "import": "./dist/api/shared/http-utils.js",
+      "default": "./dist/api/shared/http-utils.js"
+    },
+    "./shared/models": {
+      "types": "./dist/api/shared/models.d.ts",
+      "import": "./dist/api/shared/models.js",
+      "default": "./dist/api/shared/models.js"
+    },
+    "./ogc-api": {
+      "types": "./dist/api/ogc-api.d.ts",
+      "import": "./dist/api/ogc-api.js",
+      "default": "./dist/api/ogc-api.js"
+    },
+    "./tms": {
+      "types": "./dist/api/tms.d.ts",
+      "import": "./dist/api/tms.js",
+      "default": "./dist/api/tms.js"
+    },
+    "./wfs": {
+      "types": "./dist/api/wfs.d.ts",
+      "import": "./dist/api/wfs.js",
+      "default": "./dist/api/wfs.js"
+    },
+    "./wms": {
+      "types": "./dist/api/wms.d.ts",
+      "import": "./dist/api/wms.js",
+      "default": "./dist/api/wms.js"
+    },
+    "./wmts": {
+      "types": "./dist/api/wmts.d.ts",
+      "import": "./dist/api/wmts.js",
+      "default": "./dist/api/wmts.js"
+    },
+    "./worker": {
+      "types": "./dist/api/worker.d.ts",
+      "import": "./dist/api/worker.js",
+      "default": "./dist/api/worker.js"
     }
   },
   "dependencies": {
