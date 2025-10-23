@@ -575,7 +575,7 @@ describe('WfsEndpoint', () => {
           outputFormat: 'application/gml+xml; version=3.2',
         })
       ).toEqual(
-        'https://www.pigma.org/geoserver/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&OUTPUTFORMAT=application%2Fgml%2Bxml%3B+version%3D3.2&COUNT=200'
+        'https://www.pigma.org/geoserver/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&OUTPUTFORMAT=application%2Fgml%2Bxml%3B%20version%3D3.2&COUNT=200'
       );
     });
     it('returns a GetFeature requesting geojson url for a given feature type', () => {

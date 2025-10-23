@@ -151,5 +151,7 @@ export function setQueryParams(
       params[key] === true ? '' : (params[key] as string)
     )
   );
+  // this makes sure that the request will work on GeoServer (some versions fail if there is a "+" in the encoded query params)
+  urlObj.search = urlObj.search.replace(/\+/g, '%20');
   return urlObj.toString();
 }
