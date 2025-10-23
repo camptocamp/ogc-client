@@ -219,6 +219,19 @@ describe('HTTP utils', () => {
         'http://bad.proxy/?url=https%3A%2F%2Fmy.host%2Fservice%3FARG2%3D45%26Arg3%3Dhello'
       );
     });
+    it('makes sure that spaces are encoded as %20', () => {
+      expect(
+        setQueryParams(
+          'https://my.host/service?arg1=old+value&something=else+entirely',
+          {
+            ARG1: 'new value',
+            'ARG 2': 'value with space',
+          }
+        )
+      ).toBe(
+        'https://my.host/service?something=else%20entirely&ARG1=new%20value&ARG%202=value%20with%20space'
+      );
+    });
   });
 
   describe('sharedFetch', () => {
