@@ -14,7 +14,7 @@ import {
 } from '../wfs/model.js';
 import { WmsLayerFull, WmsVersion } from '../wms/model.js';
 // @ts-expect-error TS2307
-// eslint-disable-next-line require-extensions/require-extensions
+// eslint-disable-next-line import/extensions
 import OgcClientWorker from './worker?worker&inline';
 
 let fallbackWithoutWorker = false;

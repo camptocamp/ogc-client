@@ -7,6 +7,7 @@ import {
   parseBaseCollectionInfo,
   parseBasicStyleInfo,
   parseCollectionParameters,
+  parseCollections,
   parseConformance,
   parseEndpointInfo,
   parseFullStyleInfo,
@@ -45,8 +46,7 @@ import {
   isMimeTypeJson,
   isMimeTypeJsonFg,
 } from '../shared/mime-type.js';
-import { getChildPath, getBaseUrl } from '../shared/url-utils.js';
-import { parseCollections } from './info.js';
+import { getBaseUrl, getChildPath } from '../shared/url-utils.js';
 import EDRQueryBuilder from './edr/url_builder.js';
 
 /**
