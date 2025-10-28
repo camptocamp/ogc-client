@@ -14,6 +14,7 @@ The following standards are partially implemented:
 - WMTS - _Web Map Tile Service_
 - OGC API (Records and Features)
 - TMS - _Tile Map Service_
+- STAC API - _SpatioTemporal Asset Catalog_
 
 ## Why use it?
 
@@ -35,7 +36,7 @@ $ npm install --save @camptocamp/ogc-client
 To use, import API symbols like so:
 
 ```js
-import { WmsEndpoint, WfsEndpoint } from '@camptocamp/ogc-client';
+import { WmsEndpoint, WfsEndpoint, StacEndpoint } from '@camptocamp/ogc-client';
 ```
 
 Note: if you want to disable web worker usage, for example to solve issues with the `Referer` header on outgoing
@@ -71,3 +72,18 @@ $ npm start
 
 The app is based on [Vue.js](https://vuejs.org/) and will showcase most features implemented in the library.
 You will need to supply it with valid OGC service urls.
+
+## Quick Examples
+
+### STAC API
+
+See the [`examples/`](./examples/) directory for more complete examples, including:
+
+- `examples/stac-query.js` - Full STAC API query example with spatial and temporal filters
+
+Run examples with:
+
+```bash
+npm run build
+node examples/stac-query.js
+```

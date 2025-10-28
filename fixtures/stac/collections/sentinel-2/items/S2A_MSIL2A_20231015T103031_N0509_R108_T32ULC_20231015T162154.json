@@ -1,0 +1,73 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [],
+  "type": "Feature",
+  "id": "S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154",
+  "bbox": [5.0, 45.0, 6.0, 46.0],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [5.0, 45.0],
+        [6.0, 45.0],
+        [6.0, 46.0],
+        [5.0, 46.0],
+        [5.0, 45.0]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2023-10-15T10:30:31Z",
+    "platform": "sentinel-2a",
+    "constellation": "sentinel-2",
+    "instruments": ["msi"],
+    "gsd": 10,
+    "created": "2023-10-15T16:21:54Z",
+    "updated": "2023-10-15T16:21:54Z"
+  },
+  "collection": "sentinel-2",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/geo+json",
+      "href": "http://local/stac-api/collections/sentinel-2/items/S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154"
+    },
+    {
+      "rel": "parent",
+      "type": "application/json",
+      "href": "http://local/stac-api/collections/sentinel-2"
+    },
+    {
+      "rel": "collection",
+      "type": "application/json",
+      "href": "http://local/stac-api/collections/sentinel-2"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "http://local/stac-api/"
+    }
+  ],
+  "assets": {
+    "thumbnail": {
+      "href": "https://example.com/sentinel-2/S2A_MSIL2A_20231015/thumbnail.jpg",
+      "type": "image/jpeg",
+      "title": "Thumbnail",
+      "roles": ["thumbnail"]
+    },
+    "B04": {
+      "href": "https://example.com/sentinel-2/S2A_MSIL2A_20231015/B04.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Band 4 (Red)",
+      "roles": ["data"],
+      "gsd": 10
+    },
+    "B08": {
+      "href": "https://example.com/sentinel-2/S2A_MSIL2A_20231015/B08.tif",
+      "type": "image/tiff; application=geotiff",
+      "title": "Band 8 (NIR)",
+      "roles": ["data"],
+      "gsd": 10
+    }
+  }
+}
