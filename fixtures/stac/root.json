@@ -1,0 +1,51 @@
+{
+  "stac_version": "1.0.0",
+  "type": "Catalog",
+  "id": "test-stac-api",
+  "title": "Test STAC API",
+  "description": "A test STAC API for unit testing",
+  "conformsTo": [
+    "https://api.stacspec.org/v1.0.0/core",
+    "https://api.stacspec.org/v1.0.0/collections",
+    "https://api.stacspec.org/v1.0.0/ogcapi-features",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/geojson"
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "href": "http://local/stac-api/"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "http://local/stac-api/"
+    },
+    {
+      "rel": "conformance",
+      "type": "application/json",
+      "href": "http://local/stac-api/conformance"
+    },
+    {
+      "rel": "data",
+      "type": "application/json",
+      "href": "http://local/stac-api/collections"
+    },
+    {
+      "rel": "collections",
+      "type": "application/json",
+      "href": "http://local/stac-api/collections"
+    },
+    {
+      "rel": "service-desc",
+      "type": "application/vnd.oai.openapi+json;version=3.0",
+      "href": "http://local/stac-api/api"
+    },
+    {
+      "rel": "service-doc",
+      "type": "text/html",
+      "href": "http://local/stac-api/api.html"
+    }
+  ]
+}
