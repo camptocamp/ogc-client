@@ -10,9 +10,13 @@
 import { StacEndpoint } from '../dist/dist-node.js';
 
 // STAC API base URL
-const STAC_API_URL = 'https://api.stac.teledetection.fr';
+const STAC_API_URLS = [
+  'https://api.stac.teledetection.fr',
+  'https://catalog.maap.eo.esa.int/catalogue',
+  'https://stac.dataspace.copernicus.eu/v1/'
+];
 
-async function main() {
+async function main(STAC_API_URL) {
   try {
     console.log('╔═══════════════════════════════════════════════════════╗');
     console.log('║         STAC API Query Example                        ║');
@@ -50,9 +54,12 @@ async function main() {
     }
     console.log('');
 
-    // Get detailed information about the first collection
+    // Get detailed information about a collection that has proper STAC items
+    // Use AeolusL0ProductsB16 if available, otherwise fall back to first collection
     if (collections.length > 0) {
-      const collectionId = collections[0];
+      const collectionId = collections.includes('AeolusL0ProductsB16')
+        ? 'AeolusL0ProductsB16'
+        : collections[0];
       console.log(`3️⃣  Getting details for collection: "${collectionId}"...`);
       const collection = await stac.getCollection(collectionId);
 
@@ -184,10 +191,10 @@ async function main() {
         // Optionally expand the bbox slightly to potentially capture nearby items
         const expansion = 0.5; // degrees
         filterBbox = [
-          itemBbox[0] - expansion,
-          itemBbox[1] - expansion,
-          itemBbox[2] + expansion,
-          itemBbox[3] + expansion,
+          itemBbox[0] - expansion, // minX (longitude)
+          itemBbox[1] - expansion,  // minY (latitude)
+          itemBbox[2] + expansion,  // maxX (longitude)
+          itemBbox[3] + expansion,   // maxY (latitude)
         ];
 
         console.log(
@@ -312,4 +319,6 @@ async function main() {
 }
 
 // Run the example
-main();
+for (const STAC_API_URL of STAC_API_URLS) {
+  await main(STAC_API_URL);
+}

@@ -1,6 +1,7 @@
 import {
   fetchStacDocument,
   fetchLink,
+  getLinks,
   getLinkUrl,
   StacDocument,
 } from './link-utils.js';
@@ -21,6 +22,7 @@ import {
 import { StacCatalog, StacCollection, StacItem } from './model.js';
 import { EndpointError } from '../shared/errors.js';
 import { BoundingBox, DateTimeParameter } from '../shared/models.js';
+import { clampBoundingBox } from '../shared/bbox-utils.js';
 import { getBaseUrl } from '../shared/url-utils.js';
 
 /**
@@ -250,8 +252,19 @@ export default class StacEndpoint {
     collectionId: string,
     options: GetCollectionItemsOptions = {}
   ): Promise<StacItemsDocument> {
+    const collection = await this.getCollection(collectionId);
+    const itemsLinks = getLinks(
+      collection as unknown as StacDocument,
+      'items'
+    );
+    const itemsLink = itemsLinks[0];
+
     const url = await this.getCollectionItemsUrl(collectionId, options);
-    const itemsDoc = await fetchStacDocument<StacItemsDocument>(url);
+
+    // Use the link's type field as Accept header if available
+    // This ensures we get STAC items instead of plain GeoJSON
+    const acceptType = itemsLink?.type;
+    const itemsDoc = await fetchStacDocument<StacItemsDocument>(url, acceptType);
 
     if (!itemsDoc.features || !Array.isArray(itemsDoc.features)) {
       throw new EndpointError('Items response does not contain features array');
@@ -276,6 +289,12 @@ export default class StacEndpoint {
     itemId: string
   ): Promise<StacItem> {
     const collection = await this.getCollection(collectionId);
+    const itemsLinks = getLinks(
+      collection as unknown as StacDocument,
+      'items'
+    );
+    const itemsLink = itemsLinks[0];
+
     const itemsUrl = getLinkUrl(
       collection as unknown as StacDocument,
       'items',
@@ -287,8 +306,17 @@ export default class StacEndpoint {
       );
     }
 
-    const itemUrl = new URL(itemId, itemsUrl + '/').toString();
-    const itemDoc = await fetchStacDocument(itemUrl);
+    // Parse the items URL to preserve query parameters (like httpAccept)
+    const itemUrl = new URL(itemsUrl);
+    // Append the itemId to the path, preserving query params
+    if (!itemUrl.pathname.endsWith('/')) {
+      itemUrl.pathname += '/';
+    }
+    itemUrl.pathname += itemId;
+
+    // Use the link's type field as Accept header if available
+    const acceptType = itemsLink?.type;
+    const itemDoc = await fetchStacDocument(itemUrl.toString(), acceptType);
     return parseStacItem(itemDoc);
   }
 
@@ -316,17 +344,20 @@ export default class StacEndpoint {
 
     const url = new URL(itemsUrl, getBaseUrl());
 
-    // Add query parameters
-    if (options.limit !== undefined) {
+    // Add query parameters only if not already present in the link
+    // This preserves server-specific parameters (like httpAccept) from the link
+    if (options.limit !== undefined && !url.searchParams.has('limit')) {
       url.searchParams.set('limit', options.limit.toString());
     }
-    if (options.offset !== undefined) {
+    if (options.offset !== undefined && !url.searchParams.has('offset')) {
       url.searchParams.set('offset', options.offset.toString());
     }
-    if (options.bbox && options.bbox.length === 4) {
-      url.searchParams.set('bbox', options.bbox.join(','));
+    if (options.bbox && options.bbox.length === 4 && !url.searchParams.has('bbox')) {
+      // Clamp bbox to valid WGS84 bounds to prevent server validation errors
+      const clampedBbox = clampBoundingBox(options.bbox);
+      url.searchParams.set('bbox', clampedBbox.join(','));
     }
-    if (options.datetime !== undefined) {
+    if (options.datetime !== undefined && !url.searchParams.has('datetime')) {
       const dateTime = options.datetime;
       url.searchParams.set(
         'datetime',
