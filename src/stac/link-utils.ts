@@ -4,13 +4,14 @@
  */
 
 import {
-  fetchDocument as ogcFetchDocument,
   fetchRoot as ogcFetchRoot,
   getLinks as ogcGetLinks,
   getLinkUrl as ogcGetLinkUrl,
 } from '../ogc-api/link-utils.js';
 import { OgcApiDocumentLink } from '../ogc-api/model.js';
 import { EndpointError } from '../shared/errors.js';
+import { sharedFetch } from '../shared/http-utils.js';
+import { getBaseUrl } from '../shared/url-utils.js';
 
 /**
  * STAC Document type - base interface for all STAC documents
@@ -31,12 +32,36 @@ export interface StacDocument {
 
 /**
  * Fetches a STAC document from a URL and returns it as JSON
- * STAC API uses the same document structure as OGC API
+ * Note: Does not add f=json parameter as it's not compatible with STAC items endpoints
+ * Uses standard JSON Accept headers or custom Accept type from links
+ * @param url The URL to fetch
+ * @param acceptType Optional Accept header value (from link type field)
  */
 export function fetchStacDocument<T extends StacDocument>(
-  url: string
+  url: string,
+  acceptType?: string
 ): Promise<T> {
-  return ogcFetchDocument(url) as Promise<T>;
+  const urlObj = new URL(url, getBaseUrl());
+  // Don't add f=json parameter - STAC items endpoints reject it
+  // Use custom Accept header if provided (from link type), otherwise standard JSON
+  return sharedFetch(
+    urlObj.toString(),
+    'GET',
+    acceptType ? false : true,
+    acceptType
+  ).then((resp) => {
+    if (!resp.ok) {
+      throw new Error(`The document at ${urlObj} could not be fetched.`);
+    }
+    return resp
+      .clone()
+      .json()
+      .catch((e) => {
+        throw new Error(
+          `The document at ${urlObj} does not appear to be valid JSON. Error was: ${e.message}`
+        );
+      }) as Promise<T>;
+  });
 }
 
 /**
