@@ -13,7 +13,7 @@ import { StacEndpoint } from '../dist/dist-node.js';
 const STAC_API_URLS = [
   'https://api.stac.teledetection.fr',
   'https://catalog.maap.eo.esa.int/catalogue',
-  'https://stac.dataspace.copernicus.eu/v1/'
+  'https://stac.dataspace.copernicus.eu/v1/',
 ];
 
 async function main(STAC_API_URL) {
@@ -192,9 +192,9 @@ async function main(STAC_API_URL) {
         const expansion = 0.5; // degrees
         filterBbox = [
           itemBbox[0] - expansion, // minX (longitude)
-          itemBbox[1] - expansion,  // minY (latitude)
-          itemBbox[2] + expansion,  // maxX (longitude)
-          itemBbox[3] + expansion,   // maxY (latitude)
+          itemBbox[1] - expansion, // minY (latitude)
+          itemBbox[2] + expansion, // maxX (longitude)
+          itemBbox[3] + expansion, // maxY (latitude)
         ];
 
         console.log(
@@ -304,6 +304,58 @@ async function main(STAC_API_URL) {
         datetime: { start: startDate },
       });
       console.log(`   URL: ${customUrl}`);
+      console.log('');
+
+      // Demonstrate static factory methods for direct URL access
+      console.log(`9️⃣  Demonstrating static factory methods...`);
+      console.log(
+        '   These methods allow loading STAC resources directly from URLs\n'
+      );
+
+      // Method 1: fromCollectionUrl - load collection directly
+      const collectionUrl = `${STAC_API_URL}/collections/${collectionId}`;
+      console.log(`   a) Loading collection from direct URL:`);
+      console.log(`      URL: ${collectionUrl}`);
+      const directCollection = await StacEndpoint.fromCollectionUrl(
+        collectionUrl
+      );
+      console.log(`      ✓ Loaded: ${directCollection.title}`);
+      console.log('');
+
+      // Method 2: fromItemUrl - load item directly
+      if (items.length > 0) {
+        const itemUrl = `${STAC_API_URL}/collections/${collectionId}/items/${items[0].id}`;
+        console.log(`   b) Loading item from direct URL:`);
+        console.log(`      URL: ${itemUrl.substring(0, 80)}...`);
+        const directItem = await StacEndpoint.fromItemUrl(itemUrl);
+        console.log(`      ✓ Loaded: ${directItem.id}`);
+        console.log(`      Date: ${directItem.properties.datetime || 'N/A'}`);
+        console.log('');
+      }
+
+      // Method 3: fromUrl - auto-detect resource type
+      console.log(`   c) Auto-detecting resource types with fromUrl:`);
+
+      // Test with collection URL
+      const autoCollection = await StacEndpoint.fromUrl(collectionUrl);
+      console.log(`      • Collection URL → Type: ${autoCollection.type}`);
+      console.log(`        Title: ${autoCollection.data.title}`);
+
+      // Test with root/catalog URL
+      const autoCatalog = await StacEndpoint.fromUrl(STAC_API_URL);
+      console.log(`      • Root/Catalog URL → Type: ${autoCatalog.type}`);
+      console.log(
+        `        Title: ${autoCatalog.data.title || autoCatalog.data.id}`
+      );
+
+      // Test with item URL if available
+      if (items.length > 0) {
+        const itemUrl = `${STAC_API_URL}/collections/${collectionId}/items/${items[0].id}`;
+        const autoItem = await StacEndpoint.fromUrl(itemUrl);
+        console.log(`      • Item URL → Type: ${autoItem.type}`);
+        console.log(`        ID: ${autoItem.data.id}`);
+      }
+
       console.log('');
     }
 

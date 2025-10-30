@@ -126,6 +126,70 @@ export default class StacEndpoint {
   constructor(private baseUrl: string) {}
 
   /**
+   * Creates a StacCollection from a direct collection URL
+   * @param url Direct URL to a STAC collection document
+   * @returns Promise resolving to StacCollection
+   * @example
+   * const collection = await StacEndpoint.fromCollectionUrl(
+   *   'https://stac.example.com/collections/sentinel-2'
+   * );
+   */
+  static async fromCollectionUrl(url: string): Promise<StacCollection> {
+    const doc = await fetchStacDocument<StacDocument>(url);
+    return parseStacCollection(doc);
+  }
+
+  /**
+   * Creates a StacItem from a direct item URL
+   * @param url Direct URL to a STAC item document
+   * @returns Promise resolving to StacItem
+   * @example
+   * const item = await StacEndpoint.fromItemUrl(
+   *   'https://stac.example.com/collections/sentinel-2/items/S2A_MSIL2A_...'
+   * );
+   */
+  static async fromItemUrl(url: string): Promise<StacItem> {
+    const doc = await fetchStacDocument<StacDocument>(url);
+    return parseStacItem(doc);
+  }
+
+  /**
+   * Fetches and auto-detects a STAC resource from any URL
+   * Automatically detects whether the URL points to a Catalog, Collection, or Item
+   * @param url Direct URL to any STAC document
+   * @returns Promise resolving to typed resource with discriminator
+   * @example
+   * const resource = await StacEndpoint.fromUrl(url);
+   * if (resource.type === 'Collection') {
+   *   console.log('Collection:', resource.data.title);
+   * } else if (resource.type === 'Feature') {
+   *   console.log('Item:', resource.data.id);
+   * }
+   */
+  static async fromUrl(
+    url: string
+  ): Promise<
+    | { type: 'Catalog'; data: StacCatalog }
+    | { type: 'Collection'; data: StacCollection }
+    | { type: 'Feature'; data: StacItem }
+  > {
+    const doc = await fetchStacDocument<StacDocument>(url);
+
+    // STAC documents self-identify via 'type' field
+    if (doc.type === 'Collection') {
+      return { type: 'Collection', data: parseStacCollection(doc) };
+    } else if (doc.type === 'Feature') {
+      return { type: 'Feature', data: parseStacItem(doc) };
+    } else if (doc.type === 'Catalog') {
+      return { type: 'Catalog', data: parseStacCatalog(doc) };
+    } else {
+      throw new EndpointError(
+        `Unknown STAC document type: ${doc.type}. Expected 'Catalog', 'Collection', or 'Feature'.`
+      );
+    }
+  }
+
+  /**
    * Returns endpoint information from the landing page
    */
   get info(): Promise<StacEndpointInfo> {
@@ -253,10 +317,7 @@ export default class StacEndpoint {
     options: GetCollectionItemsOptions = {}
   ): Promise<StacItemsDocument> {
     const collection = await this.getCollection(collectionId);
-    const itemsLinks = getLinks(
-      collection as unknown as StacDocument,
-      'items'
-    );
+    const itemsLinks = getLinks(collection as unknown as StacDocument, 'items');
     const itemsLink = itemsLinks[0];
 
     const url = await this.getCollectionItemsUrl(collectionId, options);
@@ -264,7 +325,10 @@ export default class StacEndpoint {
     // Use the link's type field as Accept header if available
     // This ensures we get STAC items instead of plain GeoJSON
     const acceptType = itemsLink?.type;
-    const itemsDoc = await fetchStacDocument<StacItemsDocument>(url, acceptType);
+    const itemsDoc = await fetchStacDocument<StacItemsDocument>(
+      url,
+      acceptType
+    );
 
     if (!itemsDoc.features || !Array.isArray(itemsDoc.features)) {
       throw new EndpointError('Items response does not contain features array');
@@ -289,10 +353,7 @@ export default class StacEndpoint {
     itemId: string
   ): Promise<StacItem> {
     const collection = await this.getCollection(collectionId);
-    const itemsLinks = getLinks(
-      collection as unknown as StacDocument,
-      'items'
-    );
+    const itemsLinks = getLinks(collection as unknown as StacDocument, 'items');
     const itemsLink = itemsLinks[0];
 
     const itemsUrl = getLinkUrl(
@@ -352,7 +413,11 @@ export default class StacEndpoint {
     if (options.offset !== undefined && !url.searchParams.has('offset')) {
       url.searchParams.set('offset', options.offset.toString());
     }
-    if (options.bbox && options.bbox.length === 4 && !url.searchParams.has('bbox')) {
+    if (
+      options.bbox &&
+      options.bbox.length === 4 &&
+      !url.searchParams.has('bbox')
+    ) {
       // Clamp bbox to valid WGS84 bounds to prevent server validation errors
       const clampedBbox = clampBoundingBox(options.bbox);
       url.searchParams.set('bbox', clampedBbox.join(','));
