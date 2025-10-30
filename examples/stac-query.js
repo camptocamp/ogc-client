@@ -139,13 +139,15 @@ async function main(STAC_API_URL) {
           console.log(`      GSD: ${item.properties.gsd}m`);
         }
 
-        const assetCount = Object.keys(item.assets).length;
-        const assetKeys = Object.keys(item.assets).slice(0, 3).join(', ');
-        console.log(
-          `      Assets: ${assetCount} (${assetKeys}${
-            assetCount > 3 ? '...' : ''
-          })`
-        );
+        if (item.assets) {
+          const assetCount = Object.keys(item.assets).length;
+          const assetKeys = Object.keys(item.assets).slice(0, 3).join(', ');
+          console.log(
+            `      Assets: ${assetCount} (${assetKeys}${
+              assetCount > 3 ? '...' : ''
+            })`
+          );
+        }
         console.log('');
       });
 
@@ -282,17 +284,23 @@ async function main(STAC_API_URL) {
         console.log(`   Geometry Type: ${singleItem.geometry?.type || 'null'}`);
 
         // Show asset details
-        console.log(`\n   Assets (${Object.keys(singleItem.assets).length}):`);
-        Object.entries(singleItem.assets)
-          .slice(0, 5)
-          .forEach(([key, asset]) => {
-            console.log(`     • ${key}:`);
-            console.log(`       Type: ${asset.type || 'N/A'}`);
-            console.log(`       Roles: ${asset.roles?.join(', ') || 'N/A'}`);
-            if (asset.title) {
-              console.log(`       Title: ${asset.title}`);
-            }
-          });
+        if (singleItem.assets) {
+          console.log(
+            `\n   Assets (${Object.keys(singleItem.assets).length}):`
+          );
+          Object.entries(singleItem.assets)
+            .slice(0, 5)
+            .forEach(([key, asset]) => {
+              console.log(`     • ${key}:`);
+              console.log(`       Type: ${asset.type || 'N/A'}`);
+              console.log(`       Roles: ${asset.roles?.join(', ') || 'N/A'}`);
+              if (asset.title) {
+                console.log(`       Title: ${asset.title}`);
+              }
+            });
+        } else {
+          console.log(`\n   No assets available`);
+        }
         console.log('');
       }
 

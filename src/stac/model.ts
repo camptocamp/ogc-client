@@ -281,9 +281,9 @@ export interface StacItemProperties extends Partial<CommonMetadata> {
  */
 export interface StacItem extends Feature {
   /**
-   * STAC version
+   * STAC version (optional - may be inherited from collection/API level)
    */
-  stac_version: StacVersion;
+  stac_version?: StacVersion;
   /**
    * List of extension identifiers
    */
@@ -313,9 +313,9 @@ export interface StacItem extends Feature {
    */
   links: StacLink[];
   /**
-   * Dictionary of asset objects
+   * Dictionary of asset objects (optional - some APIs may omit)
    */
-  assets: Record<string, StacAsset>;
+  assets?: Record<string, StacAsset>;
   /**
    * Collection ID (required if a "collection" link exists)
    */

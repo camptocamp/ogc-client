@@ -146,9 +146,8 @@ export function parseStacCollection(doc: StacDocument): StacCollection {
  * @returns StacItem object
  */
 export function parseStacItem(doc: StacDocument): StacItem {
-  if (!doc.stac_version) {
-    throw new EndpointError('Item document is missing "stac_version" field');
-  }
+  // Note: stac_version is optional - many real-world STAC APIs omit it
+  // since the version is inherited from the collection/API level
   if (doc.type !== 'Feature') {
     throw new EndpointError(`Expected type "Feature" but got "${doc.type}"`);
   }
@@ -161,9 +160,7 @@ export function parseStacItem(doc: StacDocument): StacItem {
   if (!doc.links || !Array.isArray(doc.links)) {
     throw new EndpointError('Item document is missing "links" array');
   }
-  if (!doc.assets) {
-    throw new EndpointError('Item document is missing "assets" object');
-  }
+  // Note: assets is optional - some APIs may omit it
 
   // After validation, we know the document has the correct structure
   return doc as unknown as StacItem;
