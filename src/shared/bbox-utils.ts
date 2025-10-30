@@ -9,8 +9,8 @@ import { BoundingBox } from './models.js';
 export function clampBoundingBox(bbox: BoundingBox): BoundingBox {
   return [
     Math.max(-180, Math.min(180, bbox[0])), // minX (longitude)
-    Math.max(-90, Math.min(90, bbox[1])),   // minY (latitude)
+    Math.max(-90, Math.min(90, bbox[1])), // minY (latitude)
     Math.max(-180, Math.min(180, bbox[2])), // maxX (longitude)
-    Math.max(-90, Math.min(90, bbox[3])),   // maxY (latitude)
+    Math.max(-90, Math.min(90, bbox[3])), // maxY (latitude)
   ];
 }

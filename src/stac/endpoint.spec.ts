@@ -400,6 +400,114 @@ describe('StacEndpoint', () => {
     });
   });
 
+  describe('static factory methods', () => {
+    describe('fromCollectionUrl', () => {
+      it('creates StacCollection from direct URL', async () => {
+        const collection = await StacEndpoint.fromCollectionUrl(
+          'http://local/stac-api/collections/sentinel-2'
+        );
+
+        expect(collection).toMatchObject({
+          stac_version: '1.0.0',
+          type: 'Collection',
+          id: 'sentinel-2',
+          title: 'Sentinel-2 L2A',
+          description: 'Sentinel-2 Level-2A (L2A) Bottom-Of-Atmosphere product',
+          license: 'proprietary',
+        });
+        expect(collection.extent).toBeDefined();
+        expect(collection.providers).toBeDefined();
+      });
+    });
+
+    describe('fromItemUrl', () => {
+      it('creates StacItem from direct URL', async () => {
+        const item = await StacEndpoint.fromItemUrl(
+          'http://local/stac-api/collections/sentinel-2/items/S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154'
+        );
+
+        expect(item).toMatchObject({
+          stac_version: '1.0.0',
+          type: 'Feature',
+          id: 'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154',
+          collection: 'sentinel-2',
+        });
+        expect(item.properties).toBeDefined();
+        expect(item.properties.datetime).toBe('2023-10-15T10:30:31Z');
+        expect(item.geometry).toBeDefined();
+        expect(item.assets).toBeDefined();
+      });
+    });
+
+    describe('fromUrl', () => {
+      it('auto-detects and returns Catalog', async () => {
+        const result = await StacEndpoint.fromUrl('http://local/stac-api/');
+
+        expect(result.type).toBe('Catalog');
+        expect(result.data).toMatchObject({
+          stac_version: '1.0.0',
+          type: 'Catalog',
+          id: 'test-stac-api',
+          title: 'Test STAC API',
+        });
+      });
+
+      it('auto-detects and returns Collection', async () => {
+        const result = await StacEndpoint.fromUrl(
+          'http://local/stac-api/collections/sentinel-2'
+        );
+
+        expect(result.type).toBe('Collection');
+        expect(result.data).toMatchObject({
+          stac_version: '1.0.0',
+          type: 'Collection',
+          id: 'sentinel-2',
+          title: 'Sentinel-2 L2A',
+        });
+      });
+
+      it('auto-detects and returns Feature (Item)', async () => {
+        const result = await StacEndpoint.fromUrl(
+          'http://local/stac-api/collections/sentinel-2/items/S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154'
+        );
+
+        expect(result.type).toBe('Feature');
+        expect(result.data).toMatchObject({
+          stac_version: '1.0.0',
+          type: 'Feature',
+          id: 'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154',
+          collection: 'sentinel-2',
+        });
+      });
+
+      it('throws error for unknown document type', async () => {
+        // Mock a document with unknown type
+        const originalFetch = globalThis.fetch;
+        const mockResponse = {
+          ok: true,
+          clone: function () {
+            return this;
+          },
+          json: () =>
+            Promise.resolve({
+              type: 'UnknownType',
+              id: 'test',
+            }),
+        };
+        globalThis.fetch = jest.fn().mockResolvedValue(mockResponse);
+
+        await expect(
+          StacEndpoint.fromUrl('http://example.com/unknown')
+        ).rejects.toThrow(EndpointError);
+        await expect(
+          StacEndpoint.fromUrl('http://example.com/unknown')
+        ).rejects.toThrow('Unknown STAC document type: UnknownType');
+
+        globalThis.fetch = originalFetch;
+      });
+    });
+  });
+
   describe('error cases', () => {
     it('throws error when endpoint is not accessible', async () => {
       const badEndpoint = new StacEndpoint('http://local/non-existent/');
