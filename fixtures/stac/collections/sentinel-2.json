@@ -1,0 +1,64 @@
+{
+  "stac_version": "1.0.0",
+  "type": "Collection",
+  "id": "sentinel-2",
+  "title": "Sentinel-2 L2A",
+  "description": "Sentinel-2 Level-2A (L2A) Bottom-Of-Atmosphere product",
+  "keywords": ["sentinel", "earth observation", "esa"],
+  "license": "proprietary",
+  "providers": [
+    {
+      "name": "ESA",
+      "roles": ["producer"],
+      "url": "https://earth.esa.int"
+    }
+  ],
+  "extent": {
+    "spatial": {
+      "bbox": [[-180, -90, 180, 90]]
+    },
+    "temporal": {
+      "interval": [["2015-06-27T00:00:00Z", null]]
+    }
+  },
+  "summaries": {
+    "gsd": [10, 20, 60],
+    "platform": ["sentinel-2a", "sentinel-2b"],
+    "constellation": ["sentinel-2"],
+    "instruments": ["msi"]
+  },
+  "assets": {
+    "thumbnail": {
+      "href": "https://example.com/sentinel-2/thumbnail.png",
+      "type": "image/png",
+      "title": "Thumbnail",
+      "roles": ["thumbnail"]
+    }
+  },
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "href": "http://local/stac-api/collections/sentinel-2"
+    },
+    {
+      "rel": "items",
+      "type": "application/geo+json",
+      "href": "http://local/stac-api/collections/sentinel-2/items"
+    },
+    {
+      "rel": "parent",
+      "type": "application/json",
+      "href": "http://local/stac-api/"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "http://local/stac-api/"
+    },
+    {
+      "rel": "license",
+      "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice"
+    }
+  ]
+}
