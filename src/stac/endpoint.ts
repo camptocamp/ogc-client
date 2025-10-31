@@ -126,6 +126,42 @@ export default class StacEndpoint {
   constructor(private baseUrl: string) {}
 
   /**
+   * Private helper to apply filter options to a URL
+   * Standard filtering parameters (limit, offset, bbox, datetime, query) are always set
+   * since they are client-controlled, not server-specific
+   */
+  private static applyFilterOptions(
+    url: URL,
+    options: GetCollectionItemsOptions
+  ): void {
+    if (options.limit !== undefined) {
+      url.searchParams.set('limit', options.limit.toString());
+    }
+    if (options.offset !== undefined) {
+      url.searchParams.set('offset', options.offset.toString());
+    }
+    if (options.bbox && options.bbox.length === 4) {
+      // Clamp bbox to valid WGS84 bounds to prevent server validation errors
+      const clampedBbox = clampBoundingBox(options.bbox);
+      url.searchParams.set('bbox', clampedBbox.join(','));
+    }
+    if (options.datetime !== undefined) {
+      const dateTime = options.datetime;
+      url.searchParams.set(
+        'datetime',
+        dateTime instanceof Date
+          ? dateTime.toISOString()
+          : `${'start' in dateTime ? dateTime.start.toISOString() : '..'}/${
+              'end' in dateTime ? dateTime.end.toISOString() : '..'
+            }`
+      );
+    }
+    if (options.query) {
+      url.search += (url.search ? '&' : '') + encodeURI(options.query);
+    }
+  }
+
+  /**
    * Creates a StacCollection from a direct collection URL
    * @param url Direct URL to a STAC collection document
    * @returns Promise resolving to StacCollection
@@ -187,6 +223,98 @@ export default class StacEndpoint {
         `Unknown STAC document type: ${doc.type}. Expected 'Catalog', 'Collection', or 'Feature'.`
       );
     }
+  }
+
+  /**
+   * Queries items from a collection object with optional filtering
+   * @param collection StacCollection object
+   * @param options Query options (limit, bbox, datetime, etc.)
+   * @returns Promise resolving to StacItemsDocument with features and pagination links
+   * @example
+   * const collection = await StacEndpoint.fromCollectionUrl(url);
+   * const response = await StacEndpoint.getItemsFromCollection(collection, {
+   *   bbox: [5, 45, 6, 46],
+   *   limit: 10
+   * });
+   * console.log(response.features); // Array of items
+   * console.log(response.links); // Pagination links
+   */
+  static async getItemsFromCollection(
+    collection: StacCollection,
+    options: GetCollectionItemsOptions = {}
+  ): Promise<StacItemsDocument> {
+    // Get items link from collection
+    const itemsLinks = getLinks(collection as unknown as StacDocument, 'items');
+    if (!itemsLinks || itemsLinks.length === 0) {
+      throw new EndpointError(
+        `Collection ${collection.id} does not have an items link`
+      );
+    }
+
+    const itemsLink = itemsLinks[0];
+    const itemsUrl = itemsLink.href;
+    if (!itemsUrl) {
+      throw new EndpointError(
+        `Collection ${collection.id} items link is missing href`
+      );
+    }
+
+    // Build URL with query parameters
+    const url = new URL(itemsUrl, getBaseUrl());
+    StacEndpoint.applyFilterOptions(url, options);
+
+    // Use the link's type field as Accept header if available
+    const acceptType = itemsLink?.type;
+    const itemsDoc = await fetchStacDocument<StacItemsDocument>(
+      url.toString(),
+      acceptType
+    );
+
+    if (!itemsDoc.features || !Array.isArray(itemsDoc.features)) {
+      throw new EndpointError('Items response does not contain features array');
+    }
+
+    // Parse features in place
+    itemsDoc.features = itemsDoc.features.map((item) =>
+      parseStacItem(item as unknown as StacDocument)
+    );
+
+    return itemsDoc;
+  }
+
+  /**
+   * Queries items from a collection items URL with optional filtering
+   * Applies filters directly to the provided items endpoint URL
+   * @param itemsUrl Direct URL to a STAC collection items endpoint
+   * @param options Query options (limit, bbox, datetime, etc.)
+   * @returns Promise resolving to StacItemsDocument with features and pagination links
+   * @example
+   * const response = await StacEndpoint.getItemsFromUrl(
+   *   'https://stac.example.com/collections/sentinel-2/items',
+   *   { bbox: [5, 45, 6, 46], limit: 10 }
+   * );
+   * console.log(response.features); // Array of items
+   * console.log(response.links); // Pagination links
+   */
+  static async getItemsFromUrl(
+    itemsUrl: string,
+    options: GetCollectionItemsOptions = {}
+  ): Promise<StacItemsDocument> {
+    const url = new URL(itemsUrl, getBaseUrl());
+    StacEndpoint.applyFilterOptions(url, options);
+
+    const itemsDoc = await fetchStacDocument<StacItemsDocument>(url.toString());
+
+    if (!itemsDoc.features || !Array.isArray(itemsDoc.features)) {
+      throw new EndpointError('Items response does not contain features array');
+    }
+
+    // Parse features in place
+    itemsDoc.features = itemsDoc.features.map((item) =>
+      parseStacItem(item as unknown as StacDocument)
+    );
+
+    return itemsDoc;
   }
 
   /**
@@ -404,39 +532,7 @@ export default class StacEndpoint {
     }
 
     const url = new URL(itemsUrl, getBaseUrl());
-
-    // Add query parameters only if not already present in the link
-    // This preserves server-specific parameters (like httpAccept) from the link
-    if (options.limit !== undefined && !url.searchParams.has('limit')) {
-      url.searchParams.set('limit', options.limit.toString());
-    }
-    if (options.offset !== undefined && !url.searchParams.has('offset')) {
-      url.searchParams.set('offset', options.offset.toString());
-    }
-    if (
-      options.bbox &&
-      options.bbox.length === 4 &&
-      !url.searchParams.has('bbox')
-    ) {
-      // Clamp bbox to valid WGS84 bounds to prevent server validation errors
-      const clampedBbox = clampBoundingBox(options.bbox);
-      url.searchParams.set('bbox', clampedBbox.join(','));
-    }
-    if (options.datetime !== undefined && !url.searchParams.has('datetime')) {
-      const dateTime = options.datetime;
-      url.searchParams.set(
-        'datetime',
-        dateTime instanceof Date
-          ? dateTime.toISOString()
-          : `${'start' in dateTime ? dateTime.start.toISOString() : '..'}/${
-              'end' in dateTime ? dateTime.end.toISOString() : '..'
-            }`
-      );
-    }
-    if (options.query) {
-      url.search += (url.search ? '&' : '') + encodeURI(options.query);
-    }
-
+    StacEndpoint.applyFilterOptions(url, options);
     return url.toString();
   }
 }
