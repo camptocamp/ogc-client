@@ -508,6 +508,96 @@ describe('StacEndpoint', () => {
     });
   });
 
+  describe('static items query methods', () => {
+    describe('getItemsFromCollection', () => {
+      it('queries items from a collection object', async () => {
+        const collection = await endpoint.getCollection('sentinel-2');
+        const response = await StacEndpoint.getItemsFromCollection(collection, {
+          limit: 2,
+        });
+
+        expect(response.type).toBe('FeatureCollection');
+        expect(response.features).toHaveLength(2);
+        expect(response.features[0]).toMatchObject({
+          type: 'Feature',
+          id: 'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154',
+        });
+        expect(response.links).toBeDefined();
+      });
+
+      it('supports bbox filtering', async () => {
+        const collection = await endpoint.getCollection('sentinel-2');
+        const response = await StacEndpoint.getItemsFromCollection(collection, {
+          bbox: [5.0, 45.0, 6.0, 46.0],
+          limit: 5,
+        });
+
+        expect(response.type).toBe('FeatureCollection');
+        expect(Array.isArray(response.features)).toBe(true);
+        // Bbox is added to URL query params (tested via URL construction)
+      });
+
+      it('supports datetime filtering', async () => {
+        const collection = await endpoint.getCollection('sentinel-2');
+        const response = await StacEndpoint.getItemsFromCollection(collection, {
+          datetime: new Date('2023-10-15T00:00:00Z'),
+          limit: 5,
+        });
+
+        expect(response.type).toBe('FeatureCollection');
+        expect(Array.isArray(response.features)).toBe(true);
+      });
+
+      it('throws error when collection has no items link', async () => {
+        const collection = await endpoint.getCollection('sentinel-2');
+        // Remove items links
+        collection.links = collection.links.filter((l) => l.rel !== 'items');
+
+        await expect(
+          StacEndpoint.getItemsFromCollection(collection)
+        ).rejects.toThrow(EndpointError);
+        await expect(
+          StacEndpoint.getItemsFromCollection(collection)
+        ).rejects.toThrow('does not have an items link');
+      });
+    });
+
+    describe('getItemsFromUrl', () => {
+      it('queries items from an items URL', async () => {
+        const response = await StacEndpoint.getItemsFromUrl(
+          'http://local/stac-api/collections/sentinel-2/items',
+          { limit: 3 }
+        );
+
+        expect(response.type).toBe('FeatureCollection');
+        expect(response.features).toHaveLength(2); // Mock only has 2 items
+        expect(response.features[0]).toMatchObject({
+          type: 'Feature',
+          collection: 'sentinel-2',
+        });
+        expect(response.links).toBeDefined();
+      });
+
+      it('supports all filter options', async () => {
+        const response = await StacEndpoint.getItemsFromUrl(
+          'http://local/stac-api/collections/sentinel-2/items',
+          {
+            limit: 10,
+            offset: 0,
+            bbox: [5.0, 45.0, 6.0, 46.0],
+            datetime: {
+              start: new Date('2023-10-01T00:00:00Z'),
+              end: new Date('2023-10-31T23:59:59Z'),
+            },
+          }
+        );
+
+        expect(response.type).toBe('FeatureCollection');
+        expect(Array.isArray(response.features)).toBe(true);
+      });
+    });
+  });
+
   describe('error cases', () => {
     it('throws error when endpoint is not accessible', async () => {
       const badEndpoint = new StacEndpoint('http://local/non-existent/');

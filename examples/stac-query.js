@@ -170,8 +170,8 @@ async function main(STAC_API_URL) {
         console.log(`\n   Following "next" link for pagination...`);
         console.log(`   Next URL: ${nextLink.href}`);
 
-        // Fetch next page using the link
-        const nextPage = await fetch(nextLink.href).then((r) => r.json());
+        // Fetch next page using getItemsFromUrl
+        const nextPage = await StacEndpoint.getItemsFromUrl(nextLink.href);
         console.log(`\n   Second page: ${nextPage.features.length} item(s)`);
         nextPage.features.forEach((item, idx) => {
           console.log(`   ${idx + 1}. ${item.id}`);
@@ -364,6 +364,74 @@ async function main(STAC_API_URL) {
         console.log(`        ID: ${autoItem.data.id}`);
       }
 
+      console.log('');
+
+      // Demonstrate querying items with filtering from direct items URLs
+      console.log(`🔟  Querying items with filtering from direct URLs...`);
+      console.log(
+        '   These methods enable spatial/temporal filtering without root endpoint\n'
+      );
+
+      // Get the items URL from the collection
+      const itemsUrl = `${STAC_API_URL}/collections/${collectionId}/items`;
+
+      // Method 1: getItemsFromUrl - direct items URL query
+      console.log(`   a) Direct query with getItemsFromUrl:`);
+      console.log(`      Items URL: ${itemsUrl}`);
+      console.log(`      Filters: limit=3, bbox from first item`);
+
+      if (items.length > 0 && items[0].bbox) {
+        const directResponse = await StacEndpoint.getItemsFromUrl(itemsUrl, {
+          limit: 3,
+          bbox: filterBbox,
+        });
+        console.log(`      ✓ Found ${directResponse.features.length} item(s)`);
+        directResponse.features.forEach((item, idx) => {
+          console.log(
+            `         ${idx + 1}. ${item.id.substring(0, 40)}${
+              item.id.length > 40 ? '...' : ''
+            }`
+          );
+        });
+
+        // Show pagination links if available
+        const nextLink = directResponse.links?.find((l) => l.rel === 'next');
+        if (nextLink) {
+          console.log(`      → Next page available: ${nextLink.href}`);
+        }
+      } else {
+        console.log(`      ⊘ Skipped: No items with bbox available`);
+      }
+      console.log('');
+
+      // Method 2: getItemsFromCollection - two-step for flexibility
+      console.log(`   b) Two-step query with getItemsFromCollection:`);
+      console.log(`      First fetch collection, then query items`);
+
+      const collectionForQuery = await StacEndpoint.fromCollectionUrl(
+        collectionUrl
+      );
+      console.log(`      ✓ Loaded collection: ${collectionForQuery.title}`);
+
+      // Query with temporal filter
+      const recentDate = new Date();
+      recentDate.setDate(recentDate.getDate() - 30);
+
+      const collectionResponse = await StacEndpoint.getItemsFromCollection(
+        collectionForQuery,
+        {
+          limit: 3,
+          datetime: { start: recentDate },
+        }
+      );
+      console.log(
+        `      ✓ Found ${collectionResponse.features.length} item(s) from last 30 days`
+      );
+      collectionResponse.features.forEach((item, idx) => {
+        console.log(
+          `         ${idx + 1}. ${item.properties.datetime || 'N/A'}`
+        );
+      });
       console.log('');
     }
 
