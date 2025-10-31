@@ -162,34 +162,6 @@ export default class StacEndpoint {
   }
 
   /**
-   * Creates a StacCollection from a direct collection URL
-   * @param url Direct URL to a STAC collection document
-   * @returns Promise resolving to StacCollection
-   * @example
-   * const collection = await StacEndpoint.fromCollectionUrl(
-   *   'https://stac.example.com/collections/sentinel-2'
-   * );
-   */
-  static async fromCollectionUrl(url: string): Promise<StacCollection> {
-    const doc = await fetchStacDocument<StacDocument>(url);
-    return parseStacCollection(doc);
-  }
-
-  /**
-   * Creates a StacItem from a direct item URL
-   * @param url Direct URL to a STAC item document
-   * @returns Promise resolving to StacItem
-   * @example
-   * const item = await StacEndpoint.fromItemUrl(
-   *   'https://stac.example.com/collections/sentinel-2/items/S2A_MSIL2A_...'
-   * );
-   */
-  static async fromItemUrl(url: string): Promise<StacItem> {
-    const doc = await fetchStacDocument<StacDocument>(url);
-    return parseStacItem(doc);
-  }
-
-  /**
    * Fetches and auto-detects a STAC resource from any URL
    * Automatically detects whether the URL points to a Catalog, Collection, or Item
    * @param url Direct URL to any STAC document
@@ -231,7 +203,8 @@ export default class StacEndpoint {
    * @param options Query options (limit, bbox, datetime, etc.)
    * @returns Promise resolving to StacItemsDocument with features and pagination links
    * @example
-   * const collection = await StacEndpoint.fromCollectionUrl(url);
+   * const result = await StacEndpoint.fromUrl(url);
+   * const collection = result.data; // StacCollection
    * const response = await StacEndpoint.getItemsFromCollection(collection, {
    *   bbox: [5, 45, 6, 46],
    *   limit: 10
