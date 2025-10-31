@@ -314,57 +314,39 @@ async function main(STAC_API_URL) {
       console.log(`   URL: ${customUrl}`);
       console.log('');
 
-      // Demonstrate static factory methods for direct URL access
-      console.log(`9️⃣  Demonstrating static factory methods...`);
-      console.log(
-        '   These methods allow loading STAC resources directly from URLs\n'
-      );
+      // Demonstrate fromUrl for loading STAC resources directly
+      console.log(`9️⃣  Loading STAC resources with fromUrl...`);
+      console.log('   Auto-detects resource type from any STAC URL\n');
 
-      // Method 1: fromCollectionUrl - load collection directly
       const collectionUrl = `${STAC_API_URL}/collections/${collectionId}`;
-      console.log(`   a) Loading collection from direct URL:`);
-      console.log(`      URL: ${collectionUrl}`);
-      const directCollection = await StacEndpoint.fromCollectionUrl(
-        collectionUrl
-      );
-      console.log(`      ✓ Loaded: ${directCollection.title}`);
+
+      // Load collection
+      const collectionResult = await StacEndpoint.fromUrl(collectionUrl);
+      console.log(`   • Collection URL → Type: ${collectionResult.type}`);
+      console.log(`     Title: ${collectionResult.data.title}`);
       console.log('');
 
-      // Method 2: fromItemUrl - load item directly
+      // Load root/catalog
+      const catalogResult = await StacEndpoint.fromUrl(STAC_API_URL);
+      console.log(`   • Root/Catalog URL → Type: ${catalogResult.type}`);
+      console.log(
+        `     Title: ${catalogResult.data.title || catalogResult.data.id}`
+      );
+      console.log('');
+
+      // Load item
       if (items.length > 0) {
         const itemUrl = `${STAC_API_URL}/collections/${collectionId}/items/${items[0].id}`;
-        console.log(`   b) Loading item from direct URL:`);
-        console.log(`      URL: ${itemUrl.substring(0, 80)}...`);
-        const directItem = await StacEndpoint.fromItemUrl(itemUrl);
-        console.log(`      ✓ Loaded: ${directItem.id}`);
-        console.log(`      Date: ${directItem.properties.datetime || 'N/A'}`);
+        const itemResult = await StacEndpoint.fromUrl(itemUrl);
+        console.log(`   • Item URL → Type: ${itemResult.type}`);
+        console.log(`     ID: ${itemResult.data.id}`);
+        console.log(
+          `     Date: ${itemResult.data.properties.datetime || 'N/A'}`
+        );
         console.log('');
       }
 
-      // Method 3: fromUrl - auto-detect resource type
-      console.log(`   c) Auto-detecting resource types with fromUrl:`);
-
-      // Test with collection URL
-      const autoCollection = await StacEndpoint.fromUrl(collectionUrl);
-      console.log(`      • Collection URL → Type: ${autoCollection.type}`);
-      console.log(`        Title: ${autoCollection.data.title}`);
-
-      // Test with root/catalog URL
-      const autoCatalog = await StacEndpoint.fromUrl(STAC_API_URL);
-      console.log(`      • Root/Catalog URL → Type: ${autoCatalog.type}`);
-      console.log(
-        `        Title: ${autoCatalog.data.title || autoCatalog.data.id}`
-      );
-
-      // Test with item URL if available
-      if (items.length > 0) {
-        const itemUrl = `${STAC_API_URL}/collections/${collectionId}/items/${items[0].id}`;
-        const autoItem = await StacEndpoint.fromUrl(itemUrl);
-        console.log(`      • Item URL → Type: ${autoItem.type}`);
-        console.log(`        ID: ${autoItem.data.id}`);
-      }
-
-      console.log('');
+      console.log('   ✓ All resources loaded and auto-detected successfully\n');
 
       // Demonstrate querying items with filtering from direct items URLs
       console.log(`🔟  Querying items with filtering from direct URLs...`);
@@ -408,9 +390,8 @@ async function main(STAC_API_URL) {
       console.log(`   b) Two-step query with getItemsFromCollection:`);
       console.log(`      First fetch collection, then query items`);
 
-      const collectionForQuery = await StacEndpoint.fromCollectionUrl(
-        collectionUrl
-      );
+      const collectionResult = await StacEndpoint.fromUrl(collectionUrl);
+      const collectionForQuery = collectionResult.data;
       console.log(`      ✓ Loaded collection: ${collectionForQuery.title}`);
 
       // Query with temporal filter
