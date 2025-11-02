@@ -1,16 +1,15 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import mitt from 'mitt';
 import { TextDecoder } from 'util';
 import CacheMock from 'browser-cache-mock';
 import 'isomorphic-fetch';
 import { Buffer } from './node_modules/buffer/index.js';
 
+// @ts-expect-error Buffer is not compatible
 globalThis.Buffer = Buffer;
 
 // mock the global fetch API
-globalThis.fetchPreHandler = (url, options) => {};
-globalThis.fetchResponseFactory = (url, options) => '<empty></empty>';
+globalThis.fetchPreHandler = (_url, _options) => {};
+globalThis.fetchResponseFactory = (_url, _options) => '<empty></empty>';
 globalThis.originalFetch = globalThis.fetch;
 globalThis.mockFetch = jest.fn().mockImplementation(async (url, options) => {
   const preResult = await globalThis.fetchPreHandler(url, options);
@@ -37,19 +36,24 @@ globalThis.fetch = globalThis.mockFetch;
 
 // reset fetch response to XML by default
 beforeEach(() => {
-  globalThis.fetchResponseFactory = (url) => '<empty></empty>';
+  globalThis.fetchResponseFactory = (_url) => '<empty></empty>';
 });
 
 globalThis.caches = {
   open: async () => new CacheMock(),
+  delete: async () => true,
+  has: async () => false,
+  keys: async () => [],
+  match: async () => undefined,
 };
 
 // mock Worker class to work synchronously
 // requires an absolute file path
 // this is mainly ripped off of https://github.com/developit/jsdom-worker
+// @ts-expect-error Worker is not compatible
 globalThis.Worker = function Worker(filePath) {
   let getScopeVar;
-  let messageQueue = [];
+  let messageQueue: unknown[] | null = [];
   const inside = mitt();
   const outside = mitt();
   const scope = {
@@ -104,7 +108,7 @@ globalThis.Worker = function Worker(filePath) {
       ).call(scope);
       const q = messageQueue;
       messageQueue = null;
-      q.forEach(this.postMessage);
+      q?.forEach(this.postMessage);
     })
     .catch((e) => {
       outside.emit('error', e);
@@ -117,4 +121,5 @@ globalThis.Worker = function Worker(filePath) {
 
 // globalThis.TextDecoder = StringDecoder
 // globalThis.TextDecoder.prototype.decode = StringDecoder.prototype.write
+// @ts-expect-error TextDecoder is not compatible
 globalThis.TextDecoder = TextDecoder;

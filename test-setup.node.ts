@@ -5,4 +5,4 @@ import { enableFallbackWithoutWorker } from './src/worker/index.js';
 import './src/worker-fallback/index.js';
 
 // then enable worker fallback
-typeof enableFallbackWithoutWorker();
+enableFallbackWithoutWorker();
