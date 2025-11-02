@@ -57,7 +57,7 @@ describe('WmsEndpoint', () => {
 
     describe('CORS error handling', () => {
       beforeEach(() => {
-        globalThis.fetchPreHandler = (url, options) => {
+        globalThis.fetchPreHandler = (_url, options) => {
           if (options?.method === 'HEAD') return 'ok!';
           throw new Error('CORS problem');
         };
