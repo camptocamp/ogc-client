@@ -34,10 +34,6 @@ export interface GetCollectionItemsOptions {
    */
   limit?: number;
   /**
-   * Offset for pagination
-   */
-  offset?: number;
-  /**
    * Bounding box to filter items [minx, miny, maxx, maxy]
    */
   bbox?: BoundingBox;
@@ -127,7 +123,7 @@ export default class StacEndpoint {
 
   /**
    * Private helper to apply filter options to a URL
-   * Standard filtering parameters (limit, offset, bbox, datetime, query) are always set
+   * Standard filtering parameters (limit, bbox, datetime, query) are always set
    * since they are client-controlled, not server-specific
    */
   private static applyFilterOptions(
@@ -136,9 +132,6 @@ export default class StacEndpoint {
   ): void {
     if (options.limit !== undefined) {
       url.searchParams.set('limit', options.limit.toString());
-    }
-    if (options.offset !== undefined) {
-      url.searchParams.set('offset', options.offset.toString());
     }
     if (options.bbox && options.bbox.length === 4) {
       // Clamp bbox to valid WGS84 bounds to prevent server validation errors

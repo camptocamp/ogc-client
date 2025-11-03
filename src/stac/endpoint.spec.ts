@@ -251,13 +251,6 @@ describe('StacEndpoint', () => {
         expect(url).toContain('limit=5');
       });
 
-      it('supports offset option', async () => {
-        const url = await endpoint.getCollectionItemsUrl('sentinel-2', {
-          offset: 10,
-        });
-        expect(url).toContain('offset=10');
-      });
-
       it('supports bbox option', async () => {
         const url = await endpoint.getCollectionItemsUrl('sentinel-2', {
           bbox: [5.0, 45.0, 6.0, 46.0],
@@ -313,11 +306,9 @@ describe('StacEndpoint', () => {
       it('combines multiple options', async () => {
         const url = await endpoint.getCollectionItemsUrl('sentinel-2', {
           limit: 10,
-          offset: 5,
           bbox: [5.0, 45.0, 6.0, 46.0],
         });
         expect(url).toContain('limit=10');
-        expect(url).toContain('offset=5');
         expect(url).toContain('bbox=5%2C45%2C6%2C46');
       });
     });
@@ -545,7 +536,6 @@ describe('StacEndpoint', () => {
           'http://local/stac-api/collections/sentinel-2/items',
           {
             limit: 10,
-            offset: 0,
             bbox: [5.0, 45.0, 6.0, 46.0],
             datetime: {
               start: new Date('2023-10-01T00:00:00Z'),

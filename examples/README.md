@@ -28,10 +28,14 @@ This example shows how to:
 - List all available collections
 - Get detailed collection metadata (extent, providers, license, etc.)
 - Query items with various filters:
-  - Limit and offset (pagination)
+  - Limit (pagination)
   - Bounding box (spatial filtering)
   - DateTime (temporal filtering)
 - Retrieve a single item
 - Build custom query URLs
 
-The example queries the public STAC API at https://api.stac.teledetection.fr
+The example queries the public STAC API at:
+
+- https://api.stac.teledetection.fr
+- https://catalog.maap.eo.esa.int/catalogue
+- https://stac.dataspace.copernicus.eu/v1/
