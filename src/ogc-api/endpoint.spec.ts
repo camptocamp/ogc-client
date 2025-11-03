@@ -36,8 +36,7 @@ beforeAll(() => {
     const filePath = `${path.join(FIXTURES_ROOT, queryPath)}.${format}`;
     try {
       await stat(filePath);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e) {
+    } catch {
       return {
         ok: false,
         status: 404,
@@ -96,12 +95,12 @@ describe('OgcApiEndpoint', () => {
       it('uses shared fetch', async () => {
         jest.clearAllMocks();
         // create the endpoint three times separately
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        new OgcApiEndpoint('http://local/sample-data/').info;
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        new OgcApiEndpoint('http://local/sample-data/').info;
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        new OgcApiEndpoint('http://local/sample-data/').info;
+        await Promise.all([
+          new OgcApiEndpoint('http://local/sample-data/').info,
+          new OgcApiEndpoint('http://local/sample-data/').info,
+          new OgcApiEndpoint('http://local/sample-data/').info,
+        ]);
+
         expect(globalThis.fetch).toHaveBeenCalledTimes(1);
       });
     });
@@ -2399,8 +2398,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
         )}.${format}`;
         try {
           await stat(filePath);
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (e) {
+        } catch {
           return {
             ok: false,
             status: 404,

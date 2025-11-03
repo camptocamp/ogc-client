@@ -75,7 +75,7 @@
     "test:node": "jest --config jest.node.config.cjs",
     "format:write": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint src/**/*.ts",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "build": "rm -rf dist && npm run build:worker && npm run build:node && npm run build:browser",
     "build:browser": "esbuild $(find ./src -name \"*.ts\" -type f -not -path '*worker/index.ts' -not -path '*.spec.ts') --outdir=./dist --platform=neutral --format=esm --sourcemap",

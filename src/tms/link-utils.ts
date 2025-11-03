@@ -85,9 +85,7 @@ export function normalizeUrl(url: string): string {
     }
     urlObj.hostname = urlObj.hostname.toLowerCase();
     return urlObj.toString();
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (e) {
+  } catch {
     return url;
   }
 }
