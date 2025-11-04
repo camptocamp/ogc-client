@@ -1,0 +1,115 @@
+{
+  "collections": [
+    {
+      "stac_version": "1.0.0",
+      "type": "Collection",
+      "id": "sentinel-2",
+      "title": "Sentinel-2 L2A",
+      "description": "Sentinel-2 Level-2A (L2A) Bottom-Of-Atmosphere product",
+      "keywords": ["sentinel", "earth observation", "esa"],
+      "license": "proprietary",
+      "providers": [
+        {
+          "name": "ESA",
+          "roles": ["producer"],
+          "url": "https://earth.esa.int"
+        }
+      ],
+      "extent": {
+        "spatial": {
+          "bbox": [[-180, -90, 180, 90]]
+        },
+        "temporal": {
+          "interval": [["2015-06-27T00:00:00Z", null]]
+        }
+      },
+      "summaries": {
+        "gsd": [10, 20, 60],
+        "platform": ["sentinel-2a", "sentinel-2b"],
+        "constellation": ["sentinel-2"],
+        "instruments": ["msi"]
+      },
+      "assets": {
+        "thumbnail": {
+          "href": "https://example.com/sentinel-2/thumbnail.png",
+          "type": "image/png",
+          "title": "Thumbnail",
+          "roles": ["thumbnail"]
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "type": "application/json",
+          "href": "http://local/stac-api/collections/sentinel-2"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "href": "http://local/stac-api/collections/sentinel-2/items"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "http://local/stac-api/"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "http://local/stac-api/"
+        }
+      ]
+    },
+    {
+      "stac_version": "1.0.0",
+      "type": "Collection",
+      "id": "landsat-8",
+      "title": "Landsat 8 L2",
+      "description": "Landsat 8 Collection 2 Level-2 Surface Reflectance product",
+      "keywords": ["landsat", "earth observation", "usgs"],
+      "license": "PDDL-1.0",
+      "extent": {
+        "spatial": {
+          "bbox": [[-180, -90, 180, 90]]
+        },
+        "temporal": {
+          "interval": [["2013-04-11T00:00:00Z", null]]
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "type": "application/json",
+          "href": "http://local/stac-api/collections/landsat-8"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "href": "http://local/stac-api/collections/landsat-8/items"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "http://local/stac-api/"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "http://local/stac-api/"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "href": "http://local/stac-api/collections"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "http://local/stac-api/"
+    }
+  ]
+}
