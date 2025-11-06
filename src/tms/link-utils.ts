@@ -3,7 +3,7 @@ import { parseTileMapServiceXML, parseTileMapXML } from './parser.js';
 import { TileMapInfo, TileMapService } from './model.js';
 import { XmlDocument } from '@rgrove/parse-xml';
 import { getRootElement, parseXmlString } from '../shared/xml-utils.js';
-import { getParentPath, getBaseUrl } from '../shared/url-utils.js';
+import { getBaseUrl, getParentPath } from '../shared/url-utils.js';
 
 const MAX_DEPTH = 3;
 
@@ -85,7 +85,7 @@ export function normalizeUrl(url: string): string {
     }
     urlObj.hostname = urlObj.hostname.toLowerCase();
     return urlObj.toString();
-  } catch (err) {
+  } catch {
     return url;
   }
 }
