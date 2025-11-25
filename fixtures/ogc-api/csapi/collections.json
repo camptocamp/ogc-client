@@ -1,0 +1,46 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "links": [
+    {
+      "href": "http://local/csapi/collections/systems",
+      "rel": "item",
+      "type": "application/json",
+      "title": "Systems"
+    },
+    {
+      "href": "http://local/csapi/collections/datastreams",
+      "rel": "item",
+      "type": "application/json",
+      "title": "Datastreams"
+    }
+  ],
+  "collections": [
+    {
+      "id": "systems",
+      "title": "Systems",
+      "description": "A collection of connected systems exposed via CSAPI.",
+      "links": [
+        {
+          "href": "http://local/csapi/collections/systems/items",
+          "rel": "items",
+          "type": "application/json",
+          "title": "Systems items"
+        }
+      ]
+    },
+    {
+      "id": "datastreams",
+      "title": "Datastreams",
+      "description": "A collection of datastreams exposed via CSAPI.",
+      "links": [
+        {
+          "href": "http://local/csapi/collections/datastreams/items",
+          "rel": "items",
+          "type": "application/json",
+          "title": "Datastreams items"
+        }
+      ]
+    }
+  ]
+}

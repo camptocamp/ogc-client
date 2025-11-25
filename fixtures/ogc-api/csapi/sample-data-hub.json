@@ -1,0 +1,33 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "title": "Sample Connected Systems API (CSAPI)",
+  "description": "Dummy landing page for testing Connected Systems API integration.",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document as JSON",
+      "href": "http://local/csapi/sample-data-hub?f=json"
+    },
+    {
+      "rel": "alternate",
+      "type": "text/html",
+      "title": "This document as HTML",
+      "href": "http://local/csapi/sample-data-hub?f=html",
+      "hreflang": "en-US"
+    },
+    {
+      "rel": "conformance",
+      "type": "application/json",
+      "title": "Conformance",
+      "href": "http://local/csapi/sample-data-hub/conformance"
+    },
+    {
+      "rel": "data",
+      "type": "application/json",
+      "title": "Collections",
+      "href": "http://local/csapi/sample-data-hub/collections"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "title": "CSAPI Dummy Server",
+  "description": "This dummy server is used for testing Connected Systems API compliance.",
+  "links": [
+    {
+      "href": "http://local/csapi/collections",
+      "rel": "data",
+      "type": "application/json",
+      "title": "Connected Systems collections"
+    },
+    {
+      "href": "http://local/csapi/api",
+      "rel": "service-desc",
+      "type": "application/vnd.oai.openapi+json;version=3.0",
+      "title": "OpenAPI definition"
+    },
+    {
+      "href": "http://local/csapi/conformance",
+      "rel": "conformance",
+      "type": "application/json",
+      "title": "Conformance classes"
+    },
+    {
+      "href": "http://local/csapi/",
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document"
+    }
+  ]
+}
