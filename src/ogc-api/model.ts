@@ -276,3 +276,42 @@ export type OgcApiStyleMetadata = {
   }[];
   links?: OgcApiDocumentLink[];
 };
+
+/**
+ * CSAPI (Connected Systems API) resource capability list.
+ * Used to indicate which CSAPI resource types are available.
+ */
+export const CSAPIResourceTypes = [
+  'systems',
+  'datastreams',
+  'observations',
+  'deployments',
+  'procedures',
+  'samplingFeatures',
+  'properties',
+  'commands',
+  'controlStreams',
+  'systemEvents',
+  'systemHistory',
+  'feasibility',
+] as const;
+
+export type CSAPIResourceType = (typeof CSAPIResourceTypes)[number];
+
+/**
+ * Contains booleans indicating which CSAPI resource types are available.
+ */
+export interface CSAPICapabilities {
+  hasSystems: boolean;
+  hasDatastreams: boolean;
+  hasObservations: boolean;
+  hasDeployments: boolean;
+  hasProcedures: boolean;
+  hasSamplingFeatures: boolean;
+  hasProperties: boolean;
+  hasCommands: boolean;
+  hasControlStreams: boolean;
+  hasSystemEvents: boolean;
+  hasSystemHistory: boolean;
+  hasFeasibility: boolean;
+}
