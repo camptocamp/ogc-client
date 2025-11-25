@@ -1,0 +1,19 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Command",
+  "features": [
+    {
+      "id": "cmd-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "name": "TurnOnCoolingSystem",
+        "status": "ready",
+        "target": "sys-001",
+        "description": "Stub Command entry for canonical endpoint tests"
+      }
+    }
+  ]
+}

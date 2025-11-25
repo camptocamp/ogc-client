@@ -1,0 +1,64 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "title": "Example CSAPI Landing Page",
+  "description": "Stub landing page for CSAPI Part 1 & 2 tests",
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.csapi.server/"
+    },
+    {
+      "rel": "conformance",
+      "href": "https://example.csapi.server/conformance"
+    },
+    {
+      "rel": "data",
+      "href": "https://example.csapi.server/"
+    },
+    {
+      "rel": "systems",
+      "href": "https://example.csapi.server/systems"
+    },
+    {
+      "rel": "deployments",
+      "href": "https://example.csapi.server/deployments"
+    },
+    {
+      "rel": "procedures",
+      "href": "https://example.csapi.server/procedures"
+    },
+    {
+      "rel": "samplingFeatures",
+      "href": "https://example.csapi.server/samplingFeatures"
+    },
+    {
+      "rel": "properties",
+      "href": "https://example.csapi.server/properties"
+    },
+    {
+      "rel": "datastreams",
+      "href": "https://example.csapi.server/datastreams"
+    },
+    {
+      "rel": "observations",
+      "href": "https://example.csapi.server/observations"
+    },
+    {
+      "rel": "commands",
+      "href": "https://example.csapi.server/commands"
+    },
+    {
+      "rel": "feasibility",
+      "href": "https://example.csapi.server/feasibility"
+    },
+    {
+      "rel": "controlStreams",
+      "href": "https://example.csapi.server/controlStreams"
+    },
+    {
+      "rel": "systemEvents",
+      "href": "https://example.csapi.server/systemEvents"
+    }
+  ]
+}

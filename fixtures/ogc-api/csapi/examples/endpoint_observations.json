@@ -1,0 +1,20 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Observation",
+  "features": [
+    {
+      "id": "obs-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "phenomenonTime": "2024-01-01T00:00:00Z",
+        "result": 22.5,
+        "observedProperty": "temperature",
+        "unit": "Degree Celsius",
+        "description": "Stub Observation for canonical endpoint tests"
+      }
+    }
+  ]
+}

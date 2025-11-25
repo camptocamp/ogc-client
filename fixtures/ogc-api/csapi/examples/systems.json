@@ -1,0 +1,177 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "System",
+  "features": [
+    {
+      "id": "sys-001",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.4194, 37.7749]
+      },
+      "properties": {
+        "name": "Weather Station Prime",
+        "description": "Primary weather monitoring system for urban environment testing",
+        "featureType": "sosa:System",
+        "parentId": null,
+        "procedureIds": ["proc-001"],
+        "foiIds": ["foi-001"],
+        "observedProperties": ["prop-temp", "prop-humidity"],
+        "controlledProperties": []
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/systems/sys-001",
+          "title": "This system"
+        },
+        {
+          "rel": "deployments",
+          "href": "https://example.csapi.server/deployments?system=sys-001",
+          "title": "Deployments for this system"
+        },
+        {
+          "rel": "events",
+          "href": "https://example.csapi.server/systems/sys-001/events",
+          "title": "Events for this system"
+        },
+        {
+          "rel": "datastreams",
+          "href": "https://example.csapi.server/datastreams?system=sys-001",
+          "title": "Datastreams from this system"
+        }
+      ]
+    },
+    {
+      "id": "sys-002",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.4, 37.79]
+      },
+      "properties": {
+        "name": "Air Quality Sensor Network",
+        "description": "Distributed air quality monitoring system with multiple sensors",
+        "featureType": "sosa:System",
+        "parentId": null,
+        "procedureIds": ["proc-002"],
+        "foiIds": ["foi-002"],
+        "observedProperties": ["prop-pm25", "prop-ozone"],
+        "controlledProperties": []
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/systems/sys-002",
+          "title": "This system"
+        },
+        {
+          "rel": "deployments",
+          "href": "https://example.csapi.server/deployments?system=sys-002",
+          "title": "Deployments for this system"
+        },
+        {
+          "rel": "events",
+          "href": "https://example.csapi.server/systems/sys-002/events",
+          "title": "Events for this system"
+        }
+      ]
+    },
+    {
+      "id": "sys-003",
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-122.5, 37.8],
+            [-122.3, 37.8],
+            [-122.3, 37.7],
+            [-122.5, 37.7],
+            [-122.5, 37.8]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Regional Seismic Array",
+        "description": "Multi-station seismic monitoring system covering regional area",
+        "featureType": "sosa:System",
+        "parentId": null,
+        "procedureIds": ["proc-003"],
+        "foiIds": ["foi-003"],
+        "observedProperties": ["prop-acceleration", "prop-velocity"],
+        "controlledProperties": []
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/systems/sys-003",
+          "title": "This system"
+        },
+        {
+          "rel": "subsystems",
+          "href": "https://example.csapi.server/systems?parent=sys-003",
+          "title": "Subsystems"
+        }
+      ]
+    },
+    {
+      "id": "sys-1",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-71.0589, 42.3601]
+      },
+      "properties": {
+        "name": "Alpha System",
+        "description": "Test system for advanced filtering scenarios",
+        "featureType": "sosa:System",
+        "parentId": "sys-root",
+        "procedureIds": ["proc-2"],
+        "foiIds": ["foi-9"],
+        "observedProperties": ["prop-temp"],
+        "controlledProperties": ["prop-valve"]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/systems/sys-1"
+        },
+        {
+          "rel": "parent",
+          "href": "https://example.csapi.server/systems/sys-root"
+        }
+      ]
+    },
+    {
+      "id": "sys-3",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-71.06, 42.365]
+      },
+      "properties": {
+        "name": "Beta Node",
+        "description": "Secondary test system for filtering scenarios",
+        "featureType": "sosa:System",
+        "parentId": "sys-root",
+        "procedureIds": ["proc-2"],
+        "foiIds": ["foi-9"],
+        "observedProperties": ["prop-temp"],
+        "controlledProperties": ["prop-valve"]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/systems/sys-3"
+        },
+        {
+          "rel": "parent",
+          "href": "https://example.csapi.server/systems/sys-root"
+        }
+      ]
+    }
+  ]
+}

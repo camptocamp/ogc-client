@@ -1,0 +1,86 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "SystemEvent",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "evt-001",
+      "geometry": null,
+      "properties": {
+        "name": "Temperature Sensor Calibration",
+        "description": "System automatically recalibrated its primary temperature sensor.",
+        "eventType": "calibration",
+        "timestamp": "2025-05-01T08:30:00Z",
+        "system": {
+          "id": "sys-001",
+          "href": "https://example.csapi.server/systems/sys-001"
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/systemEvents/evt-001",
+          "type": "application/geo+json",
+          "title": "System Event evt-001"
+        },
+        {
+          "rel": "collection",
+          "href": "https://example.csapi.server/systemEvents",
+          "type": "application/geo+json",
+          "title": "System Events Collection"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-001",
+          "type": "application/geo+json",
+          "title": "Parent System sys-001"
+        }
+      ]
+    },
+    {
+      "type": "Feature",
+      "id": "evt-002",
+      "geometry": null,
+      "properties": {
+        "name": "Maintenance Alert",
+        "description": "Detected abnormal humidity readings; maintenance required.",
+        "eventType": "alert",
+        "timestamp": "2025-05-10T14:45:00Z",
+        "system": {
+          "id": "sys-001",
+          "href": "https://example.csapi.server/systems/sys-001"
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/systemEvents/evt-002",
+          "type": "application/geo+json",
+          "title": "System Event evt-002"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-001",
+          "type": "application/geo+json",
+          "title": "Parent System sys-001"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.csapi.server/systems/sys-001/events",
+      "type": "application/geo+json",
+      "title": "Events for System sys-001"
+    },
+    {
+      "rel": "collection",
+      "href": "https://example.csapi.server/systemEvents",
+      "type": "application/geo+json",
+      "title": "All System Events"
+    }
+  ]
+}

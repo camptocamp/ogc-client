@@ -1,0 +1,19 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "SamplingFeature",
+  "features": [
+    {
+      "id": "sf-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "name": "Example Sampling Feature",
+        "description": "Stub SamplingFeature entry for canonical endpoint tests",
+        "featureType": "Point",
+        "relatedSystem": "sys-001"
+      }
+    }
+  ]
+}

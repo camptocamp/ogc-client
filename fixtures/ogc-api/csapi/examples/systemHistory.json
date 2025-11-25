@@ -1,0 +1,82 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "SystemHistory",
+  "features": [
+    {
+      "id": "rev-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "systemId": "sys-001",
+        "revisionTimestamp": "2025-02-10T08:00:00Z",
+        "version": "v1.2.3",
+        "changeDescription": "Firmware updated to v1.2.3 for new protocol compliance."
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/systemHistory/rev-001"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-001"
+        }
+      ]
+    },
+    {
+      "id": "rev-002",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "systemId": "sys-001",
+        "revisionTimestamp": "2025-01-15T10:30:00Z",
+        "version": "v1.2.2",
+        "changeDescription": "Sensor calibration parameters updated."
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/systemHistory/rev-002"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-001"
+        }
+      ]
+    },
+    {
+      "id": "rev-003",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "systemId": "sys-002",
+        "revisionTimestamp": "2025-03-01T14:00:00Z",
+        "version": "v2.0.0",
+        "changeDescription": "Major hardware upgrade to new sensor array."
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/systemHistory/rev-003"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-002"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.csapi.server/systemHistory"
+    },
+    { "rel": "self", "href": "https://example.csapi.server/systemHistory" },
+    {
+      "rel": "collection",
+      "href": "https://example.csapi.server/systemHistory"
+    }
+  ]
+}

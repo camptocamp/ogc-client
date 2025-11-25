@@ -1,0 +1,91 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "Collection",
+  "members": [
+    {
+      "id": "prop-001",
+      "name": "Air Temperature",
+      "definition": "http://qudt.org/vocab/quantitykind/Temperature",
+      "type": "observable",
+      "unit": "http://qudt.org/vocab/unit/DegreeCelsius",
+      "description": "Ambient air temperature measurement"
+    },
+    {
+      "id": "prop-002",
+      "name": "Relative Humidity",
+      "definition": "http://qudt.org/vocab/quantitykind/RelativeHumidity",
+      "type": "observable",
+      "unit": "http://qudt.org/vocab/unit/Percent",
+      "description": "Relative humidity of ambient air"
+    },
+    {
+      "id": "prop-temp",
+      "name": "Temperature",
+      "definition": "http://qudt.org/vocab/quantitykind/Temperature",
+      "type": "observable",
+      "unit": "http://qudt.org/vocab/unit/DegreeCelsius",
+      "baseProperty": "prop-base-1",
+      "objectTypes": ["ObjectTypeA"],
+      "description": "Generic temperature measurement for testing"
+    },
+    {
+      "id": "prop-humidity",
+      "name": "Humidity",
+      "definition": "http://qudt.org/vocab/quantitykind/RelativeHumidity",
+      "type": "observable",
+      "unit": "http://qudt.org/vocab/unit/Percent",
+      "description": "Humidity measurement"
+    },
+    {
+      "id": "prop-pm25",
+      "name": "PM2.5 Concentration",
+      "definition": "http://example.org/quantities/pm25",
+      "type": "observable",
+      "unit": "http://qudt.org/vocab/unit/MicroGM-PER-M3",
+      "description": "Fine particulate matter concentration"
+    },
+    {
+      "id": "prop-ozone",
+      "name": "Ozone Concentration",
+      "definition": "http://example.org/quantities/ozone",
+      "type": "observable",
+      "unit": "http://qudt.org/vocab/unit/PPM",
+      "description": "Tropospheric ozone concentration"
+    },
+    {
+      "id": "prop-acceleration",
+      "name": "Ground Acceleration",
+      "definition": "http://qudt.org/vocab/quantitykind/Acceleration",
+      "type": "observable",
+      "unit": "http://qudt.org/vocab/unit/M-PER-SEC2",
+      "description": "Seismic ground acceleration"
+    },
+    {
+      "id": "prop-velocity",
+      "name": "Ground Velocity",
+      "definition": "http://qudt.org/vocab/quantitykind/Velocity",
+      "type": "observable",
+      "unit": "http://qudt.org/vocab/unit/M-PER-SEC",
+      "description": "Seismic ground velocity"
+    },
+    {
+      "id": "prop-valve",
+      "name": "Valve Position",
+      "definition": "http://example.org/quantities/valve-position",
+      "type": "controllable",
+      "unit": "http://qudt.org/vocab/unit/Percent",
+      "description": "Control valve position percentage"
+    },
+    {
+      "id": "prop-def-1",
+      "name": "Advanced Test Property",
+      "definition": "http://qudt.org/vocab/quantitykind/Temperature",
+      "type": "observable",
+      "unit": "http://qudt.org/vocab/unit/DegreeCelsius",
+      "baseProperty": "prop-base-1",
+      "objectTypes": ["ObjectTypeA"],
+      "description": "Property for advanced filtering tests"
+    }
+  ]
+}

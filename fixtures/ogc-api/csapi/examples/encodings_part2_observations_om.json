@@ -1,0 +1,62 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Observation",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "obs-001",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-117.3, 34.2, 340]
+      },
+      "properties": {
+        "phenomenonTime": "2025-11-23T09:00:00Z",
+        "resultTime": "2025-11-23T09:01:30Z",
+        "observedProperty": {
+          "href": "http://mmisw.org/ont/cf/parameter/air_temperature",
+          "title": "Air Temperature"
+        },
+        "procedure": {
+          "href": "http://example.org/sensors/temp-sensor-001"
+        },
+        "featureOfInterest": {
+          "href": "http://example.org/sites/station-alpha"
+        },
+        "result": {
+          "value": 22.4,
+          "uom": "degC"
+        },
+        "encodingType": "OM-JSON"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "obs-002",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-117.3, 34.2, 340]
+      },
+      "properties": {
+        "phenomenonTime": "2025-11-23T09:05:00Z",
+        "resultTime": "2025-11-23T09:06:30Z",
+        "observedProperty": {
+          "href": "http://mmisw.org/ont/cf/parameter/air_temperature",
+          "title": "Air Temperature"
+        },
+        "procedure": {
+          "href": "http://example.org/sensors/temp-sensor-001"
+        },
+        "featureOfInterest": {
+          "href": "http://example.org/sites/station-alpha"
+        },
+        "result": {
+          "value": 23.1,
+          "uom": "degC"
+        },
+        "encodingType": "OM-JSON"
+      }
+    }
+  ]
+}

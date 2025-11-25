@@ -1,0 +1,186 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Deployment",
+  "features": [
+    {
+      "id": "dep-001",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.4194, 37.7749]
+      },
+      "properties": {
+        "name": "Urban Weather Deployment",
+        "description": "Primary deployment of weather station in urban setting",
+        "featureType": "sosa:Deployment",
+        "parentId": null,
+        "systemIds": ["sys-001"],
+        "systemId": "sys-001",
+        "system": {
+          "id": "sys-001"
+        },
+        "foiIds": ["foi-001"],
+        "observedProperties": ["prop-temp", "prop-humidity"],
+        "controlledProperties": [],
+        "validTime": {
+          "begin": "2024-01-01T00:00:00Z",
+          "end": null
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/deployments/dep-001",
+          "title": "This deployment"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-001",
+          "title": "Associated system"
+        },
+        {
+          "rel": "procedure",
+          "href": "https://example.csapi.server/procedures/proc-001",
+          "title": "Deployment procedure"
+        },
+        {
+          "rel": "datastreams",
+          "href": "https://example.csapi.server/datastreams?deployment=dep-001",
+          "title": "Datastreams from this deployment"
+        }
+      ]
+    },
+    {
+      "id": "dep-002",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.41, 37.785]
+      },
+      "properties": {
+        "name": "Sub-deployment North",
+        "description": "Child deployment extending coverage northward",
+        "featureType": "sosa:Deployment",
+        "parentId": "dep-001",
+        "systemIds": ["sys-001"],
+        "foiIds": ["foi-001"],
+        "observedProperties": ["prop-temp"],
+        "controlledProperties": [],
+        "validTime": {
+          "begin": "2024-02-01T00:00:00Z",
+          "end": null
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/deployments/dep-002"
+        },
+        {
+          "rel": "parent",
+          "href": "https://example.csapi.server/deployments/dep-001",
+          "title": "Parent deployment"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-001"
+        }
+      ]
+    },
+    {
+      "id": "dep-003",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.429, 37.765]
+      },
+      "properties": {
+        "name": "Sub-deployment South",
+        "description": "Child deployment extending coverage southward",
+        "featureType": "sosa:Deployment",
+        "parentId": "dep-001",
+        "systemIds": ["sys-001"],
+        "foiIds": ["foi-001"],
+        "observedProperties": ["prop-humidity"],
+        "controlledProperties": [],
+        "validTime": {
+          "begin": "2024-02-01T00:00:00Z",
+          "end": null
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/deployments/dep-003"
+        },
+        {
+          "rel": "parent",
+          "href": "https://example.csapi.server/deployments/dep-001",
+          "title": "Parent deployment"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-001"
+        }
+      ]
+    },
+    {
+      "id": "dep-1",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-71.0589, 42.3601]
+      },
+      "properties": {
+        "name": "Advanced Filter Test Deployment",
+        "description": "Deployment for testing advanced filtering capabilities",
+        "featureType": "sosa:Deployment",
+        "parentId": "dep-root",
+        "systemIds": ["sys-1"],
+        "foiIds": ["foi-9"],
+        "observedProperties": ["prop-temp"],
+        "controlledProperties": ["prop-valve"]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/deployments/dep-1"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-1"
+        }
+      ]
+    },
+    {
+      "id": "dep-2",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-71.06, 42.365]
+      },
+      "properties": {
+        "name": "Beta Deployment",
+        "description": "Secondary test deployment for filtering",
+        "featureType": "sosa:Deployment",
+        "parentId": "dep-root",
+        "systemIds": ["sys-3"],
+        "foiIds": ["foi-9"],
+        "observedProperties": ["prop-temp"],
+        "controlledProperties": ["prop-valve"]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/deployments/dep-2"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-3"
+        }
+      ]
+    }
+  ]
+}

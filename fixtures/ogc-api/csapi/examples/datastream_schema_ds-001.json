@@ -1,0 +1,46 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "ObservationSchema",
+  "datastreamId": "ds-001",
+  "obsFormat": "application/json",
+  "properties": {
+    "resultTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "phenomenonTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "observedProperty": {
+      "type": "string"
+    },
+    "procedure": {
+      "type": "string"
+    },
+    "featureOfInterest": {
+      "type": "string"
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        }
+      },
+      "required": ["value"]
+    }
+  },
+  "required": [
+    "resultTime",
+    "phenomenonTime",
+    "observedProperty",
+    "procedure",
+    "featureOfInterest",
+    "result"
+  ]
+}

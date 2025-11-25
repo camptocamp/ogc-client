@@ -1,0 +1,68 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Observation",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "obs-swe-001",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-117.3, 34.2, 340]
+      },
+      "properties": {
+        "phenomenonTime": "2025-11-23T09:00:00Z",
+        "resultTime": "2025-11-23T09:01:30Z",
+        "procedure": "http://example.org/sensors/temp-sensor-001",
+        "observedProperty": "http://mmisw.org/ont/cf/parameter/air_temperature",
+        "result": {
+          "type": "DataRecord",
+          "fields": [
+            {
+              "name": "temperature",
+              "type": "Quantity",
+              "definition": "http://mmisw.org/ont/cf/parameter/air_temperature",
+              "uom": {
+                "code": "degC"
+              },
+              "value": 22.4
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "obs-swe-002",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-117.3, 34.2, 340]
+      },
+      "properties": {
+        "phenomenonTime": "2025-11-23T09:05:00Z",
+        "resultTime": "2025-11-23T09:06:30Z",
+        "procedure": "http://example.org/sensors/temp-sensor-001",
+        "observedProperty": "http://mmisw.org/ont/cf/parameter/air_temperature",
+        "result": {
+          "type": "DataArray",
+          "elementCount": 3,
+          "elementType": {
+            "name": "temperature",
+            "type": "Quantity",
+            "definition": "http://mmisw.org/ont/cf/parameter/air_temperature",
+            "uom": {
+              "code": "degC"
+            }
+          },
+          "encoding": {
+            "type": "TextEncoding",
+            "tokenSeparator": ",",
+            "blockSeparator": ";"
+          },
+          "values": "23.1,23.5,23.8"
+        }
+      }
+    }
+  ]
+}

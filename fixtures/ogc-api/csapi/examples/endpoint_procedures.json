@@ -1,0 +1,19 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Procedure",
+  "features": [
+    {
+      "id": "proc-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "name": "Example Procedure",
+        "description": "Stub Procedure entry for canonical endpoint tests",
+        "method": "Calibration",
+        "documentation": "https://example.csapi.server/procedures/proc-001"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "id": "obs-001",
+  "type": "Feature",
+  "geometry": null,
+  "properties": {
+    "phenomenonTime": "2025-01-01T00:00:00Z",
+    "resultTime": "2025-01-01T00:00:10Z",
+    "result": 23.5,
+    "observedProperty": {
+      "id": "prop-001"
+    },
+    "datastream": {
+      "id": "ds-001"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "id": "ds-001",
+  "type": "Feature",
+  "geometry": null,
+  "properties": {
+    "name": "Example Datastream",
+    "observedProperty": {
+      "id": "prop-001"
+    },
+    "procedure": {
+      "id": "proc-001"
+    },
+    "featureOfInterest": {
+      "id": "sf-001"
+    }
+  }
+}

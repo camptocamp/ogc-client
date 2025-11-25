@@ -1,0 +1,17 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "id": "cmd-001",
+  "type": "Feature",
+  "geometry": null,
+  "properties": {
+    "name": "Example Command",
+    "description": "Test fixture for single Command resource",
+    "target": {
+      "id": "sys-001"
+    },
+    "parameters": {
+      "mode": "auto"
+    }
+  }
+}

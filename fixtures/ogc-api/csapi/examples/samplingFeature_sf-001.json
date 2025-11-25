@@ -1,0 +1,14 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "id": "sf-001",
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [0, 0]
+  },
+  "properties": {
+    "name": "Example Sampling Feature",
+    "description": "Test fixture for single Sampling Feature resource"
+  }
+}

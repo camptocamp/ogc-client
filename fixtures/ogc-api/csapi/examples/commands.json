@@ -1,0 +1,25 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Command",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "cmd-001",
+      "geometry": null,
+      "properties": {
+        "featureType": "sosa:Command",
+        "controlStream": {
+          "id": "ctrl-001"
+        },
+        "status": {
+          "href": "https://example.csapi.server/commands/cmd-001/status"
+        },
+        "result": {
+          "href": "https://example.csapi.server/commands/cmd-001/result"
+        }
+      }
+    }
+  ]
+}

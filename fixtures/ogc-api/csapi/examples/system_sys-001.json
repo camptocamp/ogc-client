@@ -1,0 +1,47 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "Feature",
+  "id": "sys-001",
+  "itemType": "System",
+  "properties": {
+    "name": "WeatherStation-001",
+    "description": "Primary environmental monitoring system located at Site A.",
+    "status": "operational",
+    "manufacturer": "OGC Test Systems Inc.",
+    "deployment": {
+      "id": "dep-001",
+      "href": "https://example.csapi.server/deployments/dep-001"
+    }
+  },
+  "geometry": {
+    "type": "Point",
+    "coordinates": [8.55, 47.36]
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.csapi.server/systems/sys-001",
+      "type": "application/geo+json",
+      "title": "System sys-001"
+    },
+    {
+      "rel": "collection",
+      "href": "https://example.csapi.server/systems",
+      "type": "application/json",
+      "title": "Systems Collection"
+    },
+    {
+      "rel": "events",
+      "href": "https://example.csapi.server/systems/sys-001/events",
+      "type": "application/geo+json",
+      "title": "System Events"
+    },
+    {
+      "rel": "deployment",
+      "href": "https://example.csapi.server/deployments/dep-001",
+      "type": "application/json",
+      "title": "Deployment dep-001"
+    }
+  ]
+}

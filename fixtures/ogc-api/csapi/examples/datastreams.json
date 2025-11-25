@@ -1,0 +1,37 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Datastream",
+  "features": [
+    {
+      "id": "ds-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "name": "DatastreamA",
+        "description": "Example Datastream fixture for CSAPI Part 2 linkage testing",
+        "system": {
+          "id": "sys-001"
+        },
+        "systemId": "sys-001",
+        "systemIds": ["sys-001"],
+        "deployment": {
+          "id": "dep-001"
+        },
+        "deploymentId": "dep-001",
+        "deploymentIds": ["dep-001"]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/datastreams/ds-001"
+        },
+        {
+          "rel": "observations",
+          "href": "https://example.csapi.server/observations"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "id": "dep-001",
+  "type": "Feature",
+  "geometry": null,
+  "properties": {
+    "name": "Example Deployment",
+    "description": "Test fixture for single Deployment resource",
+    "system": {
+      "id": "sys-001"
+    }
+  }
+}

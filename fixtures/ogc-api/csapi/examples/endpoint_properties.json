@@ -1,0 +1,19 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Property",
+  "features": [
+    {
+      "id": "prop-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "name": "temperature",
+        "definition": "http://qudt.org/vocab/quantitykind/Temperature",
+        "unit": "http://qudt.org/vocab/unit/DegreeCelsius",
+        "description": "Stub Property entry for canonical endpoint tests"
+      }
+    }
+  ]
+}

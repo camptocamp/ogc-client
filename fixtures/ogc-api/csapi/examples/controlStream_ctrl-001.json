@@ -1,0 +1,14 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "id": "ctrl-001",
+  "type": "Feature",
+  "geometry": null,
+  "properties": {
+    "name": "Example Control Stream",
+    "description": "Test fixture for single Control Stream resource",
+    "controlledSystem": {
+      "id": "sys-001"
+    }
+  }
+}

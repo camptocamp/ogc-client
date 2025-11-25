@@ -1,0 +1,90 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Procedure",
+  "features": [
+    {
+      "id": "proc-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "name": "Standard Weather Monitoring Protocol",
+        "description": "Standard procedure for continuous weather data collection",
+        "featureType": "sosa:Procedure",
+        "method": "Automated continuous monitoring with calibration every 6 months",
+        "documentation": "https://example.csapi.server/docs/procedures/weather-monitoring-v1.0.pdf",
+        "observedProperties": ["prop-temp", "prop-humidity"],
+        "controlledProperties": []
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/procedures/proc-001",
+          "title": "This procedure"
+        },
+        {
+          "rel": "systems",
+          "href": "https://example.csapi.server/systems?procedure=proc-001",
+          "title": "Systems using this procedure"
+        }
+      ]
+    },
+    {
+      "id": "proc-002",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "name": "Air Quality Sampling Protocol",
+        "description": "Protocol for particulate matter and gas concentration measurement",
+        "featureType": "sosa:Procedure",
+        "method": "Continuous optical sensing with hourly aggregation",
+        "observedProperties": ["prop-pm25", "prop-ozone"],
+        "controlledProperties": []
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/procedures/proc-002"
+        }
+      ]
+    },
+    {
+      "id": "proc-003",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "name": "Seismic Monitoring Protocol",
+        "description": "High-frequency ground motion monitoring procedure",
+        "featureType": "sosa:Procedure",
+        "method": "100Hz triaxial accelerometer with real-time trigger detection",
+        "observedProperties": ["prop-acceleration", "prop-velocity"],
+        "controlledProperties": []
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/procedures/proc-003"
+        }
+      ]
+    },
+    {
+      "id": "proc-2",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "name": "Advanced Filter Test Procedure",
+        "description": "Test procedure for advanced filtering scenarios",
+        "featureType": "sosa:Procedure",
+        "observedProperties": ["prop-temp"],
+        "controlledProperties": ["prop-valve"]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/procedures/proc-2"
+        }
+      ]
+    }
+  ]
+}

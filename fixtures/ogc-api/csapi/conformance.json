@@ -1,0 +1,14 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "conformsTo": [
+    "http://www.opengis.net/spec/ogcapi-common-2/1.0/req/core",
+    "http://www.opengis.net/spec/ogcapi-common-2/1.0/req/collections",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/req/core",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/req/collections",
+    "http://www.opengis.net/spec/ogcapi-connected-systems-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-connected-systems-1/1.0/conf/collections",
+    "http://www.opengis.net/spec/ogcapi-connected-systems-2/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-connected-systems-2/1.0/conf/dynamic-data"
+  ]
+}

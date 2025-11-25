@@ -13,6 +13,7 @@ The following standards are partially implemented:
 - WFS - _Web Feature Service_
 - WMTS - _Web Map Tile Service_
 - OGC API (Records and Features)
+- OGC API - Connected Systems (CSAPI)
 - TMS - _Tile Map Service_
 - STAC API - _SpatioTemporal Asset Catalog_
 
@@ -36,7 +37,13 @@ $ npm install --save @camptocamp/ogc-client
 To use, import API symbols like so:
 
 ```js
-import { WmsEndpoint, WfsEndpoint, StacEndpoint } from '@camptocamp/ogc-client';
+import {
+  WmsEndpoint,
+  WfsEndpoint,
+  StacEndpoint,
+  SystemsClient,
+  DatastreamsClient,
+} from '@camptocamp/ogc-client';
 ```
 
 Note: if you want to disable web worker usage, for example to solve issues with the `Referer` header on outgoing
@@ -80,10 +87,12 @@ You will need to supply it with valid OGC service urls.
 See the [`examples/`](./examples/) directory for more complete examples, including:
 
 - `examples/stac-query.js` - Full STAC API query example with spatial and temporal filters
+- `examples/csapi-demo.js` - OGC API - Connected Systems example demonstrating systems, datastreams, and observations
 
 Run examples with:
 
 ```bash
 npm run build
 node examples/stac-query.js
+node examples/csapi-demo.js
 ```
