@@ -1,0 +1,20 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "ControlCommandSchema",
+  "controlStreamId": "ctrl-001",
+  "cmdFormat": "application/json",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "commandTime": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "target": {
+        "type": "string"
+      }
+    },
+    "required": ["commandTime", "target"]
+  }
+}

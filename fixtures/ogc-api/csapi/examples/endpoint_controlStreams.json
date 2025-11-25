@@ -1,0 +1,19 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "ControlStream",
+  "features": [
+    {
+      "id": "ctrl-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "name": "Example Control Stream",
+        "source": "cmd-001",
+        "targetSystem": "sys-001",
+        "description": "Stub ControlStream entry for canonical endpoint tests"
+      }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "SystemEvent",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "evt-001",
+      "geometry": null,
+      "properties": {
+        "name": "Temperature Sensor Calibration",
+        "eventType": "calibration",
+        "timestamp": "2025-05-01T08:30:00Z",
+        "system": {
+          "id": "sys-001",
+          "href": "https://example.csapi.server/systems/sys-001"
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/systemEvents/evt-001"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-001"
+        }
+      ]
+    },
+    {
+      "type": "Feature",
+      "id": "evt-002",
+      "geometry": null,
+      "properties": {
+        "name": "Maintenance Alert",
+        "eventType": "alert",
+        "timestamp": "2025-05-10T14:45:00Z",
+        "system": {
+          "id": "sys-002",
+          "href": "https://example.csapi.server/systems/sys-002"
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/systemEvents/evt-002"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-002"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.csapi.server/systemEvents"
+    },
+    {
+      "rel": "collection",
+      "href": "https://example.csapi.server/systemEvents"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "SamplingFeature",
+  "features": [
+    {
+      "id": "sf-001",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.4194, 37.7749]
+      },
+      "properties": {
+        "name": "Urban Monitoring Site",
+        "description": "Primary sampling location for urban environment monitoring",
+        "featureType": "sosa:SamplingFeature",
+        "systemIds": ["sys-001"],
+        "systemId": "sys-001",
+        "system": {
+          "id": "sys-001"
+        },
+        "foiIds": ["foi-001"],
+        "observedProperties": ["prop-temp", "prop-humidity"],
+        "controlledProperties": []
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/samplingFeatures/sf-001",
+          "title": "This sampling feature"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-001",
+          "title": "Related system"
+        },
+        {
+          "rel": "observations",
+          "href": "https://example.csapi.server/observations?samplingFeature=sf-001",
+          "title": "Observations at this location"
+        }
+      ]
+    },
+    {
+      "id": "sf-002",
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-122.4194, 37.7749],
+          [-122.4, 37.79]
+        ]
+      },
+      "properties": {
+        "name": "Urban Transect",
+        "description": "Linear sampling path across urban area",
+        "featureType": "sosa:SamplingFeature",
+        "systemIds": ["sys-002"],
+        "foiIds": ["foi-002"],
+        "observedProperties": ["prop-pm25"],
+        "controlledProperties": []
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/samplingFeatures/sf-002"
+        },
+        {
+          "rel": "system",
+          "href": "https://example.csapi.server/systems/sys-002"
+        }
+      ]
+    },
+    {
+      "id": "sf-9",
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-71.0589, 42.3601]
+      },
+      "properties": {
+        "name": "Advanced Filter Test Site",
+        "description": "Sampling feature for testing advanced filtering",
+        "featureType": "sosa:SamplingFeature",
+        "foiIds": ["foi-9"],
+        "observedProperties": ["prop-temp"],
+        "controlledProperties": ["prop-valve"]
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://example.csapi.server/samplingFeatures/sf-9"
+        }
+      ]
+    }
+  ]
+}

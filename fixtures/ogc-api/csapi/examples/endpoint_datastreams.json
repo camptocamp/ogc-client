@@ -1,0 +1,19 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Datastream",
+  "features": [
+    {
+      "id": "ds-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "name": "Example Datastream",
+        "description": "Stub Datastream for canonical endpoint tests",
+        "observedProperty": "temperature",
+        "system": "sys-001"
+      }
+    }
+  ]
+}

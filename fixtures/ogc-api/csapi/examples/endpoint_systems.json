@@ -1,0 +1,23 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "System",
+  "features": [
+    {
+      "id": "sys-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "name": "Example System",
+        "description": "Stub System entry for endpoint tests",
+        "properties": [
+          {
+            "name": "temperature",
+            "unit": "http://qudt.org/vocab/unit/DegreeCelsius"
+          }
+        ]
+      }
+    }
+  ]
+}

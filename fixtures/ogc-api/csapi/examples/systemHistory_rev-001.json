@@ -1,0 +1,24 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "id": "rev-001",
+  "type": "Feature",
+  "geometry": null,
+  "properties": {
+    "systemId": "sys-001",
+    "revisionTimestamp": "2025-02-10T08:00:00Z",
+    "version": "v1.2.3",
+    "changeDescription": "Firmware updated to v1.2.3 for new protocol compliance.",
+    "author": "admin@example.com"
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.csapi.server/systemHistory/rev-001"
+    },
+    {
+      "rel": "system",
+      "href": "https://example.csapi.server/systems/sys-001"
+    }
+  ]
+}

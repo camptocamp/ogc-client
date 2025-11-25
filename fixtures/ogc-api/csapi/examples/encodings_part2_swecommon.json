@@ -1,0 +1,40 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "Datastream",
+  "id": "ds-001",
+  "name": "Temperature Datastream",
+  "description": "Datastream for temperature measurements using SWE Common encoding",
+  "encoding": "SWE Common 3.0 JSON",
+  "observedProperty": {
+    "name": "Air Temperature",
+    "definition": "http://mmisw.org/ont/cf/parameter/air_temperature"
+  },
+  "resultSchema": {
+    "type": "DataRecord",
+    "definition": "http://www.opengis.net/def/property/OGC/0/SamplingTime",
+    "fields": [
+      {
+        "name": "phenomenonTime",
+        "type": "Time",
+        "definition": "http://www.opengis.net/def/property/OGC/0/PhenomenonTime",
+        "uom": {
+          "code": "ISO8601"
+        }
+      },
+      {
+        "name": "result",
+        "type": "Quantity",
+        "definition": "http://mmisw.org/ont/cf/parameter/air_temperature",
+        "uom": {
+          "code": "degC"
+        }
+      }
+    ]
+  },
+  "observationEncoding": {
+    "type": "TextEncoding",
+    "tokenSeparator": ",",
+    "blockSeparator": "\n"
+  }
+}

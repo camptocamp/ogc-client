@@ -1,0 +1,19 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "SystemHistory",
+  "features": [
+    {
+      "id": "rev-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "systemId": "sys-001",
+        "revisionTimestamp": "2025-02-10T08:00:00Z",
+        "version": "v1.2.3",
+        "changeDescription": "Stub SystemHistory for canonical endpoint tests"
+      }
+    }
+  ]
+}

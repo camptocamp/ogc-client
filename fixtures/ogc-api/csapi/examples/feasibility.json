@@ -1,0 +1,18 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Feasibility",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "feas-001",
+      "geometry": null,
+      "properties": {
+        "result": {
+          "href": "https://example.csapi.server/feasibility/feas-001/result"
+        }
+      }
+    }
+  ]
+}

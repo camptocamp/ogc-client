@@ -1,0 +1,46 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeatureCollection",
+  "itemType": "Observation",
+  "features": [
+    {
+      "id": "obs-001",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "datastream": {
+          "id": "ds-001"
+        },
+        "resultTime": "2025-01-01T00:00:00Z",
+        "phenomenonTime": "2025-01-01T00:00:00Z",
+        "observedProperty": "temperature",
+        "procedure": "proc-001",
+        "featureOfInterest": "foi-001",
+        "result": {
+          "value": 12.34,
+          "unit": "degC"
+        }
+      }
+    },
+    {
+      "id": "obs-002",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "datastream": {
+          "id": "ds-001"
+        },
+        "resultTime": "2025-01-01T00:05:00Z",
+        "phenomenonTime": "2025-01-01T00:05:00Z",
+        "observedProperty": "temperature",
+        "procedure": "proc-001",
+        "featureOfInterest": "foi-001",
+        "result": {
+          "value": 12.55,
+          "unit": "degC"
+        }
+      }
+    }
+  ]
+}

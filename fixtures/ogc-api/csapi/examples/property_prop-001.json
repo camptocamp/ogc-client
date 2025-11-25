@@ -1,0 +1,12 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "id": "prop-001",
+  "type": "Feature",
+  "geometry": null,
+  "properties": {
+    "name": "Temperature",
+    "definition": "http://qudt.org/vocab/quantitykind/Temperature",
+    "uom": "degC"
+  }
+}

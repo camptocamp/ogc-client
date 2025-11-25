@@ -1,0 +1,11 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "type": "FeasibilityResult",
+  "id": "feas-001",
+  "status": "planned",
+  "details": {
+    "startTime": "2023-06-01T09:00:00Z",
+    "stopTime": "2023-07-01T09:00:00Z"
+  }
+}

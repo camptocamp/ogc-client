@@ -1,0 +1,59 @@
+{
+  "_license": "BSD-3-Clause",
+  "_copyright": "Copyright (c) 2024 OS4CSAPI contributors",
+  "title": "Connected Systems API Landing Page",
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://example.csapi.server/"
+    },
+    {
+      "rel": "systems",
+      "href": "https://example.csapi.server/systems"
+    },
+    {
+      "rel": "deployments",
+      "href": "https://example.csapi.server/deployments"
+    },
+    {
+      "rel": "procedures",
+      "href": "https://example.csapi.server/procedures"
+    },
+    {
+      "rel": "samplingFeatures",
+      "href": "https://example.csapi.server/samplingFeatures"
+    },
+    {
+      "rel": "properties",
+      "href": "https://example.csapi.server/properties"
+    },
+    {
+      "rel": "datastreams",
+      "href": "https://example.csapi.server/datastreams"
+    },
+    {
+      "rel": "observations",
+      "href": "https://example.csapi.server/observations"
+    },
+    {
+      "rel": "controlstreams",
+      "href": "https://example.csapi.server/controlstreams"
+    },
+    {
+      "rel": "commands",
+      "href": "https://example.csapi.server/commands"
+    },
+    {
+      "rel": "feasibility",
+      "href": "https://example.csapi.server/feasibility"
+    },
+    {
+      "rel": "systemEvents",
+      "href": "https://example.csapi.server/systemEvents"
+    },
+    {
+      "rel": "systemHistory",
+      "href": "https://example.csapi.server/systemHistory"
+    }
+  ]
+}
