@@ -3,6 +3,7 @@ import {
   CollectionParameterType,
   CollectionParameterTypes,
   ConformanceClass,
+  CSAPICapabilities,
   OgcApiCollectionInfo,
   OgcApiDocument,
   OgcApiEndpointInfo,
@@ -101,6 +102,96 @@ export function checkHasEnvironmentalDataRetrieval([conformance]: [
       'http://www.opengis.net/spec/ogcapi-edr-1/1.0/conf/core'
     ) > -1
   );
+}
+
+// -----------------------------------------------------------------------------
+// Connected Systems API — Conformance Detection
+// Mirrors checkHasEnvironmentalDataRetrieval pattern
+// -----------------------------------------------------------------------------
+export function checkHasConnectedSystemsApi([conformance]: [
+  ConformanceClass[]
+]) {
+  if (!conformance || !Array.isArray(conformance)) return false;
+
+  return conformance.some(
+    (uri) =>
+      typeof uri === 'string' &&
+      (uri.includes('ogcapi-connected-systems-1/1.0/conf/core') ||
+        uri.includes('ogcapi-connected-systems-2/1.0/conf/dynamic-data'))
+  );
+}
+
+/**
+ * Checks for CSAPI resource availability based on root document links and collections.
+ * Returns granular capabilities for each CSAPI resource type.
+ */
+export function parseCSAPICapabilities(
+  rootDoc: OgcApiDocument | null,
+  dataDoc: OgcApiDocument | null,
+  conformance: ConformanceClass[]
+): CSAPICapabilities {
+  // Default all capabilities to false
+  const capabilities: CSAPICapabilities = {
+    hasSystems: false,
+    hasDatastreams: false,
+    hasObservations: false,
+    hasDeployments: false,
+    hasProcedures: false,
+    hasSamplingFeatures: false,
+    hasProperties: false,
+    hasCommands: false,
+    hasControlStreams: false,
+    hasSystemEvents: false,
+    hasSystemHistory: false,
+    hasFeasibility: false,
+  };
+
+  // Check if CSAPI is supported at all
+  if (!checkHasConnectedSystemsApi([conformance])) {
+    return capabilities;
+  }
+
+  // Helper to check if a resource link exists in root document
+  const hasLinkToResource = (resourceName: string): boolean => {
+    if (!rootDoc?.links) return false;
+    return rootDoc.links.some(
+      (link) =>
+        link.href?.toLowerCase().includes(`/${resourceName.toLowerCase()}`) ||
+        link.rel?.toLowerCase().includes(resourceName.toLowerCase())
+    );
+  };
+
+  // Helper to check if a collection exists
+  const hasCollection = (collectionName: string): boolean => {
+    if (!dataDoc?.collections) return false;
+    return dataDoc.collections.some(
+      (col) => col.id?.toLowerCase() === collectionName.toLowerCase()
+    );
+  };
+
+  // Check each resource type via links or collections
+  // Resource names from CSAPI spec
+  const resourceChecks: [keyof CSAPICapabilities, string][] = [
+    ['hasSystems', 'systems'],
+    ['hasDatastreams', 'datastreams'],
+    ['hasObservations', 'observations'],
+    ['hasDeployments', 'deployments'],
+    ['hasProcedures', 'procedures'],
+    ['hasSamplingFeatures', 'samplingFeatures'],
+    ['hasProperties', 'properties'],
+    ['hasCommands', 'commands'],
+    ['hasControlStreams', 'controlStreams'],
+    ['hasSystemEvents', 'systemEvents'],
+    ['hasSystemHistory', 'systemHistory'],
+    ['hasFeasibility', 'feasibility'],
+  ];
+
+  for (const [capabilityKey, resourceName] of resourceChecks) {
+    capabilities[capabilityKey] =
+      hasLinkToResource(resourceName) || hasCollection(resourceName);
+  }
+
+  return capabilities;
 }
 
 /**
