@@ -13,6 +13,9 @@ export default defineConfig([
     plugins: {
       import: importEslintPlugin,
     },
+    languageOptions: {
+      globals: { ...globals.node, ...globals.browser },
+    },
     rules: {
       'import/extensions': [
         'error',
