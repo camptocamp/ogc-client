@@ -40,7 +40,7 @@ beforeAll(() => {
     const filePath = `${path.join(FIXTURES_ROOT, queryPath)}.json`;
     try {
       await stat(filePath);
-    } catch (e) {
+    } catch {
       return {
         ok: false,
         status: 404,
@@ -106,9 +106,11 @@ describe('StacEndpoint', () => {
       it('uses shared fetch for caching', async () => {
         jest.clearAllMocks();
         // Create the endpoint three times separately
-        new StacEndpoint('http://local/stac-api/').info;
-        new StacEndpoint('http://local/stac-api/').info;
-        new StacEndpoint('http://local/stac-api/').info;
+        await Promise.all([
+          new StacEndpoint('http://local/stac-api/').info,
+          new StacEndpoint('http://local/stac-api/').info,
+          new StacEndpoint('http://local/stac-api/').info,
+        ]);
         expect(globalThis.fetch).toHaveBeenCalledTimes(1);
       });
     });

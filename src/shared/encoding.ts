@@ -30,7 +30,7 @@ export function decodeString(
     try {
       const decoder = new TextDecoder(encoding, { fatal: true });
       return decoder.decode(buffer);
-    } catch (e) {
+    } catch {
       // an error means either decoding failed or the provided encoding was not recognized; skip to the next one
     }
   }
