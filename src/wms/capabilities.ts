@@ -196,7 +196,7 @@ function parseLayer(
       hasInvertedCoordinates(srs) && version === '1.3.0'
         ? ['miny', 'minx', 'maxy', 'maxx']
         : ['minx', 'miny', 'maxx', 'maxy'];
-    return attrs.map((name) => getElementAttribute(bboxEl, name));
+    return attrs.map((name) => parseFloat(getElementAttribute(bboxEl, name)));
   }
   function parseExGeographicBoundingBox(bboxEl) {
     return [
@@ -204,11 +204,11 @@ function parseLayer(
       'southBoundLatitude',
       'eastBoundLongitude',
       'northBoundLatitude',
-    ].map((name) => getElementText(findChildElement(bboxEl, name)));
+    ].map((name) => parseFloat(getElementText(findChildElement(bboxEl, name))));
   }
   function parseLatLonBoundingBox(bboxEl) {
     return ['minx', 'miny', 'maxx', 'maxy'].map((name) =>
-      getElementAttribute(bboxEl, name)
+      parseFloat(getElementAttribute(bboxEl, name))
     );
   }
   function parseScaleHintValue(textValue, defaultValue) {
