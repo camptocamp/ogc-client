@@ -1,4 +1,5 @@
 import { Feature, Geometry } from 'geojson';
+import { BoundingBox } from '../shared/models';
 
 /**
  * STAC specification version 1.0.0
@@ -10,7 +11,7 @@ export type StacVersion = '1.0.0';
  * or [minx, miny, minz, maxx, maxy, maxz] for 3D
  */
 export type StacBBox =
-  | [number, number, number, number]
+  | BoundingBox
   | [number, number, number, number, number, number];
 
 /**

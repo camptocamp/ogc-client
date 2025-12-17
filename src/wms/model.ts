@@ -4,6 +4,7 @@ import {
   LayerStyle,
   type MetadataURL,
 } from '../shared/models.js';
+import { BaseLayerCore } from '../shared/base-layer';
 
 export type WmsLayerAttribution = {
   title?: string;
@@ -11,26 +12,17 @@ export type WmsLayerAttribution = {
   logoUrl?: string;
 };
 
-export type WmsLayerSummary = {
-  /**
-   * The layer is renderable if defined
-   */
-  name?: string;
-  title: string;
-  abstract?: string;
+export interface WmsLayerSummary extends BaseLayerCore {
   /**
    * Not defined if the layer is a leaf in the tree
    */
   children?: WmsLayerSummary[];
-};
+}
 
-export type WmsLayerFull = {
+export interface WmsLayerFull extends Exclude<WmsLayerSummary, 'children'> {
   /**
    * The layer is renderable if defined
    */
-  name?: string;
-  title: string;
-  abstract?: string;
   availableCrs: CrsCode[];
   styles: LayerStyle[];
   /**
@@ -48,6 +40,6 @@ export type WmsLayerFull = {
    * Not defined if the layer is a leaf in the tree
    */
   children?: WmsLayerFull[];
-};
+}
 
 export type WmsVersion = '1.1.0' | '1.1.1' | '1.3.0';

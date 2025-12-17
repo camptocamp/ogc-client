@@ -10,13 +10,15 @@ import {
   type OperationName,
   type OperationUrl,
 } from '../shared/models.js';
+import { BaseEndpoint } from '../shared/base-endpoint.js';
+import type { BaseLayerExtended } from '../shared/base-layer.js';
 import { WmsLayerFull, WmsLayerSummary, WmsVersion } from './model.js';
 import { generateGetMapUrl } from './url.js';
 
 /**
  * Represents a WMS endpoint advertising several layers arranged in a tree structure.
  */
-export default class WmsEndpoint {
+export default class WmsEndpoint implements BaseEndpoint {
   private _capabilitiesUrl: string;
   private _capabilitiesPromise: Promise<void>;
   private _info: GenericEndpointInfo | null;
@@ -66,15 +68,16 @@ export default class WmsEndpoint {
   }
 
   /**
-   * Returns an array of layers in summary format; layers are organized in a tree
-   * structure with each having an optional `children` property
+   * Returns an array of layers in tree structure with summary information.
+   * This preserves the WMS hierarchical layer organization.
+   * For a flat list, use getLayers() instead.
    */
-  getLayers() {
+  getLayersTree() {
     function layerSummaryMapper(layerFull) {
       return {
         title: layerFull.title,
-        name: layerFull.name,
-        abstract: layerFull.abstract,
+        id: layerFull.id,
+        description: layerFull.description,
         ...('children' in layerFull && {
           children: layerFull.children.map(layerSummaryMapper),
         }),
@@ -84,10 +87,30 @@ export default class WmsEndpoint {
   }
 
   /**
-   * Returns a array of layers, same as WmsEndpoint.getLayers(), but flattened
+   * Returns a flat array of all layers in normalized format.
+   * Implements the BaseEndpoint generic interface.
+   * @returns Array of layers with extended information
+   */
+  getLayers(): WmsLayerSummary[] {
+    return this.getFlattenedLayers();
+  }
+
+  /**
+   * Get a specific layer by its identifier in normalized format.
+   * Implements the BaseEndpoint generic interface.
+   * @param id The layer name (WMS uses 'name' as identifier)
+   * @returns Layer with extended information, or null if not found
+   */
+  getLayerById(id: string): BaseLayerExtended | null {
+    return this.getLayerByName(id);
+  }
+
+  /**
+   * Returns a array of layers in flattened format (WMS-specific summary format).
+   * For normalized BaseLayer format, use getLayers() instead.
    */
   getFlattenedLayers() {
-    return this.getLayers().flatMap(wmsLayerFlatten);
+    return this.getLayersTree().flatMap(wmsLayerFlatten);
   }
 
   /**
@@ -119,7 +142,7 @@ export default class WmsEndpoint {
     if (!this._layers) return null;
     const layers: WmsLayerFull[] = [];
     function layerLookup(layer: WmsLayerFull) {
-      if (layer.name) {
+      if (layer.id) {
         layers.push(layer);
       }
       if ('children' in layer) {
@@ -127,7 +150,7 @@ export default class WmsEndpoint {
       }
     }
     this._layers.map(layerLookup);
-    if (layers.length === 1) return layers[0].name;
+    if (layers.length === 1) return layers[0].id;
     return null;
   }
 
@@ -217,7 +240,7 @@ function wmsLayerFlatten(layerFull) {
   const layer = {
     title: layerFull.title,
     name: layerFull.name,
-    abstract: layerFull.abstract,
+    description: layerFull.description,
   };
 
   return 'children' in layerFull && Array.isArray(layerFull.children)
