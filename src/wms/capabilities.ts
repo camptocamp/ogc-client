@@ -318,9 +318,9 @@ function parseLayer(
     )
   );
   return {
-    name: getElementText(findChildElement(layerEl, 'Name')),
+    id: getElementText(findChildElement(layerEl, 'Name')),
     title: getElementText(findChildElement(layerEl, 'Title')),
-    abstract: getElementText(findChildElement(layerEl, 'Abstract')),
+    description: getElementText(findChildElement(layerEl, 'Abstract')),
     availableCrs,
     styles,
     attribution,
