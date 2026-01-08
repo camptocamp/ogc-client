@@ -1,5 +1,5 @@
 {
-  "name": "@camptocamp/ogc-client",
+  "name": "@geointel/ogc-client",
   "version": "1.3.1-dev",
   "description": "A Typescript library for interacting with geospatial services.",
   "main": "./dist/dist-node.js",
