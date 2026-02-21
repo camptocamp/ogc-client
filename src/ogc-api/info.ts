@@ -104,6 +104,25 @@ export function checkHasEnvironmentalDataRetrieval([conformance]: [
 }
 
 /**
+ * Checks whether the endpoint supports OGC API - Connected Systems.
+ * Returns true if conformance includes Part 1 Core or Part 2 Dynamic Data.
+ * @see https://docs.ogc.org/is/23-001/23-001.html
+ * @see https://docs.ogc.org/is/23-002/23-002.html
+ */
+export function checkHasConnectedSystems([conformance]: [
+  ConformanceClass[]
+]) {
+  return (
+    conformance.indexOf(
+      'http://www.opengis.net/spec/ogcapi-connectedsystems-1/1.0/conf/core'
+    ) > -1 ||
+    conformance.indexOf(
+      'http://www.opengis.net/spec/ogcapi-connectedsystems-2/1.0/conf/dynamic-data'
+    ) > -1
+  );
+}
+
+/**
  * This does not include queryables and sortables!
  */
 export function parseBaseCollectionInfo(
@@ -233,6 +252,7 @@ export function parseCollections(doc: OgcApiDocument): Array<{
   hasVectorTiles?: boolean;
   hasMapTiles?: boolean;
   hasDataQueries?: boolean;
+  hasConnectedSystems?: boolean;
 }> {
   return doc.collections.map((collection) => {
     const result: {
@@ -242,6 +262,7 @@ export function parseCollections(doc: OgcApiDocument): Array<{
       hasVectorTiles?: boolean;
       hasMapTiles?: boolean;
       hasDataQueries?: boolean;
+      hasConnectedSystems?: boolean;
     } = {
       name: collection.id as string,
     };
@@ -270,6 +291,16 @@ export function parseCollections(doc: OgcApiDocument): Array<{
 
     if (collection.data_queries) {
       result.hasDataQueries = true;
+    }
+
+    if (
+      Array.isArray(collection.links) &&
+      collection.links.some(
+        (link) =>
+          typeof link.rel === 'string' && /^ogc-cs:.+$/.test(link.rel)
+      )
+    ) {
+      result.hasConnectedSystems = true;
     }
 
     return result;

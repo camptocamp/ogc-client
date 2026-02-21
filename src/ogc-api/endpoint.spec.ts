@@ -2832,3 +2832,56 @@ describe('OgcApiEndpoint with EDR', () => {
     });
   });
 });
+
+describe('OgcApiEndpoint with CSAPI', () => {
+  let endpoint: OgcApiEndpoint;
+  describe('nominal case', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint('http://local/csapi/sample-data-hub');
+    });
+
+    it('detects Connected Systems support', async () => {
+      await expect(endpoint.hasConnectedSystems).resolves.toBe(true);
+    });
+
+    it('can list all CSAPI collections', async () => {
+      await expect(endpoint.csapiCollections).resolves.toEqual([
+        'iot-sensors',
+      ]);
+    });
+
+    it('can produce a CSAPI query builder', async () => {
+      const builder = await endpoint.csapi('iot-sensors');
+      expect(builder).toBeTruthy();
+      expect(builder.availableResources).toEqual(
+        new Set(['systems', 'deployments', 'datastreams'])
+      );
+    });
+
+    it('caches the CSAPI query builder', async () => {
+      const spy = jest.spyOn(endpoint as any, 'getCollectionDocument');
+
+      const builder1 = await endpoint.csapi('iot-sensors');
+      const builder2 = await endpoint.csapi('iot-sensors');
+
+      expect(builder1).toBe(builder2);
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('non-CSAPI endpoint', () => {
+    beforeEach(() => {
+      endpoint = new OgcApiEndpoint('http://local/sample-data/');
+    });
+
+    it('reports no Connected Systems support', async () => {
+      await expect(endpoint.hasConnectedSystems).resolves.toBe(false);
+    });
+
+    it('throws an error when calling csapi()', async () => {
+      await expect(endpoint.csapi('any-collection')).rejects.toThrow(
+        EndpointError
+      );
+    });
+  });
+});

@@ -1,4 +1,5 @@
 import {
+  checkHasConnectedSystems,
   checkHasEnvironmentalDataRetrieval,
   checkHasFeatures,
   checkHasRecords,
@@ -48,6 +49,8 @@ import {
 } from '../shared/mime-type.js';
 import { getBaseUrl, getChildPath } from '../shared/url-utils.js';
 import EDRQueryBuilder from './edr/url_builder.js';
+import CSAPIQueryBuilder from './csapi/url_builder.js';
+import { scanCsapiLinks } from './csapi/helpers.js';
 
 /**
  * Represents an OGC API endpoint advertising various collections and services.
@@ -62,11 +65,13 @@ export default class OgcApiEndpoint {
   private styles_: Promise<OgcApiStylesDocument>;
   private collection_id_to_edr_builder_: Map<string, EDRQueryBuilder> =
     new Map();
+  private collection_id_to_csapi_builder_: Map<string, CSAPIQueryBuilder> =
+    new Map();
 
   private get root(): Promise<OgcApiDocument> {
     if (!this.root_) {
       this.root_ = fetchRoot(this.baseUrl).catch((e) => {
-        throw new Error(`The endpoint appears non-conforming, the following error was encountered:
+        throw new EndpointError(`The endpoint appears non-conforming, the following error was encountered:
 ${e.message}`);
       });
     }
@@ -171,6 +176,7 @@ ${e.message}`);
       hasVectorTiles?: boolean;
       hasMapTiles?: boolean;
       hasDataQueries?: boolean;
+      hasConnectedSystems?: boolean;
     }[]
   > {
     return this.data.then((dataDocument) =>
@@ -205,6 +211,33 @@ ${e.message}`);
       .then(([data, hasEDR]) => (hasEDR ? data : { collections: [] }))
       .then(parseCollections)
       .then((collections) => collections.filter((c) => c.hasDataQueries))
+      .then((collections) => collections.map((collection) => collection.name));
+  }
+
+  /**
+   * A Promise which resolves to an array of Connected Systems collection
+   * identifiers as strings.
+   *
+   * Only collections whose links advertise CSAPI resource relations
+   * (e.g., `ogc-cs:systems`, `ogc-cs:datastreams`) are included.
+   *
+   * @example
+   * ```ts
+   * const endpoint = await new OgcApiEndpoint('https://api.example.com');
+   * const collections = await endpoint.csapiCollections;
+   * // => ['weather-stations', 'river-gauges']
+   * ```
+   *
+   * @see {@link hasConnectedSystems} to check feature support first
+   * @see https://docs.ogc.org/is/23-001/23-001.html
+   */
+  get csapiCollections(): Promise<string[]> {
+    return Promise.all([this.data, this.hasConnectedSystems])
+      .then(([data, hasCSAPI]) => (hasCSAPI ? data : { collections: [] }))
+      .then(parseCollections)
+      .then((collections) =>
+        collections.filter((c) => c.hasConnectedSystems)
+      )
       .then((collections) => collections.map((collection) => collection.name));
   }
 
@@ -277,6 +310,32 @@ ${e.message}`);
     );
   }
 
+  /**
+   * A Promise which resolves to a boolean indicating whether the endpoint
+   * offers Connected Systems (CSAPI) resources.
+   *
+   * Checks the endpoint's conformance classes for any of the CSAPI Part 1
+   * or Part 2 conformance URIs.
+   *
+   * @example
+   * ```ts
+   * const endpoint = await new OgcApiEndpoint('https://api.example.com');
+   * if (await endpoint.hasConnectedSystems) {
+   *   const builder = await endpoint.csapi('weather-stations');
+   *   // ... build CSAPI queries
+   * }
+   * ```
+   *
+   * @see {@link csapi} to create a query builder
+   * @see {@link csapiCollections} to list available collections
+   * @see https://docs.ogc.org/is/23-001/23-001.html
+   */
+  get hasConnectedSystems(): Promise<boolean> {
+    return Promise.all([this.conformanceClasses]).then(
+      checkHasConnectedSystems
+    );
+  }
+
   /*
    * A Promise which resolves to a class for constructing EDR queries
    */
@@ -295,10 +354,85 @@ ${e.message}`);
   }
 
   /**
+   * Creates a {@link CSAPIQueryBuilder} for constructing Connected Systems
+   * query URLs against the given collection.
+   *
+   * The builder discovers available resource types by inspecting the
+   * collection's link relations and the root API document. Builders are
+   * cached per collection ID so repeated calls return the same instance.
+   *
+   * @param collectionId - The collection identifier to create a builder for.
+   * @returns A CSAPIQueryBuilder scoped to the specified collection.
+   * @throws {EndpointError} If the endpoint does not support Connected Systems.
+   *
+   * @example
+   * ```ts
+   * const endpoint = await new OgcApiEndpoint('https://api.example.com');
+   * const builder = await endpoint.csapi('weather-stations');
+   *
+   * // List systems with a spatial filter
+   * const url = builder.getSystems({ bbox: [-180, -90, 180, 90], limit: 50 });
+   *
+   * // Get a specific datastream
+   * const dsUrl = builder.getDataStream('ds-001');
+   * ```
+   *
+   * @see {@link hasConnectedSystems} to check feature support first
+   * @see {@link CSAPIQueryBuilder} for all available query methods
+   * @see https://docs.ogc.org/is/23-001/23-001.html
+   * @see https://docs.ogc.org/is/23-002/23-002.html
+   */
+  public async csapi(collectionId: string): Promise<CSAPIQueryBuilder> {
+    if (!(await this.hasConnectedSystems)) {
+      throw new EndpointError(
+        'Endpoint does not support Connected Systems'
+      );
+    }
+    const cache = this.collection_id_to_csapi_builder_;
+    if (cache.has(collectionId)) {
+      return cache.get(collectionId);
+    }
+    // Use getCollectionDocument (raw doc) instead of getCollectionInfo
+    // because parseBaseCollectionInfo strips the links array, and
+    // CSAPIQueryBuilder needs ogc-cs:* link relations to discover resources.
+    const collectionDoc = await this.getCollectionDocument(collectionId);
+
+    // Extract resource URLs from the root API document. Servers that
+    // expose top-level resource endpoints (e.g., /api/systems) advertise
+    // them via link relations in the root document.
+    const resourceUrls = await this.extractRootResourceUrls();
+
+    const result = new CSAPIQueryBuilder(
+      collectionDoc as unknown as OgcApiCollectionInfo,
+      resourceUrls
+    );
+    cache.set(collectionId, result);
+    return result;
+  }
+
+  /**
    * Retrieve the tile matrix sets identifiers advertised by the endpoint. Empty if tiles are not supported
    */
   get tileMatrixSets(): Promise<string[]> {
     return this.tileMatrixSetsFull.then((sets) => sets.map((set) => set.id));
+  }
+
+  /**
+   * Extracts absolute resource URLs from the root API document's links.
+   *
+   * Scans the root document for link relations that identify CSAPI resource
+   * endpoints (using the same three conventions as
+   * {@link CSAPIQueryBuilder.extractAvailableResources}). Returns a Map of
+   * resource type name → absolute URL, which can be passed to the builder
+   * to support top-level (non-collection-scoped) resource URL patterns.
+   *
+   * @returns Map of resource type → absolute URL (may be empty).
+   */
+  private async extractRootResourceUrls(): Promise<Map<string, string>> {
+    const rootDoc = await this.root;
+    const links = rootDoc?.links;
+    if (!Array.isArray(links)) return new Map();
+    return scanCsapiLinks(links);
   }
 
   private getCollectionDocument(collectionId: string): Promise<OgcApiDocument> {
