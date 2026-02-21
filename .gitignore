@@ -3,3 +3,5 @@ dist
 coverage
 
 .idea
+.vscode
+test-output*.txt
