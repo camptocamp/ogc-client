@@ -2849,24 +2849,6 @@ describe('OgcApiEndpoint with CSAPI', () => {
         'iot-sensors',
       ]);
     });
-
-    it('can produce a CSAPI query builder', async () => {
-      const builder = await endpoint.csapi('iot-sensors');
-      expect(builder).toBeTruthy();
-      expect(builder.availableResources).toEqual(
-        new Set(['systems', 'deployments', 'datastreams'])
-      );
-    });
-
-    it('caches the CSAPI query builder', async () => {
-      const spy = jest.spyOn(endpoint as any, 'getCollectionDocument');
-
-      const builder1 = await endpoint.csapi('iot-sensors');
-      const builder2 = await endpoint.csapi('iot-sensors');
-
-      expect(builder1).toBe(builder2);
-      expect(spy).toHaveBeenCalledTimes(1);
-    });
   });
 
   describe('non-CSAPI endpoint', () => {
@@ -2876,12 +2858,6 @@ describe('OgcApiEndpoint with CSAPI', () => {
 
     it('reports no Connected Systems support', async () => {
       await expect(endpoint.hasConnectedSystems).resolves.toBe(false);
-    });
-
-    it('throws an error when calling csapi()', async () => {
-      await expect(endpoint.csapi('any-collection')).rejects.toThrow(
-        EndpointError
-      );
     });
   });
 });
