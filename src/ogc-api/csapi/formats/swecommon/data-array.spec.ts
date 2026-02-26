@@ -37,10 +37,19 @@ describe('parseDataArray — JSON encoding', () => {
       type: 'DataArray',
       elementType: { name: 'row', type: 'Quantity', uom: { code: 'Cel' } },
       encoding: { type: 'JSONEncoding', recordsAsArrays: true },
-      values: [[23.5, 65.2], [24.1, 63.8]],
+      values: [
+        [23.5, 65.2],
+        [24.1, 63.8],
+      ],
     });
-    expect(result.encoding).toEqual({ type: 'JSONEncoding', recordsAsArrays: true });
-    expect(result.values).toEqual([[23.5, 65.2], [24.1, 63.8]]);
+    expect(result.encoding).toEqual({
+      type: 'JSONEncoding',
+      recordsAsArrays: true,
+    });
+    expect(result.values).toEqual([
+      [23.5, 65.2],
+      [24.1, 63.8],
+    ]);
   });
 
   it('applies default encoding options (no booleans set)', () => {
@@ -71,7 +80,11 @@ describe('parseDataArray — Text encoding', () => {
     const result = parseDataArray({
       type: 'DataArray',
       elementType: { name: 'sample', type: 'Quantity', uom: { code: 'Cel' } },
-      encoding: { type: 'TextEncoding', tokenSeparator: ',', blockSeparator: '\n' },
+      encoding: {
+        type: 'TextEncoding',
+        tokenSeparator: ',',
+        blockSeparator: '\n',
+      },
       values: '23.5,65.2\n24.1,63.8',
     });
     expect(result.values).toEqual([
@@ -92,15 +105,22 @@ describe('parseDataArray — Text encoding', () => {
       },
       values: 'a;b;c@@d;e;f',
     });
-    expect(result.values).toEqual([['a', 'b', 'c'], ['d', 'e', 'f']]);
-    expect((result.encoding as { decimalSeparator?: string }).decimalSeparator).toBe(',');
+    expect(result.values).toEqual([
+      ['a', 'b', 'c'],
+      ['d', 'e', 'f'],
+    ]);
+    expect(
+      (result.encoding as { decimalSeparator?: string }).decimalSeparator
+    ).toBe(',');
   });
 
   it('collapses whitespace when collapseWhiteSpaces is true', () => {
-    const decoded = decodeValues(
-      ' 23.5 , 65.2 \n 24.1 , 63.8 ',
-      { type: 'TextEncoding', tokenSeparator: ',', blockSeparator: '\n', collapseWhiteSpaces: true }
-    );
+    const decoded = decodeValues(' 23.5 , 65.2 \n 24.1 , 63.8 ', {
+      type: 'TextEncoding',
+      tokenSeparator: ',',
+      blockSeparator: '\n',
+      collapseWhiteSpaces: true,
+    });
     expect(decoded).toEqual([
       ['23.5', '65.2'],
       ['24.1', '63.8'],
@@ -108,10 +128,11 @@ describe('parseDataArray — Text encoding', () => {
   });
 
   it('filters empty blocks from text values', () => {
-    const decoded = decodeValues(
-      '23.5,65.2\n\n24.1,63.8\n',
-      { type: 'TextEncoding', tokenSeparator: ',', blockSeparator: '\n' }
-    );
+    const decoded = decodeValues('23.5,65.2\n\n24.1,63.8\n', {
+      type: 'TextEncoding',
+      tokenSeparator: ',',
+      blockSeparator: '\n',
+    });
     expect(decoded).toEqual([
       ['23.5', '65.2'],
       ['24.1', '63.8'],
@@ -133,7 +154,11 @@ describe('parseDataArray — Binary encoding', () => {
         byteOrder: 'bigEndian',
         byteEncoding: 'base64',
         members: [
-          { type: 'Component', ref: 'temperature', dataType: 'http://www.opengis.net/def/dataType/OGC/0/float64' },
+          {
+            type: 'Component',
+            ref: 'temperature',
+            dataType: 'http://www.opengis.net/def/dataType/OGC/0/float64',
+          },
         ],
       },
       values: ['AAAAAAAAAAAAAAAA'],
@@ -143,11 +168,15 @@ describe('parseDataArray — Binary encoding', () => {
       byteOrder: 'bigEndian',
       byteEncoding: 'base64',
     });
-    const enc = result.encoding as { members: { type: string; ref: string; dataType: string }[] };
+    const enc = result.encoding as {
+      members: { type: string; ref: string; dataType: string }[];
+    };
     expect(enc.members).toHaveLength(1);
     expect(enc.members[0].type).toBe('Component');
     expect(enc.members[0].ref).toBe('temperature');
-    expect(enc.members[0].dataType).toBe('http://www.opengis.net/def/dataType/OGC/0/float64');
+    expect(enc.members[0].dataType).toBe(
+      'http://www.opengis.net/def/dataType/OGC/0/float64'
+    );
   });
 
   it('parses BinaryEncoding with Block members', () => {
@@ -157,17 +186,28 @@ describe('parseDataArray — Binary encoding', () => {
       byteEncoding: 'raw',
       byteLength: 1024,
       members: [
-        { type: 'Block', ref: 'imageData', compression: 'http://www.opengis.net/def/encoding/OGC/0/gzip' },
+        {
+          type: 'Block',
+          ref: 'imageData',
+          compression: 'http://www.opengis.net/def/encoding/OGC/0/gzip',
+        },
       ],
     });
     expect(enc.type).toBe('BinaryEncoding');
-    const bin = enc as { byteOrder: string; byteEncoding: string; byteLength: number; members: { type: string; ref: string; compression: string }[] };
+    const bin = enc as {
+      byteOrder: string;
+      byteEncoding: string;
+      byteLength: number;
+      members: { type: string; ref: string; compression: string }[];
+    };
     expect(bin.byteOrder).toBe('littleEndian');
     expect(bin.byteEncoding).toBe('raw');
     expect(bin.byteLength).toBe(1024);
     expect(bin.members[0].type).toBe('Block');
     expect(bin.members[0].ref).toBe('imageData');
-    expect(bin.members[0].compression).toBe('http://www.opengis.net/def/encoding/OGC/0/gzip');
+    expect(bin.members[0].compression).toBe(
+      'http://www.opengis.net/def/encoding/OGC/0/gzip'
+    );
   });
 
   it('parses Component members with optional properties', () => {
@@ -218,10 +258,14 @@ describe('parseDataArray — Binary encoding', () => {
   });
 
   it('preserves binary values as-is', () => {
-    const decoded = decodeValues(
-      'AQIDBAUG',
-      { type: 'BinaryEncoding', byteOrder: 'bigEndian', byteEncoding: 'base64', members: [] as unknown as [{ type: 'Component'; ref: string; dataType: string }] }
-    );
+    const decoded = decodeValues('AQIDBAUG', {
+      type: 'BinaryEncoding',
+      byteOrder: 'bigEndian',
+      byteEncoding: 'base64',
+      members: [] as unknown as [
+        { type: 'Component'; ref: string; dataType: string }
+      ],
+    });
     expect(decoded).toEqual(['AQIDBAUG']);
   });
 });
@@ -232,9 +276,14 @@ describe('parseDataArray — Binary encoding', () => {
 
 describe('parseEncoding — XMLEncoding', () => {
   it('recognizes XMLEncoding type discriminator', () => {
-    const enc = parseEncoding({ type: 'XMLEncoding', namespace: 'http://example.com/ns' });
+    const enc = parseEncoding({
+      type: 'XMLEncoding',
+      namespace: 'http://example.com/ns',
+    });
     expect(enc.type).toBe('XMLEncoding');
-    expect((enc as { namespace?: string }).namespace).toBe('http://example.com/ns');
+    expect((enc as { namespace?: string }).namespace).toBe(
+      'http://example.com/ns'
+    );
   });
 
   it('recognizes XMLEncoding without namespace', () => {
@@ -287,7 +336,12 @@ describe('parseDataArray — element type', () => {
   it('parses a simple element type (Quantity)', () => {
     const result = parseDataArray({
       type: 'DataArray',
-      elementType: { name: 'temperature', type: 'Quantity', uom: { code: 'Cel' }, value: 23.5 },
+      elementType: {
+        name: 'temperature',
+        type: 'Quantity',
+        uom: { code: 'Cel' },
+        value: 23.5,
+      },
     });
     expect(result.elementType.name).toBe('temperature');
   });
@@ -299,13 +353,21 @@ describe('parseDataArray — element type', () => {
         name: 'observation',
         type: 'DataRecord',
         fields: [
-          { name: 'time', type: 'Time', uom: { href: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian' } },
+          {
+            name: 'time',
+            type: 'Time',
+            uom: {
+              href: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+            },
+          },
           { name: 'value', type: 'Quantity', uom: { code: 'Cel' } },
         ],
       },
     });
     expect(result.elementType.name).toBe('observation');
-    const comp = (result.elementType as unknown as { component: { type: string } }).component;
+    const comp = (
+      result.elementType as unknown as { component: { type: string } }
+    ).component;
     expect(comp.type).toBe('DataRecord');
   });
 
@@ -319,8 +381,12 @@ describe('parseDataArray — element type', () => {
       },
     });
     expect(result.elementType.name).toBe('externalDef');
-    expect((result.elementType as Record<string, unknown>).href).toBe('http://example.com/schema/measurement');
-    expect((result.elementType as Record<string, unknown>).role).toBe('definition');
+    expect((result.elementType as Record<string, unknown>).href).toBe(
+      'http://example.com/schema/measurement'
+    );
+    expect((result.elementType as Record<string, unknown>).role).toBe(
+      'definition'
+    );
   });
 
   it('parses nested DataArray element type', () => {
@@ -333,7 +399,9 @@ describe('parseDataArray — element type', () => {
       },
     });
     expect(result.elementType.name).toBe('profile');
-    const nested = (result.elementType as unknown as { component: { type: string } }).component;
+    const nested = (
+      result.elementType as unknown as { component: { type: string } }
+    ).component;
     expect(nested.type).toBe('DataArray');
   });
 });
@@ -422,9 +490,9 @@ describe('parseDataArray — error handling', () => {
   });
 
   it('throws for missing elementType', () => {
-    expect(() =>
-      parseDataArray({ type: 'DataArray' })
-    ).toThrow('requires an "elementType"');
+    expect(() => parseDataArray({ type: 'DataArray' })).toThrow(
+      'requires an "elementType"'
+    );
   });
 
   it('throws for elementType missing name', () => {
@@ -435,7 +503,10 @@ describe('parseDataArray — error handling', () => {
 
   it('throws for elementType with empty name', () => {
     expect(() =>
-      parseDataArray({ type: 'DataArray', elementType: { name: '', type: 'Count' } })
+      parseDataArray({
+        type: 'DataArray',
+        elementType: { name: '', type: 'Count' },
+      })
     ).toThrow('non-empty "name"');
   });
 
@@ -469,25 +540,42 @@ describe('parseDataArray — error handling', () => {
 
   it('throws for BinaryEncoding missing byteOrder', () => {
     expect(() =>
-      parseEncoding({ type: 'BinaryEncoding', byteEncoding: 'base64', members: [{ type: 'Component', ref: 'x', dataType: 'y' }] })
+      parseEncoding({
+        type: 'BinaryEncoding',
+        byteEncoding: 'base64',
+        members: [{ type: 'Component', ref: 'x', dataType: 'y' }],
+      })
     ).toThrow('byteOrder');
   });
 
   it('throws for BinaryEncoding missing byteEncoding', () => {
     expect(() =>
-      parseEncoding({ type: 'BinaryEncoding', byteOrder: 'bigEndian', members: [{ type: 'Component', ref: 'x', dataType: 'y' }] })
+      parseEncoding({
+        type: 'BinaryEncoding',
+        byteOrder: 'bigEndian',
+        members: [{ type: 'Component', ref: 'x', dataType: 'y' }],
+      })
     ).toThrow('byteEncoding');
   });
 
   it('throws for BinaryEncoding missing members', () => {
     expect(() =>
-      parseEncoding({ type: 'BinaryEncoding', byteOrder: 'bigEndian', byteEncoding: 'base64' })
+      parseEncoding({
+        type: 'BinaryEncoding',
+        byteOrder: 'bigEndian',
+        byteEncoding: 'base64',
+      })
     ).toThrow('non-empty "members"');
   });
 
   it('throws for BinaryEncoding empty members', () => {
     expect(() =>
-      parseEncoding({ type: 'BinaryEncoding', byteOrder: 'bigEndian', byteEncoding: 'base64', members: [] })
+      parseEncoding({
+        type: 'BinaryEncoding',
+        byteOrder: 'bigEndian',
+        byteEncoding: 'base64',
+        members: [],
+      })
     ).toThrow('non-empty "members"');
   });
 
@@ -529,7 +617,9 @@ describe('parseDataArray — error handling', () => {
   });
 
   it('throws for encoding missing type', () => {
-    expect(() => parseEncoding({ tokenSeparator: ',' })).toThrow('"type" string');
+    expect(() => parseEncoding({ tokenSeparator: ',' })).toThrow(
+      '"type" string'
+    );
   });
 
   it('throws for unrecognized binary member type', () => {
@@ -603,7 +693,9 @@ describe('parseDataArray — complex types via componentParser callback', () => 
     expect(result.elementType.name).toBe('position');
     expect(mockParser).toHaveBeenCalledTimes(1);
     expect(mockParser).toHaveBeenCalledWith(vectorFixture);
-    const comp = (result.elementType as unknown as { component: { type: string } }).component;
+    const comp = (
+      result.elementType as unknown as { component: { type: string } }
+    ).component;
     expect(comp.type).toBe('Vector');
   });
 
@@ -625,7 +717,9 @@ describe('parseDataArray — complex types via componentParser callback', () => 
 
     const mockParser = jest.fn().mockReturnValue({
       type: 'Vector',
-      coordinates: [{ name: 'x', component: { type: 'Quantity', uom: { code: 'm' } } }],
+      coordinates: [
+        { name: 'x', component: { type: 'Quantity', uom: { code: 'm' } } },
+      ],
     });
 
     const result = parseDataArray(

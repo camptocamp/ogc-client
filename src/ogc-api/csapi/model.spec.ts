@@ -147,7 +147,14 @@ describe('Type compatibility - Part 1 GeoJSON resources', () => {
         validTime: { start: new Date('2024-01-01') },
       },
       geometry: null,
-      links: [{ rel: 'self', type: 'application/geo+json', title: '', href: '/systems/sys-002' }],
+      links: [
+        {
+          rel: 'self',
+          type: 'application/geo+json',
+          title: '',
+          href: '/systems/sys-002',
+        },
+      ],
     };
     expect(system.properties.assetType).toBe('Equipment');
     expect(system.properties.validTime?.start).toBeInstanceOf(Date);
@@ -198,7 +205,14 @@ describe('Type compatibility - Part 1 GeoJSON resources', () => {
         name: 'Monitoring Well A',
       },
       geometry: { type: 'Point', coordinates: [5, 45] },
-      links: [{ rel: 'sampledFeature', type: '', title: '', href: '/features/land-001' }],
+      links: [
+        {
+          rel: 'sampledFeature',
+          type: '',
+          title: '',
+          href: '/features/land-001',
+        },
+      ],
     };
     expect(sf.type).toBe('Feature');
     expect(sf.links).toHaveLength(1);
@@ -224,7 +238,8 @@ describe('Type compatibility - Property (non-GeoJSON)', () => {
       description: 'Mean temperature measured over 10 minutes',
       uniqueId: 'urn:example:property:mean-air-temp',
       baseProperty: 'http://vocab.nerc.ac.uk/collection/P01/current/TEMPPR01/',
-      objectType: 'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement',
+      objectType:
+        'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement',
       statistic: 'http://www.opengis.net/def/property/OGC/0/Mean',
     };
     expect(prop.id).toBe('prop-001');

@@ -200,7 +200,12 @@ export type NilValuesTime = NilValue<DateTimeNumberOrSpecial>[];
  *
  * @see NumberOrSpecial in basicTypes.json
  */
-export type NumberOrSpecial = number | 'NaN' | 'Infinity' | '+Infinity' | '-Infinity';
+export type NumberOrSpecial =
+  | number
+  | 'NaN'
+  | 'Infinity'
+  | '+Infinity'
+  | '-Infinity';
 
 /**
  * An ISO 8601 date-time string, a number (epoch offset), or a special value.

@@ -195,8 +195,10 @@ export function parseAllowedTimes(json: unknown): AllowedTimes {
     result.values = json.values as DateTimeNumberOrSpecial[];
   }
   if (Array.isArray(json.intervals)) {
-    result.intervals =
-      json.intervals as [DateTimeNumberOrSpecial, DateTimeNumberOrSpecial][];
+    result.intervals = json.intervals as [
+      DateTimeNumberOrSpecial,
+      DateTimeNumberOrSpecial
+    ][];
   }
   if (typeof json.significantFigures === 'number') {
     result.significantFigures = json.significantFigures;
@@ -227,8 +229,9 @@ export function parseAllowedTimes(json: unknown): AllowedTimes {
 export function parseNilValues<T = unknown>(json: unknown): NilValue<T>[] {
   if (!Array.isArray(json)) return [];
   return json
-    .filter((entry): entry is Record<string, unknown> =>
-      isRecord(entry) && typeof entry.reason === 'string'
+    .filter(
+      (entry): entry is Record<string, unknown> =>
+        isRecord(entry) && typeof entry.reason === 'string'
     )
     .map((entry) => ({
       reason: entry.reason as string,
@@ -258,8 +261,9 @@ export function parseNilValues<T = unknown>(json: unknown): NilValue<T>[] {
 export function parseQuality(json: unknown): AnySimpleComponent[] {
   if (!Array.isArray(json)) return [];
   return json
-    .filter((entry): entry is Record<string, unknown> =>
-      isRecord(entry) && typeof entry.type === 'string'
+    .filter(
+      (entry): entry is Record<string, unknown> =>
+        isRecord(entry) && typeof entry.type === 'string'
     )
     .map((entry) => parseSimpleComponent(entry));
 }
@@ -276,15 +280,19 @@ export function parseQuality(json: unknown): AnySimpleComponent[] {
  */
 // Return type narrowed from Record<string, unknown> to Partial<AbstractSimpleComponent>
 // to enable type-safe construction in component parsers (Issue #72).
-function parseBaseProperties(json: Record<string, unknown>): Partial<AbstractSimpleComponent> {
+function parseBaseProperties(
+  json: Record<string, unknown>
+): Partial<AbstractSimpleComponent> {
   const result: Partial<AbstractSimpleComponent> = {};
   if (typeof json.id === 'string') result.id = json.id;
   if (typeof json.label === 'string') result.label = json.label;
-  if (typeof json.description === 'string') result.description = json.description;
+  if (typeof json.description === 'string')
+    result.description = json.description;
   if (typeof json.definition === 'string') result.definition = json.definition;
   if (typeof json.updatable === 'boolean') result.updatable = json.updatable;
   if (typeof json.optional === 'boolean') result.optional = json.optional;
-  if (typeof json.referenceFrame === 'string') result.referenceFrame = json.referenceFrame;
+  if (typeof json.referenceFrame === 'string')
+    result.referenceFrame = json.referenceFrame;
   if (typeof json.axisID === 'string') result.axisID = json.axisID;
   return result;
 }
@@ -556,7 +564,9 @@ export function parseCategory(json: unknown): SweCategory {
  */
 export function parseQuantityRange(json: unknown): SweQuantityRange {
   if (!isRecord(json)) {
-    throw new SweCommonParseError('QuantityRange input must be a non-null object');
+    throw new SweCommonParseError(
+      'QuantityRange input must be a non-null object'
+    );
   }
   const result: SweQuantityRange = {
     ...parseBaseProperties(json),
@@ -652,7 +662,10 @@ export function parseTimeRange(json: unknown): SweTimeRange {
     result.nilValues = parseNilValues<DateTimeNumberOrSpecial>(json.nilValues);
   }
   if (Array.isArray(json.value) && json.value.length === 2) {
-    result.value = json.value as [DateTimeNumberOrSpecial, DateTimeNumberOrSpecial];
+    result.value = json.value as [
+      DateTimeNumberOrSpecial,
+      DateTimeNumberOrSpecial
+    ];
   }
   return result;
 }
@@ -679,7 +692,9 @@ export function parseTimeRange(json: unknown): SweTimeRange {
  */
 export function parseCategoryRange(json: unknown): SweCategoryRange {
   if (!isRecord(json)) {
-    throw new SweCommonParseError('CategoryRange input must be a non-null object');
+    throw new SweCommonParseError(
+      'CategoryRange input must be a non-null object'
+    );
   }
   const result: SweCategoryRange = {
     ...parseBaseProperties(json),

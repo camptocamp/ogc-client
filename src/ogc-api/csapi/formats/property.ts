@@ -29,9 +29,11 @@ import type { Property, ResourceLink } from '../model.js';
  * ```
  *
  * @remarks
- * No live server currently returns Property data (confirmed Smoke Test #6).
- * Fixtures and test cases are spec-derived from the OGC 23-001 `DerivedProperty`
- * schema.
+ * Validated against 7 live Property resources from OpenSensorHub
+ * (February 2026, Issue #131). All parsed correctly with no discrepancies.
+ * The live data uses only `id`, `uniqueId`, `label`, `description`, and
+ * `baseProperty` — no `objectType`, `statistic`, or `links`.
+ * See `fixtures/ogc-api/csapi/osh-properties.json` for the captured responses.
  *
  * @see https://docs.ogc.org/is/23-001/23-001.html#_property_resources
  */
@@ -49,8 +51,7 @@ export function parseProperty(json: unknown): Property {
       ? { description: obj.description }
       : {}),
     uniqueId: typeof obj.uniqueId === 'string' ? obj.uniqueId : '',
-    baseProperty:
-      typeof obj.baseProperty === 'string' ? obj.baseProperty : '',
+    baseProperty: typeof obj.baseProperty === 'string' ? obj.baseProperty : '',
     ...(typeof obj.objectType === 'string'
       ? { objectType: obj.objectType }
       : {}),

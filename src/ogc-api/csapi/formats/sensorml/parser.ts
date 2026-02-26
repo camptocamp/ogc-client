@@ -40,7 +40,6 @@ import type {
   InputList,
   OutputList,
   ParameterList,
-  Position,
   SpatialFrame,
   TemporalFrame,
 } from './types.js';
@@ -50,11 +49,9 @@ import {
   isRecord,
   optionalString,
   parseLink,
-  parseIOComponentChoice,
   parseIOList,
   parseSettings,
   parseFeatureList,
-  parseMode,
   parseModes,
 } from './_helpers.js';
 import { parseSimpleProcess } from './simple-process.js';
@@ -372,8 +369,7 @@ export function parseAbstractPhysicalProcessProperties(
   // localReferenceFrames — pass-through; detailed frame parsing
   // lives in physical-system.ts.
   if (Array.isArray(json.localReferenceFrames)) {
-    result.localReferenceFrames =
-      json.localReferenceFrames as SpatialFrame[];
+    result.localReferenceFrames = json.localReferenceFrames as SpatialFrame[];
   }
 
   // localTimeFrames — pass-through; detailed frame parsing
@@ -432,9 +428,7 @@ export function parseAbstractPhysicalProcessProperties(
  */
 export function parseSensorML30(json: unknown): SensorMLProcess {
   if (!isRecord(json)) {
-    throw new SensorMLParseError(
-      'SensorML input must be a non-null object'
-    );
+    throw new SensorMLParseError('SensorML input must be a non-null object');
   }
 
   if (typeof json.type !== 'string') {

@@ -109,9 +109,7 @@ export function checkHasEnvironmentalDataRetrieval([conformance]: [
  * @see https://docs.ogc.org/is/23-001/23-001.html
  * @see https://docs.ogc.org/is/23-002/23-002.html
  */
-export function checkHasConnectedSystems([conformance]: [
-  ConformanceClass[]
-]) {
+export function checkHasConnectedSystems([conformance]: [ConformanceClass[]]) {
   return (
     conformance.indexOf(
       'http://www.opengis.net/spec/ogcapi-connectedsystems-1/1.0/conf/core'
@@ -296,8 +294,7 @@ export function parseCollections(doc: OgcApiDocument): Array<{
     if (
       Array.isArray(collection.links) &&
       collection.links.some(
-        (link) =>
-          typeof link.rel === 'string' && /^ogc-cs:.+$/.test(link.rel)
+        (link) => typeof link.rel === 'string' && /^ogc-cs:.+$/.test(link.rel)
       )
     ) {
       result.hasConnectedSystems = true;

@@ -46,13 +46,25 @@ function makeFeature(
 
 describe('isCSAPIFeature', () => {
   it('returns true for System subtypes (compact CURIE)', () => {
-    for (const name of ['System', 'Sensor', 'Actuator', 'Platform', 'Sampler']) {
+    for (const name of [
+      'System',
+      'Sensor',
+      'Actuator',
+      'Platform',
+      'Sampler',
+    ]) {
       expect(isCSAPIFeature(makeFeature(`sosa:${name}`))).toBe(true);
     }
   });
 
   it('returns true for System subtypes (full URI)', () => {
-    for (const name of ['System', 'Sensor', 'Actuator', 'Platform', 'Sampler']) {
+    for (const name of [
+      'System',
+      'Sensor',
+      'Actuator',
+      'Platform',
+      'Sampler',
+    ]) {
       expect(isCSAPIFeature(makeFeature(`${SOSA_NS}${name}`))).toBe(true);
     }
   });
@@ -116,9 +128,7 @@ describe('isCSAPIFeature', () => {
   });
 
   it('returns true for SensorML Feature featureType', () => {
-    expect(
-      isCSAPIFeature(makeFeature(`${SENSORML_NS}Feature`))
-    ).toBe(true);
+    expect(isCSAPIFeature(makeFeature(`${SENSORML_NS}Feature`))).toBe(true);
   });
 
   it('returns true for SSN-namespaced Deployment (full URI)', () => {
@@ -140,9 +150,9 @@ describe('isCSAPIFeature', () => {
   });
 
   it('returns false for unrecognized SensorML local name', () => {
-    expect(
-      isCSAPIFeature(makeFeature(`${SENSORML_NS}UnknownThing`))
-    ).toBe(false);
+    expect(isCSAPIFeature(makeFeature(`${SENSORML_NS}UnknownThing`))).toBe(
+      false
+    );
   });
 });
 
@@ -160,7 +170,9 @@ describe('getCSAPIResourceType', () => {
   });
 
   it('classifies System subtypes with full URI', () => {
-    expect(getCSAPIResourceType(makeFeature(`${SOSA_NS}Sensor`))).toBe('System');
+    expect(getCSAPIResourceType(makeFeature(`${SOSA_NS}Sensor`))).toBe(
+      'System'
+    );
     expect(getCSAPIResourceType(makeFeature(`${SOSA_NS}Platform`))).toBe(
       'System'
     );
@@ -226,9 +238,9 @@ describe('getCSAPIResourceType', () => {
   });
 
   it('classifies SensorML Feature as SamplingFeature', () => {
-    expect(
-      getCSAPIResourceType(makeFeature(`${SENSORML_NS}Feature`))
-    ).toBe('SamplingFeature');
+    expect(getCSAPIResourceType(makeFeature(`${SENSORML_NS}Feature`))).toBe(
+      'SamplingFeature'
+    );
   });
 
   it('returns null for unrecognized SensorML local name', () => {
@@ -244,9 +256,7 @@ describe('getCSAPIResourceType', () => {
   });
 
   it('classifies SSN System (full URI)', () => {
-    expect(getCSAPIResourceType(makeFeature(`${SSN_NS}System`))).toBe(
-      'System'
-    );
+    expect(getCSAPIResourceType(makeFeature(`${SSN_NS}System`))).toBe('System');
   });
 
   it('classifies SSN types with compact CURIE prefix', () => {
@@ -468,7 +478,11 @@ describe('extractCSAPIFeature', () => {
 
   it('preserves links array', () => {
     const links = [
-      { rel: 'self', href: 'http://example.com/systems/1', type: 'application/geo+json' },
+      {
+        rel: 'self',
+        href: 'http://example.com/systems/1',
+        type: 'application/geo+json',
+      },
     ];
     const raw = makeFeature('sosa:Sensor', { links });
     const result = extractCSAPIFeature(raw);
@@ -488,9 +502,7 @@ describe('extractCSAPIFeature', () => {
       'sampledFeature@link': { href: 'http://example.com/feature/1' },
     });
     const result = extractCSAPIFeature(raw);
-    expect(result.properties.featureType).toBe(
-      `${SENSORML_NS}Feature`
-    );
+    expect(result.properties.featureType).toBe(`${SENSORML_NS}Feature`);
     expect(result.properties.uid).toBe('urn:x-test:feature:1');
     expect(result.properties.name).toBe('Test Feature');
     expect(result.geometry).toEqual({
@@ -506,7 +518,10 @@ describe('extractCSAPIFeature', () => {
     const result = extractCSAPIFeature(raw);
     expect(result.properties.featureType).toBe('sosa:SamplingFeature');
     expect(result.properties.uid).toBe('urn:x-test:feature:1');
-    expect(result.geometry).toEqual({ type: 'Point', coordinates: [10.5, 50.2] });
+    expect(result.geometry).toEqual({
+      type: 'Point',
+      coordinates: [10.5, 50.2],
+    });
     expect((result as any).properties.sampledFeatureLink).toBeUndefined();
   });
 
@@ -606,8 +621,15 @@ describe('extractCSAPIFeature', () => {
         title: 'Weather Station',
       },
       'deployedSystems@link': [
-        { href: 'http://example.com/api/systems/sensor1', uid: 'urn:x:sensor:1' },
-        { href: 'http://example.com/api/systems/sensor2', uid: 'urn:x:sensor:2', title: 'Wind Sensor' },
+        {
+          href: 'http://example.com/api/systems/sensor1',
+          uid: 'urn:x:sensor:1',
+        },
+        {
+          href: 'http://example.com/api/systems/sensor2',
+          uid: 'urn:x:sensor:2',
+          title: 'Wind Sensor',
+        },
       ],
     });
     const result = extractCSAPIFeature(raw);
@@ -618,7 +640,11 @@ describe('extractCSAPIFeature', () => {
     });
     expect((result as any).properties.deployedSystemsLink).toEqual([
       { href: 'http://example.com/api/systems/sensor1', uid: 'urn:x:sensor:1' },
-      { href: 'http://example.com/api/systems/sensor2', uid: 'urn:x:sensor:2', title: 'Wind Sensor' },
+      {
+        href: 'http://example.com/api/systems/sensor2',
+        uid: 'urn:x:sensor:2',
+        title: 'Wind Sensor',
+      },
     ]);
   });
 

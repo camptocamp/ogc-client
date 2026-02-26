@@ -50,7 +50,11 @@ import type {
 import { parseSimpleComponent, SweCommonParseError } from './components.js';
 import { parseDataRecord } from './data-record.js';
 import type { ComponentParser } from './data-record.js';
-import { isRecord, parseBaseProperties, parseAssociationAttributeGroup } from './_helpers.js';
+import {
+  isRecord,
+  parseBaseProperties,
+  parseAssociationAttributeGroup,
+} from './_helpers.js';
 
 // ========================================
 // Internal Helpers
@@ -118,10 +122,14 @@ function parseElementType(
   // Link reference (href without type)
   if (isLinkReference(json)) {
     const field: DataField = { name };
-    if (typeof json.href === 'string') (field as Record<string, unknown>).href = json.href;
-    if (typeof json.role === 'string') (field as Record<string, unknown>).role = json.role;
-    if (typeof json.arcrole === 'string') (field as Record<string, unknown>).arcrole = json.arcrole;
-    if (typeof json.title === 'string') (field as Record<string, unknown>).title = json.title;
+    if (typeof json.href === 'string')
+      (field as Record<string, unknown>).href = json.href;
+    if (typeof json.role === 'string')
+      (field as Record<string, unknown>).role = json.role;
+    if (typeof json.arcrole === 'string')
+      (field as Record<string, unknown>).arcrole = json.arcrole;
+    if (typeof json.title === 'string')
+      (field as Record<string, unknown>).title = json.title;
     return field;
   }
 
@@ -233,10 +241,13 @@ function parseBinaryMember(json: unknown, index: number): BinaryMember {
       ref: json.ref as string,
       dataType: json.dataType as string,
     };
-    if (typeof json.encryption === 'string') member.encryption = json.encryption;
-    if (typeof json.significantBits === 'number') member.significantBits = json.significantBits;
+    if (typeof json.encryption === 'string')
+      member.encryption = json.encryption;
+    if (typeof json.significantBits === 'number')
+      member.significantBits = json.significantBits;
     if (typeof json.bitLength === 'number') member.bitLength = json.bitLength;
-    if (typeof json.byteLength === 'number') member.byteLength = json.byteLength;
+    if (typeof json.byteLength === 'number')
+      member.byteLength = json.byteLength;
     return member;
   }
 
@@ -252,20 +263,25 @@ function parseBinaryMember(json: unknown, index: number): BinaryMember {
       type: 'Block',
       ref: json.ref as string,
     };
-    if (typeof json.compression === 'string') member.compression = json.compression;
-    if (typeof json.encryption === 'string') member.encryption = json.encryption;
+    if (typeof json.compression === 'string')
+      member.compression = json.compression;
+    if (typeof json.encryption === 'string')
+      member.encryption = json.encryption;
     if (typeof json['paddingBytes-before'] === 'number') {
       member['paddingBytes-before'] = json['paddingBytes-before'];
     }
     if (typeof json['paddingBytes-after'] === 'number') {
       member['paddingBytes-after'] = json['paddingBytes-after'];
     }
-    if (typeof json.byteLength === 'number') member.byteLength = json.byteLength;
+    if (typeof json.byteLength === 'number')
+      member.byteLength = json.byteLength;
     return member;
   }
 
   throw new SweCommonParseError(
-    `BinaryEncoding member at index ${index} has unrecognized type: "${String(type)}"`,
+    `BinaryEncoding member at index ${index} has unrecognized type: "${String(
+      type
+    )}"`,
     `encoding.members[${index}].type`
   );
 }
@@ -366,8 +382,8 @@ export function parseEncoding(json: unknown): DataEncoding {
           'encoding.members'
         );
       }
-      const members: BinaryMember[] = (json.members as unknown[]).map(
-        (m, i) => parseBinaryMember(m, i)
+      const members: BinaryMember[] = (json.members as unknown[]).map((m, i) =>
+        parseBinaryMember(m, i)
       );
       // Required fields byteOrder, byteEncoding, members are validated above (Issue #74).
       const result: BinaryEncoding = {
@@ -436,7 +452,10 @@ export function decodeValues(
   encoding: DataEncoding
 ): EncodedValues {
   // Link reference passthrough
-  if (isRecord(values) && typeof (values as Record<string, unknown>).href === 'string') {
+  if (
+    isRecord(values) &&
+    typeof (values as Record<string, unknown>).href === 'string'
+  ) {
     return parseAssociationAttributeGroup(values as Record<string, unknown>);
   }
 
@@ -516,9 +535,7 @@ export function parseDataArray(
   componentParser?: ComponentParser
 ): DataArray {
   if (!isRecord(json)) {
-    throw new SweCommonParseError(
-      'DataArray input must be a non-null object'
-    );
+    throw new SweCommonParseError('DataArray input must be a non-null object');
   }
 
   if (json.type !== 'DataArray') {
@@ -554,9 +571,14 @@ export function parseDataArray(
     } else if (Array.isArray(json.values)) {
       // No encoding specified — treat as raw JSON array
       values = json.values;
-    } else if (isRecord(json.values) && typeof (json.values as Record<string, unknown>).href === 'string') {
+    } else if (
+      isRecord(json.values) &&
+      typeof (json.values as Record<string, unknown>).href === 'string'
+    ) {
       // Link reference
-      values = parseAssociationAttributeGroup(json.values as Record<string, unknown>);
+      values = parseAssociationAttributeGroup(
+        json.values as Record<string, unknown>
+      );
     }
   }
 

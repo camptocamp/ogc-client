@@ -35,9 +35,19 @@ function makeCollection(
 ): OgcApiCollectionInfo {
   return {
     links: [
-      { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/actuators' },
+      {
+        rel: 'self',
+        type: '',
+        title: '',
+        href: 'https://api.example.com/collections/actuators',
+      },
       { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
-      { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlStreams' },
+      {
+        rel: 'ogc-cs:controlStreams',
+        type: '',
+        title: '',
+        href: '/controlStreams',
+      },
       { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
     ],
     title: 'Actuator Network',
@@ -69,9 +79,7 @@ const CONTROL_STREAMS_RESPONSE = {
       live: true,
       async: true,
       formats: ['application/swe+json'],
-      links: [
-        { rel: 'self', href: '/controlstreams/cs-valve' },
-      ],
+      links: [{ rel: 'self', href: '/controlstreams/cs-valve' }],
     },
     {
       id: 'cs-pump',
@@ -332,10 +340,16 @@ describe('Command workflow — fallback routing (F34)', () => {
   it('top-level URL → 400 rejection → nested fallback for getCommands (list)', () => {
     setCommandRoutingPreference(serverUrl, 'nested-only');
 
-    const nestedUrl = buildNestedCommandUrl(builder, 'cs-valve', undefined, undefined, {
-      issueTime: { start: new Date('2024-01-01T00:00:00Z') },
-      limit: 50,
-    });
+    const nestedUrl = buildNestedCommandUrl(
+      builder,
+      'cs-valve',
+      undefined,
+      undefined,
+      {
+        issueTime: { start: new Date('2024-01-01T00:00:00Z') },
+        limit: 50,
+      }
+    );
     expect(nestedUrl).toContain('/controlstreams/cs-valve/commands');
     expect(nestedUrl).toContain('issueTime=');
     expect(nestedUrl).toContain('limit=50');
@@ -372,7 +386,12 @@ describe('Command workflow — error scenarios', () => {
   it('throws EndpointError when commands not available', () => {
     const noCommands = makeCollection({
       links: [
-        { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/ro' },
+        {
+          rel: 'self',
+          type: '',
+          title: '',
+          href: 'https://api.example.com/collections/ro',
+        },
         { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
       ],
       id: 'ro',
@@ -388,7 +407,12 @@ describe('Command workflow — error scenarios', () => {
   it('throws EndpointError when controlStreams not available', () => {
     const noCS = makeCollection({
       links: [
-        { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/nocs' },
+        {
+          rel: 'self',
+          type: '',
+          title: '',
+          href: 'https://api.example.com/collections/nocs',
+        },
         { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
       ],
       id: 'nocs',
@@ -405,11 +429,13 @@ describe('Command workflow — error scenarios', () => {
 
   it('handles rejected response that is not a route rejection', () => {
     // 400 but different error message — NOT a route rejection
-    expect(
-      isCommandRouteRejection(400, 'Missing required parameter')
-    ).toBe(false);
+    expect(isCommandRouteRejection(400, 'Missing required parameter')).toBe(
+      false
+    );
 
     // 404 is not a route rejection
-    expect(isCommandRouteRejection(404, "Invalid resource name: 'commands'")).toBe(false);
+    expect(
+      isCommandRouteRejection(404, "Invalid resource name: 'commands'")
+    ).toBe(false);
   });
 });

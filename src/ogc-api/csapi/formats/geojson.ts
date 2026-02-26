@@ -419,8 +419,8 @@ function parseResourceRef(raw: Record<string, unknown>): CSAPIResourceRef {
     ...(typeof raw.rt === 'string'
       ? { rt: raw.rt }
       : typeof raw.type === 'string'
-        ? { rt: raw.type }
-        : {}),
+      ? { rt: raw.type }
+      : {}),
   };
 }
 
@@ -450,7 +450,9 @@ export function extractCSAPIFeature(
     featureType: String(p.featureType ?? ''),
     uid: String(p.uid ?? ''),
     name: String(p.name ?? ''),
-    ...(typeof p.description === 'string' ? { description: p.description } : {}),
+    ...(typeof p.description === 'string'
+      ? { description: p.description }
+      : {}),
   };
 
   const links = (Array.isArray(f.links) ? f.links : []) as ResourceLink[];
@@ -463,7 +465,9 @@ export function extractCSAPIFeature(
         type: 'Feature',
         properties: {
           ...baseProperties,
-          ...(typeof p.assetType === 'string' ? { assetType: p.assetType as System['properties']['assetType'] } : {}),
+          ...(typeof p.assetType === 'string'
+            ? { assetType: p.assetType as System['properties']['assetType'] }
+            : {}),
           ...(validTime !== undefined ? { validTime } : {}),
           ...(isCSAPIResourceRef(p['systemKind@link'])
             ? { systemKindLink: parseResourceRef(p['systemKind@link']) }
@@ -484,7 +488,11 @@ export function extractCSAPIFeature(
             ? { platformLink: parseResourceRef(p['platform@link']) }
             : {}),
           ...(Array.isArray(p['deployedSystems@link'])
-            ? { deployedSystemsLink: (p['deployedSystems@link'] as unknown[]).filter(isCSAPIResourceRef).map(parseResourceRef) }
+            ? {
+                deployedSystemsLink: (p['deployedSystems@link'] as unknown[])
+                  .filter(isCSAPIResourceRef)
+                  .map(parseResourceRef),
+              }
             : {}),
         },
         ...(geometry !== undefined ? { geometry } : {}),

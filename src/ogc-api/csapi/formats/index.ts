@@ -47,7 +47,7 @@ export {
   CSAPI_MEDIA_TYPES,
   SOSA_NS,
   SOSA_PREFIX,
-  SystemTypeUris,
+  SYSTEM_TYPE_RECOGNITION_VALUES,
   DeploymentTypeUris,
   ProcedureTypeUris,
   SamplingFeatureTypeUris,
@@ -64,7 +64,7 @@ export {
 
 export type {
   CSAPIMediaType,
-  SystemTypeUri,
+  SystemTypeRecognitionValue,
   DeploymentTypeUri,
   ProcedureTypeUri,
   SamplingFeatureTypeUri,
@@ -292,10 +292,7 @@ export type {
 } from './swecommon/index.js';
 
 // Validation types
-export type {
-  ValidationResult,
-  ValidationError,
-} from './swecommon/index.js';
+export type { ValidationResult, ValidationError } from './swecommon/index.js';
 
 // ========================================
 // Response — Collection Envelope Normalization

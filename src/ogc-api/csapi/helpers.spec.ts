@@ -41,9 +41,7 @@ describe('formatDateTimeParameter', () => {
       start: toDate('2024-01-01T00:00:00Z'),
       end: toDate('2024-12-31T23:59:59Z'),
     });
-    expect(result).toBe(
-      '2024-01-01T00:00:00.000Z/2024-12-31T23:59:59.000Z'
-    );
+    expect(result).toBe('2024-01-01T00:00:00.000Z/2024-12-31T23:59:59.000Z');
   });
 
   it('passes through the "latest" keyword', () => {
@@ -52,9 +50,9 @@ describe('formatDateTimeParameter', () => {
   });
 
   it('throws for an invalid parameter', () => {
-    expect(() =>
-      formatDateTimeParameter({} as CsapiDateTimeParameter)
-    ).toThrow('Invalid CsapiDateTimeParameter');
+    expect(() => formatDateTimeParameter({} as CsapiDateTimeParameter)).toThrow(
+      'Invalid CsapiDateTimeParameter'
+    );
   });
 });
 
@@ -153,7 +151,9 @@ describe('scanCsapiLinks', () => {
     const result = scanCsapiLinks(links);
     expect(result.size).toBe(2);
     expect(result.get('systems')).toBe('http://example.com/api/systems');
-    expect(result.get('deployments')).toBe('http://example.com/api/deployments');
+    expect(result.get('deployments')).toBe(
+      'http://example.com/api/deployments'
+    );
   });
 
   it('detects plain resource name link relations', () => {
@@ -164,7 +164,9 @@ describe('scanCsapiLinks', () => {
     const result = scanCsapiLinks(links);
     expect(result.size).toBe(2);
     expect(result.get('systems')).toBe('http://example.com/api/systems');
-    expect(result.get('datastreams')).toBe('http://example.com/api/datastreams');
+    expect(result.get('datastreams')).toBe(
+      'http://example.com/api/datastreams'
+    );
   });
 
   it('detects items links with resource type in href', () => {
@@ -175,7 +177,9 @@ describe('scanCsapiLinks', () => {
     const result = scanCsapiLinks(links);
     expect(result.size).toBe(2);
     expect(result.get('systems')).toBe('http://example.com/api/systems');
-    expect(result.get('observations')).toBe('http://example.com/api/observations/');
+    expect(result.get('observations')).toBe(
+      'http://example.com/api/observations/'
+    );
   });
 
   it('handles mixed conventions in the same links array', () => {
@@ -201,9 +205,7 @@ describe('scanCsapiLinks', () => {
   });
 
   it('ignores items links with non-resource-type href', () => {
-    const links = [
-      { rel: 'items', href: 'http://example.com/api/widgets' },
-    ];
+    const links = [{ rel: 'items', href: 'http://example.com/api/widgets' }];
     expect(scanCsapiLinks(links)).toEqual(new Map());
   });
 
@@ -219,18 +221,14 @@ describe('scanCsapiLinks', () => {
   });
 
   it('strips query parameters and trailing slashes from items href', () => {
-    const links = [
-      { rel: 'items', href: '/procedures/?f=application/json' },
-    ];
+    const links = [{ rel: 'items', href: '/procedures/?f=application/json' }];
     const result = scanCsapiLinks(links);
     expect(result.size).toBe(1);
     expect(result.get('procedures')).toBe('/procedures/?f=application/json');
   });
 
   it('normalizes featuresOfInterest to samplingFeatures in items href', () => {
-    const links = [
-      { rel: 'items', href: '/featuresOfInterest' },
-    ];
+    const links = [{ rel: 'items', href: '/featuresOfInterest' }];
     const result = scanCsapiLinks(links);
     expect(result.size).toBe(1);
     expect(result.get('samplingFeatures')).toBe('/featuresOfInterest');
@@ -242,7 +240,9 @@ describe('scanCsapiLinks', () => {
     ];
     const result = scanCsapiLinks(links);
     expect(result.size).toBe(1);
-    expect(result.get('samplingFeatures')).toBe('/featuresOfInterest?f=application/json');
+    expect(result.get('samplingFeatures')).toBe(
+      '/featuresOfInterest?f=application/json'
+    );
   });
 });
 
@@ -300,9 +300,9 @@ describe('validateBbox', () => {
   });
 
   it('rejects non-finite coordinates', () => {
-    expect(() =>
-      validateBbox([0, 0, Infinity, 10] as BoundingBox)
-    ).toThrow('finite numbers');
+    expect(() => validateBbox([0, 0, Infinity, 10] as BoundingBox)).toThrow(
+      'finite numbers'
+    );
   });
 
   it('rejects NaN coordinates', () => {
@@ -327,19 +327,23 @@ describe('formatDateTimeParameter edge cases', () => {
   });
 
   it('serializes far-future date', () => {
-    const result = formatDateTimeParameter(new Date('2099-12-31T23:59:59.999Z'));
+    const result = formatDateTimeParameter(
+      new Date('2099-12-31T23:59:59.999Z')
+    );
     expect(result).toBe('2099-12-31T23:59:59.999Z');
   });
 
   it('serializes date with millisecond precision', () => {
-    const result = formatDateTimeParameter(new Date('2024-06-15T10:30:45.123Z'));
+    const result = formatDateTimeParameter(
+      new Date('2024-06-15T10:30:45.123Z')
+    );
     expect(result).toBe('2024-06-15T10:30:45.123Z');
   });
 
   it('throws for invalid parameter type (plain object with no start/end)', () => {
-    expect(() =>
-      formatDateTimeParameter({} as CsapiDateTimeParameter)
-    ).toThrow('Invalid CsapiDateTimeParameter');
+    expect(() => formatDateTimeParameter({} as CsapiDateTimeParameter)).toThrow(
+      'Invalid CsapiDateTimeParameter'
+    );
   });
 
   it('serializes end-only interval with epoch date', () => {
@@ -393,7 +397,9 @@ describe('assertValidResourceType edge cases', () => {
   });
 
   it('rejects empty string with descriptive error', () => {
-    expect(() => assertValidResourceType('')).toThrow('Invalid CSAPI resource type');
+    expect(() => assertValidResourceType('')).toThrow(
+      'Invalid CSAPI resource type'
+    );
   });
 });
 
@@ -433,18 +439,14 @@ describe('encodeResourceId edge cases', () => {
 
 describe('scanCsapiLinks edge cases', () => {
   it('handles link with rel but missing href (defaults to empty string)', () => {
-    const links = [
-      { rel: 'ogc-cs:systems' } as any,
-    ];
+    const links = [{ rel: 'ogc-cs:systems' } as any];
     const result = scanCsapiLinks(links);
     // Convention 1 stores empty string when href is missing
     expect(result.get('systems')).toBe('');
   });
 
   it('handles link with href undefined (defaults to empty string)', () => {
-    const links = [
-      { rel: 'ogc-cs:systems', href: undefined } as any,
-    ];
+    const links = [{ rel: 'ogc-cs:systems', href: undefined } as any];
     const result = scanCsapiLinks(links);
     // Convention 1 stores empty string when href is undefined
     expect(result.get('systems')).toBe('');
@@ -516,15 +518,15 @@ describe('validateBbox edge cases', () => {
   });
 
   it('rejects 5-element array', () => {
-    expect(() => validateBbox([0, 0, 10, 10, 0] as unknown as BoundingBox)).toThrow(
-      '4 coordinates'
-    );
+    expect(() =>
+      validateBbox([0, 0, 10, 10, 0] as unknown as BoundingBox)
+    ).toThrow('4 coordinates');
   });
 
   it('rejects 6-element array', () => {
-    expect(() => validateBbox([0, 0, 0, 10, 10, 10] as unknown as BoundingBox)).toThrow(
-      '4 coordinates'
-    );
+    expect(() =>
+      validateBbox([0, 0, 0, 10, 10, 10] as unknown as BoundingBox)
+    ).toThrow('4 coordinates');
   });
 
   it('rejects empty array', () => {

@@ -215,9 +215,7 @@ export function parseDataRecord(
   componentParser?: ComponentParser
 ): DataRecord {
   if (!isRecord(json)) {
-    throw new SweCommonParseError(
-      'DataRecord input must be a non-null object'
-    );
+    throw new SweCommonParseError('DataRecord input must be a non-null object');
   }
 
   if (json.type !== 'DataRecord') {

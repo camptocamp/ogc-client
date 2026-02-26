@@ -16,7 +16,7 @@ import {
 } from './parser.js';
 import { SweCommonParseError } from './components.js';
 
-import type { AnyComponent, Vector, DataChoice, SweGeometry, Matrix } from './types.js';
+import type { Vector, DataChoice, SweGeometry, Matrix } from './types.js';
 
 // ========================================
 // Type Discrimination — Simple Components
@@ -86,7 +86,10 @@ describe('parseSWEComponent — simple component delegation', () => {
   });
 
   it('dispatches CategoryRange to parseSimpleComponent', () => {
-    const result = parseSWEComponent({ type: 'CategoryRange', value: ['low', 'high'] });
+    const result = parseSWEComponent({
+      type: 'CategoryRange',
+      value: ['low', 'high'],
+    });
     expect(result.type).toBe('CategoryRange');
   });
 });
@@ -99,9 +102,7 @@ describe('parseSWEComponent — complex component delegation', () => {
   it('dispatches DataRecord to parseDataRecord', () => {
     const result = parseSWEComponent({
       type: 'DataRecord',
-      fields: [
-        { name: 'temp', type: 'Quantity', uom: { code: 'Cel' } },
-      ],
+      fields: [{ name: 'temp', type: 'Quantity', uom: { code: 'Cel' } }],
     });
     expect(result.type).toBe('DataRecord');
   });
@@ -136,9 +137,7 @@ describe('parseSWEComponent — complex component delegation', () => {
       elementType: {
         name: 'row',
         type: 'DataRecord',
-        fields: [
-          { name: 'c1', type: 'Quantity', uom: { code: '1' } },
-        ],
+        fields: [{ name: 'c1', type: 'Quantity', uom: { code: '1' } }],
       },
       referenceFrame: 'http://www.opengis.net/def/crs/EPSG/0/4326',
     });
@@ -195,7 +194,9 @@ describe('parseVector', () => {
     expect(result.type).toBe('Vector');
     expect(result.id).toBe('vec-1');
     expect(result.label).toBe('Position');
-    expect(result.referenceFrame).toBe('http://www.opengis.net/def/crs/EPSG/0/4326');
+    expect(result.referenceFrame).toBe(
+      'http://www.opengis.net/def/crs/EPSG/0/4326'
+    );
     expect(result.localFrame).toBe('#SENSOR_FRAME');
     expect(result.coordinates).toHaveLength(3);
     expect(result.coordinates[0].name).toBe('lat');
@@ -256,7 +257,9 @@ describe('parseMatrix', () => {
       elementCount: { type: 'ElementCount', value: 3 },
     });
     expect(result.type).toBe('Matrix');
-    expect(result.referenceFrame).toBe('http://www.opengis.net/def/crs/EPSG/0/4326');
+    expect(result.referenceFrame).toBe(
+      'http://www.opengis.net/def/crs/EPSG/0/4326'
+    );
     expect(result.elementType.name).toBe('row');
     expect(result.elementCount).toBeDefined();
   });
@@ -310,13 +313,15 @@ describe('parseDataChoice', () => {
   });
 
   it('throws when items are missing', () => {
-    expect(() => parseDataChoice({ type: 'DataChoice' })).toThrow(SweCommonParseError);
+    expect(() => parseDataChoice({ type: 'DataChoice' })).toThrow(
+      SweCommonParseError
+    );
   });
 
   it('throws when items is empty', () => {
-    expect(() =>
-      parseDataChoice({ type: 'DataChoice', items: [] })
-    ).toThrow(SweCommonParseError);
+    expect(() => parseDataChoice({ type: 'DataChoice', items: [] })).toThrow(
+      SweCommonParseError
+    );
   });
 });
 
@@ -339,7 +344,10 @@ describe('parseGeometry', () => {
   });
 
   it('parses a minimal Geometry without value', () => {
-    const result = parseGeometry({ type: 'Geometry', srs: 'urn:ogc:def:crs:EPSG::4326' });
+    const result = parseGeometry({
+      type: 'Geometry',
+      srs: 'urn:ogc:def:crs:EPSG::4326',
+    });
     expect(result.type).toBe('Geometry');
     expect(result.srs).toBe('urn:ogc:def:crs:EPSG::4326');
     expect(result.value).toBeUndefined();
@@ -363,7 +371,11 @@ describe('detectEncoding', () => {
 
   it('detects TextEncoding', () => {
     const enc = detectEncoding({
-      encoding: { type: 'TextEncoding', tokenSeparator: ',', blockSeparator: '\n' },
+      encoding: {
+        type: 'TextEncoding',
+        tokenSeparator: ',',
+        blockSeparator: '\n',
+      },
     });
     expect(enc!.type).toBe('TextEncoding');
   });
@@ -374,7 +386,13 @@ describe('detectEncoding', () => {
         type: 'BinaryEncoding',
         byteOrder: 'bigEndian',
         byteEncoding: 'base64',
-        members: [{ type: 'Component', ref: 'temp', dataType: 'http://www.opengis.net/def/dataType/OGC/0/float64' }],
+        members: [
+          {
+            type: 'Component',
+            ref: 'temp',
+            dataType: 'http://www.opengis.net/def/dataType/OGC/0/float64',
+          },
+        ],
       },
     });
     expect(enc!.type).toBe('BinaryEncoding');
@@ -446,9 +464,7 @@ describe('validateAgainstSchema — type match', () => {
   it('detects type mismatch (string where number expected)', () => {
     const schema = parseSWEComponent({
       type: 'DataRecord',
-      fields: [
-        { name: 'temp', type: 'Quantity', uom: { code: 'Cel' } },
-      ],
+      fields: [{ name: 'temp', type: 'Quantity', uom: { code: 'Cel' } }],
     });
     const result = validateAgainstSchema({ temp: 'not-a-number' }, schema);
     expect(result.valid).toBe(false);
@@ -458,9 +474,7 @@ describe('validateAgainstSchema — type match', () => {
   it('detects type mismatch (number where boolean expected)', () => {
     const schema = parseSWEComponent({
       type: 'DataRecord',
-      fields: [
-        { name: 'active', type: 'Boolean' },
-      ],
+      fields: [{ name: 'active', type: 'Boolean' }],
     });
     const result = validateAgainstSchema({ active: 1 }, schema);
     expect(result.valid).toBe(false);
@@ -470,9 +484,7 @@ describe('validateAgainstSchema — type match', () => {
   it('validates Count requires an integer', () => {
     const schema = parseSWEComponent({
       type: 'DataRecord',
-      fields: [
-        { name: 'count', type: 'Count' },
-      ],
+      fields: [{ name: 'count', type: 'Count' }],
     });
     const result = validateAgainstSchema({ count: 3.5 }, schema);
     expect(result.valid).toBe(false);
@@ -672,11 +684,23 @@ describe('validateAgainstSchema — geometry constraints', () => {
       constraint: { geomTypes: ['Point', 'MultiPoint'] },
     });
     const result = validateAgainstSchema(
-      { type: 'Polygon', coordinates: [[[0, 0], [1, 0], [1, 1], [0, 0]]] },
+      {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [0, 0],
+            [1, 0],
+            [1, 1],
+            [0, 0],
+          ],
+        ],
+      },
       schema
     );
     expect(result.valid).toBe(false);
-    expect(result.errors.some(e => e.code === 'CONSTRAINT_VIOLATION')).toBe(true);
+    expect(result.errors.some((e) => e.code === 'CONSTRAINT_VIOLATION')).toBe(
+      true
+    );
   });
 
   it('passes when geometry type is in allowed geomTypes', () => {

@@ -105,19 +105,24 @@ export const SOSA_NS = 'http://www.w3.org/ns/sosa/' as const;
 export const SOSA_PREFIX = 'sosa:' as const;
 
 // ----------------------------------------
-// System Type URIs
+// System Type Recognition Values
 // ----------------------------------------
 
 /**
- * SOSA/SSN `featureType` discriminator URIs for System resources.
+ * SOSA/SSN `featureType` recognition values for System resources.
  *
- * Includes both compact CURIE (`sosa:Sensor`) and full URI
- * (`http://www.w3.org/ns/sosa/Sensor`) forms for each type.
+ * Internal lookup table used by parsers to match incoming `featureType`
+ * values against known System types. Includes both compact CURIE
+ * (`sosa:Sensor`) and full URI (`http://www.w3.org/ns/sosa/Sensor`)
+ * forms — servers may return either form.
+ *
+ * Not to be confused with the public `SystemTypeUris` in `model.ts`,
+ * which contains only the 5 canonical full-URI forms for consumers.
  *
  * @see https://www.w3.org/TR/vocab-ssn/#SOSASensor
  * @see https://docs.ogc.org/is/23-001/23-001.html
  */
-export const SystemTypeUris = [
+export const SYSTEM_TYPE_RECOGNITION_VALUES = [
   'sosa:Sensor',
   'http://www.w3.org/ns/sosa/Sensor',
   'sosa:Platform',
@@ -130,8 +135,9 @@ export const SystemTypeUris = [
   'http://www.w3.org/ns/sosa/System',
 ] as const;
 
-/** Union type of System `featureType` discriminator URIs. */
-export type SystemTypeUri = (typeof SystemTypeUris)[number];
+/** Union type of System `featureType` recognition values (CURIE + full URI). */
+export type SystemTypeRecognitionValue =
+  (typeof SYSTEM_TYPE_RECOGNITION_VALUES)[number];
 
 // ----------------------------------------
 // Deployment Type URIs

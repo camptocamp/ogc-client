@@ -163,9 +163,7 @@ export function parseDatastream(json: unknown): Datastream {
     ...(typeof obj['system@id'] === 'string'
       ? { systemId: obj['system@id'] as string }
       : {}),
-    links: Array.isArray(obj.links)
-      ? (obj.links as ResourceLink[])
-      : [],
+    links: Array.isArray(obj.links) ? (obj.links as ResourceLink[]) : [],
   } satisfies Datastream;
 }
 
@@ -223,15 +221,12 @@ export function parseControlStream(json: unknown): ControlStream {
   // Time fields: validTime is optional (undefined if absent),
   // issueTime and executionTime are nullable (null if absent).
   const validTime: TimeInterval | undefined = parseValidTime(obj.validTime);
-  const issueTime: TimeInterval | null =
-    parseValidTime(obj.issueTime) ?? null;
+  const issueTime: TimeInterval | null = parseValidTime(obj.issueTime) ?? null;
   const executionTime: TimeInterval | null =
     parseValidTime(obj.executionTime) ?? null;
 
   // controlledProperties: normalize from object or string array form
-  const controlledProperties: string[] = Array.isArray(
-    obj.controlledProperties
-  )
+  const controlledProperties: string[] = Array.isArray(obj.controlledProperties)
     ? normalizeObservedProperties(obj.controlledProperties)
     : [];
 
@@ -245,9 +240,7 @@ export function parseControlStream(json: unknown): ControlStream {
     formats: Array.isArray(obj.formats)
       ? (obj.formats.filter((f) => typeof f === 'string') as string[])
       : [],
-    ...(typeof obj.inputName === 'string'
-      ? { inputName: obj.inputName }
-      : {}),
+    ...(typeof obj.inputName === 'string' ? { inputName: obj.inputName } : {}),
     controlledProperties,
     issueTime,
     executionTime,
@@ -256,9 +249,7 @@ export function parseControlStream(json: unknown): ControlStream {
     ...(typeof obj['system@id'] === 'string'
       ? { systemId: obj['system@id'] as string }
       : {}),
-    links: Array.isArray(obj.links)
-      ? (obj.links as ResourceLink[])
-      : [],
+    links: Array.isArray(obj.links) ? (obj.links as ResourceLink[]) : [],
   } satisfies ControlStream;
 }
 
@@ -366,9 +357,7 @@ export function parseCommand(json: unknown): Command {
     ...(typeof obj['controlstream@id'] === 'string'
       ? { controlStreamId: obj['controlstream@id'] as string }
       : {}),
-    ...(Array.isArray(obj.links)
-      ? { links: obj.links as ResourceLink[] }
-      : {}),
+    ...(Array.isArray(obj.links) ? { links: obj.links as ResourceLink[] } : {}),
   } satisfies Command;
 }
 
@@ -448,9 +437,7 @@ export function parseObservation(json: unknown): Observation {
     ...(typeof obj['foi@id'] === 'string'
       ? { featureOfInterestId: obj['foi@id'] as string }
       : {}),
-    ...(Array.isArray(obj.links)
-      ? { links: obj.links as ResourceLink[] }
-      : {}),
+    ...(Array.isArray(obj.links) ? { links: obj.links as ResourceLink[] } : {}),
   } satisfies Observation;
 }
 
@@ -525,8 +512,6 @@ export function parseCommandStatus(json: unknown): CommandStatus {
     ...(typeof obj['command@id'] === 'string'
       ? { commandId: obj['command@id'] as string }
       : {}),
-    ...(Array.isArray(obj.links)
-      ? { links: obj.links as ResourceLink[] }
-      : {}),
+    ...(Array.isArray(obj.links) ? { links: obj.links as ResourceLink[] } : {}),
   } satisfies CommandStatus;
 }

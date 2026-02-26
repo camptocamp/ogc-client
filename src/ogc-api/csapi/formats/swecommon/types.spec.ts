@@ -8,67 +8,27 @@
  */
 
 import type {
-  // Base
-  AbstractSWE,
-  AbstractSweIdentifiable,
-  AbstractDataComponent,
-  AbstractSimpleComponent,
   // Unit / Constraints
   UnitOfMeasure,
   AllowedValues,
   AllowedTokens,
-  AllowedTimes,
   // Nil values
   NilValue,
-  NilValuesNumber,
-  NilValuesInteger,
-  NilValuesText,
-  NilValuesTime,
   // Special value types
   NumberOrSpecial,
-  DateTimeNumberOrSpecial,
   // Encoded values
   EncodedValues,
   AssociationAttributeGroup,
-  ElementCount,
   // Field wrappers
   DataField,
-  TypedDataField,
-  // Scalar components
-  SweBoolean,
-  SweCount,
-  SweQuantity,
-  SweText,
-  SweCategory,
-  SweTime,
-  // Range components
-  SweCountRange,
-  SweQuantityRange,
-  SweTimeRange,
-  SweCategoryRange,
   // Aggregate components
   DataRecord,
-  Vector,
-  DataChoice,
-  SweGeometry,
   GeometryConstraint,
-  GeometryType,
-  GeoJsonGeometry,
   // Array components
   DataArray,
   Matrix,
-  // Encodings
-  TextEncoding,
-  JSONEncoding,
-  BinaryEncoding,
-  XMLEncoding,
-  BinaryComponent,
-  BinaryBlock,
-  BinaryMember,
   // Unions
   DataEncoding,
-  AnyScalarComponent,
-  AnySimpleComponent,
   AnyComponent,
   SweComponentType,
   SweEncodingType,
@@ -100,7 +60,11 @@ describe('AnyComponent discriminated union', () => {
       definition: 'http://example.com/WeatherData',
       label: 'Weather',
       fields: [
-        { name: 'temp', type: 'Quantity', uom: { code: 'degC' } } as unknown as DataField,
+        {
+          name: 'temp',
+          type: 'Quantity',
+          uom: { code: 'degC' },
+        } as unknown as DataField,
       ],
     };
     expect(component.type).toBe('DataRecord');
@@ -155,10 +119,7 @@ describe('AnyComponent discriminated union', () => {
       definition: 'http://example.com/Location',
       label: 'Location',
       referenceFrame: 'http://www.opengis.net/def/crs/EPSG/0/4326',
-      coordinates: [
-        { name: 'lat' },
-        { name: 'lon' },
-      ],
+      coordinates: [{ name: 'lat' }, { name: 'lon' }],
     };
     expect(component.type).toBe('Vector');
     if (component.type === 'Vector') {
@@ -216,9 +177,22 @@ describe('AnyComponent discriminated union', () => {
 
   it('covers all 16 component types in the union', () => {
     const types: SweComponentType[] = [
-      'Boolean', 'Count', 'Quantity', 'Text', 'Category', 'Time',
-      'CountRange', 'QuantityRange', 'TimeRange', 'CategoryRange',
-      'DataRecord', 'Vector', 'DataArray', 'Matrix', 'DataChoice', 'Geometry',
+      'Boolean',
+      'Count',
+      'Quantity',
+      'Text',
+      'Category',
+      'Time',
+      'CountRange',
+      'QuantityRange',
+      'TimeRange',
+      'CategoryRange',
+      'DataRecord',
+      'Vector',
+      'DataArray',
+      'Matrix',
+      'DataChoice',
+      'Geometry',
     ];
     expect(types).toHaveLength(16);
     // All are unique
@@ -256,7 +230,11 @@ describe('DataEncoding discriminated union', () => {
       byteOrder: 'bigEndian',
       byteEncoding: 'base64',
       members: [
-        { type: 'Component', ref: '/temp', dataType: 'http://www.opengis.net/def/dataType/OGC/0/float64' },
+        {
+          type: 'Component',
+          ref: '/temp',
+          dataType: 'http://www.opengis.net/def/dataType/OGC/0/float64',
+        },
       ],
     };
     expect(enc.type).toBe('BinaryEncoding');
@@ -276,7 +254,10 @@ describe('DataEncoding discriminated union', () => {
 
   it('covers all 4 encoding types', () => {
     const types: SweEncodingType[] = [
-      'TextEncoding', 'JSONEncoding', 'BinaryEncoding', 'XMLEncoding',
+      'TextEncoding',
+      'JSONEncoding',
+      'BinaryEncoding',
+      'XMLEncoding',
     ];
     expect(types).toHaveLength(4);
     expect(new Set(types).size).toBe(4);
@@ -292,14 +273,16 @@ describe('recursive nesting', () => {
     const inner: DataRecord = {
       type: 'DataRecord',
       fields: [
-        { name: 'temp', type: 'Quantity', uom: { code: 'degC' } } as unknown as DataField,
+        {
+          name: 'temp',
+          type: 'Quantity',
+          uom: { code: 'degC' },
+        } as unknown as DataField,
       ],
     };
     const outer: DataRecord = {
       type: 'DataRecord',
-      fields: [
-        { name: 'weather', ...inner } as unknown as DataField,
-      ],
+      fields: [{ name: 'weather', ...inner } as unknown as DataField],
     };
     expect(outer.type).toBe('DataRecord');
     expect(outer.fields[0].name).toBe('weather');
@@ -383,7 +366,13 @@ describe('supporting types', () => {
   });
 
   it('handles NumberOrSpecial values', () => {
-    const values: NumberOrSpecial[] = [42, 'NaN', 'Infinity', '-Infinity', '+Infinity'];
+    const values: NumberOrSpecial[] = [
+      42,
+      'NaN',
+      'Infinity',
+      '-Infinity',
+      '+Infinity',
+    ];
     expect(values).toHaveLength(5);
   });
 

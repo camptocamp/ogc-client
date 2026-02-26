@@ -1,0 +1,25 @@
+{
+  "id": "alpha-sensors",
+  "title": "Alpha Sensor Array",
+  "description": "First CSAPI collection with systems and observations",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This collection",
+      "href": "http://local/csapi/multi-hub/collections/alpha-sensors"
+    },
+    {
+      "rel": "ogc-cs:systems",
+      "type": "application/json",
+      "title": "Systems",
+      "href": "http://local/csapi/multi-hub/collections/alpha-sensors/systems"
+    },
+    {
+      "rel": "ogc-cs:observations",
+      "type": "application/json",
+      "title": "Observations",
+      "href": "http://local/csapi/multi-hub/collections/alpha-sensors/observations"
+    }
+  ]
+}

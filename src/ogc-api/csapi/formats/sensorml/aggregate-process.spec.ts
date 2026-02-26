@@ -15,7 +15,6 @@ import {
   parseComponentEntry,
   SensorMLParseError,
 } from './aggregate-process.js';
-import type { AggregateProcess } from './types.js';
 
 // ========================================
 // Fixtures
@@ -483,9 +482,7 @@ describe('parseAggregateProcess', () => {
           ...MINIMAL_AGGREGATE_PROCESS,
           connections: [{ source: 'inputs/value' }],
         })
-      ).toThrow(
-        'connections[0] must have a string "destination" property'
-      );
+      ).toThrow('connections[0] must have a string "destination" property');
     });
 
     it('throws for non-object connection entry', () => {
@@ -701,9 +698,9 @@ describe('parseComponentEntry', () => {
   });
 
   it('throws for missing name', () => {
-    expect(() =>
-      parseComponentEntry({ type: 'SimpleProcess' }, 2)
-    ).toThrow('components[2] must have a string "name" property');
+    expect(() => parseComponentEntry({ type: 'SimpleProcess' }, 2)).toThrow(
+      'components[2] must have a string "name" property'
+    );
   });
 
   // --- Cross-type delegation tests (Task 8b) ---

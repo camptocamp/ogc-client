@@ -159,7 +159,8 @@ export function scanCsapiLinks(
     if (rel === 'items' && typeof href === 'string') {
       const segment = href.split('?')[0].replace(/\/+$/, '').split('/').pop();
       // Normalize known server naming variants to spec resource type names
-      const normalized = segment === 'featuresOfInterest' ? 'samplingFeatures' : segment;
+      const normalized =
+        segment === 'featuresOfInterest' ? 'samplingFeatures' : segment;
       if (normalized && knownTypes.has(normalized)) {
         result.set(normalized, href);
       }
@@ -212,14 +213,10 @@ export function validateBbox(bbox: BoundingBox): void {
 
   const [minx, miny, maxx, maxy] = bbox;
   if (minx > maxx) {
-    throw new Error(
-      `Invalid bbox: minx (${minx}) must be ≤ maxx (${maxx}).`
-    );
+    throw new Error(`Invalid bbox: minx (${minx}) must be ≤ maxx (${maxx}).`);
   }
   if (miny > maxy) {
-    throw new Error(
-      `Invalid bbox: miny (${miny}) must be ≤ maxy (${maxy}).`
-    );
+    throw new Error(`Invalid bbox: miny (${miny}) must be ≤ maxy (${maxy}).`);
   }
 }
 

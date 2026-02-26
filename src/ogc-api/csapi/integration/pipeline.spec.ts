@@ -54,8 +54,7 @@ describe('end-to-end: Datastream collection pipeline', () => {
         validTime: ['2026-01-26T18:32:01.56Z', 'now'],
         observedProperties: [
           {
-            definition:
-              'http://mmisw.org/ont/cf/parameter/air_temperature',
+            definition: 'http://mmisw.org/ont/cf/parameter/air_temperature',
             label: 'Air Temperature',
           },
         ],
@@ -64,14 +63,8 @@ describe('end-to-end: Datastream collection pipeline', () => {
           'application/swe+json',
           'application/swe+csv',
         ],
-        phenomenonTime: [
-          '2026-01-26T18:32:01.56Z',
-          '2026-02-19T14:22:03.12Z',
-        ],
-        resultTime: [
-          '2026-01-26T18:32:01.56Z',
-          '2026-02-19T14:22:03.12Z',
-        ],
+        phenomenonTime: ['2026-01-26T18:32:01.56Z', '2026-02-19T14:22:03.12Z'],
+        resultTime: ['2026-01-26T18:32:01.56Z', '2026-02-19T14:22:03.12Z'],
         resultType: 'record',
         live: true,
         links: [
@@ -79,9 +72,7 @@ describe('end-to-end: Datastream collection pipeline', () => {
         ],
       },
     ],
-    links: [
-      { rel: 'self', href: '/datastreams', type: 'application/json' },
-    ],
+    links: [{ rel: 'self', href: '/datastreams', type: 'application/json' }],
     numberMatched: 1,
     numberReturned: 1,
   };
@@ -102,9 +93,7 @@ describe('end-to-end: Datastream collection pipeline', () => {
     const ds = datastreams[0];
     expect(ds.id).toBe('0ocb');
     expect(ds.name).toBe('FCU Simulated Weather Station - Weather');
-    expect(ds.description).toBe(
-      'Weather observations from simulated station'
-    );
+    expect(ds.description).toBe('Weather observations from simulated station');
     expect(ds.outputName).toBe('weather');
     expect(ds.live).toBe(true);
     expect(ds.resultType).toBe('record');
@@ -116,9 +105,7 @@ describe('end-to-end: Datastream collection pipeline', () => {
 
     // validTime parsed: start is a Date, end is undefined ('now' sentinel)
     expect(ds.validTime).toBeDefined();
-    expect(ds.validTime!.start).toEqual(
-      new Date('2026-01-26T18:32:01.56Z')
-    );
+    expect(ds.validTime!.start).toEqual(new Date('2026-01-26T18:32:01.56Z'));
     expect(ds.validTime!.end).toBeUndefined();
 
     // phenomenonTime and resultTime parsed as TimeInterval
@@ -126,9 +113,7 @@ describe('end-to-end: Datastream collection pipeline', () => {
     expect(ds.phenomenonTime!.start).toEqual(
       new Date('2026-01-26T18:32:01.56Z')
     );
-    expect(ds.phenomenonTime!.end).toEqual(
-      new Date('2026-02-19T14:22:03.12Z')
-    );
+    expect(ds.phenomenonTime!.end).toEqual(new Date('2026-02-19T14:22:03.12Z'));
 
     // observedProperties normalized from object array to string array
     expect(ds.observedProperties).toEqual([
@@ -136,8 +121,12 @@ describe('end-to-end: Datastream collection pipeline', () => {
     ]);
 
     // Cross-reference fields stripped (not in Datastream interface)
-    expect((ds as unknown as Record<string, unknown>)['system@id']).toBeUndefined();
-    expect((ds as unknown as Record<string, unknown>)['system@link']).toBeUndefined();
+    expect(
+      (ds as unknown as Record<string, unknown>)['system@id']
+    ).toBeUndefined();
+    expect(
+      (ds as unknown as Record<string, unknown>)['system@link']
+    ).toBeUndefined();
   });
 
   it('handles empty collection gracefully', () => {
@@ -169,12 +158,15 @@ describe('end-to-end: Property collection pipeline', () => {
         uniqueId: 'urn:x-ogc:def:property:noaa::AirTemperature',
         label: 'Air Temperature',
         description: 'Temperature of the ambient air',
-        baseProperty:
-          'http://qudt.org/vocab/quantitykind/Temperature',
+        baseProperty: 'http://qudt.org/vocab/quantitykind/Temperature',
         objectType:
           'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement',
         links: [
-          { rel: 'self', href: '/properties/air-temp', type: 'application/json' },
+          {
+            rel: 'self',
+            href: '/properties/air-temp',
+            type: 'application/json',
+          },
         ],
       },
     ],
@@ -195,9 +187,7 @@ describe('end-to-end: Property collection pipeline', () => {
     // Step 3: Verify typed output
     const prop = properties[0];
     expect(prop.id).toBe('air-temp');
-    expect(prop.uniqueId).toBe(
-      'urn:x-ogc:def:property:noaa::AirTemperature'
-    );
+    expect(prop.uniqueId).toBe('urn:x-ogc:def:property:noaa::AirTemperature');
     expect(prop.label).toBe('Air Temperature');
     expect(prop.description).toBe('Temperature of the ambient air');
     expect(prop.baseProperty).toBe(

@@ -46,10 +46,25 @@ describe('CSAPIQueryBuilder constructor', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
-          { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
         ],
       })
     );
@@ -62,7 +77,12 @@ describe('CSAPIQueryBuilder constructor', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'items', type: '', title: '', href: '/items' },
         ],
       })
@@ -94,9 +114,24 @@ describe('CSAPIQueryBuilder constructor', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'items', type: '', title: '', href: '/collections/iot/systems' },
-          { rel: 'items', type: '', title: '', href: '/collections/iot/deployments' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'items',
+            type: '',
+            title: '',
+            href: '/collections/iot/systems',
+          },
+          {
+            rel: 'items',
+            type: '',
+            title: '',
+            href: '/collections/iot/deployments',
+          },
         ],
       })
     );
@@ -112,7 +147,12 @@ describe('CSAPIQueryBuilder constructor', () => {
           { rel: 'self', type: '', title: '', href: 'https://example.com/api' },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
           { rel: 'datastreams', type: '', title: '', href: '/api/datastreams' },
-          { rel: 'items', type: '', title: '', href: '/collections/iot/deployments' },
+          {
+            rel: 'items',
+            type: '',
+            title: '',
+            href: '/collections/iot/deployments',
+          },
         ],
       })
     );
@@ -139,9 +179,19 @@ describe('CSAPIQueryBuilder constructor', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'items', type: '', title: '', href: '/collections/iot/items' },
-          { rel: 'items', type: '', title: '', href: '/collections/iot/unknown' },
+          {
+            rel: 'items',
+            type: '',
+            title: '',
+            href: '/collections/iot/unknown',
+          },
         ],
       })
     );
@@ -159,8 +209,18 @@ describe('Resource validation', () => {
       makeCollection({
         id: 'sensors',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/sensors' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/sensors',
+          },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
         ],
       })
     );
@@ -173,7 +233,12 @@ describe('Resource validation', () => {
       makeCollection({
         id: 'sensors',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/sensors' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/sensors',
+          },
         ],
       })
     );
@@ -188,21 +253,43 @@ describe('Resource validation', () => {
       makeCollection({
         id: 'iot',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
-          { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
         ],
       })
     );
 
-    expect(() => builder.getSystems()).toThrow('Available resources: deployments, datastreams');
+    expect(() => builder.getSystems()).toThrow(
+      'Available resources: deployments, datastreams'
+    );
   });
 
   it('succeeds when resource type is available', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -225,9 +312,19 @@ describe('Top-level resource URLs', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'http://server/sensorhub/api/collections/all' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'http://server/sensorhub/api/collections/all',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
-          { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
         ],
       }),
       resourceUrls
@@ -238,12 +335,19 @@ describe('Top-level resource URLs', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
     );
-    expect(builder.getSystems()).toBe('https://example.com/collections/iot/systems');
+    expect(builder.getSystems()).toBe(
+      'https://example.com/collections/iot/systems'
+    );
   });
 
   it('uses absolute resource URL when resourceUrls map is provided', () => {
@@ -297,7 +401,12 @@ describe('getSystems', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -387,9 +496,7 @@ describe('getSystems', () => {
 
   it('returns correct URL with foiId parameter', () => {
     const url = makeIotBuilder().getSystems({ foiId: 'foi-001' });
-    expect(url).toBe(
-      'https://example.com/collections/iot/systems?foi=foi-001'
-    );
+    expect(url).toBe('https://example.com/collections/iot/systems?foi=foi-001');
   });
 
   it('returns correct URL with observedPropertyId parameter', () => {
@@ -434,7 +541,12 @@ describe('getSystem', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -458,7 +570,12 @@ describe('getSystem', () => {
       makeCollection({
         id: 'no-systems',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/no-systems' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/no-systems',
+          },
         ],
       })
     );
@@ -476,7 +593,12 @@ describe('createSystem', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -499,7 +621,12 @@ describe('updateSystem', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -524,7 +651,12 @@ describe('deleteSystem', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -546,7 +678,12 @@ describe('getSystemHistory', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -577,7 +714,12 @@ describe('getSystemSubsystems', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -620,7 +762,12 @@ describe('getSystemDataStreams', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -647,7 +794,12 @@ describe('getSystemControlStreams', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -671,7 +823,12 @@ describe('getSystemSamplingFeatures', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -695,7 +852,12 @@ describe('createSubsystem', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -704,12 +866,16 @@ describe('createSubsystem', () => {
 
   it('returns correct URL for subsystem creation', () => {
     const url = makeIotBuilder().createSubsystem('sys-parent');
-    expect(url).toBe('https://example.com/collections/iot/systems/sys-parent/subsystems');
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems/sys-parent/subsystems'
+    );
   });
 
   it('encodes special characters in parent ID', () => {
     const url = makeIotBuilder().createSubsystem('urn:example:sys:001');
-    expect(url).toBe('https://example.com/collections/iot/systems/urn%3Aexample%3Asys%3A001/subsystems');
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems/urn%3Aexample%3Asys%3A001/subsystems'
+    );
   });
 
   it('throws EndpointError when systems is unavailable', () => {
@@ -723,7 +889,12 @@ describe('createDataStreamForSystem', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -732,12 +903,18 @@ describe('createDataStreamForSystem', () => {
 
   it('returns correct URL for nested datastream creation', () => {
     const url = makeIotBuilder().createDataStreamForSystem('sys-001');
-    expect(url).toBe('https://example.com/collections/iot/systems/sys-001/datastreams');
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems/sys-001/datastreams'
+    );
   });
 
   it('encodes special characters in system ID', () => {
-    const url = makeIotBuilder().createDataStreamForSystem('urn:example:sys:001');
-    expect(url).toBe('https://example.com/collections/iot/systems/urn%3Aexample%3Asys%3A001/datastreams');
+    const url = makeIotBuilder().createDataStreamForSystem(
+      'urn:example:sys:001'
+    );
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems/urn%3Aexample%3Asys%3A001/datastreams'
+    );
   });
 
   it('throws EndpointError when systems is unavailable', () => {
@@ -751,7 +928,12 @@ describe('createControlStreamForSystem', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -760,17 +942,25 @@ describe('createControlStreamForSystem', () => {
 
   it('returns correct URL for nested control stream creation', () => {
     const url = makeIotBuilder().createControlStreamForSystem('sys-001');
-    expect(url).toBe('https://example.com/collections/iot/systems/sys-001/controlstreams');
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems/sys-001/controlstreams'
+    );
   });
 
   it('encodes special characters in system ID', () => {
-    const url = makeIotBuilder().createControlStreamForSystem('urn:example:sys:001');
-    expect(url).toBe('https://example.com/collections/iot/systems/urn%3Aexample%3Asys%3A001/controlstreams');
+    const url = makeIotBuilder().createControlStreamForSystem(
+      'urn:example:sys:001'
+    );
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems/urn%3Aexample%3Asys%3A001/controlstreams'
+    );
   });
 
   it('throws EndpointError when systems is unavailable', () => {
     const builder = new CSAPIQueryBuilder(makeCollection({ id: 'empty' }));
-    expect(() => builder.createControlStreamForSystem('x')).toThrow(EndpointError);
+    expect(() => builder.createControlStreamForSystem('x')).toThrow(
+      EndpointError
+    );
   });
 });
 
@@ -779,7 +969,12 @@ describe('createSamplingFeatureForSystem', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -788,17 +983,25 @@ describe('createSamplingFeatureForSystem', () => {
 
   it('returns correct URL for nested sampling feature creation', () => {
     const url = makeIotBuilder().createSamplingFeatureForSystem('sys-001');
-    expect(url).toBe('https://example.com/collections/iot/systems/sys-001/samplingFeatures');
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems/sys-001/samplingFeatures'
+    );
   });
 
   it('encodes special characters in system ID', () => {
-    const url = makeIotBuilder().createSamplingFeatureForSystem('urn:example:sys:001');
-    expect(url).toBe('https://example.com/collections/iot/systems/urn%3Aexample%3Asys%3A001/samplingFeatures');
+    const url = makeIotBuilder().createSamplingFeatureForSystem(
+      'urn:example:sys:001'
+    );
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems/urn%3Aexample%3Asys%3A001/samplingFeatures'
+    );
   });
 
   it('throws EndpointError when systems is unavailable', () => {
     const builder = new CSAPIQueryBuilder(makeCollection({ id: 'empty' }));
-    expect(() => builder.createSamplingFeatureForSystem('x')).toThrow(EndpointError);
+    expect(() => builder.createSamplingFeatureForSystem('x')).toThrow(
+      EndpointError
+    );
   });
 });
 
@@ -807,8 +1010,18 @@ describe('createSubdeployment', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
         ],
       })
     );
@@ -816,12 +1029,16 @@ describe('createSubdeployment', () => {
 
   it('returns correct URL for subdeployment creation', () => {
     const url = makeDepBuilder().createSubdeployment('dep-parent');
-    expect(url).toBe('https://example.com/collections/iot/deployments/dep-parent/subdeployments');
+    expect(url).toBe(
+      'https://example.com/collections/iot/deployments/dep-parent/subdeployments'
+    );
   });
 
   it('encodes special characters in parent ID', () => {
     const url = makeDepBuilder().createSubdeployment('urn:example:dep:001');
-    expect(url).toBe('https://example.com/collections/iot/deployments/urn%3Aexample%3Adep%3A001/subdeployments');
+    expect(url).toBe(
+      'https://example.com/collections/iot/deployments/urn%3Aexample%3Adep%3A001/subdeployments'
+    );
   });
 
   it('throws EndpointError when deployments is unavailable', () => {
@@ -835,7 +1052,12 @@ describe('getSystemDeployments', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -862,7 +1084,12 @@ describe('getSystemProcedures', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -886,8 +1113,18 @@ describe('getDeployments', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
         ],
       })
     );
@@ -899,7 +1136,10 @@ describe('getDeployments', () => {
   });
 
   it('returns correct URL with limit and bbox', () => {
-    const url = makeDepBuilder().getDeployments({ limit: 10, bbox: [-180, -90, 180, 90] });
+    const url = makeDepBuilder().getDeployments({
+      limit: 10,
+      bbox: [-180, -90, 180, 90],
+    });
     expect(url).toBe(
       'https://example.com/collections/iot/deployments?limit=10&bbox=-180%2C-90%2C180%2C90'
     );
@@ -907,7 +1147,10 @@ describe('getDeployments', () => {
 
   it('returns correct URL with datetime parameter', () => {
     const url = makeDepBuilder().getDeployments({
-      datetime: { start: new Date('2025-01-01T00:00:00Z'), end: new Date('2025-12-31T23:59:59Z') },
+      datetime: {
+        start: new Date('2025-01-01T00:00:00Z'),
+        end: new Date('2025-12-31T23:59:59Z'),
+      },
     });
     expect(url).toBe(
       'https://example.com/collections/iot/deployments?datetime=2025-01-01T00%3A00%3A00.000Z%2F2025-12-31T23%3A59%3A59.000Z'
@@ -916,17 +1159,23 @@ describe('getDeployments', () => {
 
   it('returns correct URL with systemId filter', () => {
     const url = makeDepBuilder().getDeployments({ systemId: 'sys-001' });
-    expect(url).toBe('https://example.com/collections/iot/deployments?system=sys-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/deployments?system=sys-001'
+    );
   });
 
   it('returns correct URL with parent parameter', () => {
     const url = makeDepBuilder().getDeployments({ parent: 'dep-parent-001' });
-    expect(url).toBe('https://example.com/collections/iot/deployments?parent=dep-parent-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/deployments?parent=dep-parent-001'
+    );
   });
 
   it('returns correct URL with recursive parameter', () => {
     const url = makeDepBuilder().getDeployments({ recursive: true });
-    expect(url).toBe('https://example.com/collections/iot/deployments?recursive=true');
+    expect(url).toBe(
+      'https://example.com/collections/iot/deployments?recursive=true'
+    );
   });
 
   it('returns correct URL with q parameter', () => {
@@ -936,12 +1185,16 @@ describe('getDeployments', () => {
 
   it('returns correct URL with offset', () => {
     const url = makeDepBuilder().getDeployments({ offset: 20 });
-    expect(url).toBe('https://example.com/collections/iot/deployments?offset=20');
+    expect(url).toBe(
+      'https://example.com/collections/iot/deployments?offset=20'
+    );
   });
 
   it('returns correct URL with f (format) parameter', () => {
     const url = makeDepBuilder().getDeployments({ f: 'application/json' });
-    expect(url).toBe('https://example.com/collections/iot/deployments?f=application%2Fjson');
+    expect(url).toBe(
+      'https://example.com/collections/iot/deployments?f=application%2Fjson'
+    );
   });
 });
 
@@ -950,8 +1203,18 @@ describe('getDeployment', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
         ],
       })
     );
@@ -964,7 +1227,9 @@ describe('getDeployment', () => {
 
   it('encodes special characters in ID', () => {
     const url = makeDepBuilder().getDeployment('dep/001');
-    expect(url).toBe('https://example.com/collections/iot/deployments/dep%2F001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/deployments/dep%2F001'
+    );
   });
 });
 
@@ -973,8 +1238,18 @@ describe('Deployment CRUD operations', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
         ],
       })
     );
@@ -1001,8 +1276,18 @@ describe('getDeploymentSubdeployments', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
         ],
       })
     );
@@ -1016,14 +1301,19 @@ describe('getDeploymentSubdeployments', () => {
   });
 
   it('returns correct URL with recursive=true', () => {
-    const url = makeDepBuilder().getDeploymentSubdeployments('dep-001', { recursive: true });
+    const url = makeDepBuilder().getDeploymentSubdeployments('dep-001', {
+      recursive: true,
+    });
     expect(url).toBe(
       'https://example.com/collections/iot/deployments/dep-001/subdeployments?recursive=true'
     );
   });
 
   it('returns correct URL with pagination and filtering', () => {
-    const url = makeDepBuilder().getDeploymentSubdeployments('dep-001', { limit: 5, offset: 10 });
+    const url = makeDepBuilder().getDeploymentSubdeployments('dep-001', {
+      limit: 5,
+      offset: 10,
+    });
     expect(url).toBe(
       'https://example.com/collections/iot/deployments/dep-001/subdeployments?limit=5&offset=10'
     );
@@ -1035,8 +1325,18 @@ describe('Deployment association and history', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
         ],
       })
     );
@@ -1077,7 +1377,12 @@ describe('Deployment resource validation', () => {
       makeCollection({
         id: 'sensors',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/sensors' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/sensors',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -1087,7 +1392,9 @@ describe('Deployment resource validation', () => {
     expect(() => builder.createDeployment()).toThrow(EndpointError);
     expect(() => builder.updateDeployment('x')).toThrow(EndpointError);
     expect(() => builder.deleteDeployment('x')).toThrow(EndpointError);
-    expect(() => builder.getDeploymentSubdeployments('x')).toThrow(EndpointError);
+    expect(() => builder.getDeploymentSubdeployments('x')).toThrow(
+      EndpointError
+    );
     expect(() => builder.getDeploymentSystems('x')).toThrow(EndpointError);
     expect(() => builder.getDeploymentHistory('x')).toThrow(EndpointError);
   });
@@ -1102,8 +1409,18 @@ describe('getProcedures', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:procedures', type: '', title: '', href: '/procedures' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:procedures',
+            type: '',
+            title: '',
+            href: '/procedures',
+          },
         ],
       })
     );
@@ -1121,32 +1438,50 @@ describe('getProcedures', () => {
 
   it('returns correct URL with offset', () => {
     const url = makeProcBuilder().getProcedures({ offset: 20 });
-    expect(url).toBe('https://example.com/collections/iot/procedures?offset=20');
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures?offset=20'
+    );
   });
 
   it('returns correct URL with q parameter', () => {
     const url = makeProcBuilder().getProcedures({ q: 'thermometer' });
-    expect(url).toBe('https://example.com/collections/iot/procedures?q=thermometer');
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures?q=thermometer'
+    );
   });
 
   it('returns correct URL with id filter', () => {
     const url = makeProcBuilder().getProcedures({ id: 'proc-001' });
-    expect(url).toBe('https://example.com/collections/iot/procedures?id=proc-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures?id=proc-001'
+    );
   });
 
   it('returns correct URL with array id filter', () => {
-    const url = makeProcBuilder().getProcedures({ id: ['proc-001', 'proc-002'] });
-    expect(url).toBe('https://example.com/collections/iot/procedures?id=proc-001%2Cproc-002');
+    const url = makeProcBuilder().getProcedures({
+      id: ['proc-001', 'proc-002'],
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures?id=proc-001%2Cproc-002'
+    );
   });
 
   it('returns correct URL with f (format) parameter', () => {
     const url = makeProcBuilder().getProcedures({ f: 'application/json' });
-    expect(url).toBe('https://example.com/collections/iot/procedures?f=application%2Fjson');
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures?f=application%2Fjson'
+    );
   });
 
   it('returns correct URL with multiple options', () => {
-    const url = makeProcBuilder().getProcedures({ limit: 5, offset: 10, q: 'sensor' });
-    expect(url).toBe('https://example.com/collections/iot/procedures?limit=5&offset=10&q=sensor');
+    const url = makeProcBuilder().getProcedures({
+      limit: 5,
+      offset: 10,
+      q: 'sensor',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures?limit=5&offset=10&q=sensor'
+    );
   });
 });
 
@@ -1155,8 +1490,18 @@ describe('getProcedure', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:procedures', type: '', title: '', href: '/procedures' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:procedures',
+            type: '',
+            title: '',
+            href: '/procedures',
+          },
         ],
       })
     );
@@ -1169,7 +1514,9 @@ describe('getProcedure', () => {
 
   it('encodes special characters in ID', () => {
     const url = makeProcBuilder().getProcedure('urn:example:proc:001');
-    expect(url).toBe('https://example.com/collections/iot/procedures/urn%3Aexample%3Aproc%3A001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures/urn%3Aexample%3Aproc%3A001'
+    );
   });
 });
 
@@ -1178,8 +1525,18 @@ describe('Procedure CRUD operations', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:procedures', type: '', title: '', href: '/procedures' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:procedures',
+            type: '',
+            title: '',
+            href: '/procedures',
+          },
         ],
       })
     );
@@ -1206,8 +1563,18 @@ describe('Procedure association methods', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:procedures', type: '', title: '', href: '/procedures' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:procedures',
+            type: '',
+            title: '',
+            href: '/procedures',
+          },
         ],
       })
     );
@@ -1215,22 +1582,35 @@ describe('Procedure association methods', () => {
 
   it('getProcedureSystems returns correct URL', () => {
     const url = makeProcBuilder().getProcedureSystems('proc-001');
-    expect(url).toBe('https://example.com/collections/iot/procedures/proc-001/systems');
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures/proc-001/systems'
+    );
   });
 
   it('getProcedureSystems returns correct URL with pagination', () => {
-    const url = makeProcBuilder().getProcedureSystems('proc-001', { limit: 5, offset: 10 });
-    expect(url).toBe('https://example.com/collections/iot/procedures/proc-001/systems?limit=5&offset=10');
+    const url = makeProcBuilder().getProcedureSystems('proc-001', {
+      limit: 5,
+      offset: 10,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures/proc-001/systems?limit=5&offset=10'
+    );
   });
 
   it('getProcedureDataStreams returns correct URL', () => {
     const url = makeProcBuilder().getProcedureDataStreams('proc-001');
-    expect(url).toBe('https://example.com/collections/iot/procedures/proc-001/datastreams');
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures/proc-001/datastreams'
+    );
   });
 
   it('getProcedureDataStreams returns correct URL with options', () => {
-    const url = makeProcBuilder().getProcedureDataStreams('proc-001', { limit: 10 });
-    expect(url).toBe('https://example.com/collections/iot/procedures/proc-001/datastreams?limit=10');
+    const url = makeProcBuilder().getProcedureDataStreams('proc-001', {
+      limit: 10,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures/proc-001/datastreams?limit=10'
+    );
   });
 });
 
@@ -1239,8 +1619,18 @@ describe('getProcedureHistory', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:procedures', type: '', title: '', href: '/procedures' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:procedures',
+            type: '',
+            title: '',
+            href: '/procedures',
+          },
         ],
       })
     );
@@ -1248,12 +1638,16 @@ describe('getProcedureHistory', () => {
 
   it('returns correct URL with no options', () => {
     const url = makeProcBuilder().getProcedureHistory('proc-001');
-    expect(url).toBe('https://example.com/collections/iot/procedures/proc-001/history');
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures/proc-001/history'
+    );
   });
 
   it('returns correct URL with limit', () => {
     const url = makeProcBuilder().getProcedureHistory('proc-001', { limit: 5 });
-    expect(url).toBe('https://example.com/collections/iot/procedures/proc-001/history?limit=5');
+    expect(url).toBe(
+      'https://example.com/collections/iot/procedures/proc-001/history?limit=5'
+    );
   });
 });
 
@@ -1263,7 +1657,12 @@ describe('Procedure resource validation', () => {
       makeCollection({
         id: 'sensors',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/sensors' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/sensors',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -1288,8 +1687,18 @@ describe('getSamplingFeatures', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:samplingFeatures', type: '', title: '', href: '/samplingFeatures' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:samplingFeatures',
+            type: '',
+            title: '',
+            href: '/samplingFeatures',
+          },
         ],
       })
     );
@@ -1302,37 +1711,56 @@ describe('getSamplingFeatures', () => {
 
   it('returns correct URL with limit', () => {
     const url = makeSfBuilder().getSamplingFeatures({ limit: 20 });
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures?limit=20');
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures?limit=20'
+    );
   });
 
   it('returns correct URL with offset', () => {
     const url = makeSfBuilder().getSamplingFeatures({ offset: 10 });
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures?offset=10');
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures?offset=10'
+    );
   });
 
   it('returns correct URL with q parameter', () => {
     const url = makeSfBuilder().getSamplingFeatures({ q: 'borehole' });
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures?q=borehole');
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures?q=borehole'
+    );
   });
 
   it('returns correct URL with id filter', () => {
     const url = makeSfBuilder().getSamplingFeatures({ id: 'sf-001' });
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures?id=sf-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures?id=sf-001'
+    );
   });
 
   it('returns correct URL with array id filter', () => {
-    const url = makeSfBuilder().getSamplingFeatures({ id: ['sf-001', 'sf-002'] });
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures?id=sf-001%2Csf-002');
+    const url = makeSfBuilder().getSamplingFeatures({
+      id: ['sf-001', 'sf-002'],
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures?id=sf-001%2Csf-002'
+    );
   });
 
   it('returns correct URL with bbox parameter', () => {
-    const url = makeSfBuilder().getSamplingFeatures({ bbox: [-120, 35, -110, 45] });
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures?bbox=-120%2C35%2C-110%2C45');
+    const url = makeSfBuilder().getSamplingFeatures({
+      bbox: [-120, 35, -110, 45],
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures?bbox=-120%2C35%2C-110%2C45'
+    );
   });
 
   it('returns correct URL with datetime parameter', () => {
     const url = makeSfBuilder().getSamplingFeatures({
-      datetime: { start: new Date('2024-01-01T00:00:00Z'), end: new Date('2024-12-31T23:59:59Z') },
+      datetime: {
+        start: new Date('2024-01-01T00:00:00Z'),
+        end: new Date('2024-12-31T23:59:59Z'),
+      },
     });
     expect(url).toBe(
       'https://example.com/collections/iot/samplingFeatures?datetime=2024-01-01T00%3A00%3A00.000Z%2F2024-12-31T23%3A59%3A59.000Z'
@@ -1340,13 +1768,23 @@ describe('getSamplingFeatures', () => {
   });
 
   it('returns correct URL with f (format) parameter', () => {
-    const url = makeSfBuilder().getSamplingFeatures({ f: 'application/geo+json' });
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures?f=application%2Fgeo%2Bjson');
+    const url = makeSfBuilder().getSamplingFeatures({
+      f: 'application/geo+json',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures?f=application%2Fgeo%2Bjson'
+    );
   });
 
   it('returns correct URL with multiple options', () => {
-    const url = makeSfBuilder().getSamplingFeatures({ limit: 10, offset: 5, q: 'well' });
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures?limit=10&offset=5&q=well');
+    const url = makeSfBuilder().getSamplingFeatures({
+      limit: 10,
+      offset: 5,
+      q: 'well',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures?limit=10&offset=5&q=well'
+    );
   });
 });
 
@@ -1355,8 +1793,18 @@ describe('getSamplingFeature', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:samplingFeatures', type: '', title: '', href: '/samplingFeatures' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:samplingFeatures',
+            type: '',
+            title: '',
+            href: '/samplingFeatures',
+          },
         ],
       })
     );
@@ -1364,12 +1812,16 @@ describe('getSamplingFeature', () => {
 
   it('returns correct URL with resource ID', () => {
     const url = makeSfBuilder().getSamplingFeature('sf-001');
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures/sf-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures/sf-001'
+    );
   });
 
   it('encodes special characters in ID', () => {
     const url = makeSfBuilder().getSamplingFeature('urn:example:sf:001');
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures/urn%3Aexample%3Asf%3A001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures/urn%3Aexample%3Asf%3A001'
+    );
   });
 });
 
@@ -1378,8 +1830,18 @@ describe('SamplingFeature CRUD operations', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:samplingFeatures', type: '', title: '', href: '/samplingFeatures' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:samplingFeatures',
+            type: '',
+            title: '',
+            href: '/samplingFeatures',
+          },
         ],
       })
     );
@@ -1392,12 +1854,16 @@ describe('SamplingFeature CRUD operations', () => {
 
   it('updateSamplingFeature returns correct URL', () => {
     const url = makeSfBuilder().updateSamplingFeature('sf-001');
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures/sf-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures/sf-001'
+    );
   });
 
   it('deleteSamplingFeature returns correct URL', () => {
     const url = makeSfBuilder().deleteSamplingFeature('sf-001');
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures/sf-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures/sf-001'
+    );
   });
 });
 
@@ -1406,8 +1872,18 @@ describe('SamplingFeature association methods', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:samplingFeatures', type: '', title: '', href: '/samplingFeatures' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:samplingFeatures',
+            type: '',
+            title: '',
+            href: '/samplingFeatures',
+          },
         ],
       })
     );
@@ -1415,22 +1891,35 @@ describe('SamplingFeature association methods', () => {
 
   it('getSamplingFeatureSystems returns correct URL', () => {
     const url = makeSfBuilder().getSamplingFeatureSystems('sf-001');
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures/sf-001/systems');
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures/sf-001/systems'
+    );
   });
 
   it('getSamplingFeatureSystems returns correct URL with pagination', () => {
-    const url = makeSfBuilder().getSamplingFeatureSystems('sf-001', { limit: 5, offset: 10 });
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures/sf-001/systems?limit=5&offset=10');
+    const url = makeSfBuilder().getSamplingFeatureSystems('sf-001', {
+      limit: 5,
+      offset: 10,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures/sf-001/systems?limit=5&offset=10'
+    );
   });
 
   it('getSamplingFeatureObservations returns correct URL', () => {
     const url = makeSfBuilder().getSamplingFeatureObservations('sf-001');
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures/sf-001/observations');
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures/sf-001/observations'
+    );
   });
 
   it('getSamplingFeatureObservations returns correct URL with options', () => {
-    const url = makeSfBuilder().getSamplingFeatureObservations('sf-001', { limit: 10 });
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures/sf-001/observations?limit=10');
+    const url = makeSfBuilder().getSamplingFeatureObservations('sf-001', {
+      limit: 10,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures/sf-001/observations?limit=10'
+    );
   });
 });
 
@@ -1439,8 +1928,18 @@ describe('getSamplingFeatureHistory', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:samplingFeatures', type: '', title: '', href: '/samplingFeatures' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:samplingFeatures',
+            type: '',
+            title: '',
+            href: '/samplingFeatures',
+          },
         ],
       })
     );
@@ -1448,12 +1947,18 @@ describe('getSamplingFeatureHistory', () => {
 
   it('returns correct URL with no options', () => {
     const url = makeSfBuilder().getSamplingFeatureHistory('sf-001');
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures/sf-001/history');
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures/sf-001/history'
+    );
   });
 
   it('returns correct URL with limit', () => {
-    const url = makeSfBuilder().getSamplingFeatureHistory('sf-001', { limit: 5 });
-    expect(url).toBe('https://example.com/collections/iot/samplingFeatures/sf-001/history?limit=5');
+    const url = makeSfBuilder().getSamplingFeatureHistory('sf-001', {
+      limit: 5,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/samplingFeatures/sf-001/history?limit=5'
+    );
   });
 });
 
@@ -1463,7 +1968,12 @@ describe('SamplingFeature resource validation', () => {
       makeCollection({
         id: 'sensors',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/sensors' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/sensors',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -1474,7 +1984,9 @@ describe('SamplingFeature resource validation', () => {
     expect(() => builder.updateSamplingFeature('x')).toThrow(EndpointError);
     expect(() => builder.deleteSamplingFeature('x')).toThrow(EndpointError);
     expect(() => builder.getSamplingFeatureSystems('x')).toThrow(EndpointError);
-    expect(() => builder.getSamplingFeatureObservations('x')).toThrow(EndpointError);
+    expect(() => builder.getSamplingFeatureObservations('x')).toThrow(
+      EndpointError
+    );
     expect(() => builder.getSamplingFeatureHistory('x')).toThrow(EndpointError);
   });
 });
@@ -1488,8 +2000,18 @@ describe('getProperties', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:properties', type: '', title: '', href: '/properties' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:properties',
+            type: '',
+            title: '',
+            href: '/properties',
+          },
         ],
       })
     );
@@ -1507,42 +2029,66 @@ describe('getProperties', () => {
 
   it('returns correct URL with q parameter', () => {
     const url = makePropBuilder().getProperties({ q: 'temperature' });
-    expect(url).toBe('https://example.com/collections/iot/properties?q=temperature');
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties?q=temperature'
+    );
   });
 
   it('returns correct URL with id filter', () => {
     const url = makePropBuilder().getProperties({ id: 'temp-01' });
-    expect(url).toBe('https://example.com/collections/iot/properties?id=temp-01');
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties?id=temp-01'
+    );
   });
 
   it('returns correct URL with multiple options', () => {
-    const url = makePropBuilder().getProperties({ limit: 10, offset: 5, q: 'pressure' });
-    expect(url).toBe('https://example.com/collections/iot/properties?limit=10&offset=5&q=pressure');
+    const url = makePropBuilder().getProperties({
+      limit: 10,
+      offset: 5,
+      q: 'pressure',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties?limit=10&offset=5&q=pressure'
+    );
   });
 
   it('returns correct URL with offset', () => {
     const url = makePropBuilder().getProperties({ offset: 20 });
-    expect(url).toBe('https://example.com/collections/iot/properties?offset=20');
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties?offset=20'
+    );
   });
 
   it('returns correct URL with f (format) parameter', () => {
     const url = makePropBuilder().getProperties({ f: 'application/json' });
-    expect(url).toBe('https://example.com/collections/iot/properties?f=application%2Fjson');
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties?f=application%2Fjson'
+    );
   });
 
   it('handles array id parameter', () => {
-    const url = makePropBuilder().getProperties({ id: ['temp-01', 'pressure-02'] });
-    expect(url).toBe('https://example.com/collections/iot/properties?id=temp-01%2Cpressure-02');
+    const url = makePropBuilder().getProperties({
+      id: ['temp-01', 'pressure-02'],
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties?id=temp-01%2Cpressure-02'
+    );
   });
 
   it('returns correct URL with system filter', () => {
     const url = makePropBuilder().getProperties({ system: 'sys-001' });
-    expect(url).toBe('https://example.com/collections/iot/properties?system=sys-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties?system=sys-001'
+    );
   });
 
   it('returns correct URL with baseProperty filter', () => {
-    const url = makePropBuilder().getProperties({ baseProperty: 'urn:qudt:Temperature' });
-    expect(url).toBe('https://example.com/collections/iot/properties?baseProperty=urn%3Aqudt%3ATemperature');
+    const url = makePropBuilder().getProperties({
+      baseProperty: 'urn:qudt:Temperature',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties?baseProperty=urn%3Aqudt%3ATemperature'
+    );
   });
 });
 
@@ -1551,8 +2097,18 @@ describe('getProperty', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:properties', type: '', title: '', href: '/properties' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:properties',
+            type: '',
+            title: '',
+            href: '/properties',
+          },
         ],
       })
     );
@@ -1560,12 +2116,16 @@ describe('getProperty', () => {
 
   it('returns correct URL with resource ID', () => {
     const url = makePropBuilder().getProperty('temperature-01');
-    expect(url).toBe('https://example.com/collections/iot/properties/temperature-01');
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties/temperature-01'
+    );
   });
 
   it('encodes special characters in ID', () => {
     const url = makePropBuilder().getProperty('urn:qudt:Temperature');
-    expect(url).toBe('https://example.com/collections/iot/properties/urn%3Aqudt%3ATemperature');
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties/urn%3Aqudt%3ATemperature'
+    );
   });
 });
 
@@ -1574,8 +2134,18 @@ describe('Property association methods', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:properties', type: '', title: '', href: '/properties' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:properties',
+            type: '',
+            title: '',
+            href: '/properties',
+          },
         ],
       })
     );
@@ -1583,32 +2153,53 @@ describe('Property association methods', () => {
 
   it('getPropertySystems returns correct URL', () => {
     const url = makePropBuilder().getPropertySystems('temperature-01');
-    expect(url).toBe('https://example.com/collections/iot/properties/temperature-01/systems');
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties/temperature-01/systems'
+    );
   });
 
   it('getPropertySystems returns correct URL with pagination', () => {
-    const url = makePropBuilder().getPropertySystems('temperature-01', { limit: 5, offset: 10 });
-    expect(url).toBe('https://example.com/collections/iot/properties/temperature-01/systems?limit=5&offset=10');
+    const url = makePropBuilder().getPropertySystems('temperature-01', {
+      limit: 5,
+      offset: 10,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties/temperature-01/systems?limit=5&offset=10'
+    );
   });
 
   it('getPropertyDataStreams returns correct URL', () => {
     const url = makePropBuilder().getPropertyDataStreams('temperature-01');
-    expect(url).toBe('https://example.com/collections/iot/properties/temperature-01/datastreams');
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties/temperature-01/datastreams'
+    );
   });
 
   it('getPropertyDataStreams returns correct URL with options', () => {
-    const url = makePropBuilder().getPropertyDataStreams('temperature-01', { limit: 10 });
-    expect(url).toBe('https://example.com/collections/iot/properties/temperature-01/datastreams?limit=10');
+    const url = makePropBuilder().getPropertyDataStreams('temperature-01', {
+      limit: 10,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties/temperature-01/datastreams?limit=10'
+    );
   });
 
   it('getPropertyControlStreams returns correct URL', () => {
-    const url = makePropBuilder().getPropertyControlStreams('valve-position-01');
-    expect(url).toBe('https://example.com/collections/iot/properties/valve-position-01/controlstreams');
+    const url =
+      makePropBuilder().getPropertyControlStreams('valve-position-01');
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties/valve-position-01/controlstreams'
+    );
   });
 
   it('getPropertyControlStreams returns correct URL with options', () => {
-    const url = makePropBuilder().getPropertyControlStreams('valve-position-01', { limit: 10 });
-    expect(url).toBe('https://example.com/collections/iot/properties/valve-position-01/controlstreams?limit=10');
+    const url = makePropBuilder().getPropertyControlStreams(
+      'valve-position-01',
+      { limit: 10 }
+    );
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties/valve-position-01/controlstreams?limit=10'
+    );
   });
 });
 
@@ -1617,8 +2208,18 @@ describe('getPropertyHistory', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:properties', type: '', title: '', href: '/properties' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:properties',
+            type: '',
+            title: '',
+            href: '/properties',
+          },
         ],
       })
     );
@@ -1626,12 +2227,18 @@ describe('getPropertyHistory', () => {
 
   it('returns correct URL with no options', () => {
     const url = makePropBuilder().getPropertyHistory('temperature-01');
-    expect(url).toBe('https://example.com/collections/iot/properties/temperature-01/history');
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties/temperature-01/history'
+    );
   });
 
   it('returns correct URL with limit', () => {
-    const url = makePropBuilder().getPropertyHistory('temperature-01', { limit: 5 });
-    expect(url).toBe('https://example.com/collections/iot/properties/temperature-01/history?limit=5');
+    const url = makePropBuilder().getPropertyHistory('temperature-01', {
+      limit: 5,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/properties/temperature-01/history?limit=5'
+    );
   });
 });
 
@@ -1641,7 +2248,12 @@ describe('Property resource validation', () => {
       makeCollection({
         id: 'sensors',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/sensors' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/sensors',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -1664,8 +2276,18 @@ describe('getDataStreams', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
         ],
       })
     );
@@ -1678,69 +2300,106 @@ describe('getDataStreams', () => {
 
   it('returns correct URL with limit', () => {
     const url = makeDsBuilder().getDataStreams({ limit: 20 });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?limit=20');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?limit=20'
+    );
   });
 
   it('returns correct URL with systemId filter', () => {
     const url = makeDsBuilder().getDataStreams({ systemId: 'sys-001' });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?system=sys-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?system=sys-001'
+    );
   });
 
   it('returns correct URL with observedPropertyId filter', () => {
-    const url = makeDsBuilder().getDataStreams({ observedPropertyId: 'temperature' });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?observedProperty=temperature');
+    const url = makeDsBuilder().getDataStreams({
+      observedPropertyId: 'temperature',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?observedProperty=temperature'
+    );
   });
 
   it('returns correct URL with phenomenonTime temporal filter', () => {
     const url = makeDsBuilder().getDataStreams({
-      phenomenonTime: { start: new Date('2024-01-01T00:00:00Z'), end: new Date('2024-12-31T23:59:59Z') },
+      phenomenonTime: {
+        start: new Date('2024-01-01T00:00:00Z'),
+        end: new Date('2024-12-31T23:59:59Z'),
+      },
     });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?phenomenonTime=2024-01-01T00%3A00%3A00.000Z%2F2024-12-31T23%3A59%3A59.000Z');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?phenomenonTime=2024-01-01T00%3A00%3A00.000Z%2F2024-12-31T23%3A59%3A59.000Z'
+    );
   });
 
   it('returns correct URL with resultTime temporal filter', () => {
-    const url = makeDsBuilder().getDataStreams({ resultTime: new Date('2024-06-01T00:00:00Z') });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?resultTime=2024-06-01T00%3A00%3A00.000Z');
+    const url = makeDsBuilder().getDataStreams({
+      resultTime: new Date('2024-06-01T00:00:00Z'),
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?resultTime=2024-06-01T00%3A00%3A00.000Z'
+    );
   });
 
   it('returns correct URL with resultTime latest keyword', () => {
     const url = makeDsBuilder().getDataStreams({ resultTime: 'latest' });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?resultTime=latest');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?resultTime=latest'
+    );
   });
 
   it('returns correct URL with multiple options', () => {
-    const url = makeDsBuilder().getDataStreams({ limit: 10, offset: 5, systemId: 'sys-001' });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?limit=10&offset=5&system=sys-001');
+    const url = makeDsBuilder().getDataStreams({
+      limit: 10,
+      offset: 5,
+      systemId: 'sys-001',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?limit=10&offset=5&system=sys-001'
+    );
   });
 
   it('returns correct URL with q parameter', () => {
     const url = makeDsBuilder().getDataStreams({ q: 'weather' });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?q=weather');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?q=weather'
+    );
   });
 
   it('returns correct URL with offset', () => {
     const url = makeDsBuilder().getDataStreams({ offset: 20 });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?offset=20');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?offset=20'
+    );
   });
 
   it('returns correct URL with id filter', () => {
     const url = makeDsBuilder().getDataStreams({ id: 'ds-001' });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?id=ds-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?id=ds-001'
+    );
   });
 
   it('handles array id parameter', () => {
     const url = makeDsBuilder().getDataStreams({ id: ['ds-001', 'ds-002'] });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?id=ds-001%2Cds-002');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?id=ds-001%2Cds-002'
+    );
   });
 
   it('returns correct URL with f (format) parameter', () => {
     const url = makeDsBuilder().getDataStreams({ f: 'application/json' });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?f=application%2Fjson');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?f=application%2Fjson'
+    );
   });
 
   it('returns correct URL with foiId filter', () => {
     const url = makeDsBuilder().getDataStreams({ foiId: 'foi-001' });
-    expect(url).toBe('https://example.com/collections/iot/datastreams?foi=foi-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams?foi=foi-001'
+    );
   });
 });
 
@@ -1749,8 +2408,18 @@ describe('getDataStream', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
         ],
       })
     );
@@ -1763,7 +2432,9 @@ describe('getDataStream', () => {
 
   it('encodes special characters in ID', () => {
     const url = makeDsBuilder().getDataStream('urn:example:ds:001');
-    expect(url).toBe('https://example.com/collections/iot/datastreams/urn%3Aexample%3Ads%3A001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/urn%3Aexample%3Ads%3A001'
+    );
   });
 });
 
@@ -1772,8 +2443,18 @@ describe('DataStream CRUD operations', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
         ],
       })
     );
@@ -1800,21 +2481,37 @@ describe('getDataStreamSchema', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
         ],
       })
     );
   }
 
   it('returns correct URL with f query parameter', () => {
-    const url = makeDsBuilder().getDataStreamSchema('ds-001', { f: 'application/swe+json' });
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/schema?f=application%2Fswe%2Bjson');
+    const url = makeDsBuilder().getDataStreamSchema('ds-001', {
+      f: 'application/swe+json',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/schema?f=application%2Fswe%2Bjson'
+    );
   });
 
   it('returns correct URL without options', () => {
     const url = makeDsBuilder().getDataStreamSchema('ds-001');
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/schema');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/schema'
+    );
   });
 });
 
@@ -1823,8 +2520,18 @@ describe('getDataStreamObservations', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
         ],
       })
     );
@@ -1832,34 +2539,58 @@ describe('getDataStreamObservations', () => {
 
   it('returns correct URL with no options', () => {
     const url = makeDsBuilder().getDataStreamObservations('ds-001');
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/observations');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations'
+    );
   });
 
   it('returns correct URL with resultTime instant', () => {
-    const url = makeDsBuilder().getDataStreamObservations('ds-001', { resultTime: new Date('2024-06-01T00:00:00Z') });
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/observations?resultTime=2024-06-01T00%3A00%3A00.000Z');
+    const url = makeDsBuilder().getDataStreamObservations('ds-001', {
+      resultTime: new Date('2024-06-01T00:00:00Z'),
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations?resultTime=2024-06-01T00%3A00%3A00.000Z'
+    );
   });
 
   it('returns correct URL with resultTime latest keyword', () => {
-    const url = makeDsBuilder().getDataStreamObservations('ds-001', { resultTime: 'latest' });
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/observations?resultTime=latest');
+    const url = makeDsBuilder().getDataStreamObservations('ds-001', {
+      resultTime: 'latest',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations?resultTime=latest'
+    );
   });
 
   it('returns correct URL with phenomenonTime filter', () => {
     const url = makeDsBuilder().getDataStreamObservations('ds-001', {
-      phenomenonTime: { start: new Date('2024-01-01T00:00:00Z'), end: new Date('2024-06-01T00:00:00Z') },
+      phenomenonTime: {
+        start: new Date('2024-01-01T00:00:00Z'),
+        end: new Date('2024-06-01T00:00:00Z'),
+      },
     });
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/observations?phenomenonTime=2024-01-01T00%3A00%3A00.000Z%2F2024-06-01T00%3A00%3A00.000Z');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations?phenomenonTime=2024-01-01T00%3A00%3A00.000Z%2F2024-06-01T00%3A00%3A00.000Z'
+    );
   });
 
   it('returns correct URL with cursor-based pagination', () => {
-    const url = makeDsBuilder().getDataStreamObservations('ds-001', { cursor: 'abc123', limit: 50 });
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/observations?cursor=abc123&limit=50');
+    const url = makeDsBuilder().getDataStreamObservations('ds-001', {
+      cursor: 'abc123',
+      limit: 50,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations?cursor=abc123&limit=50'
+    );
   });
 
   it('returns correct URL with limit', () => {
-    const url = makeDsBuilder().getDataStreamObservations('ds-001', { limit: 100 });
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/observations?limit=100');
+    const url = makeDsBuilder().getDataStreamObservations('ds-001', {
+      limit: 100,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations?limit=100'
+    );
   });
 });
 
@@ -1868,8 +2599,18 @@ describe('createObservation', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
         ],
       })
     );
@@ -1877,12 +2618,16 @@ describe('createObservation', () => {
 
   it('returns correct URL for observation creation', () => {
     const url = makeDsBuilder().createObservation('ds-001');
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/observations');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations'
+    );
   });
 
   it('encodes special characters in datastream ID', () => {
     const url = makeDsBuilder().createObservation('urn:example:ds:001');
-    expect(url).toBe('https://example.com/collections/iot/datastreams/urn%3Aexample%3Ads%3A001/observations');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/urn%3Aexample%3Ads%3A001/observations'
+    );
   });
 });
 
@@ -1891,8 +2636,18 @@ describe('DataStream association methods', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
         ],
       })
     );
@@ -1900,22 +2655,35 @@ describe('DataStream association methods', () => {
 
   it('getDataStreamSystems returns correct URL', () => {
     const url = makeDsBuilder().getDataStreamSystems('ds-001');
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/systems');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/systems'
+    );
   });
 
   it('getDataStreamSystems returns correct URL with pagination', () => {
-    const url = makeDsBuilder().getDataStreamSystems('ds-001', { limit: 5, offset: 10 });
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/systems?limit=5&offset=10');
+    const url = makeDsBuilder().getDataStreamSystems('ds-001', {
+      limit: 5,
+      offset: 10,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/systems?limit=5&offset=10'
+    );
   });
 
   it('getDataStreamProcedures returns correct URL', () => {
     const url = makeDsBuilder().getDataStreamProcedures('ds-001');
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/procedures');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/procedures'
+    );
   });
 
   it('getDataStreamProcedures returns correct URL with options', () => {
-    const url = makeDsBuilder().getDataStreamProcedures('ds-001', { limit: 10 });
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/procedures?limit=10');
+    const url = makeDsBuilder().getDataStreamProcedures('ds-001', {
+      limit: 10,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/procedures?limit=10'
+    );
   });
 });
 
@@ -1924,8 +2692,18 @@ describe('getDataStreamHistory', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
         ],
       })
     );
@@ -1933,12 +2711,16 @@ describe('getDataStreamHistory', () => {
 
   it('returns correct URL with no options', () => {
     const url = makeDsBuilder().getDataStreamHistory('ds-001');
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/history');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/history'
+    );
   });
 
   it('returns correct URL with limit', () => {
     const url = makeDsBuilder().getDataStreamHistory('ds-001', { limit: 5 });
-    expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001/history?limit=5');
+    expect(url).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/history?limit=5'
+    );
   });
 });
 
@@ -1948,7 +2730,12 @@ describe('DataStream resource validation', () => {
       makeCollection({
         id: 'sensors',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/sensors' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/sensors',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -1974,8 +2761,18 @@ describe('getObservations', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:observations', type: '', title: '', href: '/observations' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:observations',
+            type: '',
+            title: '',
+            href: '/observations',
+          },
         ],
       })
     );
@@ -1988,54 +2785,86 @@ describe('getObservations', () => {
 
   it('returns correct URL with phenomenonTime interval', () => {
     const url = makeObsBuilder().getObservations({
-      phenomenonTime: { start: new Date('2024-01-01T00:00:00Z'), end: new Date('2024-06-01T00:00:00Z') },
+      phenomenonTime: {
+        start: new Date('2024-01-01T00:00:00Z'),
+        end: new Date('2024-06-01T00:00:00Z'),
+      },
     });
-    expect(url).toBe('https://example.com/collections/iot/observations?phenomenonTime=2024-01-01T00%3A00%3A00.000Z%2F2024-06-01T00%3A00%3A00.000Z');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations?phenomenonTime=2024-01-01T00%3A00%3A00.000Z%2F2024-06-01T00%3A00%3A00.000Z'
+    );
   });
 
   it('returns correct URL with resultTime latest', () => {
     const url = makeObsBuilder().getObservations({ resultTime: 'latest' });
-    expect(url).toBe('https://example.com/collections/iot/observations?resultTime=latest');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations?resultTime=latest'
+    );
   });
 
   it('returns correct URL with cursor-based pagination', () => {
-    const url = makeObsBuilder().getObservations({ cursor: 'abc123', limit: 50 });
-    expect(url).toBe('https://example.com/collections/iot/observations?cursor=abc123&limit=50');
+    const url = makeObsBuilder().getObservations({
+      cursor: 'abc123',
+      limit: 50,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations?cursor=abc123&limit=50'
+    );
   });
 
   it('returns correct URL with obsFormat parameter', () => {
     const url = makeObsBuilder().getObservations({ f: 'application/swe+json' });
-    expect(url).toBe('https://example.com/collections/iot/observations?f=application%2Fswe%2Bjson');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations?f=application%2Fswe%2Bjson'
+    );
   });
 
   it('returns correct URL with offset', () => {
     const url = makeObsBuilder().getObservations({ offset: 20 });
-    expect(url).toBe('https://example.com/collections/iot/observations?offset=20');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations?offset=20'
+    );
   });
 
   it('returns correct URL with q parameter', () => {
     const url = makeObsBuilder().getObservations({ q: 'temperature' });
-    expect(url).toBe('https://example.com/collections/iot/observations?q=temperature');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations?q=temperature'
+    );
   });
 
   it('returns correct URL with id filter', () => {
     const url = makeObsBuilder().getObservations({ id: 'obs-001' });
-    expect(url).toBe('https://example.com/collections/iot/observations?id=obs-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations?id=obs-001'
+    );
   });
 
   it('handles array id parameter', () => {
-    const url = makeObsBuilder().getObservations({ id: ['obs-001', 'obs-002'] });
-    expect(url).toBe('https://example.com/collections/iot/observations?id=obs-001%2Cobs-002');
+    const url = makeObsBuilder().getObservations({
+      id: ['obs-001', 'obs-002'],
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations?id=obs-001%2Cobs-002'
+    );
   });
 
   it('returns correct URL with multiple options', () => {
-    const url = makeObsBuilder().getObservations({ limit: 10, offset: 5, q: 'temperature' });
-    expect(url).toBe('https://example.com/collections/iot/observations?limit=10&offset=5&q=temperature');
+    const url = makeObsBuilder().getObservations({
+      limit: 10,
+      offset: 5,
+      q: 'temperature',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations?limit=10&offset=5&q=temperature'
+    );
   });
 
   it('returns correct URL with foiId filter', () => {
     const url = makeObsBuilder().getObservations({ foiId: 'foi-001' });
-    expect(url).toBe('https://example.com/collections/iot/observations?foi=foi-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations?foi=foi-001'
+    );
   });
 });
 
@@ -2044,8 +2873,18 @@ describe('getObservation', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:observations', type: '', title: '', href: '/observations' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:observations',
+            type: '',
+            title: '',
+            href: '/observations',
+          },
         ],
       })
     );
@@ -2053,12 +2892,18 @@ describe('getObservation', () => {
 
   it('returns correct URL for single observation', () => {
     const url = makeObsBuilder().getObservation('obs-001');
-    expect(url).toBe('https://example.com/collections/iot/observations/obs-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations/obs-001'
+    );
   });
 
   it('returns correct URL with format option', () => {
-    const url = makeObsBuilder().getObservation('obs-001', { f: 'application/json' });
-    expect(url).toBe('https://example.com/collections/iot/observations/obs-001?f=application%2Fjson');
+    const url = makeObsBuilder().getObservation('obs-001', {
+      f: 'application/json',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations/obs-001?f=application%2Fjson'
+    );
   });
 });
 
@@ -2067,8 +2912,18 @@ describe('Observation CRUD methods', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:observations', type: '', title: '', href: '/observations' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:observations',
+            type: '',
+            title: '',
+            href: '/observations',
+          },
         ],
       })
     );
@@ -2076,12 +2931,16 @@ describe('Observation CRUD methods', () => {
 
   it('updateObservation returns correct URL', () => {
     const url = makeObsBuilder().updateObservation('obs-001');
-    expect(url).toBe('https://example.com/collections/iot/observations/obs-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations/obs-001'
+    );
   });
 
   it('deleteObservation returns correct URL', () => {
     const url = makeObsBuilder().deleteObservation('obs-001');
-    expect(url).toBe('https://example.com/collections/iot/observations/obs-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations/obs-001'
+    );
   });
 });
 
@@ -2090,8 +2949,18 @@ describe('Observation association methods', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:observations', type: '', title: '', href: '/observations' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:observations',
+            type: '',
+            title: '',
+            href: '/observations',
+          },
         ],
       })
     );
@@ -2099,27 +2968,39 @@ describe('Observation association methods', () => {
 
   it('getObservationDatastream returns correct URL', () => {
     const url = makeObsBuilder().getObservationDatastream('obs-001');
-    expect(url).toBe('https://example.com/collections/iot/observations/obs-001/datastream');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations/obs-001/datastream'
+    );
   });
 
   it('getObservationSamplingFeature returns correct URL', () => {
     const url = makeObsBuilder().getObservationSamplingFeature('obs-001');
-    expect(url).toBe('https://example.com/collections/iot/observations/obs-001/samplingFeature');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations/obs-001/samplingFeature'
+    );
   });
 
   it('getObservationSamplingFeature returns correct URL with options', () => {
-    const url = makeObsBuilder().getObservationSamplingFeature('obs-001', { f: 'application/json' });
-    expect(url).toBe('https://example.com/collections/iot/observations/obs-001/samplingFeature?f=application%2Fjson');
+    const url = makeObsBuilder().getObservationSamplingFeature('obs-001', {
+      f: 'application/json',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations/obs-001/samplingFeature?f=application%2Fjson'
+    );
   });
 
   it('getObservationSystem returns correct URL', () => {
     const url = makeObsBuilder().getObservationSystem('obs-001');
-    expect(url).toBe('https://example.com/collections/iot/observations/obs-001/system');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations/obs-001/system'
+    );
   });
 
   it('getObservationSystem returns correct URL with options', () => {
     const url = makeObsBuilder().getObservationSystem('obs-001', { limit: 1 });
-    expect(url).toBe('https://example.com/collections/iot/observations/obs-001/system?limit=1');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations/obs-001/system?limit=1'
+    );
   });
 });
 
@@ -2128,8 +3009,18 @@ describe('getObservationHistory', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:observations', type: '', title: '', href: '/observations' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:observations',
+            type: '',
+            title: '',
+            href: '/observations',
+          },
         ],
       })
     );
@@ -2137,12 +3028,16 @@ describe('getObservationHistory', () => {
 
   it('returns correct URL with no options', () => {
     const url = makeObsBuilder().getObservationHistory('obs-001');
-    expect(url).toBe('https://example.com/collections/iot/observations/obs-001/history');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations/obs-001/history'
+    );
   });
 
   it('returns correct URL with limit', () => {
     const url = makeObsBuilder().getObservationHistory('obs-001', { limit: 5 });
-    expect(url).toBe('https://example.com/collections/iot/observations/obs-001/history?limit=5');
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations/obs-001/history?limit=5'
+    );
   });
 });
 
@@ -2152,7 +3047,12 @@ describe('Observation resource validation', () => {
       makeCollection({
         id: 'sensors',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/sensors' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/sensors',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -2162,7 +3062,9 @@ describe('Observation resource validation', () => {
     expect(() => builder.updateObservation('x')).toThrow(EndpointError);
     expect(() => builder.deleteObservation('x')).toThrow(EndpointError);
     expect(() => builder.getObservationDatastream('x')).toThrow(EndpointError);
-    expect(() => builder.getObservationSamplingFeature('x')).toThrow(EndpointError);
+    expect(() => builder.getObservationSamplingFeature('x')).toThrow(
+      EndpointError
+    );
     expect(() => builder.getObservationSystem('x')).toThrow(EndpointError);
     expect(() => builder.getObservationHistory('x')).toThrow(EndpointError);
   });
@@ -2175,8 +3077,18 @@ describe('getControlStreams', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlstreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:controlStreams',
+            type: '',
+            title: '',
+            href: '/controlstreams',
+          },
         ],
       })
     );
@@ -2189,61 +3101,92 @@ describe('getControlStreams', () => {
 
   it('returns correct URL with systemId filter', () => {
     const url = makeCsBuilder().getControlStreams({ systemId: 'sys-001' });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams?system=sys-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams?system=sys-001'
+    );
   });
 
   it('returns correct URL with controlledPropertyId filter', () => {
-    const url = makeCsBuilder().getControlStreams({ controlledPropertyId: 'prop-001' });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams?controlledProperty=prop-001');
+    const url = makeCsBuilder().getControlStreams({
+      controlledPropertyId: 'prop-001',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams?controlledProperty=prop-001'
+    );
   });
 
   it('returns correct URL with pagination', () => {
     const url = makeCsBuilder().getControlStreams({ limit: 10, offset: 20 });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams?limit=10&offset=20');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams?limit=10&offset=20'
+    );
   });
 
   it('returns correct URL with standalone offset', () => {
     const url = makeCsBuilder().getControlStreams({ offset: 20 });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams?offset=20');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams?offset=20'
+    );
   });
 
   it('returns correct URL with q parameter', () => {
     const url = makeCsBuilder().getControlStreams({ q: 'valve' });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams?q=valve');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams?q=valve'
+    );
   });
 
   it('returns correct URL with single id', () => {
     const url = makeCsBuilder().getControlStreams({ id: 'cs-001' });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams?id=cs-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams?id=cs-001'
+    );
   });
 
   it('returns correct URL with array of ids', () => {
     const url = makeCsBuilder().getControlStreams({ id: ['cs-001', 'cs-002'] });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams?id=cs-001%2Ccs-002');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams?id=cs-001%2Ccs-002'
+    );
   });
 
   it('returns correct URL with multiple shared options', () => {
-    const url = makeCsBuilder().getControlStreams({ limit: 10, offset: 5, q: 'valve' });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams?limit=10&offset=5&q=valve');
+    const url = makeCsBuilder().getControlStreams({
+      limit: 10,
+      offset: 5,
+      q: 'valve',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams?limit=10&offset=5&q=valve'
+    );
   });
 
   it('returns correct URL with issueTime temporal filter', () => {
     const url = makeCsBuilder().getControlStreams({
-      issueTime: { start: new Date('2024-01-01T00:00:00Z'), end: new Date('2024-12-31T23:59:59Z') },
+      issueTime: {
+        start: new Date('2024-01-01T00:00:00Z'),
+        end: new Date('2024-12-31T23:59:59Z'),
+      },
     });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams?issueTime=2024-01-01T00%3A00%3A00.000Z%2F2024-12-31T23%3A59%3A59.000Z');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams?issueTime=2024-01-01T00%3A00%3A00.000Z%2F2024-12-31T23%3A59%3A59.000Z'
+    );
   });
 
   it('returns correct URL with executionTime temporal filter', () => {
     const url = makeCsBuilder().getControlStreams({
       executionTime: new Date('2024-06-01T00:00:00Z'),
     });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams?executionTime=2024-06-01T00%3A00%3A00.000Z');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams?executionTime=2024-06-01T00%3A00%3A00.000Z'
+    );
   });
 
   it('returns correct URL with foiId filter', () => {
     const url = makeCsBuilder().getControlStreams({ foiId: 'foi-001' });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams?foi=foi-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams?foi=foi-001'
+    );
   });
 });
 
@@ -2252,8 +3195,18 @@ describe('getControlStream', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlstreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:controlStreams',
+            type: '',
+            title: '',
+            href: '/controlstreams',
+          },
         ],
       })
     );
@@ -2261,12 +3214,18 @@ describe('getControlStream', () => {
 
   it('returns correct URL for single control stream', () => {
     const url = makeCsBuilder().getControlStream('cs-001');
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001'
+    );
   });
 
   it('returns correct URL with format option', () => {
-    const url = makeCsBuilder().getControlStream('cs-001', { f: 'application/json' });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001?f=application%2Fjson');
+    const url = makeCsBuilder().getControlStream('cs-001', {
+      f: 'application/json',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001?f=application%2Fjson'
+    );
   });
 });
 
@@ -2275,8 +3234,18 @@ describe('ControlStream CRUD methods', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlstreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:controlStreams',
+            type: '',
+            title: '',
+            href: '/controlstreams',
+          },
         ],
       })
     );
@@ -2289,12 +3258,16 @@ describe('ControlStream CRUD methods', () => {
 
   it('updateControlStream returns correct URL', () => {
     const url = makeCsBuilder().updateControlStream('cs-001');
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001'
+    );
   });
 
   it('deleteControlStream returns correct URL', () => {
     const url = makeCsBuilder().deleteControlStream('cs-001');
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001'
+    );
   });
 });
 
@@ -2303,21 +3276,37 @@ describe('getControlStreamSchema', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlstreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:controlStreams',
+            type: '',
+            title: '',
+            href: '/controlstreams',
+          },
         ],
       })
     );
   }
 
   it('returns correct URL with f query parameter', () => {
-    const url = makeCsBuilder().getControlStreamSchema('cs-001', { f: 'application/swe+json' });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/schema?f=application%2Fswe%2Bjson');
+    const url = makeCsBuilder().getControlStreamSchema('cs-001', {
+      f: 'application/swe+json',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/schema?f=application%2Fswe%2Bjson'
+    );
   });
 
   it('returns correct URL with no options', () => {
     const url = makeCsBuilder().getControlStreamSchema('cs-001');
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/schema');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/schema'
+    );
   });
 });
 
@@ -2326,8 +3315,18 @@ describe('getControlStreamCommands', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlstreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:controlStreams',
+            type: '',
+            title: '',
+            href: '/controlstreams',
+          },
         ],
       })
     );
@@ -2335,26 +3334,39 @@ describe('getControlStreamCommands', () => {
 
   it('returns correct URL with no options', () => {
     const url = makeCsBuilder().getControlStreamCommands('cs-001');
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/commands');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands'
+    );
   });
 
   it('returns correct URL with pagination', () => {
-    const url = makeCsBuilder().getControlStreamCommands('cs-001', { limit: 50 });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/commands?limit=50');
+    const url = makeCsBuilder().getControlStreamCommands('cs-001', {
+      limit: 50,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands?limit=50'
+    );
   });
 
   it('returns correct URL with issueTime filter', () => {
     const url = makeCsBuilder().getControlStreamCommands('cs-001', {
       issueTime: { start: new Date('2024-01-01T00:00:00Z') },
     });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/commands?issueTime=2024-01-01T00%3A00%3A00.000Z%2F..');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands?issueTime=2024-01-01T00%3A00%3A00.000Z%2F..'
+    );
   });
 
   it('returns correct URL with executionTime filter', () => {
     const url = makeCsBuilder().getControlStreamCommands('cs-001', {
-      executionTime: { start: new Date('2024-06-01T00:00:00Z'), end: new Date('2024-12-01T00:00:00Z') },
+      executionTime: {
+        start: new Date('2024-06-01T00:00:00Z'),
+        end: new Date('2024-12-01T00:00:00Z'),
+      },
     });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/commands?executionTime=2024-06-01T00%3A00%3A00.000Z%2F2024-12-01T00%3A00%3A00.000Z');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands?executionTime=2024-06-01T00%3A00%3A00.000Z%2F2024-12-01T00%3A00%3A00.000Z'
+    );
   });
 });
 
@@ -2363,8 +3375,18 @@ describe('checkCommandFeasibility', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlstreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:controlStreams',
+            type: '',
+            title: '',
+            href: '/controlstreams',
+          },
         ],
       })
     );
@@ -2372,12 +3394,16 @@ describe('checkCommandFeasibility', () => {
 
   it('returns correct URL for feasibility checking', () => {
     const url = makeCsBuilder().checkCommandFeasibility('cs-001');
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/feasibility');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/feasibility'
+    );
   });
 
   it('encodes special characters in control stream ID', () => {
     const url = makeCsBuilder().checkCommandFeasibility('urn:example:cs:001');
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/urn%3Aexample%3Acs%3A001/feasibility');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/urn%3Aexample%3Acs%3A001/feasibility'
+    );
   });
 });
 
@@ -2386,8 +3412,18 @@ describe('getControlStreamSystems', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlstreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:controlStreams',
+            type: '',
+            title: '',
+            href: '/controlstreams',
+          },
         ],
       })
     );
@@ -2395,12 +3431,19 @@ describe('getControlStreamSystems', () => {
 
   it('returns correct URL with no options', () => {
     const url = makeCsBuilder().getControlStreamSystems('cs-001');
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/systems');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/systems'
+    );
   });
 
   it('returns correct URL with pagination', () => {
-    const url = makeCsBuilder().getControlStreamSystems('cs-001', { limit: 5, offset: 10 });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/systems?limit=5&offset=10');
+    const url = makeCsBuilder().getControlStreamSystems('cs-001', {
+      limit: 5,
+      offset: 10,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/systems?limit=5&offset=10'
+    );
   });
 });
 
@@ -2409,8 +3452,18 @@ describe('getControlStreamProcedures', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlstreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:controlStreams',
+            type: '',
+            title: '',
+            href: '/controlstreams',
+          },
         ],
       })
     );
@@ -2418,12 +3471,18 @@ describe('getControlStreamProcedures', () => {
 
   it('returns correct URL with no options', () => {
     const url = makeCsBuilder().getControlStreamProcedures('cs-001');
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/procedures');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/procedures'
+    );
   });
 
   it('returns correct URL with options', () => {
-    const url = makeCsBuilder().getControlStreamProcedures('cs-001', { limit: 10 });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/procedures?limit=10');
+    const url = makeCsBuilder().getControlStreamProcedures('cs-001', {
+      limit: 10,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/procedures?limit=10'
+    );
   });
 });
 
@@ -2432,8 +3491,18 @@ describe('getControlStreamHistory', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-          { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlstreams' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:controlStreams',
+            type: '',
+            title: '',
+            href: '/controlstreams',
+          },
         ],
       })
     );
@@ -2441,12 +3510,16 @@ describe('getControlStreamHistory', () => {
 
   it('returns correct URL with no options', () => {
     const url = makeCsBuilder().getControlStreamHistory('cs-001');
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/history');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/history'
+    );
   });
 
   it('returns correct URL with limit', () => {
     const url = makeCsBuilder().getControlStreamHistory('cs-001', { limit: 5 });
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/history?limit=5');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/history?limit=5'
+    );
   });
 });
 
@@ -2456,7 +3529,12 @@ describe('ControlStream resource validation', () => {
       makeCollection({
         id: 'sensors',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/sensors' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/sensors',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -2470,7 +3548,9 @@ describe('ControlStream resource validation', () => {
     expect(() => builder.getControlStreamCommands('x')).toThrow(EndpointError);
     expect(() => builder.checkCommandFeasibility('x')).toThrow(EndpointError);
     expect(() => builder.getControlStreamSystems('x')).toThrow(EndpointError);
-    expect(() => builder.getControlStreamProcedures('x')).toThrow(EndpointError);
+    expect(() => builder.getControlStreamProcedures('x')).toThrow(
+      EndpointError
+    );
     expect(() => builder.getControlStreamHistory('x')).toThrow(EndpointError);
   });
 });
@@ -2482,7 +3562,12 @@ describe('getCommands', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
         ],
       })
@@ -2496,31 +3581,47 @@ describe('getCommands', () => {
 
   it('returns correct URL with issueTime interval', () => {
     const url = makeCmdBuilder().getCommands({
-      issueTime: { start: new Date('2024-01-01T00:00:00Z'), end: new Date('2024-06-01T00:00:00Z') },
+      issueTime: {
+        start: new Date('2024-01-01T00:00:00Z'),
+        end: new Date('2024-06-01T00:00:00Z'),
+      },
     });
-    expect(url).toBe('https://example.com/collections/iot/commands?issueTime=2024-01-01T00%3A00%3A00.000Z%2F2024-06-01T00%3A00%3A00.000Z');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands?issueTime=2024-01-01T00%3A00%3A00.000Z%2F2024-06-01T00%3A00%3A00.000Z'
+    );
   });
 
   it('returns correct URL with executionTime open-end interval', () => {
     const url = makeCmdBuilder().getCommands({
       executionTime: { start: new Date('2024-03-01T00:00:00Z') },
     });
-    expect(url).toBe('https://example.com/collections/iot/commands?executionTime=2024-03-01T00%3A00%3A00.000Z%2F..');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands?executionTime=2024-03-01T00%3A00%3A00.000Z%2F..'
+    );
   });
 
   it('returns correct URL with cursor-based pagination', () => {
-    const url = makeCmdBuilder().getCommands({ cursor: 'next-page-token', limit: 50 });
-    expect(url).toBe('https://example.com/collections/iot/commands?cursor=next-page-token&limit=50');
+    const url = makeCmdBuilder().getCommands({
+      cursor: 'next-page-token',
+      limit: 50,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands?cursor=next-page-token&limit=50'
+    );
   });
 
   it('returns correct URL with currentStatus filter', () => {
     const url = makeCmdBuilder().getCommands({ currentStatus: 'EXECUTING' });
-    expect(url).toBe('https://example.com/collections/iot/commands?statusCode=EXECUTING');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands?statusCode=EXECUTING'
+    );
   });
 
   it('returns correct URL with f parameter', () => {
     const url = makeCmdBuilder().getCommands({ f: 'application/swe+json' });
-    expect(url).toBe('https://example.com/collections/iot/commands?f=application%2Fswe%2Bjson');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands?f=application%2Fswe%2Bjson'
+    );
   });
 
   it('returns correct URL with id filter', () => {
@@ -2530,7 +3631,9 @@ describe('getCommands', () => {
 
   it('handles array id parameter', () => {
     const url = makeCmdBuilder().getCommands({ id: ['cmd-001', 'cmd-002'] });
-    expect(url).toBe('https://example.com/collections/iot/commands?id=cmd-001%2Ccmd-002');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands?id=cmd-001%2Ccmd-002'
+    );
   });
 
   it('returns correct URL with offset', () => {
@@ -2539,23 +3642,39 @@ describe('getCommands', () => {
   });
 
   it('returns correct URL with multiple options', () => {
-    const url = makeCmdBuilder().getCommands({ limit: 10, currentStatus: 'PENDING', cursor: 'abc' });
-    expect(url).toBe('https://example.com/collections/iot/commands?limit=10&statusCode=PENDING&cursor=abc');
+    const url = makeCmdBuilder().getCommands({
+      limit: 10,
+      currentStatus: 'PENDING',
+      cursor: 'abc',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands?limit=10&statusCode=PENDING&cursor=abc'
+    );
   });
 
   it('returns correct URL with multiple options including offset', () => {
-    const url = makeCmdBuilder().getCommands({ limit: 10, offset: 5, currentStatus: 'PENDING' });
-    expect(url).toBe('https://example.com/collections/iot/commands?limit=10&offset=5&statusCode=PENDING');
+    const url = makeCmdBuilder().getCommands({
+      limit: 10,
+      offset: 5,
+      currentStatus: 'PENDING',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands?limit=10&offset=5&statusCode=PENDING'
+    );
   });
 
   it('returns correct URL with sender filter', () => {
     const url = makeCmdBuilder().getCommands({ sender: 'user-001' });
-    expect(url).toBe('https://example.com/collections/iot/commands?sender=user-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands?sender=user-001'
+    );
   });
 
   it('returns correct URL with foiId filter', () => {
     const url = makeCmdBuilder().getCommands({ foiId: 'foi-001' });
-    expect(url).toBe('https://example.com/collections/iot/commands?foi=foi-001');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands?foi=foi-001'
+    );
   });
 });
 
@@ -2564,7 +3683,12 @@ describe('getCommand', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
         ],
       })
@@ -2577,8 +3701,12 @@ describe('getCommand', () => {
   });
 
   it('returns correct URL with format option', () => {
-    const url = makeCmdBuilder().getCommand('cmd-001', { f: 'application/json' });
-    expect(url).toBe('https://example.com/collections/iot/commands/cmd-001?f=application%2Fjson');
+    const url = makeCmdBuilder().getCommand('cmd-001', {
+      f: 'application/json',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands/cmd-001?f=application%2Fjson'
+    );
   });
 });
 
@@ -2587,9 +3715,19 @@ describe('Command CRUD methods', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
-          { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlstreams' },
+          {
+            rel: 'ogc-cs:controlStreams',
+            type: '',
+            title: '',
+            href: '/controlstreams',
+          },
         ],
       })
     );
@@ -2597,12 +3735,16 @@ describe('Command CRUD methods', () => {
 
   it('createCommand returns correct URL via control stream', () => {
     const url = makeCmdBuilder().createCommand('cs-001');
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/commands');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands'
+    );
   });
 
   it('createCommands returns correct URL for bulk creation', () => {
     const url = makeCmdBuilder().createCommands('cs-001');
-    expect(url).toBe('https://example.com/collections/iot/controlstreams/cs-001/commands');
+    expect(url).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands'
+    );
   });
 
   it('updateCommand returns correct URL', () => {
@@ -2621,7 +3763,12 @@ describe('Command status and result methods', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
         ],
       })
@@ -2630,32 +3777,49 @@ describe('Command status and result methods', () => {
 
   it('getCommandStatus returns correct URL', () => {
     const url = makeCmdBuilder().getCommandStatus('cmd-001');
-    expect(url).toBe('https://example.com/collections/iot/commands/cmd-001/status');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands/cmd-001/status'
+    );
   });
 
   it('getCommandStatus returns correct URL with statusCode filter', () => {
-    const url = makeCmdBuilder().getCommandStatus('cmd-001', { statusCode: 'EXECUTING' });
-    expect(url).toBe('https://example.com/collections/iot/commands/cmd-001/status?statusCode=EXECUTING');
+    const url = makeCmdBuilder().getCommandStatus('cmd-001', {
+      statusCode: 'EXECUTING',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands/cmd-001/status?statusCode=EXECUTING'
+    );
   });
 
   it('getCommandStatus returns correct URL with limit option', () => {
     const url = makeCmdBuilder().getCommandStatus('cmd-001', { limit: 10 });
-    expect(url).toBe('https://example.com/collections/iot/commands/cmd-001/status?limit=10');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands/cmd-001/status?limit=10'
+    );
   });
 
   it('getCommandStatus returns correct URL with statusCode + limit options', () => {
-    const url = makeCmdBuilder().getCommandStatus('cmd-001', { statusCode: 'EXECUTING', limit: 5 });
-    expect(url).toBe('https://example.com/collections/iot/commands/cmd-001/status?statusCode=EXECUTING&limit=5');
+    const url = makeCmdBuilder().getCommandStatus('cmd-001', {
+      statusCode: 'EXECUTING',
+      limit: 5,
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands/cmd-001/status?statusCode=EXECUTING&limit=5'
+    );
   });
 
   it('updateCommandStatus returns correct URL', () => {
     const url = makeCmdBuilder().updateCommandStatus('cmd-001');
-    expect(url).toBe('https://example.com/collections/iot/commands/cmd-001/status');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands/cmd-001/status'
+    );
   });
 
   it('getCommandResult returns correct URL', () => {
     const url = makeCmdBuilder().getCommandResult('cmd-001');
-    expect(url).toBe('https://example.com/collections/iot/commands/cmd-001/result');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands/cmd-001/result'
+    );
   });
 });
 
@@ -2664,7 +3828,12 @@ describe('cancelCommand', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
         ],
       })
@@ -2673,12 +3842,16 @@ describe('cancelCommand', () => {
 
   it('returns correct URL for command cancellation', () => {
     const url = makeCmdBuilder().cancelCommand('cmd-001');
-    expect(url).toBe('https://example.com/collections/iot/commands/cmd-001/cancel');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands/cmd-001/cancel'
+    );
   });
 
   it('encodes special characters in command ID', () => {
     const url = makeCmdBuilder().cancelCommand('urn:example:cmd:001');
-    expect(url).toBe('https://example.com/collections/iot/commands/urn%3Aexample%3Acmd%3A001/cancel');
+    expect(url).toBe(
+      'https://example.com/collections/iot/commands/urn%3Aexample%3Acmd%3A001/cancel'
+    );
   });
 });
 
@@ -2688,7 +3861,12 @@ describe('Command resource validation', () => {
       makeCollection({
         id: 'sensors',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/sensors' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/sensors',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -2708,7 +3886,12 @@ describe('Command resource validation', () => {
       makeCollection({
         id: 'commands-only',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/commands-only' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/commands-only',
+          },
           { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
         ],
       })
@@ -2731,7 +3914,12 @@ describe('extractBaseUrl edge cases', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'ogc-cs:systems', type: '', title: '', href: 'https://fallback.example.com/systems' },
+          {
+            rel: 'ogc-cs:systems',
+            type: '',
+            title: '',
+            href: 'https://fallback.example.com/systems',
+          },
         ],
       })
     );
@@ -2741,9 +3929,7 @@ describe('extractBaseUrl edge cases', () => {
   });
 
   it('returns empty baseUrl when collection has no links', () => {
-    const builder = new CSAPIQueryBuilder(
-      makeCollection({ links: [] })
-    );
+    const builder = new CSAPIQueryBuilder(makeCollection({ links: [] }));
     // With no links, availableResources is empty, so resource calls throw
     expect(builder.availableResources.size).toBe(0);
   });
@@ -2752,7 +3938,12 @@ describe('extractBaseUrl edge cases', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot/' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot/',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -2765,7 +3956,12 @@ describe('extractBaseUrl edge cases', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'ogc-cs:systems', type: '', title: '', href: 'https://example.com/api/' },
+          {
+            rel: 'ogc-cs:systems',
+            type: '',
+            title: '',
+            href: 'https://example.com/api/',
+          },
         ],
       })
     );
@@ -2785,7 +3981,12 @@ describe('buildQueryString edge cases', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -2803,7 +4004,10 @@ describe('buildQueryString edge cases', () => {
   });
 
   it('skips null values in options', () => {
-    const url = makeBuilder().getSystems({ limit: 10, q: null as unknown as string });
+    const url = makeBuilder().getSystems({
+      limit: 10,
+      q: null as unknown as string,
+    });
     expect(url).toBe('https://example.com/collections/iot/systems?limit=10');
   });
 
@@ -2814,7 +4018,9 @@ describe('buildQueryString edge cases', () => {
 
   it('serializes boolean values as strings', () => {
     const url = makeBuilder().getSystems({ recursive: true } as any);
-    expect(url).toBe('https://example.com/collections/iot/systems?recursive=true');
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?recursive=true'
+    );
   });
 
   it('serializes numeric values as strings', () => {
@@ -2824,12 +4030,16 @@ describe('buildQueryString edge cases', () => {
 
   it('serializes array values as comma-separated', () => {
     const url = makeBuilder().getSystems({ id: ['a', 'b', 'c'] } as any);
-    expect(url).toBe('https://example.com/collections/iot/systems?id=a%2Cb%2Cc');
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?id=a%2Cb%2Cc'
+    );
   });
 
   it('serializes format (f) parameter correctly', () => {
     const url = makeBuilder().getSystems({ f: 'application/json' } as any);
-    expect(url).toBe('https://example.com/collections/iot/systems?f=application%2Fjson');
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?f=application%2Fjson'
+    );
   });
 });
 
@@ -2842,7 +4052,12 @@ describe('Limit validation through builder', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -2854,23 +4069,33 @@ describe('Limit validation through builder', () => {
   });
 
   it('rejects limit of 0', () => {
-    expect(() => makeBuilder().getSystems({ limit: 0 })).toThrow('positive integer');
+    expect(() => makeBuilder().getSystems({ limit: 0 })).toThrow(
+      'positive integer'
+    );
   });
 
   it('rejects negative limit', () => {
-    expect(() => makeBuilder().getSystems({ limit: -1 })).toThrow('positive integer');
+    expect(() => makeBuilder().getSystems({ limit: -1 })).toThrow(
+      'positive integer'
+    );
   });
 
   it('rejects fractional limit', () => {
-    expect(() => makeBuilder().getSystems({ limit: 1.5 })).toThrow('positive integer');
+    expect(() => makeBuilder().getSystems({ limit: 1.5 })).toThrow(
+      'positive integer'
+    );
   });
 
   it('rejects NaN limit', () => {
-    expect(() => makeBuilder().getSystems({ limit: NaN })).toThrow('positive integer');
+    expect(() => makeBuilder().getSystems({ limit: NaN })).toThrow(
+      'positive integer'
+    );
   });
 
   it('rejects Infinity limit', () => {
-    expect(() => makeBuilder().getSystems({ limit: Infinity })).toThrow('positive integer');
+    expect(() => makeBuilder().getSystems({ limit: Infinity })).toThrow(
+      'positive integer'
+    );
   });
 });
 
@@ -2883,7 +4108,12 @@ describe('Bbox validation through builder', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -2891,31 +4121,45 @@ describe('Bbox validation through builder', () => {
   }
 
   it('accepts valid 4-element bbox', () => {
-    expect(() => makeBuilder().getSystems({ bbox: [-10, -10, 10, 10] })).not.toThrow();
+    expect(() =>
+      makeBuilder().getSystems({ bbox: [-10, -10, 10, 10] })
+    ).not.toThrow();
   });
 
   it('rejects 3-element bbox', () => {
-    expect(() => makeBuilder().getSystems({ bbox: [0, 0, 10] as any })).toThrow('4 coordinates');
+    expect(() => makeBuilder().getSystems({ bbox: [0, 0, 10] as any })).toThrow(
+      '4 coordinates'
+    );
   });
 
   it('rejects 5-element bbox', () => {
-    expect(() => makeBuilder().getSystems({ bbox: [0, 0, 10, 10, 0] as any })).toThrow('4 coordinates');
+    expect(() =>
+      makeBuilder().getSystems({ bbox: [0, 0, 10, 10, 0] as any })
+    ).toThrow('4 coordinates');
   });
 
   it('rejects bbox with Infinity', () => {
-    expect(() => makeBuilder().getSystems({ bbox: [0, 0, Infinity, 10] as any })).toThrow('finite numbers');
+    expect(() =>
+      makeBuilder().getSystems({ bbox: [0, 0, Infinity, 10] as any })
+    ).toThrow('finite numbers');
   });
 
   it('rejects bbox with NaN', () => {
-    expect(() => makeBuilder().getSystems({ bbox: [NaN, 0, 10, 10] as any })).toThrow('finite numbers');
+    expect(() =>
+      makeBuilder().getSystems({ bbox: [NaN, 0, 10, 10] as any })
+    ).toThrow('finite numbers');
   });
 
   it('rejects inverted minx > maxx', () => {
-    expect(() => makeBuilder().getSystems({ bbox: [20, 0, 10, 10] })).toThrow('minx');
+    expect(() => makeBuilder().getSystems({ bbox: [20, 0, 10, 10] })).toThrow(
+      'minx'
+    );
   });
 
   it('rejects inverted miny > maxy', () => {
-    expect(() => makeBuilder().getSystems({ bbox: [0, 20, 10, 10] })).toThrow('miny');
+    expect(() => makeBuilder().getSystems({ bbox: [0, 20, 10, 10] })).toThrow(
+      'miny'
+    );
   });
 });
 
@@ -2928,10 +4172,25 @@ describe('Temporal parameter edge cases through builder', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
-          { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
-          { rel: 'ogc-cs:observations', type: '', title: '', href: '/observations' },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
+          {
+            rel: 'ogc-cs:observations',
+            type: '',
+            title: '',
+            href: '/observations',
+          },
         ],
       })
     );
@@ -3001,9 +4260,19 @@ describe('Pagination edge cases', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
         ],
       })
     );
@@ -3016,7 +4285,9 @@ describe('Pagination edge cases', () => {
 
   it('serializes combined limit and offset', () => {
     const url = makeBuilder().getSystems({ limit: 50, offset: 100 } as any);
-    expect(url).toBe('https://example.com/collections/iot/systems?limit=50&offset=100');
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?limit=50&offset=100'
+    );
   });
 
   it('serializes large limit value', () => {
@@ -3026,7 +4297,9 @@ describe('Pagination edge cases', () => {
 
   it('serializes large offset value', () => {
     const url = makeBuilder().getSystems({ offset: 999999 } as any);
-    expect(url).toBe('https://example.com/collections/iot/systems?offset=999999');
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?offset=999999'
+    );
   });
 });
 
@@ -3039,9 +4312,19 @@ describe('Combined query parameter scenarios', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
         ],
       })
     );
@@ -3059,7 +4342,11 @@ describe('Combined query parameter scenarios', () => {
   });
 
   it('serializes limit + offset + q together', () => {
-    const url = makeBuilder().getSystems({ limit: 10, offset: 20, q: 'weather' } as any);
+    const url = makeBuilder().getSystems({
+      limit: 10,
+      offset: 20,
+      q: 'weather',
+    } as any);
     expect(url).toContain('limit=10');
     expect(url).toContain('offset=20');
     expect(url).toContain('q=weather');
@@ -3069,11 +4356,16 @@ describe('Combined query parameter scenarios', () => {
     const url = makeBuilder().getDeployments({
       limit: 5,
       bbox: [-180, -90, 180, 90],
-      datetime: { start: new Date('2024-01-01T00:00:00Z'), end: new Date('2025-01-01T00:00:00Z') },
+      datetime: {
+        start: new Date('2024-01-01T00:00:00Z'),
+        end: new Date('2025-01-01T00:00:00Z'),
+      },
     });
     expect(url).toContain('limit=5');
     expect(url).toContain('bbox=-180%2C-90%2C180%2C90');
-    expect(url).toContain('datetime=2024-01-01T00%3A00%3A00.000Z%2F2025-01-01T00%3A00%3A00.000Z');
+    expect(url).toContain(
+      'datetime=2024-01-01T00%3A00%3A00.000Z%2F2025-01-01T00%3A00%3A00.000Z'
+    );
   });
 });
 
@@ -3086,7 +4378,12 @@ describe('ID encoding edge cases', () => {
     return new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       })
@@ -3118,7 +4415,9 @@ describe('ID encoding edge cases', () => {
     const url = makeBuilder().getSystem('sensor-ñ-日本');
     expect(url).toContain('systems/');
     expect(url).toBe(
-      `https://example.com/collections/iot/systems/${encodeURIComponent('sensor-ñ-日本')}`
+      `https://example.com/collections/iot/systems/${encodeURIComponent(
+        'sensor-ñ-日本'
+      )}`
     );
   });
 
@@ -3141,7 +4440,12 @@ describe('assertResourceAvailable error messages', () => {
       makeCollection({
         id: 'my-sensors',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/my-sensors' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/my-sensors',
+          },
         ],
       })
     );
@@ -3153,7 +4457,12 @@ describe('assertResourceAvailable error messages', () => {
       makeCollection({
         id: 'test',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/test' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/test',
+          },
         ],
       })
     );
@@ -3165,9 +4474,24 @@ describe('assertResourceAvailable error messages', () => {
       makeCollection({
         id: 'partial',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/partial' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
-          { rel: 'ogc-cs:procedures', type: '', title: '', href: '/procedures' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/partial',
+          },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
+          {
+            rel: 'ogc-cs:procedures',
+            type: '',
+            title: '',
+            href: '/procedures',
+          },
         ],
       })
     );
@@ -3180,7 +4504,12 @@ describe('assertResourceAvailable error messages', () => {
       makeCollection({
         id: 'empty',
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/empty' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/empty',
+          },
         ],
       })
     );
@@ -3200,7 +4529,12 @@ describe('Top-level resource URL override', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       }),
@@ -3217,9 +4551,19 @@ describe('Top-level resource URL override', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
-          { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+          {
+            rel: 'ogc-cs:deployments',
+            type: '',
+            title: '',
+            href: '/deployments',
+          },
         ],
       }),
       resourceUrls
@@ -3235,7 +4579,12 @@ describe('Top-level resource URL override', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       }),
@@ -3252,7 +4601,12 @@ describe('Top-level resource URL override', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
       }),
@@ -3269,14 +4623,25 @@ describe('Top-level resource URL override', () => {
 
 describe('CSAPI_CONTENT_TYPES', () => {
   it('maps all 5 Part 1 resources to application/geo+json', () => {
-    const part1Types = ['systems', 'deployments', 'procedures', 'samplingFeatures', 'properties'] as const;
+    const part1Types = [
+      'systems',
+      'deployments',
+      'procedures',
+      'samplingFeatures',
+      'properties',
+    ] as const;
     for (const type of part1Types) {
       expect(CSAPI_CONTENT_TYPES[type]).toBe('application/geo+json');
     }
   });
 
   it('maps all 4 Part 2 resources to application/json', () => {
-    const part2Types = ['datastreams', 'observations', 'controlStreams', 'commands'] as const;
+    const part2Types = [
+      'datastreams',
+      'observations',
+      'controlStreams',
+      'commands',
+    ] as const;
     for (const type of part2Types) {
       expect(CSAPI_CONTENT_TYPES[type]).toBe('application/json');
     }
@@ -3286,7 +4651,9 @@ describe('CSAPI_CONTENT_TYPES', () => {
     for (const type of CSAPIResourceTypes) {
       expect(CSAPI_CONTENT_TYPES).toHaveProperty(type);
     }
-    expect(Object.keys(CSAPI_CONTENT_TYPES)).toHaveLength(CSAPIResourceTypes.length);
+    expect(Object.keys(CSAPI_CONTENT_TYPES)).toHaveLength(
+      CSAPIResourceTypes.length
+    );
   });
 });
 

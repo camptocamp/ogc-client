@@ -1,4 +1,9 @@
-import type { BoundingBox, DateTimeParameter, CrsCode, MimeType } from '../../shared/models.js';
+import type {
+  BoundingBox,
+  DateTimeParameter,
+  CrsCode,
+  MimeType,
+} from '../../shared/models.js';
 import type { OgcApiDocumentLink } from '../model.js';
 import type { Geometry } from 'geojson';
 
@@ -338,7 +343,14 @@ export interface System {
     /** Human-readable description. */
     description?: string;
     /** Asset type classification. */
-    assetType?: 'Equipment' | 'Human' | 'LivingThing' | 'Simulation' | 'Process' | 'Group' | 'Other';
+    assetType?:
+      | 'Equipment'
+      | 'Human'
+      | 'LivingThing'
+      | 'Simulation'
+      | 'Process'
+      | 'Group'
+      | 'Other';
     /** Validity time period for this system. */
     validTime?: TimeInterval;
     /**

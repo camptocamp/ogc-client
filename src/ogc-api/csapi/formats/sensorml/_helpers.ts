@@ -24,22 +24,19 @@ import type {
   Link,
   FeatureList,
   ComponentEntry,
+  ComponentList,
+  ConnectionList,
+  Connection,
 } from './types.js';
 import { SensorMLParseError } from './errors.js';
 import { parseSensorML30 } from './parser.js';
+import { isRecord } from '../_parse-utils.js';
 
 // ========================================
 // Primitive Helpers
 // ========================================
 
-/**
- * Type guard: checks whether `value` is a non-null object.
- */
-export function isRecord(
-  value: unknown
-): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
+export { isRecord } from '../_parse-utils.js';
 
 /**
  * Return `value` if it is a string, otherwise `undefined`.
@@ -107,9 +104,7 @@ export function parseFeatureList(value: unknown): FeatureList | undefined {
  * @throws {SensorMLParseError} If the entry lacks a required `name`
  * @see OAS: IOComponentChoice (L3662)
  */
-export function parseIOComponentChoice(
-  value: unknown
-): IOComponentChoice {
+export function parseIOComponentChoice(value: unknown): IOComponentChoice {
   if (!isRecord(value)) {
     throw new SensorMLParseError('IOComponentChoice entry must be an object');
   }
@@ -214,9 +209,7 @@ export function parseModes(value: unknown): Mode[] | undefined {
  * @returns Parsed ProcessMethod or `undefined` if not a valid object
  * @see OAS: ProcessMethod (L3671)
  */
-export function parseProcessMethod(
-  value: unknown
-): ProcessMethod | undefined {
+export function parseProcessMethod(value: unknown): ProcessMethod | undefined {
   if (!isRecord(value)) return undefined;
   const method: ProcessMethod = {};
   if (value.algorithm !== undefined) method.algorithm = value.algorithm;
@@ -257,9 +250,7 @@ export function parseComponentEntry(
   index: number
 ): ComponentEntry {
   if (!isRecord(value)) {
-    throw new SensorMLParseError(
-      `components[${index}] must be an object`
-    );
+    throw new SensorMLParseError(`components[${index}] must be an object`);
   }
   if (typeof value.name !== 'string') {
     throw new SensorMLParseError(
@@ -268,7 +259,12 @@ export function parseComponentEntry(
   }
 
   // Delegate all inline process types to the main SensorML dispatcher
-  const knownTypes = ['PhysicalSystem', 'PhysicalComponent', 'SimpleProcess', 'AggregateProcess'];
+  const knownTypes = [
+    'PhysicalSystem',
+    'PhysicalComponent',
+    'SimpleProcess',
+    'AggregateProcess',
+  ];
   if (typeof value.type === 'string' && knownTypes.includes(value.type)) {
     const parsed = parseSensorML30(value);
     return { ...parsed, name: value.name as string } as ComponentEntry;
@@ -276,4 +272,86 @@ export function parseComponentEntry(
 
   // External links and unrecognized types are passed through
   return value as unknown as ComponentEntry;
+}
+
+// ========================================
+// Component & Connection List Helpers
+// ========================================
+
+/**
+ * Parse a {@link ComponentList} — array of named sub-process components.
+ *
+ * @param value - Raw JSON value
+ * @returns Parsed ComponentList, or `undefined` if absent/null
+ * @throws {SensorMLParseError} If `value` is present but is not an array,
+ *   or if any component entry is invalid
+ * @see OAS: ComponentList (L4112)
+ */
+export function parseComponentList(value: unknown): ComponentList | undefined {
+  if (value === undefined || value === null) return undefined;
+  if (!Array.isArray(value)) {
+    throw new SensorMLParseError('"components" must be an array');
+  }
+  return value.map((item, i) => {
+    try {
+      return parseComponentEntry(item, i);
+    } catch (err) {
+      if (err instanceof SensorMLParseError) throw err;
+      throw new SensorMLParseError(
+        `Invalid components[${i}]: ${(err as Error).message}`
+      );
+    }
+  });
+}
+
+/**
+ * Parse a single {@link Connection} entry.
+ *
+ * Both `source` and `destination` properties are required strings
+ * (PathRef data paths).
+ *
+ * @param value - Raw JSON value
+ * @param index - Array index for error messages
+ * @returns Parsed Connection
+ * @throws {SensorMLParseError} If the entry is not valid or lacks
+ *   required `source`/`destination` properties
+ * @see OAS: ConnectionList (L4127)
+ */
+export function parseConnection(value: unknown, index: number): Connection {
+  if (!isRecord(value)) {
+    throw new SensorMLParseError(`connections[${index}] must be an object`);
+  }
+  if (typeof value.source !== 'string') {
+    throw new SensorMLParseError(
+      `connections[${index}] must have a string "source" property`
+    );
+  }
+  if (typeof value.destination !== 'string') {
+    throw new SensorMLParseError(
+      `connections[${index}] must have a string "destination" property`
+    );
+  }
+  return {
+    source: value.source,
+    destination: value.destination,
+  };
+}
+
+/**
+ * Parse a {@link ConnectionList} — array of data-flow connections.
+ *
+ * @param value - Raw JSON value
+ * @returns Parsed ConnectionList, or `undefined` if absent/null
+ * @throws {SensorMLParseError} If `value` is present but is not an array,
+ *   or if any connection entry is invalid
+ * @see OAS: ConnectionList (L4127)
+ */
+export function parseConnectionList(
+  value: unknown
+): ConnectionList | undefined {
+  if (value === undefined || value === null) return undefined;
+  if (!Array.isArray(value)) {
+    throw new SensorMLParseError('"connections" must be an array');
+  }
+  return value.map((item, i) => parseConnection(item, i));
 }

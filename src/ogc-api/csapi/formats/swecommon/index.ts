@@ -108,10 +108,7 @@ export type {
 // Types — Validation
 // ========================================
 
-export type {
-  ValidationResult,
-  ValidationError,
-} from './parser.js';
+export type { ValidationResult, ValidationError } from './parser.js';
 
 // ========================================
 // Main Parser
@@ -144,8 +141,4 @@ export {
 
 export { parseDataRecord } from './data-record.js';
 
-export {
-  parseDataArray,
-  parseEncoding,
-  decodeValues,
-} from './data-array.js';
+export { parseDataArray, parseEncoding, decodeValues } from './data-array.js';

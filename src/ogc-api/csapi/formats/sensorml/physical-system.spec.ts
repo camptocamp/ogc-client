@@ -21,7 +21,6 @@ import {
   parseComponentEntry,
   SensorMLParseError,
 } from './physical-system.js';
-import type { PhysicalSystem, PhysicalComponent } from './types.js';
 
 // ========================================
 // Fixtures
@@ -226,9 +225,7 @@ const FULL_PHYSICAL_COMPONENT = {
   localReferenceFrames: [
     {
       origin: 'Tip of the probe',
-      axes: [
-        { name: 'X', description: 'Along probe axis' },
-      ],
+      axes: [{ name: 'X', description: 'Along probe axis' }],
     },
   ],
   localTimeFrames: [
@@ -238,7 +235,10 @@ const FULL_PHYSICAL_COMPONENT = {
   ],
   position: 'Mounted 2m above ground on north side of enclosure',
   method: {
-    algorithm: { language: 'Python', code: 'T = 1/(A + B*ln(R) + C*(ln(R))**3)' },
+    algorithm: {
+      language: 'Python',
+      code: 'T = 1/(A + B*ln(R) + C*(ln(R))**3)',
+    },
     description: 'Steinhart-Hart thermistor equation',
   },
   identifiers: [
@@ -345,7 +345,11 @@ describe('parsePhysicalSystem', () => {
       const result = parsePhysicalSystem(FULL_PHYSICAL_SYSTEM);
       expect(result.id).toBe('sys-001');
       expect(result.lang).toBe('en');
-      expect(result.keywords).toEqual(['weather', 'autonomous', 'multi-sensor']);
+      expect(result.keywords).toEqual([
+        'weather',
+        'autonomous',
+        'multi-sensor',
+      ]);
       expect(result.identifiers).toHaveLength(1);
       expect(result.classifiers).toHaveLength(1);
       expect(result.validTime).toEqual(['2024-01-01T00:00:00Z', 'now']);
@@ -460,9 +464,9 @@ describe('parsePhysicalSystem', () => {
       expect(result.components).toHaveLength(1);
       expect(result.components![0].name).toBe('subSystem');
       expect(result.components![0].type).toBe('PhysicalSystem');
-      expect(
-        (result.components![0] as any).position
-      ).toBe('Inside main enclosure');
+      expect((result.components![0] as any).position).toBe(
+        'Inside main enclosure'
+      );
     });
 
     it('handles absent components and connections', () => {
@@ -558,9 +562,7 @@ describe('parsePhysicalSystem', () => {
           ...MINIMAL_PHYSICAL_SYSTEM,
           localReferenceFrames: [{ origin: 'Center' }],
         })
-      ).toThrow(
-        'localReferenceFrames[0] must have a non-empty "axes" array'
-      );
+      ).toThrow('localReferenceFrames[0] must have a non-empty "axes" array');
     });
 
     it('throws for spatial frame with empty axes', () => {
@@ -569,9 +571,7 @@ describe('parsePhysicalSystem', () => {
           ...MINIMAL_PHYSICAL_SYSTEM,
           localReferenceFrames: [{ origin: 'Center', axes: [] }],
         })
-      ).toThrow(
-        'localReferenceFrames[0] must have a non-empty "axes" array'
-      );
+      ).toThrow('localReferenceFrames[0] must have a non-empty "axes" array');
     });
 
     it('throws for axis missing name', () => {
@@ -589,9 +589,7 @@ describe('parsePhysicalSystem', () => {
       expect(() =>
         parsePhysicalSystem({
           ...MINIMAL_PHYSICAL_SYSTEM,
-          localReferenceFrames: [
-            { origin: 'Center', axes: [{ name: 'Z' }] },
-          ],
+          localReferenceFrames: [{ origin: 'Center', axes: [{ name: 'Z' }] }],
         })
       ).toThrow('axes[0] must have a string "description" property');
     });
@@ -1081,9 +1079,9 @@ describe('parseConnectionList', () => {
   });
 
   it('throws for connection missing source', () => {
-    expect(() =>
-      parseConnectionList([{ destination: 'outputs/y' }])
-    ).toThrow('connections[0] must have a string "source" property');
+    expect(() => parseConnectionList([{ destination: 'outputs/y' }])).toThrow(
+      'connections[0] must have a string "source" property'
+    );
   });
 
   it('throws for connection missing destination', () => {

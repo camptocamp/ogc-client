@@ -54,8 +54,18 @@ function makeBuilder(): CSAPIQueryBuilder {
   return new CSAPIQueryBuilder(
     makeCollection({
       links: [
-        { rel: 'self', type: '', title: '', href: 'https://example.com/collections/iot' },
-        { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlStreams' },
+        {
+          rel: 'self',
+          type: '',
+          title: '',
+          href: 'https://example.com/collections/iot',
+        },
+        {
+          rel: 'ogc-cs:controlStreams',
+          type: '',
+          title: '',
+          href: '/controlStreams',
+        },
         { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
       ],
     })
@@ -107,7 +117,9 @@ describe('command routing cache', () => {
   beforeEach(clearCommandRoutingCache);
 
   it('returns undefined for an uncached server', () => {
-    expect(getCommandRoutingPreference('https://osh.example.com')).toBeUndefined();
+    expect(
+      getCommandRoutingPreference('https://osh.example.com')
+    ).toBeUndefined();
   });
 
   it('stores and retrieves "nested-only" preference', () => {
@@ -139,8 +151,12 @@ describe('command routing cache', () => {
     setCommandRoutingPreference('https://a.example.com', 'nested-only');
     setCommandRoutingPreference('https://b.example.com', 'top-level');
     clearCommandRoutingCache();
-    expect(getCommandRoutingPreference('https://a.example.com')).toBeUndefined();
-    expect(getCommandRoutingPreference('https://b.example.com')).toBeUndefined();
+    expect(
+      getCommandRoutingPreference('https://a.example.com')
+    ).toBeUndefined();
+    expect(
+      getCommandRoutingPreference('https://b.example.com')
+    ).toBeUndefined();
   });
 });
 

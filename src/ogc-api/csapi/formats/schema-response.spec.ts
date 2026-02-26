@@ -40,8 +40,7 @@ describe('parseDatastreamSchemaResponse', () => {
       },
     };
 
-    const result: DatastreamSchemaResponse =
-      parseDatastreamSchemaResponse(raw);
+    const result: DatastreamSchemaResponse = parseDatastreamSchemaResponse(raw);
 
     // obsFormat extracted as string
     expect(result.obsFormat).toBe('application/om+json');
@@ -146,7 +145,9 @@ describe('parseDatastreamSchemaResponse', () => {
             type: 'Time',
             name: 'timestamp',
             label: 'Measurement Time',
-            uom: { href: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian' },
+            uom: {
+              href: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
+            },
           },
           {
             type: 'Quantity',

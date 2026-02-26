@@ -39,15 +39,35 @@ function makeCSAPICollection(
 ): OgcApiCollectionInfo {
   return {
     links: [
-      { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/weather' },
+      {
+        rel: 'self',
+        type: '',
+        title: '',
+        href: 'https://api.example.com/collections/weather',
+      },
       { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
       { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
       { rel: 'ogc-cs:procedures', type: '', title: '', href: '/procedures' },
-      { rel: 'ogc-cs:samplingFeatures', type: '', title: '', href: '/samplingFeatures' },
+      {
+        rel: 'ogc-cs:samplingFeatures',
+        type: '',
+        title: '',
+        href: '/samplingFeatures',
+      },
       { rel: 'ogc-cs:properties', type: '', title: '', href: '/properties' },
       { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
-      { rel: 'ogc-cs:observations', type: '', title: '', href: '/observations' },
-      { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlStreams' },
+      {
+        rel: 'ogc-cs:observations',
+        type: '',
+        title: '',
+        href: '/observations',
+      },
+      {
+        rel: 'ogc-cs:controlStreams',
+        type: '',
+        title: '',
+        href: '/controlStreams',
+      },
       { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
     ],
     title: 'Weather Stations',
@@ -82,7 +102,10 @@ const SYSTEMS_GEOJSON = {
         description: 'Mountaintop weather sensor',
       },
       links: [
-        { rel: 'self', href: 'https://api.example.com/collections/weather/systems/sys-001' },
+        {
+          rel: 'self',
+          href: 'https://api.example.com/collections/weather/systems/sys-001',
+        },
       ],
     },
     {
@@ -98,7 +121,10 @@ const SYSTEMS_GEOJSON = {
     },
   ],
   links: [
-    { rel: 'next', href: 'https://api.example.com/collections/weather/systems?offset=2' },
+    {
+      rel: 'next',
+      href: 'https://api.example.com/collections/weather/systems?offset=2',
+    },
   ],
   numberMatched: 10,
   numberReturned: 2,
@@ -117,7 +143,10 @@ const DATASTREAMS_ITEMS = {
       live: true,
       formats: ['application/swe+json'],
       links: [
-        { rel: 'self', href: 'https://api.example.com/collections/weather/datastreams/ds-001' },
+        {
+          rel: 'self',
+          href: 'https://api.example.com/collections/weather/datastreams/ds-001',
+        },
       ],
     },
   ],
@@ -146,7 +175,12 @@ const SYSTEMS_NULL_FEATURETYPE = {
 /** Minimal collection with no CSAPI resource links. */
 const NON_CSAPI_COLLECTION = makeCSAPICollection({
   links: [
-    { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/vanilla' },
+    {
+      rel: 'self',
+      type: '',
+      title: '',
+      href: 'https://api.example.com/collections/vanilla',
+    },
   ],
   id: 'vanilla',
 });
@@ -226,7 +260,9 @@ describe('Discovery workflow — GeoJSON response parsing', () => {
 
   it('extracts typed System from response features', () => {
     const result = parseCollectionResponse(SYSTEMS_GEOJSON);
-    const system = extractCSAPIFeature(result.items[0] as Record<string, unknown>);
+    const system = extractCSAPIFeature(
+      result.items[0] as Record<string, unknown>
+    );
 
     expect(system).not.toBeNull();
     expect(system!.properties.name).toBe('Weather Station Alpha');
@@ -313,9 +349,19 @@ describe('Discovery workflow — partial collection support', () => {
   it('works with a collection advertising only Part 1 resources', () => {
     const part1Only = makeCSAPICollection({
       links: [
-        { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/part1' },
+        {
+          rel: 'self',
+          type: '',
+          title: '',
+          href: 'https://api.example.com/collections/part1',
+        },
         { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
-        { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+        {
+          rel: 'ogc-cs:deployments',
+          type: '',
+          title: '',
+          href: '/deployments',
+        },
       ],
       id: 'part1',
     });
@@ -334,9 +380,24 @@ describe('Discovery workflow — partial collection support', () => {
   it('works with a collection advertising only Part 2 resources', () => {
     const part2Only = makeCSAPICollection({
       links: [
-        { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/part2' },
-        { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
-        { rel: 'ogc-cs:observations', type: '', title: '', href: '/observations' },
+        {
+          rel: 'self',
+          type: '',
+          title: '',
+          href: 'https://api.example.com/collections/part2',
+        },
+        {
+          rel: 'ogc-cs:datastreams',
+          type: '',
+          title: '',
+          href: '/datastreams',
+        },
+        {
+          rel: 'ogc-cs:observations',
+          type: '',
+          title: '',
+          href: '/observations',
+        },
       ],
       id: 'part2',
     });
@@ -371,7 +432,12 @@ describe('Discovery workflow — error scenarios', () => {
     const builder = new CSAPIQueryBuilder(
       makeCSAPICollection({
         links: [
-          { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/test' },
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://api.example.com/collections/test',
+          },
           { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
         ],
         id: 'test',
@@ -384,7 +450,9 @@ describe('Discovery workflow — error scenarios', () => {
     } catch (e) {
       expect(e).toBeInstanceOf(EndpointError);
       expect((e as EndpointError).message).toContain('systems');
-      expect((e as EndpointError).message).toContain("does not support 'deployments'");
+      expect((e as EndpointError).message).toContain(
+        "does not support 'deployments'"
+      );
     }
   });
 });

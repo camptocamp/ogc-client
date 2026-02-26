@@ -50,14 +50,34 @@ function makeFullCollection(
 ): OgcApiCollectionInfo {
   return {
     links: [
-      { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/iot' },
+      {
+        rel: 'self',
+        type: '',
+        title: '',
+        href: 'https://api.example.com/collections/iot',
+      },
       { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
       { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
       { rel: 'ogc-cs:procedures', type: '', title: '', href: '/procedures' },
-      { rel: 'ogc-cs:samplingFeatures', type: '', title: '', href: '/samplingFeatures' },
+      {
+        rel: 'ogc-cs:samplingFeatures',
+        type: '',
+        title: '',
+        href: '/samplingFeatures',
+      },
       { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
-      { rel: 'ogc-cs:observations', type: '', title: '', href: '/observations' },
-      { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlStreams' },
+      {
+        rel: 'ogc-cs:observations',
+        type: '',
+        title: '',
+        href: '/observations',
+      },
+      {
+        rel: 'ogc-cs:controlStreams',
+        type: '',
+        title: '',
+        href: '/controlStreams',
+      },
       { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
     ],
     title: 'IoT Full Collection',
@@ -300,7 +320,9 @@ describe('Navigation — path-based resource classification', () => {
 
   it('returns null for Part 2 resource paths (not in PATH_SEGMENT_TO_TYPE)', () => {
     // observations, commands, properties are Part 2, not in path classifier
-    expect(inferResourceTypeFromPath('/collections/iot/observations')).toBeNull();
+    expect(
+      inferResourceTypeFromPath('/collections/iot/observations')
+    ).toBeNull();
     expect(inferResourceTypeFromPath('/collections/iot/commands')).toBeNull();
     expect(inferResourceTypeFromPath('/collections/iot/properties')).toBeNull();
   });
@@ -333,7 +355,10 @@ describe('Navigation — SWE Common schema round-trip', () => {
   it('parses a DataRecord with Time and Quantity fields', () => {
     const result = parseSWEComponent(SWE_DATA_RECORD) as {
       type: string;
-      fields: Array<{ name: string; component?: { type: string; uom?: { code?: string } } }>;
+      fields: Array<{
+        name: string;
+        component?: { type: string; uom?: { code?: string } };
+      }>;
     };
     expect(result).not.toBeNull();
     expect(result.type).toBe('DataRecord');
@@ -404,9 +429,19 @@ describe('Navigation — partial collection support', () => {
   it('handles Part 1 only collection (no datastreams, observations)', () => {
     const part1Only = makeFullCollection({
       links: [
-        { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/cat' },
+        {
+          rel: 'self',
+          type: '',
+          title: '',
+          href: 'https://api.example.com/collections/cat',
+        },
         { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
-        { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
+        {
+          rel: 'ogc-cs:deployments',
+          type: '',
+          title: '',
+          href: '/deployments',
+        },
         { rel: 'ogc-cs:procedures', type: '', title: '', href: '/procedures' },
       ],
       id: 'cat',
@@ -427,10 +462,30 @@ describe('Navigation — partial collection support', () => {
   it('handles Part 2 only collection (no systems, deployments)', () => {
     const part2Only = makeFullCollection({
       links: [
-        { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/data' },
-        { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
-        { rel: 'ogc-cs:observations', type: '', title: '', href: '/observations' },
-        { rel: 'ogc-cs:controlStreams', type: '', title: '', href: '/controlStreams' },
+        {
+          rel: 'self',
+          type: '',
+          title: '',
+          href: 'https://api.example.com/collections/data',
+        },
+        {
+          rel: 'ogc-cs:datastreams',
+          type: '',
+          title: '',
+          href: '/datastreams',
+        },
+        {
+          rel: 'ogc-cs:observations',
+          type: '',
+          title: '',
+          href: '/observations',
+        },
+        {
+          rel: 'ogc-cs:controlStreams',
+          type: '',
+          title: '',
+          href: '/controlStreams',
+        },
         { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
       ],
       id: 'data',
@@ -473,7 +528,12 @@ describe('Navigation — error handling across workflows', () => {
   it('EndpointError contains meaningful message about missing resource', () => {
     const collection = makeFullCollection({
       links: [
-        { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/empty' },
+        {
+          rel: 'self',
+          type: '',
+          title: '',
+          href: 'https://api.example.com/collections/empty',
+        },
       ],
       id: 'empty',
     });

@@ -22,17 +22,29 @@ const FEATURE_COLLECTION_RESPONSE = {
       type: 'Feature',
       id: 'sys-001',
       geometry: { type: 'Point', coordinates: [0, 0] },
-      properties: { uid: 'urn:example:sys-001', name: 'Sensor A', featureType: 'sosa:Sensor' },
+      properties: {
+        uid: 'urn:example:sys-001',
+        name: 'Sensor A',
+        featureType: 'sosa:Sensor',
+      },
     },
     {
       type: 'Feature',
       id: 'sys-002',
       geometry: null,
-      properties: { uid: 'urn:example:sys-002', name: 'Sensor B', featureType: 'sosa:Sensor' },
+      properties: {
+        uid: 'urn:example:sys-002',
+        name: 'Sensor B',
+        featureType: 'sosa:Sensor',
+      },
     },
   ],
   links: [
-    { href: 'https://example.com/systems?offset=2', rel: 'next', type: 'application/geo+json' },
+    {
+      href: 'https://example.com/systems?offset=2',
+      rel: 'next',
+      type: 'application/geo+json',
+    },
   ],
   numberMatched: 5,
   numberReturned: 2,
@@ -46,17 +58,29 @@ const ITEMS_ENVELOPE_RESPONSE = {
       type: 'Feature',
       id: 'sys-001',
       geometry: { type: 'Point', coordinates: [0, 0] },
-      properties: { uid: 'urn:example:sys-001', name: 'Sensor A', featureType: 'sosa:Sensor' },
+      properties: {
+        uid: 'urn:example:sys-001',
+        name: 'Sensor A',
+        featureType: 'sosa:Sensor',
+      },
     },
     {
       type: 'Feature',
       id: 'sys-002',
       geometry: null,
-      properties: { uid: 'urn:example:sys-002', name: 'Sensor B', featureType: 'sosa:Sensor' },
+      properties: {
+        uid: 'urn:example:sys-002',
+        name: 'Sensor B',
+        featureType: 'sosa:Sensor',
+      },
     },
   ],
   links: [
-    { href: 'https://osh.example.com/systems', rel: 'self', type: 'application/json' },
+    {
+      href: 'https://osh.example.com/systems',
+      rel: 'self',
+      type: 'application/json',
+    },
   ],
 };
 

@@ -27,23 +27,6 @@ import {
   parseQuality,
 } from './index.js';
 
-import type {
-  AnyComponent,
-  DataRecord,
-  DataField,
-  DataArray,
-  Vector,
-  Matrix,
-  DataChoice,
-  SweGeometry,
-  DataEncoding,
-  ValidationResult,
-  ValidationError,
-  UnitOfMeasure,
-  AllowedValues,
-  AllowedTokens,
-} from './index.js';
-
 // ========================================
 // Export Accessibility — Main Parser
 // ========================================

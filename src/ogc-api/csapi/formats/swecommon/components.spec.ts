@@ -42,13 +42,18 @@ describe('parseQuantity', () => {
       value: 23.5,
       constraint: { values: [0, 10, 20, 30], intervals: [[-40, 85]] },
       nilValues: [
-        { reason: 'http://www.opengis.net/def/nil/OGC/0/BelowDetectionRange', value: -999 },
+        {
+          reason: 'http://www.opengis.net/def/nil/OGC/0/BelowDetectionRange',
+          value: -999,
+        },
       ],
     });
     expect(result.type).toBe('Quantity');
     expect(result.label).toBe('Temperature');
     expect(result.description).toBe('Air temperature');
-    expect(result.definition).toBe('http://qudt.org/vocab/quantitykind/Temperature');
+    expect(result.definition).toBe(
+      'http://qudt.org/vocab/quantitykind/Temperature'
+    );
     expect(result.uom.code).toBe('Cel');
     expect(result.value).toBe(23.5);
     expect(result.constraint).toBeDefined();
@@ -131,12 +136,18 @@ describe('parseText', () => {
     const result = parseText({
       type: 'Text',
       value: 'Station Alpha',
-      constraint: { values: ['Station Alpha', 'Station Beta', 'Station Gamma'] },
+      constraint: {
+        values: ['Station Alpha', 'Station Beta', 'Station Gamma'],
+      },
     });
     expect(result.type).toBe('Text');
     expect(result.value).toBe('Station Alpha');
     expect(result.constraint).toBeDefined();
-    expect(result.constraint!.values).toEqual(['Station Alpha', 'Station Beta', 'Station Gamma']);
+    expect(result.constraint!.values).toEqual([
+      'Station Alpha',
+      'Station Beta',
+      'Station Gamma',
+    ]);
   });
 
   it('parses a Text with regex pattern constraint', () => {
@@ -161,8 +172,12 @@ describe('parseTime', () => {
       value: '2024-06-15T12:00:00Z',
     });
     expect(result.type).toBe('Time');
-    expect(result.referenceFrame).toBe('http://www.opengis.net/def/trs/BIPM/0/UTC');
-    expect(result.uom.href).toBe('http://www.opengis.net/def/uom/ISO-8601/0/Gregorian');
+    expect(result.referenceFrame).toBe(
+      'http://www.opengis.net/def/trs/BIPM/0/UTC'
+    );
+    expect(result.uom.href).toBe(
+      'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian'
+    );
     expect(result.value).toBe('2024-06-15T12:00:00Z');
   });
 
@@ -207,7 +222,12 @@ describe('parseCategory', () => {
     expect(result.type).toBe('Category');
     expect(result.codeSpace).toBe('http://example.org/weather-conditions');
     expect(result.value).toBe('clear');
-    expect(result.constraint!.values).toEqual(['clear', 'cloudy', 'rain', 'snow']);
+    expect(result.constraint!.values).toEqual([
+      'clear',
+      'cloudy',
+      'rain',
+      'snow',
+    ]);
   });
 
   it('parses a Category without codeSpace', () => {
@@ -350,8 +370,16 @@ describe('parseAllowedValues', () => {
   });
 
   it('parses intervals', () => {
-    const result = parseAllowedValues({ intervals: [[0, 100], [200, 300]] });
-    expect(result.intervals).toEqual([[0, 100], [200, 300]]);
+    const result = parseAllowedValues({
+      intervals: [
+        [0, 100],
+        [200, 300],
+      ],
+    });
+    expect(result.intervals).toEqual([
+      [0, 100],
+      [200, 300],
+    ]);
   });
 
   it('parses significantFigures', () => {
@@ -428,7 +456,9 @@ describe('parseUnitOfMeasure', () => {
     const result = parseUnitOfMeasure({
       href: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian',
     });
-    expect(result.href).toBe('http://www.opengis.net/def/uom/ISO-8601/0/Gregorian');
+    expect(result.href).toBe(
+      'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian'
+    );
     expect(result.code).toBeUndefined();
   });
 
@@ -455,7 +485,10 @@ describe('parseUnitOfMeasure', () => {
 describe('parseNilValues', () => {
   it('parses NilValues with reason code', () => {
     const result = parseNilValues([
-      { reason: 'http://www.opengis.net/def/nil/OGC/0/BelowDetectionRange', value: -999 },
+      {
+        reason: 'http://www.opengis.net/def/nil/OGC/0/BelowDetectionRange',
+        value: -999,
+      },
     ]);
     expect(result).toHaveLength(1);
     expect(result[0].reason).toBe(
@@ -466,8 +499,14 @@ describe('parseNilValues', () => {
 
   it('parses multiple NilValues entries', () => {
     const result = parseNilValues([
-      { reason: 'http://www.opengis.net/def/nil/OGC/0/BelowDetectionRange', value: -999 },
-      { reason: 'http://www.opengis.net/def/nil/OGC/0/AboveDetectionRange', value: 9999 },
+      {
+        reason: 'http://www.opengis.net/def/nil/OGC/0/BelowDetectionRange',
+        value: -999,
+      },
+      {
+        reason: 'http://www.opengis.net/def/nil/OGC/0/AboveDetectionRange',
+        value: 9999,
+      },
       { reason: 'http://www.opengis.net/def/nil/OGC/0/missing', value: 'NaN' },
     ]);
     expect(result).toHaveLength(3);
@@ -634,10 +673,14 @@ describe('base property extraction', () => {
     expect(result.id).toBe('temp-01');
     expect(result.label).toBe('Temperature');
     expect(result.description).toBe('Ambient temperature');
-    expect(result.definition).toBe('http://qudt.org/vocab/quantitykind/Temperature');
+    expect(result.definition).toBe(
+      'http://qudt.org/vocab/quantitykind/Temperature'
+    );
     expect(result.updatable).toBe(true);
     expect(result.optional).toBe(false);
-    expect(result.referenceFrame).toBe('http://www.opengis.net/def/crs/EPSG/0/4326');
+    expect(result.referenceFrame).toBe(
+      'http://www.opengis.net/def/crs/EPSG/0/4326'
+    );
     expect(result.axisID).toBe('z');
   });
 

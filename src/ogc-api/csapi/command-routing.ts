@@ -91,7 +91,9 @@ export function isCommandRouteRejection(
   status: number,
   bodyText?: string
 ): boolean {
-  return status === 400 && (bodyText?.includes('Invalid resource name') ?? false);
+  return (
+    status === 400 && (bodyText?.includes('Invalid resource name') ?? false)
+  );
 }
 
 // ── Nested URL Construction ──
@@ -149,7 +151,8 @@ export function buildNestedCommandUrl(
   // Split the URL at the query string boundary so we can insert path
   // segments between the base path and the query parameters.
   const qIndex = baseWithOptions.indexOf('?');
-  const basePath = qIndex >= 0 ? baseWithOptions.substring(0, qIndex) : baseWithOptions;
+  const basePath =
+    qIndex >= 0 ? baseWithOptions.substring(0, qIndex) : baseWithOptions;
   const queryPart = qIndex >= 0 ? baseWithOptions.substring(qIndex) : '';
 
   let url = basePath;

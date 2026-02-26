@@ -9,20 +9,10 @@
  */
 
 import type {
-  // Primitives
-  Link,
-  TimePeriod,
-  TimeInstant,
-  TimeInstantOrPeriod,
-  PathRef,
   // Metadata
   Term,
   Document,
-  LegalConstraint,
-  SecurityConstraint,
-  ContactInfo,
   ResponsibleParty,
-  ContactLink,
   ObservableProperty,
   // Property lists
   AnyProperty,
@@ -30,46 +20,23 @@ import type {
   CharacteristicList,
   // I/O
   IOComponentChoice,
-  InputList,
-  OutputList,
-  ParameterList,
   // Configuration
-  ProcessMethod,
-  SettingValue,
-  SettingArrayValue,
-  SettingMode,
-  SetConstraint,
-  SettingStatus,
   Settings,
   // Spatial / temporal
-  FrameAxis,
   SpatialFrame,
-  TemporalFrame,
-  GeoJsonPoint,
-  Pose,
   Position,
   // Event / features
   Event,
-  FeatureList,
   // Base interfaces
   DescribedObject,
   Mode,
   AbstractProcess,
-  AbstractPhysicalProcess,
-  // Concrete types
-  SimpleProcess,
-  AggregateProcess,
-  PhysicalComponent,
-  PhysicalSystem,
   // Union & constants
   SensorMLProcess,
   SensorMLProcessType,
   // Component / connection
-  ComponentLink,
   ComponentEntry,
-  ComponentList,
   Connection,
-  ConnectionList,
 } from './types.js';
 
 import { SENSORML_PROCESS_TYPES } from './types.js';
@@ -191,7 +158,13 @@ describe('base interface compilation', () => {
       lang: 'en',
       keywords: ['test', 'example'],
       identifiers: [{ label: 'Serial', value: 'SN-12345' }],
-      classifiers: [{ label: 'Category', value: 'sensor', definition: 'http://example.com/cat' }],
+      classifiers: [
+        {
+          label: 'Category',
+          value: 'sensor',
+          definition: 'http://example.com/cat',
+        },
+      ],
       validTime: ['2024-01-01T00:00:00Z', '2025-01-01T00:00:00Z'],
     };
     expect(obj.type).toBe('SomeType');
@@ -221,10 +194,18 @@ describe('base interface compilation', () => {
       uniqueId: 'urn:example:proc',
       definition: 'http://example.com/proc-type',
       inputs: [
-        { name: 'rawTemp', type: 'Quantity', uom: { code: 'Cel' } } as IOComponentChoice,
+        {
+          name: 'rawTemp',
+          type: 'Quantity',
+          uom: { code: 'Cel' },
+        } as IOComponentChoice,
       ],
       outputs: [
-        { name: 'calibTemp', type: 'Quantity', uom: { code: 'Cel' } } as IOComponentChoice,
+        {
+          name: 'calibTemp',
+          type: 'Quantity',
+          uom: { code: 'Cel' },
+        } as IOComponentChoice,
       ],
     };
     expect(proc.definition).toBe('http://example.com/proc-type');
@@ -284,9 +265,13 @@ describe('supporting types compilation', () => {
   it('compiles Settings with all entry types', () => {
     const settings: Settings = {
       setValues: [{ ref: 'parameters/gain', value: 2.5 }],
-      setArrayValues: [{ ref: 'parameters/coefficients', value: [1.0, 0.5, 0.1] }],
+      setArrayValues: [
+        { ref: 'parameters/coefficients', value: [1.0, 0.5, 0.1] },
+      ],
       setModes: [{ ref: 'modes', value: 'highPrecision' }],
-      setConstraints: [{ type: 'AllowedValues', ref: 'outputs/temp', min: -10, max: 50 }],
+      setConstraints: [
+        { type: 'AllowedValues', ref: 'outputs/temp', min: -10, max: 50 },
+      ],
       setStatus: [{ ref: 'outputs/humidity', value: 'disabled' }],
     };
     expect(settings.setValues).toHaveLength(1);

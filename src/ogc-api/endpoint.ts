@@ -231,9 +231,7 @@ ${e.message}`);
     return Promise.all([this.data, this.hasConnectedSystems])
       .then(([data, hasCSAPI]) => (hasCSAPI ? data : { collections: [] }))
       .then(parseCollections)
-      .then((collections) =>
-        collections.filter((c) => c.hasConnectedSystems)
-      )
+      .then((collections) => collections.filter((c) => c.hasConnectedSystems))
       .then((collections) => collections.map((collection) => collection.name));
   }
 
@@ -322,7 +320,7 @@ ${e.message}`);
    * }
    * ```
    *
-   * @see Import createCSAPIBuilder from '@camptocamp/ogc-client/csapi'
+   * @see Use createCSAPIBuilder via '@camptocamp/ogc-client/csapi'
    * @see {@link csapiCollections} to list available collections
    * @see https://docs.ogc.org/is/23-001/23-001.html
    */

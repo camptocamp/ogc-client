@@ -18,7 +18,6 @@ import {
   parseAbstractPhysicalProcessProperties,
   SensorMLParseError,
 } from './parser.js';
-import type { SensorMLProcess } from './types.js';
 
 // ========================================
 // Fixtures
@@ -101,7 +100,8 @@ const CAPABILITY_LIST = {
   id: 'cap-range',
   label: 'Measurement Capabilities',
   description: 'Range and accuracy of the sensor',
-  definition: 'http://www.opengis.net/def/property/OGC/0/MeasurementCapabilities',
+  definition:
+    'http://www.opengis.net/def/property/OGC/0/MeasurementCapabilities',
   conditions: [
     { type: 'Quantity', name: 'temperature', label: 'Ambient Temperature' },
   ],
@@ -116,7 +116,8 @@ const CHARACTERISTIC_LIST = {
   id: 'char-phys',
   label: 'Physical Characteristics',
   description: 'Size and weight of the device',
-  definition: 'http://www.opengis.net/def/property/OGC/0/PhysicalCharacteristics',
+  definition:
+    'http://www.opengis.net/def/property/OGC/0/PhysicalCharacteristics',
   characteristics: [
     { name: 'weight', type: 'Quantity', label: 'Weight' },
     { name: 'dimensions', type: 'Vector', label: 'Dimensions' },
@@ -166,12 +167,12 @@ describe('parseSensorML30 – type discrimination', () => {
   });
 
   it('throws SensorMLParseError when type is missing', () => {
-    expect(() =>
-      parseSensorML30({ label: 'x', uniqueId: 'y' })
-    ).toThrow(SensorMLParseError);
-    expect(() =>
-      parseSensorML30({ label: 'x', uniqueId: 'y' })
-    ).toThrow(/string "type" property/);
+    expect(() => parseSensorML30({ label: 'x', uniqueId: 'y' })).toThrow(
+      SensorMLParseError
+    );
+    expect(() => parseSensorML30({ label: 'x', uniqueId: 'y' })).toThrow(
+      /string "type" property/
+    );
   });
 
   it('throws SensorMLParseError for null input', () => {

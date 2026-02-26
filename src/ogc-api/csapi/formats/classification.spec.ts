@@ -4,7 +4,10 @@
  * @see https://github.com/OS4CSAPI/ogc-client-CSAPI_2/issues/50 — F41
  */
 
-import { inferResourceTypeFromPath, classifyFeature } from './classification.js';
+import {
+  inferResourceTypeFromPath,
+  classifyFeature,
+} from './classification.js';
 
 // ========================================
 // Fixtures — 52North-style null featureType
@@ -48,9 +51,9 @@ const VALID_DEPLOYMENT_FEATURE = {
 
 describe('inferResourceTypeFromPath', () => {
   it('returns System for /systems path', () => {
-    expect(
-      inferResourceTypeFromPath('https://server.com/api/systems')
-    ).toBe('System');
+    expect(inferResourceTypeFromPath('https://server.com/api/systems')).toBe(
+      'System'
+    );
   });
 
   it('returns Deployment for /deployments path', () => {
@@ -60,9 +63,9 @@ describe('inferResourceTypeFromPath', () => {
   });
 
   it('returns Procedure for /procedures path', () => {
-    expect(
-      inferResourceTypeFromPath('https://server.com/api/procedures')
-    ).toBe('Procedure');
+    expect(inferResourceTypeFromPath('https://server.com/api/procedures')).toBe(
+      'Procedure'
+    );
   });
 
   it('returns SamplingFeature for /samplingFeatures path', () => {
@@ -95,9 +98,7 @@ describe('inferResourceTypeFromPath', () => {
 
   it('handles individual resource paths (resource ID after segment)', () => {
     expect(
-      inferResourceTypeFromPath(
-        'https://server.com/api/systems/abc-123'
-      )
+      inferResourceTypeFromPath('https://server.com/api/systems/abc-123')
     ).toBe('System');
   });
 
@@ -126,9 +127,7 @@ describe('inferResourceTypeFromPath', () => {
 describe('classifyFeature', () => {
   // Test case 1: featureType null + endpoint hint /systems → System
   it('returns hint when featureType is null', () => {
-    expect(classifyFeature(NULL_FEATURE_TYPE_FEATURE, 'System')).toBe(
-      'System'
-    );
+    expect(classifyFeature(NULL_FEATURE_TYPE_FEATURE, 'System')).toBe('System');
   });
 
   // Test case 2: featureType null + no hint → null (no guessing)
@@ -139,9 +138,7 @@ describe('classifyFeature', () => {
   // Test case 3: valid featureType → ignores hint, uses featureType
   it('uses featureType classification even when hint differs', () => {
     // featureType: 'sosa:Sensor' → System, hint says Deployment
-    expect(classifyFeature(VALID_SENSOR_FEATURE, 'Deployment')).toBe(
-      'System'
-    );
+    expect(classifyFeature(VALID_SENSOR_FEATURE, 'Deployment')).toBe('System');
   });
 
   // Test case 4: featureType null + endpoint hint /deployments → Deployment

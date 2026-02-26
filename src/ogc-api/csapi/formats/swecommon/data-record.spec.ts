@@ -11,7 +11,12 @@ describe('parseDataRecord — flat records', () => {
       type: 'DataRecord',
       label: 'Weather',
       fields: [
-        { name: 'temperature', type: 'Quantity', uom: { code: 'Cel' }, value: 23.5 },
+        {
+          name: 'temperature',
+          type: 'Quantity',
+          uom: { code: 'Cel' },
+          value: 23.5,
+        },
         { name: 'status', type: 'Text', value: 'OK' },
         { name: 'active', type: 'Boolean', value: true },
       ],
@@ -61,10 +66,25 @@ describe('parseDataRecord — flat records', () => {
     const result = parseDataRecord({
       type: 'DataRecord',
       fields: [
-        { name: 'pressure', type: 'Quantity', uom: { code: 'hPa' }, value: 1013 },
+        {
+          name: 'pressure',
+          type: 'Quantity',
+          uom: { code: 'hPa' },
+          value: 1013,
+        },
         { name: 'category', type: 'Category', value: 'clear' },
-        { name: 'timestamp', type: 'Time', uom: { href: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian' }, value: '2024-01-01T00:00:00Z' },
-        { name: 'range', type: 'QuantityRange', uom: { code: 'Cel' }, value: [-10, 40] },
+        {
+          name: 'timestamp',
+          type: 'Time',
+          uom: { href: 'http://www.opengis.net/def/uom/ISO-8601/0/Gregorian' },
+          value: '2024-01-01T00:00:00Z',
+        },
+        {
+          name: 'range',
+          type: 'QuantityRange',
+          uom: { code: 'Cel' },
+          value: [-10, 40],
+        },
       ],
     });
     expect(result.fields).toHaveLength(4);
@@ -88,16 +108,35 @@ describe('parseDataRecord — nested records', () => {
           name: 'location',
           type: 'DataRecord',
           fields: [
-            { name: 'lat', type: 'Quantity', uom: { code: 'deg' }, value: 45.0 },
-            { name: 'lon', type: 'Quantity', uom: { code: 'deg' }, value: -73.0 },
+            {
+              name: 'lat',
+              type: 'Quantity',
+              uom: { code: 'deg' },
+              value: 45.0,
+            },
+            {
+              name: 'lon',
+              type: 'Quantity',
+              uom: { code: 'deg' },
+              value: -73.0,
+            },
           ],
         },
-        { name: 'temperature', type: 'Quantity', uom: { code: 'Cel' }, value: 23.5 },
+        {
+          name: 'temperature',
+          type: 'Quantity',
+          uom: { code: 'Cel' },
+          value: 23.5,
+        },
       ],
     });
     expect(result.fields).toHaveLength(2);
     expect(result.fields[0].name).toBe('location');
-    const nested = (result.fields[0] as unknown as { component: { type: string; fields: { name: string }[] } }).component;
+    const nested = (
+      result.fields[0] as unknown as {
+        component: { type: string; fields: { name: string }[] };
+      }
+    ).component;
     expect(nested.type).toBe('DataRecord');
     expect(nested.fields).toHaveLength(2);
     expect(nested.fields[0].name).toBe('lat');
@@ -115,17 +154,23 @@ describe('parseDataRecord — nested records', () => {
             {
               name: 'level2',
               type: 'DataRecord',
-              fields: [
-                { name: 'level3', type: 'Text', value: 'deep' },
-              ],
+              fields: [{ name: 'level3', type: 'Text', value: 'deep' }],
             },
           ],
         },
       ],
     });
-    const l1 = (result.fields[0] as unknown as { component: { type: string; fields: { name: string }[] } }).component;
+    const l1 = (
+      result.fields[0] as unknown as {
+        component: { type: string; fields: { name: string }[] };
+      }
+    ).component;
     expect(l1.type).toBe('DataRecord');
-    const l2 = (l1.fields[0] as unknown as { component: { type: string; fields: { name: string }[] } }).component;
+    const l2 = (
+      l1.fields[0] as unknown as {
+        component: { type: string; fields: { name: string }[] };
+      }
+    ).component;
     expect(l2.type).toBe('DataRecord');
     expect(l2.fields[0].name).toBe('level3');
   });
@@ -150,7 +195,9 @@ describe('parseDataRecord — link references', () => {
     });
     expect(result.fields).toHaveLength(1);
     expect(result.fields[0].name).toBe('externalDef');
-    expect(result.fields[0].href).toBe('http://example.com/definitions/temperature');
+    expect(result.fields[0].href).toBe(
+      'http://example.com/definitions/temperature'
+    );
     expect(result.fields[0].role).toBe('definition');
     expect(result.fields[0].title).toBe('Temperature Definition');
   });
@@ -209,9 +256,9 @@ describe('parseDataRecord — error handling', () => {
   });
 
   it('throws for empty fields array', () => {
-    expect(() =>
-      parseDataRecord({ type: 'DataRecord', fields: [] })
-    ).toThrow('non-empty array');
+    expect(() => parseDataRecord({ type: 'DataRecord', fields: [] })).toThrow(
+      'non-empty array'
+    );
   });
 
   it('throws for field missing name', () => {
@@ -304,7 +351,9 @@ describe('parseDataRecord — complex types via componentParser callback', () =>
     expect(result.fields[0].name).toBe('locationVectorLLA');
     expect(mockParser).toHaveBeenCalledTimes(1);
     expect(mockParser).toHaveBeenCalledWith(vectorFixture);
-    const comp = (result.fields[0] as unknown as { component: { type: string } }).component;
+    const comp = (
+      result.fields[0] as unknown as { component: { type: string } }
+    ).component;
     expect(comp.type).toBe('Vector');
     // Simple component is still handled directly, not via callback
     expect(result.fields[1].name).toBe('active');
@@ -321,7 +370,10 @@ describe('parseDataRecord — complex types via componentParser callback', () =>
 
     const mockParser = jest.fn().mockReturnValue({
       type: 'DataArray',
-      elementType: { name: 'temp', component: { type: 'Quantity', uom: { code: 'Cel' } } },
+      elementType: {
+        name: 'temp',
+        component: { type: 'Quantity', uom: { code: 'Cel' } },
+      },
     });
 
     const result = parseDataRecord(
@@ -334,7 +386,9 @@ describe('parseDataRecord — complex types via componentParser callback', () =>
 
     expect(result.fields).toHaveLength(1);
     expect(mockParser).toHaveBeenCalledWith(dataArrayFixture);
-    const comp = (result.fields[0] as unknown as { component: { type: string } }).component;
+    const comp = (
+      result.fields[0] as unknown as { component: { type: string } }
+    ).component;
     expect(comp.type).toBe('DataArray');
   });
 
@@ -357,10 +411,12 @@ describe('parseDataRecord — complex types via componentParser callback', () =>
 
     const mockParser = jest.fn().mockReturnValue({
       type: 'Vector',
-      coordinates: [{ name: 'x', component: { type: 'Quantity', uom: { code: 'm' } } }],
+      coordinates: [
+        { name: 'x', component: { type: 'Quantity', uom: { code: 'm' } } },
+      ],
     });
 
-    const result = parseDataRecord(
+    parseDataRecord(
       {
         type: 'DataRecord',
         fields: [

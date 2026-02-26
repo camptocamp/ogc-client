@@ -5,6 +5,18 @@ import CSAPIQueryBuilder from './url_builder.js';
 import { scanCsapiLinks } from './helpers.js';
 
 /**
+ * Validates that a document has the minimum shape of an {@link OgcApiCollectionInfo}.
+ */
+function isCollectionInfo(doc: unknown): doc is OgcApiCollectionInfo {
+  return (
+    typeof doc === 'object' &&
+    doc !== null &&
+    'id' in doc &&
+    typeof (doc as Record<string, unknown>).id === 'string'
+  );
+}
+
+/**
  * Creates a {@link CSAPIQueryBuilder} for constructing Connected Systems
  * query URLs against the given collection.
  *
@@ -40,20 +52,18 @@ export async function createCSAPIBuilder(
     throw new EndpointError('Endpoint does not support Connected Systems');
   }
 
-  // Access root and getCollectionDocument via `any` because they are
-  // currently `private`. Task 6 (Issue #122) changes them to `public`;
-  // these casts will be removed then.
-  const ep = endpoint as any;
-
-  const collectionDoc = await ep.getCollectionDocument(collectionId);
-  const rootDoc = await ep.root;
+  const collectionDoc = await endpoint.getCollectionDocument(collectionId);
+  const rootDoc = await endpoint.root;
   const links = rootDoc?.links;
   const resourceUrls = Array.isArray(links)
     ? scanCsapiLinks(links)
     : new Map<string, string>();
 
-  return new CSAPIQueryBuilder(
-    collectionDoc as unknown as OgcApiCollectionInfo,
-    resourceUrls
-  );
+  if (!isCollectionInfo(collectionDoc)) {
+    throw new EndpointError(
+      `Collection '${collectionId}' document is not a valid OgcApiCollectionInfo`
+    );
+  }
+
+  return new CSAPIQueryBuilder(collectionDoc, resourceUrls);
 }

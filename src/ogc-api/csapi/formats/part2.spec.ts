@@ -51,10 +51,7 @@ describe('parseDatastream', () => {
       'application/swe+xml',
       'application/swe+binary',
     ],
-    phenomenonTime: [
-      '2026-01-26T18:32:01.56Z',
-      '2026-02-19T14:22:03.12Z',
-    ],
+    phenomenonTime: ['2026-01-26T18:32:01.56Z', '2026-02-19T14:22:03.12Z'],
     resultTime: ['2026-01-26T18:32:01.56Z', '2026-02-19T14:22:03.12Z'],
     resultType: 'record',
     live: true,
@@ -149,10 +146,7 @@ describe('parseDatastream', () => {
       name: 'Time Test',
       formats: [],
       validTime: ['2026-01-26T18:32:01.56Z', 'now'],
-      phenomenonTime: [
-        '2026-01-26T18:32:01.56Z',
-        '2026-02-19T14:22:03.12Z',
-      ],
+      phenomenonTime: ['2026-01-26T18:32:01.56Z', '2026-02-19T14:22:03.12Z'],
       resultTime: ['2026-01-26T18:32:01.56Z', '2026-02-19T14:22:03.12Z'],
     };
 
@@ -176,9 +170,7 @@ describe('parseDatastream', () => {
     expect(result.resultTime?.start).toEqual(
       new Date('2026-01-26T18:32:01.56Z')
     );
-    expect(result.resultTime?.end).toEqual(
-      new Date('2026-02-19T14:22:03.12Z')
-    );
+    expect(result.resultTime?.end).toEqual(new Date('2026-02-19T14:22:03.12Z'));
   });
 
   it('extracts definition URIs from observedProperties objects', () => {
@@ -440,10 +432,7 @@ describe('parseControlStream', () => {
     },
     inputName: 'mavControl',
     validTime: ['2026-01-14T04:49:19.134Z', 'now'],
-    issueTime: [
-      '2026-01-14T12:42:21.910351Z',
-      '2026-01-14T13:11:31.196096Z',
-    ],
+    issueTime: ['2026-01-14T12:42:21.910351Z', '2026-01-14T13:11:31.196096Z'],
     executionTime: [
       '2026-01-14T12:42:21.928726Z',
       '2026-01-14T13:11:31.196096Z',
@@ -468,14 +457,10 @@ describe('parseControlStream', () => {
   };
 
   it('extracts all fields from a full ControlStream (cross-refs excluded)', () => {
-    const result: ControlStream = parseControlStream(
-      fullControlStreamFixture
-    );
+    const result: ControlStream = parseControlStream(fullControlStreamFixture);
 
     expect(result.id).toBe('0o10');
-    expect(result.name).toBe(
-      'FCU Field Drone CubePilot - Location Control'
-    );
+    expect(result.name).toBe('FCU Field Drone CubePilot - Location Control');
     expect(result.description).toBe(
       'Control stream for MAVLink navigation commands'
     );
@@ -534,14 +519,8 @@ describe('parseControlStream', () => {
       formats: [],
       async: false,
       validTime: ['2026-01-14T04:49:19.134Z', 'now'],
-      issueTime: [
-        '2026-01-14T12:42:21.910Z',
-        '2026-01-14T13:11:31.196Z',
-      ],
-      executionTime: [
-        '2026-01-14T12:42:21.928Z',
-        '2026-01-14T13:11:31.196Z',
-      ],
+      issueTime: ['2026-01-14T12:42:21.910Z', '2026-01-14T13:11:31.196Z'],
+      executionTime: ['2026-01-14T12:42:21.928Z', '2026-01-14T13:11:31.196Z'],
     };
 
     const result: ControlStream = parseControlStream(input);
@@ -556,9 +535,7 @@ describe('parseControlStream', () => {
     expect(result.issueTime?.start).toEqual(
       new Date('2026-01-14T12:42:21.910Z')
     );
-    expect(result.issueTime?.end).toEqual(
-      new Date('2026-01-14T13:11:31.196Z')
-    );
+    expect(result.issueTime?.end).toEqual(new Date('2026-01-14T13:11:31.196Z'));
 
     // executionTime: concrete start and end
     expect(result.executionTime?.start).toEqual(
@@ -584,8 +561,7 @@ describe('parseControlStream', () => {
       ],
     };
 
-    const resultWithProps: ControlStream =
-      parseControlStream(inputWithProps);
+    const resultWithProps: ControlStream = parseControlStream(inputWithProps);
     expect(resultWithProps.controlledProperties).toEqual([
       'http://sensorml.com/ont/swe/property/Location',
     ]);
@@ -705,9 +681,7 @@ describe('parseCommand', () => {
     expect(result.id).toBe('0o1qr7kupc33cgmqj0');
     expect(result.issueTime).toBe('2026-01-14T12:42:21.910351Z');
     expect(typeof result.issueTime).toBe('string');
-    expect(result.sender).toBe(
-      'urn:osh:process:datasink:commandstream#drone'
-    );
+    expect(result.sender).toBe('urn:osh:process:datasink:commandstream#drone');
     expect(result.currentStatus).toBe('COMPLETED');
     expect(result.parameters).toEqual({
       locationVectorLLA: {
@@ -917,9 +891,7 @@ describe('parseCommandStatus', () => {
   };
 
   it('extracts all fields from a full CommandStatus (cross-refs excluded)', () => {
-    const result: CommandStatus = parseCommandStatus(
-      fullCommandStatusFixture
-    );
+    const result: CommandStatus = parseCommandStatus(fullCommandStatusFixture);
 
     expect(result.id).toBe('0o507bcujr5gcdi2racar7kupc33emq3o0');
     expect(result.reportTime).toBe('2026-01-14T12:42:21.928728Z');

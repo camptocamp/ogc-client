@@ -23,7 +23,7 @@ import {
   QUDT_NS,
   UCUM_NS,
   CF_NS,
-  SystemTypeUris,
+  SYSTEM_TYPE_RECOGNITION_VALUES,
   DeploymentTypeUris,
   ProcedureTypeUris,
   SamplingFeatureTypeUris,
@@ -120,8 +120,10 @@ describe('Format Index — Constants', () => {
   });
 
   it('exports resource type URI arrays with both compact and full URI forms', () => {
-    expect(SystemTypeUris).toContain('sosa:Sensor');
-    expect(SystemTypeUris).toContain('http://www.w3.org/ns/sosa/Sensor');
+    expect(SYSTEM_TYPE_RECOGNITION_VALUES).toContain('sosa:Sensor');
+    expect(SYSTEM_TYPE_RECOGNITION_VALUES).toContain(
+      'http://www.w3.org/ns/sosa/Sensor'
+    );
     expect(DeploymentTypeUris).toContain('sosa:Deployment');
     expect(ProcedureTypeUris).toContain('sosa:Procedure');
     expect(SamplingFeatureTypeUris).toContain('sosa:SamplingFeature');

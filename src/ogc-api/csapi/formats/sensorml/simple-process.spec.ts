@@ -14,7 +14,6 @@ import {
   parseIOComponentChoice,
   SensorMLParseError,
 } from './simple-process.js';
-import type { SimpleProcess } from './types.js';
 
 // ========================================
 // Fixtures
@@ -97,10 +96,18 @@ const FULL_SIMPLE_PROCESS = {
     description: 'Weighted moving average with configurable window size',
   },
   identifiers: [
-    { label: 'Short Name', value: 'WeightedAvg', definition: 'urn:ogc:def:identifier:shortName' },
+    {
+      label: 'Short Name',
+      value: 'WeightedAvg',
+      definition: 'urn:ogc:def:identifier:shortName',
+    },
   ],
   classifiers: [
-    { label: 'Process Type', value: 'Filter', definition: 'urn:ogc:def:classifier:processType' },
+    {
+      label: 'Process Type',
+      value: 'Filter',
+      definition: 'urn:ogc:def:classifier:processType',
+    },
   ],
   validTime: ['2024-01-01T00:00:00Z', 'now'],
 };

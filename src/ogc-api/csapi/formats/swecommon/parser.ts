@@ -51,7 +51,11 @@ import type {
 import { parseSimpleComponent, SweCommonParseError } from './components.js';
 import { parseDataRecord } from './data-record.js';
 import { parseDataArray, parseEncoding } from './data-array.js';
-import { isRecord, parseBaseProperties, parseAssociationAttributeGroup } from './_helpers.js';
+import {
+  isRecord,
+  parseBaseProperties,
+  parseAssociationAttributeGroup,
+} from './_helpers.js';
 
 // ========================================
 // Validation Interfaces
@@ -165,10 +169,14 @@ function parseField(
   // --- Link reference (href without inline type) ---
   if (isLinkReference(json)) {
     const field: DataField = { name };
-    if (typeof json.href === 'string') (field as Record<string, unknown>).href = json.href;
-    if (typeof json.role === 'string') (field as Record<string, unknown>).role = json.role;
-    if (typeof json.arcrole === 'string') (field as Record<string, unknown>).arcrole = json.arcrole;
-    if (typeof json.title === 'string') (field as Record<string, unknown>).title = json.title;
+    if (typeof json.href === 'string')
+      (field as Record<string, unknown>).href = json.href;
+    if (typeof json.role === 'string')
+      (field as Record<string, unknown>).role = json.role;
+    if (typeof json.arcrole === 'string')
+      (field as Record<string, unknown>).arcrole = json.arcrole;
+    if (typeof json.title === 'string')
+      (field as Record<string, unknown>).title = json.title;
     return field;
   }
 
@@ -232,9 +240,7 @@ function parseField(
  */
 export function parseVector(json: unknown): Vector {
   if (!isRecord(json)) {
-    throw new SweCommonParseError(
-      'Vector input must be a non-null object'
-    );
+    throw new SweCommonParseError('Vector input must be a non-null object');
   }
 
   if (json.type !== 'Vector') {
@@ -316,9 +322,7 @@ export function parseVector(json: unknown): Vector {
  */
 export function parseMatrix(json: unknown): Matrix {
   if (!isRecord(json)) {
-    throw new SweCommonParseError(
-      'Matrix input must be a non-null object'
-    );
+    throw new SweCommonParseError('Matrix input must be a non-null object');
   }
 
   if (json.type !== 'Matrix') {
@@ -355,13 +359,23 @@ export function parseMatrix(json: unknown): Matrix {
       // for Matrix we store raw — the consumer will decode
       if (Array.isArray(json.values)) {
         values = json.values;
-      } else if (isRecord(json.values) && typeof (json.values as Record<string, unknown>).href === 'string') {
-        values = parseAssociationAttributeGroup(json.values as Record<string, unknown>);
+      } else if (
+        isRecord(json.values) &&
+        typeof (json.values as Record<string, unknown>).href === 'string'
+      ) {
+        values = parseAssociationAttributeGroup(
+          json.values as Record<string, unknown>
+        );
       }
     } else if (Array.isArray(json.values)) {
       values = json.values;
-    } else if (isRecord(json.values) && typeof (json.values as Record<string, unknown>).href === 'string') {
-      values = parseAssociationAttributeGroup(json.values as Record<string, unknown>);
+    } else if (
+      isRecord(json.values) &&
+      typeof (json.values as Record<string, unknown>).href === 'string'
+    ) {
+      values = parseAssociationAttributeGroup(
+        json.values as Record<string, unknown>
+      );
     }
   }
 
@@ -374,7 +388,8 @@ export function parseMatrix(json: unknown): Matrix {
   if (elementCount !== undefined) result.elementCount = elementCount;
   if (encoding !== undefined) result.encoding = encoding;
   if (values !== undefined) result.values = values;
-  if (typeof json.referenceFrame === 'string') result.referenceFrame = json.referenceFrame;
+  if (typeof json.referenceFrame === 'string')
+    result.referenceFrame = json.referenceFrame;
   if (typeof json.localFrame === 'string') result.localFrame = json.localFrame;
 
   return result;
@@ -408,10 +423,14 @@ function parseElementType(json: unknown): DataField {
   // Link reference (href without type)
   if (isLinkReference(json)) {
     const field: DataField = { name };
-    if (typeof json.href === 'string') (field as Record<string, unknown>).href = json.href;
-    if (typeof json.role === 'string') (field as Record<string, unknown>).role = json.role;
-    if (typeof json.arcrole === 'string') (field as Record<string, unknown>).arcrole = json.arcrole;
-    if (typeof json.title === 'string') (field as Record<string, unknown>).title = json.title;
+    if (typeof json.href === 'string')
+      (field as Record<string, unknown>).href = json.href;
+    if (typeof json.role === 'string')
+      (field as Record<string, unknown>).role = json.role;
+    if (typeof json.arcrole === 'string')
+      (field as Record<string, unknown>).arcrole = json.arcrole;
+    if (typeof json.title === 'string')
+      (field as Record<string, unknown>).title = json.title;
     return field;
   }
 
@@ -490,9 +509,7 @@ function parseElementCount(
  */
 export function parseDataChoice(json: unknown): DataChoice {
   if (!isRecord(json)) {
-    throw new SweCommonParseError(
-      'DataChoice input must be a non-null object'
-    );
+    throw new SweCommonParseError('DataChoice input must be a non-null object');
   }
 
   if (json.type !== 'DataChoice') {
@@ -509,8 +526,8 @@ export function parseDataChoice(json: unknown): DataChoice {
     );
   }
 
-  const items: DataField[] = (json.items as unknown[]).map(
-    (itemJson, index) => parseField(itemJson, index, 'DataChoice')
+  const items: DataField[] = (json.items as unknown[]).map((itemJson, index) =>
+    parseField(itemJson, index, 'DataChoice')
   );
 
   // choiceValue — optional (SweCategory indicating active choice)
@@ -579,9 +596,7 @@ const GEOJSON_GEOMETRY_TYPES = new Set([
  */
 export function parseGeometry(json: unknown): SweGeometry {
   if (!isRecord(json)) {
-    throw new SweCommonParseError(
-      'Geometry input must be a non-null object'
-    );
+    throw new SweCommonParseError('Geometry input must be a non-null object');
   }
 
   if (json.type !== 'Geometry') {
@@ -616,17 +631,23 @@ export function parseGeometry(json: unknown): SweGeometry {
 
   // nilValues — optional
   if (Array.isArray(json.nilValues)) {
-    result.nilValues = json.nilValues.filter(
-      (entry: unknown): entry is Record<string, unknown> =>
-        isRecord(entry) && typeof (entry as Record<string, unknown>).reason === 'string'
-    ).map((entry: Record<string, unknown>) => ({
-      reason: entry.reason as string,
-      value: entry.value as string,
-    }));
+    result.nilValues = json.nilValues
+      .filter(
+        (entry: unknown): entry is Record<string, unknown> =>
+          isRecord(entry) &&
+          typeof (entry as Record<string, unknown>).reason === 'string'
+      )
+      .map((entry: Record<string, unknown>) => ({
+        reason: entry.reason as string,
+        value: entry.value as string,
+      }));
   }
 
   // value — optional GeoJSON geometry
-  if (isRecord(json.value) && typeof (json.value as Record<string, unknown>).type === 'string') {
+  if (
+    isRecord(json.value) &&
+    typeof (json.value as Record<string, unknown>).type === 'string'
+  ) {
     // GeoJsonGeometry has [key: string]: unknown index signature,
     // so a Record<string, unknown> with a string 'type' satisfies it.
     const geo = json.value as Record<string, unknown>;
@@ -634,7 +655,8 @@ export function parseGeometry(json: unknown): SweGeometry {
       type: geo.type as string,
     };
     if (geo.coordinates !== undefined) geoResult.coordinates = geo.coordinates;
-    if (Array.isArray(geo.geometries)) geoResult.geometries = geo.geometries as GeoJsonGeometry[];
+    if (Array.isArray(geo.geometries))
+      geoResult.geometries = geo.geometries as GeoJsonGeometry[];
     // Preserve any additional GeoJSON properties
     for (const key of Object.keys(geo)) {
       if (key !== 'type' && key !== 'coordinates' && key !== 'geometries') {
@@ -1101,7 +1123,9 @@ function validateString(
   if (typeof value !== 'string') {
     errors.push({
       path: path || 'value',
-      message: `Expected a string for ${schema.type} but received ${typeof value}`,
+      message: `Expected a string for ${
+        schema.type
+      } but received ${typeof value}`,
       code: 'TYPE_MISMATCH',
     });
     return;
@@ -1280,7 +1304,8 @@ function validateDataArray(
 
   // Check element count consistency
   if (schema.elementCount && isRecord(schema.elementCount)) {
-    const expectedCount = (schema.elementCount as Record<string, unknown>).value;
+    const expectedCount = (schema.elementCount as Record<string, unknown>)
+      .value;
     if (typeof expectedCount === 'number' && value.length !== expectedCount) {
       errors.push({
         path: path || 'value',
@@ -1345,7 +1370,8 @@ function validateMatrix(
 
   // Check element count consistency
   if (schema.elementCount && isRecord(schema.elementCount)) {
-    const expectedCount = (schema.elementCount as Record<string, unknown>).value;
+    const expectedCount = (schema.elementCount as Record<string, unknown>)
+      .value;
     if (typeof expectedCount === 'number' && value.length !== expectedCount) {
       errors.push({
         path: path || 'value',
@@ -1432,7 +1458,11 @@ function validateGeometry(
   ) {
     errors.push({
       path: path ? `${path}.type` : 'type',
-      message: `Geometry type "${value.type}" is not in the allowed types: ${schema.constraint.geomTypes.join(', ')}`,
+      message: `Geometry type "${
+        value.type
+      }" is not in the allowed types: ${schema.constraint.geomTypes.join(
+        ', '
+      )}`,
       code: 'CONSTRAINT_VIOLATION',
     });
   }

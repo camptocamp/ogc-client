@@ -15,7 +15,7 @@ import {
   QUDT_NS,
   UCUM_NS,
   CF_NS,
-  SystemTypeUris,
+  SYSTEM_TYPE_RECOGNITION_VALUES,
   DeploymentTypeUris,
   ProcedureTypeUris,
   SamplingFeatureTypeUris,
@@ -33,19 +33,24 @@ describe('CSAPI_CONTENT_TYPES', () => {
     expect(Object.keys(CSAPI_CONTENT_TYPES)).toHaveLength(9);
   });
 
-  it.each(['systems', 'deployments', 'procedures', 'samplingFeatures', 'properties'] as const)(
-    'maps Part 1 type "%s" to application/geo+json',
-    (type) => {
-      expect(CSAPI_CONTENT_TYPES[type]).toBe(MEDIA_TYPE_GEOJSON);
-    }
-  );
+  it.each([
+    'systems',
+    'deployments',
+    'procedures',
+    'samplingFeatures',
+    'properties',
+  ] as const)('maps Part 1 type "%s" to application/geo+json', (type) => {
+    expect(CSAPI_CONTENT_TYPES[type]).toBe(MEDIA_TYPE_GEOJSON);
+  });
 
-  it.each(['datastreams', 'observations', 'controlStreams', 'commands'] as const)(
-    'maps Part 2 type "%s" to application/json',
-    (type) => {
-      expect(CSAPI_CONTENT_TYPES[type]).toBe(MEDIA_TYPE_JSON);
-    }
-  );
+  it.each([
+    'datastreams',
+    'observations',
+    'controlStreams',
+    'commands',
+  ] as const)('maps Part 2 type "%s" to application/json', (type) => {
+    expect(CSAPI_CONTENT_TYPES[type]).toBe(MEDIA_TYPE_JSON);
+  });
 });
 
 // ========================================
@@ -91,20 +96,24 @@ describe('CSAPI_MEDIA_TYPES', () => {
 // ========================================
 
 describe('Resource Type URI Arrays', () => {
-  it('SystemTypeUris contains 10 entries (5 CURIE + 5 full URI)', () => {
-    expect(SystemTypeUris).toHaveLength(10);
-    expect(SystemTypeUris).toContain('sosa:Sensor');
-    expect(SystemTypeUris).toContain('http://www.w3.org/ns/sosa/Sensor');
-    expect(SystemTypeUris).toContain('sosa:Platform');
-    expect(SystemTypeUris).toContain('sosa:Actuator');
-    expect(SystemTypeUris).toContain('sosa:Sampler');
-    expect(SystemTypeUris).toContain('sosa:System');
+  it('SYSTEM_TYPE_RECOGNITION_VALUES contains 10 entries (5 CURIE + 5 full URI)', () => {
+    expect(SYSTEM_TYPE_RECOGNITION_VALUES).toHaveLength(10);
+    expect(SYSTEM_TYPE_RECOGNITION_VALUES).toContain('sosa:Sensor');
+    expect(SYSTEM_TYPE_RECOGNITION_VALUES).toContain(
+      'http://www.w3.org/ns/sosa/Sensor'
+    );
+    expect(SYSTEM_TYPE_RECOGNITION_VALUES).toContain('sosa:Platform');
+    expect(SYSTEM_TYPE_RECOGNITION_VALUES).toContain('sosa:Actuator');
+    expect(SYSTEM_TYPE_RECOGNITION_VALUES).toContain('sosa:Sampler');
+    expect(SYSTEM_TYPE_RECOGNITION_VALUES).toContain('sosa:System');
   });
 
   it('DeploymentTypeUris contains 2 entries', () => {
     expect(DeploymentTypeUris).toHaveLength(2);
     expect(DeploymentTypeUris).toContain('sosa:Deployment');
-    expect(DeploymentTypeUris).toContain('http://www.w3.org/ns/sosa/Deployment');
+    expect(DeploymentTypeUris).toContain(
+      'http://www.w3.org/ns/sosa/Deployment'
+    );
   });
 
   it('ProcedureTypeUris contains 8 entries (4 CURIE + 4 full URI)', () => {
@@ -118,23 +127,33 @@ describe('Resource Type URI Arrays', () => {
   it('SamplingFeatureTypeUris contains 2 entries', () => {
     expect(SamplingFeatureTypeUris).toHaveLength(2);
     expect(SamplingFeatureTypeUris).toContain('sosa:SamplingFeature');
-    expect(SamplingFeatureTypeUris).toContain('http://www.w3.org/ns/sosa/SamplingFeature');
+    expect(SamplingFeatureTypeUris).toContain(
+      'http://www.w3.org/ns/sosa/SamplingFeature'
+    );
   });
 
   it('PropertyTypeUris contains 4 entries (2 CURIE + 2 full URI)', () => {
     expect(PropertyTypeUris).toHaveLength(4);
     expect(PropertyTypeUris).toContain('sosa:ObservableProperty');
-    expect(PropertyTypeUris).toContain('http://www.w3.org/ns/sosa/ObservableProperty');
+    expect(PropertyTypeUris).toContain(
+      'http://www.w3.org/ns/sosa/ObservableProperty'
+    );
     expect(PropertyTypeUris).toContain('sosa:ActuatableProperty');
-    expect(PropertyTypeUris).toContain('http://www.w3.org/ns/sosa/ActuatableProperty');
+    expect(PropertyTypeUris).toContain(
+      'http://www.w3.org/ns/sosa/ActuatableProperty'
+    );
   });
 
   it('ObservationTypeUris contains 4 entries (2 CURIE + 2 full URI)', () => {
     expect(ObservationTypeUris).toHaveLength(4);
     expect(ObservationTypeUris).toContain('sosa:Observation');
-    expect(ObservationTypeUris).toContain('http://www.w3.org/ns/sosa/Observation');
+    expect(ObservationTypeUris).toContain(
+      'http://www.w3.org/ns/sosa/Observation'
+    );
     expect(ObservationTypeUris).toContain('sosa:ObservationCollection');
-    expect(ObservationTypeUris).toContain('http://www.w3.org/ns/sosa/ObservationCollection');
+    expect(ObservationTypeUris).toContain(
+      'http://www.w3.org/ns/sosa/ObservationCollection'
+    );
   });
 });
 

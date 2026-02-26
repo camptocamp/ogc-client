@@ -14,9 +14,7 @@
 import type { OgcApiCollectionInfo } from '../../model.js';
 import CSAPIQueryBuilder from '../url_builder.js';
 import { parseCollectionResponse } from '../formats/response.js';
-import type { CollectionResponse } from '../formats/response.js';
 import { parseSWEComponent } from '../formats/swecommon/parser.js';
-import type { AnyComponent } from '../formats/swecommon/types.js';
 import { getCSAPIResourceType } from '../formats/geojson.js';
 
 // ========================================
@@ -28,10 +26,20 @@ function makeCollection(
 ): OgcApiCollectionInfo {
   return {
     links: [
-      { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/iot' },
+      {
+        rel: 'self',
+        type: '',
+        title: '',
+        href: 'https://api.example.com/collections/iot',
+      },
       { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
       { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
-      { rel: 'ogc-cs:observations', type: '', title: '', href: '/observations' },
+      {
+        rel: 'ogc-cs:observations',
+        type: '',
+        title: '',
+        href: '/observations',
+      },
     ],
     title: 'IoT Sensors',
     description: 'IoT sensor collection',
@@ -64,7 +72,11 @@ const SYSTEMS_RESPONSE = {
         name: 'Weather Sensor',
       },
       links: [
-        { rel: 'alternate', type: 'application/sml+json', href: '/systems/sys-001?f=sml' },
+        {
+          rel: 'alternate',
+          type: 'application/sml+json',
+          href: '/systems/sys-001?f=sml',
+        },
       ],
     },
   ],
@@ -79,14 +91,18 @@ const DATASTREAMS_RESPONSE = {
       id: 'ds-temp',
       name: 'Temperature',
       observedProperties: ['http://qudt.org/vocab/quantitykind/Temperature'],
-      phenomenonTime: { start: '2024-01-01T00:00:00Z', end: '2024-12-31T23:59:59Z' },
-      resultTime: { start: '2024-01-01T00:00:00Z', end: '2024-12-31T23:59:59Z' },
+      phenomenonTime: {
+        start: '2024-01-01T00:00:00Z',
+        end: '2024-12-31T23:59:59Z',
+      },
+      resultTime: {
+        start: '2024-01-01T00:00:00Z',
+        end: '2024-12-31T23:59:59Z',
+      },
       resultType: 'measure',
       live: true,
       formats: ['application/swe+json'],
-      links: [
-        { rel: 'self', href: '/datastreams/ds-temp' },
-      ],
+      links: [{ rel: 'self', href: '/datastreams/ds-temp' }],
     },
     {
       id: 'ds-wind',
@@ -351,14 +367,21 @@ describe('Observation workflow — error handling', () => {
   it('propagates EndpointError when datastreams not available', () => {
     const noDs = makeCollection({
       links: [
-        { rel: 'self', type: '', title: '', href: 'https://api.example.com/collections/bare' },
+        {
+          rel: 'self',
+          type: '',
+          title: '',
+          href: 'https://api.example.com/collections/bare',
+        },
         { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
       ],
       id: 'bare',
     });
     const builder = new CSAPIQueryBuilder(noDs);
 
-    expect(() => builder.getDataStreams()).toThrow(/does not support 'datastreams'/);
+    expect(() => builder.getDataStreams()).toThrow(
+      /does not support 'datastreams'/
+    );
     expect(() => builder.getDataStreamObservations('ds-001')).toThrow(
       /does not support 'datastreams'/
     );
