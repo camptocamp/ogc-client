@@ -18,6 +18,11 @@ import type { OgcApiCollectionInfo } from '../../model.js';
 import CSAPIQueryBuilder from '../url_builder.js';
 import { EndpointError } from '../../../shared/errors.js';
 import { parseCollectionResponse } from '../formats/response.js';
+import { makeTestCollection } from './_fixtures.js';
+
+// Identity parseItem — passes elements through unchanged (for envelope tests)
+const identity = (item: unknown) => item;
+
 import {
   isCommandRouteRejection,
   getCommandRoutingPreference,
@@ -33,7 +38,7 @@ import {
 function makeCollection(
   overrides: Partial<OgcApiCollectionInfo> = {}
 ): OgcApiCollectionInfo {
-  return {
+  return makeTestCollection({
     links: [
       {
         rel: 'self',
@@ -53,18 +58,8 @@ function makeCollection(
     title: 'Actuator Network',
     description: 'Systems with command capability',
     id: 'actuators',
-    itemFormats: [],
-    bulkDownloadLinks: {},
-    jsonDownloadLink: '',
-    crs: [],
-    itemCount: 0,
-    queryables: [],
-    sortables: [],
-    mapTileFormats: [],
-    vectorTileFormats: [],
-    supportedTileMatrixSets: [],
     ...overrides,
-  };
+  });
 }
 
 /** Control stream list response (items envelope). */
@@ -170,7 +165,7 @@ describe('Command workflow — control stream discovery', () => {
   });
 
   it('parses control stream items response', () => {
-    const parsed = parseCollectionResponse(CONTROL_STREAMS_RESPONSE);
+    const parsed = parseCollectionResponse(CONTROL_STREAMS_RESPONSE, identity);
     expect(parsed.items).toHaveLength(2);
 
     const valve = parsed.items[0] as Record<string, unknown>;
@@ -217,7 +212,7 @@ describe('Command workflow — command submission', () => {
   });
 
   it('parses async command submission response', () => {
-    const parsed = parseCollectionResponse(COMMAND_CREATED_ASYNC);
+    const parsed = parseCollectionResponse(COMMAND_CREATED_ASYNC, identity);
     expect(parsed.items).toHaveLength(1);
 
     const cmd = parsed.items[0] as Record<string, unknown>;
@@ -227,7 +222,7 @@ describe('Command workflow — command submission', () => {
   });
 
   it('parses sync command response with immediate completion', () => {
-    const parsed = parseCollectionResponse(COMMAND_SYNC_RESULT);
+    const parsed = parseCollectionResponse(COMMAND_SYNC_RESULT, identity);
     const cmd = parsed.items[0] as Record<string, unknown>;
     expect(cmd.currentStatus).toBe('COMPLETED');
   });
@@ -248,7 +243,7 @@ describe('Command workflow — status tracking', () => {
   });
 
   it('parses executing status with progress', () => {
-    const parsed = parseCollectionResponse(COMMAND_STATUS_EXECUTING);
+    const parsed = parseCollectionResponse(COMMAND_STATUS_EXECUTING, identity);
     const status = parsed.items[0] as Record<string, unknown>;
     expect(status.statusCode).toBe('EXECUTING');
     expect(status.percentCompletion).toBe(50);
@@ -256,7 +251,7 @@ describe('Command workflow — status tracking', () => {
   });
 
   it('parses completed status', () => {
-    const parsed = parseCollectionResponse(COMMAND_STATUS_COMPLETED);
+    const parsed = parseCollectionResponse(COMMAND_STATUS_COMPLETED, identity);
     const status = parsed.items[0] as Record<string, unknown>;
     expect(status.statusCode).toBe('COMPLETED');
     expect(status.percentCompletion).toBe(100);
@@ -399,9 +394,8 @@ describe('Command workflow — error scenarios', () => {
     const builder = new CSAPIQueryBuilder(noCommands);
 
     expect(() => builder.getCommands()).toThrow(EndpointError);
-    expect(() => builder.getCommand('cmd-001')).toThrow(
-      /does not support 'commands'/
-    );
+    // Per-ID methods skip assertResourceAvailable (Phase 7 #156/#157)
+    expect(builder.getCommand('cmd-001')).toEqual(expect.any(String));
   });
 
   it('throws EndpointError when controlStreams not available', () => {
@@ -419,11 +413,10 @@ describe('Command workflow — error scenarios', () => {
     });
     const builder = new CSAPIQueryBuilder(noCS);
 
-    expect(() => builder.createCommand('cs-001')).toThrow(
-      /does not support 'controlStreams'/
-    );
-    expect(() => builder.checkCommandFeasibility('cs-001')).toThrow(
-      /does not support 'controlStreams'/
+    // Per-ID methods skip assertResourceAvailable (Phase 7 #156/#157)
+    expect(builder.createCommand('cs-001')).toEqual(expect.any(String));
+    expect(builder.checkCommandFeasibility('cs-001')).toEqual(
+      expect.any(String)
     );
   });
 

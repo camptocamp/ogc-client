@@ -24,7 +24,7 @@
  *   ├─ CharacteristicList
  *   ├─ SpatialFrame
  *   ├─ TemporalFrame
- *   └─ Event
+ *   └─ SensorMLEvent
  * ```
  *
  * Design notes:
@@ -106,7 +106,7 @@ export type TimePeriod = [string] | [string, string];
 export type TimeInstant = string;
 
 /**
- * Time instant or period — used in {@link Event.time}.
+ * Time instant or period — used in {@link SensorMLEvent.time}.
  *
  * - `string` — single instant
  * - `TimePeriod` — bounded or open-ended period
@@ -576,10 +576,12 @@ export type Position =
  * Records significant occurrences such as calibrations, deployments,
  * maintenance, or configuration changes.
  *
+ * Renamed from `Event` to avoid shadowing the DOM global `Event` interface.
+ *
  * @see OAS: Event (L3387)
  * @see SensorML 3.0 §7.2.9 — History
  */
-export interface Event extends AbstractSweIdentifiable {
+export interface SensorMLEvent extends AbstractSweIdentifiable {
   /** Human-readable label (required in Event per OAS). */
   label: string;
   /** Type of event — semantic URI (e.g. calibration, deployment). */
@@ -660,7 +662,7 @@ export interface DescribedObject {
   /** Additional documentation references. */
   documents?: Document[];
   /** Historical events related to this object. */
-  history?: Event[];
+  history?: SensorMLEvent[];
 }
 
 /**

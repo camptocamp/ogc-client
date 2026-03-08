@@ -163,6 +163,18 @@ export interface QueryOptions {
   f?: MimeType;
   /** Coordinate reference system for response geometries. */
   crs?: CrsCode;
+  /**
+   * Sort results by one or more property names.
+   * Single property: `'phenomenonTime'`
+   * Multiple properties: `['phenomenonTime', 'resultTime']`
+   * @see https://docs.ogc.org/is/23-001/23-001.html
+   */
+  sortBy?: string | string[];
+  /**
+   * Sort direction. Applies to all properties in `sortBy`.
+   * @default Server-defined (typically `'asc'`)
+   */
+  sortOrder?: 'asc' | 'desc';
 }
 
 /**

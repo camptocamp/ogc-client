@@ -527,6 +527,26 @@ describe('parsePhysicalSystem', () => {
       ).toThrow('PhysicalSystem must have a string "uniqueId" property');
     });
 
+    it('throws for non-string label', () => {
+      expect(() =>
+        parsePhysicalSystem({
+          type: 'PhysicalSystem',
+          label: 42,
+          uniqueId: 'urn:x',
+        })
+      ).toThrow('PhysicalSystem must have a string "label" property');
+    });
+
+    it('throws for non-string uniqueId', () => {
+      expect(() =>
+        parsePhysicalSystem({
+          type: 'PhysicalSystem',
+          label: 'Test',
+          uniqueId: null,
+        })
+      ).toThrow('PhysicalSystem must have a string "uniqueId" property');
+    });
+
     it('throws for non-array inputs', () => {
       expect(() =>
         parsePhysicalSystem({
@@ -839,6 +859,26 @@ describe('parsePhysicalComponent', () => {
         parsePhysicalComponent({
           type: 'PhysicalComponent',
           label: 'Test',
+        })
+      ).toThrow('PhysicalComponent must have a string "uniqueId" property');
+    });
+
+    it('throws for non-string label', () => {
+      expect(() =>
+        parsePhysicalComponent({
+          type: 'PhysicalComponent',
+          label: 42,
+          uniqueId: 'urn:x',
+        })
+      ).toThrow('PhysicalComponent must have a string "label" property');
+    });
+
+    it('throws for non-string uniqueId', () => {
+      expect(() =>
+        parsePhysicalComponent({
+          type: 'PhysicalComponent',
+          label: 'Test',
+          uniqueId: null,
         })
       ).toThrow('PhysicalComponent must have a string "uniqueId" property');
     });

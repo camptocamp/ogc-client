@@ -479,6 +479,107 @@ describe('getSystems', () => {
     );
   });
 
+  // sortBy / sortOrder query parameters
+  it('returns correct URL with sortBy single string', () => {
+    const url = makeIotBuilder().getSystems({ sortBy: 'name' });
+    expect(url).toBe('https://example.com/collections/iot/systems?sortBy=name');
+  });
+
+  it('returns correct URL with sortBy array', () => {
+    const url = makeIotBuilder().getSystems({
+      sortBy: ['phenomenonTime', 'resultTime'],
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?sortBy=phenomenonTime%2CresultTime'
+    );
+  });
+
+  it('returns correct URL with sortBy combined with limit', () => {
+    const url = makeIotBuilder().getSystems({ limit: 10, sortBy: 'name' });
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?limit=10&sortBy=name'
+    );
+  });
+
+  it('returns correct URL with sortBy combined with datetime', () => {
+    const url = makeIotBuilder().getSystems({
+      datetime: new Date('2024-06-01T00:00:00Z'),
+      sortBy: 'name',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?datetime=2024-06-01T00%3A00%3A00.000Z&sortBy=name'
+    );
+  });
+
+  it('skips sortBy when undefined', () => {
+    const url = makeIotBuilder().getSystems({
+      limit: 10,
+      sortBy: undefined,
+    });
+    expect(url).toBe('https://example.com/collections/iot/systems?limit=10');
+  });
+
+  it('returns correct URL with sortOrder asc', () => {
+    const url = makeIotBuilder().getSystems({ sortOrder: 'asc' });
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?sortOrder=asc'
+    );
+  });
+
+  it('returns correct URL with sortOrder desc', () => {
+    const url = makeIotBuilder().getSystems({ sortOrder: 'desc' });
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?sortOrder=desc'
+    );
+  });
+
+  it('serializes sortOrder without sortBy', () => {
+    const url = makeIotBuilder().getSystems({ sortOrder: 'desc' });
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?sortOrder=desc'
+    );
+  });
+
+  it('skips sortOrder when undefined', () => {
+    const url = makeIotBuilder().getSystems({
+      limit: 10,
+      sortOrder: undefined,
+    });
+    expect(url).toBe('https://example.com/collections/iot/systems?limit=10');
+  });
+
+  it('returns correct URL with sortBy and sortOrder together', () => {
+    const url = makeIotBuilder().getSystems({
+      sortBy: 'phenomenonTime',
+      sortOrder: 'desc',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?sortBy=phenomenonTime&sortOrder=desc'
+    );
+  });
+
+  it('returns correct URL with sortBy + sortOrder + limit + q', () => {
+    const url = makeIotBuilder().getSystems({
+      limit: 25,
+      q: 'weather',
+      sortBy: 'name',
+      sortOrder: 'asc',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?limit=25&q=weather&sortBy=name&sortOrder=asc'
+    );
+  });
+
+  it('returns correct URL with sortBy array and sortOrder', () => {
+    const url = makeIotBuilder().getSystems({
+      sortBy: ['phenomenonTime', 'resultTime'],
+      sortOrder: 'desc',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/systems?sortBy=phenomenonTime%2CresultTime&sortOrder=desc'
+    );
+  });
+
   // Systems-specific query parameters
   it('returns correct URL with parent parameter', () => {
     const url = makeIotBuilder().getSystems({ parent: 'urn:parent:1' });
@@ -563,24 +664,6 @@ describe('getSystem', () => {
     expect(url).toBe(
       'https://example.com/collections/iot/systems/urn%3Aexample%3Asensor%3A001'
     );
-  });
-
-  it('throws EndpointError when systems is unavailable', () => {
-    const builder = new CSAPIQueryBuilder(
-      makeCollection({
-        id: 'no-systems',
-        links: [
-          {
-            rel: 'self',
-            type: '',
-            title: '',
-            href: 'https://example.com/collections/no-systems',
-          },
-        ],
-      })
-    );
-
-    expect(() => builder.getSystem('abc')).toThrow(EndpointError);
   });
 });
 
@@ -877,11 +960,6 @@ describe('createSubsystem', () => {
       'https://example.com/collections/iot/systems/urn%3Aexample%3Asys%3A001/subsystems'
     );
   });
-
-  it('throws EndpointError when systems is unavailable', () => {
-    const builder = new CSAPIQueryBuilder(makeCollection({ id: 'empty' }));
-    expect(() => builder.createSubsystem('x')).toThrow(EndpointError);
-  });
 });
 
 describe('createDataStreamForSystem', () => {
@@ -915,11 +993,6 @@ describe('createDataStreamForSystem', () => {
     expect(url).toBe(
       'https://example.com/collections/iot/systems/urn%3Aexample%3Asys%3A001/datastreams'
     );
-  });
-
-  it('throws EndpointError when systems is unavailable', () => {
-    const builder = new CSAPIQueryBuilder(makeCollection({ id: 'empty' }));
-    expect(() => builder.createDataStreamForSystem('x')).toThrow(EndpointError);
   });
 });
 
@@ -955,13 +1028,6 @@ describe('createControlStreamForSystem', () => {
       'https://example.com/collections/iot/systems/urn%3Aexample%3Asys%3A001/controlstreams'
     );
   });
-
-  it('throws EndpointError when systems is unavailable', () => {
-    const builder = new CSAPIQueryBuilder(makeCollection({ id: 'empty' }));
-    expect(() => builder.createControlStreamForSystem('x')).toThrow(
-      EndpointError
-    );
-  });
 });
 
 describe('createSamplingFeatureForSystem', () => {
@@ -994,13 +1060,6 @@ describe('createSamplingFeatureForSystem', () => {
     );
     expect(url).toBe(
       'https://example.com/collections/iot/systems/urn%3Aexample%3Asys%3A001/samplingFeatures'
-    );
-  });
-
-  it('throws EndpointError when systems is unavailable', () => {
-    const builder = new CSAPIQueryBuilder(makeCollection({ id: 'empty' }));
-    expect(() => builder.createSamplingFeatureForSystem('x')).toThrow(
-      EndpointError
     );
   });
 });
@@ -1039,11 +1098,6 @@ describe('createSubdeployment', () => {
     expect(url).toBe(
       'https://example.com/collections/iot/deployments/urn%3Aexample%3Adep%3A001/subdeployments'
     );
-  });
-
-  it('throws EndpointError when deployments is unavailable', () => {
-    const builder = new CSAPIQueryBuilder(makeCollection({ id: 'empty' }));
-    expect(() => builder.createSubdeployment('x')).toThrow(EndpointError);
   });
 });
 
@@ -1342,18 +1396,28 @@ describe('Deployment association and history', () => {
     );
   }
 
-  it('getDeploymentSystems returns correct URL', () => {
+  it('getDeploymentSystems returns correct URL (deprecated)', () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
     const url = makeDepBuilder().getDeploymentSystems('dep-001');
     expect(url).toBe(
       'https://example.com/collections/iot/deployments/dep-001/systems'
     );
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('getDeploymentSystems() is deprecated')
+    );
+    warnSpy.mockRestore();
   });
 
-  it('getDeploymentSystems returns correct URL with options', () => {
+  it('getDeploymentSystems returns correct URL with options (deprecated)', () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
     const url = makeDepBuilder().getDeploymentSystems('dep-001', { limit: 5 });
     expect(url).toBe(
       'https://example.com/collections/iot/deployments/dep-001/systems?limit=5'
     );
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('getDeploymentSystems() is deprecated')
+    );
+    warnSpy.mockRestore();
   });
 
   it('getDeploymentHistory returns correct URL', () => {
@@ -1388,15 +1452,7 @@ describe('Deployment resource validation', () => {
       })
     );
     expect(() => builder.getDeployments()).toThrow(EndpointError);
-    expect(() => builder.getDeployment('x')).toThrow(EndpointError);
     expect(() => builder.createDeployment()).toThrow(EndpointError);
-    expect(() => builder.updateDeployment('x')).toThrow(EndpointError);
-    expect(() => builder.deleteDeployment('x')).toThrow(EndpointError);
-    expect(() => builder.getDeploymentSubdeployments('x')).toThrow(
-      EndpointError
-    );
-    expect(() => builder.getDeploymentSystems('x')).toThrow(EndpointError);
-    expect(() => builder.getDeploymentHistory('x')).toThrow(EndpointError);
   });
 });
 
@@ -1668,13 +1724,7 @@ describe('Procedure resource validation', () => {
       })
     );
     expect(() => builder.getProcedures()).toThrow(EndpointError);
-    expect(() => builder.getProcedure('x')).toThrow(EndpointError);
     expect(() => builder.createProcedure()).toThrow(EndpointError);
-    expect(() => builder.updateProcedure('x')).toThrow(EndpointError);
-    expect(() => builder.deleteProcedure('x')).toThrow(EndpointError);
-    expect(() => builder.getProcedureSystems('x')).toThrow(EndpointError);
-    expect(() => builder.getProcedureDataStreams('x')).toThrow(EndpointError);
-    expect(() => builder.getProcedureHistory('x')).toThrow(EndpointError);
   });
 });
 
@@ -1979,15 +2029,7 @@ describe('SamplingFeature resource validation', () => {
       })
     );
     expect(() => builder.getSamplingFeatures()).toThrow(EndpointError);
-    expect(() => builder.getSamplingFeature('x')).toThrow(EndpointError);
     expect(() => builder.createSamplingFeature()).toThrow(EndpointError);
-    expect(() => builder.updateSamplingFeature('x')).toThrow(EndpointError);
-    expect(() => builder.deleteSamplingFeature('x')).toThrow(EndpointError);
-    expect(() => builder.getSamplingFeatureSystems('x')).toThrow(EndpointError);
-    expect(() => builder.getSamplingFeatureObservations('x')).toThrow(
-      EndpointError
-    );
-    expect(() => builder.getSamplingFeatureHistory('x')).toThrow(EndpointError);
   });
 });
 
@@ -2259,11 +2301,6 @@ describe('Property resource validation', () => {
       })
     );
     expect(() => builder.getProperties()).toThrow(EndpointError);
-    expect(() => builder.getProperty('x')).toThrow(EndpointError);
-    expect(() => builder.getPropertySystems('x')).toThrow(EndpointError);
-    expect(() => builder.getPropertyDataStreams('x')).toThrow(EndpointError);
-    expect(() => builder.getPropertyControlStreams('x')).toThrow(EndpointError);
-    expect(() => builder.getPropertyHistory('x')).toThrow(EndpointError);
   });
 });
 
@@ -2741,16 +2778,7 @@ describe('DataStream resource validation', () => {
       })
     );
     expect(() => builder.getDataStreams()).toThrow(EndpointError);
-    expect(() => builder.getDataStream('x')).toThrow(EndpointError);
     expect(() => builder.createDataStream()).toThrow(EndpointError);
-    expect(() => builder.updateDataStream('x')).toThrow(EndpointError);
-    expect(() => builder.deleteDataStream('x')).toThrow(EndpointError);
-    expect(() => builder.getDataStreamSchema('x')).toThrow(EndpointError);
-    expect(() => builder.getDataStreamObservations('x')).toThrow(EndpointError);
-    expect(() => builder.createObservation('x')).toThrow(EndpointError);
-    expect(() => builder.getDataStreamSystems('x')).toThrow(EndpointError);
-    expect(() => builder.getDataStreamProcedures('x')).toThrow(EndpointError);
-    expect(() => builder.getDataStreamHistory('x')).toThrow(EndpointError);
   });
 });
 
@@ -2864,6 +2892,27 @@ describe('getObservations', () => {
     const url = makeObsBuilder().getObservations({ foiId: 'foi-001' });
     expect(url).toBe(
       'https://example.com/collections/iot/observations?foi=foi-001'
+    );
+  });
+
+  // Cross-resource sort parameter verification
+  it('returns correct URL with sortBy on observations', () => {
+    const url = makeObsBuilder().getObservations({
+      sortBy: 'phenomenonTime',
+      sortOrder: 'desc',
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations?sortBy=phenomenonTime&sortOrder=desc'
+    );
+  });
+
+  it('returns correct URL with sortBy array on observations', () => {
+    const url = makeObsBuilder().getObservations({
+      limit: 100,
+      sortBy: ['phenomenonTime', 'resultTime'],
+    });
+    expect(url).toBe(
+      'https://example.com/collections/iot/observations?limit=100&sortBy=phenomenonTime%2CresultTime'
     );
   });
 });
@@ -3058,15 +3107,106 @@ describe('Observation resource validation', () => {
       })
     );
     expect(() => builder.getObservations()).toThrow(EndpointError);
-    expect(() => builder.getObservation('x')).toThrow(EndpointError);
-    expect(() => builder.updateObservation('x')).toThrow(EndpointError);
-    expect(() => builder.deleteObservation('x')).toThrow(EndpointError);
-    expect(() => builder.getObservationDatastream('x')).toThrow(EndpointError);
-    expect(() => builder.getObservationSamplingFeature('x')).toThrow(
-      EndpointError
+  });
+});
+
+describe('Observation nested path support (datastreamId)', () => {
+  function makeNestedObsBuilder() {
+    return new CSAPIQueryBuilder(
+      makeCollection({
+        links: [
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:datastreams',
+            type: '',
+            title: '',
+            href: '/datastreams',
+          },
+        ],
+      })
     );
-    expect(() => builder.getObservationSystem('x')).toThrow(EndpointError);
-    expect(() => builder.getObservationHistory('x')).toThrow(EndpointError);
+  }
+
+  it('getObservation builds nested path when datastreamId is provided', () => {
+    const builder = makeNestedObsBuilder();
+    expect(builder.getObservation('obs-001', undefined, 'ds-001')).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations/obs-001'
+    );
+  });
+
+  it('updateObservation builds nested path when datastreamId is provided', () => {
+    const builder = makeNestedObsBuilder();
+    expect(builder.updateObservation('obs-001', 'ds-001')).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations/obs-001'
+    );
+  });
+
+  it('deleteObservation builds nested path when datastreamId is provided', () => {
+    const builder = makeNestedObsBuilder();
+    expect(builder.deleteObservation('obs-001', 'ds-001')).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations/obs-001'
+    );
+  });
+
+  it('getObservationDatastream builds nested path when datastreamId is provided', () => {
+    const builder = makeNestedObsBuilder();
+    expect(builder.getObservationDatastream('obs-001', 'ds-001')).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations/obs-001/datastream'
+    );
+  });
+
+  it('getObservationSamplingFeature builds nested path when datastreamId is provided', () => {
+    const builder = makeNestedObsBuilder();
+    expect(
+      builder.getObservationSamplingFeature('obs-001', undefined, 'ds-001')
+    ).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations/obs-001/samplingFeature'
+    );
+  });
+
+  it('getObservationSystem builds nested path when datastreamId is provided', () => {
+    const builder = makeNestedObsBuilder();
+    expect(builder.getObservationSystem('obs-001', undefined, 'ds-001')).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations/obs-001/system'
+    );
+  });
+
+  it('getObservationHistory builds nested path when datastreamId is provided', () => {
+    const builder = makeNestedObsBuilder();
+    expect(
+      builder.getObservationHistory('obs-001', { limit: 5 }, 'ds-001')
+    ).toBe(
+      'https://example.com/collections/iot/datastreams/ds-001/observations/obs-001/history?limit=5'
+    );
+  });
+
+  it('falls back to top-level path when datastreamId is omitted', () => {
+    const builder = new CSAPIQueryBuilder(
+      makeCollection({
+        links: [
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:observations',
+            type: '',
+            title: '',
+            href: '/observations',
+          },
+        ],
+      })
+    );
+    expect(builder.getObservation('obs-001')).toBe(
+      'https://example.com/collections/iot/observations/obs-001'
+    );
   });
 });
 
@@ -3540,18 +3680,7 @@ describe('ControlStream resource validation', () => {
       })
     );
     expect(() => builder.getControlStreams()).toThrow(EndpointError);
-    expect(() => builder.getControlStream('x')).toThrow(EndpointError);
     expect(() => builder.createControlStream()).toThrow(EndpointError);
-    expect(() => builder.updateControlStream('x')).toThrow(EndpointError);
-    expect(() => builder.deleteControlStream('x')).toThrow(EndpointError);
-    expect(() => builder.getControlStreamSchema('x')).toThrow(EndpointError);
-    expect(() => builder.getControlStreamCommands('x')).toThrow(EndpointError);
-    expect(() => builder.checkCommandFeasibility('x')).toThrow(EndpointError);
-    expect(() => builder.getControlStreamSystems('x')).toThrow(EndpointError);
-    expect(() => builder.getControlStreamProcedures('x')).toThrow(
-      EndpointError
-    );
-    expect(() => builder.getControlStreamHistory('x')).toThrow(EndpointError);
   });
 });
 
@@ -3872,32 +4001,115 @@ describe('Command resource validation', () => {
       })
     );
     expect(() => builder.getCommands()).toThrow(EndpointError);
-    expect(() => builder.getCommand('x')).toThrow(EndpointError);
-    expect(() => builder.updateCommand('x')).toThrow(EndpointError);
-    expect(() => builder.deleteCommand('x')).toThrow(EndpointError);
-    expect(() => builder.getCommandStatus('x')).toThrow(EndpointError);
-    expect(() => builder.updateCommandStatus('x')).toThrow(EndpointError);
-    expect(() => builder.getCommandResult('x')).toThrow(EndpointError);
-    expect(() => builder.cancelCommand('x')).toThrow(EndpointError);
   });
+});
 
-  it('createCommand and createCommands throw when controlStreams is unavailable', () => {
-    const builder = new CSAPIQueryBuilder(
+describe('Command nested path support (controlStreamId)', () => {
+  function makeNestedCmdBuilder() {
+    return new CSAPIQueryBuilder(
       makeCollection({
-        id: 'commands-only',
         links: [
           {
             rel: 'self',
             type: '',
             title: '',
-            href: 'https://example.com/collections/commands-only',
+            href: 'https://example.com/collections/iot',
           },
-          { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
+          {
+            rel: 'ogc-cs:controlStreams',
+            type: '',
+            title: '',
+            href: '/controlstreams',
+          },
         ],
       })
     );
-    expect(() => builder.createCommand('x')).toThrow(EndpointError);
-    expect(() => builder.createCommands('x')).toThrow(EndpointError);
+  }
+
+  it('getCommand builds nested path when controlStreamId is provided', () => {
+    const builder = makeNestedCmdBuilder();
+    expect(builder.getCommand('cmd-001', undefined, 'cs-001')).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands/cmd-001'
+    );
+  });
+
+  it('updateCommand builds nested path when controlStreamId is provided', () => {
+    const builder = makeNestedCmdBuilder();
+    expect(builder.updateCommand('cmd-001', 'cs-001')).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands/cmd-001'
+    );
+  });
+
+  it('deleteCommand builds nested path when controlStreamId is provided', () => {
+    const builder = makeNestedCmdBuilder();
+    expect(builder.deleteCommand('cmd-001', 'cs-001')).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands/cmd-001'
+    );
+  });
+
+  it('getCommandStatus builds nested path when controlStreamId is provided', () => {
+    const builder = makeNestedCmdBuilder();
+    expect(builder.getCommandStatus('cmd-001', undefined, 'cs-001')).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands/cmd-001/status'
+    );
+  });
+
+  it('getCommandStatus with options builds nested path with query string', () => {
+    const builder = makeNestedCmdBuilder();
+    expect(
+      builder.getCommandStatus(
+        'cmd-001',
+        { statusCode: 'EXECUTING' } as any,
+        'cs-001'
+      )
+    ).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands/cmd-001/status?statusCode=EXECUTING'
+    );
+  });
+
+  it('updateCommandStatus builds nested path when controlStreamId is provided', () => {
+    const builder = makeNestedCmdBuilder();
+    expect(builder.updateCommandStatus('cmd-001', 'cs-001')).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands/cmd-001/status'
+    );
+  });
+
+  it('getCommandResult builds nested path when controlStreamId is provided', () => {
+    const builder = makeNestedCmdBuilder();
+    expect(builder.getCommandResult('cmd-001', 'cs-001')).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands/cmd-001/result'
+    );
+  });
+
+  it('cancelCommand builds nested path when controlStreamId is provided', () => {
+    const builder = makeNestedCmdBuilder();
+    expect(builder.cancelCommand('cmd-001', 'cs-001')).toBe(
+      'https://example.com/collections/iot/controlstreams/cs-001/commands/cmd-001/cancel'
+    );
+  });
+
+  it('falls back to top-level path when controlStreamId is omitted', () => {
+    const builder = new CSAPIQueryBuilder(
+      makeCollection({
+        links: [
+          {
+            rel: 'self',
+            type: '',
+            title: '',
+            href: 'https://example.com/collections/iot',
+          },
+          {
+            rel: 'ogc-cs:commands',
+            type: '',
+            title: '',
+            href: '/commands',
+          },
+        ],
+      })
+    );
+    expect(builder.getCommand('cmd-001')).toBe(
+      'https://example.com/collections/iot/commands/cmd-001'
+    );
   });
 });
 

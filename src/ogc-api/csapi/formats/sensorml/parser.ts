@@ -36,7 +36,7 @@ import type {
   LegalConstraint,
   ResponsibleParty,
   ContactLink,
-  Event,
+  SensorMLEvent,
   InputList,
   OutputList,
   ParameterList,
@@ -101,7 +101,7 @@ function parseAnyProperty(
       `${context}[${index}].name`
     );
   }
-  // SWE Common component parsing deferred to Issues #24-#28.
+  // SWE Common deep validation not wired in; raw JSON passed through.
   return value as unknown as AnyProperty;
 }
 
@@ -133,8 +133,7 @@ export function parseCapabilityList(json: unknown): CapabilityList {
     result.description = json.description;
   if (typeof json.definition === 'string') result.definition = json.definition;
 
-  // Conditions — SWE Common simple components; pass-through until
-  // SWE Common parsers are available (Issues #24-#28).
+  // Conditions — SWE Common simple components; raw JSON pass-through.
   if (Array.isArray(json.conditions)) {
     result.conditions = json.conditions as unknown as AnySimpleComponent[];
   }
@@ -178,7 +177,7 @@ export function parseCharacteristicList(json: unknown): CharacteristicList {
     result.description = json.description;
   if (typeof json.definition === 'string') result.definition = json.definition;
 
-  // Conditions — SWE Common simple components; pass-through.
+  // Conditions — SWE Common simple components; raw JSON pass-through.
   if (Array.isArray(json.conditions)) {
     result.conditions = json.conditions as unknown as AnySimpleComponent[];
   }
@@ -283,9 +282,9 @@ export function parseDescribedObjectProperties(
     result.documents = json.documents as DescribedObject['documents'];
   }
 
-  // History (Event[])
+  // History (SensorMLEvent[])
   if (Array.isArray(json.history)) {
-    result.history = json.history as Event[];
+    result.history = json.history as SensorMLEvent[];
   }
 
   return result;

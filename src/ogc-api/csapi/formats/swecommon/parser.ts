@@ -169,14 +169,10 @@ function parseField(
   // --- Link reference (href without inline type) ---
   if (isLinkReference(json)) {
     const field: DataField = { name };
-    if (typeof json.href === 'string')
-      (field as Record<string, unknown>).href = json.href;
-    if (typeof json.role === 'string')
-      (field as Record<string, unknown>).role = json.role;
-    if (typeof json.arcrole === 'string')
-      (field as Record<string, unknown>).arcrole = json.arcrole;
-    if (typeof json.title === 'string')
-      (field as Record<string, unknown>).title = json.title;
+    if (typeof json.href === 'string') field.href = json.href;
+    if (typeof json.role === 'string') field.role = json.role;
+    if (typeof json.arcrole === 'string') field.arcrole = json.arcrole;
+    if (typeof json.title === 'string') field.title = json.title;
     return field;
   }
 
@@ -361,21 +357,14 @@ export function parseMatrix(json: unknown): Matrix {
         values = json.values;
       } else if (
         isRecord(json.values) &&
-        typeof (json.values as Record<string, unknown>).href === 'string'
+        typeof json.values.href === 'string'
       ) {
-        values = parseAssociationAttributeGroup(
-          json.values as Record<string, unknown>
-        );
+        values = parseAssociationAttributeGroup(json.values);
       }
     } else if (Array.isArray(json.values)) {
       values = json.values;
-    } else if (
-      isRecord(json.values) &&
-      typeof (json.values as Record<string, unknown>).href === 'string'
-    ) {
-      values = parseAssociationAttributeGroup(
-        json.values as Record<string, unknown>
-      );
+    } else if (isRecord(json.values) && typeof json.values.href === 'string') {
+      values = parseAssociationAttributeGroup(json.values);
     }
   }
 
@@ -423,14 +412,10 @@ function parseElementType(json: unknown): DataField {
   // Link reference (href without type)
   if (isLinkReference(json)) {
     const field: DataField = { name };
-    if (typeof json.href === 'string')
-      (field as Record<string, unknown>).href = json.href;
-    if (typeof json.role === 'string')
-      (field as Record<string, unknown>).role = json.role;
-    if (typeof json.arcrole === 'string')
-      (field as Record<string, unknown>).arcrole = json.arcrole;
-    if (typeof json.title === 'string')
-      (field as Record<string, unknown>).title = json.title;
+    if (typeof json.href === 'string') field.href = json.href;
+    if (typeof json.role === 'string') field.role = json.role;
+    if (typeof json.arcrole === 'string') field.arcrole = json.arcrole;
+    if (typeof json.title === 'string') field.title = json.title;
     return field;
   }
 
@@ -535,7 +520,7 @@ export function parseDataChoice(json: unknown): DataChoice {
   if (isRecord(json.choiceValue)) {
     choiceValue = parseSimpleComponent({
       ...json.choiceValue,
-      type: (json.choiceValue as Record<string, unknown>).type ?? 'Category',
+      type: json.choiceValue.type ?? 'Category',
     }) as SweCategory;
   }
 
@@ -620,7 +605,7 @@ export function parseGeometry(json: unknown): SweGeometry {
   // constraint — optional (permitted geometry types)
   if (isRecord(json.constraint)) {
     const constraint: GeometryConstraint = {};
-    const raw = json.constraint as Record<string, unknown>;
+    const raw = json.constraint;
     if (Array.isArray(raw.geomTypes)) {
       constraint.geomTypes = (raw.geomTypes as string[]).filter(
         (t) => typeof t === 'string'
@@ -634,8 +619,7 @@ export function parseGeometry(json: unknown): SweGeometry {
     result.nilValues = json.nilValues
       .filter(
         (entry: unknown): entry is Record<string, unknown> =>
-          isRecord(entry) &&
-          typeof (entry as Record<string, unknown>).reason === 'string'
+          isRecord(entry) && typeof entry.reason === 'string'
       )
       .map((entry: Record<string, unknown>) => ({
         reason: entry.reason as string,
@@ -644,13 +628,10 @@ export function parseGeometry(json: unknown): SweGeometry {
   }
 
   // value — optional GeoJSON geometry
-  if (
-    isRecord(json.value) &&
-    typeof (json.value as Record<string, unknown>).type === 'string'
-  ) {
+  if (isRecord(json.value) && typeof json.value.type === 'string') {
     // GeoJsonGeometry has [key: string]: unknown index signature,
     // so a Record<string, unknown> with a string 'type' satisfies it.
-    const geo = json.value as Record<string, unknown>;
+    const geo = json.value;
     const geoResult: GeoJsonGeometry = {
       type: geo.type as string,
     };
@@ -1304,8 +1285,7 @@ function validateDataArray(
 
   // Check element count consistency
   if (schema.elementCount && isRecord(schema.elementCount)) {
-    const expectedCount = (schema.elementCount as Record<string, unknown>)
-      .value;
+    const expectedCount = schema.elementCount.value;
     if (typeof expectedCount === 'number' && value.length !== expectedCount) {
       errors.push({
         path: path || 'value',
@@ -1370,8 +1350,7 @@ function validateMatrix(
 
   // Check element count consistency
   if (schema.elementCount && isRecord(schema.elementCount)) {
-    const expectedCount = (schema.elementCount as Record<string, unknown>)
-      .value;
+    const expectedCount = schema.elementCount.value;
     if (typeof expectedCount === 'number' && value.length !== expectedCount) {
       errors.push({
         path: path || 'value',

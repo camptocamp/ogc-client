@@ -315,7 +315,7 @@ ${e.message}`);
    * ```ts
    * const endpoint = await new OgcApiEndpoint('https://api.example.com');
    * if (await endpoint.hasConnectedSystems) {
-   *   const builder = await endpoint.csapi('weather-stations');
+   *   const builder = await createCSAPIBuilder(endpoint, 'weather-stations');
    *   // ... build CSAPI queries
    * }
    * ```

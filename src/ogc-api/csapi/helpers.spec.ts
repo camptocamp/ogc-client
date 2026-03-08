@@ -485,6 +485,83 @@ describe('scanCsapiLinks edge cases', () => {
 });
 
 // ----------------------------------------
+// scanCsapiLinks URL scheme validation
+// ----------------------------------------
+
+describe('scanCsapiLinks URL scheme validation', () => {
+  it('accepts https:// hrefs', () => {
+    const links = [
+      { rel: 'ogc-cs:systems', href: 'https://example.com/systems' },
+    ];
+    const result = scanCsapiLinks(links);
+    expect(result.get('systems')).toBe('https://example.com/systems');
+  });
+
+  it('accepts http:// hrefs', () => {
+    const links = [
+      { rel: 'ogc-cs:systems', href: 'http://example.com/systems' },
+    ];
+    const result = scanCsapiLinks(links);
+    expect(result.get('systems')).toBe('http://example.com/systems');
+  });
+
+  it('accepts relative hrefs (path only)', () => {
+    const links = [{ rel: 'ogc-cs:systems', href: '/api/systems' }];
+    const result = scanCsapiLinks(links);
+    expect(result.get('systems')).toBe('/api/systems');
+  });
+
+  it('rejects javascript: scheme (convention 1 — ogc-cs:)', () => {
+    const links = [{ rel: 'ogc-cs:systems', href: "javascript:alert('xss')" }];
+    const result = scanCsapiLinks(links);
+    expect(result.has('systems')).toBe(false);
+  });
+
+  it('rejects data: scheme (convention 2 — plain resource name)', () => {
+    const links = [
+      { rel: 'datastreams', href: 'data:text/html,<script>alert(1)</script>' },
+    ];
+    const result = scanCsapiLinks(links);
+    expect(result.has('datastreams')).toBe(false);
+  });
+
+  it('rejects vbscript: scheme (convention 1)', () => {
+    const links = [
+      { rel: 'ogc-cs:deployments', href: 'vbscript:MsgBox("xss")' },
+    ];
+    const result = scanCsapiLinks(links);
+    expect(result.has('deployments')).toBe(false);
+  });
+
+  it('rejects ftp: scheme (convention 3 — items)', () => {
+    const links = [{ rel: 'items', href: 'ftp://evil.com/systems' }];
+    const result = scanCsapiLinks(links);
+    expect(result.has('systems')).toBe(false);
+  });
+
+  it('accepts empty string href (convention 1)', () => {
+    const links = [{ rel: 'ogc-cs:systems' } as any];
+    const result = scanCsapiLinks(links);
+    // Missing href defaults to empty string, which is safe
+    expect(result.get('systems')).toBe('');
+  });
+
+  it('filters dangerous hrefs while keeping safe ones', () => {
+    const links = [
+      { rel: 'ogc-cs:systems', href: 'https://example.com/systems' },
+      { rel: 'ogc-cs:deployments', href: "javascript:alert('xss')" },
+      { rel: 'datastreams', href: 'http://example.com/datastreams' },
+      { rel: 'observations', href: 'data:text/html,bad' },
+    ];
+    const result = scanCsapiLinks(links);
+    expect(result.has('systems')).toBe(true);
+    expect(result.has('datastreams')).toBe(true);
+    expect(result.has('deployments')).toBe(false);
+    expect(result.has('observations')).toBe(false);
+  });
+});
+
+// ----------------------------------------
 // validateLimit edge cases
 // ----------------------------------------
 

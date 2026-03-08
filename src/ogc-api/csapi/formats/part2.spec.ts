@@ -217,6 +217,84 @@ describe('parseDatastream', () => {
     ]);
   });
 
+  it('falls back to label when definition is absent (#165)', () => {
+    const input = {
+      id: 'ds-obs-label',
+      name: 'Label-Only Props',
+      formats: [],
+      observedProperties: [
+        { label: 'Temperature', description: 'Air temperature measurement' },
+      ],
+    };
+
+    const result: Datastream = parseDatastream(input);
+
+    expect(result.observedProperties).toEqual(['Temperature']);
+  });
+
+  it('prefers definition over label when both are present (#165)', () => {
+    const input = {
+      id: 'ds-obs-both',
+      name: 'Definition Takes Priority',
+      formats: [],
+      observedProperties: [
+        {
+          definition: 'http://mmisw.org/ont/cf/parameter/air_temperature',
+          label: 'Air Temperature',
+        },
+      ],
+    };
+
+    const result: Datastream = parseDatastream(input);
+
+    expect(result.observedProperties).toEqual([
+      'http://mmisw.org/ont/cf/parameter/air_temperature',
+    ]);
+  });
+
+  it('handles mixed definition, label-only, and string items (#165)', () => {
+    const input = {
+      id: 'ds-obs-mixed',
+      name: 'Mixed Props',
+      formats: [],
+      observedProperties: [
+        { definition: 'http://example.org/temp', label: 'Temp' },
+        { label: 'Humidity' },
+        'http://example.org/pressure',
+      ],
+    };
+
+    const result: Datastream = parseDatastream(input);
+
+    expect(result.observedProperties).toEqual([
+      'http://example.org/temp',
+      'Humidity',
+      'http://example.org/pressure',
+    ]);
+  });
+
+  it('wraps a bare-object observedProperties into an array (#163)', () => {
+    // Defensive test: toArray() handles the case where a JSON serializer
+    // unwraps a single-element array into a bare object. No known CSAPI server
+    // exhibits this behavior (ST#24 P7-F3 was a testing artifact), but the
+    // code path is retained as a Postel's Law safeguard.
+    const input = {
+      id: 'ds-obs-bare',
+      name: 'Bare Object Form',
+      formats: [],
+      observedProperties: {
+        definition: 'http://mmisw.org/ont/cf/parameter/air_temperature',
+        label: 'Air Temperature',
+      },
+    };
+
+    const result: Datastream = parseDatastream(input);
+
+    expect(result.observedProperties).toEqual([
+      'http://mmisw.org/ont/cf/parameter/air_temperature',
+    ]);
+  });
+
   it('returns null (not undefined) for phenomenonTime when null', () => {
     const input = {
       id: 'ds-null-time',
@@ -577,6 +655,41 @@ describe('parseControlStream', () => {
 
     const resultEmpty: ControlStream = parseControlStream(inputEmpty);
     expect(resultEmpty.controlledProperties).toEqual([]);
+  });
+
+  it('falls back to label for controlledProperties when definition is absent (#165)', () => {
+    const input = {
+      id: 'cs-label-prop',
+      name: 'Label-Only Props',
+      formats: [],
+      async: false,
+      controlledProperties: [{ label: 'Active' }],
+    };
+
+    const result: ControlStream = parseControlStream(input);
+    expect(result.controlledProperties).toEqual(['Active']);
+  });
+
+  it('wraps a bare-object controlledProperties into an array (#163)', () => {
+    // Defensive test: toArray() handles the case where a JSON serializer
+    // unwraps a single-element array into a bare object. No known CSAPI server
+    // exhibits this behavior (ST#24 P7-F3 was a testing artifact), but the
+    // code path is retained as a Postel's Law safeguard.
+    const input = {
+      id: 'cs-bare-prop',
+      name: 'Bare Object Form',
+      formats: [],
+      async: false,
+      controlledProperties: {
+        definition: 'http://sensorml.com/ont/swe/property/Location',
+        label: 'Location',
+      },
+    };
+
+    const result: ControlStream = parseControlStream(input);
+    expect(result.controlledProperties).toEqual([
+      'http://sensorml.com/ont/swe/property/Location',
+    ]);
   });
 
   it('omits optional fields when they are absent', () => {

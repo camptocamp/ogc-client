@@ -15,6 +15,11 @@ import type { OgcApiCollectionInfo } from '../../model.js';
 import CSAPIQueryBuilder from '../url_builder.js';
 import { EndpointError } from '../../../shared/errors.js';
 import { parseCollectionResponse } from '../formats/response.js';
+import { makeTestCollection, ALL_CSAPI_LINKS } from './_fixtures.js';
+
+// Identity parseItem — passes elements through unchanged (for envelope/classification tests)
+const identity = (item: unknown) => item;
+
 import {
   isCSAPIFeature,
   getCSAPIResourceType,
@@ -37,7 +42,7 @@ import {
 function makeCSAPICollection(
   overrides: Partial<OgcApiCollectionInfo> = {}
 ): OgcApiCollectionInfo {
-  return {
+  return makeTestCollection({
     links: [
       {
         rel: 'self',
@@ -45,46 +50,13 @@ function makeCSAPICollection(
         title: '',
         href: 'https://api.example.com/collections/weather',
       },
-      { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
-      { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
-      { rel: 'ogc-cs:procedures', type: '', title: '', href: '/procedures' },
-      {
-        rel: 'ogc-cs:samplingFeatures',
-        type: '',
-        title: '',
-        href: '/samplingFeatures',
-      },
-      { rel: 'ogc-cs:properties', type: '', title: '', href: '/properties' },
-      { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
-      {
-        rel: 'ogc-cs:observations',
-        type: '',
-        title: '',
-        href: '/observations',
-      },
-      {
-        rel: 'ogc-cs:controlStreams',
-        type: '',
-        title: '',
-        href: '/controlStreams',
-      },
-      { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
+      ...ALL_CSAPI_LINKS,
     ],
     title: 'Weather Stations',
     description: 'A CSAPI weather station collection',
     id: 'weather',
-    itemFormats: [],
-    bulkDownloadLinks: {},
-    jsonDownloadLink: '',
-    crs: [],
-    itemCount: 0,
-    queryables: [],
-    sortables: [],
-    mapTileFormats: [],
-    vectorTileFormats: [],
-    supportedTileMatrixSets: [],
     ...overrides,
-  };
+  });
 }
 
 /** GeoJSON FeatureCollection with 2 System features. */
@@ -241,7 +213,7 @@ describe('Discovery workflow — full lifecycle', () => {
 
 describe('Discovery workflow — GeoJSON response parsing', () => {
   it('parses FeatureCollection into normalized CollectionResponse', () => {
-    const result = parseCollectionResponse(SYSTEMS_GEOJSON);
+    const result = parseCollectionResponse(SYSTEMS_GEOJSON, identity);
 
     expect(result.items).toHaveLength(2);
     expect(result.numberMatched).toBe(10);
@@ -251,7 +223,7 @@ describe('Discovery workflow — GeoJSON response parsing', () => {
   });
 
   it('classifies each feature from the parsed response', () => {
-    const result = parseCollectionResponse(SYSTEMS_GEOJSON);
+    const result = parseCollectionResponse(SYSTEMS_GEOJSON, identity);
 
     expect(getCSAPIResourceType(result.items[0])).toBe('System');
     expect(getCSAPIResourceType(result.items[1])).toBe('System');
@@ -259,7 +231,7 @@ describe('Discovery workflow — GeoJSON response parsing', () => {
   });
 
   it('extracts typed System from response features', () => {
-    const result = parseCollectionResponse(SYSTEMS_GEOJSON);
+    const result = parseCollectionResponse(SYSTEMS_GEOJSON, identity);
     const system = extractCSAPIFeature(
       result.items[0] as Record<string, unknown>
     );
@@ -277,7 +249,7 @@ describe('Discovery workflow — GeoJSON response parsing', () => {
 
 describe('Discovery workflow — items envelope parsing', () => {
   it('parses items envelope into normalized CollectionResponse', () => {
-    const result = parseCollectionResponse(DATASTREAMS_ITEMS);
+    const result = parseCollectionResponse(DATASTREAMS_ITEMS, identity);
 
     expect(result.items).toHaveLength(1);
     expect(result.items[0]).toHaveProperty('id', 'ds-001');
@@ -292,7 +264,7 @@ describe('Discovery workflow — items envelope parsing', () => {
 
 describe('Discovery workflow — classification fallback', () => {
   it('uses endpoint-context hint when featureType is null', () => {
-    const result = parseCollectionResponse(SYSTEMS_NULL_FEATURETYPE);
+    const result = parseCollectionResponse(SYSTEMS_NULL_FEATURETYPE, identity);
     const feature = result.items[0];
 
     // Pure featureType classification fails
@@ -416,14 +388,16 @@ describe('Discovery workflow — partial collection support', () => {
 
 describe('Discovery workflow — error scenarios', () => {
   it('throws on invalid collection response body', () => {
-    expect(() => parseCollectionResponse(null)).toThrow(/expected an object/);
-    expect(() => parseCollectionResponse('string')).toThrow(
+    expect(() => parseCollectionResponse(null, identity)).toThrow(
+      /expected an object/
+    );
+    expect(() => parseCollectionResponse('string', identity)).toThrow(
       /expected an object/
     );
   });
 
   it('throws on response missing both features and items arrays', () => {
-    expect(() => parseCollectionResponse({ data: [] })).toThrow(
+    expect(() => parseCollectionResponse({ data: [] }, identity)).toThrow(
       /missing both "features" and "items"/
     );
   });

@@ -111,7 +111,7 @@ export type { Pose } from './types.js';
 export type { Position } from './types.js';
 
 // Event / history types
-export type { Event } from './types.js';
+export type { SensorMLEvent } from './types.js';
 export type { FeatureList } from './types.js';
 
 // DescribedObject / AbstractProcess hierarchy

@@ -312,6 +312,26 @@ describe('parseSimpleProcess', () => {
       ).toThrow('SimpleProcess must have a string "uniqueId" property');
     });
 
+    it('throws for non-string label', () => {
+      expect(() =>
+        parseSimpleProcess({
+          type: 'SimpleProcess',
+          label: 42,
+          uniqueId: 'urn:x',
+        })
+      ).toThrow('SimpleProcess must have a string "label" property');
+    });
+
+    it('throws for non-string uniqueId', () => {
+      expect(() =>
+        parseSimpleProcess({
+          type: 'SimpleProcess',
+          label: 'Test',
+          uniqueId: null,
+        })
+      ).toThrow('SimpleProcess must have a string "uniqueId" property');
+    });
+
     it('throws for non-array inputs', () => {
       expect(() =>
         parseSimpleProcess({

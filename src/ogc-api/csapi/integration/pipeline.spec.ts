@@ -21,7 +21,6 @@ import {
   parseDatastreamSchemaResponse,
   parseControlStreamSchemaResponse,
 } from '../formats/schema-response.js';
-import type { Datastream, Property } from '../model.js';
 import type {
   DatastreamSchemaResponse,
   ControlStreamSchemaResponse,
@@ -78,19 +77,18 @@ describe('end-to-end: Datastream collection pipeline', () => {
   };
 
   it('parses raw JSON collection through envelope + item parser', () => {
-    // Step 1: Extract items via parseCollectionResponse
-    const collection = parseCollectionResponse(DATASTREAMS_COLLECTION);
+    // Extract items and parse each through parseDatastream in one step
+    const collection = parseCollectionResponse(
+      DATASTREAMS_COLLECTION,
+      parseDatastream
+    );
     expect(collection.items).toHaveLength(1);
     expect(collection.numberMatched).toBe(1);
     expect(collection.numberReturned).toBe(1);
     expect(collection.links).toHaveLength(1);
 
-    // Step 2: Map items through parseDatastream
-    const datastreams: Datastream[] = collection.items.map(parseDatastream);
-    expect(datastreams).toHaveLength(1);
-
-    // Step 3: Verify typed output
-    const ds = datastreams[0];
+    // Verify typed output — items are already Datastream[]
+    const ds = collection.items[0];
     expect(ds.id).toBe('0ocb');
     expect(ds.name).toBe('FCU Simulated Weather Station - Weather');
     expect(ds.description).toBe('Weather observations from simulated station');
@@ -137,11 +135,11 @@ describe('end-to-end: Datastream collection pipeline', () => {
       numberReturned: 0,
     };
 
-    const collection = parseCollectionResponse(emptyCollection);
+    const collection = parseCollectionResponse(
+      emptyCollection,
+      parseDatastream
+    );
     expect(collection.items).toHaveLength(0);
-
-    const datastreams: Datastream[] = collection.items.map(parseDatastream);
-    expect(datastreams).toHaveLength(0);
   });
 });
 
@@ -176,16 +174,15 @@ describe('end-to-end: Property collection pipeline', () => {
   };
 
   it('parses GeoJSON FeatureCollection through envelope + property parser', () => {
-    // Step 1: Extract features via parseCollectionResponse (GeoJSON envelope)
-    const collection = parseCollectionResponse(PROPERTIES_COLLECTION);
+    // Extract features and parse each through parseProperty in one step
+    const collection = parseCollectionResponse(
+      PROPERTIES_COLLECTION,
+      parseProperty
+    );
     expect(collection.items).toHaveLength(1);
 
-    // Step 2: Map through parseProperty
-    const properties: Property[] = collection.items.map(parseProperty);
-    expect(properties).toHaveLength(1);
-
-    // Step 3: Verify typed output
-    const prop = properties[0];
+    // Verify typed output — items are already Property[]
+    const prop = collection.items[0];
     expect(prop.id).toBe('air-temp');
     expect(prop.uniqueId).toBe('urn:x-ogc:def:property:noaa::AirTemperature');
     expect(prop.label).toBe('Air Temperature');

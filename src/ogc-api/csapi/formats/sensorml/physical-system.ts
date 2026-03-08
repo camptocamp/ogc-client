@@ -408,56 +408,29 @@ export function parsePhysicalSystem(json: unknown): PhysicalSystem {
   const connections = parseConnectionList(json.connections);
 
   // --- Build result, preserving DescribedObject passthrough ---
-  const result: PhysicalSystem = {
+  // Parsed fields listed after the spread override any raw values
+  // (including null) from the server JSON. Required fields (label,
+  // uniqueId) are narrowed by the typeof guards above — no cast needed.
+  return {
     ...(json as Record<string, unknown>),
     type: 'PhysicalSystem' as const,
-    label: json.label as string,
-    uniqueId: json.uniqueId as string,
-  };
-
-  // Apply parsed properties (overwrite raw values). Explicitly delete
-  // null/undefined raw values before assigning parsed ones, so that
-  // optional properties absent in input don't leak as `null`.
-  const managedKeys = [
-    'definition',
-    'typeOf',
-    'configuration',
-    'featuresOfInterest',
-    'inputs',
-    'outputs',
-    'parameters',
-    'modes',
-    'attachedTo',
-    'localReferenceFrames',
-    'localTimeFrames',
-    'position',
-    'components',
-    'connections',
-  ] as const;
-  for (const key of managedKeys) {
-    delete (result as unknown as Record<string, unknown>)[key];
-  }
-
-  if (definition !== undefined) result.definition = definition;
-  if (typeOf !== undefined) result.typeOf = typeOf;
-  if (configuration !== undefined) result.configuration = configuration;
-  if (featuresOfInterest !== undefined)
-    result.featuresOfInterest = featuresOfInterest;
-  if (inputs !== undefined) result.inputs = inputs;
-  if (outputs !== undefined) result.outputs = outputs;
-  if (parameters !== undefined) result.parameters = parameters;
-  if (modes !== undefined) result.modes = modes;
-
-  if (attachedTo !== undefined) result.attachedTo = attachedTo;
-  if (localReferenceFrames !== undefined)
-    result.localReferenceFrames = localReferenceFrames;
-  if (localTimeFrames !== undefined) result.localTimeFrames = localTimeFrames;
-  if (position !== undefined) result.position = position;
-
-  if (components !== undefined) result.components = components;
-  if (connections !== undefined) result.connections = connections;
-
-  return result;
+    label: json.label,
+    uniqueId: json.uniqueId,
+    definition,
+    typeOf,
+    configuration,
+    featuresOfInterest,
+    inputs,
+    outputs,
+    parameters,
+    modes,
+    attachedTo,
+    localReferenceFrames,
+    localTimeFrames,
+    position,
+    components,
+    connections,
+  } as PhysicalSystem;
 }
 
 /**
@@ -532,49 +505,26 @@ export function parsePhysicalComponent(json: unknown): PhysicalComponent {
   const method = parseProcessMethod(json.method);
 
   // --- Build result, preserving DescribedObject passthrough ---
-  const result: PhysicalComponent = {
+  // Parsed fields listed after the spread override any raw values
+  // (including null) from the server JSON. Required fields (label,
+  // uniqueId) are narrowed by the typeof guards above — no cast needed.
+  return {
     ...(json as Record<string, unknown>),
     type: 'PhysicalComponent' as const,
-    label: json.label as string,
-    uniqueId: json.uniqueId as string,
-  };
-
-  const managedKeys = [
-    'definition',
-    'typeOf',
-    'configuration',
-    'featuresOfInterest',
-    'inputs',
-    'outputs',
-    'parameters',
-    'modes',
-    'attachedTo',
-    'localReferenceFrames',
-    'localTimeFrames',
-    'position',
-    'method',
-  ] as const;
-  for (const key of managedKeys) {
-    delete (result as unknown as Record<string, unknown>)[key];
-  }
-
-  if (definition !== undefined) result.definition = definition;
-  if (typeOf !== undefined) result.typeOf = typeOf;
-  if (configuration !== undefined) result.configuration = configuration;
-  if (featuresOfInterest !== undefined)
-    result.featuresOfInterest = featuresOfInterest;
-  if (inputs !== undefined) result.inputs = inputs;
-  if (outputs !== undefined) result.outputs = outputs;
-  if (parameters !== undefined) result.parameters = parameters;
-  if (modes !== undefined) result.modes = modes;
-
-  if (attachedTo !== undefined) result.attachedTo = attachedTo;
-  if (localReferenceFrames !== undefined)
-    result.localReferenceFrames = localReferenceFrames;
-  if (localTimeFrames !== undefined) result.localTimeFrames = localTimeFrames;
-  if (position !== undefined) result.position = position;
-
-  if (method !== undefined) result.method = method;
-
-  return result;
+    label: json.label,
+    uniqueId: json.uniqueId,
+    definition,
+    typeOf,
+    configuration,
+    featuresOfInterest,
+    inputs,
+    outputs,
+    parameters,
+    modes,
+    attachedTo,
+    localReferenceFrames,
+    localTimeFrames,
+    position,
+    method,
+  } as PhysicalComponent;
 }

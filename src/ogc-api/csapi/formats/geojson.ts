@@ -20,6 +20,7 @@ import type {
   CSAPIResourceRef,
 } from '../model.js';
 import type { Geometry } from 'geojson';
+import { isRecord } from './_parse-utils.js';
 
 // ========================================
 // Constants
@@ -258,16 +259,22 @@ export function getCSAPIResourceType(
  * Parses a `validTime` value from server JSON into a {@link TimeInterval}.
  *
  * The OGC spec defines `timePeriod` as an array of two items, each being
- * either an ISO 8601 date-time string or the sentinel `"now"`.
+ * either an ISO 8601 date-time string or an open-ended sentinel.
+ *
+ * Recognized open-ended sentinels:
+ * - `"now"` — used by many OGC API servers (e.g., OSH Part 2 resources)
+ * - `".."` — ISO 8601-2:2019/Amd 1:2022 open-ended interval notation,
+ *   used by OGC API - Common Core and some Part 1 GeoJSON responses
  *
  * Example: `["2026-01-26T18:32:01.56Z", "now"]`
+ * Example: `["2026-02-27T00:00:00Z", ".."]`
  *
  * This function accepts:
  * - Array format: `[startString, endString]` (spec-canonical)
  * - Object format: `{ start: string|Date, end?: string|Date }` (defensive)
  * - `null` or `undefined` → returns `undefined`
  *
- * The sentinel `"now"` for the end value maps to `end: undefined`.
+ * Open-ended sentinels map to `undefined` for the corresponding bound.
  *
  * @param value - Raw validTime value from the server.
  * @returns Parsed TimeInterval, or `undefined` if the input is absent or invalid.
@@ -281,16 +288,20 @@ export function parseValidTime(value: unknown): TimeInterval | undefined {
     const endStr = value[1];
 
     if (typeof startStr !== 'string') return undefined;
-    const start = new Date(startStr);
-    if (isNaN(start.getTime())) return undefined;
+
+    let start: Date | undefined;
+    if (startStr !== 'now' && startStr !== '..') {
+      start = new Date(startStr);
+      if (isNaN(start.getTime())) return undefined;
+    }
 
     let end: Date | undefined;
-    if (typeof endStr === 'string' && endStr !== 'now') {
+    if (typeof endStr === 'string' && endStr !== 'now' && endStr !== '..') {
       end = new Date(endStr);
       if (isNaN(end.getTime())) return undefined;
     }
 
-    return { start, end };
+    return { start: start as Date, end };
   }
 
   // Object format (defensive): { start: ..., end?: ... }
@@ -306,16 +317,23 @@ export function parseValidTime(value: unknown): TimeInterval | undefined {
     }
 
     if (typeof startVal === 'string') {
-      const start = new Date(startVal);
-      if (isNaN(start.getTime())) return undefined;
+      let start: Date | undefined;
+      if (startVal !== 'now' && startVal !== '..') {
+        start = new Date(startVal);
+        if (isNaN(start.getTime())) return undefined;
+      }
 
       let end: Date | undefined;
-      if (typeof obj.end === 'string' && obj.end !== 'now') {
+      if (
+        typeof obj.end === 'string' &&
+        obj.end !== 'now' &&
+        obj.end !== '..'
+      ) {
         end = new Date(obj.end);
         if (isNaN(end.getTime())) return undefined;
       }
 
-      return { start, end };
+      return { start: start as Date, end };
     }
   }
 
@@ -435,7 +453,12 @@ export function extractCSAPIFeature(
   }
 
   const f = feature as Record<string, unknown>;
-  const p = f.properties as Record<string, unknown>;
+  if (!isRecord(f.properties)) {
+    throw new Error(
+      'Cannot extract CSAPI feature: "properties" must be a non-null object'
+    );
+  }
+  const p = f.properties;
 
   // Parse validTime if present
   const validTime = parseValidTime(p.validTime);

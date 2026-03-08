@@ -31,6 +31,77 @@ import { parseValidTime } from './geojson.js';
 // Shared Helpers
 // ========================================
 
+/**
+ * Validates that `json` is a non-null object and returns it as a
+ * `Record<string, unknown>` for safe property access.
+ *
+ * Consolidates the identical null-guard + cast boilerplate that was
+ * previously duplicated across all 5 Part 2 parse functions.
+ *
+ * @param json - Raw JSON value from a collection response.
+ * @param fn - Function name for the error message.
+ * @returns The input narrowed to `Record<string, unknown>`.
+ * @throws {Error} When `json` is not a non-null object.
+ */
+function requireObject(json: unknown, fn: string): Record<string, unknown> {
+  if (typeof json !== 'object' || json === null) {
+    throw new Error(`${fn}: input must be a non-null object`);
+  }
+  return json as Record<string, unknown>;
+}
+
+/**
+ * Fields shared between {@link Datastream} and {@link ControlStream},
+ * corresponding to the `baseStream` schema in OGC 23-002.
+ */
+interface BaseStream {
+  id: string;
+  name: string;
+  description?: string;
+  validTime?: TimeInterval;
+  formats: string[];
+  systemId?: string;
+  links: ResourceLink[];
+}
+
+/**
+ * Extracts the 7 base-stream fields shared by {@link parseDatastream} and
+ * {@link parseControlStream}.
+ *
+ * Both resource types inherit the same `baseStream` schema in OGC 23-002
+ * (§9.2 DataStream, §10.2 ControlStream). This helper consolidates the
+ * duplicated extraction logic into a single location.
+ *
+ * @param fn - Function name for error messages (forwarded to {@link requireObject}).
+ * @param json - Raw JSON value from a collection response.
+ * @returns The extracted base fields and the raw object for resource-specific extraction.
+ */
+function parseBaseStream(
+  fn: string,
+  json: unknown
+): { base: BaseStream; obj: Record<string, unknown> } {
+  const obj = requireObject(json, fn);
+  const validTime: TimeInterval | undefined = parseValidTime(obj.validTime);
+  return {
+    obj,
+    base: {
+      id: typeof obj.id === 'string' ? obj.id : '',
+      name: typeof obj.name === 'string' ? obj.name : '',
+      ...(typeof obj.description === 'string'
+        ? { description: obj.description }
+        : {}),
+      ...(validTime !== undefined ? { validTime } : {}),
+      formats: Array.isArray(obj.formats)
+        ? obj.formats.filter((f): f is string => typeof f === 'string')
+        : [],
+      ...(typeof obj['system@id'] === 'string'
+        ? { systemId: obj['system@id'] as string }
+        : {}),
+      links: Array.isArray(obj.links) ? (obj.links as ResourceLink[]) : [],
+    },
+  };
+}
+
 /** Known `resultType` enum values per OGC 23-002. */
 const RESULT_TYPES = new Set([
   'measure',
@@ -41,28 +112,72 @@ const RESULT_TYPES = new Set([
 ]);
 
 /**
- * Normalizes the `observedProperties` field from server JSON.
+ * Normalizes the `observedProperties` / `controlledProperties` field from
+ * server JSON into an array of identifier strings.
  *
- * Servers may return either:
- * - An array of objects with a `definition` field: `[{ definition: "uri", label: "..." }]`
- * - A plain string array: `["uri1", "uri2"]`
+ * Extraction priority per item:
+ *   1. String item → used as-is (already a URI or identifier)
+ *   2. Object with `definition` → definition URI extracted
+ *   3. Object with `label` (no `definition`) → label used as fallback
+ *      identifier. This handles real-world data-authoring gaps where
+ *      operators provide human-readable property names without formal
+ *      ontology URIs — a common pattern in early CSAPI deployments
+ *      across multiple server implementations. See P5-F2 analysis.
+ *   4. Otherwise → filtered out
  *
- * This function handles both forms and extracts the URI string for each entry.
- * Empty strings are filtered out.
+ * @remarks
+ * **Design rationale (Postel's Law):** The OGC 23-002 spec defines
+ * `observedProperties` items as objects with a `definition` URI as
+ * the primary semantic identifier. However, the underlying SWE Common
+ * data model treats `label` as the primary human-readable identifier
+ * and `definition` as an optional semantic binding. Since the CSAPI
+ * standard is new and many real-world deployments lack formal ontology
+ * URIs, this function accepts label-only objects rather than silently
+ * discarding them. This is not a server-specific workaround — it's a
+ * cross-implementation interoperability improvement.
  *
  * @param arr - Raw array from the server JSON.
- * @returns Array of property definition URI strings.
+ * @returns Array of property identifier strings (URIs when available,
+ *   labels as fallback).
  */
 function normalizeObservedProperties(arr: unknown[]): string[] {
   return arr
     .map((item) => {
       if (typeof item === 'string') return item;
-      if (typeof item === 'object' && item !== null && 'definition' in item) {
-        return String((item as Record<string, unknown>).definition);
+      if (typeof item === 'object' && item !== null) {
+        const obj = item as Record<string, unknown>;
+        if ('definition' in obj) return String(obj.definition);
+        if ('label' in obj) return String(obj.label);
       }
       return '';
     })
     .filter(Boolean);
+}
+
+/**
+ * Coerces a value to an array for defensive parsing (Postel's Law).
+ *
+ * Some JSON serializers may unwrap single-element arrays into bare objects.
+ * The OGC 23-002 spec defines `observedProperties` and
+ * `controlledProperties` as arrays, so this helper ensures downstream
+ * code always receives an array regardless of wire format.
+ *
+ * Note: No known CSAPI server currently exhibits this behavior. The
+ * original motivation (ST#24 P7-F3) was a testing artifact caused by
+ * PowerShell's `Invoke-RestMethod` unwrapping single-element JSON arrays
+ * during deserialization. Raw `curl` verification confirmed all servers
+ * return proper arrays on the wire. This helper is retained as a
+ * harmless defensive measure.
+ *
+ * @param value - Raw value that should be an array but may be a bare object.
+ * @returns The value wrapped in an array if it's a non-null object, the
+ *   original value if already an array, or an empty array otherwise.
+ */
+function toArray(value: unknown): unknown[] {
+  if (Array.isArray(value)) return value;
+  if (value !== null && value !== undefined && typeof value === 'object')
+    return [value];
+  return [];
 }
 
 // ========================================
@@ -112,15 +227,9 @@ function normalizeObservedProperties(arr: unknown[]): string[] {
  * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
  */
 export function parseDatastream(json: unknown): Datastream {
-  if (typeof json !== 'object' || json === null) {
-    throw new Error('parseDatastream: input must be a non-null object');
-  }
+  const { base, obj } = parseBaseStream('parseDatastream', json);
 
-  const obj = json as Record<string, unknown>;
-
-  // Time fields: validTime is optional (undefined if absent),
-  // phenomenonTime and resultTime are nullable (null if absent).
-  const validTime: TimeInterval | undefined = parseValidTime(obj.validTime);
+  // Time fields: phenomenonTime and resultTime are nullable (null if absent).
   const phenomenonTime: TimeInterval | null =
     parseValidTime(obj.phenomenonTime) ?? null;
   const resultTime: TimeInterval | null =
@@ -133,21 +242,16 @@ export function parseDatastream(json: unknown): Datastream {
       ? (rawResultType as Datastream['resultType'])
       : null;
 
-  // observedProperties: normalize from object or string array form
-  const observedProperties: string[] = Array.isArray(obj.observedProperties)
-    ? normalizeObservedProperties(obj.observedProperties)
-    : [];
+  // observedProperties: normalize from object or string array form.
+  // toArray() is a defensive wrapper — see #163. No known server sends bare
+  // objects here (original finding was a testing artifact), but it's retained
+  // as a Postel's Law safeguard.
+  const observedProperties: string[] = normalizeObservedProperties(
+    toArray(obj.observedProperties)
+  );
 
   return {
-    id: typeof obj.id === 'string' ? obj.id : '',
-    name: typeof obj.name === 'string' ? obj.name : '',
-    ...(typeof obj.description === 'string'
-      ? { description: obj.description }
-      : {}),
-    ...(validTime !== undefined ? { validTime } : {}),
-    formats: Array.isArray(obj.formats)
-      ? (obj.formats.filter((f) => typeof f === 'string') as string[])
-      : [],
+    ...base,
     ...(typeof obj.outputName === 'string'
       ? { outputName: obj.outputName }
       : {}),
@@ -160,10 +264,6 @@ export function parseDatastream(json: unknown): Datastream {
     (obj.type === 'status' || obj.type === 'observation')
       ? { type: obj.type as 'status' | 'observation' }
       : {}),
-    ...(typeof obj['system@id'] === 'string'
-      ? { systemId: obj['system@id'] as string }
-      : {}),
-    links: Array.isArray(obj.links) ? (obj.links as ResourceLink[]) : [],
   } satisfies Datastream;
 }
 
@@ -212,44 +312,29 @@ export function parseDatastream(json: unknown): Datastream {
  * @see https://docs.ogc.org/is/23-002/23-002.html#_controlstream_resources
  */
 export function parseControlStream(json: unknown): ControlStream {
-  if (typeof json !== 'object' || json === null) {
-    throw new Error('parseControlStream: input must be a non-null object');
-  }
+  const { base, obj } = parseBaseStream('parseControlStream', json);
 
-  const obj = json as Record<string, unknown>;
-
-  // Time fields: validTime is optional (undefined if absent),
-  // issueTime and executionTime are nullable (null if absent).
-  const validTime: TimeInterval | undefined = parseValidTime(obj.validTime);
+  // Time fields: issueTime and executionTime are nullable (null if absent).
   const issueTime: TimeInterval | null = parseValidTime(obj.issueTime) ?? null;
   const executionTime: TimeInterval | null =
     parseValidTime(obj.executionTime) ?? null;
 
-  // controlledProperties: normalize from object or string array form
-  const controlledProperties: string[] = Array.isArray(obj.controlledProperties)
-    ? normalizeObservedProperties(obj.controlledProperties)
-    : [];
+  // controlledProperties: normalize from object or string array form.
+  // toArray() is a defensive wrapper — see #163. No known server sends bare
+  // objects here (original finding was a testing artifact), but it's retained
+  // as a Postel's Law safeguard.
+  const controlledProperties: string[] = normalizeObservedProperties(
+    toArray(obj.controlledProperties)
+  );
 
   return {
-    id: typeof obj.id === 'string' ? obj.id : '',
-    name: typeof obj.name === 'string' ? obj.name : '',
-    ...(typeof obj.description === 'string'
-      ? { description: obj.description }
-      : {}),
-    ...(validTime !== undefined ? { validTime } : {}),
-    formats: Array.isArray(obj.formats)
-      ? (obj.formats.filter((f) => typeof f === 'string') as string[])
-      : [],
+    ...base,
     ...(typeof obj.inputName === 'string' ? { inputName: obj.inputName } : {}),
     controlledProperties,
     issueTime,
     executionTime,
     live: typeof obj.live === 'boolean' ? obj.live : null,
     async: typeof obj.async === 'boolean' ? obj.async : false,
-    ...(typeof obj['system@id'] === 'string'
-      ? { systemId: obj['system@id'] as string }
-      : {}),
-    links: Array.isArray(obj.links) ? (obj.links as ResourceLink[]) : [],
   } satisfies ControlStream;
 }
 
@@ -324,11 +409,7 @@ export function normalizeStatusCode(
  * @see https://docs.ogc.org/is/23-002/23-002.html#_command_resources
  */
 export function parseCommand(json: unknown): Command {
-  if (typeof json !== 'object' || json === null) {
-    throw new Error('parseCommand: input must be a non-null object');
-  }
-
-  const obj = json as Record<string, unknown>;
+  const obj = requireObject(json, 'parseCommand');
 
   // executionTime: time interval parsed via parseValidTime() (only present after execution)
   const executionTime: TimeInterval | undefined = parseValidTime(
@@ -405,11 +486,7 @@ export function parseCommand(json: unknown): Command {
  * @see https://docs.ogc.org/is/23-002/23-002.html#_observation_resources
  */
 export function parseObservation(json: unknown): Observation {
-  if (typeof json !== 'object' || json === null) {
-    throw new Error('parseObservation: input must be a non-null object');
-  }
-
-  const obj = json as Record<string, unknown>;
+  const obj = requireObject(json, 'parseObservation');
 
   // parameters: pass through if non-null object, omit otherwise
   const parametersValue = obj.parameters;
@@ -486,14 +563,10 @@ export function parseObservation(json: unknown): Observation {
  * // cs.reportTime === '2026-01-14T12:42:21.928728Z' (string pass-through)
  * ```
  *
- * @see https://docs.ogc.org/is/23-002/23-002.html#_command_resources
+ * @see https://docs.ogc.org/is/23-002/23-002.html#clause-commandstatus-resource
  */
 export function parseCommandStatus(json: unknown): CommandStatus {
-  if (typeof json !== 'object' || json === null) {
-    throw new Error('parseCommandStatus: input must be a non-null object');
-  }
-
-  const obj = json as Record<string, unknown>;
+  const obj = requireObject(json, 'parseCommandStatus');
 
   // executionTime: time interval parsed via parseValidTime()
   const executionTime: TimeInterval | undefined = parseValidTime(

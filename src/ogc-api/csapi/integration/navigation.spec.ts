@@ -22,6 +22,11 @@
 import type { OgcApiCollectionInfo } from '../../model.js';
 import CSAPIQueryBuilder from '../url_builder.js';
 import { parseCollectionResponse } from '../formats/response.js';
+import { makeTestCollection, ALL_CSAPI_LINKS } from './_fixtures.js';
+
+// Identity parseItem — passes elements through unchanged (for envelope/pagination tests)
+const identity = (item: unknown) => item;
+
 import {
   isCSAPIFeature,
   getCSAPIResourceType,
@@ -48,7 +53,7 @@ import { EndpointError } from '../../../shared/errors.js';
 function makeFullCollection(
   overrides: Partial<OgcApiCollectionInfo> = {}
 ): OgcApiCollectionInfo {
-  return {
+  return makeTestCollection({
     links: [
       {
         rel: 'self',
@@ -56,45 +61,13 @@ function makeFullCollection(
         title: '',
         href: 'https://api.example.com/collections/iot',
       },
-      { rel: 'ogc-cs:systems', type: '', title: '', href: '/systems' },
-      { rel: 'ogc-cs:deployments', type: '', title: '', href: '/deployments' },
-      { rel: 'ogc-cs:procedures', type: '', title: '', href: '/procedures' },
-      {
-        rel: 'ogc-cs:samplingFeatures',
-        type: '',
-        title: '',
-        href: '/samplingFeatures',
-      },
-      { rel: 'ogc-cs:datastreams', type: '', title: '', href: '/datastreams' },
-      {
-        rel: 'ogc-cs:observations',
-        type: '',
-        title: '',
-        href: '/observations',
-      },
-      {
-        rel: 'ogc-cs:controlStreams',
-        type: '',
-        title: '',
-        href: '/controlStreams',
-      },
-      { rel: 'ogc-cs:commands', type: '', title: '', href: '/commands' },
+      ...ALL_CSAPI_LINKS.filter((l) => l.rel !== 'ogc-cs:properties'),
     ],
     title: 'IoT Full Collection',
     description: 'Collection with all CSAPI resources',
     id: 'iot',
-    itemFormats: [],
-    bulkDownloadLinks: {},
-    jsonDownloadLink: '',
-    crs: [],
-    itemCount: 0,
-    queryables: [],
-    sortables: [],
-    mapTileFormats: [],
-    vectorTileFormats: [],
-    supportedTileMatrixSets: [],
     ...overrides,
-  };
+  });
 }
 
 /** GeoJSON Feature for a System resource (SOSA Sensor). */
@@ -120,7 +93,13 @@ const DEPLOYMENT_FEATURE = {
     featureType: 'http://www.w3.org/ns/sosa/Deployment',
     name: 'Field Deployment Alpha',
     validTime: { start: '2024-03-01T00:00:00Z' },
-    deployedSystems: ['sys-001'],
+    'deployedSystems@link': [
+      {
+        href: 'https://example.com/api/systems/sys-001',
+        uid: 'urn:example:system:sys-001',
+        title: 'Weather Station Alpha',
+      },
+    ],
   },
 };
 
@@ -401,22 +380,22 @@ describe('Navigation — paginated navigation with items envelope', () => {
   };
 
   it('accumulates items across three pages', () => {
-    const p1 = parseCollectionResponse(PAGE_1);
-    const p2 = parseCollectionResponse(PAGE_2);
-    const p3 = parseCollectionResponse(PAGE_3);
+    const p1 = parseCollectionResponse(PAGE_1, identity);
+    const p2 = parseCollectionResponse(PAGE_2, identity);
+    const p3 = parseCollectionResponse(PAGE_3, identity);
 
     const allItems = [...p1.items, ...p2.items, ...p3.items];
     expect(allItems).toHaveLength(5);
   });
 
   it('detects end of pagination when no next link', () => {
-    const p3 = parseCollectionResponse(PAGE_3);
+    const p3 = parseCollectionResponse(PAGE_3, identity);
     const nextLink = p3.links.find((l) => l.rel === 'next');
     expect(nextLink).toBeUndefined();
   });
 
   it('preserves numberMatched across pages', () => {
-    const p1 = parseCollectionResponse(PAGE_1);
+    const p1 = parseCollectionResponse(PAGE_1, identity);
     expect(p1.numberMatched).toBe(5);
   });
 });
@@ -508,20 +487,20 @@ describe('Navigation — partial collection support', () => {
 
 describe('Navigation — error handling across workflows', () => {
   it('parseCollectionResponse rejects non-object input', () => {
-    expect(() => parseCollectionResponse(null)).toThrow(
+    expect(() => parseCollectionResponse(null, identity)).toThrow(
       /Invalid collection response/
     );
-    expect(() => parseCollectionResponse('string')).toThrow(
+    expect(() => parseCollectionResponse('string', identity)).toThrow(
       /Invalid collection response/
     );
-    expect(() => parseCollectionResponse(42)).toThrow(
+    expect(() => parseCollectionResponse(42, identity)).toThrow(
       /Invalid collection response/
     );
   });
 
   it('parseCollectionResponse rejects object with neither features nor items', () => {
     expect(() =>
-      parseCollectionResponse({ links: [], other: 'data' })
+      parseCollectionResponse({ links: [], other: 'data' }, identity)
     ).toThrow();
   });
 

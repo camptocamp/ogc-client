@@ -158,7 +158,7 @@ export type { Pose } from './sensorml/index.js';
 export type { Position } from './sensorml/index.js';
 
 // Event / history types
-export type { Event } from './sensorml/index.js';
+export type { SensorMLEvent } from './sensorml/index.js';
 export type { FeatureList } from './sensorml/index.js';
 
 // DescribedObject / AbstractProcess hierarchy

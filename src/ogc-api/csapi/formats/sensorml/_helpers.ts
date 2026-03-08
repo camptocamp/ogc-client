@@ -96,7 +96,7 @@ export function parseFeatureList(value: unknown): FeatureList | undefined {
 /**
  * Parse a single {@link IOComponentChoice} entry.
  *
- * SWE Common sub-component parsing is deferred to Issues #24-#28;
+ * Deep SWE Common validation is not wired in;
  * the entry is preserved as-is with validated `name`.
  *
  * @param value - Raw JSON value
@@ -151,7 +151,7 @@ export function parseIOList(
 /**
  * Parse a {@link Settings} object.
  *
- * Field-level parsing is deferred to Issues #24-#28 (SWE Common).
+ * Deep SWE Common field-level validation is not wired in; raw JSON pass-through.
  *
  * @param value - Raw JSON value
  * @returns Parsed Settings or `undefined`

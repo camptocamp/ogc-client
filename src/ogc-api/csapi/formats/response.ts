@@ -76,6 +76,8 @@ export interface CollectionResponse<T> {
  *
  * @typeParam T - The type of individual items in the collection.
  * @param body - The raw JSON response body (already parsed from JSON).
+ * @param parseItem - Callback that transforms each raw element into a typed `T`.
+ *   Receives the raw element and its index in the source array.
  * @returns A normalized {@link CollectionResponse} with the items array,
  *   links, and optional pagination metadata.
  * @throws {Error} If the response contains neither `features` nor `items`.
@@ -85,7 +87,8 @@ export interface CollectionResponse<T> {
  * @see https://github.com/OS4CSAPI/ogc-client-CSAPI_2/issues/36 — Finding F3
  */
 export function parseCollectionResponse<T>(
-  body: unknown
+  body: unknown,
+  parseItem: (item: unknown, index: number) => T
 ): CollectionResponse<T> {
   if (typeof body !== 'object' || body === null) {
     throw new Error('Invalid collection response: expected an object');
@@ -94,16 +97,18 @@ export function parseCollectionResponse<T>(
   const obj = body as Record<string, unknown>;
 
   // Determine the items array: prefer `features` (GeoJSON), fall back to `items`
-  let items: T[];
+  let rawItems: unknown[];
   if (Array.isArray(obj.features)) {
-    items = obj.features as T[];
+    rawItems = obj.features as unknown[];
   } else if (Array.isArray(obj.items)) {
-    items = obj.items as T[];
+    rawItems = obj.items as unknown[];
   } else {
     throw new Error(
       'Invalid collection response: missing both "features" and "items" arrays'
     );
   }
+
+  const items: T[] = rawItems.map((el, i) => parseItem(el, i));
 
   // Extract links — always an array, default to empty
   const links: ResourceLink[] = Array.isArray(obj.links)

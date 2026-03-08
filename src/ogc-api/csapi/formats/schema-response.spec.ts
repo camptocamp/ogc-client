@@ -286,6 +286,35 @@ describe('parseControlStreamSchemaResponse', () => {
   });
 
   // ========================================
+  // Test 1b: paramsSchema fallback (older OSH builds)
+  // ========================================
+
+  it('accepts paramsSchema as a fallback for parametersSchema (older OSH builds)', () => {
+    const raw = {
+      commandFormat: 'application/json',
+      paramsSchema: {
+        type: 'DataRecord',
+        name: 'LegacyCommand',
+        fields: [
+          {
+            type: 'Boolean',
+            name: 'enable',
+          },
+        ],
+      },
+    };
+
+    const result = parseControlStreamSchemaResponse(raw);
+
+    expect(result.commandFormat).toBe('application/json');
+    expect(result.parametersSchema).toBeDefined();
+    const dr = result.parametersSchema as DataRecord;
+    expect(dr.type).toBe('DataRecord');
+    expect(dr.fields).toHaveLength(1);
+    expect((dr.fields[0] as TypedDataField).name).toBe('enable');
+  });
+
+  // ========================================
   // Test 2: Missing parametersSchema
   // ========================================
 

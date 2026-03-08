@@ -103,6 +103,30 @@ export function encodeResourceId(id: string): string {
 // ========================================
 
 /**
+ * Defense-in-depth check: returns `true` if the href is safe to use as a
+ * URL base for CSAPI query construction.
+ *
+ * - Relative URLs (those that fail `new URL()`) are safe — they resolve
+ *   against the trusted server base.
+ * - Absolute URLs with `http:` or `https:` schemes are safe.
+ * - All other schemes (`javascript:`, `data:`, `vbscript:`, protocol-relative
+ *   `//evil.com`, etc.) are rejected.
+ * - Empty strings are safe (handled as missing href downstream).
+ *
+ * @internal
+ */
+function isSafeHref(href: string): boolean {
+  if (href === '') return true;
+  try {
+    const url = new URL(href);
+    return url.protocol === 'https:' || url.protocol === 'http:';
+  } catch {
+    // Not a valid absolute URL — it's a relative path, which is safe
+    return true;
+  }
+}
+
+/**
  * Scans an array of link objects for CSAPI resource references and returns
  * a Map of resource type name → href.
  *
@@ -145,18 +169,23 @@ export function scanCsapiLinks(
     // Convention 1: ogc-cs: prefixed (e.g., rel: "ogc-cs:systems")
     const match = rel.match(/^ogc-cs:(.+)$/);
     if (match) {
-      result.set(match[1], typeof href === 'string' ? href : '');
+      const value = typeof href === 'string' ? href : '';
+      if (!isSafeHref(value)) continue;
+      result.set(match[1], value);
       continue;
     }
 
     // Convention 2: plain resource name (e.g., rel: "systems")
     if (knownTypes.has(rel)) {
-      result.set(rel, typeof href === 'string' ? href : '');
+      const value = typeof href === 'string' ? href : '';
+      if (!isSafeHref(value)) continue;
+      result.set(rel, value);
       continue;
     }
 
     // Convention 3: rel: "items" with resource type in href
     if (rel === 'items' && typeof href === 'string') {
+      if (!isSafeHref(href)) continue;
       const segment = href.split('?')[0].replace(/\/+$/, '').split('/').pop();
       // Normalize known server naming variants to spec resource type names
       const normalized =

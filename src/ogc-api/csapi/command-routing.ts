@@ -26,6 +26,22 @@
 import type CSAPIQueryBuilder from './url_builder.js';
 import type { CommandQueryOptions } from './model.js';
 import { encodeResourceId } from './helpers.js';
+import { EndpointError } from '../../shared/errors.js';
+
+/**
+ * Compile-time-constrained set of sub-path segments for command URLs.
+ *
+ * Derived from OGC API — Connected Systems Part 2 command path
+ * definitions (status, result, cancel).
+ */
+export type CommandSubPath = 'status' | 'result' | 'cancel';
+
+/** Runtime allowlist for defense-in-depth validation of command sub-paths. */
+const ALLOWED_COMMAND_SUB_PATHS: ReadonlySet<string> = new Set<string>([
+  'status',
+  'result',
+  'cancel',
+]);
 
 // ── Types ──
 
@@ -136,7 +152,7 @@ export function buildNestedCommandUrl(
   builder: CSAPIQueryBuilder,
   controlStreamId: string,
   commandId?: string,
-  subPath?: string,
+  subPath?: CommandSubPath,
   options?: CommandQueryOptions
 ): string {
   // Delegate query-string serialization to the builder.
@@ -157,6 +173,11 @@ export function buildNestedCommandUrl(
 
   let url = basePath;
   if (commandId) url += `/${encodeResourceId(commandId)}`;
-  if (subPath) url += `/${subPath}`;
+  if (subPath) {
+    if (!ALLOWED_COMMAND_SUB_PATHS.has(subPath)) {
+      throw new EndpointError(`Invalid command subPath: "${subPath}"`);
+    }
+    url += `/${subPath}`;
+  }
   return url + queryPart;
 }

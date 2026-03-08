@@ -130,7 +130,7 @@ export type {
   ParameterList,
   IOComponentChoice,
   Mode,
-  Event,
+  SensorMLEvent,
   Position,
   Pose,
   GeoJsonPoint,

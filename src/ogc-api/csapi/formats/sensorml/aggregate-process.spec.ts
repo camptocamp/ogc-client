@@ -429,6 +429,26 @@ describe('parseAggregateProcess', () => {
       ).toThrow('AggregateProcess must have a string "uniqueId" property');
     });
 
+    it('throws for non-string label', () => {
+      expect(() =>
+        parseAggregateProcess({
+          type: 'AggregateProcess',
+          label: 42,
+          uniqueId: 'urn:x',
+        })
+      ).toThrow('AggregateProcess must have a string "label" property');
+    });
+
+    it('throws for non-string uniqueId', () => {
+      expect(() =>
+        parseAggregateProcess({
+          type: 'AggregateProcess',
+          label: 'Test',
+          uniqueId: null,
+        })
+      ).toThrow('AggregateProcess must have a string "uniqueId" property');
+    });
+
     it('throws for non-array components', () => {
       expect(() =>
         parseAggregateProcess({

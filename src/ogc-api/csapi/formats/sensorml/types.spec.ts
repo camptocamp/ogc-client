@@ -26,7 +26,7 @@ import type {
   SpatialFrame,
   Position,
   // Event / features
-  Event,
+  SensorMLEvent,
   // Base interfaces
   DescribedObject,
   Mode,
@@ -288,8 +288,8 @@ describe('supporting types compilation', () => {
     expect(conn.destination).toBe('outputs/temperature');
   });
 
-  it('compiles Event', () => {
-    const event: Event = {
+  it('compiles SensorMLEvent', () => {
+    const event: SensorMLEvent = {
       label: 'Annual Calibration',
       time: ['2024-06-15T00:00:00Z'],
       definition: 'http://example.com/event/calibration',

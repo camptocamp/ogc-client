@@ -226,6 +226,19 @@ describe('buildNestedCommandUrl', () => {
     expect(url).toContain('/controlstreams/cs-001/commands/cmd-001/status');
     expect(url).toContain('limit=10');
   });
+
+  it('throws EndpointError for invalid subPath at runtime', () => {
+    // Force an invalid subPath past the type system to exercise the
+    // runtime allowlist guard (defense-in-depth).
+    expect(() =>
+      buildNestedCommandUrl(
+        builder,
+        'cs-001',
+        'cmd-001',
+        '../../../admin' as never
+      )
+    ).toThrow('Invalid command subPath');
+  });
 });
 
 // ========================================

@@ -102,46 +102,22 @@ export function parseSimpleProcess(json: unknown): SimpleProcess {
   const method = parseProcessMethod(json.method);
 
   // --- Build result, preserving DescribedObject passthrough ---
-  const result: SimpleProcess = {
-    // DescribedObject passthrough — the main parser (Issue #22)
-    // will handle shared helpers for these fields.
+  // Parsed fields listed after the spread override any raw values
+  // (including null) from the server JSON. Required fields (label,
+  // uniqueId) are narrowed by the typeof guards above — no cast needed.
+  return {
     ...(json as Record<string, unknown>),
-    // Enforce discriminator and required fields
     type: 'SimpleProcess' as const,
-    label: json.label as string,
-    uniqueId: json.uniqueId as string,
-  };
-
-  // Apply parsed AbstractProcess-level properties (overwrite raw values).
-  // Explicitly delete null/undefined raw values before assigning parsed ones,
-  // so that optional properties absent in input don't leak as `null`.
-  const abstractKeys = [
-    'definition',
-    'typeOf',
-    'configuration',
-    'featuresOfInterest',
-    'inputs',
-    'outputs',
-    'parameters',
-    'modes',
-    'method',
-  ] as const;
-  for (const key of abstractKeys) {
-    delete (result as unknown as Record<string, unknown>)[key];
-  }
-
-  if (definition !== undefined) result.definition = definition;
-  if (typeOf !== undefined) result.typeOf = typeOf;
-  if (configuration !== undefined) result.configuration = configuration;
-  if (featuresOfInterest !== undefined)
-    result.featuresOfInterest = featuresOfInterest;
-  if (inputs !== undefined) result.inputs = inputs;
-  if (outputs !== undefined) result.outputs = outputs;
-  if (parameters !== undefined) result.parameters = parameters;
-  if (modes !== undefined) result.modes = modes;
-
-  // Apply SimpleProcess-specific property
-  if (method !== undefined) result.method = method;
-
-  return result;
+    label: json.label,
+    uniqueId: json.uniqueId,
+    definition,
+    typeOf,
+    configuration,
+    featuresOfInterest,
+    inputs,
+    outputs,
+    parameters,
+    modes,
+    method,
+  } as SimpleProcess;
 }
