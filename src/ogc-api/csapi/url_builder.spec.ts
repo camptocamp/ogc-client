@@ -840,7 +840,7 @@ describe('getSystemSubsystems', () => {
 // Cross-link Navigation
 // ========================================
 
-describe('getSystemDataStreams', () => {
+describe('getSystemDatastreams', () => {
   function makeIotBuilder() {
     return new CSAPIQueryBuilder(
       makeCollection({
@@ -858,14 +858,14 @@ describe('getSystemDataStreams', () => {
   }
 
   it('returns correct URL', () => {
-    const url = makeIotBuilder().getSystemDataStreams('sys-001');
+    const url = makeIotBuilder().getSystemDatastreams('sys-001');
     expect(url).toBe(
       'https://example.com/collections/iot/systems/sys-001/datastreams'
     );
   });
 
   it('returns correct URL with options', () => {
-    const url = makeIotBuilder().getSystemDataStreams('sys-001', { limit: 20 });
+    const url = makeIotBuilder().getSystemDatastreams('sys-001', { limit: 20 });
     expect(url).toBe(
       'https://example.com/collections/iot/systems/sys-001/datastreams?limit=20'
     );
@@ -962,7 +962,7 @@ describe('createSubsystem', () => {
   });
 });
 
-describe('createDataStreamForSystem', () => {
+describe('createDatastreamForSystem', () => {
   function makeIotBuilder() {
     return new CSAPIQueryBuilder(
       makeCollection({
@@ -980,14 +980,14 @@ describe('createDataStreamForSystem', () => {
   }
 
   it('returns correct URL for nested datastream creation', () => {
-    const url = makeIotBuilder().createDataStreamForSystem('sys-001');
+    const url = makeIotBuilder().createDatastreamForSystem('sys-001');
     expect(url).toBe(
       'https://example.com/collections/iot/systems/sys-001/datastreams'
     );
   });
 
   it('encodes special characters in system ID', () => {
-    const url = makeIotBuilder().createDataStreamForSystem(
+    const url = makeIotBuilder().createDatastreamForSystem(
       'urn:example:sys:001'
     );
     expect(url).toBe(
@@ -1653,15 +1653,15 @@ describe('Procedure association methods', () => {
     );
   });
 
-  it('getProcedureDataStreams returns correct URL', () => {
-    const url = makeProcBuilder().getProcedureDataStreams('proc-001');
+  it('getProcedureDatastreams returns correct URL', () => {
+    const url = makeProcBuilder().getProcedureDatastreams('proc-001');
     expect(url).toBe(
       'https://example.com/collections/iot/procedures/proc-001/datastreams'
     );
   });
 
-  it('getProcedureDataStreams returns correct URL with options', () => {
-    const url = makeProcBuilder().getProcedureDataStreams('proc-001', {
+  it('getProcedureDatastreams returns correct URL with options', () => {
+    const url = makeProcBuilder().getProcedureDatastreams('proc-001', {
       limit: 10,
     });
     expect(url).toBe(
@@ -2210,15 +2210,15 @@ describe('Property association methods', () => {
     );
   });
 
-  it('getPropertyDataStreams returns correct URL', () => {
-    const url = makePropBuilder().getPropertyDataStreams('temperature-01');
+  it('getPropertyDatastreams returns correct URL', () => {
+    const url = makePropBuilder().getPropertyDatastreams('temperature-01');
     expect(url).toBe(
       'https://example.com/collections/iot/properties/temperature-01/datastreams'
     );
   });
 
-  it('getPropertyDataStreams returns correct URL with options', () => {
-    const url = makePropBuilder().getPropertyDataStreams('temperature-01', {
+  it('getPropertyDatastreams returns correct URL with options', () => {
+    const url = makePropBuilder().getPropertyDatastreams('temperature-01', {
       limit: 10,
     });
     expect(url).toBe(
@@ -2305,10 +2305,10 @@ describe('Property resource validation', () => {
 });
 
 // ========================================
-// DataStreams Methods
+// Datastreams Methods
 // ========================================
 
-describe('getDataStreams', () => {
+describe('getDatastreams', () => {
   function makeDsBuilder() {
     return new CSAPIQueryBuilder(
       makeCollection({
@@ -2331,26 +2331,26 @@ describe('getDataStreams', () => {
   }
 
   it('returns correct URL with no options', () => {
-    const url = makeDsBuilder().getDataStreams();
+    const url = makeDsBuilder().getDatastreams();
     expect(url).toBe('https://example.com/collections/iot/datastreams');
   });
 
   it('returns correct URL with limit', () => {
-    const url = makeDsBuilder().getDataStreams({ limit: 20 });
+    const url = makeDsBuilder().getDatastreams({ limit: 20 });
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams?limit=20'
     );
   });
 
   it('returns correct URL with systemId filter', () => {
-    const url = makeDsBuilder().getDataStreams({ systemId: 'sys-001' });
+    const url = makeDsBuilder().getDatastreams({ systemId: 'sys-001' });
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams?system=sys-001'
     );
   });
 
   it('returns correct URL with observedPropertyId filter', () => {
-    const url = makeDsBuilder().getDataStreams({
+    const url = makeDsBuilder().getDatastreams({
       observedPropertyId: 'temperature',
     });
     expect(url).toBe(
@@ -2359,7 +2359,7 @@ describe('getDataStreams', () => {
   });
 
   it('returns correct URL with phenomenonTime temporal filter', () => {
-    const url = makeDsBuilder().getDataStreams({
+    const url = makeDsBuilder().getDatastreams({
       phenomenonTime: {
         start: new Date('2024-01-01T00:00:00Z'),
         end: new Date('2024-12-31T23:59:59Z'),
@@ -2371,7 +2371,7 @@ describe('getDataStreams', () => {
   });
 
   it('returns correct URL with resultTime temporal filter', () => {
-    const url = makeDsBuilder().getDataStreams({
+    const url = makeDsBuilder().getDatastreams({
       resultTime: new Date('2024-06-01T00:00:00Z'),
     });
     expect(url).toBe(
@@ -2380,14 +2380,14 @@ describe('getDataStreams', () => {
   });
 
   it('returns correct URL with resultTime latest keyword', () => {
-    const url = makeDsBuilder().getDataStreams({ resultTime: 'latest' });
+    const url = makeDsBuilder().getDatastreams({ resultTime: 'latest' });
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams?resultTime=latest'
     );
   });
 
   it('returns correct URL with multiple options', () => {
-    const url = makeDsBuilder().getDataStreams({
+    const url = makeDsBuilder().getDatastreams({
       limit: 10,
       offset: 5,
       systemId: 'sys-001',
@@ -2398,49 +2398,49 @@ describe('getDataStreams', () => {
   });
 
   it('returns correct URL with q parameter', () => {
-    const url = makeDsBuilder().getDataStreams({ q: 'weather' });
+    const url = makeDsBuilder().getDatastreams({ q: 'weather' });
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams?q=weather'
     );
   });
 
   it('returns correct URL with offset', () => {
-    const url = makeDsBuilder().getDataStreams({ offset: 20 });
+    const url = makeDsBuilder().getDatastreams({ offset: 20 });
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams?offset=20'
     );
   });
 
   it('returns correct URL with id filter', () => {
-    const url = makeDsBuilder().getDataStreams({ id: 'ds-001' });
+    const url = makeDsBuilder().getDatastreams({ id: 'ds-001' });
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams?id=ds-001'
     );
   });
 
   it('handles array id parameter', () => {
-    const url = makeDsBuilder().getDataStreams({ id: ['ds-001', 'ds-002'] });
+    const url = makeDsBuilder().getDatastreams({ id: ['ds-001', 'ds-002'] });
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams?id=ds-001%2Cds-002'
     );
   });
 
   it('returns correct URL with f (format) parameter', () => {
-    const url = makeDsBuilder().getDataStreams({ f: 'application/json' });
+    const url = makeDsBuilder().getDatastreams({ f: 'application/json' });
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams?f=application%2Fjson'
     );
   });
 
   it('returns correct URL with foiId filter', () => {
-    const url = makeDsBuilder().getDataStreams({ foiId: 'foi-001' });
+    const url = makeDsBuilder().getDatastreams({ foiId: 'foi-001' });
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams?foi=foi-001'
     );
   });
 });
 
-describe('getDataStream', () => {
+describe('getDatastream', () => {
   function makeDsBuilder() {
     return new CSAPIQueryBuilder(
       makeCollection({
@@ -2463,19 +2463,19 @@ describe('getDataStream', () => {
   }
 
   it('returns correct URL with resource ID', () => {
-    const url = makeDsBuilder().getDataStream('ds-001');
+    const url = makeDsBuilder().getDatastream('ds-001');
     expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001');
   });
 
   it('encodes special characters in ID', () => {
-    const url = makeDsBuilder().getDataStream('urn:example:ds:001');
+    const url = makeDsBuilder().getDatastream('urn:example:ds:001');
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams/urn%3Aexample%3Ads%3A001'
     );
   });
 });
 
-describe('DataStream CRUD operations', () => {
+describe('Datastream CRUD operations', () => {
   function makeDsBuilder() {
     return new CSAPIQueryBuilder(
       makeCollection({
@@ -2497,23 +2497,23 @@ describe('DataStream CRUD operations', () => {
     );
   }
 
-  it('createDataStream returns correct URL', () => {
-    const url = makeDsBuilder().createDataStream();
+  it('createDatastream returns correct URL', () => {
+    const url = makeDsBuilder().createDatastream();
     expect(url).toBe('https://example.com/collections/iot/datastreams');
   });
 
-  it('updateDataStream returns correct URL', () => {
-    const url = makeDsBuilder().updateDataStream('ds-001');
+  it('updateDatastream returns correct URL', () => {
+    const url = makeDsBuilder().updateDatastream('ds-001');
     expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001');
   });
 
-  it('deleteDataStream returns correct URL', () => {
-    const url = makeDsBuilder().deleteDataStream('ds-001');
+  it('deleteDatastream returns correct URL', () => {
+    const url = makeDsBuilder().deleteDatastream('ds-001');
     expect(url).toBe('https://example.com/collections/iot/datastreams/ds-001');
   });
 });
 
-describe('getDataStreamSchema', () => {
+describe('getDatastreamSchema', () => {
   function makeDsBuilder() {
     return new CSAPIQueryBuilder(
       makeCollection({
@@ -2536,7 +2536,7 @@ describe('getDataStreamSchema', () => {
   }
 
   it('returns correct URL with f query parameter', () => {
-    const url = makeDsBuilder().getDataStreamSchema('ds-001', {
+    const url = makeDsBuilder().getDatastreamSchema('ds-001', {
       f: 'application/swe+json',
     });
     expect(url).toBe(
@@ -2545,14 +2545,14 @@ describe('getDataStreamSchema', () => {
   });
 
   it('returns correct URL without options', () => {
-    const url = makeDsBuilder().getDataStreamSchema('ds-001');
+    const url = makeDsBuilder().getDatastreamSchema('ds-001');
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams/ds-001/schema'
     );
   });
 });
 
-describe('getDataStreamObservations', () => {
+describe('getDatastreamObservations', () => {
   function makeDsBuilder() {
     return new CSAPIQueryBuilder(
       makeCollection({
@@ -2575,14 +2575,14 @@ describe('getDataStreamObservations', () => {
   }
 
   it('returns correct URL with no options', () => {
-    const url = makeDsBuilder().getDataStreamObservations('ds-001');
+    const url = makeDsBuilder().getDatastreamObservations('ds-001');
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams/ds-001/observations'
     );
   });
 
   it('returns correct URL with resultTime instant', () => {
-    const url = makeDsBuilder().getDataStreamObservations('ds-001', {
+    const url = makeDsBuilder().getDatastreamObservations('ds-001', {
       resultTime: new Date('2024-06-01T00:00:00Z'),
     });
     expect(url).toBe(
@@ -2591,7 +2591,7 @@ describe('getDataStreamObservations', () => {
   });
 
   it('returns correct URL with resultTime latest keyword', () => {
-    const url = makeDsBuilder().getDataStreamObservations('ds-001', {
+    const url = makeDsBuilder().getDatastreamObservations('ds-001', {
       resultTime: 'latest',
     });
     expect(url).toBe(
@@ -2600,7 +2600,7 @@ describe('getDataStreamObservations', () => {
   });
 
   it('returns correct URL with phenomenonTime filter', () => {
-    const url = makeDsBuilder().getDataStreamObservations('ds-001', {
+    const url = makeDsBuilder().getDatastreamObservations('ds-001', {
       phenomenonTime: {
         start: new Date('2024-01-01T00:00:00Z'),
         end: new Date('2024-06-01T00:00:00Z'),
@@ -2612,7 +2612,7 @@ describe('getDataStreamObservations', () => {
   });
 
   it('returns correct URL with cursor-based pagination', () => {
-    const url = makeDsBuilder().getDataStreamObservations('ds-001', {
+    const url = makeDsBuilder().getDatastreamObservations('ds-001', {
       cursor: 'abc123',
       limit: 50,
     });
@@ -2622,7 +2622,7 @@ describe('getDataStreamObservations', () => {
   });
 
   it('returns correct URL with limit', () => {
-    const url = makeDsBuilder().getDataStreamObservations('ds-001', {
+    const url = makeDsBuilder().getDatastreamObservations('ds-001', {
       limit: 100,
     });
     expect(url).toBe(
@@ -2668,7 +2668,7 @@ describe('createObservation', () => {
   });
 });
 
-describe('DataStream association methods', () => {
+describe('Datastream association methods', () => {
   function makeDsBuilder() {
     return new CSAPIQueryBuilder(
       makeCollection({
@@ -2690,15 +2690,15 @@ describe('DataStream association methods', () => {
     );
   }
 
-  it('getDataStreamSystems returns correct URL', () => {
-    const url = makeDsBuilder().getDataStreamSystems('ds-001');
+  it('getDatastreamSystems returns correct URL', () => {
+    const url = makeDsBuilder().getDatastreamSystems('ds-001');
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams/ds-001/systems'
     );
   });
 
-  it('getDataStreamSystems returns correct URL with pagination', () => {
-    const url = makeDsBuilder().getDataStreamSystems('ds-001', {
+  it('getDatastreamSystems returns correct URL with pagination', () => {
+    const url = makeDsBuilder().getDatastreamSystems('ds-001', {
       limit: 5,
       offset: 10,
     });
@@ -2707,15 +2707,15 @@ describe('DataStream association methods', () => {
     );
   });
 
-  it('getDataStreamProcedures returns correct URL', () => {
-    const url = makeDsBuilder().getDataStreamProcedures('ds-001');
+  it('getDatastreamProcedures returns correct URL', () => {
+    const url = makeDsBuilder().getDatastreamProcedures('ds-001');
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams/ds-001/procedures'
     );
   });
 
-  it('getDataStreamProcedures returns correct URL with options', () => {
-    const url = makeDsBuilder().getDataStreamProcedures('ds-001', {
+  it('getDatastreamProcedures returns correct URL with options', () => {
+    const url = makeDsBuilder().getDatastreamProcedures('ds-001', {
       limit: 10,
     });
     expect(url).toBe(
@@ -2724,7 +2724,7 @@ describe('DataStream association methods', () => {
   });
 });
 
-describe('getDataStreamHistory', () => {
+describe('getDatastreamHistory', () => {
   function makeDsBuilder() {
     return new CSAPIQueryBuilder(
       makeCollection({
@@ -2747,21 +2747,21 @@ describe('getDataStreamHistory', () => {
   }
 
   it('returns correct URL with no options', () => {
-    const url = makeDsBuilder().getDataStreamHistory('ds-001');
+    const url = makeDsBuilder().getDatastreamHistory('ds-001');
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams/ds-001/history'
     );
   });
 
   it('returns correct URL with limit', () => {
-    const url = makeDsBuilder().getDataStreamHistory('ds-001', { limit: 5 });
+    const url = makeDsBuilder().getDatastreamHistory('ds-001', { limit: 5 });
     expect(url).toBe(
       'https://example.com/collections/iot/datastreams/ds-001/history?limit=5'
     );
   });
 });
 
-describe('DataStream resource validation', () => {
+describe('Datastream resource validation', () => {
   it('throws EndpointError when datastreams is unavailable', () => {
     const builder = new CSAPIQueryBuilder(
       makeCollection({
@@ -2777,8 +2777,8 @@ describe('DataStream resource validation', () => {
         ],
       })
     );
-    expect(() => builder.getDataStreams()).toThrow(EndpointError);
-    expect(() => builder.createDataStream()).toThrow(EndpointError);
+    expect(() => builder.getDatastreams()).toThrow(EndpointError);
+    expect(() => builder.createDatastream()).toThrow(EndpointError);
   });
 });
 

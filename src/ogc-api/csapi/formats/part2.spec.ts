@@ -337,6 +337,47 @@ describe('parseDatastream', () => {
       'parseDatastream: input must be a non-null object'
     );
   });
+
+  // ========================================
+  // Cross-reference @link fallback (Issue #166 / OGC 23-002 §16.1)
+  // ========================================
+  describe('system cross-reference (@id / @link fallback)', () => {
+    const baseInput = { id: 'ds-xref', name: 'XRef Test' };
+
+    it('parses systemId from `system@id` (scalar form)', () => {
+      const input = { ...baseInput, 'system@id': '0o0o' };
+      expect(parseDatastream(input).systemId).toBe('0o0o');
+    });
+
+    it('parses systemId from `system@link.href` last path segment (object form, OGC 23-002 §16.1)', () => {
+      const input = {
+        ...baseInput,
+        'system@link': {
+          href: 'http://example.com/sensorhub/api/systems/0o0o',
+          title: 'Sensor 0',
+        },
+      };
+      expect(parseDatastream(input).systemId).toBe('0o0o');
+    });
+
+    it('prefers `@id` over `@link` when both forms are present', () => {
+      const input = {
+        ...baseInput,
+        'system@id': 'scalar-wins',
+        'system@link': { href: 'http://example.com/systems/from-link' },
+      };
+      expect(parseDatastream(input).systemId).toBe('scalar-wins');
+    });
+
+    it('handles `@link.href` as a bare identifier (no path)', () => {
+      const input = { ...baseInput, 'system@link': { href: '0o0o' } };
+      expect(parseDatastream(input).systemId).toBe('0o0o');
+    });
+
+    it('omits systemId when neither `@id` nor `@link` is present', () => {
+      expect(parseDatastream(baseInput).systemId).toBeUndefined();
+    });
+  });
 });
 
 /**
@@ -484,6 +525,134 @@ describe('parseObservation', () => {
     expect(result.datastreamId).toBe('0ocb');
     expect(result.samplingFeatureId).toBe('xyz');
     expect(result.featureOfInterestId).toBe('feat-001');
+  });
+
+  // ========================================
+  // Cross-reference @link fallback (Issue #166 / OGC 23-002 §16.1)
+  // ========================================
+  describe('datastream cross-reference (@id / @link fallback)', () => {
+    const baseInput = {
+      id: 'obs-xref',
+      resultTime: '2026-02-19T14:22:03.12Z',
+    };
+
+    it('parses datastreamId from `datastream@id` (scalar form)', () => {
+      const input = { ...baseInput, 'datastream@id': '0ocb' };
+      expect(parseObservation(input).datastreamId).toBe('0ocb');
+    });
+
+    it('parses datastreamId from `datastream@link.href` last path segment (object form, OGC 23-002 §16.1)', () => {
+      const input = {
+        ...baseInput,
+        'datastream@link': {
+          href: 'https://api.example.com/datastreams/0ocb',
+        },
+      };
+      expect(parseObservation(input).datastreamId).toBe('0ocb');
+    });
+
+    it('prefers `@id` over `@link` when both forms are present', () => {
+      const input = {
+        ...baseInput,
+        'datastream@id': 'scalar-wins',
+        'datastream@link': {
+          href: 'https://api.example.com/datastreams/from-link',
+        },
+      };
+      expect(parseObservation(input).datastreamId).toBe('scalar-wins');
+    });
+
+    it('handles `@link.href` as a bare identifier (no path)', () => {
+      const input = { ...baseInput, 'datastream@link': { href: '0ocb' } };
+      expect(parseObservation(input).datastreamId).toBe('0ocb');
+    });
+
+    it('omits datastreamId when neither `@id` nor `@link` is present', () => {
+      expect(parseObservation(baseInput).datastreamId).toBeUndefined();
+    });
+  });
+
+  describe('samplingFeature cross-reference (@id / @link fallback)', () => {
+    const baseInput = {
+      id: 'obs-xref-sf',
+      resultTime: '2026-02-19T14:22:03.12Z',
+    };
+
+    it('parses samplingFeatureId from `samplingFeature@id` (scalar form)', () => {
+      const input = { ...baseInput, 'samplingFeature@id': 'xyz' };
+      expect(parseObservation(input).samplingFeatureId).toBe('xyz');
+    });
+
+    it('parses samplingFeatureId from `samplingFeature@link.href` last path segment (object form, OGC 23-002 §16.1)', () => {
+      const input = {
+        ...baseInput,
+        'samplingFeature@link': {
+          href: 'https://api.example.com/samplingFeatures/xyz',
+        },
+      };
+      expect(parseObservation(input).samplingFeatureId).toBe('xyz');
+    });
+
+    it('prefers `@id` over `@link` when both forms are present', () => {
+      const input = {
+        ...baseInput,
+        'samplingFeature@id': 'scalar-wins',
+        'samplingFeature@link': {
+          href: 'https://api.example.com/samplingFeatures/from-link',
+        },
+      };
+      expect(parseObservation(input).samplingFeatureId).toBe('scalar-wins');
+    });
+
+    it('handles `@link.href` as a bare identifier (no path)', () => {
+      const input = {
+        ...baseInput,
+        'samplingFeature@link': { href: 'xyz' },
+      };
+      expect(parseObservation(input).samplingFeatureId).toBe('xyz');
+    });
+
+    it('omits samplingFeatureId when neither `@id` nor `@link` is present', () => {
+      expect(parseObservation(baseInput).samplingFeatureId).toBeUndefined();
+    });
+  });
+
+  describe('foi cross-reference (@id / @link fallback)', () => {
+    const baseInput = {
+      id: 'obs-xref-foi',
+      resultTime: '2026-02-19T14:22:03.12Z',
+    };
+
+    it('parses featureOfInterestId from `foi@id` (scalar form)', () => {
+      const input = { ...baseInput, 'foi@id': 'feat-001' };
+      expect(parseObservation(input).featureOfInterestId).toBe('feat-001');
+    });
+
+    it('parses featureOfInterestId from `foi@link.href` last path segment (object form, OGC 23-002 §16.1)', () => {
+      const input = {
+        ...baseInput,
+        'foi@link': { href: 'https://api.example.com/fois/feat-001' },
+      };
+      expect(parseObservation(input).featureOfInterestId).toBe('feat-001');
+    });
+
+    it('prefers `@id` over `@link` when both forms are present', () => {
+      const input = {
+        ...baseInput,
+        'foi@id': 'scalar-wins',
+        'foi@link': { href: 'https://api.example.com/fois/from-link' },
+      };
+      expect(parseObservation(input).featureOfInterestId).toBe('scalar-wins');
+    });
+
+    it('handles `@link.href` as a bare identifier (no path)', () => {
+      const input = { ...baseInput, 'foi@link': { href: 'feat-001' } };
+      expect(parseObservation(input).featureOfInterestId).toBe('feat-001');
+    });
+
+    it('omits featureOfInterestId when neither `@id` nor `@link` is present', () => {
+      expect(parseObservation(baseInput).featureOfInterestId).toBeUndefined();
+    });
   });
 });
 
@@ -746,6 +915,44 @@ describe('parseControlStream', () => {
       'parseControlStream: input must be a non-null object'
     );
   });
+
+  // ========================================
+  // Cross-reference @link fallback (Issue #166 / OGC 23-002 §16.1)
+  // ========================================
+  describe('system cross-reference (@id / @link fallback)', () => {
+    const baseInput = { id: 'cs-xref', name: 'XRef Test' };
+
+    it('parses systemId from `system@id` (scalar form)', () => {
+      const input = { ...baseInput, 'system@id': '0o30' };
+      expect(parseControlStream(input).systemId).toBe('0o30');
+    });
+
+    it('parses systemId from `system@link.href` last path segment (object form, OGC 23-002 §16.1)', () => {
+      const input = {
+        ...baseInput,
+        'system@link': { href: 'https://api.example.com/systems/0o30' },
+      };
+      expect(parseControlStream(input).systemId).toBe('0o30');
+    });
+
+    it('prefers `@id` over `@link` when both forms are present', () => {
+      const input = {
+        ...baseInput,
+        'system@id': 'scalar-wins',
+        'system@link': { href: 'https://api.example.com/systems/from-link' },
+      };
+      expect(parseControlStream(input).systemId).toBe('scalar-wins');
+    });
+
+    it('handles `@link.href` as a bare identifier (no path)', () => {
+      const input = { ...baseInput, 'system@link': { href: '0o30' } };
+      expect(parseControlStream(input).systemId).toBe('0o30');
+    });
+
+    it('omits systemId when neither `@id` nor `@link` is present', () => {
+      expect(parseControlStream(baseInput).systemId).toBeUndefined();
+    });
+  });
 });
 
 /**
@@ -928,6 +1135,48 @@ describe('parseCommand', () => {
     expect(() => parseCommand('string')).toThrow(
       'parseCommand: input must be a non-null object'
     );
+  });
+
+  // ========================================
+  // Cross-reference @link fallback (Issue #166 / OGC 23-002 §16.1)
+  // ========================================
+  describe('controlstream cross-reference (@id / @link fallback)', () => {
+    const baseInput = { id: 'cmd-xref', issueTime: '2026-02-19T14:22:03Z' };
+
+    it('parses controlStreamId from `controlstream@id` (scalar form)', () => {
+      const input = { ...baseInput, 'controlstream@id': '0o10' };
+      expect(parseCommand(input).controlStreamId).toBe('0o10');
+    });
+
+    it('parses controlStreamId from `controlstream@link.href` last path segment (object form, OGC 23-002 §16.1)', () => {
+      const input = {
+        ...baseInput,
+        'controlstream@link': {
+          href: 'https://api.example.com/controlstreams/0o10',
+        },
+      };
+      expect(parseCommand(input).controlStreamId).toBe('0o10');
+    });
+
+    it('prefers `@id` over `@link` when both forms are present', () => {
+      const input = {
+        ...baseInput,
+        'controlstream@id': 'scalar-wins',
+        'controlstream@link': {
+          href: 'https://api.example.com/controlstreams/from-link',
+        },
+      };
+      expect(parseCommand(input).controlStreamId).toBe('scalar-wins');
+    });
+
+    it('handles `@link.href` as a bare identifier (no path)', () => {
+      const input = { ...baseInput, 'controlstream@link': { href: '0o10' } };
+      expect(parseCommand(input).controlStreamId).toBe('0o10');
+    });
+
+    it('omits controlStreamId when neither `@id` nor `@link` is present', () => {
+      expect(parseCommand(baseInput).controlStreamId).toBeUndefined();
+    });
   });
 });
 
@@ -1127,5 +1376,47 @@ describe('parseCommandStatus', () => {
     expect(() => parseCommandStatus('string')).toThrow(
       'parseCommandStatus: input must be a non-null object'
     );
+  });
+
+  // ========================================
+  // Cross-reference @link fallback (Issue #166 / OGC 23-002 §16.1)
+  // ========================================
+  describe('command cross-reference (@id / @link fallback)', () => {
+    const baseInput = {
+      id: 'cs-xref',
+      reportTime: '2026-02-19T14:22:03Z',
+      statusCode: 'COMPLETED',
+    };
+
+    it('parses commandId from `command@id` (scalar form)', () => {
+      const input = { ...baseInput, 'command@id': '0o1qr' };
+      expect(parseCommandStatus(input).commandId).toBe('0o1qr');
+    });
+
+    it('parses commandId from `command@link.href` last path segment (object form, OGC 23-002 §16.1)', () => {
+      const input = {
+        ...baseInput,
+        'command@link': { href: 'https://api.example.com/commands/0o1qr' },
+      };
+      expect(parseCommandStatus(input).commandId).toBe('0o1qr');
+    });
+
+    it('prefers `@id` over `@link` when both forms are present', () => {
+      const input = {
+        ...baseInput,
+        'command@id': 'scalar-wins',
+        'command@link': { href: 'https://api.example.com/commands/from-link' },
+      };
+      expect(parseCommandStatus(input).commandId).toBe('scalar-wins');
+    });
+
+    it('handles `@link.href` as a bare identifier (no path)', () => {
+      const input = { ...baseInput, 'command@link': { href: '0o1qr' } };
+      expect(parseCommandStatus(input).commandId).toBe('0o1qr');
+    });
+
+    it('omits commandId when neither `@id` nor `@link` is present', () => {
+      expect(parseCommandStatus(baseInput).commandId).toBeUndefined();
+    });
   });
 });

@@ -1,4 +1,5 @@
 import type { Property, ResourceLink } from '../model.js';
+import { EndpointError } from '../../../shared/errors.js';
 
 /**
  * Transforms a raw JSON object from the `/properties` endpoint into a typed
@@ -14,7 +15,7 @@ import type { Property, ResourceLink } from '../model.js';
  *
  * @param json - Raw JSON object from the `/properties` items array.
  * @returns A typed {@link Property} object with extracted fields.
- * @throws {Error} When `json` is not a non-null object.
+ * @throws {EndpointError} When `json` is not a non-null object.
  *
  * @example
  * ```ts
@@ -39,7 +40,7 @@ import type { Property, ResourceLink } from '../model.js';
  */
 export function parseProperty(json: unknown): Property {
   if (typeof json !== 'object' || json === null) {
-    throw new Error('parseProperty: input must be a non-null object');
+    throw new EndpointError('parseProperty: input must be a non-null object');
   }
 
   const obj = json as Record<string, unknown>;

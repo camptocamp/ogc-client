@@ -1,6 +1,7 @@
 import { CSAPIResourceTypes } from './model.js';
 import type { CSAPIResourceType, CsapiDateTimeParameter } from './model.js';
 import type { BoundingBox } from '../../shared/models.js';
+import { EndpointError } from '../../shared/errors.js';
 
 // ========================================
 // Temporal Encoding
@@ -19,7 +20,7 @@ import type { BoundingBox } from '../../shared/models.js';
  *
  * @param param - A date instant, interval, or the `'latest'` keyword.
  * @returns ISO 8601 date or interval string, or `'latest'`.
- * @throws {Error} If `param` is not a valid `CsapiDateTimeParameter`.
+ * @throws {EndpointError} If `param` is not a valid `CsapiDateTimeParameter`.
  * @see https://docs.ogc.org/is/23-001/23-001.html
  * @see https://docs.ogc.org/is/23-002/23-002.html
  */
@@ -44,7 +45,7 @@ export function formatDateTimeParameter(param: CsapiDateTimeParameter): string {
     return `../${format(param.end)}`;
   }
 
-  throw new Error('Invalid CsapiDateTimeParameter');
+  throw new EndpointError('Invalid CsapiDateTimeParameter');
 }
 
 // ========================================
@@ -67,14 +68,14 @@ export function isValidResourceType(value: string): value is CSAPIResourceType {
  * Asserts that a string is a valid {@link CSAPIResourceType}, throwing if not.
  *
  * @param value - The string to validate.
- * @throws {Error} If `value` is not a valid CSAPI resource type.
+ * @throws {EndpointError} If `value` is not a valid CSAPI resource type.
  * @see https://docs.ogc.org/is/23-001/23-001.html
  */
 export function assertValidResourceType(
   value: string
 ): asserts value is CSAPIResourceType {
   if (!isValidResourceType(value)) {
-    throw new Error(
+    throw new EndpointError(
       `Invalid CSAPI resource type: "${value}". ` +
         `Valid types are: ${CSAPIResourceTypes.join(', ')}`
     );
@@ -209,11 +210,11 @@ export function scanCsapiLinks(
  * The limit must be a positive integer (≥ 1).
  *
  * @param limit - The limit value to validate.
- * @throws {Error} If `limit` is not a positive integer.
+ * @throws {EndpointError} If `limit` is not a positive integer.
  */
 export function validateLimit(limit: number): void {
   if (!Number.isInteger(limit) || limit < 1) {
-    throw new Error(
+    throw new EndpointError(
       `Invalid limit: ${limit}. Must be a positive integer (≥ 1).`
     );
   }
@@ -226,26 +227,32 @@ export function validateLimit(limit: number): void {
  * all elements are finite numbers and `minx ≤ maxx`, `miny ≤ maxy`.
  *
  * @param bbox - The bounding box to validate.
- * @throws {Error} If the bounding box is invalid.
+ * @throws {EndpointError} If the bounding box is invalid.
  * @see https://docs.ogc.org/is/23-001/23-001.html
  */
 export function validateBbox(bbox: BoundingBox): void {
   if (bbox.length !== 4) {
-    throw new Error(
+    throw new EndpointError(
       `Invalid bbox: expected 4 coordinates [minx, miny, maxx, maxy], got ${bbox.length}.`
     );
   }
 
   if (!bbox.every((v) => Number.isFinite(v))) {
-    throw new Error('Invalid bbox: all coordinates must be finite numbers.');
+    throw new EndpointError(
+      'Invalid bbox: all coordinates must be finite numbers.'
+    );
   }
 
   const [minx, miny, maxx, maxy] = bbox;
   if (minx > maxx) {
-    throw new Error(`Invalid bbox: minx (${minx}) must be ≤ maxx (${maxx}).`);
+    throw new EndpointError(
+      `Invalid bbox: minx (${minx}) must be ≤ maxx (${maxx}).`
+    );
   }
   if (miny > maxy) {
-    throw new Error(`Invalid bbox: miny (${miny}) must be ≤ maxy (${maxy}).`);
+    throw new EndpointError(
+      `Invalid bbox: miny (${miny}) must be ≤ maxy (${maxy}).`
+    );
   }
 }
 

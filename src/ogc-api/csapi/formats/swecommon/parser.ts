@@ -820,7 +820,7 @@ export function detectEncoding(json: unknown): DataEncoding | undefined {
 // ========================================
 
 /**
- * Validate a parsed observation result value against a DataStream's SWE
+ * Validate a parsed observation result value against a Datastream's SWE
  * Common schema (DataComponent definition).
  *
  * Returns a {@link ValidationResult} indicating success or failure with

@@ -20,6 +20,7 @@
  */
 
 import type { ResourceLink } from '../model.js';
+import { EndpointError } from '../../../shared/errors.js';
 
 // ========================================
 // Types
@@ -80,7 +81,7 @@ export interface CollectionResponse<T> {
  *   Receives the raw element and its index in the source array.
  * @returns A normalized {@link CollectionResponse} with the items array,
  *   links, and optional pagination metadata.
- * @throws {Error} If the response contains neither `features` nor `items`.
+ * @throws {EndpointError} If the response contains neither `features` nor `items`.
  *
  * @see https://docs.ogc.org/is/23-001/23-001.html — Part 1 FeatureCollection
  * @see https://docs.ogc.org/is/23-002/23-002.html — Part 2 ItemCollection
@@ -91,7 +92,7 @@ export function parseCollectionResponse<T>(
   parseItem: (item: unknown, index: number) => T
 ): CollectionResponse<T> {
   if (typeof body !== 'object' || body === null) {
-    throw new Error('Invalid collection response: expected an object');
+    throw new EndpointError('Invalid collection response: expected an object');
   }
 
   const obj = body as Record<string, unknown>;
@@ -103,7 +104,7 @@ export function parseCollectionResponse<T>(
   } else if (Array.isArray(obj.items)) {
     rawItems = obj.items as unknown[];
   } else {
-    throw new Error(
+    throw new EndpointError(
       'Invalid collection response: missing both "features" and "items" arrays'
     );
   }

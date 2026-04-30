@@ -148,7 +148,7 @@ const OBSERVATIONS_PAGE_2 = {
   links: [],
 };
 
-/** DataStream schema response (SWE Common DataRecord). */
+/** Datastream schema response (SWE Common DataRecord). */
 const DATASTREAM_SCHEMA = {
   type: 'DataRecord',
   label: 'Temperature Observation',
@@ -172,7 +172,7 @@ const DATASTREAM_SCHEMA = {
 };
 
 // ========================================
-// System → DataStream Discovery
+// System → Datastream Discovery
 // ========================================
 
 describe('Observation workflow — system to datastream discovery', () => {
@@ -188,7 +188,7 @@ describe('Observation workflow — system to datastream discovery', () => {
   });
 
   it('builds nested datastream URL for a discovered system', () => {
-    const url = builder.getSystemDataStreams('sys-001');
+    const url = builder.getSystemDatastreams('sys-001');
     expect(url).toBe(
       'https://api.example.com/collections/iot/systems/sys-001/datastreams'
     );
@@ -213,7 +213,7 @@ describe('Observation workflow — temporal query parameters', () => {
   const builder = new CSAPIQueryBuilder(makeCollection());
 
   it('builds observation URL with phenomenonTime filter', () => {
-    const url = builder.getDataStreamObservations('ds-temp', {
+    const url = builder.getDatastreamObservations('ds-temp', {
       phenomenonTime: {
         start: new Date('2024-06-15T00:00:00Z'),
         end: new Date('2024-06-15T23:59:59Z'),
@@ -225,14 +225,14 @@ describe('Observation workflow — temporal query parameters', () => {
   });
 
   it('builds observation URL with resultTime=latest', () => {
-    const url = builder.getDataStreamObservations('ds-temp', {
+    const url = builder.getDatastreamObservations('ds-temp', {
       resultTime: 'latest',
     });
     expect(url).toContain('resultTime=latest');
   });
 
   it('builds observation URL with limit and offset pagination', () => {
-    const url = builder.getDataStreamObservations('ds-temp', {
+    const url = builder.getDatastreamObservations('ds-temp', {
       limit: 100,
       offset: 200,
     });
@@ -287,7 +287,7 @@ describe('Observation workflow — cursor-based pagination', () => {
   const builder = new CSAPIQueryBuilder(makeCollection());
 
   it('builds URL with cursor token', () => {
-    const url = builder.getDataStreamObservations('ds-temp', {
+    const url = builder.getDatastreamObservations('ds-temp', {
       cursor: 'abc123xyz',
       limit: 50,
     });
@@ -304,7 +304,7 @@ describe('Observation workflow — schema and SWE Common parsing', () => {
   const builder = new CSAPIQueryBuilder(makeCollection());
 
   it('builds datastream schema URL', () => {
-    const url = builder.getDataStreamSchema('ds-temp', {
+    const url = builder.getDatastreamSchema('ds-temp', {
       f: 'application/swe+json',
     });
     expect(url).toContain('/datastreams/ds-temp/schema');
@@ -376,11 +376,11 @@ describe('Observation workflow — error handling', () => {
     });
     const builder = new CSAPIQueryBuilder(noDs);
 
-    expect(() => builder.getDataStreams()).toThrow(
+    expect(() => builder.getDatastreams()).toThrow(
       /does not support 'datastreams'/
     );
     // Per-ID methods skip assertResourceAvailable (Phase 7 #156/#157)
-    expect(builder.getDataStreamObservations('ds-001')).toEqual(
+    expect(builder.getDatastreamObservations('ds-001')).toEqual(
       expect.any(String)
     );
   });

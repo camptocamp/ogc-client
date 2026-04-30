@@ -139,7 +139,7 @@ describe('Navigation — system → nested resources', () => {
   const builder = new CSAPIQueryBuilder(makeFullCollection());
 
   it('navigates system → datastreams', () => {
-    const url = builder.getSystemDataStreams('sys-001');
+    const url = builder.getSystemDatastreams('sys-001');
     expect(url).toBe(
       'https://api.example.com/collections/iot/systems/sys-001/datastreams'
     );
@@ -200,15 +200,15 @@ describe('Navigation — multi-hop top-level → nested chain', () => {
     expect(systemUrl).toContain('/systems/sys-001');
 
     // 2. Navigate to system's datastreams
-    const dstreamsUrl = builder.getSystemDataStreams('sys-001');
+    const dstreamsUrl = builder.getSystemDatastreams('sys-001');
     expect(dstreamsUrl).toContain('/systems/sys-001/datastreams');
 
     // 3. Get datastream schema
-    const schemaUrl = builder.getDataStreamSchema('ds-temp');
+    const schemaUrl = builder.getDatastreamSchema('ds-temp');
     expect(schemaUrl).toContain('/datastreams/ds-temp/schema');
 
     // 4. Observations from that datastream
-    const obsUrl = builder.getDataStreamObservations('ds-temp');
+    const obsUrl = builder.getDatastreamObservations('ds-temp');
     expect(obsUrl).toContain('/datastreams/ds-temp/observations');
   });
 
@@ -432,7 +432,7 @@ describe('Navigation — partial collection support', () => {
     expect(builder.getDeployments()).toContain('/deployments');
 
     // Part 2 resources throw
-    expect(() => builder.getDataStreams()).toThrow(EndpointError);
+    expect(() => builder.getDatastreams()).toThrow(EndpointError);
     expect(() => builder.getObservations()).toThrow(EndpointError);
     expect(() => builder.getControlStreams()).toThrow(EndpointError);
     expect(() => builder.getCommands()).toThrow(EndpointError);
@@ -472,7 +472,7 @@ describe('Navigation — partial collection support', () => {
     const builder = new CSAPIQueryBuilder(part2Only);
 
     // Part 2 resources work
-    expect(builder.getDataStreams()).toContain('/datastreams');
+    expect(builder.getDatastreams()).toContain('/datastreams');
     expect(builder.getObservations()).toContain('/observations');
 
     // Part 1 resources throw

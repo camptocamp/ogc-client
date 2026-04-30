@@ -21,6 +21,7 @@ import type {
 } from '../model.js';
 import type { Geometry } from 'geojson';
 import { isRecord } from './_parse-utils.js';
+import { EndpointError } from '../../../shared/errors.js';
 
 // ========================================
 // Constants
@@ -201,7 +202,7 @@ export function isCSAPIFeature(feature: unknown): boolean {
  * Determines the CSAPI resource type from a GeoJSON Feature's `featureType` property.
  *
  * Only Part 1 resource types are recognized: System, Deployment, Procedure,
- * SamplingFeature. Part 2 resources (DataStreams, Observations, Control Streams,
+ * SamplingFeature. Part 2 resources (Datastreams, Observations, Control Streams,
  * Commands) do not have a `featureType` property and will return `null`.
  *
  * Checks the SOSA vocabulary first, then SSN, then SensorML.
@@ -365,7 +366,7 @@ export function isValidUri(value: unknown): boolean {
  * **Important limitations:**
  *
  * - **Only supports Part 1 resources** — Systems, Deployments, Procedures,
- *   and Sampling Features. Part 2 resources (DataStreams, Observations,
+ *   and Sampling Features. Part 2 resources (Datastreams, Observations,
  *   Control Streams, Commands) are not GeoJSON Features and cannot be
  *   parsed by this function.
  *
@@ -447,14 +448,14 @@ export function extractCSAPIFeature(
 ): System | Deployment | Procedure | SamplingFeature {
   const resourceType = getCSAPIResourceType(feature);
   if (resourceType === null) {
-    throw new Error(
+    throw new EndpointError(
       'Cannot extract CSAPI feature: unrecognized or missing featureType'
     );
   }
 
   const f = feature as Record<string, unknown>;
   if (!isRecord(f.properties)) {
-    throw new Error(
+    throw new EndpointError(
       'Cannot extract CSAPI feature: "properties" must be a non-null object'
     );
   }

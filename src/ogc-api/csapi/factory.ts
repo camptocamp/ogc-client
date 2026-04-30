@@ -1,69 +1,60 @@
-import type OgcApiEndpoint from '../endpoint.js';
-import type { OgcApiCollectionInfo } from '../model.js';
-import { EndpointError } from '../../shared/errors.js';
 import CSAPIQueryBuilder from './url_builder.js';
-import { scanCsapiLinks } from './helpers.js';
+import type { CSAPICollectionRef } from './model.js';
 
 /**
- * Validates that a document has the minimum shape of an {@link OgcApiCollectionInfo}.
- */
-function isCollectionInfo(doc: unknown): doc is OgcApiCollectionInfo {
-  return (
-    typeof doc === 'object' &&
-    doc !== null &&
-    'id' in doc &&
-    typeof (doc as Record<string, unknown>).id === 'string'
-  );
-}
-
-/**
- * Creates a {@link CSAPIQueryBuilder} for constructing Connected Systems
- * query URLs against the given collection.
+ * Constructs a {@link CSAPIQueryBuilder} from pre-resolved collection
+ * metadata and resource URLs.
  *
- * The builder discovers available resource types by inspecting the
- * collection's link relations and the root API document.
+ * Pure factory: no I/O, no `await`, no error wrapping. Network-aware
+ * composition lives in {@link OgcApiEndpoint.csapi} (the discoverable
+ * entry point); this standalone factory is the value-shaped form for
+ * tests and advanced consumers who already hold the inputs.
  *
- * @param endpoint - An initialized OGC API endpoint instance.
- * @param collectionId - The collection identifier to create a builder for.
- * @returns A CSAPIQueryBuilder scoped to the specified collection.
- * @throws {EndpointError} If the endpoint does not support Connected Systems.
+ * **URL builder, not HTTP client.** The returned builder produces URL
+ * strings via its `get*()` methods — the consumer is responsible for the
+ * `fetch()` call (auth headers, timeouts, retries, `AbortSignal`, error
+ * handling) and for handing the parsed JSON body to the matching parser
+ * function. See the {@link module:csapi | csapi module docblock} for the
+ * full 5-step request pattern.
+ *
+ * @param collection - Collection descriptor with `id`, optional `title`,
+ *   and the `links` array discovered from the collection document.
+ * @param resourceUrls - Map of `CSAPIResourceType` → URL produced by
+ *   `scanCsapiLinks(rootDoc.links)`.
+ * @returns A configured {@link CSAPIQueryBuilder}.
  *
  * @example
  * ```ts
- * import { createCSAPIBuilder } from '@camptocamp/ogc-client/csapi';
- * import OgcApiEndpoint from '@camptocamp/ogc-client';
+ * import { OgcApiEndpoint } from '@camptocamp/ogc-client';
+ * import { parseDatastream } from '@camptocamp/ogc-client/csapi';
  *
- * const endpoint = await new OgcApiEndpoint('https://api.example.com');
- * const builder = await createCSAPIBuilder(endpoint, 'weather-stations');
+ * const endpoint = new OgcApiEndpoint('https://api.example.com');
+ * // Preferred: use the discoverable entry point on the endpoint.
+ * const builder = await endpoint.csapi('weather-stations');
  *
- * // List systems with a spatial filter
- * const url = builder.getSystems({ bbox: [-180, -90, 180, 90], limit: 50 });
+ * // 1. Builder → URL string (no network call here)
+ * const url = builder.getDatastreams({ limit: 50 });
+ *
+ * // 2. Consumer owns the fetch — auth, timeouts, retries, etc.
+ * const response = await fetch(url, {
+ *   headers: { Authorization: 'Bearer ...' },
+ * });
+ *
+ * // 3. Parse the body with the matching parser
+ * const body = (await response.json()) as { items: unknown[] };
+ * const datastreams = body.items.map(parseDatastream);
  * ```
  *
  * @see {@link CSAPIQueryBuilder} for all available query methods
+ * @see {@link module:csapi | csapi module docblock} for the request pattern
  * @see https://docs.ogc.org/is/23-001/23-001.html
  * @see https://docs.ogc.org/is/23-002/23-002.html
+ *
+ * @public
  */
-export async function createCSAPIBuilder(
-  endpoint: OgcApiEndpoint,
-  collectionId: string
-): Promise<CSAPIQueryBuilder> {
-  if (!(await endpoint.hasConnectedSystems)) {
-    throw new EndpointError('Endpoint does not support Connected Systems');
-  }
-
-  const collectionDoc = await endpoint.getCollectionDocument(collectionId);
-  const rootDoc = await endpoint.root;
-  const links = rootDoc?.links;
-  const resourceUrls = Array.isArray(links)
-    ? scanCsapiLinks(links)
-    : new Map<string, string>();
-
-  if (!isCollectionInfo(collectionDoc)) {
-    throw new EndpointError(
-      `Collection '${collectionId}' document is not a valid OgcApiCollectionInfo`
-    );
-  }
-
-  return new CSAPIQueryBuilder(collectionDoc, resourceUrls);
+export function createCSAPIBuilder(
+  collection: CSAPICollectionRef,
+  resourceUrls: ReadonlyMap<string, string>
+): CSAPIQueryBuilder {
+  return new CSAPIQueryBuilder(collection, new Map(resourceUrls));
 }

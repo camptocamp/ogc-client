@@ -10,7 +10,7 @@ import type { Geometry } from 'geojson';
 /**
  * Extends {@link DateTimeParameter} with the CSAPI Part 2 `'latest'` keyword.
  *
- * The `resultTime` parameter on DataStream and Observation endpoints supports
+ * The `resultTime` parameter on Datastream and Observation endpoints supports
  * the special value `'latest'` to retrieve the most recent result. This type
  * alias keeps the `'latest'` keyword scoped to CSAPI without modifying the
  * shared `DateTimeParameter` used by EDR and other OGC API modules.
@@ -109,6 +109,33 @@ export interface TimeInterval {
 export type ResourceLink = OgcApiDocumentLink;
 
 /**
+ * Minimal collection descriptor required to construct a {@link CSAPIQueryBuilder}.
+ *
+ * Structurally compatible with the upstream `OgcApiCollectionInfo` shape but
+ * defined locally so that the CSAPI module's public API does not depend on
+ * the upstream OGC API collection-info type. Refactors of
+ * `OgcApiCollectionInfo` cannot become breaking changes to the CSAPI public
+ * API.
+ *
+ * Most consumers obtain a `CSAPICollectionRef` implicitly by calling
+ * {@link createCSAPIBuilder}. Direct construction of `CSAPIQueryBuilder` is
+ * the documented workaround for servers that don't advertise CSAPI link
+ * relations — see the `CSAPIQueryBuilder` constructor JSDoc for the
+ * `resourceUrls` pattern.
+ *
+ * @see https://docs.ogc.org/is/23-001/23-001.html#_collection_metadata
+ * @public
+ */
+export interface CSAPICollectionRef {
+  /** Stable collection identifier. */
+  id: string;
+  /** Optional human-readable title. */
+  title?: string;
+  /** Resource links discovered from the collection document. */
+  links: ResourceLink[];
+}
+
+/**
  * Parsed form of a CS API `@link` inline property.
  *
  * `@link` properties appear on Part 1 GeoJSON resources to encode structural
@@ -143,7 +170,16 @@ export interface CSAPIResourceRef {
  * @see https://docs.ogc.org/is/23-001/23-001.html#_query_parameters
  */
 export interface QueryOptions {
-  /** Maximum number of resources to return. */
+  /**
+   * Maximum number of resources to return.
+   *
+   * Optional. When omitted, the server applies its own default page size,
+   * which varies by implementation (`connected-systems-go` defaults to
+   * `limit=10`; OpenSensorHub defaults to `limit=100`). To retrieve all
+   * results, follow the `next` link in the response body's `links` array.
+   * See the Pagination section of {@link CSAPIQueryBuilder}'s class
+   * docblock for the full pagination contract.
+   */
   limit?: number;
   /** Offset-based pagination: number of resources to skip. */
   offset?: number;
@@ -233,7 +269,7 @@ export interface PropertyQueryOptions extends QueryOptions {
 }
 
 /**
- * Query options for DataStream list endpoints.
+ * Query options for Datastream list endpoints.
  * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
  */
 export interface DatastreamQueryOptions extends QueryOptions {
@@ -531,9 +567,9 @@ export interface Property {
 // ========================================
 
 /**
- * A DataStream resource.
+ * A Datastream resource.
  *
- * DataStreams represent a stream of observations from a system, linking
+ * Datastreams represent a stream of observations from a system, linking
  * a system to its observed properties and observation results.
  *
  * Required properties: `name`, `system@link`, `observedProperties`,

@@ -26,6 +26,7 @@ import {
   type TimeInterval,
 } from '../model.js';
 import { parseValidTime } from './geojson.js';
+import { EndpointError } from '../../../shared/errors.js';
 
 // ========================================
 // Shared Helpers
@@ -41,13 +42,57 @@ import { parseValidTime } from './geojson.js';
  * @param json - Raw JSON value from a collection response.
  * @param fn - Function name for the error message.
  * @returns The input narrowed to `Record<string, unknown>`.
- * @throws {Error} When `json` is not a non-null object.
+ * @throws {EndpointError} When `json` is not a non-null object.
  */
 function requireObject(json: unknown, fn: string): Record<string, unknown> {
   if (typeof json !== 'object' || json === null) {
-    throw new Error(`${fn}: input must be a non-null object`);
+    throw new EndpointError(`${fn}: input must be a non-null object`);
   }
   return json as Record<string, unknown>;
+}
+
+/**
+ * Extracts a cross-reference ID from either the scalar `@id` form or the
+ * object `@link` form, per OGC 23-002 §16.1.
+ *
+ * The `@link` form carries an `href` that may be a full URL or just an
+ * identifier; the last path segment is used as the ID. When both forms are
+ * present, `@id` wins (it is the authoritative scalar form).
+ *
+ * Resolves issue #166 (`connected-systems-go` interop): servers MAY emit
+ * either `"<field>@id": "abc"` or `"<field>@link": { href: "..." }`, and
+ * clients MUST accept either.
+ *
+ * @param obj - The raw resource JSON, narrowed to a record.
+ * @param fieldName - The cross-reference field name without the `@id`/`@link`
+ *   suffix (e.g. `'system'`, `'datastream'`, `'foi'`, `'controlstream'`,
+ *   `'command'`, `'samplingFeature'`).
+ * @returns The extracted identifier string, or `undefined` when neither form
+ *   is present or well-formed.
+ */
+function extractCrossReferenceId(
+  obj: Record<string, unknown>,
+  fieldName: string
+): string | undefined {
+  // Form 1: scalar @id (authoritative; wins if both forms present)
+  const idValue = obj[`${fieldName}@id`];
+  if (typeof idValue === 'string' && idValue.length > 0) {
+    return idValue;
+  }
+  // Form 2: object @link with string href
+  const linkValue = obj[`${fieldName}@link`];
+  if (
+    typeof linkValue === 'object' &&
+    linkValue !== null &&
+    typeof (linkValue as Record<string, unknown>).href === 'string'
+  ) {
+    const href = (linkValue as Record<string, unknown>).href as string;
+    const lastSegment = href.split('/').filter(Boolean).pop();
+    if (lastSegment && lastSegment.length > 0) {
+      return lastSegment;
+    }
+  }
+  return undefined;
 }
 
 /**
@@ -69,7 +114,7 @@ interface BaseStream {
  * {@link parseControlStream}.
  *
  * Both resource types inherit the same `baseStream` schema in OGC 23-002
- * (§9.2 DataStream, §10.2 ControlStream). This helper consolidates the
+ * (§9.2 Datastream, §10.2 ControlStream). This helper consolidates the
  * duplicated extraction logic into a single location.
  *
  * @param fn - Function name for error messages (forwarded to {@link requireObject}).
@@ -94,9 +139,10 @@ function parseBaseStream(
       formats: Array.isArray(obj.formats)
         ? obj.formats.filter((f): f is string => typeof f === 'string')
         : [],
-      ...(typeof obj['system@id'] === 'string'
-        ? { systemId: obj['system@id'] as string }
-        : {}),
+      ...((): { systemId?: string } => {
+        const systemId = extractCrossReferenceId(obj, 'system');
+        return systemId !== undefined ? { systemId } : {};
+      })(),
       links: Array.isArray(obj.links) ? (obj.links as ResourceLink[]) : [],
     },
   };
@@ -435,9 +481,10 @@ export function parseCommand(json: unknown): Command {
     ...(typeof obj.sender === 'string' ? { sender: obj.sender } : {}),
     ...(currentStatus !== undefined ? { currentStatus } : {}),
     parameters,
-    ...(typeof obj['controlstream@id'] === 'string'
-      ? { controlStreamId: obj['controlstream@id'] as string }
-      : {}),
+    ...((): { controlStreamId?: string } => {
+      const controlStreamId = extractCrossReferenceId(obj, 'controlstream');
+      return controlStreamId !== undefined ? { controlStreamId } : {};
+    })(),
     ...(Array.isArray(obj.links) ? { links: obj.links as ResourceLink[] } : {}),
   } satisfies Command;
 }
@@ -505,15 +552,18 @@ export function parseObservation(json: unknown): Observation {
       ? { parameters: parametersValue as Record<string, unknown> }
       : {}),
     ...(obj.result !== undefined ? { result: obj.result } : {}),
-    ...(typeof obj['datastream@id'] === 'string'
-      ? { datastreamId: obj['datastream@id'] as string }
-      : {}),
-    ...(typeof obj['samplingFeature@id'] === 'string'
-      ? { samplingFeatureId: obj['samplingFeature@id'] as string }
-      : {}),
-    ...(typeof obj['foi@id'] === 'string'
-      ? { featureOfInterestId: obj['foi@id'] as string }
-      : {}),
+    ...((): { datastreamId?: string } => {
+      const datastreamId = extractCrossReferenceId(obj, 'datastream');
+      return datastreamId !== undefined ? { datastreamId } : {};
+    })(),
+    ...((): { samplingFeatureId?: string } => {
+      const samplingFeatureId = extractCrossReferenceId(obj, 'samplingFeature');
+      return samplingFeatureId !== undefined ? { samplingFeatureId } : {};
+    })(),
+    ...((): { featureOfInterestId?: string } => {
+      const featureOfInterestId = extractCrossReferenceId(obj, 'foi');
+      return featureOfInterestId !== undefined ? { featureOfInterestId } : {};
+    })(),
     ...(Array.isArray(obj.links) ? { links: obj.links as ResourceLink[] } : {}),
   } satisfies Observation;
 }
@@ -582,9 +632,10 @@ export function parseCommandStatus(json: unknown): CommandStatus {
       : {}),
     ...(executionTime !== undefined ? { executionTime } : {}),
     ...(typeof obj.message === 'string' ? { message: obj.message } : {}),
-    ...(typeof obj['command@id'] === 'string'
-      ? { commandId: obj['command@id'] as string }
-      : {}),
+    ...((): { commandId?: string } => {
+      const commandId = extractCrossReferenceId(obj, 'command');
+      return commandId !== undefined ? { commandId } : {};
+    })(),
     ...(Array.isArray(obj.links) ? { links: obj.links as ResourceLink[] } : {}),
   } satisfies CommandStatus;
 }

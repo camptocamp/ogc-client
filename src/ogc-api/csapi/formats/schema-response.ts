@@ -20,6 +20,7 @@ import type {
 } from '../model.js';
 import { parseSWEComponent } from './swecommon/parser.js';
 import { parseEncoding } from './swecommon/data-array.js';
+import { EndpointError } from '../../../shared/errors.js';
 
 /**
  * Transforms a raw JSON object from the `/datastreams/{id}/schema` endpoint
@@ -41,7 +42,7 @@ import { parseEncoding } from './swecommon/data-array.js';
  *
  * @param json - Raw JSON object from the `/datastreams/{id}/schema` endpoint.
  * @returns A typed {@link DatastreamSchemaResponse} object with up to 4 fields.
- * @throws {Error} When `json` is not a non-null object.
+ * @throws {EndpointError} When `json` is not a non-null object.
  *
  * @example
  * ```ts
@@ -67,7 +68,7 @@ export function parseDatastreamSchemaResponse(
   json: unknown
 ): DatastreamSchemaResponse {
   if (typeof json !== 'object' || json === null) {
-    throw new Error(
+    throw new EndpointError(
       'parseDatastreamSchemaResponse: input must be a non-null object'
     );
   }
@@ -121,7 +122,7 @@ export function parseDatastreamSchemaResponse(
  *
  * @param json - Raw JSON object from the `/controlstreams/{id}/schema` endpoint.
  * @returns A typed {@link ControlStreamSchemaResponse} object with up to 3 fields.
- * @throws {Error} When `json` is not a non-null object.
+ * @throws {EndpointError} When `json` is not a non-null object.
  *
  * @example
  * ```ts
@@ -147,7 +148,7 @@ export function parseControlStreamSchemaResponse(
   json: unknown
 ): ControlStreamSchemaResponse {
   if (typeof json !== 'object' || json === null) {
-    throw new Error(
+    throw new EndpointError(
       'parseControlStreamSchemaResponse: input must be a non-null object'
     );
   }

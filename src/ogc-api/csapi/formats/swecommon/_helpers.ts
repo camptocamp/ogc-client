@@ -20,6 +20,7 @@ import type {
   AbstractDataComponent,
   AssociationAttributeGroup,
 } from './types.js';
+import { EndpointError } from '../../../../shared/errors.js';
 
 // ========================================
 // Primitive Helpers
@@ -65,14 +66,16 @@ export function parseBaseProperties(
  *
  * Extracts: `href` (required), `role`, `title`, `arcrole` (all optional).
  *
- * @throws {Error} If `href` is missing or not a string.
+ * @throws {EndpointError} If `href` is missing or not a string.
  * @see https://docs.ogc.org/is/24-014/24-014.html — OGC SWE Common 3.0 (xlink attributes)
  */
 export function parseAssociationAttributeGroup(
   json: Record<string, unknown>
 ): AssociationAttributeGroup {
   if (typeof json.href !== 'string') {
-    throw new Error('AssociationAttributeGroup requires a string "href"');
+    throw new EndpointError(
+      'AssociationAttributeGroup requires a string "href"'
+    );
   }
   const result: AssociationAttributeGroup = { href: json.href };
   if (typeof json.role === 'string') result.role = json.role;

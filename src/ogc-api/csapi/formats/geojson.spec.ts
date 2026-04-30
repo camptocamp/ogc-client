@@ -8,6 +8,7 @@ import {
   SENSORML_NS,
   SSN_NS,
 } from './geojson.js';
+import { EndpointError } from '../../../shared/errors.js';
 
 // ========================================
 // Test Fixtures
@@ -778,7 +779,7 @@ describe('extractCSAPIFeature', () => {
     // getCSAPIResourceType catches this first; the explicit isRecord
     // guard in extractCSAPIFeature is defense-in-depth.
     const raw = { type: 'Feature', properties: null, geometry: null };
-    expect(() => extractCSAPIFeature(raw)).toThrow(Error);
+    expect(() => extractCSAPIFeature(raw)).toThrow(EndpointError);
     expect(() => extractCSAPIFeature(raw)).not.toThrow(TypeError);
   });
 });

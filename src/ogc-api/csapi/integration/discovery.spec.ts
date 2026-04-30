@@ -175,7 +175,7 @@ describe('Discovery workflow — full lifecycle', () => {
     expect(builder.getSystems()).toBe(
       'https://api.example.com/collections/weather/systems'
     );
-    expect(builder.getDataStreams()).toBe(
+    expect(builder.getDatastreams()).toBe(
       'https://api.example.com/collections/weather/datastreams'
     );
     expect(builder.getCommands()).toBe(
@@ -345,7 +345,7 @@ describe('Discovery workflow — partial collection support', () => {
     expect(builder.availableResources.has('deployments')).toBe(true);
 
     // Part 2 resources are unavailable
-    expect(() => builder.getDataStreams()).toThrow(EndpointError);
+    expect(() => builder.getDatastreams()).toThrow(EndpointError);
     expect(() => builder.getObservations()).toThrow(EndpointError);
   });
 
@@ -378,7 +378,7 @@ describe('Discovery workflow — partial collection support', () => {
 
     expect(builder.availableResources.size).toBe(2);
     expect(() => builder.getSystems()).toThrow(EndpointError);
-    expect(builder.getDataStreams()).toContain('/datastreams');
+    expect(builder.getDatastreams()).toContain('/datastreams');
   });
 });
 

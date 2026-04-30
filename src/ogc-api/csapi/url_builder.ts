@@ -1,4 +1,3 @@
-import type { OgcApiCollectionInfo } from '../model.js';
 import type {
   QueryOptions,
   SystemQueryOptions,
@@ -11,6 +10,8 @@ import type {
   ControlStreamQueryOptions,
   CommandQueryOptions,
   CommandStatusQueryOptions,
+  CSAPICollectionRef,
+  CSAPIResourceType,
 } from './model.js';
 import { EndpointError } from '../../shared/errors.js';
 import {
@@ -56,11 +57,46 @@ type ResourceSubPath =
  * resource types (Part 1: systems, deployments, procedures, samplingFeatures,
  * properties; Part 2: datastreams, observations, controlStreams, commands).
  *
+ * **URL builder, NOT an HTTP client.** Every `get*()` method on this class
+ * returns a URL **string** — no network request is made. The consumer is
+ * responsible for issuing the `fetch()` call (auth headers, timeouts,
+ * retries, `AbortSignal`, error handling, content-negotiation) and for
+ * passing the parsed JSON body to the matching parser function
+ * (`parseDatastream`, `parseObservation`, `parseSystem`, …). This mirrors
+ * the design of `EDRQueryBuilder` from the sibling `ogc-api/edr` module —
+ * same pattern, same rationale. See the {@link module:csapi | csapi module
+ * docblock} for the full 5-step request pattern and a complete worked
+ * example.
+ *
  * ## Resource Discovery
  *
  * Available resources are discovered automatically from the collection's link
  * relations. Attempting to build a URL for an unavailable resource throws an
  * {@link EndpointError}. Check `availableResources` to inspect what is available.
+ *
+ * ## Pagination
+ *
+ * All list methods (`get*` returning collection URLs) follow the
+ * [OGC API Common](https://docs.ogc.org/is/19-072/19-072.html#_pagination)
+ * pagination contract:
+ *
+ * - **The server chooses the default page size** if `limit` is unspecified.
+ *   Defaults vary by implementation — `connected-systems-go` defaults to
+ *   `limit=10`; OpenSensorHub defaults to `limit=100`. Code that processes
+ *   only the first response may silently lose data on low-default servers.
+ *
+ * - **The server returns `next` HATEOAS links** in the response body's
+ *   `links` array (`rel: "next"`) when more pages are available. The
+ *   consumer is responsible for following them; this library does not
+ *   auto-paginate.
+ *
+ * - **A future enhancement** (deferred — see issue
+ *   [#170](https://github.com/OS4CSAPI/ogc-client-CSAPI_2/issues/170))
+ *   may add an opt-in async-iterator / `followNext` helper. Until then,
+ *   consumer code MUST follow `next` links explicitly to avoid data loss.
+ *
+ * Every list method on this class carries a `@remarks` Pagination block
+ * that points back at this section.
  *
  * ## Error Handling
  *
@@ -97,8 +133,8 @@ type ResourceSubPath =
  *
  * @example Complete workflow — list, filter, and navigate CSAPI resources:
  * ```ts
- * import { OgcApiEndpoint } from '@AugmentedGeo/ogc-client';
- * import { createCSAPIBuilder } from '@AugmentedGeo/ogc-client/csapi';
+ * import { OgcApiEndpoint } from '@camptocamp/ogc-client';
+ * import { createCSAPIBuilder } from '@camptocamp/ogc-client/csapi';
  *
  * const endpoint = await new OgcApiEndpoint('https://api.example.com');
  * const builder = await createCSAPIBuilder(endpoint, 'weather-stations');
@@ -114,7 +150,7 @@ type ResourceSubPath =
  * const systemUrl = builder.getSystem('sys-001');
  *
  * // List observations for a datastream with temporal filter
- * const obsUrl = builder.getDataStreamObservations('ds-001', {
+ * const obsUrl = builder.getDatastreamObservations('ds-001', {
  *   phenomenonTime: { start: new Date('2024-01-01') },
  *   limit: 100,
  * });
@@ -155,7 +191,7 @@ export default class CSAPIQueryBuilder {
    *
    * @see {@link scanCsapiLinks} for the recognized link conventions
    */
-  public readonly availableResources: Set<string>;
+  public readonly availableResources: ReadonlySet<CSAPIResourceType>;
 
   /** Base URL for resource endpoints, derived from collection links. */
   private baseUrl: string;
@@ -205,7 +241,7 @@ export default class CSAPIQueryBuilder {
    * @see https://docs.ogc.org/is/23-001/23-001.html
    */
   constructor(
-    private collection_: Pick<OgcApiCollectionInfo, 'id' | 'title' | 'links'>,
+    private collection_: CSAPICollectionRef,
     resourceUrls?: Map<string, string>
   ) {
     this.resourceUrls_ = resourceUrls ?? new Map();
@@ -258,12 +294,16 @@ export default class CSAPIQueryBuilder {
    * @returns Set of available resource type names (e.g., 'systems', 'datastreams').
    * @see https://docs.ogc.org/is/23-001/23-001.html
    */
-  private extractAvailableResources(): Set<string> {
+  private extractAvailableResources(): Set<CSAPIResourceType> {
     const links = this.collection_.links;
     if (!Array.isArray(links)) {
-      return new Set<string>();
+      return new Set<CSAPIResourceType>();
     }
-    return new Set(scanCsapiLinks(links).keys());
+    // scanCsapiLinks emits only CSAPIResourceType keys (Conventions 2 & 3
+    // gate by `knownTypes`; Convention 1's `ogc-cs:` prefix is reserved for
+    // spec resource types). The cast aligns the static type with this
+    // runtime invariant without changing behavior.
+    return new Set(scanCsapiLinks(links).keys()) as Set<CSAPIResourceType>;
   }
 
   /**
@@ -417,7 +457,10 @@ export default class CSAPIQueryBuilder {
    * @see {@link scanCsapiLinks} for the link conventions used during discovery
    */
   private assertResourceAvailable(resourceType: string): void {
-    if (!this.availableResources.has(resourceType)) {
+    // Widen the `has` lookup to accept arbitrary string inputs from internal
+    // call sites; the public type of `availableResources` remains
+    // `ReadonlySet<CSAPIResourceType>`. See Phase 8 / Task A3 / Finding 023.
+    if (!(this.availableResources as ReadonlySet<string>).has(resourceType)) {
       throw new EndpointError(
         `Collection '${this.collection_.id}' does not support '${resourceType}' resource. ` +
           `Available resources: ${Array.from(this.availableResources).join(
@@ -458,6 +501,12 @@ export default class CSAPIQueryBuilder {
 
   /**
    * Returns the URL for listing systems.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param options - Optional query parameters for filtering systems.
    * @returns URL string for the systems list endpoint.
@@ -575,6 +624,12 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for retrieving a system's version history.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The system resource identifier.
    * @param options - Optional query parameters for filtering history entries.
    * @returns URL string for the system history endpoint.
@@ -594,6 +649,12 @@ export default class CSAPIQueryBuilder {
 
   /**
    * Returns the URL for listing subsystems of a system.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param id - The parent system resource identifier.
    * @param options - Optional query parameters. Supports `recursive` parameter
@@ -637,6 +698,12 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for listing datastreams associated with a system.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The system resource identifier.
    * @param options - Optional query parameters for filtering datastreams.
    * @returns URL string for the system's datastreams endpoint.
@@ -644,13 +711,13 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.getSystemDataStreams('abc123');
+   * const url = builder.getSystemDatastreams('abc123');
    * // => "https://example.com/collections/iot/systems/abc123/datastreams"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
    */
-  getSystemDataStreams(id: string, options?: DatastreamQueryOptions): string {
+  getSystemDatastreams(id: string, options?: DatastreamQueryOptions): string {
     return this.build('systems', id, 'datastreams', options);
   }
 
@@ -667,18 +734,24 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.createDataStreamForSystem('sys-001');
+   * const url = builder.createDatastreamForSystem('sys-001');
    * // => "https://example.com/collections/iot/systems/sys-001/datastreams"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
    */
-  createDataStreamForSystem(systemId: string): string {
+  createDatastreamForSystem(systemId: string): string {
     return this.build('systems', systemId, 'datastreams');
   }
 
   /**
    * Returns the URL for listing control streams associated with a system.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param id - The system resource identifier.
    * @param options - Optional query parameters for filtering control streams.
@@ -725,6 +798,12 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for listing sampling features associated with a system.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The system resource identifier.
    * @param options - Optional query parameters for filtering sampling features.
    * @returns URL string for the system's sampling features endpoint.
@@ -767,6 +846,12 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for listing deployments associated with a system.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The system resource identifier.
    * @param options - Optional query parameters for filtering deployments.
    * @returns URL string for the system's deployments endpoint.
@@ -786,6 +871,12 @@ export default class CSAPIQueryBuilder {
 
   /**
    * Returns the URL for listing procedures associated with a system.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param id - The system resource identifier.
    * @param options - Optional query parameters for filtering procedures.
@@ -810,6 +901,12 @@ export default class CSAPIQueryBuilder {
 
   /**
    * Returns the URL for querying the deployments collection.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param options - Optional query parameters for filtering, pagination, bbox,
    *   datetime, sorting, and deployment-specific filters.
@@ -915,6 +1012,12 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for listing subdeployments of a deployment.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The parent deployment resource identifier.
    * @param options - Optional query parameters. Supports `recursive` parameter
    *   to include nested subdeployments at all levels.
@@ -967,6 +1070,12 @@ export default class CSAPIQueryBuilder {
    * within a Deployment feature representation (Table 43). Use the parsed
    * `deployedSystemsLink` property on a fetched `CSAPIDeployment` instead.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The deployment resource identifier.
    * @param options - Optional query parameters for filtering systems.
    * @returns URL string for the (non-standard) deployment systems endpoint.
@@ -985,6 +1094,12 @@ export default class CSAPIQueryBuilder {
 
   /**
    * Returns the URL for retrieving a deployment's version history.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param id - The deployment resource identifier.
    * @param options - Optional query parameters for filtering history entries.
@@ -1009,6 +1124,12 @@ export default class CSAPIQueryBuilder {
 
   /**
    * Returns the URL for listing procedures.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param options - Optional query parameters for filtering procedures.
    *   Procedures support: `id`, `uid`, `q`, `limit`, `offset`, `f`.
@@ -1115,6 +1236,12 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for listing systems that implement a procedure.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The procedure resource identifier.
    * @param options - Optional query parameters for filtering systems.
    * @returns URL string for the procedure's systems endpoint.
@@ -1135,6 +1262,12 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for listing datastreams associated with a procedure.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The procedure resource identifier.
    * @param options - Optional query parameters for filtering datastreams.
    * @returns URL string for the procedure's datastreams endpoint.
@@ -1142,13 +1275,13 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.getProcedureDataStreams('proc-001');
+   * const url = builder.getProcedureDatastreams('proc-001');
    * // => "https://example.com/collections/iot/procedures/proc-001/datastreams"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
    */
-  getProcedureDataStreams(
+  getProcedureDatastreams(
     id: string,
     options?: DatastreamQueryOptions
   ): string {
@@ -1157,6 +1290,12 @@ export default class CSAPIQueryBuilder {
 
   /**
    * Returns the URL for retrieving a procedure's version history.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param id - The procedure resource identifier.
    * @param options - Optional query parameters for filtering history entries.
@@ -1181,6 +1320,12 @@ export default class CSAPIQueryBuilder {
 
   /**
    * Returns the URL for listing sampling features.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param options - Optional query parameters for filtering sampling features.
    *   Sampling features support: `id`, `uid`, `q`, `bbox`, `datetime`, `limit`, `offset`, `f`.
@@ -1287,6 +1432,12 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for listing systems associated with a sampling feature.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The sampling feature resource identifier.
    * @param options - Optional query parameters for filtering systems.
    * @returns URL string for the sampling feature's systems endpoint.
@@ -1310,6 +1461,12 @@ export default class CSAPIQueryBuilder {
    * This is a Part 2 cross-reference endpoint linking Part 1 sampling features
    * to Part 2 observation data.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The sampling feature resource identifier.
    * @param options - Optional query parameters for filtering observations.
    * @returns URL string for the sampling feature's observations endpoint.
@@ -1332,6 +1489,12 @@ export default class CSAPIQueryBuilder {
 
   /**
    * Returns the URL for retrieving a sampling feature's version history.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param id - The sampling feature resource identifier.
    * @param options - Optional query parameters for filtering history entries.
@@ -1364,6 +1527,12 @@ export default class CSAPIQueryBuilder {
    *
    * Properties are **read-only** — there are no create, update, or delete
    * endpoints for Properties in the CSAPI specification.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param options - Optional query parameters for filtering properties.
    *   Properties support: `system`, `baseProperty`, `id`, `uid`, `q`,
@@ -1410,6 +1579,12 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for listing systems that observe or actuate a property.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The property resource identifier.
    * @param options - Optional query parameters for filtering systems.
    * @returns URL string for the property's systems endpoint.
@@ -1433,6 +1608,12 @@ export default class CSAPIQueryBuilder {
    * This is a Part 2 cross-reference endpoint linking Part 1 properties
    * to Part 2 datastream data.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The property resource identifier.
    * @param options - Optional query parameters for filtering datastreams.
    * @returns URL string for the property's datastreams endpoint.
@@ -1440,13 +1621,13 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.getPropertyDataStreams('temperature-01');
+   * const url = builder.getPropertyDatastreams('temperature-01');
    * // => "https://example.com/collections/iot/properties/temperature-01/datastreams"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
    */
-  getPropertyDataStreams(id: string, options?: DatastreamQueryOptions): string {
+  getPropertyDatastreams(id: string, options?: DatastreamQueryOptions): string {
     return this.build('properties', id, 'datastreams', options);
   }
 
@@ -1455,6 +1636,12 @@ export default class CSAPIQueryBuilder {
    *
    * This is a Part 2 cross-reference endpoint linking Part 1 properties
    * to Part 2 control stream data.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param id - The property resource identifier.
    * @param options - Optional query parameters for filtering control streams.
@@ -1479,6 +1666,12 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for retrieving a property's version history.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The property resource identifier.
    * @param options - Optional query parameters for filtering history entries.
    * @returns URL string for the property history endpoint.
@@ -1501,9 +1694,15 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for querying all datastreams.
    *
-   * DataStreams represent collections of observations from the same system
+   * Datastreams represent collections of observations from the same system
    * with shared schemas. Supports filtering by system, observed property,
    * and temporal parameters.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param options - Optional query parameters including `systemId`, `observedPropertyId`,
    *   `phenomenonTime`, `resultTime`, plus standard pagination and filtering.
@@ -1512,13 +1711,13 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.getDataStreams({ limit: 10, observedPropertyId: 'temperature' });
+   * const url = builder.getDatastreams({ limit: 10, observedPropertyId: 'temperature' });
    * // => "https://example.com/collections/iot/datastreams?limit=10&observedPropertyId=temperature"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
    */
-  getDataStreams(options?: DatastreamQueryOptions): string {
+  getDatastreams(options?: DatastreamQueryOptions): string {
     return this.build('datastreams', undefined, undefined, options);
   }
 
@@ -1532,13 +1731,13 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.getDataStream('ds-001');
+   * const url = builder.getDatastream('ds-001');
    * // => "https://example.com/collections/iot/datastreams/ds-001"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
    */
-  getDataStream(id: string, options?: QueryOptions): string {
+  getDatastream(id: string, options?: QueryOptions): string {
     return this.build('datastreams', id, undefined, options);
   }
 
@@ -1553,13 +1752,13 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.createDataStream();
+   * const url = builder.createDatastream();
    * // => "https://example.com/collections/iot/datastreams"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
    */
-  createDataStream(): string {
+  createDatastream(): string {
     return this.build('datastreams');
   }
 
@@ -1583,13 +1782,13 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.updateDataStream('ds-001');
+   * const url = builder.updateDatastream('ds-001');
    * // => "https://example.com/collections/iot/datastreams/ds-001"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
    */
-  updateDataStream(id: string): string {
+  updateDatastream(id: string): string {
     return this.build('datastreams', id);
   }
 
@@ -1602,13 +1801,13 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.deleteDataStream('ds-001');
+   * const url = builder.deleteDatastream('ds-001');
    * // => "https://example.com/collections/iot/datastreams/ds-001"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
    */
-  deleteDataStream(id: string): string {
+  deleteDatastream(id: string): string {
     return this.build('datastreams', id);
   }
 
@@ -1631,13 +1830,13 @@ export default class CSAPIQueryBuilder {
    * @example
    * ```ts
    * // Without obsFormat — server returns the default schema:
-   * const url = builder.getDataStreamSchema('ds-001');
+   * const url = builder.getDatastreamSchema('ds-001');
    * // => "https://example.com/collections/iot/datastreams/ds-001/schema"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#req_datastream_schema
    */
-  getDataStreamSchema(id: string, options?: QueryOptions): string {
+  getDatastreamSchema(id: string, options?: QueryOptions): string {
     return this.build('datastreams', id, 'schema', options);
   }
 
@@ -1648,6 +1847,12 @@ export default class CSAPIQueryBuilder {
    * including the special `latest` value for `resultTime`.
    * Supports cursor-based pagination via the `cursor` parameter.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The datastream resource identifier.
    * @param options - Optional query parameters including `phenomenonTime`,
    *   `resultTime`, `cursor`, plus standard pagination and filtering.
@@ -1656,13 +1861,13 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.getDataStreamObservations('ds-001', { resultTime: 'latest', limit: 100 });
+   * const url = builder.getDatastreamObservations('ds-001', { resultTime: 'latest', limit: 100 });
    * // => "https://example.com/collections/iot/datastreams/ds-001/observations?resultTime=latest&limit=100"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_observation_resources
    */
-  getDataStreamObservations(
+  getDatastreamObservations(
     id: string,
     options?: ObservationQueryOptions
   ): string {
@@ -1694,6 +1899,12 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for listing systems that produce a datastream.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The datastream resource identifier.
    * @param options - Optional query parameters for filtering systems.
    * @returns URL string for the datastream's systems endpoint.
@@ -1701,18 +1912,24 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.getDataStreamSystems('ds-001');
+   * const url = builder.getDatastreamSystems('ds-001');
    * // => "https://example.com/collections/iot/datastreams/ds-001/systems"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
    */
-  getDataStreamSystems(id: string, options?: SystemQueryOptions): string {
+  getDatastreamSystems(id: string, options?: SystemQueryOptions): string {
     return this.build('datastreams', id, 'systems', options);
   }
 
   /**
    * Returns the URL for listing procedures associated with a datastream.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param id - The datastream resource identifier.
    * @param options - Optional query parameters for filtering procedures.
@@ -1721,18 +1938,24 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.getDataStreamProcedures('ds-001');
+   * const url = builder.getDatastreamProcedures('ds-001');
    * // => "https://example.com/collections/iot/datastreams/ds-001/procedures"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
    */
-  getDataStreamProcedures(id: string, options?: QueryOptions): string {
+  getDatastreamProcedures(id: string, options?: QueryOptions): string {
     return this.build('datastreams', id, 'procedures', options);
   }
 
   /**
    * Returns the URL for retrieving a datastream's version history.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param id - The datastream resource identifier.
    * @param options - Optional query parameters for filtering history entries.
@@ -1741,13 +1964,13 @@ export default class CSAPIQueryBuilder {
    *
    * @example
    * ```ts
-   * const url = builder.getDataStreamHistory('ds-001', { limit: 5 });
+   * const url = builder.getDatastreamHistory('ds-001', { limit: 5 });
    * // => "https://example.com/collections/iot/datastreams/ds-001/history?limit=5"
    * ```
    *
    * @see https://docs.ogc.org/is/23-002/23-002.html#_datastream_resources
    */
-  getDataStreamHistory(id: string, options?: QueryOptions): string {
+  getDatastreamHistory(id: string, options?: QueryOptions): string {
     return this.build('datastreams', id, 'history', options);
   }
 
@@ -1760,6 +1983,12 @@ export default class CSAPIQueryBuilder {
    * temporal filtering via `phenomenonTime` and `resultTime` (including
    * the special `'latest'` value), plus cursor-based pagination for
    * efficient streaming of large time series.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param options - Optional query parameters including `phenomenonTime`,
    *   `resultTime`, plus standard pagination and filtering.
@@ -1996,6 +2225,12 @@ export default class CSAPIQueryBuilder {
   /**
    * Returns the URL for retrieving an observation's version history.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The observation resource identifier.
    * @param options - Optional query parameters for filtering history entries.
    * @param datastreamId - Optional parent datastream ID for nested path.
@@ -2034,8 +2269,14 @@ export default class CSAPIQueryBuilder {
    * Returns the URL for querying all control streams.
    *
    * ControlStreams represent command interfaces for controlling actuators
-   * and systems. They mirror DataStreams architecturally but for
+   * and systems. They mirror Datastreams architecturally but for
    * control/actuation rather than observation/sensing.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param options - Optional query parameters including `systemId`,
    *   `controlledPropertyId`, plus standard pagination and filtering.
@@ -2179,6 +2420,12 @@ export default class CSAPIQueryBuilder {
    * Supports temporal filtering via `issueTime` and `executionTime`,
    * and cursor-based pagination via the `cursor` parameter.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The control stream resource identifier.
    * @param options - Optional query parameters including `issueTime`,
    *   `executionTime`, `currentStatus`, plus standard pagination and filtering.
@@ -2227,6 +2474,12 @@ export default class CSAPIQueryBuilder {
    * (mapped to `sosa:madeByActuator`) — the System that receives commands from
    * this control channel.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The control stream resource identifier.
    * @param options - Optional query parameters for filtering systems.
    * @returns URL string for the control stream's systems endpoint.
@@ -2251,6 +2504,12 @@ export default class CSAPIQueryBuilder {
    * (mapped to `sosa:usedProcedure`) — the procedure used to process commands
    * received in this control channel.
    *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
+   *
    * @param id - The control stream resource identifier.
    * @param options - Optional query parameters for filtering procedures.
    * @returns URL string for the control stream's procedures endpoint.
@@ -2273,6 +2532,12 @@ export default class CSAPIQueryBuilder {
 
   /**
    * Returns the URL for retrieving a control stream's version history.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param id - The control stream resource identifier.
    * @param options - Optional query parameters for filtering history entries.
@@ -2299,6 +2564,12 @@ export default class CSAPIQueryBuilder {
    * Commands represent tasking requests sent to systems for actuation via
    * control streams. They are the control equivalent of Observations —
    * instructions that flow to systems rather than data that flows from them.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param options - Optional query parameters including `issueTime`,
    *   `executionTime`, `currentStatus`, plus standard pagination and filtering.
@@ -2521,6 +2792,12 @@ export default class CSAPIQueryBuilder {
    *
    * Command status tracks lifecycle state transitions: PENDING → ACCEPTED →
    * EXECUTING → COMPLETED/FAILED/CANCELED.
+   *
+   * @remarks
+   * **Pagination:** server picks the default `limit` if unspecified; the
+   * consumer must follow `next` HATEOAS links from the response body to
+   * retrieve subsequent pages. See the Pagination section of the
+   * {@link CSAPIQueryBuilder} class docblock.
    *
    * @param id - The command resource identifier.
    * @param options - Optional query parameters for filtering command status results.
