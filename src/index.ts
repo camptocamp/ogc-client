@@ -52,7 +52,12 @@ export type {
   StacItemsDocument,
 } from './stac/index.js';
 
-export { useCache, clearCache } from './shared/cache.js';
+export {
+  useCache,
+  clearCache,
+  setCacheExpiryDuration,
+  getCacheExpiryDuration,
+} from './shared/cache.js';
 export {
   sharedFetch,
   setFetchOptions,
