@@ -308,7 +308,7 @@ export default class WfsEndpoint {
   }
 
   /**
-   * Returns the Capabilities URL of the WMS
+   * Returns the Capabilities URL of the WFS
    *
    * This is the URL reported by the service if available, otherwise the URL
    * passed to the constructor
@@ -319,7 +319,7 @@ export default class WfsEndpoint {
       return this._capabilitiesUrl;
     }
     return setQueryParams(baseUrl, {
-      SERVICE: 'WMS',
+      SERVICE: 'WFS',
       REQUEST: 'GetCapabilities',
     });
   }

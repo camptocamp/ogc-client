@@ -673,7 +673,7 @@ describe('WfsEndpoint', () => {
     it('returns the self-reported URL after the capabilities are retrieved', async () => {
       await endpoint.isReady();
       expect(endpoint.getCapabilitiesUrl()).toBe(
-        'https://www.pigma.org/geoserver/wfs?SERVICE=WMS&REQUEST=GetCapabilities'
+        'https://www.pigma.org/geoserver/wfs?SERVICE=WFS&REQUEST=GetCapabilities'
       );
     });
   });
