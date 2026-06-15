@@ -13,6 +13,7 @@ import { WmsVersion } from './model.js';
  * @param extent Expressed in the requested CRS
  * @param outputFormat
  * @param [styles] Comma-separated list of styles to use; leave out for default style
+ * @param [dimensions] Dimension values keyed by dimension name (case-insensitive, e.g. { time: '...' })
  */
 export function generateGetMapUrl(
   serviceUrl: string,
@@ -23,7 +24,8 @@ export function generateGetMapUrl(
   crs: CrsCode,
   extent: BoundingBox,
   outputFormat: MimeType,
-  styles?: string
+  styles?: string,
+  dimensions?: Record<string, string>
 ): string {
   const crsParam = version === '1.3.0' ? 'CRS' : 'SRS';
 
@@ -39,6 +41,14 @@ export function generateGetMapUrl(
   newParams['FORMAT'] = outputFormat ?? 'image/png';
   newParams[crsParam] = crs;
   newParams['BBOX'] = extent.join(',');
+
+  // Dimensions are exposed lowercase in the parsed capabilities (e.g. "time"),
+  // but must be uppercased on the wire like every other WMS parameter.
+  if (dimensions) {
+    for (const [name, value] of Object.entries(dimensions)) {
+      newParams[name.toUpperCase()] = value;
+    }
+  }
 
   return setQueryParams(serviceUrl, newParams);
 }

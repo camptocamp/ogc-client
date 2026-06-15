@@ -19,7 +19,12 @@ import {
   getRootElement,
   stripNamespace,
 } from '../shared/xml-utils.js';
-import { WmsLayerAttribution, WmsLayerFull, WmsVersion } from './model.js';
+import {
+  WmsLayerAttribution,
+  WmsLayerDimension,
+  WmsLayerFull,
+  WmsVersion,
+} from './model.js';
 
 /**
  * Will read all operation URLs from the capabilities doc
@@ -181,7 +186,8 @@ function parseLayer(
   inheritedAttribution: WmsLayerAttribution = null,
   inheritedBoundingBoxes: Record<CrsCode, BoundingBox> = null,
   inheritedMaxScaleDenom: number = null,
-  inheritedMinScaleDenom: number = null
+  inheritedMinScaleDenom: number = null,
+  inheritedDimensions: WmsLayerDimension[] = []
 ): WmsLayerFull {
   const srsTag = version === '1.3.0' ? 'CRS' : 'SRS';
   const srsList = findChildrenElement(layerEl, srsTag).map(getElementText);
@@ -234,6 +240,52 @@ function parseLayer(
   function parseScaleDenominator(name, inheritedValue) {
     const textValue = getElementText(findChildElement(layerEl, name));
     return textValue === '' ? inheritedValue : parseFloat(textValue);
+  }
+  function parseDimensionValues(el: XmlElement): string[] {
+    return getElementText(el)
+      .split(',')
+      .map((value) => value.trim())
+      .filter((value) => value !== '');
+  }
+  // In WMS 1.3.0 the dimension values and their attributes are held directly
+  // by the Dimension element. In WMS 1.1.1 the Dimension element only holds
+  // the metadata (name, units, unitSymbol) while the values and their
+  // attributes (default, nearestValue, multipleValues, current) live in a
+  // sibling Extent element sharing the same name.
+  function parseDimensions(): WmsLayerDimension[] {
+    return (
+      findChildrenElement(layerEl, 'Dimension')
+        .map((dimEl) => {
+          const name = getElementAttribute(dimEl, 'name');
+          const units = getElementAttribute(dimEl, 'units');
+          const unitSymbol = getElementAttribute(dimEl, 'unitSymbol');
+          const valueSource =
+            version === '1.3.0'
+              ? dimEl
+              : findChildrenElement(layerEl, 'Extent').find(
+                  (extentEl) => getElementAttribute(extentEl, 'name') === name
+                ) ?? null;
+          const dimension: WmsLayerDimension = {
+            name,
+            units,
+            defaultValue: getElementAttribute(valueSource, 'default'),
+            values: valueSource ? parseDimensionValues(valueSource) : [],
+            nearestValue:
+              getElementAttribute(valueSource, 'nearestValue') === '1',
+            multipleValues:
+              getElementAttribute(valueSource, 'multipleValues') === '1',
+            current: getElementAttribute(valueSource, 'current') === '1',
+          };
+          if (unitSymbol) {
+            dimension.unitSymbol = unitSymbol;
+          }
+          return dimension;
+        })
+        // A dimension with no resolvable values is not actionable (e.g. a WMS
+        // 1.1.1 Dimension with no matching Extent, or an empty Extent); drop it
+        // so every entry exposed is usable.
+        .filter((dimension) => dimension.values.length > 0)
+    );
   }
   const attributionEl = findChildElement(layerEl, 'Attribution');
   const attribution =
@@ -305,6 +357,17 @@ function parseLayer(
     })
   );
 
+  // Dimensions are inheritable per the WMS spec: a child layer inherits its
+  // ancestors' dimensions, and a dimension it redefines with the same name
+  // replaces the inherited one.
+  const ownDimensions = parseDimensions();
+  const dimensions = [
+    ...inheritedDimensions.filter(
+      (inherited) => !ownDimensions.some((own) => own.name === inherited.name)
+    ),
+    ...ownDimensions,
+  ];
+
   const children = findChildrenElement(layerEl, 'Layer').map((layer) =>
     parseLayer(
       layer,
@@ -314,7 +377,8 @@ function parseLayer(
       attribution,
       boundingBoxes,
       maxScaleDenominator,
-      minScaleDenominator
+      minScaleDenominator,
+      dimensions
     )
   );
   return {
@@ -331,6 +395,7 @@ function parseLayer(
     ...(minScaleDenominator !== null ? { minScaleDenominator } : {}),
     ...(maxScaleDenominator !== null ? { maxScaleDenominator } : {}),
     ...(metadata.length && { metadata }),
+    ...(dimensions.length && { dimensions }),
     ...(children.length && { children }),
   };
 }

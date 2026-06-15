@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE WMT_MS_Capabilities SYSTEM "http://schemas.opengis.net/wms/1.1.1/WMS_MS_Capabilities.dtd">
+<WMT_MS_Capabilities version="1.1.1">
+  <Service>
+    <Name>OGC:WMS</Name>
+    <Title>Dimensions test server</Title>
+  </Service>
+  <Capability>
+    <Layer>
+      <Title>Root</Title>
+      <SRS>EPSG:4326</SRS>
+      <Layer queryable="1">
+        <Name>weather</Name>
+        <Title>Weather</Title>
+        <Dimension name="time" units="ISO8601"/>
+        <Dimension name="elevation" units="EPSG:5030" unitSymbol="m"/>
+        <Extent name="time" default="2024-01-02T00:00:00Z" nearestValue="1" multipleValues="1" current="1">2024-01-01T00:00:00Z,2024-01-02T00:00:00Z,2024-01-03T00:00:00Z</Extent>
+        <Extent name="elevation" default="0">0,1000,3000</Extent>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMT_MS_Capabilities>

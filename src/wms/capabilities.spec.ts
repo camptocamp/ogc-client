@@ -8,6 +8,10 @@ import {
 import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
 // @ts-expect-error ts-migrate(7016)
 import capabilities111 from '../../fixtures/wms/capabilities-brgm-1-1-1.xml';
+// @ts-expect-error ts-migrate(7016)
+import dimensions130 from '../../fixtures/wms/capabilities-dimensions-1-3-0.xml';
+// @ts-expect-error ts-migrate(7016)
+import dimensions111 from '../../fixtures/wms/capabilities-dimensions-1-1-1.xml';
 import { parseXmlString } from '../shared/xml-utils.js';
 import type { WmsLayerFull } from './model.js';
 
@@ -296,6 +300,100 @@ describe('WMS capabilities', () => {
       expect(
         readLayersFromCapabilities(doc).map(fixupScaleDenominators)
       ).toEqual(expectedLayers);
+    });
+  });
+
+  describe('layer dimensions', () => {
+    // Same expected output for both versions: the parser normalizes the
+    // WMS 1.1.1 Dimension/Extent split into the 1.3.0 inline representation.
+    const expectedDimensions = [
+      {
+        name: 'time',
+        units: 'ISO8601',
+        defaultValue: '2024-01-02T00:00:00Z',
+        values: [
+          '2024-01-01T00:00:00Z',
+          '2024-01-02T00:00:00Z',
+          '2024-01-03T00:00:00Z',
+        ],
+        nearestValue: true,
+        multipleValues: true,
+        current: true,
+      },
+      {
+        name: 'elevation',
+        units: 'EPSG:5030',
+        unitSymbol: 'm',
+        defaultValue: '0',
+        values: ['0', '1000', '3000'],
+        nearestValue: false,
+        multipleValues: false,
+        current: false,
+      },
+    ];
+    it('reads the dimensions (1.3.0)', () => {
+      const doc = parseXmlString(dimensions130);
+      const [layer] = readLayersFromCapabilities(doc)[0].children;
+      expect(layer.dimensions).toEqual(expectedDimensions);
+    });
+    it('reads the dimensions (1.1.1)', () => {
+      const doc = parseXmlString(dimensions111);
+      const [layer] = readLayersFromCapabilities(doc)[0].children;
+      expect(layer.dimensions).toEqual(expectedDimensions);
+    });
+    it('skips a 1.1.1 Dimension with no matching Extent (no values)', () => {
+      const doc = parseXmlString(`<?xml version="1.0"?>
+        <WMT_MS_Capabilities version="1.1.1">
+          <Capability>
+            <Layer>
+              <Layer queryable="1">
+                <Name>weather</Name>
+                <Title>Weather</Title>
+                <Dimension name="time" units="ISO8601"/>
+              </Layer>
+            </Layer>
+          </Capability>
+        </WMT_MS_Capabilities>`);
+      const [layer] = readLayersFromCapabilities(doc)[0].children;
+      expect(layer.dimensions).toBeUndefined();
+    });
+    it('inherits parent dimensions, child redefinition overriding by name', () => {
+      const doc = parseXmlString(`<?xml version="1.0"?>
+        <WMS_Capabilities version="1.3.0" xmlns="http://www.opengis.net/wms">
+          <Capability>
+            <Layer>
+              <Title>Root</Title>
+              <Dimension name="time" units="ISO8601" default="2024-01-01T00:00:00Z">2024-01-01T00:00:00Z</Dimension>
+              <Dimension name="elevation" units="EPSG:5030" default="0">0,1000</Dimension>
+              <Layer queryable="1">
+                <Name>weather</Name>
+                <Title>Weather</Title>
+                <Dimension name="elevation" units="EPSG:5030" default="3000">3000,5000</Dimension>
+              </Layer>
+            </Layer>
+          </Capability>
+        </WMS_Capabilities>`);
+      const [layer] = readLayersFromCapabilities(doc)[0].children;
+      expect(layer.dimensions).toEqual([
+        {
+          name: 'time',
+          units: 'ISO8601',
+          defaultValue: '2024-01-01T00:00:00Z',
+          values: ['2024-01-01T00:00:00Z'],
+          nearestValue: false,
+          multipleValues: false,
+          current: false,
+        },
+        {
+          name: 'elevation',
+          units: 'EPSG:5030',
+          defaultValue: '3000',
+          values: ['3000', '5000'],
+          nearestValue: false,
+          multipleValues: false,
+          current: false,
+        },
+      ]);
     });
   });
 
