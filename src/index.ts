@@ -15,6 +15,7 @@ export type {
 export { default as WmsEndpoint } from './wms/endpoint.js';
 export type {
   WmsLayerFull,
+  WmsLayerDimension,
   WmsVersion,
   WmsLayerSummary,
   WmsLayerAttribution,

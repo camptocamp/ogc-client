@@ -34,4 +34,22 @@ describe('generateGetMapUrl', () => {
       'http://example.com/wms?SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=layer1%2Clayer2&STYLES=style1%2Cstyle2&WIDTH=100&HEIGHT=200&FORMAT=image%2Fpng&CRS=EPSG%3A4326&BBOX=10%2C20%2C100%2C200'
     );
   });
+  it('appends dimension values as query params, uppercasing the keys', () => {
+    expect(
+      generateGetMapUrl(
+        'http://example.com/wms',
+        '1.3.0',
+        'layer1',
+        100,
+        200,
+        'EPSG:4326',
+        [10, 20, 100, 200],
+        'image/png',
+        undefined,
+        { time: '2024-01-02T00:00:00Z', elevation: '1000' }
+      )
+    ).toBe(
+      'http://example.com/wms?SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=layer1&STYLES=&WIDTH=100&HEIGHT=200&FORMAT=image%2Fpng&CRS=EPSG%3A4326&BBOX=10%2C20%2C100%2C200&TIME=2024-01-02T00%3A00%3A00Z&ELEVATION=1000'
+    );
+  });
 });

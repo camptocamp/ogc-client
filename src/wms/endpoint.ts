@@ -156,6 +156,7 @@ export default class WmsEndpoint {
    * @param {BoundingBox} options.extent Expressed in the requested CRS
    * @param {MimeType} options.outputFormat
    * @param {string} [options.styles] List of styles to use, one for each layer requested; leave out or use empty string for default style
+   * @param {Object} [options.dimensions] Dimension values keyed by uppercase dimension name (e.g. { TIME: '...' })
    * @returns Returns null if endpoint is not ready
    */
   getMapUrl(
@@ -167,12 +168,14 @@ export default class WmsEndpoint {
       extent: BoundingBox;
       outputFormat: MimeType;
       styles?: string[];
+      dimensions?: Record<string, string>;
     }
   ) {
     if (!this._layers) {
       return null;
     }
-    const { widthPx, heightPx, crs, extent, outputFormat, styles } = options;
+    const { widthPx, heightPx, crs, extent, outputFormat, styles, dimensions } =
+      options;
     // TODO: check supported CRS
     // TODO: check supported output formats
     // TODO: check supported styles
@@ -185,7 +188,8 @@ export default class WmsEndpoint {
       crs,
       extent,
       outputFormat,
-      styles !== undefined ? styles.join(',') : ''
+      styles !== undefined ? styles.join(',') : '',
+      dimensions
     );
   }
 
