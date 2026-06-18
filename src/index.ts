@@ -13,6 +13,12 @@ export type {
   WfsGetFeatureOptions,
 } from './wfs/model.js';
 export { default as WmsEndpoint } from './wms/endpoint.js';
+export {
+  getDimensionDefaultValue,
+  expandDimensionValues,
+  parseIso8601Duration,
+  parseIso8601DurationMs,
+} from './wms/dimension.js';
 export type {
   WmsLayerFull,
   WmsLayerDimension,
