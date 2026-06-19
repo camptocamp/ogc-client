@@ -40,8 +40,8 @@ describe('NcwmsEndpoint', () => {
       const calledUrl: string = (globalThis.fetch as jest.Mock).mock
         .calls[0][0];
       expect(calledUrl).toContain('REQUEST=GetMetadata');
-      expect(calledUrl).toContain('ITEM=layerDetails');
-      expect(calledUrl).toContain('LAYERNAME=tos');
+      expect(calledUrl).toContain('item=layerDetails');
+      expect(calledUrl).toContain('layerName=tos');
     });
   });
 
@@ -68,6 +68,25 @@ describe('NcwmsEndpoint', () => {
         supportedStyles: ['boxfill', 'contour'],
         units: '°C',
         bbox: [-180.0, -90.0, 180.0, 90.0],
+      });
+    });
+
+    describe('when the server returns numeric values as strings (e.g. ERDDAP/CMEMS)', () => {
+      beforeEach(() => {
+        globalThis.fetchResponseFactory = () =>
+          JSON.stringify({
+            ...layerDetailsFixture,
+            scaleRange: ['-3.0', '32.0'],
+            bbox: ['-180.0', '-77.0104751586914', '179.5', '89.8962631225586'],
+          });
+      });
+      it('coerces string numbers and returns parsed layer details', async () => {
+        const details = await endpoint.getLayerDetails('tos');
+        expect(details).not.toBeNull();
+        expect(details!.scaleRange).toEqual([-3.0, 32.0]);
+        expect(details!.bbox).toEqual([
+          -180.0, -77.0104751586914, 179.5, 89.8962631225586,
+        ]);
       });
     });
 
@@ -123,10 +142,10 @@ describe('NcwmsEndpoint', () => {
       const calledUrl: string = (globalThis.fetch as jest.Mock).mock
         .calls[0][0];
       expect(calledUrl).toContain('REQUEST=GetMetadata');
-      expect(calledUrl).toContain('ITEM=minmax');
-      expect(calledUrl).toContain('LAYERS=tos');
-      expect(calledUrl).toContain('BBOX=-10%2C30%2C10%2C50');
-      expect(calledUrl).toContain('SRS=CRS%3A84');
+      expect(calledUrl).toContain('item=minmax');
+      expect(calledUrl).toContain('layerName=tos');
+      expect(calledUrl).toContain('bbox=-10%2C30%2C10%2C50');
+      expect(calledUrl).toContain('crs=CRS%3A84');
     });
 
     it('includes TIME and ELEVATION when provided', async () => {
@@ -136,8 +155,8 @@ describe('NcwmsEndpoint', () => {
       });
       const calledUrl: string = (globalThis.fetch as jest.Mock).mock
         .calls[0][0];
-      expect(calledUrl).toContain('TIME=2023-01-01T00%3A00%3A00Z');
-      expect(calledUrl).toContain('ELEVATION=-10');
+      expect(calledUrl).toContain('time=2023-01-01T00%3A00%3A00Z');
+      expect(calledUrl).toContain('elevation=-10');
     });
 
     it('returns parsed min/max values', async () => {
