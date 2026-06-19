@@ -10,7 +10,6 @@ import getFeatureStates100 from '../../fixtures/wfs/getfeature-props-states-1-0-
 import getFeatureStates110 from '../../fixtures/wfs/getfeature-props-states-1-1-0.xml';
 // @ts-expect-error ts-migrate(7016)
 import getFeatureStates200 from '../../fixtures/wfs/getfeature-props-states-2-0-0.xml';
-// @ts-expect-error ts-migrate(7016)
 import getFeatureStates200Geojson from '../../fixtures/wfs/getfeature-props-states-2-0-0.json';
 import {
   computeFeaturePropsDetails,
