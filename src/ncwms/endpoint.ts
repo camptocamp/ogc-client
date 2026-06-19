@@ -96,7 +96,9 @@ export class NcwmsEndpoint {
       scaleRange: data.scaleRange as [number, number],
       palettes: data.palettes as string[],
       defaultPalette:
-        typeof data.defaultPalette === 'string' ? data.defaultPalette : undefined,
+        typeof data.defaultPalette === 'string'
+          ? data.defaultPalette
+          : undefined,
       supportedStyles:
         Array.isArray(data.supportedStyles) &&
         data.supportedStyles.every((s) => typeof s === 'string')
@@ -138,8 +140,13 @@ export class NcwmsEndpoint {
     if (!resp.ok) {
       throw new Error(`NcWMS GetMinMax failed with status ${resp.status}`);
     }
-    const data = await resp.json();
-    return { min: data.min as number, max: data.max as number };
+    const data = (await resp.json()) as { min?: unknown; max?: unknown };
+    const min = typeof data.min === 'number' ? data.min : Number(data.min);
+    const max = typeof data.max === 'number' ? data.max : Number(data.max);
+    if (!Number.isFinite(min) || !Number.isFinite(max)) {
+      throw new Error('NcWMS GetMinMax returned an invalid min/max payload');
+    }
+    return { min, max };
   }
 
   /**
