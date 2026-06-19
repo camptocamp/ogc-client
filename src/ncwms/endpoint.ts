@@ -45,8 +45,8 @@ export class NcwmsEndpoint {
     const url = setQueryParams(this._baseUrl, {
       SERVICE: 'WMS',
       REQUEST: 'GetMetadata',
-      ITEM: 'layerDetails',
-      LAYERNAME: layerName,
+      item: 'layerDetails',
+      layerName: layerName,
     });
 
     return useCache(
@@ -75,25 +75,32 @@ export class NcwmsEndpoint {
       return null;
     }
 
+    const toFiniteNumber = (v: unknown): number | null => {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : null;
+    };
+
     if (
       !Array.isArray(data.palettes) ||
       !data.palettes.every((p) => typeof p === 'string') ||
       !Array.isArray(data.scaleRange) ||
       data.scaleRange.length !== 2 ||
-      !data.scaleRange.every((n) => typeof n === 'number' && Number.isFinite(n))
+      data.scaleRange.some((n) => toFiniteNumber(n) === null)
     ) {
       return null;
     }
 
+    const scaleRange = data.scaleRange.map(toFiniteNumber) as [number, number];
+
     const bbox =
       Array.isArray(data.bbox) &&
       data.bbox.length === 4 &&
-      data.bbox.every((n) => typeof n === 'number' && Number.isFinite(n))
-        ? (data.bbox as BoundingBox)
+      data.bbox.every((n) => toFiniteNumber(n) !== null)
+        ? (data.bbox.map(toFiniteNumber) as BoundingBox)
         : ([-180, -90, 180, 90] as BoundingBox);
 
     return {
-      scaleRange: data.scaleRange as [number, number],
+      scaleRange,
       palettes: data.palettes as string[],
       defaultPalette:
         typeof data.defaultPalette === 'string'
@@ -125,15 +132,15 @@ export class NcwmsEndpoint {
       SERVICE: 'WMS',
       VERSION: '1.1.1',
       REQUEST: 'GetMetadata',
-      ITEM: 'minmax',
-      LAYERS: layerName,
-      BBOX: bbox.join(','),
-      SRS: 'CRS:84',
-      WIDTH: '50',
-      HEIGHT: '50',
+      item: 'minmax',
+      layerName: layerName,
+      bbox: bbox.join(','),
+      crs: 'CRS:84',
+      width: '50',
+      height: '50',
     };
-    if (options?.time) params['TIME'] = options.time;
-    if (options?.elevation) params['ELEVATION'] = options.elevation;
+    if (options?.time) params['time'] = options.time;
+    if (options?.elevation) params['elevation'] = options.elevation;
 
     const url = setQueryParams(this._baseUrl, params);
     const resp = await sharedFetch(url, 'GET', true);
