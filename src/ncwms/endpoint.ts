@@ -77,23 +77,33 @@ export class NcwmsEndpoint {
 
     if (
       !Array.isArray(data.palettes) ||
+      !data.palettes.every((p) => typeof p === 'string') ||
       !Array.isArray(data.scaleRange) ||
-      (data.scaleRange as unknown[]).length !== 2
+      data.scaleRange.length !== 2 ||
+      !data.scaleRange.every((n) => typeof n === 'number' && Number.isFinite(n))
     ) {
       return null;
     }
 
+    const bbox =
+      Array.isArray(data.bbox) &&
+      data.bbox.length === 4 &&
+      data.bbox.every((n) => typeof n === 'number' && Number.isFinite(n))
+        ? (data.bbox as BoundingBox)
+        : ([-180, -90, 180, 90] as BoundingBox);
+
     return {
       scaleRange: data.scaleRange as [number, number],
       palettes: data.palettes as string[],
-      defaultPalette: (data.defaultPalette as string) ?? undefined,
-      supportedStyles: Array.isArray(data.supportedStyles)
-        ? (data.supportedStyles as string[])
-        : ['boxfill'],
-      units: (data.units as string) ?? '',
-      bbox: Array.isArray(data.bbox)
-        ? (data.bbox as BoundingBox)
-        : [-180, -90, 180, 90],
+      defaultPalette:
+        typeof data.defaultPalette === 'string' ? data.defaultPalette : undefined,
+      supportedStyles:
+        Array.isArray(data.supportedStyles) &&
+        data.supportedStyles.every((s) => typeof s === 'string')
+          ? (data.supportedStyles as string[])
+          : ['boxfill'],
+      units: typeof data.units === 'string' ? data.units : '',
+      bbox,
     };
   }
 
