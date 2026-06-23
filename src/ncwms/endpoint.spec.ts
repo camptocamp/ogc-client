@@ -143,9 +143,9 @@ describe('NcwmsEndpoint', () => {
         .calls[0][0];
       expect(calledUrl).toContain('REQUEST=GetMetadata');
       expect(calledUrl).toContain('item=minmax');
-      expect(calledUrl).toContain('layerName=tos');
+      expect(calledUrl).toContain('LAYERS=tos');
       expect(calledUrl).toContain('bbox=-10%2C30%2C10%2C50');
-      expect(calledUrl).toContain('crs=CRS%3A84');
+      expect(calledUrl).toContain('SRS=CRS%3A84');
     });
 
     it('includes TIME and ELEVATION when provided', async () => {
