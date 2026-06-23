@@ -35,6 +35,61 @@ describe('link-utils', () => {
     });
   });
 
+  const itemsResponse = {
+    ok: true,
+    clone: () => ({ json: () => Promise.resolve({ features: [] }) }),
+  };
+  const firstFetchedUrl = () =>
+    new URL((httpUtils.sharedFetch as jest.Mock).mock.calls[0][0]);
+
+  describe('fetchRoot with an /items initial url', () => {
+    it('forces limit=1 even if the url already has a larger limit', async () => {
+      const landingPage = {
+        links: [
+          { rel: 'service-desc', href: 'https://example.com/api?f=json' },
+          { rel: 'conformance', href: 'https://example.com/conformance' },
+        ],
+      };
+      (httpUtils.sharedFetch as jest.Mock)
+        .mockResolvedValueOnce(itemsResponse)
+        .mockResolvedValue({
+          ok: true,
+          clone: () => ({ json: () => Promise.resolve(landingPage) }),
+        });
+
+      await linkUtils.fetchRoot(
+        'https://example.com/collections/big/items?limit=500'
+      );
+
+      expect(firstFetchedUrl().pathname).toBe('/collections/big/items');
+      expect(firstFetchedUrl().searchParams.get('limit')).toBe('1');
+    });
+  });
+
+  describe('fetchCollectionRoot with an /items initial url', () => {
+    it('adds limit=1 to an /items url that has no limit', async () => {
+      const collection = {
+        id: 'big',
+        links: [
+          { rel: 'items', href: 'https://example.com/collections/big/items' },
+        ],
+      };
+      (httpUtils.sharedFetch as jest.Mock)
+        .mockResolvedValueOnce(itemsResponse)
+        .mockResolvedValue({
+          ok: true,
+          clone: () => ({ json: () => Promise.resolve(collection) }),
+        });
+
+      await linkUtils.fetchCollectionRoot(
+        'https://example.com/collections/big/items'
+      );
+
+      expect(firstFetchedUrl().pathname).toBe('/collections/big/items');
+      expect(firstFetchedUrl().searchParams.get('limit')).toBe('1');
+    });
+  });
+
   describe('getLinks', () => {
     it('returns links matching the provided rel type', () => {
       const mockDoc: OgcApiDocument = {
