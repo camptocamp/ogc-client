@@ -133,9 +133,9 @@ export class NcwmsEndpoint {
       VERSION: '1.1.1',
       REQUEST: 'GetMetadata',
       item: 'minmax',
-      layerName: layerName,
+      LAYERS: layerName,
       bbox: bbox.join(','),
-      crs: 'CRS:84',
+      SRS: 'CRS:84',
       width: '50',
       height: '50',
     };
