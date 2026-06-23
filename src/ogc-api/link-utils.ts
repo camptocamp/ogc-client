@@ -7,6 +7,16 @@ import { EndpointError } from '../shared/errors.js';
 import { sharedFetch } from '../shared/http-utils.js';
 import { getParentPath, getBaseUrl } from '../shared/url-utils.js';
 
+// During endpoint discovery we may fetch an `/items` URL just to inspect its links.
+// Cap that response so initial endpoint loading does not pull a full collection.
+function capItemsForDiscovery(url: string): string {
+  const urlObj = new URL(url, getBaseUrl());
+  if (urlObj.pathname.replace(/\/$/, '').endsWith('/items')) {
+    urlObj.searchParams.set('limit', '1');
+  }
+  return urlObj.toString();
+}
+
 export function fetchDocument<T extends OgcApiDocument>(
   url: string
 ): Promise<T> {
@@ -40,7 +50,7 @@ function checkIsLandingPage(doc: OgcApiDocument): boolean {
 }
 
 export function fetchRoot(url: string): Promise<OgcApiDocument> {
-  return fetchDocument(url).then((doc) => {
+  return fetchDocument(capItemsForDiscovery(url)).then((doc) => {
     // if no data link, attempt to look at the parent
     if (!checkIsLandingPage(doc)) {
       const parentUrl = getParentPath(url);
@@ -60,7 +70,7 @@ export function fetchRoot(url: string): Promise<OgcApiDocument> {
 export function fetchCollectionRoot(
   url: string
 ): Promise<OgcApiDocument | null> {
-  return fetchDocument(url).then((doc) => {
+  return fetchDocument(capItemsForDiscovery(url)).then((doc) => {
     // this looks like the root; return null
     if (checkIsLandingPage(doc)) {
       return null;
