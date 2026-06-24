@@ -16,7 +16,7 @@ import type WMTSTileGrid from 'ol/tilegrid/WMTS.js';
  * Represents a WMTS endpoint advertising several layers.
  */
 export default class WmtsEndpoint {
-  private _capabilitiesPromise: Promise<void>;
+  private _capabilitiesUrl: string;
   private _info: WmtsEndpointInfo = null;
   private _layers: WmtsLayer[] = null;
   private _matrixSets: WmtsMatrixSet[] = null;
@@ -27,23 +27,9 @@ export default class WmtsEndpoint {
    *   initialize the endpoint
    */
   constructor(url: string) {
-    const capabilitiesUrl = setQueryParams(url, {
+    this._capabilitiesUrl = setQueryParams(url, {
       SERVICE: 'WMTS',
       REQUEST: 'GetCapabilities',
-    });
-
-    /**
-     * This fetches the capabilities doc and parses its contents
-     */
-    this._capabilitiesPromise = useCache(
-      () => parseWmtsCapabilities(capabilitiesUrl),
-      'WMTS',
-      'CAPABILITIES',
-      capabilitiesUrl
-    ).then(({ info, layers, matrixSets }) => {
-      this._info = info;
-      this._layers = layers;
-      this._matrixSets = matrixSets;
     });
   }
 
@@ -52,7 +38,24 @@ export default class WmtsEndpoint {
    * @throws {EndpointError}
    */
   isReady() {
-    return this._capabilitiesPromise.then(() => this);
+    if (this._info) {
+      return Promise.resolve(this);
+    }
+
+    /**
+     * This fetches the capabilities doc and parses its contents
+     */
+    const capabilitiesPromise = useCache(
+      () => parseWmtsCapabilities(this._capabilitiesUrl),
+      'WMTS',
+      'CAPABILITIES',
+      this._capabilitiesUrl
+    ).then(({ info, layers, matrixSets }) => {
+      this._info = info;
+      this._layers = layers;
+      this._matrixSets = matrixSets;
+    });
+    return capabilitiesPromise.then(() => this);
   }
 
   /**

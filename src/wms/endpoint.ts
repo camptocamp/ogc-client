@@ -24,7 +24,6 @@ import { parseDescribeLayerResponse } from './describelayer.js';
  */
 export default class WmsEndpoint {
   private _capabilitiesUrl: string;
-  private _capabilitiesPromise: Promise<void>;
   private _info: GenericEndpointInfo | null;
   private _layers: WmsLayerFull[] | null;
   private _url: Record<OperationName, OperationUrl>;
@@ -39,11 +38,21 @@ export default class WmsEndpoint {
       SERVICE: 'WMS',
       REQUEST: 'GetCapabilities',
     });
+  }
+
+  /**
+   * Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.
+   * @throws {EndpointError}
+   */
+  isReady() {
+    if (this._info) {
+      return Promise.resolve(this);
+    }
 
     /**
      * This fetches the capabilities doc and parses its contents
      */
-    this._capabilitiesPromise = useCache(
+    const capabilitiesPromise = useCache(
       () => parseWmsCapabilities(this._capabilitiesUrl),
       'WMS',
       'CAPABILITIES',
@@ -54,14 +63,8 @@ export default class WmsEndpoint {
       this._url = url;
       this._version = version;
     });
-  }
 
-  /**
-   * Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.
-   * @throws {EndpointError}
-   */
-  isReady() {
-    return this._capabilitiesPromise.then(() => this);
+    return capabilitiesPromise.then(() => this);
   }
 
   /**
