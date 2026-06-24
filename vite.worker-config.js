@@ -1,5 +1,8 @@
+import { resolve, relative } from 'node:path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+
+const srcRoot = resolve('src');
 
 export default defineConfig({
   plugins: [
@@ -17,9 +20,14 @@ export default defineConfig({
     },
     emptyOutDir: false,
     rollupOptions: {
-      external: [/^ol/, 'proj4'],
+      // Inline only the worker code, not the dependencies
+      external: (source, importer) => {
+        if (!importer) return false;
+        if (source.includes('?worker')) return false;
+        return true;
+      },
       output: {
-        globals: (name) => name,
+        paths: (id) => relative(srcRoot, id),
         inlineDynamicImports: true,
       },
     },

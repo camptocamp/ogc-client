@@ -4,7 +4,10 @@ import {
   OperationName,
   OperationUrl,
 } from '../shared/models.js';
-import { setFetchOptionsUpdateCallback } from '../shared/http-utils.js';
+import {
+  getFetchOptions,
+  setFetchOptionsUpdateCallback,
+} from '../shared/http-utils.js';
 import { WmtsEndpointInfo, WmtsLayer, WmtsMatrixSet } from '../wmts/model.js';
 import {
   WfsFeatureTypeFull,
@@ -37,6 +40,12 @@ function getWorkerInstance() {
   }
   if (!workerInstance) {
     workerInstance = new OgcClientWorker();
+    setFetchOptionsUpdateCallback((options) => {
+      sendTaskRequest('updateFetchOptions', workerInstance, { options });
+    });
+    sendTaskRequest('updateFetchOptions', workerInstance, {
+      options: getFetchOptions(),
+    });
   }
   return workerInstance;
 }
@@ -102,9 +111,3 @@ export function parseWmtsCapabilities(capabilitiesUrl: string): Promise<{
     url: capabilitiesUrl,
   });
 }
-
-setFetchOptionsUpdateCallback((options) => {
-  const worker = getWorkerInstance();
-  if (!worker) return;
-  sendTaskRequest('updateFetchOptions', getWorkerInstance(), { options });
-});
