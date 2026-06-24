@@ -1,0 +1,30 @@
+{
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document as JSON",
+      "href": "http://local/csapi/multi-hub?f=json"
+    },
+    {
+      "rel": "service-desc",
+      "type": "application/vnd.oai.openapi+json;version=3.0",
+      "title": "OpenAPI definition",
+      "href": "http://local/csapi/multi-hub/openapi"
+    },
+    {
+      "rel": "conformance",
+      "type": "application/json",
+      "title": "Conformance",
+      "href": "http://local/csapi/multi-hub/conformance"
+    },
+    {
+      "rel": "data",
+      "type": "application/json",
+      "title": "Collections",
+      "href": "http://local/csapi/multi-hub/collections"
+    }
+  ],
+  "title": "CSAPI Multi-Collection Hub",
+  "description": "Test fixture with multiple CSAPI-capable collections"
+}

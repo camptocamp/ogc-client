@@ -104,6 +104,42 @@ export function checkHasEnvironmentalDataRetrieval([conformance]: [
 }
 
 /**
+ * Canonical URI base for OGC API - Connected Systems Part 1 conformance classes.
+ * Per OGC 23-001 §6, all Part 1 conformance class URIs share this prefix.
+ */
+export const CSAPI_PART1_CONFORMANCE_PREFIX =
+  'http://www.opengis.net/spec/ogcapi-connectedsystems-1/';
+
+/**
+ * Canonical URI base for OGC API - Connected Systems Part 2 conformance classes.
+ * Per OGC 23-002 §6, all Part 2 conformance class URIs share this prefix.
+ */
+export const CSAPI_PART2_CONFORMANCE_PREFIX =
+  'http://www.opengis.net/spec/ogcapi-connectedsystems-2/';
+
+/**
+ * Checks whether the endpoint supports OGC API - Connected Systems.
+ *
+ * Returns true if any declared conformance class belongs to Part 1 or Part 2.
+ * Per the published standards, there is no single mandatory class (Part 1
+ * explicitly states "There is no Core requirements class"); any class declared
+ * under either prefix proves the server implements some portion of CSAPI.
+ *
+ * Detection is intentionally permissive at the library level: per-resource
+ * capability gating (e.g. `/conf/datastream`) is performed by downstream code.
+ *
+ * @see https://docs.ogc.org/is/23-001/23-001.html
+ * @see https://docs.ogc.org/is/23-002/23-002.html
+ */
+export function checkHasConnectedSystems([conformance]: [ConformanceClass[]]) {
+  return conformance.some(
+    (c) =>
+      c.startsWith(CSAPI_PART1_CONFORMANCE_PREFIX) ||
+      c.startsWith(CSAPI_PART2_CONFORMANCE_PREFIX)
+  );
+}
+
+/**
  * This does not include queryables and sortables!
  */
 export function parseBaseCollectionInfo(
@@ -233,6 +269,7 @@ export function parseCollections(doc: OgcApiDocument): Array<{
   hasVectorTiles?: boolean;
   hasMapTiles?: boolean;
   hasDataQueries?: boolean;
+  hasConnectedSystems?: boolean;
 }> {
   return doc.collections.map((collection) => {
     const result: {
@@ -242,6 +279,7 @@ export function parseCollections(doc: OgcApiDocument): Array<{
       hasVectorTiles?: boolean;
       hasMapTiles?: boolean;
       hasDataQueries?: boolean;
+      hasConnectedSystems?: boolean;
     } = {
       name: collection.id as string,
     };
@@ -270,6 +308,15 @@ export function parseCollections(doc: OgcApiDocument): Array<{
 
     if (collection.data_queries) {
       result.hasDataQueries = true;
+    }
+
+    if (
+      Array.isArray(collection.links) &&
+      collection.links.some(
+        (link) => typeof link.rel === 'string' && /^ogc-cs:.+$/.test(link.rel)
+      )
+    ) {
+      result.hasConnectedSystems = true;
     }
 
     return result;

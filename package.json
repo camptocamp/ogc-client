@@ -12,6 +12,7 @@
     "src/"
   ],
   "type": "module",
+  "sideEffects": false,
   "engines": {
     "node": ">=20.0.0"
   },
@@ -21,6 +22,12 @@
       "import": "./dist/dist-node.js",
       "browser": "./dist/index.js",
       "default": "./dist/dist-node.js"
+    },
+    "./csapi": {
+      "types": "./dist/ogc-api/csapi/index.d.ts",
+      "import": "./dist/ogc-api/csapi/index.js",
+      "browser": "./dist/ogc-api/csapi/index.js",
+      "default": "./dist/ogc-api/csapi/index.js"
     }
   },
   "dependencies": {

@@ -46,6 +46,7 @@ export type {
   GenericEndpointInfo,
   MimeType,
   CrsCode,
+  DateTimeParameter,
 } from './shared/models.js';
 export { default as OgcApiEndpoint } from './ogc-api/endpoint.js';
 export * from './ogc-api/model.js';
