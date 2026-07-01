@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wps:ExecuteResponse service="WPS" version="1.0.0" xml:lang="en"
+    xmlns:wps="http://www.opengis.net/wps/1.0.0"
+    xmlns:ows="http://www.opengis.net/ows/1.1"
+    serviceInstance="https://sextant.ifremer.fr/services/wps3/demo?service=WPS&amp;request=GetCapabilities"
+    statusLocation="https://sextant.ifremer.fr/services/wps3/demo?service=WPS&amp;request=GetResults&amp;uuid=abc123">
+  <wps:Process wps:processVersion="1.0generic">
+    <ows:Identifier>script:demo-inputs</ows:Identifier>
+    <ows:Title>Ifremer input example</ows:Title>
+  </wps:Process>
+  <wps:Status creationTime="2024-01-01T00:00:00.000Z">
+    <wps:ProcessSucceeded>Process succeeded.</wps:ProcessSucceeded>
+  </wps:Status>
+  <wps:ProcessOutputs>
+    <wps:Output>
+      <ows:Identifier>OUTPUT</ows:Identifier>
+      <ows:Title>defined inputs as file</ows:Title>
+      <wps:Reference href="https://sextant.ifremer.fr/services/wps3/demo/jobs/abc123/files/output.json" mimeType="application/json"/>
+    </wps:Output>
+  </wps:ProcessOutputs>
+</wps:ExecuteResponse>

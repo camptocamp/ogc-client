@@ -230,7 +230,9 @@ function parseOutputResult(outputEl: XmlElement): WpsExecuteOutputResult {
       identifier,
       ...(title && { title }),
       reference: {
-        href: getElementAttribute(referenceEl, 'xlink:href'),
+        href:
+          getElementAttribute(referenceEl, 'xlink:href') ||
+          getElementAttribute(referenceEl, 'href'),
         ...(mimeType && { mimeType }),
       },
     };

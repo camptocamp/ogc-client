@@ -3,6 +3,8 @@ import executeSucceededInline from '../../fixtures/wps/execute-succeeded-inline.
 // @ts-expect-error ts-migrate(7016)
 import executeSucceededReference from '../../fixtures/wps/execute-succeeded-reference.xml';
 // @ts-expect-error ts-migrate(7016)
+import executeSucceededReferencePlainHref from '../../fixtures/wps/execute-succeeded-reference-plain-href.xml';
+// @ts-expect-error ts-migrate(7016)
 import executeAccepted from '../../fixtures/wps/execute-accepted.xml';
 // @ts-expect-error ts-migrate(7016)
 import executeFailed from '../../fixtures/wps/execute-failed.xml';
@@ -199,6 +201,24 @@ describe('WPS Execute', () => {
             reference: {
               href: 'https://my.wps.server/geoserver/ows?service=WMS&version=1.3.0&request=GetCapabilities',
               mimeType: 'application/x-ogc-wms',
+            },
+          },
+        ],
+      });
+    });
+
+    it('parses a reference output with a plain (non-xlink) href attribute', () => {
+      const result = parseExecuteResponse(
+        parseXmlString(executeSucceededReferencePlainHref)
+      );
+      expect(result).toMatchObject({
+        status: 'succeeded',
+        outputs: [
+          {
+            identifier: 'OUTPUT',
+            reference: {
+              href: 'https://sextant.ifremer.fr/services/wps3/demo/jobs/abc123/files/output.json',
+              mimeType: 'application/json',
             },
           },
         ],
