@@ -34,6 +34,13 @@
       layers from it.
     </p>
     <TmsEndpoint></TmsEndpoint>
+
+    <h2 class="my-4">WPS</h2>
+    <p>
+      Enter a WPS endpoint URL below to get some information and a list of
+      processes from it.
+    </p>
+    <WpsEndpoint></WpsEndpoint>
   </div>
 </template>
 
@@ -45,6 +52,7 @@ import WfsEndpoint from './components/wfs/WfsEndpoint.vue';
 import OgcApiEndpoint from './components/ogc-api/OgcApiEndpoint.vue';
 import WmtsEndpoint from '@/components/wmts/WmtsEndpoint.vue';
 import TmsEndpoint from '@/components/tms/TmsEndpoint.vue';
+import WpsEndpoint from '@/components/wps/WpsEndpoint.vue';
 
 export default {
   name: 'App',
@@ -54,6 +62,7 @@ export default {
     WfsEndpoint,
     WmsEndpoint,
     TmsEndpoint,
+    WpsEndpoint,
   },
 };
 </script>
