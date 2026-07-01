@@ -39,3 +39,22 @@ The example queries the public STAC API at:
 - https://api.stac.teledetection.fr
 - https://catalog.maap.eo.esa.int/catalogue
 - https://stac.dataspace.copernicus.eu/v1/
+
+### WPS Example (Ifremer Sextant demo)
+
+Demonstrates interacting with a WPS (Web Processing Service) 1.0.0 endpoint:
+
+```bash
+node examples/wps-sextant.mjs
+```
+
+This example shows how to:
+
+- Connect to a WPS endpoint (GetCapabilities) and read service info
+- List the advertised processes
+- Describe a process (inputs / outputs)
+- Execute a process asynchronously and poll its status until completion
+
+The example queries the public py-qgis-wps demo server at:
+
+- https://sextant.ifremer.fr/services/wps3/demo
