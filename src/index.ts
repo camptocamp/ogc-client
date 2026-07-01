@@ -27,6 +27,26 @@ export type {
   WmsLayerAttribution,
   WmsLayerDescription,
 } from './wms/model.js';
+export { default as WpsEndpoint } from './wps/endpoint.js';
+export type {
+  WpsVersion,
+  WpsProcessSummary,
+  WpsProcessFull,
+  WpsProcessInput,
+  WpsProcessOutput,
+  WpsLiteralData,
+  WpsComplexData,
+  WpsBoundingBoxData,
+  WpsFormat,
+  WpsInputType,
+  WpsInputValue,
+  WpsOutputSelection,
+  WpsExecuteOptions,
+  WpsExecuteResponse,
+  WpsExecuteOutputResult,
+  WpsExecuteStatus,
+  WpsEndpointInfo,
+} from './wps/model.js';
 export { default as WmtsEndpoint } from './wmts/endpoint.js';
 export type {
   WmtsLayerDimensionValue,
@@ -67,6 +87,7 @@ export {
 } from './shared/cache.js';
 export {
   sharedFetch,
+  postXmlDocument,
   setFetchOptions,
   resetFetchOptions,
 } from './shared/http-utils.js';

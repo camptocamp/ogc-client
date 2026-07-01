@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wps:ProcessDescriptions service="WPS" version="1.0.0" xml:lang="en"
+    xmlns:wps="http://www.opengis.net/wps/1.0.0"
+    xmlns:ows="http://www.opengis.net/ows/1.1"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+  <ProcessDescription wps:processVersion="1.0.0" statusSupported="true" storeSupported="true">
+    <ows:Identifier>JTS:buffer</ows:Identifier>
+    <ows:Title>Buffer a geometry</ows:Title>
+    <ows:Abstract>Returns the buffer of a geometry by a given distance</ows:Abstract>
+    <DataInputs>
+      <Input minOccurs="1" maxOccurs="1">
+        <ows:Identifier>geom</ows:Identifier>
+        <ows:Title>The geometry to buffer</ows:Title>
+        <ComplexData maximumMegabytes="5">
+          <Default>
+            <Format>
+              <MimeType>application/wkt</MimeType>
+            </Format>
+          </Default>
+          <Supported>
+            <Format>
+              <MimeType>application/wkt</MimeType>
+            </Format>
+            <Format>
+              <MimeType>application/json</MimeType>
+            </Format>
+            <Format>
+              <MimeType>application/gml-3.1.1</MimeType>
+              <Schema>http://schemas.opengis.net/gml/3.1.1/base/feature.xsd</Schema>
+            </Format>
+          </Supported>
+        </ComplexData>
+      </Input>
+      <Input minOccurs="1" maxOccurs="1">
+        <ows:Identifier>distance</ows:Identifier>
+        <ows:Title>The buffer distance</ows:Title>
+        <LiteralData>
+          <ows:DataType ows:reference="xs:double">xs:double</ows:DataType>
+          <ows:AnyValue/>
+          <DefaultValue>1.0</DefaultValue>
+        </LiteralData>
+      </Input>
+      <Input minOccurs="0" maxOccurs="1">
+        <ows:Identifier>capStyle</ows:Identifier>
+        <ows:Title>The buffer cap style</ows:Title>
+        <LiteralData>
+          <ows:DataType ows:reference="xs:string">xs:string</ows:DataType>
+          <ows:AllowedValues>
+            <ows:Value>Round</ows:Value>
+            <ows:Value>Flat</ows:Value>
+            <ows:Value>Square</ows:Value>
+          </ows:AllowedValues>
+          <DefaultValue>Round</DefaultValue>
+        </LiteralData>
+      </Input>
+      <Input minOccurs="0" maxOccurs="unbounded">
+        <ows:Identifier>extent</ows:Identifier>
+        <ows:Title>Area of interest</ows:Title>
+        <BoundingBoxData>
+          <Default>
+            <CRS>EPSG:4326</CRS>
+          </Default>
+          <Supported>
+            <CRS>EPSG:4326</CRS>
+            <CRS>EPSG:3857</CRS>
+          </Supported>
+        </BoundingBoxData>
+      </Input>
+    </DataInputs>
+    <ProcessOutputs>
+      <Output>
+        <ows:Identifier>result</ows:Identifier>
+        <ows:Title>The buffered geometry</ows:Title>
+        <ComplexOutput>
+          <Default>
+            <Format>
+              <MimeType>application/wkt</MimeType>
+            </Format>
+          </Default>
+          <Supported>
+            <Format>
+              <MimeType>application/wkt</MimeType>
+            </Format>
+            <Format>
+              <MimeType>application/json</MimeType>
+            </Format>
+            <Format>
+              <MimeType>application/gml-3.1.1</MimeType>
+            </Format>
+          </Supported>
+        </ComplexOutput>
+      </Output>
+    </ProcessOutputs>
+  </ProcessDescription>
+</wps:ProcessDescriptions>
