@@ -13,6 +13,11 @@ import {
   WfsVersion,
 } from '../wfs/model.js';
 import { WmsLayerFull, WmsVersion } from '../wms/model.js';
+import {
+  WpsEndpointInfo,
+  WpsProcessSummary,
+  WpsVersion,
+} from '../wps/model.js';
 // @ts-expect-error TS2307
 // eslint-disable-next-line import/extensions
 import OgcClientWorker from './worker?worker&inline';
@@ -99,6 +104,21 @@ export function parseWmtsCapabilities(capabilitiesUrl: string): Promise<{
   matrixSets: WmtsMatrixSet[];
 }> {
   return sendTaskRequest('parseWmtsCapabilities', getWorkerInstance(), {
+    url: capabilitiesUrl,
+  });
+}
+
+/**
+ * Parses the capabilities document and return all relevant information
+ * @param capabilitiesUrl This url should point to the capabilities document
+ */
+export function parseWpsCapabilities(capabilitiesUrl: string): Promise<{
+  version: WpsVersion;
+  url: Record<OperationName, OperationUrl>;
+  info: WpsEndpointInfo;
+  processes: WpsProcessSummary[];
+}> {
+  return sendTaskRequest('parseWpsCapabilities', getWorkerInstance(), {
     url: capabilitiesUrl,
   });
 }
