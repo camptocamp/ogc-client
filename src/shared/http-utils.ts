@@ -122,6 +122,55 @@ export function queryXmlDocument(url: string) {
 }
 
 /**
+ * Runs a POST HTTP request with an XML body to the provided URL and resolves
+ * to the XmlDocument. Unlike `queryXmlDocument`, this is not guarded against
+ * concurrent identical requests (POST is not idempotent) and does not go
+ * through `sharedFetch`.
+ */
+export function postXmlDocument(url: string, body: string) {
+  const options: RequestInit = { ...getFetchOptions() };
+  options.method = 'POST';
+  options.body = body;
+  options.headers = {
+    ...(options.headers ?? {}),
+    'Content-Type': 'application/xml',
+  };
+  return fetch(url, options)
+    .catch(() =>
+      // attempt a HEAD to see if the failure comes from CORS or the service is generally unreachable
+      fetch(url, { ...getFetchOptions(), method: 'HEAD', mode: 'no-cors' })
+        .catch((error) => {
+          throw new EndpointError(
+            `Fetching the document failed either due to network errors or unreachable host, error is: ${error.message}`,
+            0,
+            false
+          );
+        })
+        .then(() => {
+          throw new EndpointError(
+            `The document could not be fetched due to CORS limitations`,
+            0,
+            true
+          );
+        })
+    )
+    .then(async (resp: Response) => {
+      if (!resp.ok) {
+        const text = await resp.text();
+        throw new EndpointError(
+          `Received an error with code ${resp.status}: ${text}`,
+          resp.status,
+          false
+        );
+      }
+      const buffer = await resp.arrayBuffer();
+      const contentTypeHeader = resp.headers.get('Content-Type');
+      return decodeString(buffer, contentTypeHeader);
+    })
+    .then((xml) => parseXmlString(xml));
+}
+
+/**
  * Add or replace query params in the url; note that params are considered case-insensitive,
  * meaning that existing params in different cases will be removed as well.
  * Also, if the url ends with an encoded URL (typically in the case of urls run through a CORS

@@ -4,6 +4,7 @@ import { check } from '../shared/errors.js';
 import * as wmsCapabilities from '../wms/capabilities.js';
 import * as wfsCapabilities from '../wfs/capabilities.js';
 import * as wmtsCapabilities from '../wmts/capabilities.js';
+import * as wpsCapabilities from '../wps/capabilities.js';
 import {
   computeFeaturePropsDetails,
   parseFeatureProps,
@@ -82,4 +83,15 @@ addTaskHandler(
         layers: wmtsCapabilities.readLayersFromCapabilities(xmlDoc),
         matrixSets: wmtsCapabilities.readMatrixSetsFromCapabilities(xmlDoc),
       }))
+);
+
+addTaskHandler('parseWpsCapabilities', globalThis, ({ url }: { url: string }) =>
+  queryXmlDocument(url)
+    .then((xmlDoc) => check(xmlDoc, url))
+    .then((xmlDoc) => ({
+      info: wpsCapabilities.readInfoFromCapabilities(xmlDoc),
+      processes: wpsCapabilities.readProcessesFromCapabilities(xmlDoc),
+      url: wpsCapabilities.readOperationUrlsFromCapabilities(xmlDoc),
+      version: wpsCapabilities.readVersionFromCapabilities(xmlDoc),
+    }))
 );

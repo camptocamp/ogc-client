@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wps:ExecuteResponse service="WPS" version="1.0.0" xml:lang="en"
+    xmlns:wps="http://www.opengis.net/wps/1.0.0"
+    xmlns:ows="http://www.opengis.net/ows/1.1"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    serviceInstance="https://my.wps.server/geoserver/ows?SERVICE=WPS&amp;REQUEST=GetCapabilities">
+  <wps:Process wps:processVersion="1.0.0">
+    <ows:Identifier>JTS:buffer</ows:Identifier>
+    <ows:Title>Buffer a geometry</ows:Title>
+  </wps:Process>
+  <wps:Status creationTime="2024-01-01T00:00:00.000Z">
+    <wps:ProcessFailed>
+      <ows:ExceptionReport version="1.1.0">
+        <ows:Exception exceptionCode="NoApplicableCode" locator="distance">
+          <ows:ExceptionText>Failed to execute process JTS:buffer: distance must be a number</ows:ExceptionText>
+        </ows:Exception>
+      </ows:ExceptionReport>
+    </wps:ProcessFailed>
+  </wps:Status>
+</wps:ExecuteResponse>
