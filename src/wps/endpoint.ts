@@ -124,8 +124,7 @@ export default class WpsEndpoint {
     return useCache(
       () => {
         const url = generateDescribeProcessUrl(
-          this._reproxyUrl(this.getOperationUrl('DescribeProcess')) ||
-            this._capabilitiesUrl,
+          this.getOperationUrl('DescribeProcess') || this._capabilitiesUrl,
           this._version,
           processId
         );
@@ -156,8 +155,7 @@ export default class WpsEndpoint {
     }
     const body = buildExecuteRequest(process, options, this._version);
     const executeUrl =
-      this._reproxyUrl(this.getOperationUrl('Execute', 'Post')) ||
-      this._capabilitiesUrl;
+      this.getOperationUrl('Execute', 'Post') || this._capabilitiesUrl;
     return postXmlDocument(executeUrl, body).then(parseExecuteResponse);
   }
 
@@ -166,25 +164,6 @@ export default class WpsEndpoint {
    * @param statusLocation The statusLocation URL returned by execute()
    */
   getStatus(statusLocation: string): Promise<WpsExecuteResponse> {
-    return queryXmlDocument(this._reproxyUrl(statusLocation)).then(
-      parseExecuteResponse
-    );
-  }
-
-  /**
-   * Operation URLs come from the raw `xlink:href` of the capabilities, so they
-   * point directly at the service. If the endpoint was created with a proxied
-   * URL, re-apply the same proxy prefix so requests keep going through it
-   * (otherwise a direct request would bypass the proxy and fail on CORS).
-   */
-  private _reproxyUrl(url: string): string {
-    if (!url) return url;
-    // detect the proxy prefix in the capabilities URL (everything before the
-    // first encoded "http://" / "https://")
-    const match = this._capabilitiesUrl.match(/^(.*?)(https?%3A%2F%2F)/i);
-    const prefix = match ? match[1] : '';
-    // don't re-proxy an URL that is already proxied
-    if (!prefix || url.startsWith(prefix)) return url;
-    return prefix + encodeURIComponent(url);
+    return queryXmlDocument(statusLocation).then(parseExecuteResponse);
   }
 }
