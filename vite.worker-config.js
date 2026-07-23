@@ -1,5 +1,8 @@
+import { relative, resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+
+const srcRoot = resolve('src');
 
 export default defineConfig({
   plugins: [
@@ -16,11 +19,12 @@ export default defineConfig({
       fileName: `worker/index`,
     },
     emptyOutDir: false,
-    rollupOptions: {
-      external: [/^ol/, 'proj4'],
+    rolldownOptions: {
+      // inline only the worker code; the rest of the imports should be left as is to connect to the rest of the build:browser output
+      external: (id) => !id.includes('?worker'),
       output: {
-        globals: (name) => name,
-        inlineDynamicImports: true,
+        paths: (id) => relative(srcRoot, id),
+        codeSplitting: false,
       },
     },
     outDir: 'dist',
