@@ -88,7 +88,7 @@ describe('WfsEndpoint', () => {
           .catch((e) => e)) as EndpointError;
         expect(error).toBeInstanceOf(EndpointError);
         expect(error.message).toBe(
-          'The document could not be fetched due to CORS limitations'
+          'The document at https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetCapabilities could not be fetched due to CORS limitations'
         );
         expect(error.httpStatus).toBe(0);
         expect(error.isCrossOriginRelated).toBe(true);
@@ -108,7 +108,7 @@ describe('WfsEndpoint', () => {
           .catch((e) => e)) as EndpointError;
         expect(error).toBeInstanceOf(EndpointError);
         expect(error.message).toBe(
-          'Fetching the document failed either due to network errors or unreachable host, error is: other kind of problem'
+          'Fetching the document at https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetCapabilities failed either due to network errors or unreachable host, error is: other kind of problem'
         );
         expect(error.httpStatus).toBe(0);
         expect(error.isCrossOriginRelated).toBe(false);
@@ -134,7 +134,7 @@ describe('WfsEndpoint', () => {
           .catch((e) => e)) as EndpointError;
         expect(error).toBeInstanceOf(EndpointError);
         expect(error.message).toBe(
-          'Received an error with code 500: something broke in the server'
+          'The document at https://my.test.service/ogc/wfs?SERVICE=WFS&REQUEST=GetCapabilities could not be fetched, received an error with code 500: something broke in the server'
         );
         expect(error.httpStatus).toBe(500);
         expect(error.isCrossOriginRelated).toBe(false);

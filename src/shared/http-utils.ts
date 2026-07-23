@@ -2,6 +2,7 @@ import { parseXmlString } from './xml-utils.js';
 import { EndpointError } from './errors.js';
 import { decodeString } from './encoding.js';
 import { FetchOptions } from './models.js';
+import { XmlDocument } from '@rgrove/parse-xml';
 
 const fetchPromises: Map<string, Promise<Response>> = new Map();
 
@@ -85,21 +86,21 @@ export function sharedFetch(
  * Runs a GET HTTP request to the provided URL and resolves to the
  * XmlDocument
  */
-export function queryXmlDocument(url: string) {
+export function queryXmlDocument(url: string): Promise<XmlDocument> {
   return sharedFetch(url)
     .catch(() =>
       // attempt a HEAD to see if the failure comes from CORS or the service is generally unreachable
       fetch(url, { ...getFetchOptions(), method: 'HEAD', mode: 'no-cors' })
         .catch((error) => {
           throw new EndpointError(
-            `Fetching the document failed either due to network errors or unreachable host, error is: ${error.message}`,
+            `Fetching the document at ${url} failed either due to network errors or unreachable host, error is: ${error.message}`,
             0,
             false
           );
         })
         .then(() => {
           throw new EndpointError(
-            `The document could not be fetched due to CORS limitations`,
+            `The document at ${url} could not be fetched due to CORS limitations`,
             0,
             true
           );
@@ -109,7 +110,7 @@ export function queryXmlDocument(url: string) {
       if (!resp.ok) {
         const text = await resp.text();
         throw new EndpointError(
-          `Received an error with code ${resp.status}: ${text}`,
+          `The document at ${url} could not be fetched, received an error with code ${resp.status}: ${text}`,
           resp.status,
           false
         );
@@ -119,4 +120,45 @@ export function queryXmlDocument(url: string) {
       return decodeString(buffer, contentTypeHeader);
     })
     .then((xml) => parseXmlString(xml));
+}
+
+/**
+ * Runs a GET HTTP request to the provided URL and resolves to a JSON object
+ */
+export function queryJsonDocument<T>(url: string): Promise<T> {
+  return sharedFetch(url, 'GET', true)
+    .catch(() =>
+      // attempt a HEAD to see if the failure comes from CORS or the service is generally unreachable
+      fetch(url, { ...getFetchOptions(), method: 'HEAD', mode: 'no-cors' })
+        .catch((error) => {
+          throw new EndpointError(
+            `Fetching the document at ${url} failed either due to network errors or unreachable host, error is: ${error.message}`,
+            0,
+            false
+          );
+        })
+        .then(() => {
+          throw new EndpointError(
+            `The document at ${url} could not be fetched due to CORS limitations`,
+            0,
+            true
+          );
+        })
+    )
+    .then(async (resp: Response) => {
+      if (!resp.ok) {
+        const text = await resp.text();
+        throw new Error(
+          `The document at ${url} could not be fetched, received an error with code ${resp.status}: ${text}`
+        );
+      }
+      return resp
+        .clone()
+        .json()
+        .catch((e) => {
+          throw new Error(
+            `The document at ${url} does not appear to be valid JSON. Error was: ${e.message}`
+          );
+        }) as Promise<T>;
+    });
 }

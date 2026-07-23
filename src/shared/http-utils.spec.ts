@@ -117,7 +117,7 @@ describe('HTTP utils', () => {
       it('rejects with an error', async () => {
         await expect(queryXmlDocument(sampleXml)).rejects.toEqual(
           new EndpointError(
-            'Received an error with code 401: <error>Random error</error>',
+            'The document at <sample-xml><node1></node1><node2></node2></sample-xml> could not be fetched, received an error with code 401: <error>Random error</error>',
             401,
             false
           )
@@ -131,7 +131,7 @@ describe('HTTP utils', () => {
       it('rejects with an error', async () => {
         await expect(queryXmlDocument(sampleXml)).rejects.toThrowError(
           new EndpointError(
-            `The document could not be fetched due to CORS limitations`
+            `The document at <sample-xml><node1></node1><node2></node2></sample-xml> could not be fetched due to CORS limitations`
           )
         );
       });
@@ -143,7 +143,7 @@ describe('HTTP utils', () => {
       it('rejects with an error', async () => {
         await expect(queryXmlDocument(sampleXml)).rejects.toEqual(
           new EndpointError(
-            'Fetching the document failed either due to network errors or unreachable host, error is: General network error'
+            `Fetching the document at <sample-xml><node1></node1><node2></node2></sample-xml> failed either due to network errors or unreachable host, error is: General network error`
           )
         );
       });
@@ -356,6 +356,7 @@ describe('HTTP utils', () => {
     describe('used in queryXmlDocument', () => {
       beforeEach(() => {
         setFetchOptions(sampleOptions);
+        globalThis.fetchResponseFactory = () => '<empty></empty>';
         queryXmlDocument('./hello.xml');
       });
       it('is used in the fetch() call', () => {
@@ -368,6 +369,7 @@ describe('HTTP utils', () => {
     describe('used in sharedFetch', () => {
       beforeEach(() => {
         setFetchOptions(sampleOptions);
+        globalThis.fetchResponseFactory = () => '<empty></empty>';
         sharedFetch('./hello.xml', 'HEAD');
       });
       it('is used in the fetch() call', () => {

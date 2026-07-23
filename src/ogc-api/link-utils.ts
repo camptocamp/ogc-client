@@ -4,8 +4,8 @@ import {
   OgcApiDocumentLink,
 } from '../ogc-api/model.js';
 import { EndpointError } from '../shared/errors.js';
-import { sharedFetch } from '../shared/http-utils.js';
-import { getParentPath, getBaseUrl } from '../shared/url-utils.js';
+import { queryJsonDocument } from '../shared/http-utils.js';
+import { getBaseUrl, getParentPath } from '../shared/url-utils.js';
 
 // During endpoint discovery we may fetch an `/items` URL just to inspect its links.
 // Cap that response so initial endpoint loading does not pull a full collection.
@@ -22,19 +22,7 @@ export function fetchDocument<T extends OgcApiDocument>(
 ): Promise<T> {
   const urlObj = new URL(url, getBaseUrl());
   urlObj.searchParams.set('f', 'json');
-  return sharedFetch(urlObj.toString(), 'GET', true).then((resp) => {
-    if (!resp.ok) {
-      throw new Error(`The document at ${urlObj} could not be fetched.`);
-    }
-    return resp
-      .clone()
-      .json()
-      .catch((e) => {
-        throw new Error(
-          `The document at ${urlObj} does not appear to be valid JSON. Error was: ${e.message}`
-        );
-      }) as Promise<T>;
-  });
+  return queryJsonDocument(urlObj.toString());
 }
 
 function checkIsLandingPage(doc: OgcApiDocument): boolean {
