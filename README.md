@@ -15,6 +15,7 @@ The following standards are partially implemented:
 - OGC API (Records and Features)
 - TMS - _Tile Map Service_
 - STAC API - _SpatioTemporal Asset Catalog_
+- NcWMS - _Extended WMS for scientific data (Thredds, ERDDAP, CMEMS…)_
 
 ## Why use it?
 
@@ -36,7 +37,12 @@ $ npm install --save @camptocamp/ogc-client
 To use, import API symbols like so:
 
 ```js
-import { WmsEndpoint, WfsEndpoint, StacEndpoint } from '@camptocamp/ogc-client';
+import {
+  WmsEndpoint,
+  WfsEndpoint,
+  StacEndpoint,
+  NcwmsEndpoint,
+} from '@camptocamp/ogc-client';
 ```
 
 Note: if you want to disable web worker usage, for example to solve issues with the `Referer` header on outgoing
@@ -74,6 +80,34 @@ The app is based on [Vue.js](https://vuejs.org/) and will showcase most features
 You will need to supply it with valid OGC service urls.
 
 ## Quick Examples
+
+### NcWMS
+
+```js
+import { NcwmsEndpoint } from '@camptocamp/ogc-client';
+
+const endpoint = new NcwmsEndpoint(
+  'https://my.thredds.server/thredds/wms/dataset'
+);
+
+// Detect NcWMS and get available palettes and scale range
+const details = await endpoint.getLayerDetails('temperature');
+if (details) {
+  console.log(details.palettes); // ['rainbow', 'occam', ...]
+  console.log(details.scaleRange); // [-2, 35]
+  console.log(details.units); // '°C'
+}
+
+// Auto-detect min/max from the current map extent
+const { min, max } = await endpoint.getMinMax('temperature', [-10, 30, 10, 50]);
+
+// Build a legend image URL (no network request)
+const legendUrl = endpoint.getLegendUrl('temperature', {
+  style: 'boxfill/rainbow',
+  colorScaleRange: [min, max],
+  logScale: false,
+});
+```
 
 ### STAC API
 

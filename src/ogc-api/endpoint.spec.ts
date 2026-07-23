@@ -25,6 +25,7 @@ beforeAll(() => {
         clone: function () {
           return this;
         },
+        text: () => Promise.resolve('could not fetch'),
       } as Response;
     }
 
@@ -44,6 +45,7 @@ beforeAll(() => {
         clone: function () {
           return this;
         },
+        text: () => Promise.resolve('could not fetch'),
       } as Response;
     }
     const contents = await readFile(filePath, {
@@ -1895,7 +1897,7 @@ Could not find a root JSON document containing both a link with rel='data' and a
         await expect(endpoint.info).rejects.toEqual(
           new EndpointError(
             `The endpoint appears non-conforming, the following error was encountered:
-The document at http://local/nonexisting?f=json could not be fetched.`
+The document at http://local/nonexisting?f=json could not be fetched, received an error with code 404: could not fetch`
           )
         );
       });
@@ -2406,6 +2408,7 @@ The document at http://local/nonexisting?f=json could not be fetched.`
             clone: function () {
               return this;
             },
+            text: () => Promise.resolve('could not fetch'),
           } as Response;
         }
         const contents = await readFile(filePath, {

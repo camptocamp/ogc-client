@@ -1,5 +1,5 @@
 import { MimeType } from '../shared/models.js';
-import { setQueryParams } from '../shared/http-utils.js';
+import { setQueryParams } from '../shared/url-utils.js';
 import { useCache } from '../shared/cache.js';
 import { parseWmtsCapabilities } from '../worker/index.js';
 import {

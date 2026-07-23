@@ -1,0 +1,18 @@
+{
+  "units": "°C",
+  "bbox": [-180.0, -90.0, 180.0, 90.0],
+  "scaleRange": [-2.0, 35.0],
+  "numColorBands": 250,
+  "supportedStyles": ["boxfill", "contour"],
+  "palettes": [
+    "rainbow",
+    "occam",
+    "occam_sea",
+    "redblue",
+    "greyscale",
+    "alg",
+    "alg2"
+  ],
+  "defaultPalette": "occam",
+  "logScaling": false
+}

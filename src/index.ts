@@ -58,6 +58,8 @@ export type {
   StacEndpointInfo,
   StacItemsDocument,
 } from './stac/index.js';
+export { NcwmsEndpoint } from './wms/ncwms/endpoint.js';
+export type { NcwmsLayerDetails, NcwmsMinMax } from './wms/ncwms/model.js';
 
 export {
   useCache,

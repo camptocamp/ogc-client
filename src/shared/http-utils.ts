@@ -2,6 +2,7 @@ import { parseXmlString } from './xml-utils.js';
 import { EndpointError } from './errors.js';
 import { decodeString } from './encoding.js';
 import { FetchOptions } from './models.js';
+import { XmlDocument } from '@rgrove/parse-xml';
 
 const fetchPromises: Map<string, Promise<Response>> = new Map();
 
@@ -85,21 +86,21 @@ export function sharedFetch(
  * Runs a GET HTTP request to the provided URL and resolves to the
  * XmlDocument
  */
-export function queryXmlDocument(url: string) {
+export function queryXmlDocument(url: string): Promise<XmlDocument> {
   return sharedFetch(url)
     .catch(() =>
       // attempt a HEAD to see if the failure comes from CORS or the service is generally unreachable
       fetch(url, { ...getFetchOptions(), method: 'HEAD', mode: 'no-cors' })
         .catch((error) => {
           throw new EndpointError(
-            `Fetching the document failed either due to network errors or unreachable host, error is: ${error.message}`,
+            `Fetching the document at ${url} failed either due to network errors or unreachable host, error is: ${error.message}`,
             0,
             false
           );
         })
         .then(() => {
           throw new EndpointError(
-            `The document could not be fetched due to CORS limitations`,
+            `The document at ${url} could not be fetched due to CORS limitations`,
             0,
             true
           );
@@ -109,7 +110,7 @@ export function queryXmlDocument(url: string) {
       if (!resp.ok) {
         const text = await resp.text();
         throw new EndpointError(
-          `Received an error with code ${resp.status}: ${text}`,
+          `The document at ${url} could not be fetched, received an error with code ${resp.status}: ${text}`,
           resp.status,
           false
         );
@@ -122,40 +123,42 @@ export function queryXmlDocument(url: string) {
 }
 
 /**
- * Add or replace query params in the url; note that params are considered case-insensitive,
- * meaning that existing params in different cases will be removed as well.
- * Also, if the url ends with an encoded URL (typically in the case of urls run through a CORS
- * proxy, which is an aberration and should be forbidden btw), then the encoded URL
- * will be modified instead.
+ * Runs a GET HTTP request to the provided URL and resolves to a JSON object
  */
-export function setQueryParams(
-  url: string,
-  params: Record<string, string | boolean>
-): string {
-  const encodedUrlMatch = url.match(/(https?%3A%2F%2F[^/]+)$/);
-  if (encodedUrlMatch) {
-    const encodedUrl = encodedUrlMatch[1];
-    const modifiedUrl = setQueryParams(decodeURIComponent(encodedUrl), params);
-    return url.replace(encodedUrl, encodeURIComponent(modifiedUrl));
-  }
-
-  const urlObj = new URL(url);
-  const keys = Object.keys(params);
-  const keysLower = keys.map((key) => key.toLowerCase());
-  const toDelete = [];
-  for (const param of urlObj.searchParams.keys()) {
-    if (keysLower.indexOf(param.toLowerCase()) > -1) {
-      toDelete.push(param);
-    }
-  }
-  toDelete.map((param) => urlObj.searchParams.delete(param));
-  keys.forEach((key) =>
-    urlObj.searchParams.set(
-      key,
-      params[key] === true ? '' : (params[key] as string)
+export function queryJsonDocument<T>(url: string): Promise<T> {
+  return sharedFetch(url, 'GET', true)
+    .catch(() =>
+      // attempt a HEAD to see if the failure comes from CORS or the service is generally unreachable
+      fetch(url, { ...getFetchOptions(), method: 'HEAD', mode: 'no-cors' })
+        .catch((error) => {
+          throw new EndpointError(
+            `Fetching the document at ${url} failed either due to network errors or unreachable host, error is: ${error.message}`,
+            0,
+            false
+          );
+        })
+        .then(() => {
+          throw new EndpointError(
+            `The document at ${url} could not be fetched due to CORS limitations`,
+            0,
+            true
+          );
+        })
     )
-  );
-  // this makes sure that the request will work on GeoServer (some versions fail if there is a "+" in the encoded query params)
-  urlObj.search = urlObj.search.replace(/\+/g, '%20');
-  return urlObj.toString();
+    .then(async (resp: Response) => {
+      if (!resp.ok) {
+        const text = await resp.text();
+        throw new Error(
+          `The document at ${url} could not be fetched, received an error with code ${resp.status}: ${text}`
+        );
+      }
+      return resp
+        .clone()
+        .json()
+        .catch((e) => {
+          throw new Error(
+            `The document at ${url} does not appear to be valid JSON. Error was: ${e.message}`
+          );
+        }) as Promise<T>;
+    });
 }
