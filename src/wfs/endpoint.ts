@@ -26,7 +26,12 @@ import {
 import { isMimeTypeJson } from '../shared/mime-type.js';
 
 /**
- * Represents a WFS endpoint advertising several feature types
+ * Represents a WFS endpoint advertising several feature types.
+ *
+ * Always use the class like so to make sure that all its internals are correctly initialized:
+ * ```js
+ * const endpoint = await new WfsEndpoint(url).isReady();
+ * ```
  */
 export default class WfsEndpoint {
   private _capabilitiesUrl: string;
@@ -49,6 +54,8 @@ export default class WfsEndpoint {
   }
 
   /**
+   * **This should be called before any other method to initialize the endpoint!**
+   *
    * Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.
    * @throws {EndpointError}
    */

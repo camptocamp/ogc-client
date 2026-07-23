@@ -21,6 +21,11 @@ import { parseDescribeLayerResponse } from './describelayer.js';
 
 /**
  * Represents a WMS endpoint advertising several layers arranged in a tree structure.
+ *
+ * Always use the class like so to make sure that all its internals are correctly initialized:
+ * ```js
+ * const endpoint = await new WmsEndpoint(url).isReady();
+ * ```
  */
 export default class WmsEndpoint {
   private _capabilitiesUrl: string;
@@ -42,6 +47,8 @@ export default class WmsEndpoint {
   }
 
   /**
+   * **This should be called before any other method to initialize the endpoint!**
+   *
    * Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.
    * @throws {EndpointError}
    */

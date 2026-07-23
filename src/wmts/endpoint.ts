@@ -14,6 +14,11 @@ import type WMTSTileGrid from 'ol/tilegrid/WMTS.js';
 
 /**
  * Represents a WMTS endpoint advertising several layers.
+ *
+ * Always use the class like so to make sure that all its internals are correctly initialized:
+ * ```js
+ * const endpoint = await new WmtsEndpoint(url).isReady();
+ * ```
  */
 export default class WmtsEndpoint {
   private _capabilitiesUrl: string;
@@ -35,6 +40,8 @@ export default class WmtsEndpoint {
   }
 
   /**
+   * **This should be called before any other method to initialize the endpoint!**
+   *
    * Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.
    * @throws {EndpointError}
    */
