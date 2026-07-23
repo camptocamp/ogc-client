@@ -111,11 +111,14 @@ describe('NcwmsEndpoint', () => {
             return this;
           },
           headers: { get: () => null },
+          text: () => Promise.resolve('could not fetch'),
         });
       });
-      it('returns null', async () => {
-        const details = await endpoint.getLayerDetails('tos');
-        expect(details).toBeNull();
+      it('returns an error', async () => {
+        const error = await endpoint.getLayerDetails('tos').catch((e) => e);
+        expect(error.message).toBe(
+          'The document at https://my.test.service/thredds/wms?SERVICE=WMS&REQUEST=GetMetadata&item=layerDetails&layerName=tos could not be fetched, received an error with code 404: could not fetch'
+        );
       });
     });
 
@@ -125,9 +128,11 @@ describe('NcwmsEndpoint', () => {
           throw new TypeError('network error');
         };
       });
-      it('returns null', async () => {
-        const details = await endpoint.getLayerDetails('tos');
-        expect(details).toBeNull();
+      it('returns an error', async () => {
+        const error = await endpoint.getLayerDetails('tos').catch((e) => e);
+        expect(error.message).toBe(
+          'Fetching the document at https://my.test.service/thredds/wms?SERVICE=WMS&REQUEST=GetMetadata&item=layerDetails&layerName=tos failed either due to network errors or unreachable host, error is: network error'
+        );
       });
     });
   });
@@ -173,12 +178,15 @@ describe('NcwmsEndpoint', () => {
             return this;
           },
           headers: { get: () => null },
+          text: () => Promise.resolve('server error'),
         });
       });
       it('throws', async () => {
         await expect(
           endpoint.getMinMax('tos', [-10, 30, 10, 50])
-        ).rejects.toThrow('NcWMS GetMinMax failed with status 500');
+        ).rejects.toThrow(
+          'The document at https://my.test.service/thredds/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMetadata&item=minmax&LAYERS=tos&bbox=-10%2C30%2C10%2C50&SRS=CRS%3A84&width=50&height=50 could not be fetched, received an error with code 500: server error'
+        );
       });
     });
   });

@@ -1,8 +1,12 @@
 import { useCache } from '../../shared/cache.js';
-import { sharedFetch } from '../../shared/http-utils.js';
+import { queryJsonDocument } from '../../shared/http-utils.js';
 import { BoundingBox } from '../../shared/models.js';
 import WmsEndpoint from '../endpoint.js';
-import { NcwmsLayerDetails, NcwmsMinMax } from './model.js';
+import {
+  NcwmsDetailsResponse,
+  NcwmsLayerDetails,
+  NcwmsMinMax,
+} from './model.js';
 import { setQueryParams } from '../../shared/url-utils.js';
 
 /**
@@ -48,26 +52,14 @@ export class NcwmsEndpoint extends WmsEndpoint {
   private async _fetchLayerDetails(
     url: string
   ): Promise<NcwmsLayerDetails | null> {
-    let resp: Response;
-    try {
-      resp = await sharedFetch(url, 'GET', true);
-    } catch {
-      return null;
-    }
-    if (!resp.ok) return null;
-
-    let data: Record<string, unknown>;
-    try {
-      data = await resp.json();
-    } catch {
-      return null;
-    }
+    const data = await queryJsonDocument<NcwmsDetailsResponse>(url);
 
     const toFiniteNumber = (v: unknown): number | null => {
       const n = Number(v);
       return Number.isFinite(n) ? n : null;
     };
 
+    // validate inputs
     if (
       !Array.isArray(data.palettes) ||
       !data.palettes.every((p) => typeof p === 'string') ||
@@ -131,11 +123,7 @@ export class NcwmsEndpoint extends WmsEndpoint {
     if (options?.elevation) params['elevation'] = options.elevation;
 
     const url = setQueryParams(this._baseUrl, params);
-    const resp = await sharedFetch(url, 'GET', true);
-    if (!resp.ok) {
-      throw new Error(`NcWMS GetMinMax failed with status ${resp.status}`);
-    }
-    const data = (await resp.json()) as { min?: unknown; max?: unknown };
+    const data = await queryJsonDocument<{ min?: unknown; max?: unknown }>(url);
     const min = typeof data.min === 'number' ? data.min : Number(data.min);
     const max = typeof data.max === 'number' ? data.max : Number(data.max);
     if (!Number.isFinite(min) || !Number.isFinite(max)) {
