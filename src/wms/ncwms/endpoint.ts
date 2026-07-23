@@ -1,28 +1,16 @@
-import { useCache } from '../shared/cache.js';
-import { setQueryParams, sharedFetch } from '../shared/http-utils.js';
-import { BoundingBox } from '../shared/models.js';
-
-export interface NcwmsLayerDetails {
-  scaleRange: [number, number];
-  palettes: string[];
-  defaultPalette?: string;
-  supportedStyles: string[];
-  units: string;
-  bbox: BoundingBox;
-}
-
-export interface NcwmsMinMax {
-  min: number;
-  max: number;
-}
+import { useCache } from '../../shared/cache.js';
+import { setQueryParams, sharedFetch } from '../../shared/http-utils.js';
+import { BoundingBox } from '../../shared/models.js';
+import WmsEndpoint from '../endpoint.js';
+import { NcwmsLayerDetails, NcwmsMinMax } from './model.js';
 
 /**
  * Represents an NcWMS endpoint, a WMS extension for scientific data with
- * additional rendering parameters (colour palette, scale range, log scale).
+ * additional rendering parameters (color palette, scale range, log scale).
  *
  * NcWMS is used by servers such as Thredds, ERDDAP, BODC and CMEMS.
  */
-export class NcwmsEndpoint {
+export class NcwmsEndpoint extends WmsEndpoint {
   private _baseUrl: string;
 
   constructor(url: string) {

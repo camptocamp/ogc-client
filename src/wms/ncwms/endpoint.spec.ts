@@ -1,9 +1,9 @@
-import layerDetailsFixture from '../../fixtures/ncwms/layer-details.json';
-import minMaxFixture from '../../fixtures/ncwms/min-max.json';
+import layerDetailsFixture from '../../../fixtures/ncwms/layer-details.json';
+import minMaxFixture from '../../../fixtures/ncwms/min-max.json';
 import { NcwmsEndpoint } from './endpoint.js';
-import { useCache } from '../shared/cache.js';
+import { useCache } from '../../shared/cache.js';
 
-jest.mock('../shared/cache', () => ({
+jest.mock('../../shared/cache', () => ({
   useCache: jest.fn((factory) => factory()),
 }));
 
