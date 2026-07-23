@@ -16,11 +16,11 @@ export default defineConfig({
       fileName: `worker/index`,
     },
     emptyOutDir: false,
-    rollupOptions: {
+    rolldownOptions: {
       external: [/^ol/, 'proj4'],
       output: {
         globals: (name) => name,
-        inlineDynamicImports: true,
+        codeSplitting: false,
       },
     },
     outDir: 'dist',
