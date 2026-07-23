@@ -26,11 +26,16 @@ import {
 import { isMimeTypeJson } from '../shared/mime-type.js';
 
 /**
- * Represents a WFS endpoint advertising several feature types
+ * Represents a WFS endpoint advertising several feature types.
+ *
+ * Always use the class like so to make sure that all its internals are correctly initialized:
+ * ```js
+ * const endpoint = await new WfsEndpoint(url).isReady();
+ * ```
  */
 export default class WfsEndpoint {
   private _capabilitiesUrl: string;
-  private _capabilitiesPromise: Promise<void>;
+  private _capabilitiesPromise: Promise<WfsEndpoint>;
   private _info: GenericEndpointInfo | null;
   private _featureTypes: WfsFeatureTypeInternal[] | null;
   private _url: Record<OperationName, OperationUrl>;
@@ -46,29 +51,30 @@ export default class WfsEndpoint {
       SERVICE: 'WFS',
       REQUEST: 'GetCapabilities',
     });
-
-    /**
-     * This fetches the capabilities doc and parses its contents
-     */
-    this._capabilitiesPromise = useCache(
-      () => parseWfsCapabilities(this._capabilitiesUrl),
-      'WFS',
-      'CAPABILITIES',
-      this._capabilitiesUrl
-    ).then(({ info, featureTypes, url, version }) => {
-      this._info = info;
-      this._featureTypes = featureTypes;
-      this._url = url;
-      this._version = version;
-    });
   }
 
   /**
+   * **This should be called before any other method to initialize the endpoint!**
+   *
    * Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.
    * @throws {EndpointError}
    */
   isReady() {
-    return this._capabilitiesPromise.then(() => this);
+    if (!this._capabilitiesPromise) {
+      this._capabilitiesPromise = useCache(
+        () => parseWfsCapabilities(this._capabilitiesUrl),
+        'WFS',
+        'CAPABILITIES',
+        this._capabilitiesUrl
+      ).then(({ info, featureTypes, url, version }) => {
+        this._info = info;
+        this._featureTypes = featureTypes;
+        this._url = url;
+        this._version = version;
+        return this;
+      });
+    }
+    return this._capabilitiesPromise;
   }
 
   /**

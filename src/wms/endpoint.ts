@@ -21,10 +21,15 @@ import { parseDescribeLayerResponse } from './describelayer.js';
 
 /**
  * Represents a WMS endpoint advertising several layers arranged in a tree structure.
+ *
+ * Always use the class like so to make sure that all its internals are correctly initialized:
+ * ```js
+ * const endpoint = await new WmsEndpoint(url).isReady();
+ * ```
  */
 export default class WmsEndpoint {
   private _capabilitiesUrl: string;
-  private _capabilitiesPromise: Promise<void>;
+  private _capabilitiesPromise: Promise<WmsEndpoint>;
   private _info: GenericEndpointInfo | null;
   private _layers: WmsLayerFull[] | null;
   private _url: Record<OperationName, OperationUrl>;
@@ -39,29 +44,30 @@ export default class WmsEndpoint {
       SERVICE: 'WMS',
       REQUEST: 'GetCapabilities',
     });
-
-    /**
-     * This fetches the capabilities doc and parses its contents
-     */
-    this._capabilitiesPromise = useCache(
-      () => parseWmsCapabilities(this._capabilitiesUrl),
-      'WMS',
-      'CAPABILITIES',
-      this._capabilitiesUrl
-    ).then(({ info, layers, url, version }) => {
-      this._info = info;
-      this._layers = layers;
-      this._url = url;
-      this._version = version;
-    });
   }
 
   /**
+   * **This should be called before any other method to initialize the endpoint!**
+   *
    * Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.
    * @throws {EndpointError}
    */
   isReady() {
-    return this._capabilitiesPromise.then(() => this);
+    if (!this._capabilitiesPromise) {
+      this._capabilitiesPromise = useCache(
+        () => parseWmsCapabilities(this._capabilitiesUrl),
+        'WMS',
+        'CAPABILITIES',
+        this._capabilitiesUrl
+      ).then(({ info, layers, url, version }) => {
+        this._info = info;
+        this._layers = layers;
+        this._url = url;
+        this._version = version;
+        return this;
+      });
+    }
+    return this._capabilitiesPromise;
   }
 
   /**
