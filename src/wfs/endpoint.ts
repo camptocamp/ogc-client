@@ -30,6 +30,7 @@ import { isMimeTypeJson } from '../shared/mime-type.js';
  */
 export default class WfsEndpoint {
   private _capabilitiesUrl: string;
+  private _capabilitiesPromise: Promise<WfsEndpoint>;
   private _info: GenericEndpointInfo | null;
   private _featureTypes: WfsFeatureTypeInternal[] | null;
   private _url: Record<OperationName, OperationUrl>;
@@ -52,26 +53,21 @@ export default class WfsEndpoint {
    * @throws {EndpointError}
    */
   isReady() {
-    if ( this._info ){
-      return Promise.resolve(this);
+    if (!this._capabilitiesPromise) {
+      this._capabilitiesPromise = useCache(
+        () => parseWfsCapabilities(this._capabilitiesUrl),
+        'WFS',
+        'CAPABILITIES',
+        this._capabilitiesUrl
+      ).then(({ info, featureTypes, url, version }) => {
+        this._info = info;
+        this._featureTypes = featureTypes;
+        this._url = url;
+        this._version = version;
+        return this;
+      });
     }
-
-    /**
-     * This fetches the capabilities doc and parses its contents
-     */
-    const capabilitiesPromise = useCache(
-      () => parseWfsCapabilities(this._capabilitiesUrl),
-      'WFS',
-      'CAPABILITIES',
-      this._capabilitiesUrl
-    ).then(({ info, featureTypes, url, version }) => {
-      this._info = info;
-      this._featureTypes = featureTypes;
-      this._url = url;
-      this._version = version;
-    });
-
-    return capabilitiesPromise.then(() => this);
+    return this._capabilitiesPromise;
   }
 
   /**
