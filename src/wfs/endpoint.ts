@@ -2,7 +2,8 @@ import {
   parseWfsCapabilities,
   queryWfsFeatureTypeDetails,
 } from '../worker/index.js';
-import { queryXmlDocument, setQueryParams } from '../shared/http-utils.js';
+import { queryXmlDocument } from '../shared/http-utils.js';
+import { setQueryParams } from '../shared/url-utils.js';
 import { parseFeatureTypeInfo } from './featuretypeinfo.js';
 import { useCache } from '../shared/cache.js';
 import {

@@ -50,3 +50,44 @@ export function getChildPath(url: string, childFragment: string): string {
   }
   return urlObj.toString();
 }
+
+/**
+ * Add, replace or remove query params in the url; note that params are considered case-insensitive,
+ * meaning that existing params in different cases will be impacted as well.
+ * Also, if the url ends with an encoded URL (typically in the case of urls run through a CORS
+ * proxy, which is an aberration and should be forbidden btw), then the encoded URL
+ * will be modified instead.
+ * Params set to `null` will be removed.
+ */
+export function setQueryParams(
+  url: string,
+  params: Record<string, string | boolean | null>
+): string {
+  const encodedUrlMatch = url.match(/(https?%3A%2F%2F[^/]+)$/);
+  if (encodedUrlMatch) {
+    const encodedUrl = encodedUrlMatch[1];
+    const modifiedUrl = setQueryParams(decodeURIComponent(encodedUrl), params);
+    return url.replace(encodedUrl, encodeURIComponent(modifiedUrl));
+  }
+
+  const urlObj = new URL(url);
+  const keys = Object.keys(params);
+  const keysLower = keys.map((key) => key.toLowerCase());
+  const toDelete = [];
+  for (const param of urlObj.searchParams.keys()) {
+    if (keysLower.indexOf(param.toLowerCase()) > -1) {
+      toDelete.push(param);
+    }
+  }
+  toDelete.map((param) => urlObj.searchParams.delete(param));
+  keys.forEach((key) => {
+    if (params[key] === null) return;
+    urlObj.searchParams.set(
+      key,
+      params[key] === true ? '' : (params[key] as string)
+    );
+  });
+  // this makes sure that the request will work on GeoServer (some versions fail if there is a "+" in the encoded query params)
+  urlObj.search = urlObj.search.replace(/\+/g, '%20');
+  return urlObj.toString();
+}

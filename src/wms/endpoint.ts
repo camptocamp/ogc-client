@@ -1,6 +1,7 @@
 import { parseWmsCapabilities } from '../worker/index.js';
 import { useCache } from '../shared/cache.js';
-import { queryXmlDocument, setQueryParams } from '../shared/http-utils.js';
+import { queryXmlDocument } from '../shared/http-utils.js';
+import { setQueryParams } from '../shared/url-utils.js';
 import {
   BoundingBox,
   CrsCode,

@@ -1,4 +1,4 @@
-import { setQueryParams } from '../shared/http-utils.js';
+import { setQueryParams } from '../shared/url-utils.js';
 import { BoundingBox, CrsCode, MimeType } from '../shared/models.js';
 import { WmsVersion } from './model.js';
 

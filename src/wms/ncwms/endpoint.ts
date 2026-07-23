@@ -1,8 +1,9 @@
 import { useCache } from '../../shared/cache.js';
-import { setQueryParams, sharedFetch } from '../../shared/http-utils.js';
+import { sharedFetch } from '../../shared/http-utils.js';
 import { BoundingBox } from '../../shared/models.js';
 import WmsEndpoint from '../endpoint.js';
 import { NcwmsLayerDetails, NcwmsMinMax } from './model.js';
+import { setQueryParams } from '../../shared/url-utils.js';
 
 /**
  * Represents an NcWMS endpoint, a WMS extension for scientific data with
@@ -14,14 +15,13 @@ export class NcwmsEndpoint extends WmsEndpoint {
   private _baseUrl: string;
 
   constructor(url: string) {
-    // Strip WMS-specific query params to get the base endpoint URL
-    const urlObj = new URL(url);
-    for (const param of ['SERVICE', 'REQUEST', 'VERSION', 'LAYERS', 'LAYER']) {
-      for (const key of [...urlObj.searchParams.keys()]) {
-        if (key.toUpperCase() === param) urlObj.searchParams.delete(key);
-      }
-    }
-    this._baseUrl = urlObj.toString();
+    super(url);
+    this._baseUrl = setQueryParams(url, {
+      SERVICE: 'WMS',
+      VERSION: null,
+      LAYERS: null,
+      LAYER: null,
+    });
   }
 
   /**
