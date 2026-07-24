@@ -18,7 +18,7 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/dist-node.js",
+      "import": "./dist/index.js",
       "browser": "./dist/index.js",
       "default": "./dist/dist-node.js"
     }
