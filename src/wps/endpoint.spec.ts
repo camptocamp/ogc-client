@@ -32,7 +32,7 @@ describe('WpsEndpoint', () => {
   it('makes a getcapabilities request', async () => {
     await endpoint.isReady();
     expect(globalThis.fetch).toHaveBeenCalledWith(
-      'https://my.test.service/ogc/wps?aa=bb&SERVICE=WPS&REQUEST=GetCapabilities',
+      'https://my.test.service/ogc/wps?aa=bb&SERVICE=WPS&REQUEST=GetCapabilities&VERSION=1.0.0',
       { method: 'GET' }
     );
   });

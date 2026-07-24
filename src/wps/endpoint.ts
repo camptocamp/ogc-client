@@ -21,10 +21,17 @@ import { setQueryParams } from '../shared/url-utils.js';
 
 /**
  * Represents a WPS endpoint advertising a set of processes.
+ *
+ * Please note that for now, **only WPS version 1.0.0 is supported!**
+ *
+ * Always use the class like so to make sure that all its internals are correctly initialized:
+ * ```js
+ * const endpoint = await new WpsEndpoint(url).isReady();
+ * ```
  */
 export default class WpsEndpoint {
   private _capabilitiesUrl: string;
-  private _capabilitiesPromise: Promise<void>;
+  private _capabilitiesPromise: Promise<WpsEndpoint>;
   private _info: WpsEndpointInfo | null;
   private _processes: WpsProcessSummary[] | null;
   private _url: Record<OperationName, OperationUrl>;
@@ -38,30 +45,33 @@ export default class WpsEndpoint {
     this._capabilitiesUrl = setQueryParams(url, {
       SERVICE: 'WPS',
       REQUEST: 'GetCapabilities',
-    });
-
-    /**
-     * This fetches the capabilities doc and parses its contents
-     */
-    this._capabilitiesPromise = useCache(
-      () => parseWpsCapabilities(this._capabilitiesUrl),
-      'WPS',
-      'CAPABILITIES',
-      this._capabilitiesUrl
-    ).then(({ info, processes, url, version }) => {
-      this._info = info;
-      this._processes = processes;
-      this._url = url;
-      this._version = version;
+      VERSION: '1.0.0', // hardcoded version; remove this to extend support to other versions
     });
   }
 
   /**
+   * **This should be called before any other method to initialize the endpoint!**
+   *
    * Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.
    * @throws {EndpointError}
    */
   isReady() {
-    return this._capabilitiesPromise.then(() => this);
+    if (!this._capabilitiesPromise) {
+      this._capabilitiesPromise = useCache(
+        () => parseWpsCapabilities(this._capabilitiesUrl),
+        'WPS',
+        'CAPABILITIES',
+        this._capabilitiesUrl
+      ).then(({ info, processes, url, version }) => {
+        this._info = info;
+        this._processes = processes;
+        this._url = url;
+        this._version = version;
+
+        return this;
+      });
+    }
+    return this._capabilitiesPromise;
   }
 
   /**
