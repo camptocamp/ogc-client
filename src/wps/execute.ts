@@ -1,6 +1,10 @@
 import { XmlDocument, XmlElement } from '@rgrove/parse-xml';
 import { check, parse } from '../shared/errors.js';
 import {
+  createCdataElement,
+  createDocument,
+  createElement,
+  createTextElement,
   findChildElement,
   findChildrenElement,
   getChildrenElement,
@@ -8,7 +12,9 @@ import {
   getElementName,
   getElementText,
   getRootElement,
+  parseXmlString,
   stripNamespace,
+  xmlToString,
 } from '../shared/xml-utils.js';
 import {
   WpsExecuteOptions,
@@ -20,89 +26,47 @@ import {
   WpsVersion,
 } from './model.js';
 
-const escapeXml = (s: string) =>
-  s.replace(
-    /[&<>"']/g,
-    (c) =>
-      ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&apos;',
-      }[c]!)
-  );
+const el = createElement;
+const text = createTextElement;
+const cdata = createCdataElement;
 
-/** Build an element; attribute values are escaped here so it can't be forgotten. */
-const el = (
-  tag: string,
-  attrs: Record<string, string | undefined>,
-  children = ''
-) => {
-  const a = Object.entries(attrs)
-    .filter(([, v]) => v != null)
-    .map(([k, v]) => ` ${k}="${escapeXml(v!)}"`)
-    .join('');
-  return children === '' ? `<${tag}${a}/>` : `<${tag}${a}>${children}</${tag}>`;
-};
-
-/** Build a text element; text content is escaped here. */
-const text = (tag: string, value: string) => el(tag, {}, escapeXml(value));
-
-const cdata = (raw: string) =>
-  `<![CDATA[${raw.replace(/]]>/g, ']]]]><![CDATA[>')}]]>`;
-
-/**
- * Complex content is XML embedded in XML when the mimeType denotes GML/XML (raw
- * insertion), otherwise it is wrapped in CDATA so any `<` or `&` survives.
- */
-function complexBody(mimeType: string, content: string): string {
-  return /xml|gml/i.test(mimeType) ? content : cdata(content);
-}
-
-function buildInput(value: WpsInputValue): string {
-  const identifier = text('ows:Identifier', value.identifier);
+function buildInput(value: WpsInputValue): XmlElement {
+  const identifier = text('ows:Identifier', {}, value.identifier);
 
   if (value.literalValue !== undefined) {
-    return el(
-      'wps:Input',
-      {},
-      identifier +
-        el('wps:Data', {}, text('wps:LiteralData', value.literalValue))
-    );
+    return el('wps:Input', {}, [
+      identifier,
+      el('wps:Data', {}, text('wps:LiteralData', {}, value.literalValue)),
+    ]);
   }
 
   if (value.boundingBoxValue) {
     const { crs, bbox } = value.boundingBoxValue;
     const [minx, miny, maxx, maxy] = bbox;
-    return el(
-      'wps:Input',
-      {},
-      identifier +
-        el(
-          'wps:Data',
-          {},
-          el(
-            'wps:BoundingBoxData',
-            { crs, dimensions: '2' },
-            text('ows:LowerCorner', `${minx} ${miny}`) +
-              text('ows:UpperCorner', `${maxx} ${maxy}`)
-          )
-        )
-    );
-  }
-
-  const { mimeType, content } = value.complexValue!;
-  return el(
-    'wps:Input',
-    {},
-    identifier +
+    return el('wps:Input', {}, [
+      identifier,
       el(
         'wps:Data',
         {},
-        el('wps:ComplexData', { mimeType }, complexBody(mimeType, content))
-      )
-  );
+        el('wps:BoundingBoxData', { crs, dimensions: '2' }, [
+          text('ows:LowerCorner', {}, `${minx} ${miny}`),
+          text('ows:UpperCorner', {}, `${maxx} ${maxy}`),
+        ])
+      ),
+    ]);
+  }
+
+  const { mimeType, content } = value.complexValue!;
+
+  /**
+   * Complex content is XML embedded in XML when the mimeType denotes GML/XML (raw
+   * insertion), otherwise it is wrapped in CDATA so any `<` or `&` survives.
+   */
+  const complexBody = /xml|gml/i.test(mimeType)
+    ? el('wps:ComplexData', { mimeType }, parseXmlString(content).root)
+    : cdata('wps:ComplexData', { mimeType }, content);
+
+  return el('wps:Input', {}, [identifier, el('wps:Data', {}, complexBody)]);
 }
 
 /**
@@ -116,11 +80,9 @@ export function buildExecuteRequest(
   options: WpsExecuteOptions,
   version: WpsVersion
 ): string {
-  const inputs = options.inputs.map(buildInput).join('');
+  const inputs = options.inputs.map(buildInput);
 
-  const responseForm = el(
-    'wps:ResponseForm',
-    {},
+  const responseForm = el('wps:ResponseForm', {}, [
     el(
       'wps:ResponseDocument',
       {
@@ -128,23 +90,20 @@ export function buildExecuteRequest(
         lineage: String(options.lineage ?? false),
         status: String(options.status ?? false),
       },
-      options.outputs
-        .map((output) =>
-          el(
-            'wps:Output',
-            {
-              asReference: String(output.asReference ?? false),
-              mimeType: output.mimeType,
-            },
-            text('ows:Identifier', output.identifier)
-          )
+      options.outputs.map((output) =>
+        el(
+          'wps:Output',
+          {
+            asReference: String(output.asReference ?? false),
+            mimeType: output.mimeType ?? '',
+          },
+          [text('ows:Identifier', {}, output.identifier)]
         )
-        .join('')
-    )
-  );
+      )
+    ),
+  ]);
 
-  return (
-    `<?xml version="1.0" encoding="UTF-8"?>` +
+  const document = createDocument(
     el(
       'wps:Execute',
       {
@@ -154,11 +113,15 @@ export function buildExecuteRequest(
         'xmlns:ows': 'http://www.opengis.net/ows/1.1',
         'xmlns:xlink': 'http://www.w3.org/1999/xlink',
       },
-      text('ows:Identifier', process.identifier) +
-        el('wps:DataInputs', {}, inputs) +
-        responseForm
+      [
+        text('ows:Identifier', {}, process.identifier),
+        el('wps:DataInputs', {}, inputs),
+        responseForm,
+      ]
     )
   );
+
+  return xmlToString(document);
 }
 
 const STATUS_TAG_MAP: Record<string, WpsExecuteStatus> = {

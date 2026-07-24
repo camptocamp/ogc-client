@@ -55,9 +55,31 @@ describe('WpsEndpoint', () => {
   describe('#getServiceInfo', () => {
     it('returns the service info', async () => {
       await endpoint.isReady();
-      expect(endpoint.getServiceInfo()).toMatchObject({
-        title: 'Demo WPS',
+      expect(endpoint.getServiceInfo()).toEqual({
+        abstract: 'Web Processing Service for the demo GeoServer instance',
+        constraints: 'NONE',
+        fees: 'NONE',
+        keywords: ['WPS', 'geospatial', 'geoprocessing'],
         name: 'WPS',
+        provider: {
+          contact: {
+            address: {
+              administrativeArea: '',
+              city: 'Metropolis',
+              country: 'Wonderland',
+              deliveryPoint: '',
+              postalCode: '',
+            },
+            email: 'jane@example.org',
+            fax: '',
+            name: 'Jane Doe',
+            phone: '+00 00 000 0000',
+            position: 'GIS Manager',
+          },
+          name: 'Example Org',
+          site: 'https://www.example.org',
+        },
+        title: 'Demo WPS',
       });
     });
   });

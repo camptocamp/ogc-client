@@ -57,7 +57,41 @@ describe('WPS Execute', () => {
         },
         '1.0.0'
       );
-      expect(body).toMatchSnapshot();
+      expect(body).toEqual(`<?xml version="1.0" encoding="UTF-8"?>
+<wps:Execute service="WPS" version="1.0.0" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <ows:Identifier>JTS:buffer</ows:Identifier>
+    <wps:DataInputs>
+        <wps:Input>
+            <ows:Identifier>distance</ows:Identifier>
+            <wps:Data>
+                <wps:LiteralData>10</wps:LiteralData>
+            </wps:Data>
+        </wps:Input>
+        <wps:Input>
+            <ows:Identifier>geom</ows:Identifier>
+            <wps:Data>
+                <wps:ComplexData mimeType="application/wkt"><![CDATA[POINT (0 0)]]></wps:ComplexData>
+            </wps:Data>
+        </wps:Input>
+        <wps:Input>
+            <ows:Identifier>extent</ows:Identifier>
+            <wps:Data>
+                <wps:BoundingBoxData crs="EPSG:4326" dimensions="2">
+                    <ows:LowerCorner>-1 -2</ows:LowerCorner>
+                    <ows:UpperCorner>3 4</ows:UpperCorner>
+                </wps:BoundingBoxData>
+            </wps:Data>
+        </wps:Input>
+    </wps:DataInputs>
+    <wps:ResponseForm>
+        <wps:ResponseDocument storeExecuteResponse="true" lineage="false" status="true">
+            <wps:Output asReference="false" mimeType="application/json">
+                <ows:Identifier>result</ows:Identifier>
+            </wps:Output>
+        </wps:ResponseDocument>
+    </wps:ResponseForm>
+</wps:Execute>
+`);
       // must be well-formed
       expect(() => parseXmlString(body)).not.toThrow();
     });
@@ -79,7 +113,9 @@ describe('WPS Execute', () => {
         },
         '1.0.0'
       );
-      expect(gml).toContain('<gml:Point><gml:pos>0 0</gml:pos></gml:Point>');
+      expect(gml).toMatch(
+        /<gml:Point>\s*<gml:pos>0 0<\/gml:pos>\s*<\/gml:Point>/
+      );
       expect(gml).not.toContain('CDATA');
 
       const json = buildExecuteRequest(
