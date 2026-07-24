@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wps:ExecuteResponse service="WPS" version="1.0.0" xml:lang="en"
+    xmlns:wps="http://www.opengis.net/wps/1.0.0"
+    xmlns:ows="http://www.opengis.net/ows/1.1"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    serviceInstance="https://my.wps.server/geoserver/ows?SERVICE=WPS&amp;REQUEST=GetCapabilities"
+    statusLocation="https://my.wps.server/geoserver/ows?SERVICE=WPS&amp;REQUEST=GetExecutionStatus&amp;EXECUTIONID=abc123">
+  <wps:Process wps:processVersion="1.0.0">
+    <ows:Identifier>ras:Contour</ows:Identifier>
+    <ows:Title>Contour</ows:Title>
+  </wps:Process>
+  <wps:Status creationTime="2024-01-01T00:00:00.000Z">
+    <wps:ProcessStarted percentCompleted="35">Process is executing.</wps:ProcessStarted>
+  </wps:Status>
+</wps:ExecuteResponse>

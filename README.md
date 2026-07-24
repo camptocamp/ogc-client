@@ -12,6 +12,7 @@ The following standards are partially implemented:
 - WMS - _Web Map Service_
 - WFS - _Web Feature Service_
 - WMTS - _Web Map Tile Service_
+- WPS - _Web Processing Service_
 - OGC API (Records and Features)
 - TMS - _Tile Map Service_
 - STAC API - _SpatioTemporal Asset Catalog_
@@ -114,6 +115,7 @@ const legendUrl = endpoint.getLegendUrl('temperature', {
 See the [`examples/`](./examples/) directory for more complete examples, including:
 
 - `examples/stac-query.js` - Full STAC API query example with spatial and temporal filters
+- `examples/wps-sextant.mjs` - WPS 1.0.0 example: read service info, list/describe processes and run one asynchronously
 
 Run examples with:
 

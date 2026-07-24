@@ -19,7 +19,8 @@
       <li>
         Support for <a href="https://www.ogc.org/standards/wfs">WFS</a>,
         <a href="https://www.ogc.org/standards/wms">WMS</a>,
-        <a href="https://www.ogc.org/standards/wmts">WMTS</a> and
+        <a href="https://www.ogc.org/standards/wmts">WMTS</a>,
+        <a href="https://www.ogc.org/standards/wps">WPS</a> and
         <a href="https://ogcapi.ogc.org/">OGC API</a> protocols
       </li>
       <li>Elaborate cache system to minimize network requests</li>
@@ -270,6 +271,35 @@ const tileMaps = await endpoint.allTileMaps;
 
 // Get detailed information for a specific tile map
 const tileMapDetails = await endpoint.getTileMapInfo(tileMaps[0].href);</pre
+        >
+      </CodeBlock>
+    </p>
+
+    <h5>Run a process on a Web Processing Service (WPS)</h5>
+
+    <p>
+      <CodeBlock lang="js">
+        <pre>
+import { WpsEndpoint } from '@camptocamp/ogc-client';
+
+async function runProcess() {
+  const endpoint = await new WpsEndpoint('https://my.server.org/wps').isReady();
+
+  // Read service info and list the advertised processes
+  const info = endpoint.getServiceInfo();
+  const processes = endpoint.getProcesses();
+
+  // Describe a process to discover its inputs and outputs
+  const description = await endpoint.describeProcess(processes[0].identifier);
+
+  // Execute the process and read the result
+  const result = await endpoint.execute(processes[0].identifier, {
+    inputs: [
+      { identifier: 'NAME', literalValue: 'hello ogc-client' },
+    ],
+    outputs: [{ identifier: 'OUTPUT', asReference: true }],
+  });
+}</pre
         >
       </CodeBlock>
     </p>

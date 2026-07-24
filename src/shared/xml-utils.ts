@@ -1,4 +1,14 @@
-import { parseXml, XmlDocument, XmlElement, XmlText } from '@rgrove/parse-xml';
+import {
+  parseXml,
+  XmlCdata,
+  XmlComment,
+  XmlDeclaration,
+  XmlDocument,
+  XmlDocumentType,
+  XmlElement,
+  XmlProcessingInstruction,
+  XmlText,
+} from '@rgrove/parse-xml';
 
 export class XmlParseError extends Error {
   constructor(message) {
@@ -7,7 +17,7 @@ export class XmlParseError extends Error {
 }
 
 /**
- * Parses a XML document as string, return a document object
+ * Parses an XML document as string, return a document object
  */
 export function parseXmlString(xmlString: string) {
   let doc: XmlDocument = null;
@@ -120,4 +130,98 @@ export function getElementText(element: XmlElement) {
  */
 export function getElementAttribute(element: XmlElement, attrName: string) {
   return (element && element.attributes[attrName]) || '';
+}
+
+export function createElement(
+  name: string,
+  attrs: Record<string, string>,
+  children: XmlElement | XmlElement[] = []
+): XmlElement {
+  return new XmlElement(
+    name,
+    attrs,
+    Array.isArray(children) ? children : [children]
+  );
+}
+
+export function createTextElement(
+  name: string,
+  attrs: Record<string, string>,
+  text: string
+): XmlElement {
+  return new XmlElement(name, attrs, [new XmlText(text)]);
+}
+
+export function createCdataElement(
+  name: string,
+  attrs: Record<string, string>,
+  content: string
+): XmlElement {
+  return new XmlElement(name, attrs, [new XmlCdata(content)]);
+}
+
+export function createDocument(rootEl: XmlElement): XmlDocument {
+  return new XmlDocument([rootEl]);
+}
+
+export function xmlToString(
+  el:
+    | XmlDocument
+    | XmlElement
+    | XmlComment
+    | XmlProcessingInstruction
+    | XmlDeclaration
+    | XmlDocumentType
+    | XmlCdata
+    | XmlText,
+  indentationLevel = 0
+) {
+  const encodeEntities = (text: string) => {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  };
+  if (el instanceof XmlDocument)
+    return `<?xml version="1.0" encoding="UTF-8"?>${xmlToString(
+      el.children[0]
+    )}`;
+  if (el instanceof XmlCdata) {
+    const encoded = el.text.replace(/]]>/g, ']]]]><![CDATA[>');
+    return `<![CDATA[${encoded}]]>`;
+  }
+  if (el instanceof XmlText) {
+    const text = el.text;
+    const isEmpty = !text || text.replace(/^\s+|\s+$/g, '') === '';
+    if (isEmpty) return '';
+    return encodeEntities(text);
+  }
+  if (!(el instanceof XmlElement)) return `<!-- unknown -->`;
+
+  const padding = '    '.repeat(indentationLevel);
+  const children = Array.isArray(el.children)
+    ? el.children
+        .map((el) => xmlToString(el, indentationLevel + 1))
+        .filter((el) => el !== '')
+        .map((elString, index, array) =>
+          index < array.length - 1 ? elString.replace(/\n\s*$/g, '') : elString
+        )
+        .join('')
+    : '';
+  const attrs = Object.keys(el.attributes).reduce(
+    (prev, curr) => prev + ` ${curr}="${encodeEntities(el.attributes[curr])}"`,
+    ''
+  );
+  const parentPadding = '    '.repeat(Math.max(0, indentationLevel - 1));
+  if (children === '') {
+    return `
+${padding}<${el.name}${attrs}/>
+${parentPadding}`;
+  }
+
+  return `
+${padding}<${el.name}${attrs}>${children}</${el.name}>
+${parentPadding}`;
 }

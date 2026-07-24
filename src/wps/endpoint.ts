@@ -1,0 +1,179 @@
+import { parseWpsCapabilities } from '../worker/index.js';
+import { useCache } from '../shared/cache.js';
+import { postXmlDocument, queryXmlDocument } from '../shared/http-utils.js';
+import {
+  type HttpMethod,
+  type OperationName,
+  type OperationUrl,
+} from '../shared/models.js';
+import {
+  WpsEndpointInfo,
+  WpsExecuteOptions,
+  WpsExecuteResponse,
+  WpsProcessFull,
+  WpsProcessSummary,
+  WpsVersion,
+} from './model.js';
+import { generateDescribeProcessUrl } from './url.js';
+import { parseDescribeProcessResponse } from './describeprocess.js';
+import { buildExecuteRequest, parseExecuteResponse } from './execute.js';
+import { setQueryParams } from '../shared/url-utils.js';
+
+/**
+ * Represents a WPS endpoint advertising a set of processes.
+ *
+ * Please note that for now, **only WPS version 1.0.0 is supported!**
+ *
+ * Always use the class like so to make sure that all its internals are correctly initialized:
+ * ```js
+ * const endpoint = await new WpsEndpoint(url).isReady();
+ * ```
+ */
+export default class WpsEndpoint {
+  private _capabilitiesUrl: string;
+  private _capabilitiesPromise: Promise<WpsEndpoint>;
+  private _info: WpsEndpointInfo | null;
+  private _processes: WpsProcessSummary[] | null;
+  private _url: Record<OperationName, OperationUrl>;
+  private _version: WpsVersion | null;
+
+  /**
+   * @param url WPS endpoint url; can contain any query parameters, these will be used to
+   *   initialize the endpoint
+   */
+  constructor(url: string) {
+    this._capabilitiesUrl = setQueryParams(url, {
+      SERVICE: 'WPS',
+      REQUEST: 'GetCapabilities',
+      VERSION: '1.0.0', // hardcoded version; remove this to extend support to other versions
+    });
+  }
+
+  /**
+   * **This should be called before any other method to initialize the endpoint!**
+   *
+   * Resolves when the endpoint is ready to use. Returns the same endpoint object for convenience.
+   * @throws {EndpointError}
+   */
+  isReady() {
+    if (!this._capabilitiesPromise) {
+      this._capabilitiesPromise = useCache(
+        () => parseWpsCapabilities(this._capabilitiesUrl),
+        'WPS',
+        'CAPABILITIES',
+        this._capabilitiesUrl
+      ).then(({ info, processes, url, version }) => {
+        this._info = info;
+        this._processes = processes;
+        this._url = url;
+        this._version = version;
+
+        return this;
+      });
+    }
+    return this._capabilitiesPromise;
+  }
+
+  /**
+   * Returns the service information.
+   */
+  getServiceInfo() {
+    return this._info;
+  }
+
+  /**
+   * Returns the WPS version advertised by this endpoint.
+   */
+  getVersion() {
+    return this._version;
+  }
+
+  /**
+   * Returns an array of processes advertised by the service, in summary format.
+   */
+  getProcesses() {
+    return this._processes;
+  }
+
+  /**
+   * Returns the summary of a process by its identifier, or null if not found.
+   */
+  getProcessSummary(processId: string): WpsProcessSummary | null {
+    if (!this._processes) return null;
+    return (
+      this._processes.find((process) => process.identifier === processId) ??
+      null
+    );
+  }
+
+  /**
+   * Returns the URL reported by the WPS for the given operation
+   * @param operationName e.g. Execute, DescribeProcess, GetCapabilities
+   * @param method HTTP method
+   */
+  getOperationUrl(operationName: OperationName, method: HttpMethod = 'Get') {
+    if (!this._url) {
+      return null;
+    }
+    return this._url[operationName]?.[method];
+  }
+
+  /**
+   * Returns the Capabilities URL used to initialize the endpoint.
+   */
+  getCapabilitiesUrl() {
+    return this._capabilitiesUrl;
+  }
+
+  /**
+   * Performs a DescribeProcess request for the given process and returns its
+   * full description (inputs, outputs, supported formats).
+   * @param processId Process identifier to describe
+   */
+  describeProcess(processId: string): Promise<WpsProcessFull | null> {
+    return useCache(
+      () => {
+        const url = generateDescribeProcessUrl(
+          this.getOperationUrl('DescribeProcess') || this._capabilitiesUrl,
+          this._version,
+          processId
+        );
+        return queryXmlDocument(url).then((doc) =>
+          parseDescribeProcessResponse(doc, processId)
+        );
+      },
+      'WPS',
+      'DESCRIBEPROCESS',
+      this._capabilitiesUrl,
+      processId
+    );
+  }
+
+  /**
+   * Executes a process (POST XML). Fetches the process description first in
+   * order to type the inputs.
+   * @param processId Process identifier to execute
+   * @param options Execution options (inputs, outputs, response form flags)
+   */
+  async execute(
+    processId: string,
+    options: WpsExecuteOptions
+  ): Promise<WpsExecuteResponse> {
+    const process = await this.describeProcess(processId);
+    if (!process) {
+      throw new Error(`Process '${processId}' was not found in this endpoint`);
+    }
+    const body = buildExecuteRequest(process, options, this._version);
+    const executeUrl =
+      this.getOperationUrl('Execute', 'Post') || this._capabilitiesUrl;
+    return postXmlDocument(executeUrl, body).then(parseExecuteResponse);
+  }
+
+  /**
+   * Polls the status of an asynchronous execution.
+   * @param statusLocation The statusLocation URL returned by execute()
+   */
+  getStatus(statusLocation: string): Promise<WpsExecuteResponse> {
+    return queryXmlDocument(statusLocation).then(parseExecuteResponse);
+  }
+}
