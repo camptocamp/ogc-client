@@ -107,7 +107,8 @@ export async function useCache<T>(
   }
   const taskRun = factory();
   if (taskRun instanceof Promise) {
-    taskRun.then(() => tasksMap.delete(taskKey));
+    const clear = () => tasksMap.delete(taskKey);
+    taskRun.then(clear, clear);
     tasksMap.set(taskKey, taskRun);
   }
   const result = await taskRun;
