@@ -12,6 +12,7 @@ import {
 } from './url.js';
 import { stripNamespace } from '../shared/xml-utils.js';
 import {
+  FieldSort,
   GenericEndpointInfo,
   type HttpMethod,
   type OperationName,
@@ -275,6 +276,7 @@ export default class WfsEndpoint {
       startIndex,
       attributes,
       hitsOnly,
+      sortBy,
     } = options || {};
     const internalFeatureType = this._getFeatureTypeByName(featureType);
     if (!internalFeatureType) {
@@ -310,7 +312,10 @@ export default class WfsEndpoint {
       outputCrs,
       extent,
       extentCrs,
-      startIndex
+      startIndex,
+      sortBy && typeof sortBy[0] === 'string'
+        ? [sortBy as FieldSort]
+        : (sortBy as FieldSort[])
     );
   }
 

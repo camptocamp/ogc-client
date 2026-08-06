@@ -58,7 +58,6 @@ export function generateGetFeatureUrl(
   if (startIndex) {
     newParams.STARTINDEX = startIndex.toString(10);
   }
-
   const url = new URL(setQueryParams(serviceUrl, newParams));
 
   // Don't encode +A or +D Wfs sorting param
@@ -66,7 +65,7 @@ export function generateGetFeatureUrl(
     const sorts = sortBy
       .map((fieldSort) => `${fieldSort[1]} ${fieldSort[0]}`)
       .join(',');
-    // Direct update on string url to prevent encoding of +A and +D
+    // using the URL API so that the space characters get encoded to "+" in the url
     url.searchParams.set('SORTBY', sorts);
   }
 
