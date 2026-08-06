@@ -63,7 +63,10 @@ export function generateGetFeatureUrl(
   // Don't encode +A or +D Wfs sorting param
   if (Array.isArray(sortBy) && sortBy.length > 0) {
     const sorts = sortBy
-      .map((fieldSort) => `${fieldSort[1]} ${fieldSort[0]}`)
+      .map(
+        (fieldSort) =>
+          `${fieldSort[1]} ${fieldSort[0] === 'D' ? 'DESC' : 'ASC'}`
+      )
       .join(',');
     // using the URL API so that the space characters get encoded to "+" in the url
     url.searchParams.set('SORTBY', sorts);

@@ -644,7 +644,7 @@ describe('WfsEndpoint', () => {
           sortBy: ['D', 'myAttr'],
         })
       ).toEqual(
-        'https://www.pigma.org/geoserver/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&OUTPUTFORMAT=application%2Fgml%2Bxml%3B+version%3D3.2&COUNT=200&SORTBY=myAttr+D'
+        'https://www.pigma.org/geoserver/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&OUTPUTFORMAT=application%2Fgml%2Bxml%3B+version%3D3.2&COUNT=200&SORTBY=myAttr+DESC'
       );
     });
     it('supports multiple sorting attributes', () => {
@@ -658,7 +658,7 @@ describe('WfsEndpoint', () => {
           ],
         })
       ).toEqual(
-        'https://www.pigma.org/geoserver/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&OUTPUTFORMAT=application%2Fgml%2Bxml%3B+version%3D3.2&COUNT=200&SORTBY=myAttr2+A%2CmyAttr+D'
+        'https://www.pigma.org/geoserver/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=cd16%3Ahierarchisation_l&OUTPUTFORMAT=application%2Fgml%2Bxml%3B+version%3D3.2&COUNT=200&SORTBY=myAttr2+ASC%2CmyAttr+DESC'
       );
     });
   });
