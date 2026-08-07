@@ -53,6 +53,8 @@ export function parseFeatureProps(
         return parseFloat(valueAsString);
       case 'boolean':
         return valueAsString === 'true';
+      case 'date':
+        return new Date(valueAsString);
       default:
         return valueAsString;
     }
@@ -73,24 +75,6 @@ export function parseFeatureProps(
   return members.map((el) => ({
     id: getElementAttribute(el, idAttr),
     properties: getProperties(el),
-  }));
-}
-
-/**
- * Returns an array of features with their id and properties
- */
-export function parseFeaturePropsGeojson(
-  getFeaturesGeojson: Record<string, unknown>
-): WfsFeatureWithProps[] {
-  if (
-    !('features' in getFeaturesGeojson) ||
-    !Array.isArray(getFeaturesGeojson.features)
-  ) {
-    throw new Error('Geojson object is apparently not a FeatureCollection');
-  }
-  return getFeaturesGeojson.features.map((feature) => ({
-    id: feature.id,
-    properties: { ...feature.properties },
   }));
 }
 

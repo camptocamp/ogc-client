@@ -20,8 +20,13 @@ export type WfsFeatureTypeInternal = {
   metadata?: MetadataURL[];
 };
 
-export type FeaturePropertyValue = string | number | boolean;
-export type FeaturePropertyType = 'string' | 'float' | 'integer' | 'boolean';
+export type FeaturePropertyValue = string | number | boolean | Date;
+export type FeaturePropertyType =
+  | 'string'
+  | 'float'
+  | 'integer'
+  | 'boolean'
+  | 'date';
 
 export type FeatureGeometryType =
   | 'linestring'
@@ -71,7 +76,7 @@ export type WfsFeatureTypeFull = {
   /**
    * These properties will *not* include the feature geometry
    */
-  properties: Record<string, FeaturePropertyValue>;
+  properties: Record<string, FeaturePropertyType>;
   /**
    * Not defined if no geometry present
    */
