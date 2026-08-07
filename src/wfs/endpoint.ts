@@ -20,6 +20,7 @@ import {
 } from '../shared/models.js';
 import {
   WfsFeatureTypeBrief,
+  WfsFeatureTypeFull,
   WfsFeatureTypeInternal,
   WfsFeatureTypeSummary,
   WfsGetFeatureOptions,
@@ -89,7 +90,7 @@ export default class WfsEndpoint {
   /**
    * Returns an array of feature types
    */
-  getFeatureTypes() {
+  getFeatureTypes(): WfsFeatureTypeBrief[] {
     return this._featureTypes.map(
       (featureType) =>
         ({
@@ -121,7 +122,7 @@ export default class WfsEndpoint {
    * @param name Feature type name property (unique in the WFS service)
    * @return return null if layer was not found or endpoint is not ready
    */
-  getFeatureTypeSummary(name: string) {
+  getFeatureTypeSummary(name: string): WfsFeatureTypeSummary | null {
     const featureType = this._getFeatureTypeByName(name);
     if (!featureType) return null;
 
@@ -146,7 +147,7 @@ export default class WfsEndpoint {
    * @param name Feature type name property (unique in the WFS service)
    * @return {Promise<WfsFeatureTypeFull>|null} return null if layer was not found or endpoint is not ready
    */
-  getFeatureTypeFull(name: string) {
+  getFeatureTypeFull(name: string): Promise<WfsFeatureTypeFull> {
     const featureType = this._getFeatureTypeByName(name);
     if (!featureType) return null;
 

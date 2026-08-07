@@ -5,6 +5,7 @@ export type {
   WfsFeatureTypeSummary,
   WfsFeatureTypeBrief,
   FeatureGeometryType,
+  FeaturePropertyValue,
   FeaturePropertyType,
   WfsFeatureTypeFull,
   WfsFeatureTypePropDetails,
