@@ -92,6 +92,13 @@ function getTypeFromXsdType(xsdType: string): FeaturePropertyType {
 
   switch (xsdTypeNoNamespace) {
     case 'string':
+    case 'duration':
+    case 'time':
+    case 'gMonth':
+    case 'gMonthDay':
+    case 'gDay':
+    case 'gYear':
+    case 'gYearMonth':
       return 'string';
     case 'boolean':
       return 'boolean';
@@ -113,6 +120,9 @@ function getTypeFromXsdType(xsdType: string): FeaturePropertyType {
     case 'unsignedShort':
     case 'unsignedByte':
       return 'integer';
+    case 'dateTime':
+    case 'date':
+      return 'date';
     default:
       return 'string';
   }

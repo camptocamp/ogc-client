@@ -11,6 +11,7 @@
             <usa:AREA_LAND>2.51470069067E11</usa:AREA_LAND>
             <usa:AREA_WATER>1.864445306E9</usa:AREA_WATER>
             <usa:PERSONS>563626</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.2">
             <usa:STATE_ABBR>PA</usa:STATE_ABBR>
@@ -18,6 +19,7 @@
             <usa:AREA_LAND>1.15883064314E11</usa:AREA_LAND>
             <usa:AREA_WATER>3.397122731E9</usa:AREA_WATER>
             <usa:PERSONS>12702379</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.3">
             <usa:STATE_ABBR>OH</usa:STATE_ABBR>
@@ -25,6 +27,7 @@
             <usa:AREA_LAND>1.05828706692E11</usa:AREA_LAND>
             <usa:AREA_WATER>1.0269012119E10</usa:AREA_WATER>
             <usa:PERSONS>11536504</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.4">
             <usa:STATE_ABBR>NM</usa:STATE_ABBR>
@@ -32,6 +35,7 @@
             <usa:AREA_LAND>3.1416074824E11</usa:AREA_LAND>
             <usa:AREA_WATER>7.56659673E8</usa:AREA_WATER>
             <usa:PERSONS>2059179</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.5">
             <usa:STATE_ABBR>MD</usa:STATE_ABBR>
@@ -39,6 +43,7 @@
             <usa:AREA_LAND>2.5141638381E10</usa:AREA_LAND>
             <usa:AREA_WATER>6.989579585E9</usa:AREA_WATER>
             <usa:PERSONS>5773552</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.6">
             <usa:STATE_ABBR>RI</usa:STATE_ABBR>
@@ -46,6 +51,7 @@
             <usa:AREA_LAND>2.677566454E9</usa:AREA_LAND>
             <usa:AREA_WATER>1.323668539E9</usa:AREA_WATER>
             <usa:PERSONS>1052567</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.7">
             <usa:STATE_ABBR>OR</usa:STATE_ABBR>
@@ -53,6 +59,7 @@
             <usa:AREA_LAND>2.48607802255E11</usa:AREA_LAND>
             <usa:AREA_WATER>6.191433228E9</usa:AREA_WATER>
             <usa:PERSONS>3831074</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.8">
             <usa:STATE_ABBR>PR</usa:STATE_ABBR>
@@ -60,6 +67,7 @@
             <usa:AREA_LAND>8.867536532E9</usa:AREA_LAND>
             <usa:AREA_WATER>4.923745357E9</usa:AREA_WATER>
             <usa:PERSONS>3725789</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.9">
             <usa:STATE_ABBR>WI</usa:STATE_ABBR>
@@ -67,6 +75,7 @@
             <usa:AREA_LAND>1.40268064888E11</usa:AREA_LAND>
             <usa:AREA_WATER>2.9366760483E10</usa:AREA_WATER>
             <usa:PERSONS>5686986</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.10">
             <usa:STATE_ABBR>ND</usa:STATE_ABBR>
@@ -74,6 +83,7 @@
             <usa:AREA_LAND>1.78711239147E11</usa:AREA_LAND>
             <usa:AREA_WATER>4.396568298E9</usa:AREA_WATER>
             <usa:PERSONS>672591</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.11">
             <usa:STATE_ABBR>NV</usa:STATE_ABBR>
@@ -81,6 +91,7 @@
             <usa:AREA_LAND>2.84331937541E11</usa:AREA_LAND>
             <usa:AREA_WATER>2.047761678E9</usa:AREA_WATER>
             <usa:PERSONS>2700551</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.12">
             <usa:STATE_ABBR>GA</usa:STATE_ABBR>
@@ -88,6 +99,7 @@
             <usa:AREA_LAND>1.48959236603E11</usa:AREA_LAND>
             <usa:AREA_WATER>4.951196915E9</usa:AREA_WATER>
             <usa:PERSONS>9687653</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.13">
             <usa:STATE_ABBR>NY</usa:STATE_ABBR>
@@ -95,6 +107,7 @@
             <usa:AREA_LAND>1.22056806947E11</usa:AREA_LAND>
             <usa:AREA_WATER>1.92399241E10</usa:AREA_WATER>
             <usa:PERSONS>19378102</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
         <usa:states gml:id="states.14">
             <usa:STATE_ABBR>AR</usa:STATE_ABBR>
@@ -102,6 +115,7 @@
             <usa:AREA_LAND>1.34771261408E11</usa:AREA_LAND>
             <usa:AREA_WATER>2.960539257E9</usa:AREA_WATER>
             <usa:PERSONS>2915918</usa:PERSONS>
+            <usa:MyDate>2020-03-05</usa:MyDate>
         </usa:states>
     </gml:featureMembers>
 </wfs:FeatureCollection>
