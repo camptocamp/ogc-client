@@ -1,6 +1,7 @@
 import {
   BoundingBox,
   CrsCode,
+  FieldSort,
   MetadataURL,
   MimeType,
 } from '../shared/models.js';
@@ -149,4 +150,8 @@ export type WfsGetFeatureOptions = {
    * note: this might not work for WFS version < 2
    */
   hitsOnly?: boolean;
+  /**
+   * attributes to sort by on, by either ascending or descending order
+   */
+  sortBy?: FieldSort | FieldSort[];
 };
