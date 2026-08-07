@@ -87,7 +87,7 @@ export function parseFeatureTypeInfo(
 function getTypeFromXsdType(xsdType: string): FeaturePropertyType {
   const xsdTypeNoNamespace =
     xsdType.indexOf(':') > -1
-      ? xsdType.substr(xsdType.indexOf(':') + 1)
+      ? xsdType.substring(xsdType.indexOf(':') + 1)
       : xsdType;
 
   switch (xsdTypeNoNamespace) {
