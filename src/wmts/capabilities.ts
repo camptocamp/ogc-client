@@ -27,6 +27,28 @@ function parseBBox(xmlElement: XmlElement): BoundingBox {
   return result;
 }
 
+/**
+ * Parse a URN/URL CRS string into a short name format
+ * @param crsString - URN/URL CRS string (e.g. "urn:ogc:def:crs:EPSG::4326" or "http://www.opengis.net/def/crs/EPSG/0/4326")
+ * @returns The parsed CRS string in short name format (e.g. "EPSG:4326")
+ */
+function parseCRS(crsString: string): string {
+  if (!crsString) return '';
+  const segments = crsString.trim().split(/[/:]+/).filter(Boolean);
+  if (segments.length === 0) return crsString;
+  const code = segments.pop() || '';
+  let authority = null;
+  const knownAuthorities = ['EPSG', 'ESRI', 'IAU', 'IGNF', 'NKG', 'OGC'];
+  while (segments.length > 0) {
+    const candidate = segments.pop() || '';
+    if (knownAuthorities.includes(candidate.toUpperCase())) {
+      authority = candidate.toUpperCase();
+      break;
+    }
+  }
+  return authority ? `${authority}:${code}` : code;
+}
+
 export function readInfoFromCapabilities(
   capabilitiesDoc: XmlDocument
 ): WmtsEndpointInfo {
@@ -104,7 +126,7 @@ export function readMatrixSetsFromCapabilities(
     const boundingBox = parseBBox(findChildElement(element, 'BoundingBox'));
     return {
       identifier: getElementText(findChildElement(element, 'Identifier')),
-      crs: getElementText(findChildElement(element, 'SupportedCRS')),
+      crs: parseCRS(getElementText(findChildElement(element, 'SupportedCRS'))),
       tileMatrices: findChildrenElement(element, 'TileMatrix').map(
         parseMatrixSet
       ),
@@ -124,7 +146,7 @@ export function readLayersFromCapabilities(
    * Get the TileMatrixSet CRS
    * @param contentsEl - Contents
    * @param identifier - TileMatrixSet identifier
-   * @returns The SupportedCRS of the TileMatrixSet
+   * @returns The parsed supported CRS of the TileMatrixSet
    */
   function getMatrixSetCrs(contentsEl: XmlElement, identifier: string): string {
     const matrixSet = findChildrenElement(contentsEl, 'TileMatrixSet').find(
@@ -133,7 +155,8 @@ export function readLayersFromCapabilities(
         return getElementText(identifierEl) === identifier;
       }
     );
-    return getElementText(findChildElement(matrixSet, 'SupportedCRS'));
+    const supportedCrsEl = findChildElement(matrixSet, 'SupportedCRS');
+    return parseCRS(getElementText(supportedCrsEl));
   }
 
   /**

@@ -151,7 +151,7 @@ describe('WmtsEndpoint', () => {
         );
         expect(buildOpenLayersTileGrid).toHaveBeenCalledWith(
           {
-            crs: 'urn:ogc:def:crs:OGC:1.3:CRS84',
+            crs: 'OGC:CRS84',
             identifier: 'BigWorldPixel',
             tileMatrices: expect.arrayContaining([
               {
@@ -181,7 +181,7 @@ describe('WmtsEndpoint', () => {
             boundingBox: [
               1799448.394855, 6124949.74777, 1848250.442089, 6162571.828177,
             ],
-            crs: 'urn:ogc:def:crs:EPSG:6.18:3:3857',
+            crs: 'EPSG:3857',
             identifier: 'google3857',
             tileMatrices: expect.arrayContaining([
               {
