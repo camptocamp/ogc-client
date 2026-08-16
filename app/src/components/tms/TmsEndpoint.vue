@@ -1,40 +1,42 @@
 <template>
-  <div>
-    <div class="d-flex flex-row my-4">
+  <div class="pico">
+    <div style="display: flex; flex-direction: row; gap: 16px">
       <input
-        class="form-control me-3"
+        autofocus
         placeholder="Enter a TMS endpoint URL here"
         v-model="url"
+        @keydown.enter="createEndpoint()"
       />
-      <div class="spacer-s"></div>
-      <button type="button" class="btn btn-primary" @click="createEndpoint()">
-        Analyze
-      </button>
+      <button type="button" @click="createEndpoint()">Analyze</button>
     </div>
-    <div v-if="loading">Loading...</div>
-    <div v-if="loaded">
-      <InfoList :info="info" />
-      <h4>Available Tile Maps</h4>
-      <ItemsTree
-        :items="tilemaps"
-        style="min-height: 200px; max-height: 400px; overflow-y: auto"
-      >
-        <template v-slot="{ item }">
-          <div :title="item.title">
-            <a
-              href
-              @click="handleTileMapClick(item, $event)"
-              class="link-light"
-            >
-              {{ item.title }} ({{ item.srs }})
-            </a>
-          </div>
-        </template>
-      </ItemsTree>
-      <!-- Display detailed tilemap info using our new component -->
-      <TileMapDetails v-if="selectedTileMap" :tileMap="selectedTileMap" />
-    </div>
-    <div v-if="error" class="text-danger">Error: {{ error }}</div>
+    <Async v-if="loadPromise" :promise="loadPromise">
+      <template v-slot:then="{ result }">
+        <InfoList :info="result.info" />
+        <h4>Available Tile Maps</h4>
+        <ItemsTree
+          :items="result.tilemaps"
+          style="min-height: 200px; max-height: 500px; overflow-y: auto"
+        >
+          <template v-slot="{ item }">
+            <div :title="item.title">
+              <!-- target attribute makes sure vitepress router does not handle the click -->
+              <a
+                href
+                target
+                @click="handleTileMapClick(result.endpoint, item, $event)"
+              >
+                {{ item.title }} ({{ item.srs }})
+              </a>
+            </div>
+          </template>
+        </ItemsTree>
+        <Async v-if="loadTileMapPromise" :promise="loadTileMapPromise">
+          <template v-slot:then="{ result: tileMap }">
+            <TileMapDetails :tileMap="tileMap" />
+          </template>
+        </Async>
+      </template>
+    </Async>
   </div>
 </template>
 
@@ -43,71 +45,40 @@ import InfoList from '../presentation/InfoList.vue';
 import ItemsTree from '../presentation/ItemsTree.vue';
 import TileMapDetails from './TileMapDetails.vue';
 import TmsEndpoint from '../../../../src/tms/endpoint';
+import Async from '../presentation/Async.vue';
 
 export default {
   name: 'TmsEndpoint',
-  components: { ItemsTree, InfoList, TileMapDetails },
+  components: { Async, ItemsTree, InfoList, TileMapDetails },
   data: () => ({
-    loading: false,
-    error: null,
-    endpoint: null,
-    info: {},
-    tilemaps: [],
-    selectedTileMap: null,
-    url: 'https://ahocevar.com/geoserver/gwc/service/tms/1.0.0',
+    loadPromise: null,
+    loadTileMapPromise: null,
+    url: 'https://data.geopf.fr/tms/1.0.0',
   }),
-  computed: {
-    loaded() {
-      return this.endpoint && !this.loading && !this.error;
-    },
-  },
   methods: {
-    async createEndpoint() {
-      this.error = null;
-      this.loading = true;
-      this.selectedTileMap = null;
+    createEndpoint() {
+      this.loadTileMapPromise = null;
+      const endpoint = new TmsEndpoint(this.url);
 
-      try {
-        this.endpoint = new TmsEndpoint(this.url);
-
-        // Using getters instead of methods
-        const [tmsDocument, tileMaps] = await Promise.all([
-          this.endpoint.tileMapServiceInfo,
-          this.endpoint.allTileMaps,
-        ]);
-
-        this.info = {
+      this.loadPromise = Promise.all([
+        endpoint.tileMapServiceInfo,
+        endpoint.allTileMaps,
+      ]).then(([tmsDocument, tileMaps]) => ({
+        info: {
           title: tmsDocument.title || 'TMS Endpoint',
           description: tmsDocument.abstract || 'TMS endpoint information',
-        };
-
-        this.tilemaps = tileMaps || [];
-      } catch (e) {
-        this.error = e.message;
-        console.error('Error loading TMS endpoint:', e);
-      } finally {
-        this.loading = false;
-      }
+        },
+        tilemaps: tileMaps || [],
+        endpoint,
+      }));
     },
 
-    async handleTileMapClick(tileMap, event) {
+    handleTileMapClick(endpoint, tileMap, event) {
       event.preventDefault();
-      // Optionally, store a copy of the clicked tileMap reference
-      this.selectedTileMap = tileMap;
-      try {
-        // getTileMapInfo remains a method since it takes a parameter
-        const tmInfo = await this.endpoint.getTileMapInfo(tileMap.href);
-        // Update selectedTileMap with full resource info
-        this.selectedTileMap = tmInfo;
-      } catch (e) {
-        this.error = e.message;
-        console.error('Error fetching TileMap info:', e);
-      }
+      this.loadTileMapPromise = endpoint.getTileMapInfo(tileMap.href);
     },
   },
 };
 </script>
 
-<style scoped>
-/* Add any component-specific styles if needed */
-</style>
+<style scoped></style>

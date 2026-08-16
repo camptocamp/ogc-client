@@ -1,14 +1,16 @@
 <template>
   <div>
     <p>{{ process.identifier }}</p>
-    <InfoList :info="processInfo"></InfoList>
-    <div v-if="loading">Loading process description...</div>
-    <template v-if="full">
-      <p>Inputs</p>
-      <InfoList :info="inputs"></InfoList>
-      <p>Outputs</p>
-      <InfoList :info="outputs"></InfoList>
-    </template>
+    <InfoList :info="process"></InfoList>
+    <Async v-if="processLoaded" :promise="processLoaded">
+      <template v-slot:then="{ result: processFull }">
+        <InfoList :info="getOtherInfo(processFull)"></InfoList>
+        <p>Inputs</p>
+        <InfoList :info="getInputs(processFull)"></InfoList>
+        <p>Outputs</p>
+        <InfoList :info="getOutputs(processFull)"></InfoList>
+      </template>
+    </Async>
   </div>
 </template>
 
@@ -16,10 +18,11 @@
 
 <script>
 import InfoList from '../presentation/InfoList.vue';
+import Async from '../presentation/Async.vue';
 
 export default {
   name: 'WpsProcessInfo',
-  components: { InfoList },
+  components: { Async, InfoList },
   props: {
     /** @type {{ new(): WpsProcessSummary}} */
     process: Object,
@@ -27,45 +30,9 @@ export default {
     endpoint: Object,
   },
   data: () => ({
-    loading: false,
     /** @type {?{ new(): WpsProcessFull}} */
-    full: null,
+    processLoaded: null,
   }),
-  computed: {
-    processInfo() {
-      return {
-        ...(this.process.title && { title: this.process.title }),
-        ...(this.process.abstract && { abstract: this.process.abstract }),
-        ...(this.process.processVersion && {
-          version: this.process.processVersion,
-        }),
-        ...(this.full && {
-          'status supported': this.full.statusSupported,
-          'store supported': this.full.storeSupported,
-        }),
-      };
-    },
-    inputs() {
-      if (!this.full) return {};
-      return this.full.inputs.reduce(
-        (prev, input) => ({
-          ...prev,
-          [input.identifier]: this.describeParam(input, true),
-        }),
-        {}
-      );
-    },
-    outputs() {
-      if (!this.full) return {};
-      return this.full.outputs.reduce(
-        (prev, output) => ({
-          ...prev,
-          [output.identifier]: this.describeParam(output, false),
-        }),
-        {}
-      );
-    },
-  },
   methods: {
     describeParam(param, isInput) {
       const parts = [param.type];
@@ -82,20 +49,38 @@ export default {
         parts.push(param.complexData.default.mimeType);
       }
       if (param.title) {
-        parts.push(`— ${param.title}`);
+        parts.push(`- ${param.title}`);
       }
       return parts.join(' ');
     },
-    async describe() {
-      this.loading = true;
-      this.full = null;
-      try {
-        this.full = await this.endpoint.describeProcess(
-          this.process.identifier
-        );
-      } finally {
-        this.loading = false;
-      }
+    getInputs(processFull) {
+      return processFull.inputs.reduce(
+        (prev, input) => ({
+          ...prev,
+          [input.identifier]: this.describeParam(input, true),
+        }),
+        {},
+      );
+    },
+    getOutputs(processFull) {
+      return processFull.outputs.reduce(
+        (prev, output) => ({
+          ...prev,
+          [output.identifier]: this.describeParam(output, false),
+        }),
+        {},
+      );
+    },
+    getOtherInfo(processFull) {
+      return {
+        'status supported': processFull.statusSupported,
+        'store supported': processFull.storeSupported,
+      };
+    },
+    describe() {
+      this.processLoaded = this.endpoint.describeProcess(
+        this.process.identifier,
+      );
     },
   },
   mounted() {

@@ -1,28 +1,18 @@
 # ogc-client application
 
-This application provides the following:
+This Vitepress application provides the following:
 
-- A general and developer documentation
-- A simple demo
-
-## Project setup
-
-```
-npm install
-```
+- A general documentation and API reference
+- Live examples of the library
 
 ### Compiles and hot-reloads for development
 
 ```
-npm run start
+npm run docs:dev
 ```
 
 ### Compiles and minifies for production
 
 ```
-npm run build
+npm run docs:build
 ```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).

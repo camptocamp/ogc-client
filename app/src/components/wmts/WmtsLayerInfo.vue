@@ -2,13 +2,10 @@
   <div>
     <p>{{ layer.title }}</p>
     <InfoList :info="layer"></InfoList>
-    <div class="d-flex flex-row justify-content-between">
+    <div class="pico" style="display: flex; flex-direction: row; gap: 16px">
       <label>
         Selected style:&nbsp;
-        <select
-          v-model="selectedStyle"
-          class="form-select d-inline-block w-auto"
-        >
+        <select v-model="selectedStyle">
           <option v-for="style in layer.styles" :value="style.name">
             {{ style.title || style.name }}
           </option>
@@ -16,10 +13,7 @@
       </label>
       <label>
         Selected matrix set:&nbsp;
-        <select
-          v-model="selectedMatrixSet"
-          class="form-select d-inline-block w-auto"
-        >
+        <select v-model="selectedMatrixSet">
           <option v-for="(matrixSet, index) in layer.matrixSets" :value="index">
             {{ matrixSet.identifier }}
           </option>
@@ -78,7 +72,7 @@ export default {
         const matrixSetLink = newVal.matrixSets[this.selectedMatrixSet];
         const tileGrid = await this.endpoint.getOpenLayersTileGrid(
           this.layer.name,
-          matrixSetLink.identifier
+          matrixSetLink.identifier,
         );
         if (!this.olMap) {
           this.olMap = new Map({
@@ -116,9 +110,10 @@ export default {
           const extent = transformExtent(
             this.layer.latLonBoundingBox,
             'EPSG:4326',
-            'EPSG:3857'
+            'EPSG:3857',
           );
           layer.setExtent(extent);
+          this.olMap.getView().fit(extent);
         }
         this.olMap.addLayer(layer);
       },

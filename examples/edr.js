@@ -1,6 +1,6 @@
 // npx tsx app/examples/edr.ts
 
-import { OgcApiEndpoint } from '../../src-node/index.js';
+import { OgcApiEndpoint } from '../dist/dist-node.js';
 
 const baseUrl = 'https://api.wwdh.internetofwater.app/?f=json';
 

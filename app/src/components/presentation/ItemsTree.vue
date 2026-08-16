@@ -1,5 +1,13 @@
 <template>
-  <div class="bg-dark small text-white p-2 rounded-1">
+  <div
+    style="
+      background-color: rgb(33, 37, 41);
+      border-radius: 3.2px;
+      color: white;
+      padding: 8px;
+      font-size: 0.8em;
+    "
+  >
     <div v-for="treeItem in items">
       <TreeItem :item="treeItem">
         <template v-slot="{ item }">
@@ -11,10 +19,15 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+:deep(a) {
+  color: white;
+}
+</style>
 
 <script>
 import TreeItem from './TreeItem.vue';
+
 /**
  * @typedef {Object} TreeItem
  * @property {TreeItem[]} [children]
