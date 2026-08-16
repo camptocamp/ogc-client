@@ -335,7 +335,7 @@ describe('WMTS Capabilities', () => {
             wellKnownScaleSet: 'urn:ogc:def:wkss:OGC:1.0:GoogleMapsCompatible',
           },
           {
-            crs: 'OGC:CRS84',
+            crs: 'urn:ogc:def:crs:OGC:1.3:CRS84',
             identifier: 'BigWorldPixel',
             tileMatrices: [
               {
@@ -396,7 +396,7 @@ describe('WMTS Capabilities', () => {
             wellKnownScaleSet: 'urn:ogc:def:wkss:OGC:1.0:GlobalCRS84Pixel',
           },
           {
-            crs: 'OGC:CRS84',
+            crs: 'urn:ogc:def:crs:OGC:1.3:CRS84',
             identifier: 'BigWorld',
             tileMatrices: [
               {
@@ -614,7 +614,7 @@ describe('WMTS Capabilities', () => {
             matrixSets: [
               {
                 identifier: 'BigWorldPixel',
-                crs: 'OGC:CRS84',
+                crs: 'urn:ogc:def:crs:OGC:1.3:CRS84',
                 limits: [],
               },
               {

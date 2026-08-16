@@ -8,14 +8,15 @@ import {
   getRootElement,
 } from '../shared/xml-utils.js';
 import type {
-  WmtsLayerResourceLink,
   MatrixSetLink,
   TileMatrix,
   WmtsEndpointInfo,
   WmtsLayer,
+  WmtsLayerResourceLink,
   WmtsMatrixSet,
 } from './model.js';
 import type { XmlDocument, XmlElement } from '@rgrove/parse-xml';
+import { simplifyEpsgUrn } from '../shared/crs-utils.js';
 
 function parseBBox(xmlElement: XmlElement): BoundingBox {
   const result = ['LowerCorner', 'UpperCorner']
@@ -25,28 +26,6 @@ function parseBBox(xmlElement: XmlElement): BoundingBox {
     .map(parseFloat) as BoundingBox;
   if (result.some(Number.isNaN)) return null;
   return result;
-}
-
-/**
- * Parse a URN/URL CRS string into a short name format
- * @param crsString - URN/URL CRS string (e.g. "urn:ogc:def:crs:EPSG::4326" or "http://www.opengis.net/def/crs/EPSG/0/4326")
- * @returns The parsed CRS string in short name format (e.g. "EPSG:4326")
- */
-function parseCRS(crsString: string): string {
-  if (!crsString) return '';
-  const segments = crsString.trim().split(/[/:]+/).filter(Boolean);
-  if (segments.length === 0) return crsString;
-  const code = segments.pop() || '';
-  let authority = null;
-  const knownAuthorities = ['EPSG', 'ESRI', 'IAU', 'IGNF', 'NKG', 'OGC'];
-  while (segments.length > 0) {
-    const candidate = segments.pop() || '';
-    if (knownAuthorities.includes(candidate.toUpperCase())) {
-      authority = candidate.toUpperCase();
-      break;
-    }
-  }
-  return authority ? `${authority}:${code}` : code;
 }
 
 export function readInfoFromCapabilities(
@@ -126,7 +105,9 @@ export function readMatrixSetsFromCapabilities(
     const boundingBox = parseBBox(findChildElement(element, 'BoundingBox'));
     return {
       identifier: getElementText(findChildElement(element, 'Identifier')),
-      crs: parseCRS(getElementText(findChildElement(element, 'SupportedCRS'))),
+      crs: simplifyEpsgUrn(
+        getElementText(findChildElement(element, 'SupportedCRS'))
+      ),
       tileMatrices: findChildrenElement(element, 'TileMatrix').map(
         parseMatrixSet
       ),
@@ -155,8 +136,9 @@ export function readLayersFromCapabilities(
         return getElementText(identifierEl) === identifier;
       }
     );
-    const supportedCrsEl = findChildElement(matrixSet, 'SupportedCRS');
-    return parseCRS(getElementText(supportedCrsEl));
+    return simplifyEpsgUrn(
+      getElementText(findChildElement(matrixSet, 'SupportedCRS'))
+    );
   }
 
   /**

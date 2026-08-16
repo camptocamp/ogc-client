@@ -151,7 +151,7 @@ describe('WmtsEndpoint', () => {
         );
         expect(buildOpenLayersTileGrid).toHaveBeenCalledWith(
           {
-            crs: 'OGC:CRS84',
+            crs: 'urn:ogc:def:crs:OGC:1.3:CRS84',
             identifier: 'BigWorldPixel',
             tileMatrices: expect.arrayContaining([
               {
