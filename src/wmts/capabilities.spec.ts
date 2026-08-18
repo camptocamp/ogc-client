@@ -148,7 +148,7 @@ describe('WMTS Capabilities', () => {
             boundingBox: [
               1799448.394855, 6124949.74777, 1848250.442089, 6162571.828177,
             ],
-            crs: 'urn:ogc:def:crs:EPSG:6.18:3:3857',
+            crs: 'EPSG:3857',
             identifier: 'google3857',
             tileMatrices: [
               {
@@ -420,7 +420,7 @@ describe('WMTS Capabilities', () => {
             ],
           },
           {
-            crs: 'urn:ogc:def:crs:EPSG:6.18:3:3857',
+            crs: 'EPSG:3857',
             identifier: 'google3857subset',
             tileMatrices: [
               {
@@ -451,7 +451,7 @@ describe('WMTS Capabilities', () => {
         const doc = parseXmlString(arcgis);
         expect(readMatrixSetsFromCapabilities(doc)).toEqual([
           {
-            crs: 'urn:ogc:def:crs:EPSG::3857',
+            crs: 'EPSG:3857',
             identifier: 'default028mm',
             tileMatrices: expect.arrayContaining([
               {
@@ -484,7 +484,7 @@ describe('WMTS Capabilities', () => {
             ]),
           },
           {
-            crs: 'urn:ogc:def:crs:EPSG:6.18.3:3857',
+            crs: 'EPSG:3857',
             identifier: 'GoogleMapsCompatible',
             wellKnownScaleSet: 'urn:ogc:def:wkss:OGC:1.0:GoogleMapsCompatible',
             tileMatrices: expect.arrayContaining([
@@ -619,12 +619,12 @@ describe('WMTS Capabilities', () => {
               },
               {
                 identifier: 'google3857',
-                crs: 'urn:ogc:def:crs:EPSG:6.18:3:3857',
+                crs: 'EPSG:3857',
                 limits: [],
               },
               {
                 identifier: 'google3857subset',
-                crs: 'urn:ogc:def:crs:EPSG:6.18:3:3857',
+                crs: 'EPSG:3857',
                 limits: [],
               },
             ],
@@ -676,12 +676,12 @@ describe('WMTS Capabilities', () => {
             matrixSets: [
               {
                 identifier: 'default028mm',
-                crs: 'urn:ogc:def:crs:EPSG::3857',
+                crs: 'EPSG:3857',
                 limits: [],
               },
               {
                 identifier: 'GoogleMapsCompatible',
-                crs: 'urn:ogc:def:crs:EPSG:6.18.3:3857',
+                crs: 'EPSG:3857',
                 limits: [],
               },
             ],

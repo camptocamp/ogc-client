@@ -8,14 +8,15 @@ import {
   getRootElement,
 } from '../shared/xml-utils.js';
 import type {
-  WmtsLayerResourceLink,
   MatrixSetLink,
   TileMatrix,
   WmtsEndpointInfo,
   WmtsLayer,
+  WmtsLayerResourceLink,
   WmtsMatrixSet,
 } from './model.js';
 import type { XmlDocument, XmlElement } from '@rgrove/parse-xml';
+import { simplifyEpsgUrn } from '../shared/crs-utils.js';
 
 function parseBBox(xmlElement: XmlElement): BoundingBox {
   const result = ['LowerCorner', 'UpperCorner']
@@ -104,7 +105,9 @@ export function readMatrixSetsFromCapabilities(
     const boundingBox = parseBBox(findChildElement(element, 'BoundingBox'));
     return {
       identifier: getElementText(findChildElement(element, 'Identifier')),
-      crs: getElementText(findChildElement(element, 'SupportedCRS')),
+      crs: simplifyEpsgUrn(
+        getElementText(findChildElement(element, 'SupportedCRS'))
+      ),
       tileMatrices: findChildrenElement(element, 'TileMatrix').map(
         parseMatrixSet
       ),
@@ -124,7 +127,7 @@ export function readLayersFromCapabilities(
    * Get the TileMatrixSet CRS
    * @param contentsEl - Contents
    * @param identifier - TileMatrixSet identifier
-   * @returns The SupportedCRS of the TileMatrixSet
+   * @returns The parsed supported CRS of the TileMatrixSet
    */
   function getMatrixSetCrs(contentsEl: XmlElement, identifier: string): string {
     const matrixSet = findChildrenElement(contentsEl, 'TileMatrixSet').find(
@@ -133,7 +136,9 @@ export function readLayersFromCapabilities(
         return getElementText(identifierEl) === identifier;
       }
     );
-    return getElementText(findChildElement(matrixSet, 'SupportedCRS'));
+    return simplifyEpsgUrn(
+      getElementText(findChildElement(matrixSet, 'SupportedCRS'))
+    );
   }
 
   /**
