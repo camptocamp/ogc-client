@@ -21,25 +21,17 @@ jobs:
       - name: Install lib dependencies
         run: npm ci
 
-      - name: Install app dependencies
-        working-directory: app
-        run: npm ci
-
       - name: Build library output
         run: npm run build
 
-      - name: Build library docs
+      - name: Build docs website
         working-directory: app
-        run: npm run docs
-
-      - name: Build demo
-        working-directory: app
-        run: npm run build
+        run: npm run docs:build -- --base=/ogc-client/
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./app/dist
+          publish_dir: ./app/.vitepress/dist
           keep_files: false
           exclude_assets: '*.js.map'

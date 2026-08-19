@@ -7,8 +7,6 @@ import { data } from './api.data.js';
 import ClassCard from "./src/components/apidoc/ClassCard.vue";
 import FunctionCard from "./src/components/apidoc/FunctionCard.vue";
 import TypeCard from "./src/components/apidoc/TypeCard.vue";
-
-console.log(data);
 </script>
 
 # API Reference

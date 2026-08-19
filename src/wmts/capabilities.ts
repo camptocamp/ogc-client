@@ -106,7 +106,7 @@ export function readMatrixSetsFromCapabilities(
     return {
       identifier: getElementText(findChildElement(element, 'Identifier')),
       crs: simplifyEpsgUrn(
-        getElementText(findChildElement(element, 'SupportedCRS'))
+        getElementText(findChildElement(element, 'SupportedCRS')),
       ),
       tileMatrices: findChildrenElement(element, 'TileMatrix').map(
         parseMatrixSet,
@@ -137,7 +137,7 @@ export function readLayersFromCapabilities(
       },
     );
     return simplifyEpsgUrn(
-      getElementText(findChildElement(matrixSet, 'SupportedCRS'))
+      getElementText(findChildElement(matrixSet, 'SupportedCRS')),
     );
   }
 
