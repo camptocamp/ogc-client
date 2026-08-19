@@ -1,8 +1,4 @@
-import API from './api.json';
-
-export function formatClassToString(classObj) {
-  return classObj.name;
-}
+import API from './data/api.json';
 
 export function formatFunctionToString(functionObj) {
   const params = (functionObj?.signatures?.[0]?.parameters || [])
@@ -63,6 +59,8 @@ export function formatTypeToString(typeObj) {
         )}, ${formatTypeToString(typeObj.typeArguments[1])}\\>`;
       case 'Response':
         return `[Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)`;
+      case 'Error':
+        return `[Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)`;
       case 'Promise':
         return `[Promise](https://developer.mozilla.org/en-US/docs/Web/API/Promise)&lt;${formatTypeToString(
           typeObj.typeArguments[0],
@@ -100,4 +98,11 @@ export function getDescription(obj) {
   )
     ?.map((s) => s.text)
     .join('');
+}
+
+export function getReturnDescription(obj) {
+  const returnBlock = obj?.signatures?.[0]?.comment?.blockTags?.find(
+    (block) => block.tag === '@returns',
+  );
+  return returnBlock?.content?.map((c) => c.text).join(', ') ?? null;
 }

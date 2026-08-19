@@ -86,7 +86,7 @@
     "build:worker": "vite build --config vite.worker-config.js",
     "prepublishOnly": "npm run typecheck && npm test && npm run build",
     "typecheck": "tsc --noEmit",
-    "docs:api": "typedoc ./src/index.ts --json app/api.json --pretty --excludePrivate",
+    "docs:api": "typedoc ./src/index.ts --json app/data/api.json --pretty --excludePrivate",
     "docs:dev": "npm run docs:api && vitepress dev app",
     "docs:build": "npm run docs:api && vitepress build app",
     "docs:preview": "npm run docs:api && vitepress preview app"

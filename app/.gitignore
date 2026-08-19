@@ -22,4 +22,4 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-api.json
+data/api.json
