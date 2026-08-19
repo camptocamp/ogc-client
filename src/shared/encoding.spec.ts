@@ -43,10 +43,10 @@ describe('parse XML documents with alternate encodings', () => {
   describe('UTF-8 (without header)', () => {
     it('successfully parses the XML file', async () => {
       const doc = await queryXmlDocument(
-        'http://localhost:8888/fixtures/wms/capabilities-brgm-1-1-1.xml'
+        'http://localhost:8888/fixtures/wms/capabilities-brgm-1-1-1.xml',
       );
       expect(readInfoFromCapabilities(doc).title).toBe(
-        'GéoServices : géologie, hydrogéologie et gravimétrie'
+        'GéoServices : géologie, hydrogéologie et gravimétrie',
       );
     });
   });
@@ -56,20 +56,20 @@ describe('parse XML documents with alternate encodings', () => {
     });
     it('successfully parses the XML file', async () => {
       const doc = await queryXmlDocument(
-        'http://localhost:8888/fixtures/wms/capabilities-brgm-1-1-1.xml'
+        'http://localhost:8888/fixtures/wms/capabilities-brgm-1-1-1.xml',
       );
       expect(readInfoFromCapabilities(doc).title).toBe(
-        'GéoServices : géologie, hydrogéologie et gravimétrie'
+        'GéoServices : géologie, hydrogéologie et gravimétrie',
       );
     });
   });
   describe('UTF-16 (without header)', () => {
     it('successfully parses the XML file', async () => {
       const doc = await queryXmlDocument(
-        'http://localhost:8888/fixtures/wms/capabilities-brgm-1-1-1-utf-16.xml'
+        'http://localhost:8888/fixtures/wms/capabilities-brgm-1-1-1-utf-16.xml',
       );
       expect(readInfoFromCapabilities(doc).title).toBe(
-        'GéoServices : géologie, hydrogéologie et gravimétrie'
+        'GéoServices : géologie, hydrogéologie et gravimétrie',
       );
     });
   });
@@ -79,20 +79,20 @@ describe('parse XML documents with alternate encodings', () => {
     });
     it('successfully parses the XML file', async () => {
       const doc = await queryXmlDocument(
-        'http://localhost:8888/fixtures/wms/capabilities-brgm-1-1-1-utf-16.xml'
+        'http://localhost:8888/fixtures/wms/capabilities-brgm-1-1-1-utf-16.xml',
       );
       expect(readInfoFromCapabilities(doc).title).toBe(
-        'GéoServices : géologie, hydrogéologie et gravimétrie'
+        'GéoServices : géologie, hydrogéologie et gravimétrie',
       );
     });
   });
   describe('ISO-8859-15 (without header)', () => {
     it('parses the XML file in ISO-8859-1 but misses ISO-8859-15 specific chars', async () => {
       const doc = await queryXmlDocument(
-        'http://localhost:8888/fixtures/wms/capabilities-brgm-1-1-1-iso-8859-15.xml'
+        'http://localhost:8888/fixtures/wms/capabilities-brgm-1-1-1-iso-8859-15.xml',
       );
       expect(readInfoFromCapabilities(doc).title).toBe(
-        'GéoServices : géologie, hydrogéologie et gravimétrie ¤'
+        'GéoServices : géologie, hydrogéologie et gravimétrie ¤',
       );
     });
   });
@@ -102,10 +102,10 @@ describe('parse XML documents with alternate encodings', () => {
     });
     it('successfully parses the XML file', async () => {
       const doc = await queryXmlDocument(
-        'http://localhost:8888/fixtures/wms/capabilities-brgm-1-1-1-iso-8859-15.xml'
+        'http://localhost:8888/fixtures/wms/capabilities-brgm-1-1-1-iso-8859-15.xml',
       );
       expect(readInfoFromCapabilities(doc).title).toBe(
-        'GéoServices : géologie, hydrogéologie et gravimétrie €'
+        'GéoServices : géologie, hydrogéologie et gravimétrie €',
       );
     });
   });

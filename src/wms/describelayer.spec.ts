@@ -11,7 +11,7 @@ describe('WMS DescribeLayer', () => {
       const doc = parseXmlString(describeLayerWfs);
       const result = parseDescribeLayerResponse(
         doc,
-        'geodata:geography_vector'
+        'geodata:geography_vector',
       );
       expect(result).toEqual({
         layerName: 'geodata:geography_vector',

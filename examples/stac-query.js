@@ -67,13 +67,13 @@ async function main(STAC_API_URL) {
       console.log(
         `   Description: ${collection.description.substring(0, 100)}${
           collection.description.length > 100 ? '...' : ''
-        }`
+        }`,
       );
       console.log(`   License: ${collection.license}`);
 
       if (collection.keywords && collection.keywords.length > 0) {
         console.log(
-          `   Keywords: ${collection.keywords.slice(0, 5).join(', ')}`
+          `   Keywords: ${collection.keywords.slice(0, 5).join(', ')}`,
         );
       }
 
@@ -93,7 +93,7 @@ async function main(STAC_API_URL) {
         console.log(
           `   Temporal Extent: ${interval[0] || 'open'} to ${
             interval[1] || 'open'
-          }`
+          }`,
         );
       }
 
@@ -103,7 +103,7 @@ async function main(STAC_API_URL) {
         console.log(
           `   Collection Assets: ${assetKeys.length} (${assetKeys
             .slice(0, 3)
-            .join(', ')}${assetKeys.length > 3 ? '...' : ''})`
+            .join(', ')}${assetKeys.length > 3 ? '...' : ''})`,
         );
       }
 
@@ -145,7 +145,7 @@ async function main(STAC_API_URL) {
           console.log(
             `      Assets: ${assetCount} (${assetKeys}${
               assetCount > 3 ? '...' : ''
-            })`
+            })`,
           );
         }
         console.log('');
@@ -200,10 +200,10 @@ async function main(STAC_API_URL) {
         ];
 
         console.log(
-          `   Using bbox from first item (expanded by ${expansion}°)`
+          `   Using bbox from first item (expanded by ${expansion}°)`,
         );
         console.log(
-          `   BBox: [${filterBbox.map((v) => v.toFixed(2)).join(', ')}]`
+          `   BBox: [${filterBbox.map((v) => v.toFixed(2)).join(', ')}]`,
         );
         console.log(`   Limit: 5\n`);
 
@@ -215,7 +215,7 @@ async function main(STAC_API_URL) {
         console.log(`   Found ${filteredItems.length} item(s) in bbox`);
         filteredItems.forEach((item, idx) => {
           console.log(
-            `   ${idx + 1}. ${item.id} - ${item.properties.datetime || 'N/A'}`
+            `   ${idx + 1}. ${item.id} - ${item.properties.datetime || 'N/A'}`,
           );
         });
         console.log('');
@@ -255,7 +255,7 @@ async function main(STAC_API_URL) {
       console.log(
         `   Date range: ${startDate.toISOString().split('T')[0]} to ${
           endDate.toISOString().split('T')[0]
-        }`
+        }`,
       );
       console.log(`   Limit: 5\n`);
 
@@ -267,7 +267,7 @@ async function main(STAC_API_URL) {
       console.log(`   Found ${recentItems.length} item(s) in date range`);
       recentItems.forEach((item, idx) => {
         console.log(
-          `   ${idx + 1}. ${item.id} - ${item.properties.datetime || 'N/A'}`
+          `   ${idx + 1}. ${item.id} - ${item.properties.datetime || 'N/A'}`,
         );
       });
       console.log('');
@@ -286,7 +286,7 @@ async function main(STAC_API_URL) {
         // Show asset details
         if (singleItem.assets) {
           console.log(
-            `\n   Assets (${Object.keys(singleItem.assets).length}):`
+            `\n   Assets (${Object.keys(singleItem.assets).length}):`,
           );
           Object.entries(singleItem.assets)
             .slice(0, 5)
@@ -330,7 +330,7 @@ async function main(STAC_API_URL) {
       const catalogResult = await StacEndpoint.fromUrl(STAC_API_URL);
       console.log(`   • Root/Catalog URL → Type: ${catalogResult.type}`);
       console.log(
-        `     Title: ${catalogResult.data.title || catalogResult.data.id}`
+        `     Title: ${catalogResult.data.title || catalogResult.data.id}`,
       );
       console.log('');
 
@@ -341,7 +341,7 @@ async function main(STAC_API_URL) {
         console.log(`   • Item URL → Type: ${itemResult.type}`);
         console.log(`     ID: ${itemResult.data.id}`);
         console.log(
-          `     Date: ${itemResult.data.properties.datetime || 'N/A'}`
+          `     Date: ${itemResult.data.properties.datetime || 'N/A'}`,
         );
         console.log('');
       }
@@ -351,7 +351,7 @@ async function main(STAC_API_URL) {
       // Demonstrate querying items with filtering from direct items URLs
       console.log(`🔟  Querying items with filtering from direct URLs...`);
       console.log(
-        '   These methods enable spatial/temporal filtering without root endpoint\n'
+        '   These methods enable spatial/temporal filtering without root endpoint\n',
       );
 
       // Get the items URL from the collection
@@ -372,7 +372,7 @@ async function main(STAC_API_URL) {
           console.log(
             `         ${idx + 1}. ${item.id.substring(0, 40)}${
               item.id.length > 40 ? '...' : ''
-            }`
+            }`,
           );
         });
 
@@ -403,14 +403,14 @@ async function main(STAC_API_URL) {
         {
           limit: 3,
           datetime: { start: recentDate },
-        }
+        },
       );
       console.log(
-        `      ✓ Found ${collectionResponse.features.length} item(s) from last 30 days`
+        `      ✓ Found ${collectionResponse.features.length} item(s) from last 30 days`,
       );
       collectionResponse.features.forEach((item, idx) => {
         console.log(
-          `         ${idx + 1}. ${item.properties.datetime || 'N/A'}`
+          `         ${idx + 1}. ${item.properties.datetime || 'N/A'}`,
         );
       });
       console.log('');

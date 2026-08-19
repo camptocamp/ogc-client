@@ -56,15 +56,15 @@ describe('TMS link utilities', () => {
       const result = await fetchXml('https://example.com/data.xml');
       expect(result).toEqual(
         parseXmlString(
-          '<?xml version="1.0" encoding="UTF-8"?><root><child>Test</child></root>'
-        )
+          '<?xml version="1.0" encoding="UTF-8"?><root><child>Test</child></root>',
+        ),
       );
       expect(globalThis.fetch).toHaveBeenCalledWith(
         'https://example.com/data.xml',
         {
           headers: { Accept: 'application/json,application/schema+json' },
           method: 'GET',
-        }
+        },
       );
     });
 
@@ -76,7 +76,7 @@ describe('TMS link utilities', () => {
         },
       });
       await expect(fetchXml('https://example.com/bad-url')).rejects.toThrow(
-        'The document at https://example.com/bad-url could not be fetched.'
+        'The document at https://example.com/bad-url could not be fetched.',
       );
     });
 
@@ -89,7 +89,7 @@ describe('TMS link utilities', () => {
         },
       });
       await expect(fetchXml('https://example.com/not-xml')).rejects.toThrow(
-        'Root element is missing or invalid (line 1, column 1)'
+        'Root element is missing or invalid (line 1, column 1)',
       );
     });
 
@@ -103,7 +103,7 @@ describe('TMS link utilities', () => {
       });
       const result = await fetchXml('https://example.com/xml-tag');
       expect(result).toEqual(
-        parseXmlString('<root>Valid XML without declaration</root>')
+        parseXmlString('<root>Valid XML without declaration</root>'),
       );
     });
   });

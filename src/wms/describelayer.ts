@@ -16,14 +16,14 @@ import { WmsLayerDescription } from './model.js';
  */
 export function parseDescribeLayerResponse(
   describeLayerDoc: XmlDocument,
-  layerName: string
+  layerName: string,
 ): WmsLayerDescription | null {
   const root = getRootElement(describeLayerDoc);
   const match = findChildElement(root, 'LayerDescription');
   if (!match) return null;
 
   const owsType = getElementText(
-    findChildElement(match, 'owsType')
+    findChildElement(match, 'owsType'),
   ) as WmsLayerDescription['owsType'];
   const onlineResource = findChildElement(match, 'OnlineResource');
   const owsUrl = getElementAttribute(onlineResource, 'xlink:href');

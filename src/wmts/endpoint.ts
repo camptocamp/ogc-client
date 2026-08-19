@@ -51,7 +51,7 @@ export default class WmtsEndpoint {
         () => parseWmtsCapabilities(this._capabilitiesUrl),
         'WMTS',
         'CAPABILITIES',
-        this._capabilitiesUrl
+        this._capabilitiesUrl,
       ).then(({ info, layers, matrixSets }) => {
         this._info = info;
         this._layers = layers;
@@ -92,7 +92,7 @@ export default class WmtsEndpoint {
     if (!this._matrixSets) return null;
     return (
       this._matrixSets.find(
-        (matrixSet) => matrixSet.identifier === identifier
+        (matrixSet) => matrixSet.identifier === identifier,
       ) ?? null
     );
   }
@@ -125,7 +125,7 @@ export default class WmtsEndpoint {
    */
   getLayerResourceLink(
     layerName: string,
-    formatHint?: MimeType
+    formatHint?: MimeType,
   ): WmtsLayerResourceLink {
     if (!this._layers) return null;
     const layer = this.getLayerByName(layerName);
@@ -133,13 +133,13 @@ export default class WmtsEndpoint {
     if (formatHint) {
       resourceLinkIndex =
         layer.resourceLinks.findIndex(
-          (resourceLink) => resourceLink.format === formatHint
+          (resourceLink) => resourceLink.format === formatHint,
         ) || 0;
     }
     const resourceLink = layer.resourceLinks[resourceLinkIndex];
     if (formatHint && resourceLink.format !== formatHint) {
       console.warn(
-        `[ogc-client] Requested '${formatHint}' format for the WMTS layer but it is not available in REST encoding, falling back to '${resourceLink.format}'`
+        `[ogc-client] Requested '${formatHint}' format for the WMTS layer but it is not available in REST encoding, falling back to '${resourceLink.format}'`,
       );
     }
     return resourceLink;
@@ -155,7 +155,7 @@ export default class WmtsEndpoint {
     tileMatrix: string,
     tileRow: number,
     tileCol: number,
-    outputFormat?: MimeType
+    outputFormat?: MimeType,
   ): string {
     if (!this._layers) return null;
     const resourceLink = this.getLayerResourceLink(layerName, outputFormat);
@@ -168,7 +168,7 @@ export default class WmtsEndpoint {
       tileMatrix,
       tileRow,
       tileCol,
-      resourceLink.format
+      resourceLink.format,
     );
   }
 
@@ -177,14 +177,14 @@ export default class WmtsEndpoint {
    * @param layerName
    */
   getDefaultDimensions(
-    layerName: string
+    layerName: string,
   ): Record<string, WmtsLayerDimensionValue> {
     if (!this._layers) return null;
     const layer = this.getLayerByName(layerName);
     if (!layer.dimensions) return {};
     return layer.dimensions.reduce(
       (prev, curr) => ({ ...prev, [curr.identifier]: curr.defaultValue }),
-      {}
+      {},
     );
   }
 
@@ -198,14 +198,14 @@ export default class WmtsEndpoint {
    */
   getOpenLayersTileGrid(
     layerName: string,
-    matrixSetIdentifier?: string
+    matrixSetIdentifier?: string,
   ): Promise<WMTSTileGrid | null> {
     if (!this._layers) return null;
     if (!this.tileGridModule) {
       this.tileGridModule = import('./ol-tilegrid.js').catch((e) => {
         console.warn(
           `[ogc-client] Cannot use getOpenLayersTileGrid, the 'ol' package is probably not available.\n`,
-          e
+          e,
         );
         return null;
       });
@@ -213,14 +213,14 @@ export default class WmtsEndpoint {
     const layer = this.getLayerByName(layerName);
     const matrixSetLink =
       layer.matrixSets.find(
-        (matrixSet) => matrixSet.identifier === matrixSetIdentifier
+        (matrixSet) => matrixSet.identifier === matrixSetIdentifier,
       ) ?? layer.matrixSets[0];
     const matrixSet = this.getMatrixSetByIdentifier(matrixSetLink.identifier);
     return this.tileGridModule.then((olTileGridModule) => {
       if (!olTileGridModule) return null;
       return olTileGridModule.buildOpenLayersTileGrid(
         matrixSet,
-        matrixSetLink.limits
+        matrixSetLink.limits,
       );
     });
   }

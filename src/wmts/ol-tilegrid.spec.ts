@@ -109,7 +109,7 @@ describe('buildOpenLayersTileGrid', () => {
           minTileRow: 125,
           tileMatrix: '12',
         },
-      ]
+      ],
     );
     expect(createFromCapabilitiesMatrixSet).toHaveBeenCalledWith(
       {
@@ -199,7 +199,7 @@ describe('buildOpenLayersTileGrid', () => {
         {
           TileMatrix: '12',
         },
-      ]
+      ],
     );
   });
 });

@@ -68,7 +68,7 @@ export default class WfsEndpoint {
         () => parseWfsCapabilities(this._capabilitiesUrl),
         'WFS',
         'CAPABILITIES',
-        this._capabilitiesUrl
+        this._capabilitiesUrl,
       ).then(({ info, featureTypes, url, version }) => {
         this._info = info;
         this._featureTypes = featureTypes;
@@ -100,7 +100,7 @@ export default class WfsEndpoint {
           ...('latLonBoundingBox' in featureType && {
             boundingBox: featureType.latLonBoundingBox,
           }),
-        } as WfsFeatureTypeBrief)
+        }) as WfsFeatureTypeBrief,
     );
   }
 
@@ -111,7 +111,7 @@ export default class WfsEndpoint {
       this._featureTypes.find((featureType) =>
         isQualified
           ? featureType.name === name
-          : stripNamespace(featureType.name) === name
+          : stripNamespace(featureType.name) === name,
       ) || null
     );
   }
@@ -156,7 +156,7 @@ export default class WfsEndpoint {
         const describeUrl = generateDescribeFeatureTypeUrl(
           this.getOperationUrl('DescribeFeatureType'),
           this._version,
-          name
+          name,
         );
         const getFeatureUrl = generateGetFeatureUrl(
           this.getOperationUrl('GetFeature'),
@@ -165,7 +165,7 @@ export default class WfsEndpoint {
           undefined,
           undefined,
           undefined,
-          true
+          true,
         );
 
         return Promise.all([
@@ -176,14 +176,14 @@ export default class WfsEndpoint {
             featureType,
             describeResponse,
             getFeatureResponse,
-            this._version
-          )
+            this._version,
+          ),
         );
       },
       'WFS',
       'FEATURETYPEINFO',
       this._capabilitiesUrl,
-      name
+      name,
     );
   }
 
@@ -211,12 +211,12 @@ export default class WfsEndpoint {
         queryWfsFeatureTypeDetails(
           this._capabilitiesUrl,
           this._version,
-          featureTypeFull
+          featureTypeFull,
         ).then((result) => result.props),
       'WFS',
       'FEATURETYPEPROPDETAILS',
       this._capabilitiesUrl,
-      name
+      name,
     );
   }
 
@@ -233,7 +233,7 @@ export default class WfsEndpoint {
     const featureTypeInfo = this._getFeatureTypeByName(featureType);
     if (!featureTypeInfo) {
       throw new Error(
-        `The following feature type was not found in the service: ${featureType}`
+        `The following feature type was not found in the service: ${featureType}`,
       );
     }
     const candidates = featureTypeInfo.outputFormats.filter(isMimeTypeJson);
@@ -282,7 +282,7 @@ export default class WfsEndpoint {
     const internalFeatureType = this._getFeatureTypeByName(featureType);
     if (!internalFeatureType) {
       throw new Error(
-        `The following feature type was not found in the service: ${featureType}`
+        `The following feature type was not found in the service: ${featureType}`,
       );
     }
     let format = outputFormat;
@@ -290,7 +290,7 @@ export default class WfsEndpoint {
       format = this._getJsonCompatibleOutputFormat(featureType) || undefined;
       if (!format) {
         throw new Error(
-          `The endpoint does not appear to support GeoJSON for the feature type ${internalFeatureType.name}`
+          `The endpoint does not appear to support GeoJSON for the feature type ${internalFeatureType.name}`,
         );
       }
     } else if (
@@ -299,7 +299,7 @@ export default class WfsEndpoint {
     ) {
       // do not prevent using this output format, because it still might work! but give a warning at least
       console.warn(
-        `[ogc-client] The following output format type was not found in the feature type ${internalFeatureType.name}: ${outputFormat}`
+        `[ogc-client] The following output format type was not found in the feature type ${internalFeatureType.name}: ${outputFormat}`,
       );
     }
     return generateGetFeatureUrl(
@@ -316,7 +316,7 @@ export default class WfsEndpoint {
       startIndex,
       sortBy && typeof sortBy[0] === 'string'
         ? [sortBy as FieldSort]
-        : (sortBy as FieldSort[])
+        : (sortBy as FieldSort[]),
     );
   }
 

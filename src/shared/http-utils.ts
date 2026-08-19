@@ -34,7 +34,7 @@ export function resetFetchOptions() {
 }
 
 export function setFetchOptionsUpdateCallback(
-  callback: (options: FetchOptions) => void
+  callback: (options: FetchOptions) => void,
 ) {
   fetchOptionsUpdateCallback = callback;
 }
@@ -48,7 +48,7 @@ export function sharedFetch(
   url: string,
   method: 'GET' | 'HEAD' = 'GET',
   asJson?: boolean,
-  customAcceptHeader?: string
+  customAcceptHeader?: string,
 ) {
   let fetchKey = `${method}#${url}`;
   if (asJson || customAcceptHeader) {
@@ -95,16 +95,16 @@ export function queryXmlDocument(url: string): Promise<XmlDocument> {
           throw new EndpointError(
             `Fetching the document at ${url} failed either due to network errors or unreachable host, error is: ${error.message}`,
             0,
-            false
+            false,
           );
         })
         .then(() => {
           throw new EndpointError(
             `The document at ${url} could not be fetched due to CORS limitations`,
             0,
-            true
+            true,
           );
-        })
+        }),
     )
     .then(async (resp: Response) => {
       if (!resp.ok) {
@@ -112,7 +112,7 @@ export function queryXmlDocument(url: string): Promise<XmlDocument> {
         throw new EndpointError(
           `The document at ${url} could not be fetched, received an error with code ${resp.status}: ${text}`,
           resp.status,
-          false
+          false,
         );
       }
       const buffer = await resp.arrayBuffer();
@@ -144,16 +144,16 @@ export function postXmlDocument(url: string, body: string) {
           throw new EndpointError(
             `Fetching the document failed either due to network errors or unreachable host, error is: ${error.message}`,
             0,
-            false
+            false,
           );
         })
         .then(() => {
           throw new EndpointError(
             `The document could not be fetched due to CORS limitations`,
             0,
-            true
+            true,
           );
-        })
+        }),
     )
     .then(async (resp: Response) => {
       if (!resp.ok) {
@@ -161,7 +161,7 @@ export function postXmlDocument(url: string, body: string) {
         throw new EndpointError(
           `Received an error with code ${resp.status}: ${text}`,
           resp.status,
-          false
+          false,
         );
       }
       const buffer = await resp.arrayBuffer();
@@ -183,22 +183,22 @@ export function queryJsonDocument<T>(url: string): Promise<T> {
           throw new EndpointError(
             `Fetching the document at ${url} failed either due to network errors or unreachable host, error is: ${error.message}`,
             0,
-            false
+            false,
           );
         })
         .then(() => {
           throw new EndpointError(
             `The document at ${url} could not be fetched due to CORS limitations`,
             0,
-            true
+            true,
           );
-        })
+        }),
     )
     .then(async (resp: Response) => {
       if (!resp.ok) {
         const text = await resp.text();
         throw new Error(
-          `The document at ${url} could not be fetched, received an error with code ${resp.status}: ${text}`
+          `The document at ${url} could not be fetched, received an error with code ${resp.status}: ${text}`,
         );
       }
       return resp
@@ -206,7 +206,7 @@ export function queryJsonDocument<T>(url: string): Promise<T> {
         .json()
         .catch((e) => {
           throw new Error(
-            `The document at ${url} does not appear to be valid JSON. Error was: ${e.message}`
+            `The document at ${url} does not appear to be valid JSON. Error was: ${e.message}`,
           );
         }) as Promise<T>;
     });

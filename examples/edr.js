@@ -13,7 +13,7 @@ const baseUrl = 'https://api.wwdh.internetofwater.app/?f=json';
   for (const collection of edr_collection_names) {
     const edr_builder = await api.edr(collection);
     const sourceLink = edr_builder.links.find(
-      (link) => link.title === 'data source'
+      (link) => link.title === 'data source',
     );
 
     const sourceUrl = sourceLink ? sourceLink.href : null;

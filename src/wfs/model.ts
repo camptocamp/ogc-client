@@ -22,11 +22,7 @@ export type WfsFeatureTypeInternal = {
 
 export type FeaturePropertyValue = string | number | boolean | Date;
 export type FeaturePropertyType =
-  | 'string'
-  | 'float'
-  | 'integer'
-  | 'boolean'
-  | 'date';
+  'string' | 'float' | 'integer' | 'boolean' | 'date';
 
 export type FeatureGeometryType =
   | 'linestring'

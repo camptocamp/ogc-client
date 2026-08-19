@@ -12,7 +12,7 @@ export class EndpointError extends Error {
   constructor(
     message: string,
     public readonly httpStatus?: number,
-    public readonly isCrossOriginRelated?: boolean
+    public readonly isCrossOriginRelated?: boolean,
   ) {
     super(message);
     this.name = 'EndpointError';
@@ -39,7 +39,7 @@ export class ServiceExceptionError extends Error {
     public readonly requestUrl?: string,
     public readonly code?: string,
     public readonly locator?: string,
-    public readonly response?: XmlDocument
+    public readonly response?: XmlDocument,
   ) {
     super(message);
     this.name = 'ServiceExceptionError';
@@ -53,7 +53,7 @@ export class ServiceExceptionError extends Error {
  */
 export function parse(
   serviceException: XmlElement,
-  url?: string
+  url?: string,
 ): ServiceExceptionError {
   const errorCode =
     getElementAttribute(serviceException, 'code') ||
@@ -67,7 +67,7 @@ export function parse(
     url,
     errorCode,
     errorLocator,
-    serviceException.document
+    serviceException.document,
   );
 }
 
@@ -136,7 +136,7 @@ export function decodeError(error: Record<string, unknown>): Error {
       error.requestUrl as string,
       error.code as string,
       error.locator as string,
-      error.response as XmlDocument
+      error.response as XmlDocument,
     );
     e.stack = error.stack as string;
     return e;
@@ -145,7 +145,7 @@ export function decodeError(error: Record<string, unknown>): Error {
     const e = new EndpointError(
       error.message as string,
       error.httpStatus as number,
-      error.isCrossOriginRelated as boolean
+      error.isCrossOriginRelated as boolean,
     );
     e.stack = error.stack as string;
     return e;

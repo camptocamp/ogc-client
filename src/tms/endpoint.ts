@@ -39,7 +39,7 @@ export default class TmsEndpoint {
             ...serviceData,
             tileMaps: serviceData.tileMaps?.filter(
               (tileMap) =>
-                normalizeUrl(tileMap.href) === normalizeUrl(this.baseUrl)
+                normalizeUrl(tileMap.href) === normalizeUrl(this.baseUrl),
             ),
           };
         } else {

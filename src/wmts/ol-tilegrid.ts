@@ -10,7 +10,7 @@ register(proj4);
 
 export async function buildOpenLayersTileGrid(
   matrixSet: WmtsMatrixSet,
-  limits: MatrixSetLimit[]
+  limits: MatrixSetLimit[],
 ): Promise<WMTSTileGrid> {
   // if the matrix set crs is not known, load it
   let projection = getProjection(matrixSet.crs);
@@ -19,7 +19,7 @@ export async function buildOpenLayersTileGrid(
   }
   if (!projection) {
     throw new Error(
-      `[ogc-client] could not create OpenLayers tile grid, the following projection is unknown: ${matrixSet.crs}`
+      `[ogc-client] could not create OpenLayers tile grid, the following projection is unknown: ${matrixSet.crs}`,
     );
   }
   const matrixSetInfo = {

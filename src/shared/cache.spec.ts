@@ -78,7 +78,7 @@ describe('cache utils', () => {
                 setTimeout(() => {
                   resolve(produced);
                 }, 10);
-              })
+              }),
           );
           useCache(longTask, 'test', 'entry', '04');
           result = await useCache(longTask, 'test', 'entry', '04');
@@ -99,7 +99,7 @@ describe('cache utils', () => {
         });
         it('deletes the expired cache entry', async () => {
           await expect(
-            readCacheEntry('test', 'entry', '04')
+            readCacheEntry('test', 'entry', '04'),
           ).resolves.toBeNull();
         });
         it('preserves unrelated entry', async () => {

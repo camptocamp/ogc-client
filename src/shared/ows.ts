@@ -12,11 +12,11 @@ import {
  * @param capabilitiesDoc
  */
 export function readProviderFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): Provider {
   const serviceProvider = findChildElement(
     getRootElement(capabilitiesDoc),
-    'ServiceProvider'
+    'ServiceProvider',
   );
   const serviceContact = findChildElement(serviceProvider, 'ServiceContact');
   const contactInfo = findChildElement(serviceContact, 'ContactInfo');
@@ -26,22 +26,22 @@ export function readProviderFromCapabilities(
     name: getElementText(findChildElement(serviceProvider, 'ProviderName')),
     site: getElementAttribute(
       findChildElement(serviceProvider, 'ProviderSite'),
-      'xlink:href'
+      'xlink:href',
     ),
     contact: {
       name: getElementText(findChildElement(serviceContact, 'IndividualName')),
       position: getElementText(
-        findChildElement(serviceContact, 'PositionName')
+        findChildElement(serviceContact, 'PositionName'),
       ),
       phone: getElementText(findChildElement(phone, 'Voice')),
       fax: getElementText(findChildElement(phone, 'Facsimile')),
       address: {
         deliveryPoint: getElementText(
-          findChildElement(address, 'DeliveryPoint')
+          findChildElement(address, 'DeliveryPoint'),
         ),
         city: getElementText(findChildElement(address, 'City')),
         administrativeArea: getElementText(
-          findChildElement(address, 'AdministrativeArea')
+          findChildElement(address, 'AdministrativeArea'),
         ),
         postalCode: getElementText(findChildElement(address, 'PostalCode')),
         country: getElementText(findChildElement(address, 'Country')),

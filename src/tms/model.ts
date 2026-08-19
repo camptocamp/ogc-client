@@ -100,7 +100,4 @@ export interface Origin {
 }
 
 export type TmsProfile =
-  | 'none'
-  | 'global-geodetic'
-  | 'global-mercator'
-  | 'local';
+  'none' | 'global-geodetic' | 'global-mercator' | 'local';

@@ -33,7 +33,7 @@ describe('DateTimeParameterToEDRString', () => {
 
   it('throws if passed an invalid object', () => {
     expect(() =>
-      DateTimeParameterToEDRString({} as DateTimeParameter)
+      DateTimeParameterToEDRString({} as DateTimeParameter),
     ).toThrow();
   });
 });

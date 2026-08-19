@@ -64,9 +64,9 @@ export default class StacEndpoint {
       this.root_ = fetchStacDocument<StacRootDocument>(this.baseUrl).catch(
         (e) => {
           throw new EndpointError(
-            `Failed to fetch STAC root document: ${e.message}`
+            `Failed to fetch STAC root document: ${e.message}`,
           );
-        }
+        },
       );
     }
     return this.root_;
@@ -86,7 +86,7 @@ export default class StacEndpoint {
         return fetchLink<StacDocument>(
           root,
           ['conformance', 'http://www.opengis.net/def/rel/ogc/1.0/conformance'],
-          this.baseUrl
+          this.baseUrl,
         )
           .then(parseConformance)
           .catch(() => []);
@@ -105,7 +105,7 @@ export default class StacEndpoint {
           const collectionsUrl = getLinkUrl(
             root,
             ['data', 'collections'],
-            this.baseUrl
+            this.baseUrl,
           );
           if (!collectionsUrl) return null;
           return fetchStacDocument<StacCollectionsDocument>(collectionsUrl);
@@ -128,7 +128,7 @@ export default class StacEndpoint {
    */
   private static applyFilterOptions(
     url: URL,
-    options: GetCollectionItemsOptions
+    options: GetCollectionItemsOptions,
   ): void {
     if (options.limit !== undefined) {
       url.searchParams.set('limit', options.limit.toString());
@@ -146,7 +146,7 @@ export default class StacEndpoint {
           ? dateTime.toISOString()
           : `${'start' in dateTime ? dateTime.start.toISOString() : '..'}/${
               'end' in dateTime ? dateTime.end.toISOString() : '..'
-            }`
+            }`,
       );
     }
     if (options.query) {
@@ -168,7 +168,7 @@ export default class StacEndpoint {
    * }
    */
   static async fromUrl(
-    url: string
+    url: string,
   ): Promise<
     | { type: 'Catalog'; data: StacCatalog }
     | { type: 'Collection'; data: StacCollection }
@@ -185,7 +185,7 @@ export default class StacEndpoint {
       return { type: 'Catalog', data: parseStacCatalog(doc) };
     } else {
       throw new EndpointError(
-        `Unknown STAC document type: ${doc.type}. Expected 'Catalog', 'Collection', or 'Feature'.`
+        `Unknown STAC document type: ${doc.type}. Expected 'Catalog', 'Collection', or 'Feature'.`,
       );
     }
   }
@@ -207,13 +207,13 @@ export default class StacEndpoint {
    */
   static async getItemsFromCollection(
     collection: StacCollection,
-    options: GetCollectionItemsOptions = {}
+    options: GetCollectionItemsOptions = {},
   ): Promise<StacItemsDocument> {
     // Get items link from collection
     const itemsLinks = getLinks(collection as unknown as StacDocument, 'items');
     if (!itemsLinks || itemsLinks.length === 0) {
       throw new EndpointError(
-        `Collection ${collection.id} does not have an items link`
+        `Collection ${collection.id} does not have an items link`,
       );
     }
 
@@ -221,7 +221,7 @@ export default class StacEndpoint {
     const itemsUrl = itemsLink.href;
     if (!itemsUrl) {
       throw new EndpointError(
-        `Collection ${collection.id} items link is missing href`
+        `Collection ${collection.id} items link is missing href`,
       );
     }
 
@@ -233,7 +233,7 @@ export default class StacEndpoint {
     const acceptType = itemsLink?.type;
     const itemsDoc = await fetchStacDocument<StacItemsDocument>(
       url.toString(),
-      acceptType
+      acceptType,
     );
 
     if (!itemsDoc.features || !Array.isArray(itemsDoc.features)) {
@@ -242,7 +242,7 @@ export default class StacEndpoint {
 
     // Parse features in place
     itemsDoc.features = itemsDoc.features.map((item) =>
-      parseStacItem(item as unknown as StacDocument)
+      parseStacItem(item as unknown as StacDocument),
     );
 
     return itemsDoc;
@@ -264,7 +264,7 @@ export default class StacEndpoint {
    */
   static async getItemsFromUrl(
     itemsUrl: string,
-    options: GetCollectionItemsOptions = {}
+    options: GetCollectionItemsOptions = {},
   ): Promise<StacItemsDocument> {
     const url = new URL(itemsUrl, getBaseUrl());
     StacEndpoint.applyFilterOptions(url, options);
@@ -277,7 +277,7 @@ export default class StacEndpoint {
 
     // Parse features in place
     itemsDoc.features = itemsDoc.features.map((item) =>
-      parseStacItem(item as unknown as StacDocument)
+      parseStacItem(item as unknown as StacDocument),
     );
 
     return itemsDoc;
@@ -339,7 +339,7 @@ export default class StacEndpoint {
    */
   get allCollections(): Promise<string[]> {
     return this.collectionsDocument.then((doc) =>
-      doc ? parseCollectionsList(doc) : []
+      doc ? parseCollectionsList(doc) : [],
     );
   }
 
@@ -362,7 +362,7 @@ export default class StacEndpoint {
 
     // Try to find collection in the collections array first
     const collection = collectionsDoc.collections.find(
-      (col) => col.id === collectionId
+      (col) => col.id === collectionId,
     );
     if (collection) {
       return parseStacCollection(collection as unknown as StacDocument);
@@ -372,11 +372,11 @@ export default class StacEndpoint {
     const collectionsUrl = getLinkUrl(
       await this.root,
       ['data', 'collections'],
-      this.baseUrl
+      this.baseUrl,
     );
     const collectionUrl = new URL(
       collectionId,
-      collectionsUrl + '/'
+      collectionsUrl + '/',
     ).toString();
     const collectionDoc = await fetchStacDocument(collectionUrl);
     return parseStacCollection(collectionDoc);
@@ -390,11 +390,11 @@ export default class StacEndpoint {
    */
   async getCollectionItems(
     collectionId: string,
-    options: GetCollectionItemsOptions = {}
+    options: GetCollectionItemsOptions = {},
   ): Promise<StacItem[]> {
     const response = await this.getCollectionItemsResponse(
       collectionId,
-      options
+      options,
     );
     return response.features;
   }
@@ -408,7 +408,7 @@ export default class StacEndpoint {
    */
   async getCollectionItemsResponse(
     collectionId: string,
-    options: GetCollectionItemsOptions = {}
+    options: GetCollectionItemsOptions = {},
   ): Promise<StacItemsDocument> {
     const collection = await this.getCollection(collectionId);
     const itemsLinks = getLinks(collection as unknown as StacDocument, 'items');
@@ -421,7 +421,7 @@ export default class StacEndpoint {
     const acceptType = itemsLink?.type;
     const itemsDoc = await fetchStacDocument<StacItemsDocument>(
       url,
-      acceptType
+      acceptType,
     );
 
     if (!itemsDoc.features || !Array.isArray(itemsDoc.features)) {
@@ -430,7 +430,7 @@ export default class StacEndpoint {
 
     // Parse features in place
     itemsDoc.features = itemsDoc.features.map((item) =>
-      parseStacItem(item as unknown as StacDocument)
+      parseStacItem(item as unknown as StacDocument),
     );
 
     return itemsDoc;
@@ -444,7 +444,7 @@ export default class StacEndpoint {
    */
   async getCollectionItem(
     collectionId: string,
-    itemId: string
+    itemId: string,
   ): Promise<StacItem> {
     const collection = await this.getCollection(collectionId);
     const itemsLinks = getLinks(collection as unknown as StacDocument, 'items');
@@ -453,11 +453,11 @@ export default class StacEndpoint {
     const itemsUrl = getLinkUrl(
       collection as unknown as StacDocument,
       'items',
-      this.baseUrl
+      this.baseUrl,
     );
     if (!itemsUrl) {
       throw new EndpointError(
-        `Collection ${collectionId} does not have an items link`
+        `Collection ${collectionId} does not have an items link`,
       );
     }
 
@@ -483,17 +483,17 @@ export default class StacEndpoint {
    */
   async getCollectionItemsUrl(
     collectionId: string,
-    options: GetCollectionItemsOptions = {}
+    options: GetCollectionItemsOptions = {},
   ): Promise<string> {
     const collection = await this.getCollection(collectionId);
     const itemsUrl = getLinkUrl(
       collection as unknown as StacDocument,
       'items',
-      this.baseUrl
+      this.baseUrl,
     );
     if (!itemsUrl) {
       throw new EndpointError(
-        `Collection ${collectionId} does not have an items link`
+        `Collection ${collectionId} does not have an items link`,
       );
     }
 

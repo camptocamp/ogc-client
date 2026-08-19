@@ -28,29 +28,29 @@ function parseBBox(xmlElement: XmlElement): BoundingBox {
 }
 
 export function readInfoFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): WmtsEndpointInfo {
   const rootEl = getRootElement(capabilitiesDoc);
   const service = findChildElement(rootEl, 'ServiceIdentification');
   const keywords = findChildrenElement(
     findChildElement(service, 'Keywords'),
-    'Keyword'
+    'Keyword',
   ).map(getElementText);
   const metadata = findChildElement(rootEl, 'OperationsMetadata');
   const getTileOperation = findChildrenElement(metadata, 'Operation').find(
-    (el) => getElementAttribute(el, 'name') == 'GetTile'
+    (el) => getElementAttribute(el, 'name') == 'GetTile',
   );
   const getTileUrls = findChildrenElement(getTileOperation, 'Get', true).reduce(
     (prev, curr) => {
       const encodingType = getElementText(
-        findChildElement(curr, 'Value', true)
+        findChildElement(curr, 'Value', true),
       );
       const url = getElementAttribute(curr, 'xlink:href');
       if (encodingType.toLowerCase() === 'restful')
         return { ...prev, rest: url };
       return { ...prev, kvp: url };
     },
-    {}
+    {},
   );
 
   return {
@@ -66,7 +66,7 @@ export function readInfoFromCapabilities(
 }
 
 export function readMatrixSetsFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): WmtsMatrixSet[] {
   function parseMatrixSet(element: XmlElement): TileMatrix {
     const topLeft = getElementText(findChildElement(element, 'TopLeftCorner'))
@@ -75,38 +75,38 @@ export function readMatrixSetsFromCapabilities(
     return {
       identifier: getElementText(findChildElement(element, 'Identifier')),
       tileWidth: parseInt(
-        getElementText(findChildElement(element, 'TileWidth'))
+        getElementText(findChildElement(element, 'TileWidth')),
       ),
       tileHeight: parseInt(
-        getElementText(findChildElement(element, 'TileHeight'))
+        getElementText(findChildElement(element, 'TileHeight')),
       ),
       matrixWidth: parseInt(
-        getElementText(findChildElement(element, 'MatrixWidth'))
+        getElementText(findChildElement(element, 'MatrixWidth')),
       ),
       matrixHeight: parseInt(
-        getElementText(findChildElement(element, 'MatrixHeight'))
+        getElementText(findChildElement(element, 'MatrixHeight')),
       ),
       scaleDenominator: parseFloat(
-        getElementText(findChildElement(element, 'ScaleDenominator'))
+        getElementText(findChildElement(element, 'ScaleDenominator')),
       ),
       topLeft,
     };
   }
   const contents = findChildElement(
     getRootElement(capabilitiesDoc),
-    'Contents'
+    'Contents',
   );
   const matrixSets = findChildrenElement(contents, 'TileMatrixSet');
   return matrixSets.map((element) => {
     const wellKnownScaleSet = getElementText(
-      findChildElement(element, 'WellKnownScaleSet')
+      findChildElement(element, 'WellKnownScaleSet'),
     );
     const boundingBox = parseBBox(findChildElement(element, 'BoundingBox'));
     return {
       identifier: getElementText(findChildElement(element, 'Identifier')),
       crs: getElementText(findChildElement(element, 'SupportedCRS')),
       tileMatrices: findChildrenElement(element, 'TileMatrix').map(
-        parseMatrixSet
+        parseMatrixSet,
       ),
       ...(boundingBox && { boundingBox }),
       ...(wellKnownScaleSet && { wellKnownScaleSet }),
@@ -115,7 +115,7 @@ export function readMatrixSetsFromCapabilities(
 }
 
 export function readLayersFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): WmtsLayer[] {
   const rootEl = getRootElement(capabilitiesDoc);
   const contentsEl = findChildElement(rootEl, 'Contents');
@@ -131,7 +131,7 @@ export function readLayersFromCapabilities(
       (matrixSetEl) => {
         const identifierEl = findChildElement(matrixSetEl, 'Identifier');
         return getElementText(identifierEl) === identifier;
-      }
+      },
     );
     return getElementText(findChildElement(matrixSet, 'SupportedCRS'));
   }
@@ -143,7 +143,7 @@ export function readLayersFromCapabilities(
    */
   function parseMatrixSetLink(element: XmlElement): MatrixSetLink {
     const identifier = getElementText(
-      findChildElement(element, 'TileMatrixSet')
+      findChildElement(element, 'TileMatrixSet'),
     );
     const crs = getMatrixSetCrs(contentsEl, identifier);
 
@@ -154,30 +154,30 @@ export function readLayersFromCapabilities(
         (element) => ({
           tileMatrix: getElementText(findChildElement(element, 'TileMatrix')),
           minTileRow: parseInt(
-            getElementText(findChildElement(element, 'MinTileRow'))
+            getElementText(findChildElement(element, 'MinTileRow')),
           ),
           minTileCol: parseInt(
-            getElementText(findChildElement(element, 'MinTileCol'))
+            getElementText(findChildElement(element, 'MinTileCol')),
           ),
           maxTileRow: parseInt(
-            getElementText(findChildElement(element, 'MaxTileRow'))
+            getElementText(findChildElement(element, 'MaxTileRow')),
           ),
           maxTileCol: parseInt(
-            getElementText(findChildElement(element, 'MaxTileCol'))
+            getElementText(findChildElement(element, 'MaxTileCol')),
           ),
-        })
+        }),
       ),
     };
   }
   const getTileOperation = findChildrenElement(
     findChildElement(rootEl, 'OperationsMetadata'),
-    'Operation'
+    'Operation',
   ).find((el) => getElementAttribute(el, 'name') == 'GetTile');
   const getKvpElt = findChildrenElement(getTileOperation, 'Get', true).filter(
     (elt) => {
       const encodingType = getElementText(findChildElement(elt, 'Value', true));
       return encodingType.toLowerCase() === 'kvp';
-    }
+    },
   )[0];
   const getKvpUrl = getKvpElt
     ? getElementAttribute(getKvpElt, 'xlink:href')
@@ -186,13 +186,13 @@ export function readLayersFromCapabilities(
   const layers = findChildrenElement(contents, 'Layer');
   return layers.map((element) => {
     const latLonBoundingBox = parseBBox(
-      findChildElement(element, 'WGS84BoundingBox')
+      findChildElement(element, 'WGS84BoundingBox'),
     );
     let defaultStyle = '';
     const styles = findChildrenElement(element, 'Style').map((element) => {
       const legendUrl = getElementAttribute(
         findChildElement(element, 'LegendURL'),
-        'xlink:href'
+        'xlink:href',
       );
       const abstract = getElementText(findChildElement(element, 'Abstract'));
       const style: LayerStyle = {
@@ -207,14 +207,14 @@ export function readLayersFromCapabilities(
       return style;
     });
     const outputFormats = findChildrenElement(element, 'Format').map(
-      getElementText
+      getElementText,
     );
     const resourceLinks: WmtsLayerResourceLink[] = findChildrenElement(
       element,
-      'ResourceURL'
+      'ResourceURL',
     )
       .filter(
-        (element) => getElementAttribute(element, 'resourceType') === 'tile'
+        (element) => getElementAttribute(element, 'resourceType') === 'tile',
       )
       .map((element) => {
         const format = getElementAttribute(element, 'format');
@@ -227,25 +227,25 @@ export function readLayersFromCapabilities(
           encoding: 'KVP' as const,
           url: getKvpUrl,
           format,
-        }))
+        })),
       );
     }
     const matrixSets = findChildrenElement(element, 'TileMatrixSetLink').map(
-      parseMatrixSetLink
+      parseMatrixSetLink,
     );
     const dimensions = findChildrenElement(element, 'Dimension').map(
       (element) => {
         const identifier = getElementText(
-          findChildElement(element, 'Identifier')
+          findChildElement(element, 'Identifier'),
         );
         const defaultValue = getElementText(
-          findChildElement(element, 'Default')
+          findChildElement(element, 'Default'),
         );
         const values = findChildrenElement(element, 'Values').map(
-          getElementText
+          getElementText,
         );
         return { identifier, defaultValue, values };
-      }
+      },
     );
     return {
       name: getElementText(findChildElement(element, 'Identifier')),

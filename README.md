@@ -88,7 +88,7 @@ You will need to supply it with valid OGC service urls.
 import { NcwmsEndpoint } from '@camptocamp/ogc-client';
 
 const endpoint = new NcwmsEndpoint(
-  'https://my.thredds.server/thredds/wms/dataset'
+  'https://my.thredds.server/thredds/wms/dataset',
 );
 
 // Detect NcWMS and get available palettes and scale range

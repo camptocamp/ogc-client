@@ -18,11 +18,11 @@ globalThis.mockFetch = jest.fn().mockImplementation(async (url, options) => {
     text: () => Promise.resolve(globalThis.fetchResponseFactory(url, options)),
     json: () =>
       Promise.resolve(
-        JSON.parse(globalThis.fetchResponseFactory(url, options))
+        JSON.parse(globalThis.fetchResponseFactory(url, options)),
       ),
     arrayBuffer: () =>
       Promise.resolve(
-        Buffer.from(globalThis.fetchResponseFactory(url, options), 'utf-8')
+        Buffer.from(globalThis.fetchResponseFactory(url, options), 'utf-8'),
       ),
     clone: function () {
       return this;
@@ -92,11 +92,11 @@ globalThis.Worker = function Worker(filePath) {
         entryPoints: [filePath],
         bundle: true,
         write: false,
-      })
+      }),
     )
     .then((result) => {
       const code = new TextDecoder('utf-8').decode(
-        result.outputFiles[0].contents
+        result.outputFiles[0].contents,
       );
       let vars = 'var self=this,global=self,globalThis=self';
       for (const k in scope) vars += `,${k}=self.${k}`;
@@ -104,7 +104,7 @@ globalThis.Worker = function Worker(filePath) {
         vars +
           ';\n' +
           code +
-          '\nreturn function(n){return n=="onmessage"?onmessage:null;}'
+          '\nreturn function(n){return n=="onmessage"?onmessage:null;}',
       ).call(scope);
       const q = messageQueue;
       messageQueue = null;

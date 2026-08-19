@@ -69,8 +69,8 @@ describe('feature type info', () => {
           featureType,
           parseXmlString(describeFeatureType110),
           parseXmlString(getFeatureHits110),
-          '1.1.0'
-        )
+          '1.1.0',
+        ),
       ).toEqual(expectedFeatureTypeInfo);
     });
 
@@ -80,8 +80,8 @@ describe('feature type info', () => {
           featureType,
           parseXmlString(describeFeatureType200),
           parseXmlString(getFeatureHits200),
-          '2.0.0'
-        )
+          '2.0.0',
+        ),
       ).toEqual(expectedFeatureTypeInfo);
     });
 
@@ -114,15 +114,15 @@ describe('feature type info', () => {
 </xsd:schema>
 `);
       const getFeatureNoHits = parseXmlString(
-        `<wfs:FeatureCollection timeStamp="2021-06-25T12:56:16.087Z" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"/>`
+        `<wfs:FeatureCollection timeStamp="2021-06-25T12:56:16.087Z" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"/>`,
       );
       expect(
         parseFeatureTypeInfo(
           incompleteFeatureType,
           describeFeatureNoGeom,
           getFeatureNoHits,
-          '1.1.0'
-        )
+          '1.1.0',
+        ),
       ).toEqual({
         name: 'cd16:hierarchisation_l',
         boundingBox: [

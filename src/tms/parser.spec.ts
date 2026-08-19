@@ -58,7 +58,7 @@ describe('TMS parser utilities', () => {
       expect(result.version).toBe('1.0.0');
       expect(result.title).toBe('Example Tile Map Service');
       expect(result.abstract).toBe(
-        'This is a longer description of the example tiling map service.'
+        'This is a longer description of the example tiling map service.',
       );
       expect(result.keywords).toEqual(['example tile service']);
       expect(result.tileMaps?.length).toBe(2);
@@ -120,7 +120,7 @@ describe('TMS parser utilities', () => {
       expect(result.tileMapService).toBe('http://tms.osgeo.org/1.0.0');
       expect(result.title).toBe('VMAP0 World Map');
       expect(result.abstract).toBe(
-        'A map of the world built from the NGA VMAP0 vector data set.'
+        'A map of the world built from the NGA VMAP0 vector data set.',
       );
       expect(result.srs).toBe('EPSG:4326');
       expect(result.boundingBox).toEqual([-180, -90, 180, 90]);
@@ -144,7 +144,7 @@ describe('TMS parser utilities', () => {
       });
       expect(result.metadata?.length).toBe(1);
       expect(result.attribution?.title).toBe(
-        'National Geospatial Intelligence Agency'
+        'National Geospatial Intelligence Agency',
       );
       expect(result.attribution?.logo).toEqual({
         width: 10,

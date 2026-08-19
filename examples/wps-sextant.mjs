@@ -55,7 +55,7 @@ async function main() {
     console.log(`   Inputs:`);
     full?.inputs?.forEach((input) => {
       console.log(
-        `     - ${input.identifier} (${input.type}) [${input.minOccurs}..${input.maxOccurs}]`
+        `     - ${input.identifier} (${input.type}) [${input.minOccurs}..${input.maxOccurs}]`,
       );
     });
     console.log(`   Outputs:`);
@@ -93,17 +93,17 @@ async function main() {
         console.log(
           `     poll #${i + 1}: ${status.status} (${
             status.percentCompleted ?? '?'
-          }%)`
+          }%)`,
         );
         if (status.status === 'succeeded' || status.status === 'failed') {
           status.outputs.forEach((output) => {
             if (output.reference) {
               console.log(
-                `     → ${output.identifier}: ${output.reference.href}`
+                `     → ${output.identifier}: ${output.reference.href}`,
               );
             } else if (output.data) {
               console.log(
-                `     → ${output.identifier}: ${output.data.content}`
+                `     → ${output.identifier}: ${output.data.content}`,
               );
             }
           });

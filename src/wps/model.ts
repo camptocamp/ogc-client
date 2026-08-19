@@ -97,11 +97,7 @@ export interface WpsExecuteOptions {
 }
 
 export type WpsExecuteStatus =
-  | 'accepted'
-  | 'started'
-  | 'paused'
-  | 'succeeded'
-  | 'failed';
+  'accepted' | 'started' | 'paused' | 'succeeded' | 'failed';
 
 export interface WpsExecuteOutputResult {
   identifier: string;

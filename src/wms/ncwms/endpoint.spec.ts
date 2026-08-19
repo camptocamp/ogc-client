@@ -18,7 +18,7 @@ describe('NcwmsEndpoint', () => {
     globalThis.fetchPreHandler = () => {};
     globalThis.fetchResponseFactory = () => LAYER_DETAILS_JSON;
     endpoint = new NcwmsEndpoint(
-      'https://my.test.service/thredds/wms?SERVICE=WMS&REQUEST=GetCapabilities'
+      'https://my.test.service/thredds/wms?SERVICE=WMS&REQUEST=GetCapabilities',
     );
   });
 
@@ -27,7 +27,7 @@ describe('NcwmsEndpoint', () => {
       await endpoint.getLayerDetails('tos');
       expect(globalThis.fetch).toHaveBeenCalledWith(
         expect.stringContaining('https://my.test.service/thredds/wms?'),
-        expect.anything()
+        expect.anything(),
       );
       const calledUrl: string = (globalThis.fetch as jest.Mock).mock
         .calls[0][0];
@@ -117,7 +117,7 @@ describe('NcwmsEndpoint', () => {
       it('returns an error', async () => {
         const error = await endpoint.getLayerDetails('tos').catch((e) => e);
         expect(error.message).toBe(
-          'The document at https://my.test.service/thredds/wms?SERVICE=WMS&REQUEST=GetMetadata&item=layerDetails&layerName=tos could not be fetched, received an error with code 404: could not fetch'
+          'The document at https://my.test.service/thredds/wms?SERVICE=WMS&REQUEST=GetMetadata&item=layerDetails&layerName=tos could not be fetched, received an error with code 404: could not fetch',
         );
       });
     });
@@ -131,7 +131,7 @@ describe('NcwmsEndpoint', () => {
       it('returns an error', async () => {
         const error = await endpoint.getLayerDetails('tos').catch((e) => e);
         expect(error.message).toBe(
-          'Fetching the document at https://my.test.service/thredds/wms?SERVICE=WMS&REQUEST=GetMetadata&item=layerDetails&layerName=tos failed either due to network errors or unreachable host, error is: network error'
+          'Fetching the document at https://my.test.service/thredds/wms?SERVICE=WMS&REQUEST=GetMetadata&item=layerDetails&layerName=tos failed either due to network errors or unreachable host, error is: network error',
         );
       });
     });
@@ -183,9 +183,9 @@ describe('NcwmsEndpoint', () => {
       });
       it('throws', async () => {
         await expect(
-          endpoint.getMinMax('tos', [-10, 30, 10, 50])
+          endpoint.getMinMax('tos', [-10, 30, 10, 50]),
         ).rejects.toThrow(
-          'The document at https://my.test.service/thredds/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMetadata&item=minmax&LAYERS=tos&bbox=-10%2C30%2C10%2C50&SRS=CRS%3A84&width=50&height=50 could not be fetched, received an error with code 500: server error'
+          'The document at https://my.test.service/thredds/wms?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMetadata&item=minmax&LAYERS=tos&bbox=-10%2C30%2C10%2C50&SRS=CRS%3A84&width=50&height=50 could not be fetched, received an error with code 500: server error',
         );
       });
     });

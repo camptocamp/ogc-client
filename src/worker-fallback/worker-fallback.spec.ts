@@ -24,7 +24,7 @@ describe('Worker fallback', () => {
     beforeEach(() => {
       globalThis.fetchResponseFactory = () => wmsCapabilities;
       endpoint = new WmsEndpoint(
-        'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb'
+        'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb',
       );
     });
 
@@ -42,7 +42,7 @@ describe('Worker fallback', () => {
     beforeEach(() => {
       globalThis.fetchResponseFactory = () => wfsCapabilities;
       endpoint = new WfsEndpoint(
-        'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType'
+        'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType',
       );
     });
 

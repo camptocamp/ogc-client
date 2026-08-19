@@ -61,7 +61,7 @@ export default class WpsEndpoint {
         () => parseWpsCapabilities(this._capabilitiesUrl),
         'WPS',
         'CAPABILITIES',
-        this._capabilitiesUrl
+        this._capabilitiesUrl,
       ).then(({ info, processes, url, version }) => {
         this._info = info;
         this._processes = processes;
@@ -136,16 +136,16 @@ export default class WpsEndpoint {
         const url = generateDescribeProcessUrl(
           this.getOperationUrl('DescribeProcess') || this._capabilitiesUrl,
           this._version,
-          processId
+          processId,
         );
         return queryXmlDocument(url).then((doc) =>
-          parseDescribeProcessResponse(doc, processId)
+          parseDescribeProcessResponse(doc, processId),
         );
       },
       'WPS',
       'DESCRIBEPROCESS',
       this._capabilitiesUrl,
-      processId
+      processId,
     );
   }
 
@@ -157,7 +157,7 @@ export default class WpsEndpoint {
    */
   async execute(
     processId: string,
-    options: WpsExecuteOptions
+    options: WpsExecuteOptions,
   ): Promise<WpsExecuteResponse> {
     const process = await this.describeProcess(processId);
     if (!process) {

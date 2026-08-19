@@ -53,12 +53,12 @@ export function parseEndpointInfo(rootDoc: StacRootDocument): StacEndpointInfo {
   }
   if (!rootDoc.description) {
     throw new EndpointError(
-      'Root document is missing required "description" field'
+      'Root document is missing required "description" field',
     );
   }
   if (!rootDoc.stac_version) {
     throw new EndpointError(
-      'Root document is missing required "stac_version" field'
+      'Root document is missing required "stac_version" field',
     );
   }
 
@@ -112,7 +112,7 @@ export function parseStacCatalog(doc: StacRootDocument): StacCatalog {
 export function parseStacCollection(doc: StacDocument): StacCollection {
   if (!doc.stac_version) {
     throw new EndpointError(
-      'Collection document is missing "stac_version" field'
+      'Collection document is missing "stac_version" field',
     );
   }
   if (doc.type !== 'Collection') {
@@ -123,7 +123,7 @@ export function parseStacCollection(doc: StacDocument): StacCollection {
   }
   if (!doc.description) {
     throw new EndpointError(
-      'Collection document is missing "description" field'
+      'Collection document is missing "description" field',
     );
   }
   if (!doc.license) {
@@ -199,7 +199,7 @@ export function checkStacCoreConformance(conformance: string[]): boolean {
   return conformance.some(
     (uri) =>
       (uri.includes('stac-api') || uri.includes('stacspec.org')) &&
-      (uri.includes('/core') || uri.includes('/item-search'))
+      (uri.includes('/core') || uri.includes('/item-search')),
   );
 }
 
@@ -212,6 +212,6 @@ export function checkOgcFeaturesConformance(conformance: string[]): boolean {
   return conformance.some(
     (uri) =>
       uri.includes('ogcapi-features') ||
-      uri === 'http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core'
+      uri === 'http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core',
   );
 }

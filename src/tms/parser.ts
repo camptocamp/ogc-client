@@ -42,7 +42,7 @@ export function parseTileMapServiceXML(xmlDoc: XmlDocument): TileMapService {
         srs: getElementAttribute(el, 'srs') || '',
         profile: getElementAttribute(el, 'profile') || '',
         href: getElementAttribute(el, 'href') || '',
-      }))
+      })),
     );
   }
 
@@ -104,14 +104,14 @@ export function parseTileMapXML(xmlDoc: XmlDocument): TileMapInfo {
       ...tileSetEls.map((el) => ({
         href: getElementAttribute(el, 'href') || '',
         unitsPerPixel: parseFloat(
-          getElementAttribute(el, 'units-per-pixel') || '0'
+          getElementAttribute(el, 'units-per-pixel') || '0',
         ),
         order: parseInt(getElementAttribute(el, 'order') || '0'),
         minrow: parseInt(getElementAttribute(el, 'minrow') || '0'),
         maxrow: parseInt(getElementAttribute(el, 'maxrow') || '0'),
         mincol: parseInt(getElementAttribute(el, 'mincol') || '0'),
         maxcol: parseInt(getElementAttribute(el, 'maxcol') || '0'),
-      }))
+      })),
     );
   }
 
@@ -123,14 +123,14 @@ export function parseTileMapXML(xmlDoc: XmlDocument): TileMapInfo {
       ...tileSetEls.map((el) => ({
         href: getElementAttribute(el, 'href') || '',
         unitsPerPixel: parseFloat(
-          getElementAttribute(el, 'units-per-pixel') || '0'
+          getElementAttribute(el, 'units-per-pixel') || '0',
         ),
         order: parseInt(getElementAttribute(el, 'order') || '0'),
         minrow: parseInt(getElementAttribute(el, 'minrow') || '0'),
         maxrow: parseInt(getElementAttribute(el, 'maxrow') || '0'),
         mincol: parseInt(getElementAttribute(el, 'mincol') || '0'),
         maxcol: parseInt(getElementAttribute(el, 'maxcol') || '0'),
-      }))
+      })),
     );
   }
 
@@ -187,7 +187,7 @@ export function parseTileMapXML(xmlDoc: XmlDocument): TileMapInfo {
  * Extracts a simplified endpoint info object from the service data.
  */
 export function extractEndpointInfo(
-  serviceData: TileMapService
+  serviceData: TileMapService,
 ): TmsEndpointInfo {
   return {
     title: serviceData.title,
@@ -200,7 +200,7 @@ export function extractEndpointInfo(
  * Extracts an array of TileMap references from the service data.
  */
 export function extractTileMapReferences(
-  serviceData: TileMapService
+  serviceData: TileMapService,
 ): TileMapReference[] {
   return serviceData.tileMaps || [];
 }

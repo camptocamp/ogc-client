@@ -45,7 +45,7 @@ export function parseConformance(doc: OgcApiDocument): ConformanceClass[] {
 export function checkTileConformance(conformance: ConformanceClass[]) {
   return (
     conformance.indexOf(
-      'http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/core'
+      'http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/core',
     ) > -1
   );
 }
@@ -53,17 +53,17 @@ export function checkTileConformance(conformance: ConformanceClass[]) {
 export function checkStyleConformance(conformance: ConformanceClass[]) {
   return (
     conformance.indexOf(
-      'http://www.opengis.net/spec/ogcapi-styles-1/0.0/conf/core'
+      'http://www.opengis.net/spec/ogcapi-styles-1/0.0/conf/core',
     ) > -1 ||
     conformance.indexOf(
-      'http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/core'
+      'http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/core',
     ) > -1
   );
 }
 
 export function checkHasRecords([collections, conformance]: [
   OgcApiCollectionInfo[],
-  ConformanceClass[]
+  ConformanceClass[],
 ]) {
   const classes = [
     'http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/record-core',
@@ -73,7 +73,7 @@ export function checkHasRecords([collections, conformance]: [
   return (
     (classes.every((confClass) => conformance.indexOf(confClass) > -1) ||
       conformance.indexOf(
-        'http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/core'
+        'http://www.opengis.net/spec/ogcapi-records-1/1.0/conf/core',
       ) > -1) &&
     collections.some((collection) => collection.itemType === 'record')
   );
@@ -81,24 +81,24 @@ export function checkHasRecords([collections, conformance]: [
 
 export function checkHasFeatures([collections, conformance]: [
   OgcApiCollectionInfo[],
-  ConformanceClass[]
+  ConformanceClass[],
 ]) {
   return (
     conformance.indexOf(
-      'http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core'
+      'http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core',
     ) > -1 &&
     collections.some(
-      (collection) => collection.itemType === 'feature' || !collection.itemType
+      (collection) => collection.itemType === 'feature' || !collection.itemType,
     )
   );
 }
 
 export function checkHasEnvironmentalDataRetrieval([conformance]: [
-  ConformanceClass[]
+  ConformanceClass[],
 ]) {
   return (
     conformance.indexOf(
-      'http://www.opengis.net/spec/ogcapi-edr-1/1.0/conf/core'
+      'http://www.opengis.net/spec/ogcapi-edr-1/1.0/conf/core',
     ) > -1
   );
 }
@@ -107,7 +107,7 @@ export function checkHasEnvironmentalDataRetrieval([conformance]: [
  * This does not include queryables and sortables!
  */
 export function parseBaseCollectionInfo(
-  doc: OgcApiDocument | OgcApiCollectionInfo
+  doc: OgcApiDocument | OgcApiCollectionInfo,
 ): OgcApiCollectionInfo {
   const { links, ...props } = doc;
   const itemFormats = links
@@ -151,7 +151,7 @@ export function parseBaseCollectionInfo(
 }
 
 export function parseCollectionParameters(
-  doc: OgcApiDocument
+  doc: OgcApiDocument,
 ): CollectionParameter[] {
   if ('properties' in doc && typeof doc.properties === 'object') {
     return Object.keys(doc.properties).map((name) => {
@@ -254,7 +254,7 @@ export function parseCollections(doc: OgcApiDocument): Array<{
     if (
       collection.links.some(
         (link) =>
-          link.rel === 'http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector'
+          link.rel === 'http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector',
       )
     ) {
       result.hasVectorTiles = true;
@@ -262,7 +262,7 @@ export function parseCollections(doc: OgcApiDocument): Array<{
     if (
       collection.links.some(
         (link) =>
-          link.rel === 'http://www.opengis.net/def/rel/ogc/1.0/tilesets-map'
+          link.rel === 'http://www.opengis.net/def/rel/ogc/1.0/tilesets-map',
       )
     ) {
       result.hasMapTiles = true;

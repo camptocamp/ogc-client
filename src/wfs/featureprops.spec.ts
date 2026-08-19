@@ -107,8 +107,8 @@ describe('feature props utils', () => {
           parseFeatureProps(
             parseXmlString(getFeatureCities100),
             featureTypeFull,
-            '1.0.0'
-          )
+            '1.0.0',
+          ),
         ).toEqual(expected);
       });
       it('version 1.1.0', () => {
@@ -116,8 +116,8 @@ describe('feature props utils', () => {
           parseFeatureProps(
             parseXmlString(getFeatureCities110),
             featureTypeFull,
-            '1.1.0'
-          )
+            '1.1.0',
+          ),
         ).toEqual(expected);
       });
       it('version 2.0.0', () => {
@@ -125,8 +125,8 @@ describe('feature props utils', () => {
           parseFeatureProps(
             parseXmlString(getFeatureCities200),
             featureTypeFull,
-            '2.0.0'
-          )
+            '2.0.0',
+          ),
         ).toEqual(expected);
       });
     });
@@ -306,8 +306,8 @@ describe('feature props utils', () => {
           parseFeatureProps(
             parseXmlString(getFeatureStates100),
             featureTypeFull,
-            '1.0.0'
-          )
+            '1.0.0',
+          ),
         ).toEqual(expected);
       });
       it('version 1.1.0', () => {
@@ -315,8 +315,8 @@ describe('feature props utils', () => {
           parseFeatureProps(
             parseXmlString(getFeatureStates110),
             featureTypeFull,
-            '1.1.0'
-          )
+            '1.1.0',
+          ),
         ).toEqual(expected);
       });
       it('version 2.0.0', () => {
@@ -324,8 +324,8 @@ describe('feature props utils', () => {
           parseFeatureProps(
             parseXmlString(getFeatureStates200),
             featureTypeFull,
-            '2.0.0'
-          )
+            '2.0.0',
+          ),
         ).toEqual(expected);
       });
     });
@@ -362,7 +362,7 @@ describe('feature props utils', () => {
 
       it('ignores props not listed in the feature type info', () => {
         expect(
-          parseFeatureProps(parseXmlString(xml), featureTypeFull, '2.0.0')
+          parseFeatureProps(parseXmlString(xml), featureTypeFull, '2.0.0'),
         ).toEqual(expected);
       });
     });
@@ -421,7 +421,7 @@ describe('feature props utils', () => {
 
       it('only saves defined props on objects', () => {
         expect(
-          parseFeatureProps(parseXmlString(xml), featureTypeFull, '2.0.0')
+          parseFeatureProps(parseXmlString(xml), featureTypeFull, '2.0.0'),
         ).toStrictEqual(expected);
       });
     });

@@ -30,7 +30,7 @@ export function generateGetFeatureUrl(
   extent?: BoundingBox,
   extentCrs?: CrsCode,
   startIndex?: number,
-  sortBy?: FieldSort[]
+  sortBy?: FieldSort[],
 ) {
   const typeParam = version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
   const countParam = version === '2.0.0' ? 'COUNT' : 'MAXFEATURES';
@@ -65,7 +65,7 @@ export function generateGetFeatureUrl(
     const sorts = sortBy
       .map(
         (fieldSort) =>
-          `${fieldSort[1]} ${fieldSort[0] === 'D' ? 'DESC' : 'ASC'}`
+          `${fieldSort[1]} ${fieldSort[0] === 'D' ? 'DESC' : 'ASC'}`,
       )
       .join(',');
     // using the URL API so that the space characters get encoded to "+" in the url
@@ -81,7 +81,7 @@ export function generateGetFeatureUrl(
 export function generateDescribeFeatureTypeUrl(
   serviceUrl: string,
   version: WfsVersion,
-  featureType: string
+  featureType: string,
 ) {
   const typeParam = version === '2.0.0' ? 'TYPENAMES' : 'TYPENAME';
   return setQueryParams(serviceUrl, {

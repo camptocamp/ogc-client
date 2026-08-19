@@ -6,7 +6,7 @@ import { WmsLayerDimension } from './model.js';
  * is expressed as "start/end/period"). Returns null if none is available.
  */
 export function getDimensionDefaultValue(
-  dim: WmsLayerDimension
+  dim: WmsLayerDimension,
 ): string | null {
   const candidate = dim.defaultValue || dim.values[0]?.split('/')[0];
   return candidate || null;
@@ -29,7 +29,7 @@ export type Iso8601Duration = {
  */
 export function parseIso8601Duration(duration: string): Iso8601Duration | null {
   const match = duration.match(
-    /^P(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?)?$/
+    /^P(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?)?$/,
   );
   // a bare "P" or "PT" matches but carries no fields, which is not a duration
   if (!match || match.slice(1).every((g) => g === undefined)) return null;
@@ -87,7 +87,7 @@ const DEFAULT_MAX_VALUES = 3650;
  */
 export function expandDimensionValues(
   dim: WmsLayerDimension,
-  max: number = DEFAULT_MAX_VALUES
+  max: number = DEFAULT_MAX_VALUES,
 ): Date[] {
   const dates: Date[] = [];
   for (const value of dim.values) {

@@ -35,7 +35,7 @@ describe('WmtsEndpoint', () => {
       await endpoint.isReady();
       expect(globalThis.fetch).toHaveBeenCalledWith(
         'https://my.test.service/ogc/wmts?bb=c&SERVICE=WMTS&REQUEST=GetCapabilities',
-        { method: 'GET' }
+        { method: 'GET' },
       );
     });
 
@@ -48,7 +48,7 @@ describe('WmtsEndpoint', () => {
       });
       it('stores the parsed capabilities in cache', async () => {
         await expect(
-          (useCache as any).mock.results[0].value
+          (useCache as any).mock.results[0].value,
         ).resolves.toMatchObject({
           info: {
             title: 'Web Map Tile Service',
@@ -79,7 +79,7 @@ describe('WmtsEndpoint', () => {
       it('returns a layer', async () => {
         await endpoint.isReady();
         expect(
-          endpoint.getLayerByName('BlueMarbleNextGeneration')
+          endpoint.getLayerByName('BlueMarbleNextGeneration'),
         ).toMatchObject({
           abstract: 'Blue Marble Next Generation NASA Product',
           name: 'BlueMarbleNextGeneration',
@@ -105,7 +105,7 @@ describe('WmtsEndpoint', () => {
       it('returns a layer resource url without type hint', async () => {
         await endpoint.isReady();
         expect(
-          endpoint.getLayerResourceLink('BlueMarbleNextGeneration')
+          endpoint.getLayerResourceLink('BlueMarbleNextGeneration'),
         ).toEqual({
           encoding: 'REST',
           format: 'image/png',
@@ -117,8 +117,8 @@ describe('WmtsEndpoint', () => {
         expect(
           endpoint.getLayerResourceLink(
             'BlueMarbleNextGeneration',
-            'image/jpeg'
-          )
+            'image/jpeg',
+          ),
         ).toEqual({
           encoding: 'KVP',
           format: 'image/jpeg',
@@ -138,7 +138,7 @@ describe('WmtsEndpoint', () => {
       it('returns a specific matrix set', async () => {
         await endpoint.isReady();
         expect(
-          endpoint.getDefaultDimensions('BlueMarbleNextGeneration')
+          endpoint.getDefaultDimensions('BlueMarbleNextGeneration'),
         ).toEqual({ OtherDimension: 'abcd', Time: '20110805' });
       });
     });
@@ -147,7 +147,7 @@ describe('WmtsEndpoint', () => {
       it('returns a tile grid using the first matrix set', async () => {
         await endpoint.isReady();
         const tileGrid = await endpoint.getOpenLayersTileGrid(
-          'BlueMarbleNextGeneration'
+          'BlueMarbleNextGeneration',
         );
         expect(buildOpenLayersTileGrid).toHaveBeenCalledWith(
           {
@@ -166,7 +166,7 @@ describe('WmtsEndpoint', () => {
             ]),
             wellKnownScaleSet: 'urn:ogc:def:wkss:OGC:1.0:GlobalCRS84Pixel',
           },
-          []
+          [],
         );
         expect(tileGrid).toEqual({ tileGrid: true });
       });
@@ -174,7 +174,7 @@ describe('WmtsEndpoint', () => {
         await endpoint.isReady();
         await endpoint.getOpenLayersTileGrid(
           'BlueMarbleNextGeneration',
-          'google3857'
+          'google3857',
         );
         expect(buildOpenLayersTileGrid).toHaveBeenCalledWith(
           {
@@ -196,7 +196,7 @@ describe('WmtsEndpoint', () => {
             ]),
             wellKnownScaleSet: 'urn:ogc:def:wkss:OGC:1.0:GoogleMapsCompatible',
           },
-          []
+          [],
         );
       });
     });
@@ -275,10 +275,10 @@ describe('WmtsEndpoint', () => {
             '3',
             2,
             1,
-            'image/gif'
-          )
+            'image/gif',
+          ),
         ).toEqual(
-          'http://www.maps.bob/cgi-bin/MiraMon5_0.cgi?layer=BlueMarbleNextGeneration&style=DarkBlue&tilematrixset=BigWorldPixel&Service=WMTS&Request=GetTile&Format=image%2Fgif&TileMatrix=3&TileCol=1&TileRow=2'
+          'http://www.maps.bob/cgi-bin/MiraMon5_0.cgi?layer=BlueMarbleNextGeneration&style=DarkBlue&tilematrixset=BigWorldPixel&Service=WMTS&Request=GetTile&Format=image%2Fgif&TileMatrix=3&TileCol=1&TileRow=2',
         );
       });
       it('returns a full tile url (REST)', async () => {
@@ -290,8 +290,8 @@ describe('WmtsEndpoint', () => {
             'google3857subset',
             '18',
             2,
-            3
-          )
+            3,
+          ),
         ).toBe('http://www.example.com/wmts/coastlines/18/2/3.png');
       });
     });
@@ -319,7 +319,7 @@ describe('WmtsEndpoint', () => {
       it('returns a layer', async () => {
         await endpoint.isReady();
         expect(
-          endpoint.getLayerByName('Demographics_USA_Population_Density')
+          endpoint.getLayerByName('Demographics_USA_Population_Density'),
         ).toMatchObject({
           abstract: '',
           name: 'Demographics_USA_Population_Density',
@@ -393,10 +393,10 @@ describe('WmtsEndpoint', () => {
             'default028mm',
             '3',
             2,
-            1
-          )
+            1,
+          ),
         ).toEqual(
-          'https://services.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/WMTS/tile/1.0.0/Demographics_USA_Population_Density/default/default028mm/3/2/1.png'
+          'https://services.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/WMTS/tile/1.0.0/Demographics_USA_Population_Density/default/default028mm/3/2/1.png',
         );
       });
       it('returns a full tile url with type hint (REST)', async () => {
@@ -409,10 +409,10 @@ describe('WmtsEndpoint', () => {
             '3',
             2,
             1,
-            'image/jpeg'
-          )
+            'image/jpeg',
+          ),
         ).toBe(
-          'https://services.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/WMTS/tile/1.0.0/Demographics_USA_Population_Density/default/default028mm/3/2/1.jpeg'
+          'https://services.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/WMTS/tile/1.0.0/Demographics_USA_Population_Density/default/default028mm/3/2/1.jpeg',
         );
       });
     });
@@ -480,7 +480,7 @@ describe('WmtsEndpoint', () => {
               minTileRow: 125,
               tileMatrix: '12',
             },
-          ])
+          ]),
         );
       });
     });
