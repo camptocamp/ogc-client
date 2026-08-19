@@ -1,42 +1,38 @@
 <template>
-  <div>
-    <div class="d-flex flex-row my-4">
+  <div class="pico">
+    <div style="display: flex; flex-direction: row; gap: 16px">
       <input
-        class="form-control me-3"
+        autofocus
         placeholder="Enter a WPS endpoint URL here"
         v-model="url"
+        @keydown.enter="createEndpoint()"
       />
-      <div class="spacer-s"></div>
-      <button type="button" class="btn btn-primary" @click="createEndpoint()">
-        Analyze
-      </button>
+      <button type="button" @click="createEndpoint()">Analyze</button>
     </div>
-    <div v-if="loading">Loading...</div>
-    <div v-if="loaded">
-      <InfoList :info="endpoint.getServiceInfo()"></InfoList>
-      <h4>Available Processes</h4>
-      <ItemsTree
-        :items="endpoint.getProcesses()"
-        style="min-height: 200px; max-height: 400px; overflow-y: auto"
-      >
-        <template v-slot="{ item }">
-          <div :title="item.abstract">
-            <a
-              href
-              @click="handleProcessClick(item, $event)"
-              class="link-light"
-              >{{ item.title || item.identifier }}</a
-            >
-          </div>
-        </template>
-      </ItemsTree>
-      <WpsProcessInfo
-        v-if="selectedProcess"
-        :process="selectedProcess"
-        :endpoint="endpoint"
-      ></WpsProcessInfo>
-    </div>
-    <div v-if="error" class="text-danger">Error: {{ error }}</div>
+    <Async v-if="loadPromise" :promise="loadPromise">
+      <template v-slot:then="{ result: endpoint }">
+        <InfoList :info="endpoint.getServiceInfo()"></InfoList>
+        <h4>Available Processes</h4>
+        <ItemsTree
+          :items="endpoint.getProcesses()"
+          style="min-height: 200px; max-height: 500px; overflow-y: auto"
+        >
+          <template v-slot="{ item }">
+            <div :title="item.abstract">
+              <!-- target attribute makes sure vitepress router does not handle the click -->
+              <a href target @click="handleProcessClick(item, $event)">{{
+                item.title || item.identifier
+              }}</a>
+            </div>
+          </template>
+        </ItemsTree>
+        <WpsProcessInfo
+          v-if="selectedProcess"
+          :process="selectedProcess"
+          :endpoint="endpoint"
+        ></WpsProcessInfo>
+      </template>
+    </Async>
   </div>
 </template>
 
@@ -45,34 +41,21 @@ import InfoList from '../presentation/InfoList.vue';
 import ItemsTree from '../presentation/ItemsTree.vue';
 import WpsProcessInfo from './WpsProcessInfo.vue';
 import WpsEndpoint from '../../../../src/wps/endpoint';
+import Async from '../presentation/Async.vue';
 
 export default {
   name: 'WpsEndpoint',
-  components: { WpsProcessInfo, ItemsTree, InfoList },
+  components: { Async, WpsProcessInfo, ItemsTree, InfoList },
   data: () => ({
-    loading: false,
-    error: null,
-    endpoint: null,
+    loadPromise: null,
     url: 'https://sextant.ifremer.fr/services/wps3/demo',
     selectedProcess: null,
   }),
-  computed: {
-    loaded() {
-      return this.endpoint && this.loading === false && this.error === null;
-    },
-  },
   methods: {
-    async createEndpoint() {
-      this.error = null;
-      this.loading = true;
+    createEndpoint() {
       this.selectedProcess = null;
-      this.endpoint = new WpsEndpoint(this.url);
-      try {
-        await this.endpoint.isReady();
-      } catch (e) {
-        this.error = e.message;
-      }
-      this.loading = false;
+      const endpoint = new WpsEndpoint(this.url);
+      this.loadPromise = endpoint.isReady();
     },
     handleProcessClick(process, event) {
       event.preventDefault();

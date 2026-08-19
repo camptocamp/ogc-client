@@ -74,7 +74,7 @@ describe('WMS capabilities', () => {
         styles: [
           {
             legendUrl: expect.stringContaining(
-              'http://geoservices.brgm.fr/geologie?language=fre'
+              'http://geoservices.brgm.fr/geologie?language=fre',
             ),
             name: 'default',
             title: 'default',
@@ -298,7 +298,7 @@ describe('WMS capabilities', () => {
     it('reads the layers (1.1.1)', () => {
       const doc = parseXmlString(capabilities111);
       expect(
-        readLayersFromCapabilities(doc).map(fixupScaleDenominators)
+        readLayersFromCapabilities(doc).map(fixupScaleDenominators),
       ).toEqual(expectedLayers);
     });
   });
@@ -416,9 +416,7 @@ describe('WMS capabilities', () => {
         'image/svg+xml',
       ],
       infoFormats: ['text/plain', 'application/vnd.ogc.gml'],
-      exceptionFormats: [
-        /* these differ depending on the WMS version used */
-      ],
+      exceptionFormats: [/* these differ depending on the WMS version used */],
       keywords: [
         'Géologie',
         'BRGM',

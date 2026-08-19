@@ -24,7 +24,7 @@ describe('WmsEndpoint', () => {
     globalThis.fetchPreHandler = () => {};
     globalThis.fetchResponseFactory = () => capabilities130;
     endpoint = new WmsEndpoint(
-      'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb'
+      'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb',
     );
   });
 
@@ -32,7 +32,7 @@ describe('WmsEndpoint', () => {
     await endpoint.isReady();
     expect(globalThis.fetch).toHaveBeenCalledWith(
       'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetCapabilities',
-      { method: 'GET' }
+      { method: 'GET' },
     );
   });
 
@@ -45,7 +45,7 @@ describe('WmsEndpoint', () => {
     });
     it('stores the parsed capabilities in cache', async () => {
       await expect(
-        (useCache as any).mock.results[0].value
+        (useCache as any).mock.results[0].value,
       ).resolves.toMatchObject({
         info: {
           title: 'GéoServices : géologie, hydrogéologie et gravimétrie',
@@ -73,7 +73,7 @@ describe('WmsEndpoint', () => {
           .catch((e) => e)) as EndpointError;
         expect(error).toBeInstanceOf(EndpointError);
         expect(error.message).toBe(
-          'The document at https://my.test.service/ogc/wms?SERVICE=WMS&REQUEST=GetCapabilities could not be fetched due to CORS limitations'
+          'The document at https://my.test.service/ogc/wms?SERVICE=WMS&REQUEST=GetCapabilities could not be fetched due to CORS limitations',
         );
         expect(error.httpStatus).toBe(0);
         expect(error.isCrossOriginRelated).toBe(true);
@@ -93,7 +93,7 @@ describe('WmsEndpoint', () => {
           .catch((e) => e)) as EndpointError;
         expect(error).toBeInstanceOf(EndpointError);
         expect(error.message).toBe(
-          'Fetching the document at https://my.test.service/ogc/wms?SERVICE=WMS&REQUEST=GetCapabilities failed either due to network errors or unreachable host, error is: other kind of problem'
+          'Fetching the document at https://my.test.service/ogc/wms?SERVICE=WMS&REQUEST=GetCapabilities failed either due to network errors or unreachable host, error is: other kind of problem',
         );
         expect(error.httpStatus).toBe(0);
         expect(error.isCrossOriginRelated).toBe(false);
@@ -119,7 +119,7 @@ describe('WmsEndpoint', () => {
           .catch((e) => e)) as EndpointError;
         expect(error).toBeInstanceOf(EndpointError);
         expect(error.message).toBe(
-          'The document at https://my.test.service/ogc/wms?SERVICE=WMS&REQUEST=GetCapabilities could not be fetched, received an error with code 500: something broke in the server'
+          'The document at https://my.test.service/ogc/wms?SERVICE=WMS&REQUEST=GetCapabilities could not be fetched, received an error with code 500: something broke in the server',
         );
         expect(error.httpStatus).toBe(500);
         expect(error.isCrossOriginRelated).toBe(false);
@@ -137,10 +137,10 @@ describe('WmsEndpoint', () => {
           .catch((e) => e)) as ServiceExceptionError;
         expect(error).toBeInstanceOf(ServiceExceptionError);
         expect(error.message).toBe(
-          'msWMSGetCapabilities(): WMS server error. WMS request not enabled. Check wms/ows_enable_request settings.'
+          'msWMSGetCapabilities(): WMS server error. WMS request not enabled. Check wms/ows_enable_request settings.',
         );
         expect(error.requestUrl).toBe(
-          'https://my.test.service/ogc/wms?SERVICE=WMS&REQUEST=GetCapabilities'
+          'https://my.test.service/ogc/wms?SERVICE=WMS&REQUEST=GetCapabilities',
         );
         expect(error.code).toBe('');
         expect(error.locator).toBe('');
@@ -305,7 +305,7 @@ describe('WmsEndpoint', () => {
       beforeEach(() => {
         globalThis.fetchResponseFactory = () => capabilitiesStates;
         endpoint = new WmsEndpoint(
-          'https://my.test.service/ogc/wms?service=wfs&request=DescribeFeatureType'
+          'https://my.test.service/ogc/wms?service=wfs&request=DescribeFeatureType',
         );
       });
       it('returns the single feature type name', async () => {
@@ -377,9 +377,9 @@ describe('WmsEndpoint', () => {
           crs: 'EPSG:4326',
           extent: [10, 20, 100, 200],
           outputFormat: 'image/png',
-        })
+        }),
       ).toBe(
-        'http://geoservices.brgm.fr/geologie?language=fre&SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=layer1%2Clayer2&STYLES=&WIDTH=100&HEIGHT=200&FORMAT=image%2Fpng&CRS=EPSG%3A4326&BBOX=10%2C20%2C100%2C200'
+        'http://geoservices.brgm.fr/geologie?language=fre&SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=layer1%2Clayer2&STYLES=&WIDTH=100&HEIGHT=200&FORMAT=image%2Fpng&CRS=EPSG%3A4326&BBOX=10%2C20%2C100%2C200',
       );
     });
   });
@@ -387,7 +387,7 @@ describe('WmsEndpoint', () => {
   describe('#getCapabilitiesUrl', () => {
     it.skip('returns the URL used for the request before the capabilities are retrieved', async () => {
       expect(endpoint.getCapabilitiesUrl()).toBe(
-        'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetCapabilities'
+        'https://my.test.service/ogc/wms?aa=bb&SERVICE=WMS&REQUEST=GetCapabilities',
       );
       await endpoint.isReady();
     });
@@ -395,7 +395,7 @@ describe('WmsEndpoint', () => {
     it('returns the self-reported URL after the capabilities are retrieved', async () => {
       await endpoint.isReady();
       expect(endpoint.getCapabilitiesUrl()).toBe(
-        'http://geoservices.brgm.fr/geologie?language=fre&SERVICE=WMS&REQUEST=GetCapabilities'
+        'http://geoservices.brgm.fr/geologie?language=fre&SERVICE=WMS&REQUEST=GetCapabilities',
       );
     });
   });
@@ -414,7 +414,7 @@ describe('WmsEndpoint', () => {
     it('returns the correct URL for an existant operation', async () => {
       await endpoint.isReady();
       expect(endpoint.getOperationUrl('GetMap')).toBe(
-        'http://geoservices.brgm.fr/geologie?language=fre&'
+        'http://geoservices.brgm.fr/geologie?language=fre&',
       );
     });
   });
@@ -429,7 +429,7 @@ describe('WmsEndpoint', () => {
         return capabilities130;
       };
       endpoint = new WmsEndpoint(
-        'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb'
+        'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb',
       );
     });
 
@@ -465,7 +465,7 @@ describe('WmsEndpoint', () => {
         return capabilities130;
       };
       endpoint = new WmsEndpoint(
-        'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb'
+        'https://my.test.service/ogc/wms?service=wms&request=GetMap&aa=bb',
       );
       await endpoint.isReady();
       const result = await endpoint.describeLayer('nonexistent:layer');

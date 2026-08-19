@@ -20,7 +20,7 @@ function extractEncoding(contentType: string) {
  */
 export function decodeString(
   buffer: ArrayBuffer,
-  contentType?: string
+  contentType?: string,
 ): string | null {
   const encodingHint = contentType ? extractEncoding(contentType) : null;
   const encodingAttempts = encodingHint
@@ -36,7 +36,7 @@ export function decodeString(
   }
   // if all else fails, decode using fallback and hope for the best
   console.warn(
-    `[ogc-client] XML document encoding could not be determined, falling back to ${FALLBACK_ENCODING}.`
+    `[ogc-client] XML document encoding could not be determined, falling back to ${FALLBACK_ENCODING}.`,
   );
   return new TextDecoder(FALLBACK_ENCODING).decode(buffer);
 }

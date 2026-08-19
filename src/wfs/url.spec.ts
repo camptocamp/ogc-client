@@ -7,9 +7,9 @@ describe('WFS url helpers', () => {
   describe('generateGetFeatureUrl', () => {
     it('generates a correct URL (v1.0.0, no max features, no attributes)', () => {
       expect(
-        generateGetFeatureUrl('http://example.com/wfs', '1.0.0', 'my:type')
+        generateGetFeatureUrl('http://example.com/wfs', '1.0.0', 'my:type'),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.0.0&TYPENAME=my%3Atype'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.0.0&TYPENAME=my%3Atype',
       );
     });
     it('generates a correct URL (v1.0.0, max features 5, attributes set)', () => {
@@ -20,24 +20,24 @@ describe('WFS url helpers', () => {
           'my:type',
           undefined,
           5,
-          ['attr1', 'attr2', 'geom']
-        )
+          ['attr1', 'attr2', 'geom'],
+        ),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.0.0&TYPENAME=my%3Atype&PROPERTYNAME=attr1%2Cattr2%2Cgeom&MAXFEATURES=5'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.0.0&TYPENAME=my%3Atype&PROPERTYNAME=attr1%2Cattr2%2Cgeom&MAXFEATURES=5',
       );
     });
     it('generates a correct URL (v1.1.0, no max features, no attributes)', () => {
       expect(
-        generateGetFeatureUrl('http://example.com/wfs', '1.1.0', 'my:type')
+        generateGetFeatureUrl('http://example.com/wfs', '1.1.0', 'my:type'),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=my%3Atype'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.1.0&TYPENAME=my%3Atype',
       );
     });
     it('generates a correct URL (v2.0.0, no max features, no attributes)', () => {
       expect(
-        generateGetFeatureUrl('http://example.com/wfs', '2.0.0', 'my:type')
+        generateGetFeatureUrl('http://example.com/wfs', '2.0.0', 'my:type'),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype',
       );
     });
     it('generates a correct URL for hit count only (v2.0.0, no max features, no attributes)', () => {
@@ -49,10 +49,10 @@ describe('WFS url helpers', () => {
           undefined,
           undefined,
           undefined,
-          true
-        )
+          true,
+        ),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&RESULTTYPE=hits&COUNT=1'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&RESULTTYPE=hits&COUNT=1',
       );
     });
     it('generates a correct URL (v2.0.0, max features 5, attributes set)', () => {
@@ -63,10 +63,10 @@ describe('WFS url helpers', () => {
           'my:type',
           undefined,
           5,
-          ['attr1', 'attr2', 'geom']
-        )
+          ['attr1', 'attr2', 'geom'],
+        ),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&PROPERTYNAME=attr1%2Cattr2%2Cgeom&COUNT=5'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&PROPERTYNAME=attr1%2Cattr2%2Cgeom&COUNT=5',
       );
     });
     it('generates a correct URL (v2.0.0, output format set)', () => {
@@ -75,10 +75,10 @@ describe('WFS url helpers', () => {
           'http://example.com/wfs',
           '2.0.0',
           'my:type',
-          'application/json'
-        )
+          'application/json',
+        ),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&OUTPUTFORMAT=application%2Fjson'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&OUTPUTFORMAT=application%2Fjson',
       );
     });
     it('generates a correct URL (v2.0.0)', () => {
@@ -93,10 +93,10 @@ describe('WFS url helpers', () => {
           undefined,
           'EPSG:2154',
           [10, 20, 100, 200],
-          'EPSG:3857'
-        )
+          'EPSG:3857',
+        ),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&SRSNAME=EPSG%3A2154&BBOX=10%2C20%2C100%2C200%2CEPSG%3A3857'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&SRSNAME=EPSG%3A2154&BBOX=10%2C20%2C100%2C200%2CEPSG%3A3857',
       );
     });
     it('generates a correct URL (v2.0.0, startIndex set)', () => {
@@ -112,10 +112,10 @@ describe('WFS url helpers', () => {
           undefined,
           undefined,
           undefined,
-          10
-        )
+          10,
+        ),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&STARTINDEX=10'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&STARTINDEX=10',
       );
     });
     it('generates a correct URL (v2.0.0, with sorting)', () => {
@@ -135,10 +135,10 @@ describe('WFS url helpers', () => {
           [
             ['A', 'col1'],
             ['D', 'col2'],
-          ]
-        )
+          ],
+        ),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&SORTBY=col1+ASC%2Ccol2+DESC'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=my%3Atype&SORTBY=col1+ASC%2Ccol2+DESC',
       );
     });
   });
@@ -149,10 +149,10 @@ describe('WFS url helpers', () => {
         generateDescribeFeatureTypeUrl(
           'http://example.com/wfs',
           '1.0.0',
-          'my:type'
-        )
+          'my:type',
+        ),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=DescribeFeatureType&VERSION=1.0.0&TYPENAME=my%3Atype'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=DescribeFeatureType&VERSION=1.0.0&TYPENAME=my%3Atype',
       );
     });
     it('generates a correct URL (v1.1.0)', () => {
@@ -160,10 +160,10 @@ describe('WFS url helpers', () => {
         generateDescribeFeatureTypeUrl(
           'http://example.com/wfs',
           '1.1.0',
-          'my:type'
-        )
+          'my:type',
+        ),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=DescribeFeatureType&VERSION=1.1.0&TYPENAME=my%3Atype'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=DescribeFeatureType&VERSION=1.1.0&TYPENAME=my%3Atype',
       );
     });
     it('generates a correct URL (v2.0.0)', () => {
@@ -171,10 +171,10 @@ describe('WFS url helpers', () => {
         generateDescribeFeatureTypeUrl(
           'http://example.com/wfs',
           '2.0.0',
-          'my:type'
-        )
+          'my:type',
+        ),
       ).toBe(
-        'http://example.com/wfs?SERVICE=WFS&REQUEST=DescribeFeatureType&VERSION=2.0.0&TYPENAMES=my%3Atype'
+        'http://example.com/wfs?SERVICE=WFS&REQUEST=DescribeFeatureType&VERSION=2.0.0&TYPENAMES=my%3Atype',
       );
     });
   });

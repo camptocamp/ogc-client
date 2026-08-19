@@ -45,12 +45,12 @@ export class NcwmsEndpoint extends WmsEndpoint {
       () => this._fetchLayerDetails(url),
       'NCWMS',
       'LAYER_DETAILS',
-      url
+      url,
     );
   }
 
   private async _fetchLayerDetails(
-    url: string
+    url: string,
   ): Promise<NcwmsLayerDetails | null> {
     const data = await queryJsonDocument<NcwmsDetailsResponse>(url);
 
@@ -106,7 +106,7 @@ export class NcwmsEndpoint extends WmsEndpoint {
   async getMinMax(
     layerName: string,
     bbox: BoundingBox,
-    options?: { time?: string; elevation?: string }
+    options?: { time?: string; elevation?: string },
   ): Promise<NcwmsMinMax> {
     const params: Record<string, string> = {
       SERVICE: 'WMS',
@@ -143,7 +143,7 @@ export class NcwmsEndpoint extends WmsEndpoint {
       style?: string;
       colorScaleRange?: [number, number];
       logScale?: boolean;
-    } = {}
+    } = {},
   ): string {
     const params: Record<string, string> = {
       SERVICE: 'WMS',

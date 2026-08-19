@@ -12,10 +12,10 @@ describe('URL utils', () => {
         'zoom:3',
         4,
         5,
-        'image/png'
+        'image/png',
       );
       expect(url).toBe(
-        'http://my.service.org/wmts?layer=myLayer&style=myStyle&tilematrixset=webMercator&Service=WMTS&Request=GetTile&Format=image%2Fpng&TileMatrix=zoom%3A3&TileCol=5&TileRow=4'
+        'http://my.service.org/wmts?layer=myLayer&style=myStyle&tilematrixset=webMercator&Service=WMTS&Request=GetTile&Format=image%2Fpng&TileMatrix=zoom%3A3&TileCol=5&TileRow=4',
       );
     });
   });
@@ -30,10 +30,10 @@ describe('URL utils', () => {
         'zoom:3',
         4,
         5,
-        'image/png'
+        'image/png',
       );
       expect(url).toBe(
-        'http://my.service.org/wmts/myStyle/webMercator/zoom:3/4/5.png'
+        'http://my.service.org/wmts/myStyle/webMercator/zoom:3/4/5.png',
       );
     });
   });

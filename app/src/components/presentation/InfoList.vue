@@ -1,12 +1,12 @@
 <template>
-  <dl class="small">
+  <dl style="font-size: 14px">
     <template v-for="prop in propList">
-      <dt class="d-flex flex-row" style="gap: 0.5rem">
+      <dt style="display: flex; flex-direction: row; gap: 0.5rem">
         <span>{{ prop.title }}</span>
         <div
-          class="flex-grow-1"
           style="
-            border-top: 2px solid #e0e0e0;
+            flex-grow: 1;
+            border-top: 2px solid rgb(136 136 136 / 0.42);
             margin-top: 0.7em;
             min-width: 6px;
           "
@@ -30,6 +30,7 @@ dl {
 }
 dt {
   grid-column: 1;
+  font-weight: bold;
 }
 dd {
   grid-column: 2;

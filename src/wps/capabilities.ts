@@ -19,7 +19,7 @@ import { WpsEndpointInfo, WpsProcessSummary, WpsVersion } from './model.js';
  * @return The parsed WPS version, or null if no version could be found
  */
 export function readVersionFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): WpsVersion {
   return getRootElement(capabilitiesDoc).attributes['version'] as WpsVersion;
 }
@@ -31,12 +31,12 @@ export function readVersionFromCapabilities(
  * @return The parsed operations URLs
  */
 export function readOperationUrlsFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): Record<OperationName, OperationUrl> {
   const urls: Record<OperationName, OperationUrl> = {};
   const operationsMetadata = findChildElement(
     getRootElement(capabilitiesDoc),
-    'OperationsMetadata'
+    'OperationsMetadata',
   );
   findChildrenElement(operationsMetadata, 'Operation').forEach((operation) => {
     const name = getElementAttribute(operation, 'name');
@@ -51,11 +51,11 @@ export function readOperationUrlsFromCapabilities(
  * @return Parsed process summaries
  */
 export function readProcessesFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): WpsProcessSummary[] {
   const processOfferings = findChildElement(
     getRootElement(capabilitiesDoc),
-    'ProcessOfferings'
+    'ProcessOfferings',
   );
   return findChildrenElement(processOfferings, 'Process').map((processEl) => {
     const abstract = getElementText(findChildElement(processEl, 'Abstract'));
@@ -75,15 +75,15 @@ export function readProcessesFromCapabilities(
  * @return Parsed service info
  */
 export function readInfoFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): WpsEndpointInfo {
   const service = findChildElement(
     getRootElement(capabilitiesDoc),
-    'ServiceIdentification'
+    'ServiceIdentification',
   );
   const keywords = findChildrenElement(
     findChildElement(service, 'Keywords'),
-    'Keyword'
+    'Keyword',
   )
     .map(getElementText)
     .filter((v, i, arr) => arr.indexOf(v) === i);

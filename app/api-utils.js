@@ -1,4 +1,4 @@
-import API from './data/api.json';
+import API from './api.json';
 
 export function formatClassToString(classObj) {
   return classObj.name;
@@ -10,7 +10,7 @@ export function formatFunctionToString(functionObj) {
       (param) =>
         `${param.flags?.isRest ? '...' : ''}${param.name}${
           param.flags?.optional ? '?' : ''
-        }: ${formatTypeToString(param.type)}`
+        }: ${formatTypeToString(param.type)}`,
     )
     .join(', ');
   let typeParams = '';
@@ -27,8 +27,8 @@ export function formatConstructorToString(classObj, functionObj) {
     .map(
       (param) =>
         `${param.flags?.isRest ? '...' : ''}${param.name}: ${formatTypeToString(
-          param.type
-        )}`
+          param.type,
+        )}`,
     )
     .join(', ');
   return `new ${classObj.name}(${params})`;
@@ -59,16 +59,18 @@ export function formatTypeToString(typeObj) {
     switch (typeObj.name) {
       case 'Record':
         return `Record\\<${formatTypeToString(
-          typeObj.typeArguments[0]
+          typeObj.typeArguments[0],
         )}, ${formatTypeToString(typeObj.typeArguments[1])}\\>`;
       case 'Response':
         return `[Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)`;
       case 'Promise':
-        return `Promise&lt;${formatTypeToString(typeObj.typeArguments[0])}&gt;`;
+        return `[Promise](https://developer.mozilla.org/en-US/docs/Web/API/Promise)&lt;${formatTypeToString(
+          typeObj.typeArguments[0],
+        )}&gt;`;
     }
     const ref = API.children.find((el) => el.id === typeObj.target);
     if (ref) {
-      return `[${ref.name}](#/api/${ref.name})`;
+      return `[${ref.name}](/api#type-${ref.name})`;
     }
     return typeObj.name;
   }
@@ -81,7 +83,7 @@ export function formatTypeToString(typeObj) {
   }
   if (typeObj.type === 'indexedAccess') {
     return `${formatTypeToString(typeObj.objectType)}[${formatTypeToString(
-      typeObj.indexType
+      typeObj.indexType,
     )}]`;
   }
   if (typeObj.type === 'tuple') {

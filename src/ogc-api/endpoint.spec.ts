@@ -11,7 +11,7 @@ beforeAll(() => {
     const url = new URL(
       urlOrInfo instanceof URL || typeof urlOrInfo === 'string'
         ? urlOrInfo
-        : urlOrInfo.url
+        : urlOrInfo.url,
     );
 
     // if we're on the root path (e.g. /sample-data/), only answer if there's a trailing slash
@@ -91,7 +91,7 @@ describe('OgcApiEndpoint', () => {
       });
       it('does not support EDR ', async () => {
         await expect(endpoint.hasEnvironmentalDataRetrieval).resolves.toBe(
-          false
+          false,
         );
       });
       it('uses shared fetch', async () => {
@@ -243,7 +243,7 @@ describe('OgcApiEndpoint', () => {
     describe('#getCollectionInfo', () => {
       it('returns airports collection info', async () => {
         await expect(
-          endpoint.getCollectionInfo('airports')
+          endpoint.getCollectionInfo('airports'),
         ).resolves.toStrictEqual({
           title: 'Airports',
           description:
@@ -314,7 +314,7 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns dutch-metadata collection info', async () => {
         await expect(
-          endpoint.getCollectionInfo('dutch-metadata')
+          endpoint.getCollectionInfo('dutch-metadata'),
         ).resolves.toStrictEqual({
           id: 'dutch-metadata',
           title: 'Sample metadata records from Dutch Nationaal georegister',
@@ -400,7 +400,7 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns roads_national collection info', async () => {
         await expect(
-          endpoint.getCollectionInfo('roads_national')
+          endpoint.getCollectionInfo('roads_national'),
         ).resolves.toStrictEqual({
           title: 'National Roads',
           description:
@@ -493,7 +493,7 @@ describe('OgcApiEndpoint', () => {
     describe('#getCollectionItems', () => {
       it('returns airports collection items', async () => {
         await expect(
-          endpoint.getCollectionItems('airports')
+          endpoint.getCollectionItems('airports'),
         ).resolves.toStrictEqual([
           {
             type: 'Feature',
@@ -561,7 +561,7 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns dutch-metadata collection items', async () => {
         await expect(
-          endpoint.getCollectionItems('dutch-metadata')
+          endpoint.getCollectionItems('dutch-metadata'),
         ).resolves.toStrictEqual([
           {
             id: '35149dfb-31d3-431c-a8bc-12a4034dac48',
@@ -1291,7 +1291,7 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns roads_national collection items', async () => {
         await expect(
-          endpoint.getCollectionItems('roads_national')
+          endpoint.getCollectionItems('roads_national'),
         ).resolves.toStrictEqual([
           {
             type: 'Feature',
@@ -1448,11 +1448,11 @@ describe('OgcApiEndpoint', () => {
             ['attr1'],
             [1, 2, 3, 4],
             ['attr2', 'attr3'],
-            new Date('2023-02-01')
+            new Date('2023-02-01'),
           );
           expect(globalThis.fetch).toHaveBeenCalledWith(
             'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=20&offset=12&skipGeometry=false&sortby=attr1&properties=attr2%2Cattr3&datetime=2023-02-01T00%3A00%3A00.000Z&bbox=1%2C2%2C3%2C4',
-            { method: 'GET', headers: expect.any(Object) }
+            { method: 'GET', headers: expect.any(Object) },
           );
         });
         it('encodes date time param as an interval', async () => {
@@ -1464,11 +1464,11 @@ describe('OgcApiEndpoint', () => {
             undefined,
             undefined,
             undefined,
-            { start: new Date('2023-02-01'), end: new Date('2023-02-15') }
+            { start: new Date('2023-02-01'), end: new Date('2023-02-15') },
           );
           expect(globalThis.fetch).toHaveBeenCalledWith(
             'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&datetime=2023-02-01T00%3A00%3A00.000Z%2F2023-02-15T00%3A00%3A00.000Z',
-            { method: 'GET', headers: expect.any(Object) }
+            { method: 'GET', headers: expect.any(Object) },
           );
         });
         it('encodes date time param as an interval (start only)', async () => {
@@ -1480,11 +1480,11 @@ describe('OgcApiEndpoint', () => {
             undefined,
             undefined,
             undefined,
-            { start: new Date('2023-02-01') }
+            { start: new Date('2023-02-01') },
           );
           expect(globalThis.fetch).toHaveBeenCalledWith(
             'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&datetime=2023-02-01T00%3A00%3A00.000Z%2F..',
-            { method: 'GET', headers: expect.any(Object) }
+            { method: 'GET', headers: expect.any(Object) },
           );
         });
         it('encodes date time param as an interval (end only)', async () => {
@@ -1496,11 +1496,11 @@ describe('OgcApiEndpoint', () => {
             undefined,
             undefined,
             undefined,
-            { end: new Date('2023-02-01') }
+            { end: new Date('2023-02-01') },
           );
           expect(globalThis.fetch).toHaveBeenCalledWith(
             'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&datetime=..%2F2023-02-01T00%3A00%3A00.000Z',
-            { method: 'GET', headers: expect.any(Object) }
+            { method: 'GET', headers: expect.any(Object) },
           );
         });
         it('adds freeform query param at the end of the url', async () => {
@@ -1513,11 +1513,11 @@ describe('OgcApiEndpoint', () => {
             null,
             null,
             null,
-            'name=Inverness Airport&specialchar=✓'
+            'name=Inverness Airport&specialchar=✓',
           );
           expect(globalThis.fetch).toHaveBeenCalledWith(
             'https://my.server.org/sample-data/collections/roads_national/items?f=json&limit=10&offset=0&sortby=attr1%2Cattr2&name=Inverness+Airport&specialchar=%E2%9C%93',
-            { method: 'GET', headers: expect.any(Object) }
+            { method: 'GET', headers: expect.any(Object) },
           );
         });
       });
@@ -1525,7 +1525,7 @@ describe('OgcApiEndpoint', () => {
     describe('#getCollectionItem', () => {
       it('returns one airports collection item', async () => {
         await expect(
-          endpoint.getCollectionItem('airports', '1')
+          endpoint.getCollectionItem('airports', '1'),
         ).resolves.toStrictEqual({
           geometry: {
             coordinates: [-1.2918826, 59.8783475],
@@ -1580,8 +1580,8 @@ describe('OgcApiEndpoint', () => {
         await expect(
           endpoint.getCollectionItem(
             'dutch-metadata',
-            '35149dfb-31d3-431c-a8bc-12a4034dac48'
-          )
+            '35149dfb-31d3-431c-a8bc-12a4034dac48',
+          ),
         ).resolves.toStrictEqual({
           geometry: {
             coordinates: [
@@ -1711,18 +1711,18 @@ describe('OgcApiEndpoint', () => {
       });
       it('returns the first available URL for the collection items if no mime-type specified', async () => {
         await expect(
-          endpoint.getCollectionItemsUrl('airports')
+          endpoint.getCollectionItemsUrl('airports'),
         ).resolves.toEqual(
-          'https://my.server.org/sample-data/collections/airports/items?f=html'
+          'https://my.server.org/sample-data/collections/airports/items?f=html',
         );
       });
       it('selects the URL using JSON-FG if asJson is specified', async () => {
         await expect(
           endpoint.getCollectionItemsUrl('airports', {
             asJson: true,
-          })
+          }),
         ).resolves.toEqual(
-          'https://my.server.org/sample-data/collections/airports/items?f=jsonfg'
+          'https://my.server.org/sample-data/collections/airports/items?f=jsonfg',
         );
       });
       it('returns the correct URL for the collection items an a given mime-type', async () => {
@@ -1731,9 +1731,9 @@ describe('OgcApiEndpoint', () => {
             limit: 101,
             query: 'name=Sumburgh Airport',
             outputFormat: 'application/geo+json',
-          })
+          }),
         ).resolves.toEqual(
-          'https://my.server.org/sample-data/collections/airports/items?f=json&limit=101&name=Sumburgh%20Airport'
+          'https://my.server.org/sample-data/collections/airports/items?f=json&limit=101&name=Sumburgh%20Airport',
         );
       });
       it('outputs a warning if the required format is not a known mime-type for the collection', async () => {
@@ -1742,14 +1742,14 @@ describe('OgcApiEndpoint', () => {
             limit: 101,
             query: 'name=Sumburgh Airport',
             outputFormat: 'shapefile',
-          })
+          }),
         ).resolves.toEqual(
-          'https://my.server.org/sample-data/collections/airports/items?f=shapefile&limit=101&name=Sumburgh%20Airport'
+          'https://my.server.org/sample-data/collections/airports/items?f=shapefile&limit=101&name=Sumburgh%20Airport',
         );
         expect(console.warn).toHaveBeenCalledWith(
           expect.stringContaining(
-            'The following output format type was not found in the collection'
-          )
+            'The following output format type was not found in the collection',
+          ),
         );
       });
       it('encodes the various options properly', async () => {
@@ -1769,9 +1769,9 @@ describe('OgcApiEndpoint', () => {
             },
             outputCrs: 'EPSG:4326',
             skipGeometry: true,
-          })
+          }),
         ).resolves.toEqual(
-          'https://my.server.org/sample-data/collections/airports/items?f=jsonfg&limit=12&offset=34&skipGeometry=true&sortby=attr1%2Cattr2&properties=attr3%2Cattr4&datetime=2023-02-01T00%3A00%3A00.000Z%2F2023-02-15T00%3A00%3A00.000Z&crs=EPSG%3A4326&bbox=1%2C2%2C3%2C4&bbox-crs=EPSG%3A4326&name=Sumburgh%20Airport'
+          'https://my.server.org/sample-data/collections/airports/items?f=jsonfg&limit=12&offset=34&skipGeometry=true&sortby=attr1%2Cattr2&properties=attr3%2Cattr4&datetime=2023-02-01T00%3A00%3A00.000Z%2F2023-02-15T00%3A00%3A00.000Z&crs=EPSG%3A4326&bbox=1%2C2%2C3%2C4&bbox-crs=EPSG%3A4326&name=Sumburgh%20Airport',
         );
       });
     });
@@ -1792,8 +1792,8 @@ describe('OgcApiEndpoint', () => {
           new EndpointError(
             `The endpoint appears non-conforming, the following error was encountered:
 The document at http://local/sample-data/notjson?f=json does not appear to be valid JSON. Error was: Unexpected token 'h', "hello world
-" is not valid JSON`
-          )
+" is not valid JSON`,
+          ),
         );
       });
     });
@@ -1841,7 +1841,7 @@ The document at http://local/sample-data/notjson?f=json does not appear to be va
     describe('on a single collection path', () => {
       beforeEach(() => {
         endpoint = new OgcApiEndpoint(
-          'http://local/sample-data/collections/airports'
+          'http://local/sample-data/collections/airports',
         );
       });
       it('correctly parses endpoint info, keep a single collection', async () => {
@@ -1860,7 +1860,7 @@ The document at http://local/sample-data/notjson?f=json does not appear to be va
     describe('on a single collection items path', () => {
       beforeEach(() => {
         endpoint = new OgcApiEndpoint(
-          'http://local/sample-data/collections/airports/items'
+          'http://local/sample-data/collections/airports/items',
         );
       });
       it('correctly parses endpoint info, keep a single collection', async () => {
@@ -1884,8 +1884,8 @@ The document at http://local/sample-data/notjson?f=json does not appear to be va
         await expect(endpoint.info).rejects.toEqual(
           new EndpointError(
             `The endpoint appears non-conforming, the following error was encountered:
-Could not find a root JSON document containing both a link with rel='data' and a link with rel='service-desc' (or 'service-doc').`
-          )
+Could not find a root JSON document containing both a link with rel='data' and a link with rel='service-desc' (or 'service-doc').`,
+          ),
         );
       });
     });
@@ -1897,8 +1897,8 @@ Could not find a root JSON document containing both a link with rel='data' and a
         await expect(endpoint.info).rejects.toEqual(
           new EndpointError(
             `The endpoint appears non-conforming, the following error was encountered:
-The document at http://local/nonexisting?f=json could not be fetched, received an error with code 404: could not fetch`
-          )
+The document at http://local/nonexisting?f=json could not be fetched, received an error with code 404: could not fetch`,
+          ),
         );
       });
     });
@@ -1957,7 +1957,7 @@ The document at http://local/nonexisting?f=json could not be fetched, received a
       describe('#getCollectionInfo', () => {
         it('returns a collection info', async () => {
           await expect(
-            endpoint.getCollectionInfo('aires-covoiturage')
+            endpoint.getCollectionInfo('aires-covoiturage'),
           ).resolves.toStrictEqual({
             crs: ['http://www.opengis.net/def/crs/OGC/1.3/CRS84', 'EPSG:4326'],
             itemFormats: [
@@ -1996,9 +1996,9 @@ The document at http://local/nonexisting?f=json could not be fetched, received a
           await expect(
             endpoint.getCollectionItemsUrl('aires-covoiturage', {
               asJson: true,
-            })
+            }),
           ).resolves.toEqual(
-            'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson'
+            'https://my.server.org/sample-data-2/collections/aires-covoiturage/items?f=geojson',
           );
         });
       });
@@ -2008,7 +2008,7 @@ The document at http://local/nonexisting?f=json could not be fetched, received a
   describe('url with trailing ?', () => {
     beforeEach(() => {
       endpoint = new OgcApiEndpoint(
-        'http://local/sample-data/collections/airports/items?'
+        'http://local/sample-data/collections/airports/items?',
       );
     });
     describe('#info', () => {
@@ -2101,10 +2101,10 @@ The document at http://local/nonexisting?f=json could not be fetched, received a
           await expect(
             endpoint.getVectorTilesetUrl(
               'NaturalEarth__physical__ne_10m_lakes_pluvial',
-              'GlobalCRS84Pixel'
-            )
+              'GlobalCRS84Pixel',
+            ),
           ).resolves.toEqual(
-            'http://local/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=json'
+            'http://local/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/tiles/GlobalCRS84Pixel?f=json',
           );
         });
       });
@@ -2113,10 +2113,10 @@ The document at http://local/nonexisting?f=json could not be fetched, received a
           await expect(
             endpoint.getMapTilesetUrl(
               'NaturalEarth__physical__ne_10m_lakes_pluvial',
-              'GlobalCRS84Pixel'
-            )
+              'GlobalCRS84Pixel',
+            ),
           ).resolves.toEqual(
-            'http://local/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Pixel?f=json'
+            'http://local/gnosis-earth/collections/NaturalEarth__physical__ne_10m_lakes_pluvial/map/tiles/GlobalCRS84Pixel?f=json',
           );
         });
       });
@@ -2270,7 +2270,7 @@ The document at http://local/nonexisting?f=json could not be fetched, received a
     describe('#getStyle for a given collection', () => {
       it('returns style metadata', async () => {
         await expect(
-          endpoint.getStyle('Tritanopia', 'airports')
+          endpoint.getStyle('Tritanopia', 'airports'),
         ).resolves.toEqual({
           title: 'Tritanopia',
           id: 'Tritanopia',
@@ -2312,14 +2312,17 @@ The document at http://local/nonexisting?f=json could not be fetched, received a
     describe('#getStylesheetUrl', () => {
       it('returns the correct stylesheet URL', async () => {
         await expect(
-          endpoint.getStylesheetUrl('Deuteranopia', 'application/vnd.esri.lyr')
+          endpoint.getStylesheetUrl('Deuteranopia', 'application/vnd.esri.lyr'),
         ).resolves.toEqual('http://local/zoomstack/styles/Deuteranopia?f=lyr');
       });
     });
     describe('#getStylesheetUrl with type Mapbox', () => {
       it('returns the correct stylesheet URL', async () => {
         await expect(
-          endpoint.getStylesheetUrl('Road', 'application/vnd.mapbox.style+json')
+          endpoint.getStylesheetUrl(
+            'Road',
+            'application/vnd.mapbox.style+json',
+          ),
         ).resolves.toEqual('http://local/zoomstack/styles/Road?f=mbs');
       });
     });
@@ -2329,10 +2332,10 @@ The document at http://local/nonexisting?f=json could not be fetched, received a
           endpoint.getStylesheetUrl(
             'Tritanopia',
             'application/vnd.ogc.sld+xml;version=1.0',
-            'airports'
-          )
+            'airports',
+          ),
         ).resolves.toEqual(
-          'https://my.server.org/sample-data/collections/airports/styles/Tritanopia?f=sld10'
+          'https://my.server.org/sample-data/collections/airports/styles/Tritanopia?f=sld10',
         );
       });
     });
@@ -2341,7 +2344,7 @@ The document at http://local/nonexisting?f=json could not be fetched, received a
     describe('on collections path', () => {
       beforeEach(() => {
         endpoint = new OgcApiEndpoint(
-          'http://local/sample-data/collections?foo=bar'
+          'http://local/sample-data/collections?foo=bar',
         );
       });
       it('correctly parses endpoint info and collections', async () => {
@@ -2387,7 +2390,7 @@ The document at http://local/nonexisting?f=json could not be fetched, received a
         const url = new URL(
           urlOrInfo instanceof URL || typeof urlOrInfo === 'string'
             ? urlOrInfo
-            : urlOrInfo.url
+            : urlOrInfo.url,
         );
 
         const rootFixture = 'sample-data-root';
@@ -2396,7 +2399,7 @@ The document at http://local/nonexisting?f=json could not be fetched, received a
         const filePath = `${path.join(
           FIXTURES_ROOT,
           rootFixture,
-          queryPath
+          queryPath,
         )}.${format}`;
         try {
           await stat(filePath);
@@ -2560,7 +2563,7 @@ describe('OgcApiEndpoint with EDR', () => {
 
       it('supports EDR ', async () => {
         await expect(endpoint.hasEnvironmentalDataRetrieval).resolves.toBe(
-          true
+          true,
         );
       });
 
@@ -2575,7 +2578,7 @@ describe('OgcApiEndpoint with EDR', () => {
         expect(builder).toBeTruthy();
 
         expect(builder.supported_queries).toEqual(
-          new Set(['area', 'locations', 'cube'])
+          new Set(['area', 'locations', 'cube']),
         );
 
         expect(Object.keys(builder.supported_parameters)).toEqual([
@@ -2599,7 +2602,7 @@ describe('OgcApiEndpoint with EDR', () => {
         const builder = await endpoint.edr('reservoir-api');
 
         const areaUrlWithoutParam = builder.buildAreaDownloadUrl(
-          'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))'
+          'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
         );
 
         const areaUrlWithouParam =
@@ -2610,7 +2613,7 @@ describe('OgcApiEndpoint with EDR', () => {
           'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
           {
             parameter_name: ['Water Temperature'],
-          }
+          },
         );
         const WithParam =
           areaUrlWithouParam + '&parameter-name=Water+Temperature';
@@ -2624,7 +2627,7 @@ describe('OgcApiEndpoint with EDR', () => {
               type: 'single',
               level: 1,
             },
-          }
+          },
         );
         const WithParamAndZ =
           areaUrlWithouParam + '&z=1' + '&parameter-name=Water+Temperature';
@@ -2635,7 +2638,7 @@ describe('OgcApiEndpoint with EDR', () => {
         const builder = await endpoint.edr('reservoir-api');
         const locationsUrl = builder.buildLocationsDownloadUrl();
         expect(locationsUrl).toEqual(
-          'https://dummy.edr.app/collections/reservoir-api/locations'
+          'https://dummy.edr.app/collections/reservoir-api/locations',
         );
       });
 
@@ -2646,14 +2649,14 @@ describe('OgcApiEndpoint with EDR', () => {
             'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
             {
               parameter_name: ['BadParameterName'],
-            }
-          )
+            },
+          ),
         ).toThrow();
 
         expect(() =>
           builder.buildLocationsDownloadUrl({
             parameter_name: ['BadParameterName'],
-          })
+          }),
         ).toThrow();
 
         expect(() =>
@@ -2666,8 +2669,8 @@ describe('OgcApiEndpoint with EDR', () => {
             },
             {
               parameter_name: ['BadParameterName'],
-            }
-          )
+            },
+          ),
         ).toThrow();
 
         expect(() =>
@@ -2679,8 +2682,8 @@ describe('OgcApiEndpoint with EDR', () => {
             'cm',
             {
               parameter_name: ['BadParameterName'],
-            }
-          )
+            },
+          ),
         ).toThrow();
 
         expect(() =>
@@ -2690,8 +2693,8 @@ describe('OgcApiEndpoint with EDR', () => {
             'cm',
             {
               parameter_name: ['BadParameterName'],
-            }
-          )
+            },
+          ),
         ).toThrow();
 
         expect(() =>
@@ -2699,8 +2702,8 @@ describe('OgcApiEndpoint with EDR', () => {
             'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
             {
               parameter_name: ['BadParameterName'],
-            }
-          )
+            },
+          ),
         ).toThrow();
 
         expect(() =>
@@ -2708,8 +2711,8 @@ describe('OgcApiEndpoint with EDR', () => {
             'LINESTRING(-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0)',
             {
               parameter_name: ['BadParameterName'],
-            }
-          )
+            },
+          ),
         ).toThrow();
       });
 
@@ -2721,7 +2724,7 @@ describe('OgcApiEndpoint with EDR', () => {
             minY: 10,
             maxX: -10,
             maxY: 12,
-          })
+          }),
         ).toThrow();
 
         expect(() =>
@@ -2732,7 +2735,7 @@ describe('OgcApiEndpoint with EDR', () => {
             maxY: 12,
             maxZ: 0,
             minZ: 1,
-          })
+          }),
         ).toThrow();
       });
 
@@ -2743,14 +2746,14 @@ describe('OgcApiEndpoint with EDR', () => {
             'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
             {
               crs: 'BadCRS',
-            }
-          )
+            },
+          ),
         ).toThrow();
 
         expect(() =>
           builder.buildLocationsDownloadUrl({
             crs: 'BadCRS',
-          })
+          }),
         ).toThrow();
 
         expect(() =>
@@ -2763,8 +2766,8 @@ describe('OgcApiEndpoint with EDR', () => {
             },
             {
               crs: 'BadCRS',
-            }
-          )
+            },
+          ),
         ).toThrow();
 
         expect(() =>
@@ -2776,8 +2779,8 @@ describe('OgcApiEndpoint with EDR', () => {
             'cm',
             {
               crs: 'BadCRS',
-            }
-          )
+            },
+          ),
         ).toThrow();
 
         expect(() =>
@@ -2787,8 +2790,8 @@ describe('OgcApiEndpoint with EDR', () => {
             'cm',
             {
               crs: 'BadCRS',
-            }
-          )
+            },
+          ),
         ).toThrow();
 
         expect(() =>
@@ -2796,8 +2799,8 @@ describe('OgcApiEndpoint with EDR', () => {
             'POLYGON((-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0))',
             {
               crs: 'BadCRS',
-            }
-          )
+            },
+          ),
         ).toThrow();
 
         expect(() =>
@@ -2805,8 +2808,8 @@ describe('OgcApiEndpoint with EDR', () => {
             'LINESTRING(-1.0 50.0, -1.0 51.0, 0.0 51.0, 0.0 50.0, -1.0 50.0)',
             {
               crs: 'BadCRS',
-            }
-          )
+            },
+          ),
         ).toThrow();
       });
 
@@ -2818,7 +2821,7 @@ describe('OgcApiEndpoint with EDR', () => {
             minY: 10,
             maxX: -10,
             maxY: 12,
-          })
+          }),
         ).toThrow();
 
         expect(() =>
@@ -2829,7 +2832,7 @@ describe('OgcApiEndpoint with EDR', () => {
             maxY: 12,
             maxZ: 0,
             minZ: 1,
-          })
+          }),
         ).toThrow();
       });
     });

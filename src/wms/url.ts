@@ -25,7 +25,7 @@ export function generateGetMapUrl(
   extent: BoundingBox,
   outputFormat: MimeType,
   styles?: string,
-  dimensions?: Record<string, string>
+  dimensions?: Record<string, string>,
 ): string {
   const crsParam = version === '1.3.0' ? 'CRS' : 'SRS';
 
@@ -62,7 +62,7 @@ export function generateGetMapUrl(
 export function generateDescribeLayerUrl(
   serviceUrl: string,
   version: WmsVersion,
-  layerName: string
+  layerName: string,
 ): string {
   return setQueryParams(serviceUrl, {
     SERVICE: 'WMS',

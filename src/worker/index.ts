@@ -85,7 +85,7 @@ export function parseWfsCapabilities(capabilitiesUrl: string): Promise<{
 export function queryWfsFeatureTypeDetails(
   capabilitiesUrl: string,
   serviceVersion: WfsVersion,
-  featureTypeFull: WfsFeatureTypeFull
+  featureTypeFull: WfsFeatureTypeFull,
 ): Promise<{ props: WfsFeatureTypePropsDetails }> {
   return sendTaskRequest('queryWfsFeatureTypeDetails', getWorkerInstance(), {
     url: capabilitiesUrl,

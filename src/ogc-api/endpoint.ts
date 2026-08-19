@@ -78,8 +78,8 @@ ${e.message}`);
         fetchLink(
           root,
           ['conformance', 'http://www.opengis.net/def/rel/ogc/1.0/conformance'],
-          this.baseUrl
-        )
+          this.baseUrl,
+        ),
       );
     }
     return this.conformance_;
@@ -89,8 +89,8 @@ ${e.message}`);
       getLinkUrl(
         root,
         ['data', 'http://www.opengis.net/def/rel/ogc/1.0/data'],
-        this.baseUrl
-      )
+        this.baseUrl,
+      ),
     );
   }
   private get data(): Promise<OgcApiDocument> {
@@ -102,7 +102,7 @@ ${e.message}`);
           const singleCollection = await fetchCollectionRoot(this.baseUrl);
           if (singleCollection !== null && Array.isArray(data.collections)) {
             data.collections = data.collections.filter(
-              (collection) => collection.id === singleCollection.id
+              (collection) => collection.id === singleCollection.id,
             );
           }
           return data;
@@ -118,7 +118,7 @@ ${e.message}`);
         return fetchLink(
           root,
           ['http://www.opengis.net/def/rel/ogc/1.0/tiling-schemes'],
-          this.baseUrl
+          this.baseUrl,
         ).then(parseTileMatrixSets);
       });
     }
@@ -132,7 +132,7 @@ ${e.message}`);
         return fetchLink(
           root,
           ['styles', 'http://www.opengis.net/def/rel/ogc/1.0/styles'],
-          this.baseUrl
+          this.baseUrl,
         ) as unknown as OgcApiStylesDocument;
       });
     }
@@ -174,7 +174,7 @@ ${e.message}`);
     }[]
   > {
     return this.data.then((dataDocument) =>
-      dataDocument ? parseCollections(dataDocument) : []
+      dataDocument ? parseCollections(dataDocument) : [],
     );
   }
 
@@ -216,7 +216,7 @@ ${e.message}`);
       .then(([data, hasTiles]) => (hasTiles ? data : { collections: [] }))
       .then(parseCollections)
       .then((collections) =>
-        collections.filter((collection) => collection.hasVectorTiles)
+        collections.filter((collection) => collection.hasVectorTiles),
       )
       .then((collections) => collections.map((collection) => collection.name));
   }
@@ -229,7 +229,7 @@ ${e.message}`);
       .then(([data, hasTiles]) => (hasTiles ? data : { collections: [] }))
       .then(parseCollections)
       .then((collections) =>
-        collections.filter((collection) => collection.hasMapTiles)
+        collections.filter((collection) => collection.hasMapTiles),
       )
       .then((collections) => collections.map((collection) => collection.name));
   }
@@ -273,7 +273,7 @@ ${e.message}`);
    */
   get hasEnvironmentalDataRetrieval(): Promise<boolean> {
     return Promise.all([this.conformanceClasses]).then(
-      checkHasEnvironmentalDataRetrieval
+      checkHasEnvironmentalDataRetrieval,
     );
   }
 
@@ -307,7 +307,7 @@ ${e.message}`);
         if (!collections.find((collection) => collection.name === collectionId))
           throw new EndpointError(`Collection not found: ${collectionId}`);
         return data.collections.find(
-          (collection) => collection.id === collectionId
+          (collection) => collection.id === collectionId,
         );
       })
       .then(async (collection) => {
@@ -317,14 +317,14 @@ ${e.message}`);
         }
         // otherwise build a URL for the collection
         return fetchDocument(
-          getChildPath(await this.collectionsUrl, collectionId)
+          getChildPath(await this.collectionsUrl, collectionId),
         );
       });
   }
 
   private async getStyleMetadataDocument(
     styleId: string,
-    collectionId?: string
+    collectionId?: string,
   ): Promise<OgcApiDocument> {
     const doc = collectionId
       ? await this.getCollectionDocument(collectionId)
@@ -333,15 +333,15 @@ ${e.message}`);
       doc as OgcApiDocument,
       ['styles', 'http://www.opengis.net/def/rel/ogc/1.0/styles'],
       this.baseUrl,
-      'application/json'
+      'application/json',
     );
     const stylesLink = getLinkUrl(
       doc as OgcApiDocument,
       ['styles', 'http://www.opengis.net/def/rel/ogc/1.0/styles'],
-      this.baseUrl
+      this.baseUrl,
     );
     const styleData = (await fetchDocument(
-      stylesLinkJson ?? stylesLink
+      stylesLinkJson ?? stylesLink,
     )) as OgcApiStylesDocument;
 
     if (!styleData.styles.some((style) => style.id === styleId)) {
@@ -368,28 +368,28 @@ ${e.message}`);
         fetchLink(
           collectionDoc,
           ['queryables', 'http://www.opengis.net/def/rel/ogc/1.0/queryables'],
-          this.baseUrl
+          this.baseUrl,
         )
           .then(parseCollectionParameters)
           .catch(() => []),
         fetchLink(
           collectionDoc,
           ['sortables', 'http://www.opengis.net/def/rel/ogc/1.0/sortables'],
-          this.baseUrl
+          this.baseUrl,
         )
           .then(parseCollectionParameters)
           .catch(() => []),
         fetchLink(
           collectionDoc,
           ['http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector'],
-          this.baseUrl
+          this.baseUrl,
         )
           .then((tilesetDoc) => tilesetDoc.tilesets)
           .catch(() => []),
         fetchLink(
           collectionDoc,
           ['http://www.opengis.net/def/rel/ogc/1.0/tilesets-map'],
-          this.baseUrl
+          this.baseUrl,
         )
           .then((tilesetDoc) => tilesetDoc.tilesets)
           .catch(() => []),
@@ -400,7 +400,7 @@ ${e.message}`);
       .map(
         (tileset) =>
           tileMatrixSetsFull.find((set) => set.uri === tileset.tileMatrixSetURI)
-            ?.id
+            ?.id,
       )
       .filter(Boolean);
 
@@ -412,7 +412,7 @@ ${e.message}`);
         'self',
         this.baseUrl,
         undefined,
-        true
+        true,
       );
       const tilesetDoc = await fetchDocument(tilesetUrl);
       vectorTileFormats = getLinks(tilesetDoc, 'item').map((link) => link.type);
@@ -426,7 +426,7 @@ ${e.message}`);
         'self',
         this.baseUrl,
         undefined,
-        true
+        true,
       );
       const tilesetDoc = await fetchDocument(tilesetUrl);
       mapTileFormats = getLinks(tilesetDoc, 'item').map((link) => link.type);
@@ -463,7 +463,7 @@ ${e.message}`);
     boundingBox: BoundingBox = null,
     properties: string[] = null,
     dateTime: DateTimeParameter = null,
-    query: string = null
+    query: string = null,
   ): Promise<OgcApiCollectionItem[]> {
     return this.getCollectionItemsUrl(collectionId, {
       extent: boundingBox,
@@ -487,13 +487,13 @@ ${e.message}`);
    */
   getCollectionItem(
     collectionId: string,
-    itemId: string
+    itemId: string,
   ): Promise<OgcApiCollectionItem> {
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
         const url = new URL(
           getLinkUrl(collectionDoc, 'items', this.baseUrl),
-          getBaseUrl()
+          getBaseUrl(),
         );
         url.pathname += `/${itemId}`;
         return url.toString();
@@ -534,14 +534,14 @@ ${e.message}`);
       sortBy?: string[];
       properties?: string[];
       dateTime?: DateTimeParameter;
-    } = {}
+    } = {},
   ): Promise<string> {
     return this.getCollectionDocument(collectionId)
       .then((collectionDoc) => {
         const baseUrl = this.baseUrl || '';
         const itemLinks = getLinks(collectionDoc, 'items', undefined, true);
         let linkWithFormat = itemLinks.find(
-          (link) => link.type === options?.outputFormat
+          (link) => link.type === options?.outputFormat,
         );
         let url: URL;
         if (options.asJson) {
@@ -554,7 +554,7 @@ ${e.message}`);
         if (options?.outputFormat && !linkWithFormat) {
           // do not prevent using this output format, because it still might work! but give a warning at least
           console.warn(
-            `[ogc-client] The following output format type was not found in the collection '${collectionId}': ${options.outputFormat}`
+            `[ogc-client] The following output format type was not found in the collection '${collectionId}': ${options.outputFormat}`,
           );
           url = new URL(itemLinks[0].href, baseUrl);
           url.searchParams.set('f', options.outputFormat);
@@ -575,7 +575,7 @@ ${e.message}`);
         if (options.properties !== undefined)
           url.searchParams.set(
             'properties',
-            options.properties.join(',').toString()
+            options.properties.join(',').toString(),
           );
         if (options.dateTime !== undefined) {
           const dateTime = options.dateTime;
@@ -585,7 +585,7 @@ ${e.message}`);
               ? dateTime.toISOString()
               : `${'start' in dateTime ? dateTime.start.toISOString() : '..'}/${
                   'end' in dateTime ? dateTime.end.toISOString() : '..'
-                }`
+                }`,
           );
         }
         if (options.outputCrs !== undefined)
@@ -612,30 +612,30 @@ ${e.message}`);
    */
   getVectorTilesetUrl(
     collectionId: string,
-    tileMatrixSet = 'WebMercatorQuad'
+    tileMatrixSet = 'WebMercatorQuad',
   ): Promise<string> {
     return this.getCollectionDocument(collectionId)
       .then(async (collectionDoc) => {
         const collectionTilesLink = getLinkUrl(
           collectionDoc,
           'http://www.opengis.net/def/rel/ogc/1.0/tilesets-vector',
-          this.baseUrl
+          this.baseUrl,
         );
         const collectionTiles = await fetchDocument(collectionTilesLink);
         const matrixSet = (await this.tileMatrixSetsFull).find(
-          (set) => set.id === tileMatrixSet
+          (set) => set.id === tileMatrixSet,
         );
         if (!matrixSet) {
           throw new Error(
-            `The following tile matrix set does not exist on this endpoint: '${tileMatrixSet}'.`
+            `The following tile matrix set does not exist on this endpoint: '${tileMatrixSet}'.`,
           );
         }
         const tileset = collectionTiles.tilesets.find(
-          (tileset) => tileset.tileMatrixSetURI === matrixSet.uri
+          (tileset) => tileset.tileMatrixSetURI === matrixSet.uri,
         );
         if (!tileset) {
           throw new Error(
-            `The collection '${collectionId}' does not support the tile matrix set '${tileMatrixSet}'.`
+            `The collection '${collectionId}' does not support the tile matrix set '${tileMatrixSet}'.`,
           );
         }
         const tilesetUrl = getLinkUrl(tileset, 'self', this.baseUrl);
@@ -657,30 +657,30 @@ ${e.message}`);
    */
   getMapTilesetUrl(
     collectionId: string,
-    tileMatrixSet = 'WebMercatorQuad'
+    tileMatrixSet = 'WebMercatorQuad',
   ): Promise<string> {
     return this.getCollectionDocument(collectionId)
       .then(async (collectionDoc) => {
         const collectionTilesLink = getLinkUrl(
           collectionDoc,
           'http://www.opengis.net/def/rel/ogc/1.0/tilesets-map',
-          this.baseUrl
+          this.baseUrl,
         );
         const collectionTiles = await fetchDocument(collectionTilesLink);
         const matrixSet = (await this.tileMatrixSetsFull).find(
-          (set) => set.id === tileMatrixSet
+          (set) => set.id === tileMatrixSet,
         );
         if (!matrixSet) {
           throw new Error(
-            `The following tile matrix set does not exist on this endpoint: '${tileMatrixSet}'.`
+            `The following tile matrix set does not exist on this endpoint: '${tileMatrixSet}'.`,
           );
         }
         const tileset = collectionTiles.tilesets.find(
-          (tileset) => tileset.tileMatrixSetURI === matrixSet.uri
+          (tileset) => tileset.tileMatrixSetURI === matrixSet.uri,
         );
         if (!tileset) {
           throw new Error(
-            `The collection '${collectionId}' does not support the tile matrix set '${tileMatrixSet}'.`
+            `The collection '${collectionId}' does not support the tile matrix set '${tileMatrixSet}'.`,
           );
         }
         const tilesetUrl = getLinkUrl(tileset, 'self', this.baseUrl);
@@ -708,7 +708,7 @@ ${e.message}`);
       ['styles', 'http://www.opengis.net/def/rel/ogc/1.0/styles'],
       this.baseUrl,
       undefined,
-      true
+      true,
     );
     const styleData = (await fetchDocument(stylesLink)) as OgcApiStylesDocument;
     return styleData.styles.map(parseBasicStyleInfo);
@@ -722,11 +722,11 @@ ${e.message}`);
    */
   async getStyle(
     styleId: string,
-    collectionId?: string
+    collectionId?: string,
   ): Promise<OgcStyleFull | OgcStyleBrief> {
     const metadataDoc = await this.getStyleMetadataDocument(
       styleId,
-      collectionId
+      collectionId,
     );
     if (!metadataDoc?.stylesheets) {
       return parseBasicStyleInfo(metadataDoc as OgcApiStyleMetadata);
@@ -743,16 +743,16 @@ ${e.message}`);
   async getStylesheetUrl(
     styleId: string,
     mimeType: string,
-    collectionId?: string
+    collectionId?: string,
   ): Promise<string> {
     const stylesDoc = await this.getStyleMetadataDocument(
       styleId,
-      collectionId
+      collectionId,
     );
 
     if (stylesDoc.stylesheets) {
       return (stylesDoc as OgcApiStyleMetadata)?.stylesheets?.find(
-        (s) => s.link.type === mimeType && s.link.rel === 'stylesheet'
+        (s) => s.link.type === mimeType && s.link.rel === 'stylesheet',
       )?.link?.href;
     }
 

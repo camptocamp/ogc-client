@@ -11,7 +11,7 @@ export function generateGetTileUrl(
   tileMatrix: string,
   tileRow: number,
   tileCol: number,
-  outputFormat: MimeType
+  outputFormat: MimeType,
 ): string {
   const context = {
     layer: layerName,

@@ -59,7 +59,7 @@ export default class WmsEndpoint {
         () => parseWmsCapabilities(this._capabilitiesUrl),
         'WMS',
         'CAPABILITIES',
-        this._capabilitiesUrl
+        this._capabilitiesUrl,
       ).then(({ info, layers, url, version }) => {
         this._info = info;
         this._layers = layers;
@@ -176,7 +176,7 @@ export default class WmsEndpoint {
       outputFormat: MimeType;
       styles?: string[];
       dimensions?: Record<string, string>;
-    }
+    },
   ) {
     if (!this._layers) {
       return null;
@@ -196,7 +196,7 @@ export default class WmsEndpoint {
       extent,
       outputFormat,
       styles !== undefined ? styles.join(',') : '',
-      dimensions
+      dimensions,
     );
   }
 
@@ -236,16 +236,16 @@ export default class WmsEndpoint {
         const url = generateDescribeLayerUrl(
           describeLayerBaseUrl,
           this._version,
-          layerName
+          layerName,
         );
         return queryXmlDocument(url).then((doc) =>
-          parseDescribeLayerResponse(doc, layerName)
+          parseDescribeLayerResponse(doc, layerName),
         );
       },
       'WMS',
       'DESCRIBELAYER',
       this._capabilitiesUrl,
-      layerName
+      layerName,
     );
   }
 

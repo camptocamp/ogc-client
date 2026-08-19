@@ -41,7 +41,7 @@ async function main() {
 
     if (!time || !elevation) {
       throw new Error(
-        `Layer "${LAYER_NAME}" does not expose default time/elevation values.`
+        `Layer "${LAYER_NAME}" does not expose default time/elevation values.`,
       );
     }
 
@@ -55,7 +55,7 @@ async function main() {
     const details = await endpoint.getLayerDetails(LAYER_NAME);
     if (!details) {
       throw new Error(
-        `No ncWMS metadata is available for layer "${LAYER_NAME}".`
+        `No ncWMS metadata is available for layer "${LAYER_NAME}".`,
       );
     }
 
@@ -79,7 +79,7 @@ async function main() {
     console.log(`   Max: ${minMax.max}\n`);
 
     console.log(
-      '3️⃣  Generating a legend URL for the same rendering parameters...'
+      '3️⃣  Generating a legend URL for the same rendering parameters...',
     );
     const legendUrl = endpoint.getLegendUrl(LAYER_NAME, {
       style: `boxfill/${details.defaultPalette || 'rainbow'}`,

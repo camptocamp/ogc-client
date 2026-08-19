@@ -25,13 +25,13 @@ import { WfsFeatureTypeInternal, WfsVersion } from './model.js';
  * @param capabilitiesDoc Capabilities document
  */
 export function readOperationUrlsFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): Record<OperationName, OperationUrl> {
   const urls: Record<OperationName, OperationUrl> = {};
   const capabilities = getRootElement(capabilitiesDoc);
   const operationsMetadata = findChildElement(
     capabilities,
-    'OperationsMetadata'
+    'OperationsMetadata',
   );
   if (operationsMetadata) {
     // WFS 1.1.0 or 2.0.0
@@ -39,7 +39,7 @@ export function readOperationUrlsFromCapabilities(
       (operation) => {
         const name = getElementAttribute(operation, 'name');
         urls[name] = parseOperation110(operation);
-      }
+      },
     );
   } else {
     // WFS 1.0.0
@@ -59,7 +59,7 @@ export function readOperationUrlsFromCapabilities(
  * @return The parsed WFS version, or null if no version could be found
  */
 export function readVersionFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): WfsVersion {
   return getRootElement(capabilitiesDoc).attributes['version'] as WfsVersion;
 }
@@ -70,7 +70,7 @@ export function readVersionFromCapabilities(
  * @return Advertised output formats
  */
 export function readOutputFormatsFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): MimeType[] {
   const version = readVersionFromCapabilities(capabilitiesDoc);
   let outputFormats: string[];
@@ -78,26 +78,26 @@ export function readOutputFormatsFromCapabilities(
     const getFeature = findChildElement(
       findChildElement(
         findChildElement(getRootElement(capabilitiesDoc), 'Capability'),
-        'Request'
+        'Request',
       ),
-      'GetFeature'
+      'GetFeature',
     );
     outputFormats = getChildrenElement(
-      findChildElement(getFeature, 'ResultFormat')
+      findChildElement(getFeature, 'ResultFormat'),
     ).map(getElementName);
   } else {
     const operations = findChildElement(
       getRootElement(capabilitiesDoc),
-      'OperationsMetadata'
+      'OperationsMetadata',
     );
     const getFeature = findChildrenElement(operations, 'Operation').find(
-      (el) => getElementAttribute(el, 'name') === 'GetFeature'
+      (el) => getElementAttribute(el, 'name') === 'GetFeature',
     );
     const parameter = findChildrenElement(getFeature, 'Parameter').find(
-      (el) => getElementAttribute(el, 'name') === 'outputFormat'
+      (el) => getElementAttribute(el, 'name') === 'outputFormat',
     );
     outputFormats = findChildrenElement(parameter, 'Value', true).map(
-      getElementText
+      getElementText,
     );
   }
   return outputFormats;
@@ -109,7 +109,7 @@ export function readOutputFormatsFromCapabilities(
  * @return Parsed service info
  */
 export function readInfoFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): GenericEndpointInfo {
   const version = readVersionFromCapabilities(capabilitiesDoc);
   const serviceTag = version.startsWith('1.0')
@@ -125,7 +125,7 @@ export function readInfoFromCapabilities(
   } else {
     keywords = findChildrenElement(
       findChildElement(service, 'Keywords'),
-      'Keyword'
+      'Keyword',
     ).map(getElementText);
   }
   let provider;
@@ -150,16 +150,16 @@ export function readInfoFromCapabilities(
  * Will read all feature types present in the capabilities doc
  */
 export function readFeatureTypesFromCapabilities(
-  capabilitiesDoc: XmlDocument
+  capabilitiesDoc: XmlDocument,
 ): WfsFeatureTypeInternal[] {
   const version = readVersionFromCapabilities(capabilitiesDoc);
   const outputFormats = readOutputFormatsFromCapabilities(capabilitiesDoc);
   const capability = findChildElement(
     getRootElement(capabilitiesDoc),
-    'FeatureTypeList'
+    'FeatureTypeList',
   );
   return findChildrenElement(capability, 'FeatureType').map((featureTypeEl) =>
-    parseFeatureType(featureTypeEl, version, outputFormats)
+    parseFeatureType(featureTypeEl, version, outputFormats),
   );
 }
 
@@ -201,7 +201,7 @@ function parseOperation110(operation: XmlElement): OperationUrl {
 function parseFeatureType(
   featureTypeEl: XmlElement,
   serviceVersion: WfsVersion,
-  defaultOutputFormats: MimeType[]
+  defaultOutputFormats: MimeType[],
 ): WfsFeatureTypeInternal {
   const srsTag = serviceVersion.startsWith('2.') ? 'CRS' : 'SRS';
   const defaultSrsTag = serviceVersion.startsWith('1.0')
@@ -230,7 +230,7 @@ function parseFeatureType(
     ? []
     : findChildrenElement(
         findChildElement(featureTypeEl, 'OutputFormats'),
-        'Format'
+        'Format',
       ).map(getElementText);
 
   const keywords = serviceVersion.startsWith('1.0')
@@ -239,7 +239,7 @@ function parseFeatureType(
         .map((keyword) => keyword.trim())
     : findChildrenElement(
         findChildElement(featureTypeEl, 'Keywords'),
-        'Keyword'
+        'Keyword',
       )
         .map(getElementText)
         .filter((v, i, arr) => arr.indexOf(v) === i);
@@ -249,14 +249,14 @@ function parseFeatureType(
       ? findChildrenElement(featureTypeEl, 'MetadataURL').map(
           (metadataUrlEl) => ({
             url: getElementAttribute(metadataUrlEl, 'xlink:href'),
-          })
+          }),
         )
       : findChildrenElement(featureTypeEl, 'MetadataURL').map(
           (metadataUrlEl) => ({
             format: getElementAttribute(metadataUrlEl, 'format'),
             type: getElementAttribute(metadataUrlEl, 'type'),
             url: getElementText(metadataUrlEl).trim(),
-          })
+          }),
         );
 
   return {
@@ -264,7 +264,7 @@ function parseFeatureType(
     title: getElementText(findChildElement(featureTypeEl, 'Title')),
     abstract: getElementText(findChildElement(featureTypeEl, 'Abstract')),
     defaultCrs: simplifyEpsgUrn(
-      getElementText(findChildElement(featureTypeEl, defaultSrsTag))
+      getElementText(findChildElement(featureTypeEl, defaultSrsTag)),
     ),
     otherCrs,
     outputFormats:

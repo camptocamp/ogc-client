@@ -35,7 +35,7 @@ describe('errors utils', () => {
         const doc = parseXmlString(wfsException100);
         const exception = findChildElement(
           getRootElement(doc),
-          'ServiceException'
+          'ServiceException',
         );
         expect(exception).not.toBeNull();
         const error = parse(exception, url);
@@ -43,7 +43,7 @@ describe('errors utils', () => {
         expect(error.code).toBe('InvalidParameterValue');
         expect(error.locator).toBe('request');
         expect(error.message).toBe(
-          'msWFSDispatch(): WFS server error. Invalid WFS request: FooBar'
+          'msWFSDispatch(): WFS server error. Invalid WFS request: FooBar',
         );
         expect(error.requestUrl).toBe(url);
         expect(error.response).toBe(doc);
@@ -59,7 +59,7 @@ describe('errors utils', () => {
         expect(error.code).toBe('InvalidParameterValue');
         expect(error.locator).toBe('request');
         expect(error.message).toBe(
-          'msWFSDispatch(): WFS server error. Invalid WFS request: FooBar'
+          'msWFSDispatch(): WFS server error. Invalid WFS request: FooBar',
         );
         expect(error.requestUrl).toBe(url);
         expect(error.response).toBe(doc);
@@ -75,7 +75,7 @@ describe('errors utils', () => {
         expect(error.code).toBe('InvalidParameterValue');
         expect(error.locator).toBe('request');
         expect(error.message).toBe(
-          'msWFSDispatch(): WFS server error. Invalid WFS request: FooBar'
+          'msWFSDispatch(): WFS server error. Invalid WFS request: FooBar',
         );
         expect(error.requestUrl).toBe(url);
         expect(error.response).toBe(doc);
@@ -86,7 +86,7 @@ describe('errors utils', () => {
         const doc = parseXmlString(wmsException110);
         const exception = findChildElement(
           getRootElement(doc),
-          'ServiceException'
+          'ServiceException',
         );
         expect(exception).not.toBeNull();
         const error = parse(exception, url);
@@ -94,7 +94,7 @@ describe('errors utils', () => {
         expect(error.code).toBe('');
         expect(error.locator).toBe('');
         expect(error.message).toBe(
-          'msWMSDispatch(): WMS server error. Incomplete or unsupported WMS request'
+          'msWMSDispatch(): WMS server error. Incomplete or unsupported WMS request',
         );
         expect(error.requestUrl).toBe(url);
         expect(error.response).toBe(doc);
@@ -105,7 +105,7 @@ describe('errors utils', () => {
         const doc = parseXmlString(wmsException111);
         const exception = findChildElement(
           getRootElement(doc),
-          'ServiceException'
+          'ServiceException',
         );
         expect(exception).not.toBeNull();
         const error = parse(exception, url);
@@ -113,7 +113,7 @@ describe('errors utils', () => {
         expect(error.code).toBe('');
         expect(error.locator).toBe('');
         expect(error.message).toBe(
-          'msWMSDispatch(): WMS server error. Incomplete or unsupported WMS request'
+          'msWMSDispatch(): WMS server error. Incomplete or unsupported WMS request',
         );
         expect(error.requestUrl).toBe(url);
         expect(error.response).toBe(doc);
@@ -124,7 +124,7 @@ describe('errors utils', () => {
         const doc = parseXmlString(wmsException130);
         const exception = findChildElement(
           getRootElement(doc),
-          'ServiceException'
+          'ServiceException',
         );
         expect(exception).not.toBeNull();
         const error = parse(exception, url);
@@ -132,7 +132,7 @@ describe('errors utils', () => {
         expect(error.code).toBe('');
         expect(error.locator).toBe('');
         expect(error.message).toBe(
-          'msWMSDispatch(): WMS server error. Incomplete or unsupported WMS request'
+          'msWMSDispatch(): WMS server error. Incomplete or unsupported WMS request',
         );
         expect(error.requestUrl).toBe(url);
         expect(error.response).toBe(doc);
@@ -192,7 +192,7 @@ describe('errors utils', () => {
         'http://my.test.service/ogc/wfs?service=WFS&version=1.0.0&request=FooBar',
         'InvalidParameterValue',
         'request',
-        parseXmlString(wfsException100)
+        parseXmlString(wfsException100),
       );
       expect(encodeError(e)).toEqual({
         message:

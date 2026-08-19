@@ -139,7 +139,7 @@ describe('WFS capabilities', () => {
         metadata: type.metadata.map((metadata) => ({ url: metadata.url })),
       }));
       expect(readFeatureTypesFromCapabilities(doc)).toEqual(
-        typesWithoutMetadataUrlAttributes
+        typesWithoutMetadataUrlAttributes,
       );
     });
     it('reads the feature types (1.1.0)', () => {
@@ -147,7 +147,7 @@ describe('WFS capabilities', () => {
       const typesWithGml3 = expectedTypes.map((types) => ({
         ...types,
         outputFormats: types.outputFormats.filter(
-          (f) => f.indexOf('3.2') === -1 && f.indexOf('2.1') === -1
+          (f) => f.indexOf('3.2') === -1 && f.indexOf('2.1') === -1,
         ),
       }));
       expect(readFeatureTypesFromCapabilities(doc)).toEqual(typesWithGml3);
@@ -171,7 +171,7 @@ describe('WFS capabilities', () => {
         otherCrs: [],
       }));
       expect(readFeatureTypesFromCapabilities(doc)).toEqual(
-        typesWithoutCrsAndDefaultFormats
+        typesWithoutCrsAndDefaultFormats,
       );
     });
 

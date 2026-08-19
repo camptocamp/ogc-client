@@ -20,7 +20,7 @@ export function parseFeatureTypeInfo(
   featureType: WfsFeatureTypeInternal,
   describeFeatureTypeDoc: XmlDocument,
   getFeatureHitsDoc: XmlDocument,
-  serviceVersion: WfsVersion
+  serviceVersion: WfsVersion,
 ): WfsFeatureTypeFull {
   const {
     name,
@@ -38,13 +38,13 @@ export function parseFeatureTypeInfo(
     ? 'numberMatched'
     : 'numberOfFeatures';
   const objectCount = parseInt(
-    getElementAttribute(getRootElement(getFeatureHitsDoc), hitsAttr)
+    getElementAttribute(getRootElement(getFeatureHitsDoc), hitsAttr),
   );
 
   const complexTypeEl = findChildrenElement(
     getRootElement(describeFeatureTypeDoc),
     'complexType',
-    true
+    true,
   )[0];
   const typeElementsEls = findChildrenElement(complexTypeEl, 'element', true);
   const properties = typeElementsEls
@@ -53,14 +53,14 @@ export function parseFeatureTypeInfo(
       (prev, curr) => ({
         ...prev,
         [getElementAttribute(curr, 'name')]: getTypeFromXsdType(
-          getElementAttribute(curr, 'type')
+          getElementAttribute(curr, 'type'),
         ),
       }),
-      {}
+      {},
     );
 
   const geomEl = typeElementsEls.filter((el) =>
-    getElementAttribute(el, 'type').startsWith('gml:')
+    getElementAttribute(el, 'type').startsWith('gml:'),
   )[0];
   const geometryName = geomEl ? getElementAttribute(geomEl, 'name') : undefined;
   const geometryType = geomEl

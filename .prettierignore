@@ -1,6 +1,6 @@
 fixtures/**/*.xml
 fixtures/**/notjson.json
 dist
-app/dist
 node_modules
-app/node_modules
+app/.vitepress/dist
+app/.vitepress/cache

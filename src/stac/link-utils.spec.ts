@@ -37,7 +37,7 @@ describe('stac/link-utils', () => {
       (httpUtils.sharedFetch as jest.Mock).mockResolvedValue(mockResponse);
 
       const result = await linkUtils.fetchStacDocument(
-        'https://example.com/api'
+        'https://example.com/api',
       );
       expect(result).toEqual(mockData);
       expect(httpUtils.sharedFetch).toHaveBeenCalled();
@@ -55,7 +55,7 @@ describe('stac/link-utils', () => {
       (httpUtils.sharedFetch as jest.Mock).mockResolvedValue(mockResponse);
 
       await expect(
-        linkUtils.fetchStacDocument('https://example.com/not-found')
+        linkUtils.fetchStacDocument('https://example.com/not-found'),
       ).rejects.toThrow(Error);
     });
 
@@ -71,7 +71,7 @@ describe('stac/link-utils', () => {
       (httpUtils.sharedFetch as jest.Mock).mockResolvedValue(mockResponse);
 
       await expect(
-        linkUtils.fetchStacDocument('https://example.com/bad-json')
+        linkUtils.fetchStacDocument('https://example.com/bad-json'),
       ).rejects.toThrow(Error);
     });
   });
@@ -210,7 +210,7 @@ describe('stac/link-utils', () => {
       const url = linkUtils.getLinkUrl(
         doc,
         'items',
-        'https://example.com/collections/test/'
+        'https://example.com/collections/test/',
       );
       expect(url).toBe('https://example.com/collections/test/items');
     });
@@ -223,7 +223,7 @@ describe('stac/link-utils', () => {
       const url = linkUtils.getLinkUrl(
         doc,
         'nonexistent',
-        'https://example.com/'
+        'https://example.com/',
       );
       expect(url).toBeNull();
     });
@@ -248,7 +248,7 @@ describe('stac/link-utils', () => {
         doc,
         'alternate',
         'https://example.com/',
-        'text/html'
+        'text/html',
       );
       expect(url).toBe('http://example.com/data.html');
     });
@@ -274,7 +274,7 @@ describe('stac/link-utils', () => {
       const result = await linkUtils.fetchLink(
         doc,
         'items',
-        'https://example.com/'
+        'https://example.com/',
       );
       expect(result).toEqual(mockData);
     });
@@ -285,10 +285,10 @@ describe('stac/link-utils', () => {
       };
 
       await expect(
-        linkUtils.fetchLink(doc, 'nonexistent', 'https://example.com/')
+        linkUtils.fetchLink(doc, 'nonexistent', 'https://example.com/'),
       ).rejects.toThrow(EndpointError);
       await expect(
-        linkUtils.fetchLink(doc, 'nonexistent', 'https://example.com/')
+        linkUtils.fetchLink(doc, 'nonexistent', 'https://example.com/'),
       ).rejects.toThrow('No link found with rel type: nonexistent');
     });
 
@@ -308,8 +308,8 @@ describe('stac/link-utils', () => {
           doc,
           'alternate',
           'https://example.com/',
-          'application/json'
-        )
+          'application/json',
+        ),
       ).rejects.toThrow('mime type: application/json');
     });
   });
@@ -325,7 +325,7 @@ describe('stac/link-utils', () => {
 
       expect(() => linkUtils.assertHasLinks(doc, 'self')).not.toThrow();
       expect(() =>
-        linkUtils.assertHasLinks(doc, ['self', 'root'])
+        linkUtils.assertHasLinks(doc, ['self', 'root']),
       ).not.toThrow();
     });
 
@@ -335,10 +335,10 @@ describe('stac/link-utils', () => {
       };
 
       expect(() => linkUtils.assertHasLinks(doc, 'missing')).toThrow(
-        EndpointError
+        EndpointError,
       );
       expect(() => linkUtils.assertHasLinks(doc, 'missing')).toThrow(
-        'missing required links with rel types: missing'
+        'missing required links with rel types: missing',
       );
     });
 
@@ -348,10 +348,10 @@ describe('stac/link-utils', () => {
       };
 
       expect(() =>
-        linkUtils.assertHasLinks(doc, ['self', 'root', 'items'])
+        linkUtils.assertHasLinks(doc, ['self', 'root', 'items']),
       ).toThrow(EndpointError);
       expect(() =>
-        linkUtils.assertHasLinks(doc, ['self', 'root', 'items'])
+        linkUtils.assertHasLinks(doc, ['self', 'root', 'items']),
       ).toThrow('missing required links with rel types: root, items');
     });
   });

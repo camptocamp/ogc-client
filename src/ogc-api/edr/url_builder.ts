@@ -94,7 +94,7 @@ export default class EDRQueryBuilder {
    */
   buildPositionDownloadUrl(
     coords: WellKnownTextString,
-    optional_params: optionalPositionParams = {}
+    optional_params: optionalPositionParams = {},
   ): string {
     if (!this.supported_query_types.position) {
       throw new Error('Collection does not support position queries');
@@ -107,25 +107,25 @@ export default class EDRQueryBuilder {
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
-        DateTimeParameterToEDRString(optional_params.datetime)
+        DateTimeParameterToEDRString(optional_params.datetime),
       );
     if (optional_params.parameter_name) {
       for (const parameter of optional_params.parameter_name) {
         if (!this.supported_parameters[parameter]) {
           throw new Error(
-            `The following parameter name does not exist on this collection: '${parameter}'.`
+            `The following parameter name does not exist on this collection: '${parameter}'.`,
           );
         }
       }
       url.searchParams.set(
         'parameter-name',
-        optional_params.parameter_name.join(',')
+        optional_params.parameter_name.join(','),
       );
     }
     if (optional_params.crs !== undefined) {
       if (!this.supported_crs.includes(optional_params.crs)) {
         throw new Error(
-          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`,
         );
       }
       url.searchParams.set('crs', optional_params.crs);
@@ -155,7 +155,7 @@ export default class EDRQueryBuilder {
     coords: WellKnownTextString,
     within: number,
     within_units: string,
-    optional_params: optionalRadiusParams = {}
+    optional_params: optionalRadiusParams = {},
   ): string {
     if (!this.supported_query_types.radius) {
       throw new Error('Collection does not support radius queries');
@@ -169,26 +169,26 @@ export default class EDRQueryBuilder {
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
-        DateTimeParameterToEDRString(optional_params.datetime)
+        DateTimeParameterToEDRString(optional_params.datetime),
       );
     if (optional_params.parameter_name != null) {
       for (const parameter of optional_params.parameter_name) {
         if (!this.supported_parameters[parameter]) {
           throw new Error(
-            `The following parameter name does not exist on this collection: '${parameter}'.`
+            `The following parameter name does not exist on this collection: '${parameter}'.`,
           );
         }
       }
       url.searchParams.set(
         'parameter-name',
-        optional_params.parameter_name.join(',')
+        optional_params.parameter_name.join(','),
       );
     }
 
     if (optional_params.crs !== undefined) {
       if (!this.supported_crs.includes(optional_params.crs)) {
         throw new Error(
-          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`,
         );
       }
       url.searchParams.set('crs', optional_params.crs);
@@ -214,7 +214,7 @@ export default class EDRQueryBuilder {
    */
   buildAreaDownloadUrl(
     coords: WellKnownTextString,
-    optional_params: optionalAreaParams = {}
+    optional_params: optionalAreaParams = {},
   ): string {
     if (!this.supported_query_types.area) {
       throw new Error('Collection does not support area queries');
@@ -228,26 +228,26 @@ export default class EDRQueryBuilder {
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
-        DateTimeParameterToEDRString(optional_params.datetime)
+        DateTimeParameterToEDRString(optional_params.datetime),
       );
     if (optional_params.parameter_name) {
       for (const param of optional_params.parameter_name) {
         if (!this.supported_parameters[param]) {
           throw new Error(
-            `The following parameter name does not exist on this collection: '${param}'.`
+            `The following parameter name does not exist on this collection: '${param}'.`,
           );
         }
       }
 
       url.searchParams.set(
         'parameter-name',
-        optional_params.parameter_name.join(',')
+        optional_params.parameter_name.join(','),
       );
     }
     if (optional_params.crs !== undefined) {
       if (!this.supported_crs.includes(optional_params.crs)) {
         throw new Error(
-          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`,
         );
       }
       url.searchParams.set('crs', optional_params.crs);
@@ -279,7 +279,7 @@ export default class EDRQueryBuilder {
    */
   buildCubeDownloadUrl(
     bbox: bboxWithoutVerticalAxis | bboxWithVerticalAxis,
-    optional_params: optionalCubeParams = {}
+    optional_params: optionalCubeParams = {},
   ): string {
     if (!this.supported_query_types.cube) {
       throw new Error('Collection does not support cube queries');
@@ -312,25 +312,25 @@ export default class EDRQueryBuilder {
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
-        DateTimeParameterToEDRString(optional_params.datetime)
+        DateTimeParameterToEDRString(optional_params.datetime),
       );
     if (optional_params.parameter_name) {
       for (const parameter of optional_params.parameter_name) {
         if (!this.supported_parameters[parameter]) {
           throw new Error(
-            `The following parameter name does not exist on this collection: '${parameter}'.`
+            `The following parameter name does not exist on this collection: '${parameter}'.`,
           );
         }
       }
       url.searchParams.set(
         'parameter-name',
-        optional_params.parameter_name.join(',')
+        optional_params.parameter_name.join(','),
       );
     }
     if (optional_params.crs !== undefined) {
       if (!this.supported_crs.includes(optional_params.crs)) {
         throw new Error(
-          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`,
         );
       }
       url.searchParams.set('crs', optional_params.crs);
@@ -362,7 +362,7 @@ export default class EDRQueryBuilder {
    */
   buildTrajectoryDownloadUrl(
     coords: WellKnownTextString,
-    optional_params: optionalTrajectoryParams = {}
+    optional_params: optionalTrajectoryParams = {},
   ): string {
     if (!this.supported_query_types.trajectory) {
       throw new Error('Collection does not support trajectory queries');
@@ -375,25 +375,25 @@ export default class EDRQueryBuilder {
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
-        DateTimeParameterToEDRString(optional_params.datetime)
+        DateTimeParameterToEDRString(optional_params.datetime),
       );
     if (optional_params.parameter_name) {
       for (const parameter of optional_params.parameter_name) {
         if (!this.supported_parameters[parameter]) {
           throw new Error(
-            `The following parameter name does not exist on this collection: '${parameter}'.`
+            `The following parameter name does not exist on this collection: '${parameter}'.`,
           );
         }
       }
       url.searchParams.set(
         'parameter-name',
-        optional_params.parameter_name.join(',')
+        optional_params.parameter_name.join(','),
       );
     }
     if (optional_params.crs !== undefined) {
       if (!this.supported_crs.includes(optional_params.crs)) {
         throw new Error(
-          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`,
         );
       }
       url.searchParams.set('crs', optional_params.crs);
@@ -437,7 +437,7 @@ export default class EDRQueryBuilder {
     width_units: string,
     corridor_height: number,
     height_units: string,
-    optional_params: optionalCorridorParams = {}
+    optional_params: optionalCorridorParams = {},
   ): string {
     if (!this.supported_query_types.corridor) {
       throw new Error('Collection does not support corridor queries');
@@ -454,19 +454,19 @@ export default class EDRQueryBuilder {
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
-        DateTimeParameterToEDRString(optional_params.datetime)
+        DateTimeParameterToEDRString(optional_params.datetime),
       );
     if (optional_params.parameter_name) {
       for (const parameter of optional_params.parameter_name) {
         if (!this.supported_parameters[parameter]) {
           throw new Error(
-            `The following parameter name does not exist on this collection: '${parameter}'.`
+            `The following parameter name does not exist on this collection: '${parameter}'.`,
           );
         }
       }
       url.searchParams.set(
         'parameter-name',
-        optional_params.parameter_name.join(',')
+        optional_params.parameter_name.join(','),
       );
     }
     if (optional_params.resolution_x !== undefined)
@@ -479,7 +479,7 @@ export default class EDRQueryBuilder {
     if (optional_params.crs !== undefined) {
       if (!this.supported_crs.includes(optional_params.crs)) {
         throw new Error(
-          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`,
         );
       }
       url.searchParams.set('crs', optional_params.crs);
@@ -505,7 +505,7 @@ export default class EDRQueryBuilder {
    * @returns A built locations query URL
    */
   buildLocationsDownloadUrl(
-    optional_params: optionalLocationParams = {}
+    optional_params: optionalLocationParams = {},
   ): string {
     if (!this.supported_query_types.locations) {
       throw new Error('Collection does not support location queries');
@@ -519,26 +519,26 @@ export default class EDRQueryBuilder {
       for (const parameter of optional_params.parameter_name) {
         if (!this.supported_parameters[parameter]) {
           throw new Error(
-            `The following parameter name does not exist on this collection: '${parameter}'.`
+            `The following parameter name does not exist on this collection: '${parameter}'.`,
           );
         }
       }
       url.searchParams.set(
         'parameter-name',
-        optional_params.parameter_name.join(',')
+        optional_params.parameter_name.join(','),
       );
     }
 
     if (optional_params.datetime !== undefined)
       url.searchParams.set(
         'datetime',
-        DateTimeParameterToEDRString(optional_params.datetime)
+        DateTimeParameterToEDRString(optional_params.datetime),
       );
 
     if (optional_params.crs !== undefined) {
       if (!this.supported_crs.includes(optional_params.crs)) {
         throw new Error(
-          `The following crs does not exist on this collection: '${optional_params.crs}'.`
+          `The following crs does not exist on this collection: '${optional_params.crs}'.`,
         );
       }
       url.searchParams.set('crs', optional_params.crs);

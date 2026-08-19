@@ -61,7 +61,7 @@ export function getChildPath(url: string, childFragment: string): string {
  */
 export function setQueryParams(
   url: string,
-  params: Record<string, string | boolean | null>
+  params: Record<string, string | boolean | null>,
 ): string {
   const encodedUrlMatch = url.match(/(https?%3A%2F%2F[^/]+)$/);
   if (encodedUrlMatch) {
@@ -84,7 +84,7 @@ export function setQueryParams(
     if (params[key] === null) return;
     urlObj.searchParams.set(
       key,
-      params[key] === true ? '' : (params[key] as string)
+      params[key] === true ? '' : (params[key] as string),
     );
   });
   // this makes sure that the request will work on GeoServer (some versions fail if there is a "+" in the encoded query params)

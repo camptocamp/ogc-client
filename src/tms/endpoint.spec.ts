@@ -4,11 +4,11 @@ import * as path from 'path';
 
 const SERVICE_FIXTURE = path.join(
   __dirname,
-  '../../fixtures/tms/tms-resource-geopf.xml'
+  '../../fixtures/tms/tms-resource-geopf.xml',
 );
 const TILE_FIXTURE = path.join(
   __dirname,
-  '../../fixtures/tms/tileMap-resource-geopf.xml'
+  '../../fixtures/tms/tileMap-resource-geopf.xml',
 );
 
 // Setup global fetch to read fixture files
@@ -17,7 +17,7 @@ beforeAll(() => {
     .fn()
     .mockImplementation(async (urlOrInfo: string | Request) => {
       const url = new URL(
-        typeof urlOrInfo === 'string' ? urlOrInfo : urlOrInfo.url
+        typeof urlOrInfo === 'string' ? urlOrInfo : urlOrInfo.url,
       );
       let filePath: string;
       if (url.href.includes('PLAN.IGN')) {
@@ -55,7 +55,7 @@ describe('TmsEndpoint', () => {
     const endpoint = new TmsEndpoint('http://tms.osgeo.org/1.0.0/');
 
     const tileInfo = await endpoint.getTileMapInfo(
-      'http://tms.osgeo.org/1.0.0/PLAN.IGN'
+      'http://tms.osgeo.org/1.0.0/PLAN.IGN',
     );
     expect(tileInfo.title).toBe('Plan IGN');
     expect(tileInfo.metadata).toEqual([

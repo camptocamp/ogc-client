@@ -39,7 +39,7 @@ export interface StacDocument {
  */
 export function fetchStacDocument<T extends StacDocument>(
   url: string,
-  acceptType?: string
+  acceptType?: string,
 ): Promise<T> {
   const urlObj = new URL(url, getBaseUrl());
   // Don't add f=json parameter - STAC items endpoints reject it
@@ -48,7 +48,7 @@ export function fetchStacDocument<T extends StacDocument>(
     urlObj.toString(),
     'GET',
     acceptType ? false : true,
-    acceptType
+    acceptType,
   ).then((resp) => {
     if (!resp.ok) {
       throw new Error(`The document at ${urlObj} could not be fetched.`);
@@ -58,7 +58,7 @@ export function fetchStacDocument<T extends StacDocument>(
       .json()
       .catch((e) => {
         throw new Error(
-          `The document at ${urlObj} does not appear to be valid JSON. Error was: ${e.message}`
+          `The document at ${urlObj} does not appear to be valid JSON. Error was: ${e.message}`,
         );
       }) as Promise<T>;
   });
@@ -78,12 +78,12 @@ export function fetchRoot(url: string): Promise<StacDocument> {
  */
 export function hasLinks(
   doc: StacDocument,
-  relTypes: string | string[]
+  relTypes: string | string[],
 ): boolean {
   const types = Array.isArray(relTypes) ? relTypes : [relTypes];
   // Check that ALL specified rel types exist
   return types.every((relType) =>
-    doc.links?.some((link) => link.rel === relType)
+    doc.links?.some((link) => link.rel === relType),
   );
 }
 
@@ -94,7 +94,7 @@ export function getLinks(
   doc: StacDocument,
   relType: string | string[],
   mimeType?: string,
-  assertPresence?: boolean
+  assertPresence?: boolean,
 ): OgcApiDocumentLink[] {
   return ogcGetLinks(doc as any, relType, mimeType, assertPresence);
 }
@@ -107,7 +107,7 @@ export function getLinkUrl(
   relType: string | string[],
   baseUrl?: string,
   mimeType?: string,
-  assertPresence?: boolean
+  assertPresence?: boolean,
 ): string | null {
   return ogcGetLinkUrl(doc as any, relType, baseUrl, mimeType, assertPresence);
 }
@@ -119,7 +119,7 @@ export async function fetchLink<T extends StacDocument>(
   doc: StacDocument,
   relType: string | string[],
   baseUrl: string,
-  mimeType?: string
+  mimeType?: string,
 ): Promise<T> {
   const url = getLinkUrl(doc, relType, baseUrl, mimeType);
   if (!url) {
@@ -127,7 +127,7 @@ export async function fetchLink<T extends StacDocument>(
     throw new EndpointError(
       `No link found with rel type: ${relStr}${
         mimeType ? ` and mime type: ${mimeType}` : ''
-      }`
+      }`,
     );
   }
   return fetchStacDocument<T>(url);
@@ -138,15 +138,15 @@ export async function fetchLink<T extends StacDocument>(
  */
 export function assertHasLinks(
   doc: StacDocument,
-  relTypes: string | string[]
+  relTypes: string | string[],
 ): void {
   const relArray = Array.isArray(relTypes) ? relTypes : [relTypes];
   const missingRels = relArray.filter((rel) => !hasLinks(doc, rel));
   if (missingRels.length > 0) {
     throw new EndpointError(
       `Document is missing required links with rel types: ${missingRels.join(
-        ', '
-      )}`
+        ', ',
+      )}`,
     );
   }
 }

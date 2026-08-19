@@ -11,7 +11,7 @@ beforeAll(() => {
     const url = new URL(
       urlOrInfo instanceof URL || typeof urlOrInfo === 'string'
         ? urlOrInfo
-        : urlOrInfo.url
+        : urlOrInfo.url,
     );
 
     // Handle trailing slash behavior
@@ -135,7 +135,7 @@ describe('StacEndpoint', () => {
         const conformance = await endpoint.conformanceClasses;
         expect(conformance).toContain('https://api.stacspec.org/v1.0.0/core');
         expect(conformance).toContain(
-          'http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core'
+          'http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core',
         );
       });
     });
@@ -203,10 +203,10 @@ describe('StacEndpoint', () => {
 
       it('throws error for non-existent collection', async () => {
         await expect(endpoint.getCollection('non-existent')).rejects.toThrow(
-          EndpointError
+          EndpointError,
         );
         await expect(endpoint.getCollection('non-existent')).rejects.toThrow(
-          'Collection not found: non-existent'
+          'Collection not found: non-existent',
         );
       });
     });
@@ -319,7 +319,7 @@ describe('StacEndpoint', () => {
       it('retrieves a single item from a collection', async () => {
         const item = await endpoint.getCollectionItem(
           'sentinel-2',
-          'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154'
+          'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154',
         );
 
         expect(item).toMatchObject({
@@ -333,7 +333,7 @@ describe('StacEndpoint', () => {
       it('includes all item properties', async () => {
         const item = await endpoint.getCollectionItem(
           'sentinel-2',
-          'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154'
+          'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154',
         );
 
         expect(item.properties.datetime).toBe('2023-10-15T10:30:31Z');
@@ -345,7 +345,7 @@ describe('StacEndpoint', () => {
       it('includes geometry and bbox', async () => {
         const item = await endpoint.getCollectionItem(
           'sentinel-2',
-          'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154'
+          'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154',
         );
 
         expect(item.geometry).toBeDefined();
@@ -356,7 +356,7 @@ describe('StacEndpoint', () => {
       it('includes assets', async () => {
         const item = await endpoint.getCollectionItem(
           'sentinel-2',
-          'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154'
+          'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154',
         );
 
         expect(item.assets).toBeDefined();
@@ -368,7 +368,7 @@ describe('StacEndpoint', () => {
       it('includes links', async () => {
         const item = await endpoint.getCollectionItem(
           'sentinel-2',
-          'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154'
+          'S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154',
         );
 
         expect(item.links).toBeDefined();
@@ -409,7 +409,7 @@ describe('StacEndpoint', () => {
 
       it('auto-detects and returns Collection', async () => {
         const result = await StacEndpoint.fromUrl(
-          'http://local/stac-api/collections/sentinel-2'
+          'http://local/stac-api/collections/sentinel-2',
         );
 
         expect(result.type).toBe('Collection');
@@ -423,7 +423,7 @@ describe('StacEndpoint', () => {
 
       it('auto-detects and returns Feature (Item)', async () => {
         const result = await StacEndpoint.fromUrl(
-          'http://local/stac-api/collections/sentinel-2/items/S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154'
+          'http://local/stac-api/collections/sentinel-2/items/S2A_MSIL2A_20231015T103031_N0509_R108_T32ULC_20231015T162154',
         );
 
         expect(result.type).toBe('Feature');
@@ -452,10 +452,10 @@ describe('StacEndpoint', () => {
         globalThis.fetch = jest.fn().mockResolvedValue(mockResponse);
 
         await expect(
-          StacEndpoint.fromUrl('http://example.com/unknown')
+          StacEndpoint.fromUrl('http://example.com/unknown'),
         ).rejects.toThrow(EndpointError);
         await expect(
-          StacEndpoint.fromUrl('http://example.com/unknown')
+          StacEndpoint.fromUrl('http://example.com/unknown'),
         ).rejects.toThrow('Unknown STAC document type: UnknownType');
 
         globalThis.fetch = originalFetch;
@@ -509,10 +509,10 @@ describe('StacEndpoint', () => {
         collection.links = collection.links.filter((l) => l.rel !== 'items');
 
         await expect(
-          StacEndpoint.getItemsFromCollection(collection)
+          StacEndpoint.getItemsFromCollection(collection),
         ).rejects.toThrow(EndpointError);
         await expect(
-          StacEndpoint.getItemsFromCollection(collection)
+          StacEndpoint.getItemsFromCollection(collection),
         ).rejects.toThrow('does not have an items link');
       });
     });
@@ -521,7 +521,7 @@ describe('StacEndpoint', () => {
       it('queries items from an items URL', async () => {
         const response = await StacEndpoint.getItemsFromUrl(
           'http://local/stac-api/collections/sentinel-2/items',
-          { limit: 3 }
+          { limit: 3 },
         );
 
         expect(response.type).toBe('FeatureCollection');
@@ -543,7 +543,7 @@ describe('StacEndpoint', () => {
               start: new Date('2023-10-01T00:00:00Z'),
               end: new Date('2023-10-31T23:59:59Z'),
             },
-          }
+          },
         );
 
         expect(response.type).toBe('FeatureCollection');
@@ -561,7 +561,7 @@ describe('StacEndpoint', () => {
     it('handles missing collections gracefully', async () => {
       const endpoint = new StacEndpoint('http://local/stac-api/');
       await expect(endpoint.getCollection('missing')).rejects.toThrow(
-        EndpointError
+        EndpointError,
       );
     });
   });

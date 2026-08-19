@@ -57,7 +57,7 @@ export function getElementName(element: XmlElement) {
 export function findChildrenElement(
   element: XmlElement,
   name: string,
-  nested: boolean = false
+  nested: boolean = false,
 ): XmlElement[] {
   const strippedName = stripNamespace(name);
   function reducer(prev, curr) {
@@ -87,7 +87,7 @@ export function findChildrenElement(
 export function findChildElement(
   element: XmlElement,
   name: string,
-  nested: boolean = false
+  nested: boolean = false,
 ) {
   return (findChildrenElement(element, name, nested)[0] as XmlElement) || null;
 }
@@ -101,7 +101,7 @@ export function getChildrenElement(element: XmlElement) {
   return element && Array.isArray(element.children)
     ? [
         ...(element.children.filter(
-          (el) => el instanceof XmlElement
+          (el) => el instanceof XmlElement,
         ) as XmlElement[]),
       ]
     : [];
@@ -135,19 +135,19 @@ export function getElementAttribute(element: XmlElement, attrName: string) {
 export function createElement(
   name: string,
   attrs: Record<string, string>,
-  children: XmlElement | XmlElement[] = []
+  children: XmlElement | XmlElement[] = [],
 ): XmlElement {
   return new XmlElement(
     name,
     attrs,
-    Array.isArray(children) ? children : [children]
+    Array.isArray(children) ? children : [children],
   );
 }
 
 export function createTextElement(
   name: string,
   attrs: Record<string, string>,
-  text: string
+  text: string,
 ): XmlElement {
   return new XmlElement(name, attrs, [new XmlText(text)]);
 }
@@ -155,7 +155,7 @@ export function createTextElement(
 export function createCdataElement(
   name: string,
   attrs: Record<string, string>,
-  content: string
+  content: string,
 ): XmlElement {
   return new XmlElement(name, attrs, [new XmlCdata(content)]);
 }
@@ -174,7 +174,7 @@ export function xmlToString(
     | XmlDocumentType
     | XmlCdata
     | XmlText,
-  indentationLevel = 0
+  indentationLevel = 0,
 ) {
   const encodeEntities = (text: string) => {
     return text
@@ -186,7 +186,7 @@ export function xmlToString(
   };
   if (el instanceof XmlDocument)
     return `<?xml version="1.0" encoding="UTF-8"?>${xmlToString(
-      el.children[0]
+      el.children[0],
     )}`;
   if (el instanceof XmlCdata) {
     const encoded = el.text.replace(/]]>/g, ']]]]><![CDATA[>');
@@ -206,13 +206,13 @@ export function xmlToString(
         .map((el) => xmlToString(el, indentationLevel + 1))
         .filter((el) => el !== '')
         .map((elString, index, array) =>
-          index < array.length - 1 ? elString.replace(/\n\s*$/g, '') : elString
+          index < array.length - 1 ? elString.replace(/\n\s*$/g, '') : elString,
         )
         .join('')
     : '';
   const attrs = Object.keys(el.attributes).reduce(
     (prev, curr) => prev + ` ${curr}="${encodeEntities(el.attributes[curr])}"`,
-    ''
+    '',
   );
   const parentPadding = '    '.repeat(Math.max(0, indentationLevel - 1));
   if (children === '') {

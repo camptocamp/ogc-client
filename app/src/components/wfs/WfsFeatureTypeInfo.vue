@@ -4,16 +4,17 @@
     <InfoList :info="featureTypeInfo"></InfoList>
     <p>Properties</p>
     <InfoList :info="featureProperties"></InfoList>
-    <div v-if="featurePropsDetails === null && !loadingValues">
-      <button type="button" class="btn btn-primary" @click="loadValues()">
-        Load unique values
-      </button>
+
+    <div v-if="!loadPromise">
+      <button type="button" @click="loadValues()">Load unique values</button>
     </div>
-    <div v-if="loadingValues">Loading unique values...</div>
-    <div v-if="featurePropsDetails !== null">
-      <p>Unique values</p>
-      <InfoList :info="uniqueValues"></InfoList>
-    </div>
+
+    <Async v-if="loadPromise" :promise="loadPromise">
+      <template v-slot:then="{ result: featurePropsDetails }">
+        <p>Unique values</p>
+        <InfoList :info="getUniqueValues(featurePropsDetails)"></InfoList>
+      </template>
+    </Async>
   </div>
 </template>
 
@@ -21,9 +22,11 @@
 
 <script>
 import InfoList from '../presentation/InfoList.vue';
+import Async from '../presentation/Async.vue';
+
 export default {
   name: 'WfsFeatureTypeInfo',
-  components: { InfoList },
+  components: { Async, InfoList },
   props: {
     /** @type {{ new(): WfsFeatureTypeFull}} */
     featureType: Object,
@@ -31,9 +34,7 @@ export default {
     endpoint: Object,
   },
   data: () => ({
-    loadingValues: false,
-    /** @type {?{ new(): WfsFeatureTypePropsDetails}} */
-    featurePropsDetails: null,
+    loadPromise: null,
   }),
   computed: {
     featureTypeInfo() {
@@ -43,7 +44,7 @@ export default {
           abstract: this.featureType.abstract,
         }),
         CRS: [this.featureType.defaultCrs, ...this.featureType.otherCrs].join(
-          ', '
+          ', ',
         ),
         ...('objectCount' in this.featureType && {
           'object count': this.featureType.objectCount,
@@ -64,34 +65,30 @@ export default {
         ...this.featureType.properties,
       };
     },
-    uniqueValues() {
-      if (this.featurePropsDetails === null) return {};
-      return Object.keys(this.featurePropsDetails).reduce(
+  },
+  methods: {
+    loadValues() {
+      this.loadPromise = this.endpoint.getFeatureTypePropDetails(
+        this.featureType.name,
+      );
+    },
+    getUniqueValues(featurePropsDetails) {
+      return Object.keys(featurePropsDetails).reduce(
         (prev, curr) => ({
           ...prev,
-          [curr]: this.featurePropsDetails[curr].uniqueValues
+          [curr]: featurePropsDetails[curr].uniqueValues
             .sort((valueA, valueB) => valueB.count - valueA.count)
             .filter((v, i) => i <= 8)
             .map((v, i) => (i < 8 ? `${v.value} (${v.count})` : '...'))
             .join(', '),
         }),
-        {}
+        {},
       );
-    },
-  },
-  methods: {
-    async loadValues() {
-      this.loadingValues = true;
-      this.featurePropsDetails = await this.endpoint.getFeatureTypePropDetails(
-        this.featureType.name
-      );
-      this.loadingValues = false;
     },
   },
   watch: {
     featureType() {
-      this.loadingValues = false;
-      this.featurePropsDetails = null;
+      this.loadPromise = null;
     },
   },
 };

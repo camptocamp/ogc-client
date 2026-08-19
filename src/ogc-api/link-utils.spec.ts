@@ -59,7 +59,7 @@ describe('link-utils', () => {
     it('forces limit=1 even if the url already has a larger limit', async () => {
       await fetchRoot('https://example.com/collections/big/items?limit=500');
       const firstFetchedUrl = new URL(
-        (globalThis.fetch as jest.Mock).mock.calls[0][0]
+        (globalThis.fetch as jest.Mock).mock.calls[0][0],
       );
       expect(firstFetchedUrl.pathname).toBe('/collections/big/items');
       expect(firstFetchedUrl.searchParams.get('limit')).toBe('1');
@@ -70,7 +70,7 @@ describe('link-utils', () => {
     it('adds limit=1 to an /items url that has no limit', async () => {
       await fetchCollectionRoot('https://example.com/collections/big/items');
       const firstFetchedUrl = new URL(
-        (globalThis.fetch as jest.Mock).mock.calls[0][0]
+        (globalThis.fetch as jest.Mock).mock.calls[0][0],
       );
       expect(firstFetchedUrl.pathname).toBe('/collections/big/items');
       expect(firstFetchedUrl.searchParams.get('limit')).toBe('1');

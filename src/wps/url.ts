@@ -10,7 +10,7 @@ import { WpsVersion } from './model.js';
 export function generateDescribeProcessUrl(
   serviceUrl: string,
   version: WpsVersion,
-  processId: string
+  processId: string,
 ): string {
   return setQueryParams(serviceUrl, {
     SERVICE: 'WPS',
@@ -30,7 +30,7 @@ export function generateDescribeProcessUrl(
 export function generateExecuteUrl(
   serviceUrl: string,
   version: WpsVersion,
-  processId: string
+  processId: string,
 ): string {
   return setQueryParams(serviceUrl, {
     SERVICE: 'WPS',

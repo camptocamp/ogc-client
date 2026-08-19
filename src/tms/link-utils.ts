@@ -25,11 +25,11 @@ export async function fetchXml(url: string): Promise<XmlDocument> {
  */
 export async function fetchRoot(
   url: string,
-  currentDepth = 0
+  currentDepth = 0,
 ): Promise<TileMapService> {
   if (currentDepth > MAX_DEPTH) {
     throw new Error(
-      'Maximum recursion depth reached while searching for TMS root document.'
+      'Maximum recursion depth reached while searching for TMS root document.',
     );
   }
   const xmlDoc = await fetchXml(url);
@@ -41,7 +41,7 @@ export async function fetchRoot(
   const parentUrl = getParentPath(url);
   if (!parentUrl || parentUrl === url) {
     throw new Error(
-      'Could not find a valid TMS root document with a <TileMapService> element.'
+      'Could not find a valid TMS root document with a <TileMapService> element.',
     );
   }
   return fetchRoot(parentUrl, currentDepth + 1);
@@ -52,11 +52,11 @@ export async function fetchRoot(
  */
 export async function fetchTileMapResourceXML(
   url: string,
-  currentDepth = 0
+  currentDepth = 0,
 ): Promise<TileMapInfo | null> {
   if (currentDepth > MAX_DEPTH) {
     throw new Error(
-      'Maximum recursion depth reached while searching for TMS TileMap document.'
+      'Maximum recursion depth reached while searching for TMS TileMap document.',
     );
   }
   const xmlDoc = await fetchXml(url);

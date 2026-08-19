@@ -20,11 +20,7 @@ describe('HTTP utils', () => {
     const sampleXml = '<sample-xml><node1></node1><node2></node2></sample-xml>';
 
     let fetchBehaviour:
-      | 'ok'
-      | 'httpError'
-      | 'corsError'
-      | 'networkError'
-      | 'delay';
+      'ok' | 'httpError' | 'corsError' | 'networkError' | 'delay';
 
     let originalFetch;
 
@@ -81,7 +77,7 @@ describe('HTTP utils', () => {
                       return this;
                     },
                   }),
-                10
+                10,
               );
             });
         }
@@ -119,8 +115,8 @@ describe('HTTP utils', () => {
           new EndpointError(
             'The document at <sample-xml><node1></node1><node2></node2></sample-xml> could not be fetched, received an error with code 401: <error>Random error</error>',
             401,
-            false
-          )
+            false,
+          ),
         );
       });
     });
@@ -131,8 +127,8 @@ describe('HTTP utils', () => {
       it('rejects with an error', async () => {
         await expect(queryXmlDocument(sampleXml)).rejects.toThrowError(
           new EndpointError(
-            `The document at <sample-xml><node1></node1><node2></node2></sample-xml> could not be fetched due to CORS limitations`
-          )
+            `The document at <sample-xml><node1></node1><node2></node2></sample-xml> could not be fetched due to CORS limitations`,
+          ),
         );
       });
     });
@@ -143,8 +139,8 @@ describe('HTTP utils', () => {
       it('rejects with an error', async () => {
         await expect(queryXmlDocument(sampleXml)).rejects.toEqual(
           new EndpointError(
-            `Fetching the document at <sample-xml><node1></node1><node2></node2></sample-xml> failed either due to network errors or unreachable host, error is: General network error`
-          )
+            `Fetching the document at <sample-xml><node1></node1><node2></node2></sample-xml> failed either due to network errors or unreachable host, error is: General network error`,
+          ),
         );
       });
     });
@@ -154,7 +150,7 @@ describe('HTTP utils', () => {
       });
       it('rejects with an error related to XML parsing', async () => {
         await expect(
-          queryXmlDocument('<broken-xml</broken-xml>')
+          queryXmlDocument('<broken-xml</broken-xml>'),
         ).rejects.toThrowError('Unclosed start tag for element `broken-xml`');
       });
     });
@@ -182,7 +178,7 @@ describe('HTTP utils', () => {
             setTimeout(() => {
               // return a different result every time
               const text = `request result: ${Math.floor(
-                Math.random() * 100000
+                Math.random() * 100000,
               )}`;
               resolve({
                 text: async () => text,
@@ -194,7 +190,7 @@ describe('HTTP utils', () => {
                 }) as () => Response,
               } as Response);
             }, 10);
-          })
+          }),
       );
     });
     afterAll(() => {
@@ -209,34 +205,34 @@ describe('HTTP utils', () => {
 
         // these requests will be shared
         sharedFetch('http://test.org/resource1').then(
-          (r) => (getResults[0] = r)
+          (r) => (getResults[0] = r),
         );
         sharedFetch('http://test.org/resource1', 'HEAD').then(
-          (r) => (headResults[0] = r)
+          (r) => (headResults[0] = r),
         );
         jest.advanceTimersByTime(2);
         sharedFetch('http://test.org/resource1').then(
-          (r) => (getResults[1] = r)
+          (r) => (getResults[1] = r),
         );
         sharedFetch('http://test.org/resource1', 'HEAD').then(
-          (r) => (headResults[1] = r)
+          (r) => (headResults[1] = r),
         );
         jest.advanceTimersByTime(3);
         sharedFetch('http://test.org/resource1').then(
-          (r) => (getResults[2] = r)
+          (r) => (getResults[2] = r),
         );
         sharedFetch('http://test.org/resource1', 'HEAD').then(
-          (r) => (headResults[2] = r)
+          (r) => (headResults[2] = r),
         );
         await jest.advanceTimersByTime(10);
         await jest.runOnlyPendingTimers();
 
         // first batch has resolved
         sharedFetch('http://test.org/resource1', 'HEAD').then(
-          (r) => (headResults[3] = r)
+          (r) => (headResults[3] = r),
         );
         sharedFetch('http://test.org/resource1').then(
-          (r) => (getResults[3] = r)
+          (r) => (getResults[3] = r),
         );
         await jest.advanceTimersByTime(10);
         await jest.runOnlyPendingTimers();
@@ -269,7 +265,7 @@ describe('HTTP utils', () => {
       it('shares result for simultaneous GET requests and not subsequent ones', async () => {
         const sharedResult = await getResults[0].text();
         const getResultsText = await Promise.all(
-          getResults.map((r) => r.text())
+          getResults.map((r) => r.text()),
         );
         expect(getResultsText).toEqual([
           sharedResult,
@@ -281,7 +277,7 @@ describe('HTTP utils', () => {
       it('shares result for simultaneous HEAD requests and not subsequent ones', async () => {
         const sharedResult = await headResults[0].text();
         const headResultsText = await Promise.all(
-          headResults.map((r) => r.text())
+          headResults.map((r) => r.text()),
         );
         expect(headResultsText).toEqual([
           sharedResult,
@@ -299,16 +295,16 @@ describe('HTTP utils', () => {
 
         // these requests will be not shared
         sharedFetch('http://test.org/resource1').then(
-          (r) => (getResults[0] = r)
+          (r) => (getResults[0] = r),
         );
         sharedFetch('http://test.org/resource2', 'HEAD').then(
-          (r) => (headResults[0] = r)
+          (r) => (headResults[0] = r),
         );
         sharedFetch('http://test.org/resource3').then(
-          (r) => (getResults[1] = r)
+          (r) => (getResults[1] = r),
         );
         sharedFetch('http://test.org/resource4', 'HEAD').then(
-          (r) => (headResults[1] = r)
+          (r) => (headResults[1] = r),
         );
         await jest.advanceTimersByTime(40);
         await jest.runOnlyPendingTimers();
@@ -395,7 +391,7 @@ describe('HTTP utils', () => {
               ...sampleOptions.headers,
               Accept: 'application/json,application/schema+json',
             },
-          }
+          },
         );
       });
     });
@@ -405,7 +401,7 @@ describe('HTTP utils', () => {
         globalThis.fetchResponseFactory = () => capabilities200;
         setFetchOptions(sampleOptions);
         endpoint = new WfsEndpoint(
-          'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType'
+          'https://my.test.service/ogc/wfs?service=wfs&request=DescribeFeatureType',
         );
       });
       it('is used in the fetch() call', async () => {
@@ -415,7 +411,7 @@ describe('HTTP utils', () => {
           {
             ...sampleOptions,
             method: 'GET',
-          }
+          },
         );
       });
     });

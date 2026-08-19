@@ -25,7 +25,7 @@ describe('WpsEndpoint', () => {
       return capabilities;
     };
     endpoint = new WpsEndpoint(
-      'https://my.test.service/ogc/wps?service=wps&request=GetMap&aa=bb'
+      'https://my.test.service/ogc/wps?service=wps&request=GetMap&aa=bb',
     );
   });
 
@@ -33,7 +33,7 @@ describe('WpsEndpoint', () => {
     await endpoint.isReady();
     expect(globalThis.fetch).toHaveBeenCalledWith(
       'https://my.test.service/ogc/wps?aa=bb&SERVICE=WPS&REQUEST=GetCapabilities&VERSION=1.0.0',
-      { method: 'GET' }
+      { method: 'GET' },
     );
   });
 
@@ -129,7 +129,7 @@ describe('WpsEndpoint', () => {
     it('returns the Execute POST url', async () => {
       await endpoint.isReady();
       expect(endpoint.getOperationUrl('Execute', 'Post')).toBe(
-        'https://my.wps.server/geoserver/wps'
+        'https://my.wps.server/geoserver/wps',
       );
     });
   });
@@ -158,7 +158,7 @@ describe('WpsEndpoint', () => {
       expect(result.status).toBe('succeeded');
       // the POST goes to the dedicated Execute POST url
       const postCall = (globalThis.fetch as jest.Mock).mock.calls.find(
-        ([, options]) => options?.method === 'POST'
+        ([, options]) => options?.method === 'POST',
       );
       expect(postCall[0]).toBe('https://my.wps.server/geoserver/wps');
       expect(postCall[1].headers['Content-Type']).toBe('application/xml');
@@ -171,7 +171,7 @@ describe('WpsEndpoint', () => {
       globalThis.fetchResponseFactory = () => executeAccepted;
       await endpoint.isReady();
       const result = await endpoint.getStatus(
-        'https://my.wps.server/geoserver/ows?SERVICE=WPS&REQUEST=GetExecutionStatus&EXECUTIONID=abc123'
+        'https://my.wps.server/geoserver/ows?SERVICE=WPS&REQUEST=GetExecutionStatus&EXECUTIONID=abc123',
       );
       expect(result).toMatchObject({
         status: 'started',

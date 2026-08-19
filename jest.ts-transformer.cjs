@@ -9,7 +9,7 @@ module.exports = {
     const transformed = src
       .replace(
         /new OgcClientWorker\(\)/,
-        `new Worker('${dir}/worker.ts', { type: 'module' })`
+        `new Worker('${dir}/worker.ts', { type: 'module' })`,
       )
       .replace(`import OgcClientWorker from './worker?worker&inline';`, '');
     return tsJest

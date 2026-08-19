@@ -6,26 +6,21 @@
     </slot>
   </div>
   <div v-else-if="rejected">
-    <slot name="catch" :error="rejected">
-      <span class="error">Error: {{ rejected }}</span>
-    </slot>
+    <Error :message="rejected"></Error>
   </div>
   <div v-else>
-    <slot name="then" :result="resolved">
-      <span>Loaded: {{ resolved }}</span>
-    </slot>
+    <slot name="then" :result="resolved"></slot>
   </div>
 </template>
 
-<style scoped>
-.error {
-  color: darkred;
-}
-</style>
+<style scoped></style>
 
 <script>
+import Error from './Error.vue';
+
 export default {
   name: 'Async',
+  components: { Error },
   props: {
     promise: Promise,
   },
@@ -50,7 +45,7 @@ export default {
               this.rejected = rejected;
               this.resolved = null;
               this.pending = false;
-            }
+            },
           );
         } else {
           this.resolved = value;

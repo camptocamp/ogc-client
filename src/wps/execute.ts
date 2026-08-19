@@ -51,7 +51,7 @@ function buildInput(value: WpsInputValue): XmlElement {
         el('wps:BoundingBoxData', { crs, dimensions: '2' }, [
           text('ows:LowerCorner', {}, `${minx} ${miny}`),
           text('ows:UpperCorner', {}, `${maxx} ${maxy}`),
-        ])
+        ]),
       ),
     ]);
   }
@@ -78,7 +78,7 @@ function buildInput(value: WpsInputValue): XmlElement {
 export function buildExecuteRequest(
   process: WpsProcessFull,
   options: WpsExecuteOptions,
-  version: WpsVersion
+  version: WpsVersion,
 ): string {
   const inputs = options.inputs.map(buildInput);
 
@@ -97,9 +97,9 @@ export function buildExecuteRequest(
             asReference: String(output.asReference ?? false),
             mimeType: output.mimeType ?? '',
           },
-          [text('ows:Identifier', {}, output.identifier)]
-        )
-      )
+          [text('ows:Identifier', {}, output.identifier)],
+        ),
+      ),
     ),
   ]);
 
@@ -117,8 +117,8 @@ export function buildExecuteRequest(
         text('ows:Identifier', {}, process.identifier),
         el('wps:DataInputs', {}, inputs),
         responseForm,
-      ]
-    )
+      ],
+    ),
   );
 
   return xmlToString(document);
@@ -138,7 +138,7 @@ const STATUS_TAG_MAP: Record<string, WpsExecuteStatus> = {
  *   nested inside a ProcessFailed status returned with HTTP 200)
  */
 export function parseExecuteResponse(
-  executeDoc: XmlDocument
+  executeDoc: XmlDocument,
 ): WpsExecuteResponse {
   // ExceptionReport at the root (e.g. malformed request, 4xx)
   check(executeDoc);
@@ -148,7 +148,7 @@ export function parseExecuteResponse(
 
   const statusEl = findChildElement(root, 'Status');
   const statusChild = getChildrenElement(statusEl).find(
-    (child) => stripNamespace(getElementName(child)) in STATUS_TAG_MAP
+    (child) => stripNamespace(getElementName(child)) in STATUS_TAG_MAP,
   );
   const statusName = statusChild
     ? stripNamespace(getElementName(statusChild))
@@ -164,12 +164,12 @@ export function parseExecuteResponse(
 
   const percentCompletedAttr = getElementAttribute(
     statusChild,
-    'percentCompleted'
+    'percentCompleted',
   );
 
   const outputs = findChildrenElement(
     findChildElement(root, 'ProcessOutputs'),
-    'Output'
+    'Output',
   ).map(parseOutputResult);
 
   return {

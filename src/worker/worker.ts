@@ -21,7 +21,7 @@ addTaskHandler('parseWmsCapabilities', globalThis, ({ url }: { url: string }) =>
       layers: wmsCapabilities.readLayersFromCapabilities(xmlDoc),
       url: wmsCapabilities.readOperationUrlsFromCapabilities(xmlDoc),
       version: wmsCapabilities.readVersionFromCapabilities(xmlDoc),
-    }))
+    })),
 );
 
 addTaskHandler('parseWfsCapabilities', globalThis, ({ url }: { url: string }) =>
@@ -32,7 +32,7 @@ addTaskHandler('parseWfsCapabilities', globalThis, ({ url }: { url: string }) =>
       featureTypes: wfsCapabilities.readFeatureTypesFromCapabilities(xmlDoc),
       url: wfsCapabilities.readOperationUrlsFromCapabilities(xmlDoc),
       version: wfsCapabilities.readVersionFromCapabilities(xmlDoc),
-    }))
+    })),
 );
 
 addTaskHandler(
@@ -53,14 +53,14 @@ addTaskHandler(
       featureTypeFull.name,
       undefined,
       undefined,
-      Object.keys(featureTypeFull.properties)
+      Object.keys(featureTypeFull.properties),
     );
     return queryXmlDocument(getFeatureUrl).then((getFeatureDoc) => ({
       props: computeFeaturePropsDetails(
-        parseFeatureProps(getFeatureDoc, featureTypeFull, serviceVersion)
+        parseFeatureProps(getFeatureDoc, featureTypeFull, serviceVersion),
       ),
     }));
-  }
+  },
 );
 
 addTaskHandler(
@@ -69,7 +69,7 @@ addTaskHandler(
   ({ options }: { options: FetchOptions }) => {
     setFetchOptions(options);
     return Promise.resolve({});
-  }
+  },
 );
 
 addTaskHandler(
@@ -82,7 +82,7 @@ addTaskHandler(
         info: wmtsCapabilities.readInfoFromCapabilities(xmlDoc),
         layers: wmtsCapabilities.readLayersFromCapabilities(xmlDoc),
         matrixSets: wmtsCapabilities.readMatrixSetsFromCapabilities(xmlDoc),
-      }))
+      })),
 );
 
 addTaskHandler('parseWpsCapabilities', globalThis, ({ url }: { url: string }) =>
@@ -93,5 +93,5 @@ addTaskHandler('parseWpsCapabilities', globalThis, ({ url }: { url: string }) =>
       processes: wpsCapabilities.readProcessesFromCapabilities(xmlDoc),
       url: wpsCapabilities.readOperationUrlsFromCapabilities(xmlDoc),
       version: wpsCapabilities.readVersionFromCapabilities(xmlDoc),
-    }))
+    })),
 );

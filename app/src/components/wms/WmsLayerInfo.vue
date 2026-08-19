@@ -2,13 +2,10 @@
   <div>
     <p>{{ layer.title }}</p>
     <InfoList :info="layerInfo"></InfoList>
-    <div class="d-flex flex-row justify-content-between">
+    <div style="display: flex; flex-direction: row; gap: 16px">
       <label>
         Selected style:&nbsp;
-        <select
-          v-model="selectedStyle"
-          class="form-select d-inline-block w-auto"
-        >
+        <select v-model="selectedStyle">
           <option v-for="style in layer.styles" :value="style.name">
             {{ style.title || style.name }}
           </option>
@@ -16,7 +13,7 @@
       </label>
       <label>
         Selected CRS:&nbsp;
-        <select v-model="selectedCrs" class="form-select d-inline-block w-auto">
+        <select v-model="selectedCrs">
           <option v-for="crs in layer.availableCrs">
             {{ crs }}
           </option>
@@ -76,7 +73,7 @@ export default {
       const ratio = (extent[2] - extent[0]) / (extent[3] - extent[1]);
       const maxDimension = 500;
       const widthPx = Math.round(
-        ratio > 1 ? maxDimension : maxDimension * ratio
+        ratio > 1 ? maxDimension : maxDimension * ratio,
       );
       const heightPx = Math.round(widthPx / ratio);
       return this.endpoint.getMapUrl([this.layer.name], {

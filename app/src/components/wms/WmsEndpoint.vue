@@ -1,45 +1,45 @@
 <template>
-  <div>
-    <div class="d-flex flex-row my-4">
+  <div class="pico">
+    <div style="display: flex; flex-direction: row; gap: 16px">
       <input
-        class="form-control me-3"
+        autofocus
         placeholder="Enter a WMS service URL here"
         v-model="url"
+        @keydown.enter="createEndpoint()"
       />
-      <button type="button" class="btn btn-primary" @click="createEndpoint()">
-        Analyze
-      </button>
+      <button type="button" @click="createEndpoint()">Analyze</button>
     </div>
-    <div v-if="loading">Loading...</div>
-    <div v-if="loaded">
-      <InfoList :info="endpoint.getServiceInfo()"></InfoList>
-      <ItemsTree
-        :items="endpoint.getLayers()"
-        style="min-height: 200px; max-height: 400px; overflow: auto"
-      >
-        <template v-slot="{ item }">
-          <div :title="item.abstract">
-            <template v-if="item.name">
-              <a
-                href
-                @click="handleLayerClick(item, $event)"
-                class="link-light"
-                >{{ item.title }}</a
-              >
-            </template>
-            <template v-else>
-              <span>{{ item.title }}</span>
-            </template>
-          </div>
-        </template>
-      </ItemsTree>
-      <WmsLayerInfo
-        v-if="selectedLayer"
-        :layer="selectedLayer"
-        :endpoint="endpoint"
-      ></WmsLayerInfo>
-    </div>
-    <div v-if="error">Error: {{ error }}</div>
+    <Async v-if="loadPromise" :promise="loadPromise">
+      <template v-slot:then="{ result: endpoint }">
+        <InfoList :info="endpoint.getServiceInfo()"></InfoList>
+        <ItemsTree
+          :items="endpoint.getLayers()"
+          style="min-height: 200px; max-height: 500px; overflow: auto"
+        >
+          <template v-slot="{ item }">
+            <div :title="item.abstract">
+              <template v-if="item.name">
+                <!-- target attribute makes sure vitepress router does not handle the click -->
+                <a
+                  href
+                  target
+                  @click="handleLayerClick(endpoint, item, $event)"
+                  >{{ item.title }}</a
+                >
+              </template>
+              <template v-else>
+                <span>{{ item.title }}</span>
+              </template>
+            </div>
+          </template>
+        </ItemsTree>
+        <WmsLayerInfo
+          v-if="selectedLayer"
+          :layer="selectedLayer"
+          :endpoint="endpoint"
+        ></WmsLayerInfo>
+      </template>
+    </Async>
   </div>
 </template>
 
@@ -48,36 +48,24 @@ import InfoList from '../presentation/InfoList.vue';
 import ItemsTree from '../presentation/ItemsTree.vue';
 import WmsLayerInfo from './WmsLayerInfo.vue';
 import WmsEndpoint from '../../../../src/wms/endpoint';
+import Async from '../presentation/Async.vue';
 
 export default {
   name: 'WmsEndpoint',
-  components: { WmsLayerInfo, ItemsTree, InfoList },
+  components: { Async, WmsLayerInfo, ItemsTree, InfoList },
   data: () => ({
-    loading: false,
-    error: null,
-    endpoint: null,
-    url: 'https://ahocevar.com/geoserver/wms',
+    loadPromise: null,
+    url: 'https://data.geopf.fr/wms-r/wms',
     selectedLayer: null,
   }),
-  computed: {
-    loaded() {
-      return this.endpoint && this.loading === false && this.error === null;
-    },
-  },
   methods: {
-    async createEndpoint() {
-      this.error = null;
-      this.loading = true;
-      this.endpoint = new WmsEndpoint(this.url);
-      try {
-        await this.endpoint.isReady();
-      } catch (e) {
-        this.error = e.message;
-      }
-      this.loading = false;
+    createEndpoint() {
+      this.selectedLayer = null;
+      const endpoint = new WmsEndpoint(this.url);
+      this.loadPromise = endpoint.isReady();
     },
-    handleLayerClick(layer, event) {
-      this.selectedLayer = this.endpoint.getLayerByName(layer.name);
+    handleLayerClick(endpoint, layer, event) {
+      this.selectedLayer = endpoint.getLayerByName(layer.name);
       event.preventDefault();
     },
   },

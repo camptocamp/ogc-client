@@ -55,7 +55,7 @@ describe('WPS Execute', () => {
           storeExecuteResponse: true,
           status: true,
         },
-        '1.0.0'
+        '1.0.0',
       );
       expect(body).toEqual(`<?xml version="1.0" encoding="UTF-8"?>
 <wps:Execute service="WPS" version="1.0.0" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -111,10 +111,10 @@ describe('WPS Execute', () => {
           ],
           outputs: [{ identifier: 'result' }],
         },
-        '1.0.0'
+        '1.0.0',
       );
       expect(gml).toMatch(
-        /<gml:Point>\s*<gml:pos>0 0<\/gml:pos>\s*<\/gml:Point>/
+        /<gml:Point>\s*<gml:pos>0 0<\/gml:pos>\s*<\/gml:Point>/,
       );
       expect(gml).not.toContain('CDATA');
 
@@ -132,10 +132,10 @@ describe('WPS Execute', () => {
           ],
           outputs: [{ identifier: 'result' }],
         },
-        '1.0.0'
+        '1.0.0',
       );
       expect(json).toContain(
-        '<![CDATA[{"type":"Point","coordinates":[0,0]}]]>'
+        '<![CDATA[{"type":"Point","coordinates":[0,0]}]]>',
       );
     });
 
@@ -150,18 +150,18 @@ describe('WPS Execute', () => {
               { identifier: 'result', mimeType: 'text/x"ml & <weird>' },
             ],
           },
-          '1.0.0'
+          '1.0.0',
         );
         const doc = parseXmlString(body);
         const literal = findChildElement(
           findChildElement(
             findChildElement(
               findChildElement(getRootElement(doc), 'DataInputs'),
-              'Input'
+              'Input',
             ),
-            'Data'
+            'Data',
           ),
-          'LiteralData'
+          'LiteralData',
         );
         // the value survives the round-trip unchanged
         expect(getElementText(literal)).toBe(nasty);
@@ -182,7 +182,7 @@ describe('WPS Execute', () => {
             ],
             outputs: [{ identifier: 'result' }],
           },
-          '1.0.0'
+          '1.0.0',
         );
         expect(() => parseXmlString(body)).not.toThrow();
         const complex = findChildElement(
@@ -190,13 +190,13 @@ describe('WPS Execute', () => {
             findChildElement(
               findChildElement(
                 getRootElement(parseXmlString(body)),
-                'DataInputs'
+                'DataInputs',
               ),
-              'Input'
+              'Input',
             ),
-            'Data'
+            'Data',
           ),
-          'ComplexData'
+          'ComplexData',
         );
         expect(getElementText(complex)).toBe('foo ]]> bar');
       });
@@ -206,7 +206,7 @@ describe('WPS Execute', () => {
   describe('parseExecuteResponse', () => {
     it('parses a succeeded response with inline data', () => {
       const result = parseExecuteResponse(
-        parseXmlString(executeSucceededInline)
+        parseXmlString(executeSucceededInline),
       );
       expect(result).toEqual({
         status: 'succeeded',
@@ -225,7 +225,7 @@ describe('WPS Execute', () => {
 
     it('parses a succeeded response with a reference output', () => {
       const result = parseExecuteResponse(
-        parseXmlString(executeSucceededReference)
+        parseXmlString(executeSucceededReference),
       );
       expect(result).toMatchObject({
         status: 'succeeded',
@@ -245,7 +245,7 @@ describe('WPS Execute', () => {
 
     it('parses a reference output with a plain (non-xlink) href attribute', () => {
       const result = parseExecuteResponse(
-        parseXmlString(executeSucceededReferencePlainHref)
+        parseXmlString(executeSucceededReferencePlainHref),
       );
       expect(result).toMatchObject({
         status: 'succeeded',
@@ -281,7 +281,7 @@ describe('WPS Execute', () => {
       }
       expect(error).toBeInstanceOf(ServiceExceptionError);
       expect(error.message).toBe(
-        'Failed to execute process JTS:buffer: distance must be a number'
+        'Failed to execute process JTS:buffer: distance must be a number',
       );
       expect(error.code).toBe('NoApplicableCode');
       expect(error.locator).toBe('distance');

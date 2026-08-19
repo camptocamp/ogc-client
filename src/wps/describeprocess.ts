@@ -23,13 +23,13 @@ import {
  */
 export function parseDescribeProcessResponse(
   describeProcessDoc: XmlDocument,
-  processId: string
+  processId: string,
 ): WpsProcessFull | null {
   const root = getRootElement(describeProcessDoc);
   const descriptions = findChildrenElement(root, 'ProcessDescription');
   const match =
     descriptions.find(
-      (el) => getElementText(findChildElement(el, 'Identifier')) === processId
+      (el) => getElementText(findChildElement(el, 'Identifier')) === processId,
     ) ?? null;
   if (!match) return null;
 
@@ -41,7 +41,7 @@ export function parseDescribeProcessResponse(
 
   const processOutputs = findChildElement(match, 'ProcessOutputs');
   const outputs = findChildrenElement(processOutputs, 'Output').map(
-    parseOutput
+    parseOutput,
   );
 
   return {
@@ -75,11 +75,11 @@ function parseFormat(formatEl: XmlElement): WpsFormat {
 function parseComplexData(el: XmlElement): WpsComplexData {
   const defaultFormat = findChildElement(
     findChildElement(el, 'Default'),
-    'Format'
+    'Format',
   );
   const supported = findChildrenElement(
     findChildElement(el, 'Supported'),
-    'Format'
+    'Format',
   ).map(parseFormat);
   const maximumMegabytes = getElementAttribute(el, 'maximumMegabytes');
   return {
@@ -106,11 +106,11 @@ function parseInput(inputEl: XmlElement): WpsProcessInput {
   if (literalEl) {
     const dataType = getElementText(findChildElement(literalEl, 'DataType'));
     const defaultValue = getElementText(
-      findChildElement(literalEl, 'DefaultValue')
+      findChildElement(literalEl, 'DefaultValue'),
     );
     const allowedValues = findChildrenElement(
       findChildElement(literalEl, 'AllowedValues'),
-      'Value'
+      'Value',
     ).map(getElementText);
     const anyValue = !!findChildElement(literalEl, 'AnyValue');
     return {
@@ -132,11 +132,11 @@ function parseInput(inputEl: XmlElement): WpsProcessInput {
       type: 'boundingbox',
       boundingBoxData: {
         defaultCrs: getElementText(
-          findChildElement(findChildElement(bboxEl, 'Default'), 'CRS')
+          findChildElement(findChildElement(bboxEl, 'Default'), 'CRS'),
         ),
         supportedCrs: findChildrenElement(
           findChildElement(bboxEl, 'Supported'),
-          'CRS'
+          'CRS',
         ).map(getElementText),
       },
     };

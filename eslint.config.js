@@ -6,7 +6,7 @@ import typescriptEslint from 'typescript-eslint';
 
 export default defineConfig([
   {
-    ignores: ['**/dist/', '**/coverage/'],
+    ignores: ['**/dist/', '**/coverage/', 'app'],
   },
   {
     extends: [js.configs.recommended, typescriptEslint.configs.recommended],
