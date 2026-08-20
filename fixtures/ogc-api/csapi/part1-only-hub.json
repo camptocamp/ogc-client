@@ -1,0 +1,30 @@
+{
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document as JSON",
+      "href": "http://local/csapi/part1-only-hub?f=json"
+    },
+    {
+      "rel": "service-desc",
+      "type": "application/vnd.oai.openapi+json;version=3.0",
+      "title": "OpenAPI definition",
+      "href": "http://local/csapi/part1-only-hub/openapi"
+    },
+    {
+      "rel": "conformance",
+      "type": "application/json",
+      "title": "Conformance",
+      "href": "http://local/csapi/part1-only-hub/conformance"
+    },
+    {
+      "rel": "data",
+      "type": "application/json",
+      "title": "Collections",
+      "href": "http://local/csapi/part1-only-hub/collections"
+    }
+  ],
+  "title": "CSAPI Hub (Part 1 Only)",
+  "description": "Endpoint with only Part 1 Core conformance (no Part 2 dynamic-data)"
+}
