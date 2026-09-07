@@ -246,7 +246,7 @@ export function readLayersFromCapabilities(
         const defaultValue = getElementText(
           findChildElement(element, 'Default'),
         );
-        const values = findChildrenElement(element, 'Values').map(
+        const values = findChildrenElement(element, 'Value').map(
           getElementText,
         );
         return { identifier, defaultValue, values };
