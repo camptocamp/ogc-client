@@ -649,7 +649,7 @@ describe('WMTS Capabilities', () => {
               {
                 defaultValue: '20110805',
                 identifier: 'Time',
-                values: [],
+                values: ['20110805', '20081024'],
               },
               {
                 defaultValue: 'abcd',
