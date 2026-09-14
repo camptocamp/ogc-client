@@ -59,62 +59,78 @@ export default {
      * @property {string} selectedStyle
      * @property {string} selectedMatrixSet
      */ ({
-      selectedStyle: '',
-      selectedMatrixSet: 0,
+      selectedStyle: null,
+      selectedMatrixSet: null,
       olMap: null,
     }),
+  methods: {
+    refreshLayer: async function () {
+      const matrixSetLink = this.layer.matrixSets[this.selectedMatrixSet];
+      const tileGrid = await this.endpoint.getOpenLayersTileGrid(
+        this.layer.name,
+        matrixSetLink.identifier,
+      );
+      if (!this.olMap) {
+        this.olMap = new Map({
+          target: this.$refs['map-root'],
+          layers: [
+            new TileLayer({
+              source: new OSM(),
+            }),
+          ],
+          view: new View({
+            zoom: 2,
+            center: [0, 0],
+          }),
+        });
+      } else {
+        this.olMap.getLayers().pop();
+      }
+      const resourceLink = this.layer.resourceLinks[0];
+      const dimensions = this.endpoint.getDefaultDimensions(this.layer.name);
+      const layer = new TileLayer({
+        source: new WMTS({
+          layer: this.layer.name,
+          style: this.selectedStyle,
+          matrixSet: matrixSetLink.identifier,
+          format: resourceLink.format,
+          url: resourceLink.url,
+          requestEncoding: resourceLink.encoding,
+          tileGrid,
+          projection: matrixSetLink.crs,
+          dimensions,
+        }),
+      });
+      if (this.layer.latLonBoundingBox) {
+        const extent = transformExtent(
+          this.layer.latLonBoundingBox,
+          'EPSG:4326',
+          'EPSG:3857',
+        );
+        layer.setExtent(extent);
+        this.olMap.getView().fit(extent);
+      }
+      this.olMap.addLayer(layer);
+    },
+  },
   watch: {
     layer: {
       immediate: true,
-      async handler(newVal) {
-        this.selectedStyle = newVal.defaultStyle || newVal.styles[0]?.name;
+      handler() {
+        this.selectedStyle =
+          this.layer.defaultStyle || this.layer.styles[0]?.name;
         this.selectedMatrixSet = 0;
-        const matrixSetLink = newVal.matrixSets[this.selectedMatrixSet];
-        const tileGrid = await this.endpoint.getOpenLayersTileGrid(
-          this.layer.name,
-          matrixSetLink.identifier,
-        );
-        if (!this.olMap) {
-          this.olMap = new Map({
-            target: this.$refs['map-root'],
-            layers: [
-              new TileLayer({
-                source: new OSM(),
-              }),
-            ],
-            view: new View({
-              zoom: 2,
-              center: [0, 0],
-            }),
-          });
-        } else {
-          this.olMap.getLayers().pop();
-        }
-        const resourceLink = this.layer.resourceLinks[0];
-        const dimensions = this.endpoint.getDefaultDimensions(this.layer.name);
-        const layer = new TileLayer({
-          source: new WMTS({
-            layer: this.layer.name,
-            style: this.selectedStyle,
-            matrixSet: matrixSetLink.identifier,
-            format: resourceLink.format,
-            url: resourceLink.url,
-            requestEncoding: resourceLink.encoding,
-            tileGrid,
-            projection: matrixSetLink.crs,
-            dimensions,
-          }),
-        });
-        if (this.layer.latLonBoundingBox) {
-          const extent = transformExtent(
-            this.layer.latLonBoundingBox,
-            'EPSG:4326',
-            'EPSG:3857',
-          );
-          layer.setExtent(extent);
-          this.olMap.getView().fit(extent);
-        }
-        this.olMap.addLayer(layer);
+        this.refreshLayer();
+      },
+    },
+    selectedStyle: {
+      handler() {
+        this.refreshLayer();
+      },
+    },
+    selectedMatrixSet: {
+      handler() {
+        this.refreshLayer();
       },
     },
   },
