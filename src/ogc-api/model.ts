@@ -72,6 +72,7 @@ export interface OgcApiCollectionCapabilities {
   hasVectorTiles?: boolean;
   hasMapTiles?: boolean;
   hasDataQueries?: boolean;
+  hasConnectedSystems?: boolean;
 }
 
 /**

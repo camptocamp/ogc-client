@@ -26,7 +26,7 @@ function markdownInline(input) {
   return md.renderInline(input);
 }
 
-function processClass(apiElement) {
+function processClass(apiElement, importPath) {
   const constructorElement = apiElement.children.find(
     (item) => item.name === 'constructor',
   );
@@ -58,7 +58,7 @@ function processClass(apiElement) {
     name: apiElement.name,
     descriptionHtml: markdown(getDescription(apiElement)),
     importHtml: markdown(`\`\`\`js
-import { ${apiElement.name} } from '@camptocamp/ogc-client'
+import { ${apiElement.name} } from '${importPath}'
 \`\`\``),
     constructorSignature: constructorElement
       ? markdownInline(
@@ -66,7 +66,7 @@ import { ${apiElement.name} } from '@camptocamp/ogc-client'
         )
       : null,
     constructor: constructorElement
-      ? processFunction(constructorElement)
+      ? processFunction(constructorElement, importPath)
       : null,
     constructorDescriptionHtml: constructorElement
       ? markdown(getDescription(constructorElement))
@@ -78,22 +78,24 @@ import { ${apiElement.name} } from '@camptocamp/ogc-client'
       ),
       descriptionHtml: markdown(getDescription(property)),
     })),
-    methods: methods.map(processFunction),
-    staticMethods: staticMethods.map(processFunction),
+    methods: methods.map((method) => processFunction(method, importPath)),
+    staticMethods: staticMethods.map((method) =>
+      processFunction(method, importPath),
+    ),
     extends: apiElement.extendedTypes?.map((extended) => ({
       signature: markdownInline(formatTypeToString(extended)),
     })),
   };
 }
 
-function processFunction(apiElement) {
+function processFunction(apiElement, importPath) {
   const signature = apiElement.signatures?.[0];
 
   return {
     name: apiElement.name,
     descriptionHtml: markdown(getDescription(apiElement)),
     importHtml: markdown(`\`\`\`js
-import { ${apiElement.name} } from '@camptocamp/ogc-client'
+import { ${apiElement.name} } from '${importPath}'
 \`\`\``),
     signature: markdownInline(
       `${formatFunctionToString(apiElement)}: ${formatTypeToString(signature?.type)}`,
@@ -140,20 +142,43 @@ function processType(apiElement) {
 
 export default {
   async load() {
+    const apiModules = [
+      {
+        module: api.children.find((item) => item.name === 'index'),
+        importPath: '@camptocamp/ogc-client',
+      },
+      {
+        module: api.children.find((item) => item.name === 'csapi'),
+        importPath: '@camptocamp/ogc-client/csapi',
+      },
+    ];
+
     return {
-      classes: api.children
-        .filter((item) => item.kind & 128 /* ReflectionKind.Class */)
-        .map(processClass),
-      functions: api.children
-        .filter((item) => item.kind & 64 /* ReflectionKind.Function */)
-        .map(processFunction),
-      types: api.children
-        .filter(
-          (item) =>
-            item.kind & 256 /* ReflectionKind.Interface */ ||
-            item.kind & 2097152 /* ReflectionKind.TypeAlias */,
+      classes: apiModules
+        .flatMap(({ module, importPath }) =>
+          module.children
+            .filter((item) => item.kind & 128 /* ReflectionKind.Class */)
+            .map((item) => processClass(item, importPath)),
         )
-        .map(processType),
+        .sort((a, b) => a.name.localeCompare(b.name)),
+      functions: apiModules
+        .flatMap(({ module, importPath }) =>
+          module.children
+            .filter((item) => item.kind & 64 /* ReflectionKind.Function */)
+            .map((item) => processFunction(item, importPath)),
+        )
+        .sort((a, b) => a.name.localeCompare(b.name)),
+      types: apiModules
+        .flatMap(({ module }) =>
+          module.children
+            .filter(
+              (item) =>
+                item.kind & 256 /* ReflectionKind.Interface */ ||
+                item.kind & 2097152 /* ReflectionKind.TypeAlias */,
+            )
+            .map(processType),
+        )
+        .sort((a, b) => a.name.localeCompare(b.name)),
     };
   },
 };

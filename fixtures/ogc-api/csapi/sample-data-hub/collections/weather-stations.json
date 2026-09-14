@@ -1,0 +1,19 @@
+{
+  "id": "weather-stations",
+  "title": "Weather Stations",
+  "description": "Weather monitoring stations — no CSAPI link relations",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This collection",
+      "href": "http://local/csapi/sample-data-hub/collections/weather-stations"
+    },
+    {
+      "rel": "items",
+      "type": "application/geo+json",
+      "title": "Items",
+      "href": "http://local/csapi/sample-data-hub/collections/weather-stations/items"
+    }
+  ]
+}
