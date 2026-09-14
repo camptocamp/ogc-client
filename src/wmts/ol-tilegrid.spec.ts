@@ -185,18 +185,38 @@ describe('buildOpenLayersTileGrid', () => {
       null,
       [
         {
+          MaxTileCol: 1,
+          MaxTileRow: 1,
+          MinTileCol: 0,
+          MinTileRow: 0,
           TileMatrix: '0',
         },
         {
+          MaxTileCol: 2,
+          MaxTileRow: 2,
+          MinTileCol: 0,
+          MinTileRow: 0,
           TileMatrix: '1',
         },
         {
+          MaxTileCol: 1024,
+          MaxTileRow: 1024,
+          MinTileCol: 0,
+          MinTileRow: 31,
           TileMatrix: '10',
         },
         {
+          MaxTileCol: 2048,
+          MaxTileRow: 2048,
+          MinTileCol: 0,
+          MinTileRow: 62,
           TileMatrix: '11',
         },
         {
+          MaxTileCol: 4096,
+          MaxTileRow: 4096,
+          MinTileCol: 0,
+          MinTileRow: 125,
           TileMatrix: '12',
         },
       ],

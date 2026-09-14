@@ -3,7 +3,7 @@ import WMTSTileGrid, {
   createFromCapabilitiesMatrixSet,
 } from 'ol/tilegrid/WMTS.js';
 import { get as getProjection } from 'ol/proj.js';
-import { fromEPSGCode, register } from 'ol/proj/proj4.js';
+import { fromProjectionCode, register } from 'ol/proj/proj4.js';
 import proj4 from 'proj4';
 
 register(proj4);
@@ -15,7 +15,7 @@ export async function buildOpenLayersTileGrid(
   // if the matrix set crs is not known, load it
   let projection = getProjection(matrixSet.crs);
   if (!projection) {
-    projection = await fromEPSGCode(matrixSet.crs);
+    projection = await fromProjectionCode(matrixSet.crs);
   }
   if (!projection) {
     throw new Error(
@@ -36,6 +36,10 @@ export async function buildOpenLayersTileGrid(
   };
   const matrixSetLimits = limits.map((limit) => ({
     TileMatrix: limit.tileMatrix,
+    MinTileRow: limit.minTileRow,
+    MaxTileRow: limit.maxTileRow,
+    MinTileCol: limit.minTileCol,
+    MaxTileCol: limit.maxTileCol,
   }));
   return createFromCapabilitiesMatrixSet(matrixSetInfo, null, matrixSetLimits);
 }

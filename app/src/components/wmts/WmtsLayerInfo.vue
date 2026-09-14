@@ -104,7 +104,6 @@ export default {
             projection: matrixSetLink.crs,
             dimensions,
           }),
-          maxResolution: tileGrid.getResolutions()[0],
         });
         if (this.layer.latLonBoundingBox) {
           const extent = transformExtent(
