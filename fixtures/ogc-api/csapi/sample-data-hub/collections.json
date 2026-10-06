@@ -1,0 +1,54 @@
+{
+  "collections": [
+    {
+      "id": "iot-sensors",
+      "title": "IoT Sensor Network",
+      "description": "A network of IoT sensors deployed across the region",
+      "links": [
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "This collection",
+          "href": "http://local/csapi/sample-data-hub/collections/iot-sensors"
+        },
+        {
+          "rel": "ogc-cs:systems",
+          "type": "application/json",
+          "title": "Systems",
+          "href": "http://local/csapi/sample-data-hub/collections/iot-sensors/systems"
+        },
+        {
+          "rel": "ogc-cs:deployments",
+          "type": "application/json",
+          "title": "Deployments",
+          "href": "http://local/csapi/sample-data-hub/collections/iot-sensors/deployments"
+        },
+        {
+          "rel": "ogc-cs:datastreams",
+          "type": "application/json",
+          "title": "Datastreams",
+          "href": "http://local/csapi/sample-data-hub/collections/iot-sensors/datastreams"
+        }
+      ]
+    },
+    {
+      "id": "weather-stations",
+      "title": "Weather Stations",
+      "description": "Weather monitoring stations",
+      "links": [
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "This collection",
+          "href": "http://local/csapi/sample-data-hub/collections/weather-stations"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Items",
+          "href": "http://local/csapi/sample-data-hub/collections/weather-stations/items"
+        }
+      ]
+    }
+  ]
+}

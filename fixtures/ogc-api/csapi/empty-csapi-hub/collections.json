@@ -1,0 +1,23 @@
+{
+  "collections": [
+    {
+      "id": "plain-features",
+      "title": "Plain Feature Collection",
+      "description": "A regular OGC API Features collection without CSAPI link relations",
+      "links": [
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "This collection",
+          "href": "http://local/csapi/empty-csapi-hub/collections/plain-features"
+        },
+        {
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "Items",
+          "href": "http://local/csapi/empty-csapi-hub/collections/plain-features/items"
+        }
+      ]
+    }
+  ]
+}
