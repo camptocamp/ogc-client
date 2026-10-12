@@ -1,0 +1,53 @@
+{
+  "items": [
+    {
+      "id": "040g",
+      "uniqueId": "urn:x-odas:property:sound-source-doa",
+      "label": "Sound Source Direction of Arrival",
+      "description": "The instantaneous direction from which a sound source is perceived by a microphone array. Expressed as a unit vector (x, y, z) on the unit sphere centered on the array, or equivalently as azimuth and elevation angles. The primary observable output of the SSL module.",
+      "baseProperty": "http://qudt.org/vocab/quantitykind/Angle"
+    },
+    {
+      "id": "0410",
+      "uniqueId": "urn:x-odas:property:sound-source-energy",
+      "label": "Sound Source Energy",
+      "description": "The accumulated beamformer response energy at the detected direction of arrival. Proportional to the signal-to-noise ratio of the source. Values range from 0 (noise floor) to 1+ (strong source). The energy threshold E_T (default: 600 unnormalized) discriminates real sources from noise.",
+      "baseProperty": "http://qudt.org/vocab/quantitykind/Energy"
+    },
+    {
+      "id": "041g",
+      "uniqueId": "urn:x-odas:property:source-activity-level",
+      "label": "Sound Source Activity Level",
+      "description": "The tracking activity level of a sound source, representing the tracker confidence that the source is currently producing sound. Ranges from 0.0 (inactive/lost) to 1.0 (highly active). Derived from particle filter weight diversity and observation assignment probabilities.",
+      "baseProperty": "http://qudt.org/vocab/quantitykind/DimensionlessRatio"
+    },
+    {
+      "id": "0420",
+      "uniqueId": "urn:x-odas:property:geographic-bearing",
+      "label": "Geographic Line of Bearing",
+      "description": "The true geographic azimuth bearing from a sensor array to a detected sound source. Computed by transforming the array-local DOA unit vector to a geographic azimuth using the array known position and orientation. Expressed in degrees clockwise from true north (0-360).",
+      "baseProperty": "http://qudt.org/vocab/quantitykind/Angle"
+    },
+    {
+      "id": "042g",
+      "uniqueId": "urn:x-odas:property:triangulated-position",
+      "label": "Triangulated 3D Source Position",
+      "description": "The estimated 3D geographic position of a sound source, derived from multi-array triangulation. Computed via Ray-to-Ray intersection of DOA vectors from 2+ distributed arrays. Includes estimated uncertainty based on DOA angle variance (sigma_phi approx 0.0961 rad / ~5.5 degrees) and array geometry.",
+      "baseProperty": "http://qudt.org/vocab/quantitykind/Position"
+    },
+    {
+      "id": "0430",
+      "uniqueId": "urn:x-odas:property:detection-threshold",
+      "label": "Detection Energy Threshold",
+      "description": "The energy threshold E_T that discriminates real sound sources from noise in the SSL module. Observations with energy below this threshold are classified as noise. Default value: 600. Lowering increases sensitivity but also false detections; raising reduces sensitivity but improves precision.",
+      "baseProperty": "http://qudt.org/vocab/quantitykind/Energy"
+    },
+    {
+      "id": "043g",
+      "uniqueId": "urn:x-odas:property:tracking-sensitivity",
+      "label": "Tracking New Source Sensitivity",
+      "description": "The probability threshold T_new that must be exceeded for F_new consecutive frames to instantiate a new tracked source. Default: T_new=0.75, F_new=10 frames. Lower values create tracks more readily; higher values require stronger evidence before starting a new track.",
+      "baseProperty": "http://qudt.org/vocab/quantitykind/DimensionlessRatio"
+    }
+  ]
+}

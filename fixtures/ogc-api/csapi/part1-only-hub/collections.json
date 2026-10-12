@@ -1,0 +1,23 @@
+{
+  "collections": [
+    {
+      "id": "sensor-network",
+      "title": "Sensor Network",
+      "description": "A CSAPI collection on a Part 1-only endpoint",
+      "links": [
+        {
+          "rel": "self",
+          "type": "application/json",
+          "title": "This collection",
+          "href": "http://local/csapi/part1-only-hub/collections/sensor-network"
+        },
+        {
+          "rel": "ogc-cs:systems",
+          "type": "application/json",
+          "title": "Systems",
+          "href": "http://local/csapi/part1-only-hub/collections/sensor-network/systems"
+        }
+      ]
+    }
+  ]
+}

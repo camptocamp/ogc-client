@@ -1,0 +1,30 @@
+{
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "title": "This document as JSON",
+      "href": "http://local/csapi/empty-csapi-hub?f=json"
+    },
+    {
+      "rel": "service-desc",
+      "type": "application/vnd.oai.openapi+json;version=3.0",
+      "title": "OpenAPI definition",
+      "href": "http://local/csapi/empty-csapi-hub/openapi"
+    },
+    {
+      "rel": "conformance",
+      "type": "application/json",
+      "title": "Conformance",
+      "href": "http://local/csapi/empty-csapi-hub/conformance"
+    },
+    {
+      "rel": "data",
+      "type": "application/json",
+      "title": "Collections",
+      "href": "http://local/csapi/empty-csapi-hub/collections"
+    }
+  ],
+  "title": "CSAPI Hub (no matching collections)",
+  "description": "Endpoint with CSAPI conformance but no collections having ogc-cs: link relations"
+}

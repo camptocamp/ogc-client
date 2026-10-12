@@ -1,0 +1,11 @@
+{
+  "conformsTo": [
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json",
+    "http://www.opengis.net/spec/ogcapi-common-2/1.0/conf/collections",
+    "http://www.opengis.net/spec/ogcapi-connectedsystems-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-connectedsystems-2/1.0/conf/dynamic-data",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/geojson"
+  ]
+}
