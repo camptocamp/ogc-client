@@ -1,10 +1,16 @@
 name: Publish NPM package @dev version
 
-# This workflow runs whenever a commit is pushed on main
+# This workflow was taken from https://docs.npmjs.com/trusted-publishers#step-2-configure-your-cicd-workflow-1
+# Runs whenever a commit is pushed on main
+
 on:
   push:
     branches:
       - main
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
 
 jobs:
   publish-npm-package:
@@ -12,15 +18,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
       - name: Install Node & NPM
         uses: actions/setup-node@v3
         with:
           node-version: '24'
-          cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false # never use caching in release builds
 
       - name: Install dependencies
         run: npm ci
@@ -31,5 +36,3 @@ jobs:
 
       - name: Publish NPM package with @dev tag
         run: npm publish --tag dev
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
