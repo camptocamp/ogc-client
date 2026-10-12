@@ -27,12 +27,19 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           package-manager-cache: false # never use caching in release builds
 
+      - name: Check that the package version ends with "dev"
+        id: version
+        run: echo "is-dev=$(node --print 'require("./package.json").version.endsWith("dev")')" >> "$GITHUB_OUTPUT"
+
       - name: Install dependencies
+        if: steps.version.outputs.is-dev == 'true'
         run: npm ci
 
         # New version will be <npm version>.<commit hash>, e.g. 1.1.1-dev.0a4c598
       - name: Adjust package version according to branch & commit
+        if: steps.version.outputs.is-dev == 'true'
         run: npm version $(node --print 'require("./package.json").version').$(git rev-parse --short HEAD) --no-git-tag-version --allow-same-version
 
       - name: Publish NPM package with @dev tag
+        if: steps.version.outputs.is-dev == 'true'
         run: npm publish --tag dev
