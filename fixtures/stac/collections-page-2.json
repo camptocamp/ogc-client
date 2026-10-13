@@ -1,0 +1,44 @@
+{
+  "collections": [
+    {
+      "stac_version": "1.0.0",
+      "type": "Collection",
+      "id": "modis",
+      "title": "MODIS",
+      "description": "MODIS surface reflectance",
+      "license": "proprietary",
+      "extent": {
+        "spatial": {
+          "bbox": [[-180, -90, 180, 90]]
+        },
+        "temporal": {
+          "interval": [["2000-02-24T00:00:00Z", null]]
+        }
+      },
+      "links": [
+        {
+          "rel": "self",
+          "type": "application/json",
+          "href": "http://local/stac-api/collections/modis"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/json",
+      "href": "http://local/stac-api/collections-page-2"
+    },
+    {
+      "rel": "previous",
+      "type": "application/json",
+      "href": "http://local/stac-api/collections"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "http://local/stac-api/"
+    }
+  ]
+}

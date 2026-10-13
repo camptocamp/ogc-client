@@ -155,9 +155,9 @@ describe('StacEndpoint', () => {
     });
 
     describe('#allCollections', () => {
-      it('returns array of collection IDs', async () => {
+      it('returns array of collection IDs from all pages', async () => {
         const collections = await endpoint.allCollections;
-        expect(collections).toEqual(['sentinel-2', 'landsat-8']);
+        expect(collections).toEqual(['sentinel-2', 'landsat-8', 'modis']);
       });
     });
 
@@ -199,6 +199,15 @@ describe('StacEndpoint', () => {
         const collection = await endpoint.getCollection('sentinel-2');
         expect(collection.assets).toBeDefined();
         expect(collection.assets).toHaveProperty('thumbnail');
+      });
+
+      it('retrieves a collection not listed in the first page', async () => {
+        const collection = await endpoint.getCollection('modis');
+        expect(collection).toMatchObject({
+          type: 'Collection',
+          id: 'modis',
+          title: 'MODIS',
+        });
       });
 
       it('throws error for non-existent collection', async () => {
