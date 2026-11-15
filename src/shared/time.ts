@@ -17,12 +17,19 @@ export function parseIso8601Duration(duration: string): Duration {
 
 /**
  * Advance a date by an ISO 8601 duration using calendar arithmetic.
+ * Year and month steps clamp the day to the end of the target month,
+ * e.g. Jan 31 + P1M gives Feb 28 (or 29).
  */
 export function advanceByDuration(date: Date, d: Duration): Date {
   const next = new Date(date.getTime());
+  const dayOfMonth = next.getUTCDate();
+  next.setUTCDate(1);
   next.setUTCFullYear(next.getUTCFullYear() + d.years);
   next.setUTCMonth(next.getUTCMonth() + d.months);
-  next.setUTCDate(next.getUTCDate() + d.days);
+  const daysInMonth = new Date(
+    Date.UTC(next.getUTCFullYear(), next.getUTCMonth() + 1, 0),
+  ).getUTCDate();
+  next.setUTCDate(Math.min(dayOfMonth, daysInMonth) + d.days);
   next.setUTCHours(next.getUTCHours() + d.hours);
   next.setUTCMinutes(next.getUTCMinutes() + d.minutes);
   next.setUTCMilliseconds(next.getUTCMilliseconds() + d.seconds * 1000);
@@ -39,10 +46,23 @@ export function expandTimeInterval(
 ): Date[] {
   const dates: Date[] = [];
   const endMs = interval.end.getTime();
+  const p = interval.period;
   let current = interval.begin;
-  while (current.getTime() <= endMs && dates.length < maxDatesCount) {
+  // each step is computed from `begin` so that month-end clamping does not accumulate
+  for (
+    let k = 1;
+    current.getTime() <= endMs && dates.length < maxDatesCount;
+    k++
+  ) {
     dates.push(current);
-    const next = advanceByDuration(current, interval.period);
+    const next = advanceByDuration(interval.begin, {
+      years: p.years * k,
+      months: p.months * k,
+      days: p.days * k,
+      hours: p.hours * k,
+      minutes: p.minutes * k,
+      seconds: p.seconds * k,
+    });
     if (next.getTime() <= current.getTime()) break; // zero-length step guard
     current = next;
   }

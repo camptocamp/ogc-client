@@ -86,6 +86,37 @@ describe('expandTimeInterval', () => {
     ]);
   });
 
+  it('clamps monthly steps to the end of shorter months', () => {
+    const dates = expandTimeInterval({
+      begin: new Date('2001-01-31T00:00:00Z'),
+      end: new Date('2001-06-30T00:00:00Z'),
+      period: parseIso8601Duration('P1M'),
+    });
+    expect(dates.map((d) => d.toISOString().slice(0, 10))).toEqual([
+      '2001-01-31',
+      '2001-02-28',
+      '2001-03-31',
+      '2001-04-30',
+      '2001-05-31',
+      '2001-06-30',
+    ]);
+  });
+
+  it('clamps yearly steps from Feb 29', () => {
+    const dates = expandTimeInterval({
+      begin: new Date('2000-02-29T00:00:00Z'),
+      end: new Date('2004-02-29T00:00:00Z'),
+      period: parseIso8601Duration('P1Y'),
+    });
+    expect(dates.map((d) => d.toISOString().slice(0, 10))).toEqual([
+      '2000-02-29',
+      '2001-02-28',
+      '2002-02-28',
+      '2003-02-28',
+      '2004-02-29',
+    ]);
+  });
+
   it('respects the cap', () => {
     const dates = expandTimeInterval(
       {
