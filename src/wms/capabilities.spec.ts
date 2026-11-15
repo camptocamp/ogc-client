@@ -297,6 +297,26 @@ describe('WMS capabilities', () => {
       const doc = parseXmlString(capabilities130);
       expect(readLayersFromCapabilities(doc)).toEqual(expectedLayers);
     });
+    it('reads 1.3.0 bounding boxes in latitude-first order for geographic CRSs', () => {
+      const doc = parseXmlString(`<?xml version="1.0"?>
+        <WMS_Capabilities version="1.3.0" xmlns="http://www.opengis.net/wms">
+          <Capability>
+            <Layer>
+              <Name>L</Name>
+              <Title>L</Title>
+              <CRS>EPSG:4326</CRS>
+              <CRS>EPSG:4269</CRS>
+              <BoundingBox CRS="EPSG:4326" minx="30" miny="-100" maxx="40" maxy="-90"/>
+              <BoundingBox CRS="EPSG:4269" minx="30" miny="-100" maxx="40" maxy="-90"/>
+            </Layer>
+          </Capability>
+        </WMS_Capabilities>`);
+      const [layer] = readLayersFromCapabilities(doc);
+      expect(layer.boundingBoxes).toEqual({
+        'EPSG:4326': [-100, 30, -90, 40],
+        'EPSG:4269': [-100, 30, -90, 40],
+      });
+    });
     it('reads the layers (1.1.1)', () => {
       const doc = parseXmlString(capabilities111);
       expect(

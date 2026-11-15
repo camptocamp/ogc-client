@@ -8,6 +8,15 @@ describe('CRS utils', () => {
     it('returns false for EPSG:2154', () => {
       expect(hasInvertedCoordinates('EPSG:2154')).toBeFalsy();
     });
+    it.each(['EPSG:4269', 'EPSG:4283', 'EPSG:4230', 'EPSG:4314', 'EPSG:4612'])(
+      'returns true for latitude-first geographic CRS %s',
+      (crs) => {
+        expect(hasInvertedCoordinates(crs)).toBeTruthy();
+      },
+    );
+    it('returns true for a full URN of a latitude-first geographic CRS', () => {
+      expect(hasInvertedCoordinates('urn:ogc:def:crs:EPSG::4269')).toBeTruthy();
+    });
   });
 
   describe('simplifyEpsgUrn', () => {
