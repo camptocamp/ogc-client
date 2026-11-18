@@ -110,6 +110,11 @@
       "rel": "root",
       "type": "application/json",
       "href": "http://local/stac-api/"
+    },
+    {
+      "rel": "next",
+      "type": "application/json",
+      "href": "http://local/stac-api/collections-page-2"
     }
   ]
 }

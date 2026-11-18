@@ -338,9 +338,17 @@ export default class StacEndpoint {
    * Returns array of all collection IDs
    */
   get allCollections(): Promise<string[]> {
-    return this.collectionsDocument.then((doc) =>
-      doc ? parseCollectionsList(doc) : [],
-    );
+    return this.collectionsDocument.then(async (doc) => {
+      const collectionIds: string[] = [];
+      while (doc) {
+        collectionIds.push(...parseCollectionsList(doc));
+        const nextUrl = getLinkUrl(doc, 'next', this.baseUrl);
+        doc = nextUrl
+          ? await fetchStacDocument<StacCollectionsDocument>(nextUrl)
+          : null;
+      }
+      return collectionIds;
+    });
   }
 
   /**
@@ -352,12 +360,6 @@ export default class StacEndpoint {
     const collectionsDoc = await this.collectionsDocument;
     if (!collectionsDoc) {
       throw new EndpointError('No collections available at this endpoint');
-    }
-
-    // Check if collection exists in the list
-    const collectionIds = parseCollectionsList(collectionsDoc);
-    if (!collectionIds.includes(collectionId)) {
-      throw new EndpointError(`Collection not found: ${collectionId}`);
     }
 
     // Try to find collection in the collections array first
@@ -378,7 +380,9 @@ export default class StacEndpoint {
       collectionId,
       collectionsUrl + '/',
     ).toString();
-    const collectionDoc = await fetchStacDocument(collectionUrl);
+    const collectionDoc = await fetchStacDocument(collectionUrl).catch(() => {
+      throw new EndpointError(`Collection not found: ${collectionId}`);
+    });
     return parseStacCollection(collectionDoc);
   }
 
